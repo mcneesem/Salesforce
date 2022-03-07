@@ -24,6 +24,17 @@ public class NSP_AccountTeamMemberTriggerHelperTest {
        
         Account account = [SELECT Id FROM Account WHERE Name = 'TestAccount'];
         //Insert Test User Record
+        Profile profileobj = [SELECT Id FROM Profile WHERE Name='Integration User'];
+        UserRole role = [SELECT Id FROM UserRole WHERE Name='CEO'];
+
+        User userobj = new User(alias = 'jsmith', email='jsmith@acme.com', 
+        emailencodingkey='UTF-8', lastname='Smith', 
+        languagelocalekey='en_US', 
+        localesidkey='en_US', profileid = profileobj.Id, userroleid = role.Id,
+        timezonesidkey='America/Los_Angeles', 
+        username='insperitytestadminuser@insperity.com',
+        IsActive=true);
+        insert userobj;
         User user = [SELECT Alias FROM User WHERE Profile.Name LIKE 'Integration%' AND IsActive=true LIMIT 1];
 
         List<AccountTeamMember>  accountTeamMemberList = New List<AccountTeamMember>();

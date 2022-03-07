@@ -241,6 +241,7 @@ public static void inBoundUserTest(){
     User getUser = [SELECT Id, Name, Email FROM User WHERE Email = 'testuser@test.com' LIMIT 1];
     getUser.UserRoleId = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Name = 'Inbound Manager'][0].Id;
     Database.update(getUser);
+    Test.startTest();
     System.runAs(getUser) {
         leadObject.NSP_DC_SetDate__c =  date.today();
         leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
@@ -250,7 +251,7 @@ public static void inBoundUserTest(){
         leadObject.NSP_DC_SetTime__c = myTime;
         leadObject.NSP_Assign_Lead__c = true;
         leadObject.Lead_Owner_Auto_Assignment__c = false;
-        Test.startTest();
+        
         Database.update(leadObject);
         Test.stopTest();
         system.assertEquals(true, leadObject.NSP_Assign_Lead__c);

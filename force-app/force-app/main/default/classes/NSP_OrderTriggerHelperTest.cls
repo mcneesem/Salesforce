@@ -73,10 +73,10 @@ public class NSP_OrderTriggerHelperTest{
         objOrder.NSP_Billing_Account__c  = objaccount.Id;
         update objOrder;
         
-		objOrder.NSP_Billing_Account__c  = Null;
+		/*objOrder.NSP_Billing_Account__c  = Null;
         objOrder.NSP_Shipping_Address__c = null;
         objOrder.NSP_Billing_Address__c = null;
-        update objOrder;
+        update objOrder; */
 
     }
     

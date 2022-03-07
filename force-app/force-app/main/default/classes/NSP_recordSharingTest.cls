@@ -27,14 +27,14 @@ public class NSP_recordSharingTest {
                                 emailencodingkey='UTF-8', lastname='Smith', 
                                 languagelocalekey='en_US', 
                                 localesidkey='en_US', profileid = profileobj.Id, userroleid = BPArole.Id,
-                                timezonesidkey='America/Los_Angeles', NSP_Sales_Office__c='0302 Phoenix 2' ,
+                                timezonesidkey='America/Los_Angeles', NSP_Sales_Office__c='301' ,
                                 username='insperitytestadminuser@insperity.com.testUsr');
         users.add(BpaUser);
         User BpaUser2 = new User(alias = 'jBPA', email='jsmithyBPA@acmetest.com', 
                                  emailencodingkey='UTF-8', lastname='Smith', 
                                  languagelocalekey='en_US', 
                                  localesidkey='en_US', profileid = profileobj.Id, userroleid = BPArole.Id,
-                                 timezonesidkey='America/Los_Angeles', NSP_Sales_Office__c='0601 Denver 1' ,
+                                 timezonesidkey='America/Los_Angeles', NSP_Sales_Office__c='601' ,
                                  username='insperitytestadminuser@insperity.com.testBPA');
         users.add(BpaUser2);
         User SalesLeader = new User(alias = 'johnth', email='johnsmith@acme.com', 
@@ -57,7 +57,7 @@ public class NSP_recordSharingTest {
                                         emailencodingkey='UTF-8', lastname='Smit', 
                                         languagelocalekey='en_US', 
                                         localesidkey='en_US', profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
-                                        timezonesidkey='America/Los_Angeles',  NSP_Sales_Office__c='0701 Stamford 1',
+                                        timezonesidkey='America/Los_Angeles',  NSP_Sales_Office__c='701',
                                         username='insperitytestadminuser@insperity.com.ATM');
         
         users.add(accountTeamUser);

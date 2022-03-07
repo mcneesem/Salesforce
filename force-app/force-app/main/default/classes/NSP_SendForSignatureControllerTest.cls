@@ -24,7 +24,7 @@ public static final String ACCOUNTNAME ='testCustomer'; // Added as part of code
         NSP_SendForSignatureController.updatePartnerLifeCycleValue();
         test.stopTest();
         Account acc1 = [SELECT id, NSP_Partner_Lifecycle__c FROM Account WHERE Name =: ACCOUNTNAME LIMIT 1];
-        System.assertEquals(acc1.NSP_Partner_Lifecycle__c,NSP_SalesConstants.ONBOARDING);
+        System.assertEquals(acc1.NSP_Partner_Lifecycle__c,'Evaluation');
         system.assertNotEquals(controller, null);
         
 
