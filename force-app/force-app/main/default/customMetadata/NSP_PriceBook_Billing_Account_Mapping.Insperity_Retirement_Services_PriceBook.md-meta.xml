@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Insperity Retirement Services PriceBook</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Applicable_Pricing_Model__c</field>
+        <value xsi:type="xsd:string">RET - Bundled Plus #2,RET - Bundled Plus #3,RET - Mid-Market #1,RET - Mid-Market #2,RET - Mid-Market #3,RET - Participant Fee Only,RET- Bundled Plus,RET- Legacy Non Revenue,RET- Legacy Revenue,RET - WO no Admin,RET - WO with Admin</value>
+    </values>
+    <values>
+        <field>NSP_PriceBookId__c</field>
+        <value xsi:type="xsd:string">Retirement Services Pricebook</value>
+    </values>
+    <values>
+        <field>NSP_Product_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_WO_Account__c</field>
+        <value xsi:type="xsd:string">Insperity WO Billing Account</value>
+    </values>
+</CustomMetadata>

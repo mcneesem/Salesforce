@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Account_Segment__c</fullName>
+    <description>Show guidance for success message based on the Account Segment. Account segment is determined based on the Number Of Employees</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Account Segment</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MidMarket</fullName>
+                <default>true</default>
+                <label>MidMarket</label>
+            </value>
+            <value>
+                <fullName>Emerging Growth</fullName>
+                <default>false</default>
+                <label>Emerging Growth</label>
+            </value>
+            <value>
+                <fullName>Core Sales</fullName>
+                <default>false</default>
+                <label>Core Sales</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

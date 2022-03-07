@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Template_Section__c</fullName>
+    <description>Describes which part of the Template Section the Product [QuoteLineItems] Belongs to.</description>
+    <externalId>false</externalId>
+    <label>Template Section</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Selected Bundled Service Package</fullName>
+                <default>false</default>
+                <label>Selected Bundled Service Package</label>
+            </value>
+            <value>
+                <fullName>Contractor</fullName>
+                <default>false</default>
+                <label>Contractor</label>
+            </value>
+            <value>
+                <fullName>Selected Products</fullName>
+                <default>false</default>
+                <label>Selected Products</label>
+            </value>
+            <value>
+                <fullName>Selected Software Products</fullName>
+                <default>false</default>
+                <label>Selected Software Products</label>
+            </value>
+            <value>
+                <fullName>Selected Cloud-Based Products</fullName>
+                <default>false</default>
+                <label>Selected Cloud-Based Products</label>
+            </value>
+            <value>
+                <fullName>Selected Equipment</fullName>
+                <default>false</default>
+                <label>Selected Equipment</label>
+            </value>
+            <value>
+                <fullName>Selected Equipment Support and Maintenance Plan</fullName>
+                <default>false</default>
+                <label>Selected Equipment Support and Maintenance Plan</label>
+            </value>
+            <value>
+                <fullName>Selected Implementation Services</fullName>
+                <default>false</default>
+                <label>Selected Implementation Services</label>
+            </value>
+            <value>
+                <fullName>Selected Services</fullName>
+                <default>false</default>
+                <label>Selected Services</label>
+            </value>
+            <value>
+                <fullName>Other Items</fullName>
+                <default>false</default>
+                <label>Other Items</label>
+            </value>
+            <value>
+                <fullName>Shell Bundle</fullName>
+                <default>false</default>
+                <label>Shell Bundle</label>
+            </value>
+            <value>
+                <fullName>Selected Recruiting Outsourcing</fullName>
+                <default>false</default>
+                <label>Selected Recruiting Outsourcing</label>
+            </value>
+            <value>
+                <fullName>Selected Recruiting Consulting</fullName>
+                <default>false</default>
+                <label>Selected Recruiting Consulting</label>
+            </value>
+            <value>
+                <fullName>Selected Project Recruiting</fullName>
+                <default>false</default>
+                <label>Selected Project Recruiting</label>
+            </value>
+            <value>
+                <fullName>Selected Employment Branding Services</fullName>
+                <default>false</default>
+                <label>Selected Employment Branding Services</label>
+            </value>
+            <value>
+                <fullName>Selected Skills-Based Assessment</fullName>
+                <default>false</default>
+                <label>Selected Skills-Based Assessment</label>
+            </value>
+            <value>
+                <fullName>Selected Personality and Cognitive Assessment</fullName>
+                <default>false</default>
+                <label>Selected Personality and Cognitive Assessment</label>
+            </value>
+            <value>
+                <fullName>Selected Behavior Based Interview Training Services</fullName>
+                <default>false</default>
+                <label>Selected Behavior Based Interview Training Services</label>
+            </value>
+            <value>
+                <fullName>Selected Insperity Talent Connect Applicant Tracking System</fullName>
+                <default>false</default>
+                <label>Selected Insperity Talent Connect Applicant Tracking System</label>
+            </value>
+            <value>
+                <fullName>Selected Insperity Talent Connect Implementation Services</fullName>
+                <default>false</default>
+                <label>Selected Insperity Talent Connect Implementation Services</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

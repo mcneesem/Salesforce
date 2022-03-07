@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HCM_Can_Edit_Only_WX_Opportunities</fullName>
+    <active>true</active>
+    <description>This validates that  HCM Sales Consultants can only edit opportunities with WX products</description>
+    <errorConditionFormula>AND(TEXT( NSP_PrimaryProduct__c ) &lt;&gt; &quot;WX&quot;,
+$UserRole.DeveloperName =&quot;HCM_Sales_Consultant&quot;,
+NOT(OR($Profile.Name = &quot;System Administrator&quot; ,
+$Profile.Name = &quot;Data Migration&quot;,
+$Profile.Name = &quot;Sales Administrator&quot;)),NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c))</errorConditionFormula>
+    <errorMessage>HCM Sales Consultants can modify only WX Opportunities.</errorMessage>
+</ValidationRule>

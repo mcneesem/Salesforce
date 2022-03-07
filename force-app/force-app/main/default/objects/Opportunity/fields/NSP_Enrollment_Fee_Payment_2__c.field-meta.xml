@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Enrollment_Fee_Payment_2__c</fullName>
+    <description>to save payment amount from enrollment fee payment if payment number is 2</description>
+    <externalId>false</externalId>
+    <label>Enrollment Fee Payment 2</label>
+    <summarizedField>NSP_Enrollment_Fee_Payment__c.NSP_Payment_Amount__c</summarizedField>
+    <summaryFilterItems>
+        <field>NSP_Enrollment_Fee_Payment__c.NSP_Payment_Number__c</field>
+        <operation>equals</operation>
+        <value>2</value>
+    </summaryFilterItems>
+    <summaryForeignKey>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

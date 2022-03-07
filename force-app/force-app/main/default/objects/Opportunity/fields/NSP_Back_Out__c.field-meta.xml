@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Back_Out__c</fullName>
+    <description>Field used to store if the Opportunity is Backed out</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Back Out?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

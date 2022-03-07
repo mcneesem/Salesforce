@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_OneForce_External_ID__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>This should be the legacy id of the campaign concatenated with a dash &apos;-&apos; and the legacy id of the lead.</description>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>true</externalId>
+    <label>OneForce External ID</label>
+    <length>50</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

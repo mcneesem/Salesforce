@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_user_can_modify_own_record</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(AND(  NOT(ISNEW()), CreatedBy.Profile.Name !=  LastModifiedBy.Profile.Name ,  $Profile.Name ==  $Label.NSP_Integration_Profile_Name),NOT( $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c))</errorConditionFormula>
+    <errorMessage>Only Integration User can modify record</errorMessage>
+</ValidationRule>

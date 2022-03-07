@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+		<customValue>
+			<label>Alabama</label>
+			<default>false</default>
+			<fullName>Alabama</fullName>
+		</customValue>
+		<customValue>
+			<label>Alaska</label>
+			<default>false</default>
+			<fullName>Alaska</fullName>
+		</customValue>
+		<customValue>
+			<label>Arizona</label>
+			<default>false</default>
+			<fullName>Arizona</fullName>
+		</customValue>
+		<customValue>
+			<label>Arkansas</label>
+			<default>false</default>
+			<fullName>Arkansas</fullName>
+		</customValue>
+		<customValue>
+			<label>California</label>
+			<default>false</default>
+			<fullName>California</fullName>
+		</customValue>
+		<customValue>
+			<label>Colorado</label>
+			<default>false</default>
+			<fullName>Colorado</fullName>
+		</customValue>
+		<customValue>
+			<label>Connecticut</label>
+			<default>false</default>
+			<fullName>Connecticut</fullName>
+		</customValue>
+		<customValue>
+			<label>Delaware</label>
+			<default>false</default>
+			<fullName>Delaware</fullName>
+		</customValue>
+		<customValue>
+			<label>District of Columbia</label>
+			<default>false</default>
+			<fullName>District of Columbia</fullName>
+		</customValue>
+		<customValue>
+			<label>Florida</label>
+			<default>false</default>
+			<fullName>Florida</fullName>
+		</customValue>
+		<customValue>
+			<label>Georgia</label>
+			<default>false</default>
+			<fullName>Georgia</fullName>
+		</customValue>
+		<customValue>
+			<label>Hawaii</label>
+			<default>false</default>
+			<fullName>Hawaii</fullName>
+		</customValue>
+		<customValue>
+			<label>Idaho</label>
+			<default>false</default>
+			<fullName>Idaho</fullName>
+		</customValue>
+		<customValue>
+			<label>Illinois</label>
+			<default>false</default>
+			<fullName>Illinois</fullName>
+		</customValue>
+		<customValue>
+			<label>Indiana</label>
+			<default>false</default>
+			<fullName>Indiana</fullName>
+		</customValue>
+		<customValue>
+			<label>Iowa</label>
+			<default>false</default>
+			<fullName>Iowa</fullName>
+		</customValue>
+		<customValue>
+			<label>Kansas</label>
+			<default>false</default>
+			<fullName>Kansas</fullName>
+		</customValue>
+		<customValue>
+			<label>Kentucky</label>
+			<default>false</default>
+			<fullName>Kentucky</fullName>
+		</customValue>
+		<customValue>
+			<label>Louisiana</label>
+			<default>false</default>
+			<fullName>Louisiana</fullName>
+		</customValue>
+		<customValue>
+			<label>Maine</label>
+			<default>false</default>
+			<fullName>Maine</fullName>
+		</customValue>
+		<customValue>
+			<label>Maryland</label>
+			<default>false</default>
+			<fullName>Maryland</fullName>
+		</customValue>
+		<customValue>
+			<label>Massachusetts</label>
+			<default>false</default>
+			<fullName>Massachusetts</fullName>
+		</customValue>
+		<customValue>
+			<label>Michigan</label>
+			<default>false</default>
+			<fullName>Michigan</fullName>
+		</customValue>
+		<customValue>
+			<label>Minnesota</label>
+			<default>false</default>
+			<fullName>Minnesota</fullName>
+		</customValue>
+		<customValue>
+			<label>Mississippi</label>
+			<default>false</default>
+			<fullName>Mississippi</fullName>
+		</customValue>
+		<customValue>
+			<label>Missouri</label>
+			<default>false</default>
+			<fullName>Missouri</fullName>
+		</customValue>
+		<customValue>
+			<label>Montana</label>
+			<default>false</default>
+			<fullName>Montana</fullName>
+		</customValue>
+		<customValue>
+			<label>Nebraska</label>
+			<default>false</default>
+			<fullName>Nebraska</fullName>
+		</customValue>
+		<customValue>
+			<label>Nevada</label>
+			<default>false</default>
+			<fullName>Nevada</fullName>
+		</customValue>
+		<customValue>
+			<label>New Hampshire</label>
+			<default>false</default>
+			<fullName>New Hampshire</fullName>
+		</customValue>
+		<customValue>
+			<label>New Jersey</label>
+			<default>false</default>
+			<fullName>New Jersey</fullName>
+		</customValue>
+		<customValue>
+			<label>New Mexico</label>
+			<default>false</default>
+			<fullName>New Mexico</fullName>
+		</customValue>
+		<customValue>
+			<label>New York</label>
+			<default>false</default>
+			<fullName>New York</fullName>
+		</customValue>
+		<customValue>
+			<label>North Carolina</label>
+			<default>false</default>
+			<fullName>North Carolina</fullName>
+		</customValue>
+		<customValue>
+			<label>North Dakota</label>
+			<default>false</default>
+			<fullName>North Dakota</fullName>
+		</customValue>
+		<customValue>
+			<label>Ohio</label>
+			<default>false</default>
+			<fullName>Ohio</fullName>
+		</customValue>
+		<customValue>
+			<label>Oklahoma</label>
+			<default>false</default>
+			<fullName>Oklahoma</fullName>
+		</customValue>
+		<customValue>
+			<label>Oregon</label>
+			<default>false</default>
+			<fullName>Oregon</fullName>
+		</customValue>
+		<customValue>
+			<label>Pennsylvania</label>
+			<default>false</default>
+			<fullName>Pennsylvania</fullName>
+		</customValue>
+		<customValue>
+			<label>Rhode Island</label>
+			<default>false</default>
+			<fullName>Rhode Island</fullName>
+		</customValue>
+		<customValue>
+			<label>South Carolina</label>
+			<default>false</default>
+			<fullName>South Carolina</fullName>
+		</customValue>
+		<customValue>
+			<label>South Dakota</label>
+			<default>false</default>
+			<fullName>South Dakota</fullName>
+		</customValue>
+		<customValue>
+			<label>Tennessee</label>
+			<default>false</default>
+			<fullName>Tennessee</fullName>
+		</customValue>
+		<customValue>
+			<label>Texas</label>
+			<default>false</default>
+			<fullName>Texas</fullName>
+		</customValue>
+		<customValue>
+			<label>Utah</label>
+			<default>false</default>
+			<fullName>Utah</fullName>
+		</customValue>
+		<customValue>
+			<label>Vermont</label>
+			<default>false</default>
+			<fullName>Vermont</fullName>
+		</customValue>
+		<customValue>
+			<label>Virginia</label>
+			<default>false</default>
+			<fullName>Virginia</fullName>
+		</customValue>
+		<customValue>
+			<label>Washington</label>
+			<default>false</default>
+			<fullName>Washington</fullName>
+		</customValue>
+		<customValue>
+			<label>West Virginia</label>
+			<default>false</default>
+			<fullName>West Virginia</fullName>
+		</customValue>
+		<customValue>
+			<label>Wisconsin</label>
+			<default>false</default>
+			<fullName>Wisconsin</fullName>
+		</customValue>
+		<customValue>
+			<label>Wyoming</label>
+			<default>false</default>
+			<fullName>Wyoming</fullName>
+		</customValue>
+    <masterLabel>US States</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

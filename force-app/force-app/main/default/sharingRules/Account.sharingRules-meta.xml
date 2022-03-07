@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Share_All_Accounts</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <label>Share All Accounts</label>
+        <sharedTo>
+            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_Account_Id__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Share_Segment_Accounts_to_BPC_Role_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Rule will Share Segment Accounts to BPC Role Users</description>
+        <label>Share Segment Accounts to BPC Role Users</label>
+        <sharedTo>
+            <role>Business_Performance_Consultant</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_Account_Segment__c</field>
+            <operation>equals</operation>
+            <value>MidMarket</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Share_Segment_Accounts_to_BPC_Support_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will Share Segment Accounts to BPC Support Group</description>
+        <label>Share Segment Accounts to BPC Support Group</label>
+        <sharedTo>
+            <group>NSP_BPC_Support</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_Account_Segment__c</field>
+            <operation>equals</operation>
+            <value>MidMarket</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Account_Access_All_Sales</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <description>Account Access All Sales</description>
+        <label>Account Access All Sales</label>
+        <sharedTo>
+            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Edit_Access_to_Finance_Hierarchy</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <description>Sharing rule to give edit access of accounts to Finance users</description>
+        <label>Account Edit Access to Finance Hierarchy</label>
+        <sharedTo>
+            <roleAndSubordinates>Finance_Leaders</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+        <sharingOwnerRules>
+        <fullName>BPA_owner_Account_to_NCS_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Sharing Rule will share BPA owner Account with NCS Group Users</description>
+        <label>BPA owner Account to NCS group</label>
+        <sharedTo>
+            <group>NSP_New_Client_Sales</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Account_to_Channel_Operation_Role_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will share BPA owner Account to Channel Operation Role Users</description>
+        <label>BPA owner Account to Channel Operation Role Users</label>
+        <sharedTo>
+            <role>Channel_Operations</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Account_to_Data_Science_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Sharing Rule will share BPA owner Account with Data Science Group Users</description>
+        <label>BPA owner Account to Data Science group</label>
+        <sharedTo>
+            <group>NSP_Data_Science</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

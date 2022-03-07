@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Has_Demo_Activity__c</fullName>
+    <description>Checkbox is checked when the opportunity has any Activities of Type Demo</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Has Demo Activity</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

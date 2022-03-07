@@ -1,0 +1,10 @@
+<!-- Vf page shown on click on send for signature - account -->
+<apex:page standardController="Account" extensions="NSP_SendForSignatureController" action="{!updatePartnerLifeCycleValue}">
+<apex:form >
+     <p style="font-size:20px">{!$Label.NSP_MovePartnerLifecycletoOnboarding}</p>
+     <apex:actionFunction name="UpdatePartnerLifeCycle" action="{!UpdatePartnerLifeCycleValue}" />
+    <apex:outputLink value="{!URLFOR(IF($Site.prefix == '/s','/apex/dfsle__sending', $Site.Prefix +'/apex/dfsle__sending'), null, [sId = Account.Id, templateId = Account.NSP_Merge_On_Demand_DocuSign_Template_Id__c , recordId = Account.Id, title = Account.NSP_Template_Selection__c, quickSend = false, isEmbedded = false])}" > 
+    <p style="font-size:20px">{!$Label.NSP_SendForSignature}</p> 
+</apex:outputLink>
+</apex:form>
+</apex:page>

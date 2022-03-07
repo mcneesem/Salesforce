@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_And_Client_For_Life_Sync_p_Quote</fullName>
+    <active>true</active>
+    <description>When the Opportunity is moving to closed Won, its primary product and Client for life should be in sync with Primary Product and Client for life of its Primary Quote</description>
+    <errorConditionFormula>AND(ISCHANGED(StageName), ISPICKVAL(StageName, &quot;Closed Won&quot;),
+OR(TEXT(NSP_PrimaryProduct__c)&lt;&gt; TEXT( SBQQ__PrimaryQuote__r.NSP_Opportunity_Primary_Product__c ), 
+	TEXT( NSP_Client_For_Life__c ) &lt;&gt; TEXT( SBQQ__PrimaryQuote__r.NSP_Client_For_Life__c )),
+NOT(ISPICKVAL(NSP_PrimaryProduct__c, &quot;WO&quot;)),
+	NOT(OR( $Profile.Name = &quot;System Administrator&quot; , 
+	$Profile.Name = &quot;Data Migration&quot;,
+	$Profile.Name = &quot;Sales Administrator&quot;)),
+	NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c)
+	)</errorConditionFormula>
+    <errorMessage>Please update the Primary Product and Client for life on the opportunity that matches the quote</errorMessage>
+</ValidationRule>

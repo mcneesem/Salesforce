@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Roll_Up_WO_Number_of_Employees__c</fullName>
+    <externalId>false</externalId>
+    <label>Roll Up WO Number of Employees</label>
+    <summarizedField>OpportunityLineItem.NSP_Margin__c</summarizedField>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.NSP_Product_Name_Text__c</field>
+        <operation>equals</operation>
+        <value>Workforce Optimization</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

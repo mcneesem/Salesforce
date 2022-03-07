@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+   <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Lead_to_Channel_Operation_role_users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share BPA owner Lead to Channel Operation role users</description>
+        <label>BPA owner Lead to Channel Operation role users</label>
+        <sharedTo>
+            <role>Channel_Operations</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Lead_to_Data_Science_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share BPA owner Lead to Data Science Group</description>
+        <label>BPA owner Lead to Data Science Group</label>
+        <sharedTo>
+            <group>NSP_Data_Science</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Lead_to_NCS_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share Lead BPA owner Leads with NCS Public Group</description>
+        <label>BPA owner Lead to NCS group</label>
+        <sharedTo>
+            <group>NSP_New_Client_Sales</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_View_All_Leads_Owned_by_Sales_Leader_and_subordinates</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>This sharing rule grants read access to all the leads owned by Sales Leader and below roles with all users with Sales Leader and below roles</description>
+        <label>View All Leads Owned by Sales Leader and subordinates</label>
+        <sharedTo>
+            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

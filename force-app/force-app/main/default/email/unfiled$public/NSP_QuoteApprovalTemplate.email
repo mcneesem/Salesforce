@@ -1,0 +1,102 @@
+<messaging:emailTemplate subject="Approval Request: Approval for {!relatedTo.Quote__r.SBQQ__Opportunity2__r.Name} have been requested "  relatedToType="sbaa__Approval__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <p>
+                    {!relatedTo.Owner.Name} has submitted quote {!relatedTo.Quote__r.Name} for your review.<br/>
+ Please respond to this email with the word <b><apex:outputText style="color: #009600;" value="Approve"/></b> or <b><apex:outputText style="color: #FF0000;" value="Reject"/></b> in the first line.<br/> 
+ Add any comments you may have on the second line.<br/>  
+ </p>
+             <b>Opportunity Owner:</b>&nbsp;{!relatedTo.Quote__r.SBQQ__Opportunity2__r.Owner.Name}<br/>
+             <b>Sales Office:</b>&nbsp; &nbsp;<apex:outputField value="{!relatedTo.Quote__r.SBQQ__Opportunity2__r.NSP_Sales_Office__c}"/><br/>
+             <b>SE:</b>&nbsp;&nbsp;<apex:outputField value=" {!relatedTo.Quote__r.Owner.Name}"/> <br/>
+              <p>
+               <b>Requestor's Comment:</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Submitter_Comment__c}" />
+                        </p>
+                 <p>
+                    <apex:outputPanel rendered="{!AND((relatedTo.Quote__r.NSP_Has_WA_product__c || relatedTo.Quote__r.NSP_Has_WX_product__c), relatedTo.Quote__r.NSP_Threshold_Percentage__c != 80) }">
+                         
+                      <b>  Minimum Billing Threshold Pct has been changed to </b> <apex:outputField value=" {!relatedTo.Quote__r.NSP_Threshold_Percentage__c}" />
+                    </apex:outputPanel>
+                </p>
+                
+                <p>
+                    <apex:outputPanel rendered="{!((relatedTo.Quote__r.NSP_Has_WA_product__c || relatedTo.Quote__r.NSP_Has_WX_product__c)&& relatedTo.Quote__r.NSP_Free_Month__c != '') }">
+                         
+                       <b> <apex:outputField value=" {!relatedTo.Quote__r.NSP_Free_Month__c}"/> Months Free</b> have been included in this quote.
+                    </apex:outputPanel>
+                </p>
+                <p>
+                    <apex:outputPanel rendered="{!(relatedTo.Quote__r.NSP_UpFront_Payment__c != 30 || relatedTo.Quote__r.NSP_At_Hire_Payment__c != 50) }">
+                         
+                       <b> On Demand Payment Percentages </b> have been changed to: Up Front - &nbsp;<apex:outputField value=" {!relatedTo.Quote__r.NSP_UpFront_Payment__c}" /> ,
+                        &nbsp;At Hire - &nbsp;<apex:outputField value=" {!relatedTo.Quote__r.NSP_At_Hire_Payment__c}" />,
+                        &nbsp;Retention - &nbsp;<apex:outputField value=" {!relatedTo.Quote__r.NSP_Retention_Payment__c}" />
+                    </apex:outputPanel>
+                </p>
+               <p>
+                    <c:NSP_DisplayQli quoteId="{!relatedTo.Quote__r.Id}" />
+                </p>
+                <p style="color:white"><apex:outputText value="{!relatedTo.Id}"/></p>
+                
+                <p>
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Talent_Connect_Notes__c != '' }">
+                        <b>Talent Connect - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Talent_Connect_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                
+                <p>
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Talent_Connect_Notes__c != '' }">
+                        <b>Talent Connect - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Talent_Connect_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_OnDemand_Notes__c != '' }">
+                        <b>On Demand - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_OnDemand_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Sourcing_Notes__c != '' }">
+                        <b>Sourcing- Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Sourcing_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Employment_Screening_Notes__c != '' }">
+                        <b>Employment Screening - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Employment_Screening_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Employment_Branding_Notes__c != '' }">
+                        <b>Employment Branding - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Employment_Branding_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Skills_Based_Assessment_Notes__c != '' }">
+                        <b>Skill-Based Assessment - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Skills_Based_Assessment_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Personality_Assessment_Notes__c != '' }">
+                        <b>Personality/Cognitive Assessment - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Personality_Assessment_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p> 
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_BehavioralBasedInterviewTrainingNote__c != '' }">
+                        <b>Behavioral Based Interview Training - Special Notes</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_BehavioralBasedInterviewTrainingNote__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p>Alternatively you can use this link to review the transaction: <apex:outputText value=" {!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}/{!relatedTo.Id}"/></p>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Sub_Product__c</fullName>
+    <description>Field to store Sub Product on opportunity</description>
+    <externalId>false</externalId>
+    <label>Sub Product</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_PrimaryProduct__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Sub_Product</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Expense Management</controllingFieldValue>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Pro Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense Management</controllingFieldValue>
+            <valueName>ExpensAble Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense Management</controllingFieldValue>
+            <valueName>ExpensAble Express</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <valueName>Health &amp; Welfare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <valueName>Property &amp; Casualty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>OPRT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>OPRT Renewal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>OPRT Express</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>OrgPlus Desktop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>Sage OrgPlus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>PerformSmart</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>PerformSmart Renewal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>Descriptions Naw</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>Performance Now</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>UED Bundle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>Dotcoms</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Timestar SaaS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>TimeStar Mgd Hosted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>TimeStar On Prem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Add On Software</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Hardware</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Abra Migration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>TFW Migration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Sage Time</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>CompuPayTime</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

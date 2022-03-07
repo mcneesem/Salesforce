@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Task_type__c</fullName>
+    <externalId>false</externalId>
+    <label>Task Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Core Sales</fullName>
+                <default>false</default>
+                <label>Core Sales</label>
+            </value>
+            <value>
+                <fullName>BPS</fullName>
+                <default>false</default>
+                <label>BPS</label>
+            </value>
+            <value>
+                <fullName>Mid Market</fullName>
+                <default>false</default>
+                <label>Mid Market</label>
+            </value>
+            <value>
+                <fullName>Eloqua</fullName>
+                <default>false</default>
+                <label>Eloqua</label>
+            </value>
+            <value>
+                <fullName>New Client Sales</fullName>
+                <default>false</default>
+                <label>New Client Sales</label>
+            </value>
+            <value>
+                <fullName>Correspondence</fullName>
+                <default>false</default>
+                <label>Correspondence</label>
+            </value>
+            <value>
+                <fullName>Channels</fullName>
+                <default>false</default>
+                <label>Channels</label>
+            </value>
+            <value>
+                <fullName>Client reference</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Client reference</label>
+            </value>
+            <value>
+                <fullName>Demo</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Demo</label>
+            </value>
+            <value>
+                <fullName>Email Click</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Email Click</label>
+            </value>
+            <value>
+                <fullName>Email Open</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Email Open</label>
+            </value>
+            <value>
+                <fullName>Email send</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Email send</label>
+            </value>
+            <value>
+                <fullName>EmailBounced</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EmailBounced</label>
+            </value>
+            <value>
+                <fullName>Form Submission</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Form Submission</label>
+            </value>
+            <value>
+                <fullName>Required for Booking</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Required for Booking</label>
+            </value>
+            <value>
+                <fullName>Website visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Website visit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

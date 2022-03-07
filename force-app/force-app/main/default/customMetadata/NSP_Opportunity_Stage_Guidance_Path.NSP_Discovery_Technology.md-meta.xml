@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Discovery Technology</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Account_Segment__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Is_Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>NSP_Message__c</field>
+        <value xsi:type="xsd:string">•	Scope opportunity details – understand size of organization, budget, motivating factors for purchase, decision makers, etc.
+•	Identify functional needs – What product functionality is the prospect looking for?
+•	Identify deal-breakers – Is there anything the prospect is requesting that you know Insperity is unable to provide or makes them a conflict for the product.</value>
+    </values>
+    <values>
+        <field>NSP_PrimaryProduct__c</field>
+        <value xsi:type="xsd:string">Technology</value>
+    </values>
+    <values>
+        <field>NSP_StageName__c</field>
+        <value xsi:type="xsd:string">Discovery</value>
+    </values>
+</CustomMetadata>

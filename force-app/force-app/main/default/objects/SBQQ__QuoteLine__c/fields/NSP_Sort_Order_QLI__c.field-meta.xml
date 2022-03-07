@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Sort_Order_QLI__c</fullName>
+    <description>Sort order on QLI</description>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISBLANK(SBQQ__RequiredBy__r.SBQQ__Product__r.NSP_Sort_Order_QLI__c)) ,SBQQ__RequiredBy__r.SBQQ__Product__r.NSP_Sort_Order_QLI__c,&apos;&apos;)&amp;
+
+IF(!ISBLANK( SBQQ__ProductOption__r.NSP_Sort_Order_QLI__c ) ,SBQQ__ProductOption__r.NSP_Sort_Order_QLI__c,
+ IF(!ISBLANK(SBQQ__Product__r.NSP_Sort_Order_QLI__c ),SBQQ__Product__r.NSP_Sort_Order_QLI__c,&apos;ZZ&apos;))</formula>
+    <label>Sort Order QLI</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

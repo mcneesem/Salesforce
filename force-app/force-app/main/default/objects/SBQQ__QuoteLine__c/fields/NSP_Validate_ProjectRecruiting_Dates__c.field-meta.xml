@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Validate_ProjectRecruiting_Dates__c</fullName>
+    <description>field use to validate that NSP_ProjRec_End_Date__c &gt; NSP_ProjRec_Start_Date__c</description>
+    <externalId>false</externalId>
+    <formula>NSP_ProjRec_Start_Date__c != null &amp;&amp; NSP_ProjRec_End_Date__c != null &amp;&amp; NSP_ProjRec_End_Date__c  &lt; NSP_ProjRec_Start_Date__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Validate ProjectRecruiting Dates</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

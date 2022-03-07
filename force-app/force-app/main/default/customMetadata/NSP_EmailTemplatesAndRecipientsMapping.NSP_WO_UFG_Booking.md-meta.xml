@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>WO UFG Booking</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Email_Template_Name_API__c</field>
+        <value xsi:type="xsd:string">NSP_WO_UFG_Booking</value>
+    </values>
+    <values>
+        <field>NSP_Is_MidMarket__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_MidMarket_National_Account__c</field>
+        <value xsi:type="xsd:string">United Franchise Group</value>
+    </values>
+    <values>
+        <field>NSP_OpportunityProduct__c</field>
+        <value xsi:type="xsd:string">WO</value>
+    </values>
+    <values>
+        <field>NSP_RecipientEmailIds_CC__c</field>
+        <value xsi:type="xsd:string">Keith.Simmons@insperity.com.invalid,Michael.Cassidy@insperity.com.invalid,Shea.Brown@insperity.com.invalid,Keely.James@insperity.com.invalid,Catherine.Houchins@insperity.com.invalid,Kristen.Renton@insperity.com.invalid,TheNationalAccountsServiceTeam@insperity.com.invalid,orientation_request@insperity.com.invalid,OrientationCoordinators@insperity.com.invalid</value>
+    </values>
+    <values>
+        <field>NSP_Recipients_Email_Ids_TO__c</field>
+        <value xsi:type="xsd:string">PwC_QA@insperity.com,UFG@insperity.com.invalid,Todd.Bidwell@insperity.com.invalid,Heath.Goudreau@insperity.com.invalid,Matt.Butler@insperity.com.invalid,ITAOrderProcessing@insperity.com.invalid</value>
+    </values>
+</CustomMetadata>

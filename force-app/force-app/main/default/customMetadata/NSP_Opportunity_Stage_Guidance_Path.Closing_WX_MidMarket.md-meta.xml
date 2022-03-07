@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Closing WX MidMarket</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Account_Segment__c</field>
+        <value xsi:type="xsd:string">MidMarket</value>
+    </values>
+    <values>
+        <field>NSP_Is_Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>NSP_Message__c</field>
+        <value xsi:type="xsd:string">•	Closed/Won – Proper execution of document
+•	Closed/Lost proper documentation
+•	Communication with service partners is critical</value>
+    </values>
+    <values>
+        <field>NSP_PrimaryProduct__c</field>
+        <value xsi:type="xsd:string">WX</value>
+    </values>
+    <values>
+        <field>NSP_StageName__c</field>
+        <value xsi:type="xsd:string">Closing</value>
+    </values>
+</CustomMetadata>

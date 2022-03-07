@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <available>true</available>
+    <description>Email template used to send email to Service teams when Opportunity with RJ account and WO product is closed won</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>WO RJ Advisor Booking</name>
+    <style>none</style>
+    <subject>NEW CLIENT DOWNLOADED: RJ ADVISORS:  /  /</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

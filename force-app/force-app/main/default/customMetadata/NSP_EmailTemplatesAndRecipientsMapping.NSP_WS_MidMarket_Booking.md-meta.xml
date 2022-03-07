@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>NSP_WS MidMarket Booking</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Email_Template_Name_API__c</field>
+        <value xsi:type="xsd:string">NSP_WO_or_WS_MidMarket_Booking</value>
+    </values>
+    <values>
+        <field>NSP_Is_MidMarket__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>NSP_MidMarket_National_Account__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_OpportunityProduct__c</field>
+        <value xsi:type="xsd:string">WS</value>
+    </values>
+    <values>
+        <field>NSP_RecipientEmailIds_CC__c</field>
+        <value xsi:type="xsd:string">PwC_QA@insperity.com.invalidcc1,PwC_QA@insperity.com.invalidcc2,PwC_QA@insperity.com.invalidCC3</value>
+    </values>
+    <values>
+        <field>NSP_Recipients_Email_Ids_TO__c</field>
+        <value xsi:type="xsd:string">PwC_QA@insperity.com,PwC_QA@insperity.com.invalid1,PwC_QA@insperity.com.invalid2</value>
+    </values>
+</CustomMetadata>

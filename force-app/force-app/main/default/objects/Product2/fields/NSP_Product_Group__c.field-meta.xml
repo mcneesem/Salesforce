@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Product_Group__c</fullName>
+    <description>Group of Options (Similar in nature)</description>
+    <externalId>false</externalId>
+    <label>Product Group</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Additional Services</fullName>
+                <default>false</default>
+                <label>Additional Services</label>
+            </value>
+            <value>
+                <fullName>Badges</fullName>
+                <default>false</default>
+                <label>Badges</label>
+            </value>
+            <value>
+                <fullName>Biometric iSolved Clocks</fullName>
+                <default>false</default>
+                <label>Biometric iSolved Clocks</label>
+            </value>
+            <value>
+                <fullName>Optional Components</fullName>
+                <default>false</default>
+                <label>Optional Components</label>
+            </value>
+            <value>
+                <fullName>OrgPlus Express Traditional</fullName>
+                <default>false</default>
+                <label>OrgPlus Express Traditional</label>
+            </value>
+            <value>
+                <fullName>OrgPlus RealTime PEO</fullName>
+                <default>false</default>
+                <label>OrgPlus RealTime PEO</label>
+            </value>
+            <value>
+                <fullName>OrgPlus RealTime Traditional</fullName>
+                <default>false</default>
+                <label>OrgPlus RealTime Traditional</label>
+            </value>
+            <value>
+                <fullName>OrgPlus RealTime Traditional / PEO</fullName>
+                <default>false</default>
+                <label>OrgPlus RealTime Traditional / PEO</label>
+            </value>
+            <value>
+                <fullName>Partner Products</fullName>
+                <default>false</default>
+                <label>Partner Products</label>
+            </value>
+            <value>
+                <fullName>Payroll Services</fullName>
+                <default>false</default>
+                <label>Payroll Services</label>
+            </value>
+            <value>
+                <fullName>PerformSmart PEO</fullName>
+                <default>false</default>
+                <label>PerformSmart PEO</label>
+            </value>
+            <value>
+                <fullName>PerformSmart Traditional</fullName>
+                <default>false</default>
+                <label>PerformSmart Traditional</label>
+            </value>
+            <value>
+                <fullName>PerformSmart Traditional / PEO</fullName>
+                <default>false</default>
+                <label>PerformSmart Traditional / PEO</label>
+            </value>
+            <value>
+                <fullName>Setup</fullName>
+                <default>false</default>
+                <label>Setup</label>
+            </value>
+            <value>
+                <fullName>Setup Fee</fullName>
+                <default>false</default>
+                <label>Setup Fee</label>
+            </value>
+            <value>
+                <fullName>Shipping</fullName>
+                <default>false</default>
+                <label>Shipping</label>
+            </value>
+            <value>
+                <fullName>Standard iSolved Clocks - G2+</fullName>
+                <default>false</default>
+                <label>Standard iSolved Clocks - G2+</label>
+            </value>
+            <value>
+                <fullName>Standard iSolved Clocks - LE</fullName>
+                <default>false</default>
+                <label>Standard iSolved Clocks - LE</label>
+            </value>
+            <value>
+                <fullName>TimeStar License</fullName>
+                <default>false</default>
+                <label>TimeStar License</label>
+            </value>
+            <value>
+                <fullName>TimeStar License Traditional</fullName>
+                <default>false</default>
+                <label>TimeStar License Traditional</label>
+            </value>
+            <value>
+                <fullName>TimeStar PEO</fullName>
+                <default>false</default>
+                <label>TimeStar PEO</label>
+            </value>
+            <value>
+                <fullName>TimeStar Traditional</fullName>
+                <default>false</default>
+                <label>TimeStar Traditional</label>
+            </value>
+            <value>
+                <fullName>TimeStar Traditional / PEO</fullName>
+                <default>false</default>
+                <label>TimeStar Traditional / PEO</label>
+            </value>
+            <value>
+                <fullName>Workforce Acceleration</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration</label>
+            </value>
+            <value>
+                <fullName>Standard iSolved Clocks - G2+ Support</fullName>
+                <default>false</default>
+                <label>Standard iSolved Clocks - G2+ Support</label>
+            </value>
+            <value>
+                <fullName>Biometric iSolved Clocks Support</fullName>
+                <default>false</default>
+                <label>Biometric iSolved Clocks Support</label>
+            </value>
+            <value>
+                <fullName>Standard iSolved Clocks - LE Support</fullName>
+                <default>false</default>
+                <label>Standard iSolved Clocks - LE Support</label>
+            </value>
+            <value>
+                <fullName>WA Core</fullName>
+                <default>false</default>
+                <label>WA Core</label>
+            </value>
+            <value>
+                <fullName>Talent Acquisition Traditional</fullName>
+                <default>false</default>
+                <label>Talent Acquisition Traditional</label>
+            </value>
+            <value>
+                <fullName>Other Traditional</fullName>
+                <default>false</default>
+                <label>Other Traditional</label>
+            </value>
+            <value>
+                <fullName>Talent Acquisition PEO</fullName>
+                <default>false</default>
+                <label>Talent Acquisition PEO</label>
+            </value>
+            <value>
+                <fullName>Other PEO</fullName>
+                <default>false</default>
+                <label>Other PEO</label>
+            </value>
+            <value>
+                <fullName>Recurring Payroll Processes</fullName>
+                <default>false</default>
+                <label>Recurring Payroll Processes</label>
+            </value>
+            <value>
+                <fullName>One Time Payout</fullName>
+                <default>false</default>
+                <label>One Time Payout</label>
+            </value>
+            <value>
+                <fullName>IWOS Recurring Services</fullName>
+                <default>false</default>
+                <label>IWOS Recurring Services</label>
+            </value>
+            <value>
+                <fullName>IWOS One Time Service</fullName>
+                <default>false</default>
+                <label>IWOS One Time Service</label>
+            </value>
+            <value>
+                <fullName>Non-CPQ</fullName>
+                <default>false</default>
+                <label>Non-CPQ</label>
+            </value>
+            <value>
+                <fullName>Talent Acquisition</fullName>
+                <default>false</default>
+                <label>Talent Acquisition</label>
+            </value>
+            <value>
+                <fullName>Standard Clock - IT11</fullName>
+                <default>false</default>
+                <label>Standard Clock - IT11</label>
+            </value>
+            <value>
+                <fullName>Standard Clock - GT4</fullName>
+                <default>false</default>
+                <label>Standard Clock - GT4</label>
+            </value>
+            <value>
+                <fullName>Standard Clock - IT51</fullName>
+                <default>false</default>
+                <label>Standard Clock - IT51</label>
+            </value>
+            <value>
+                <fullName>Biometric Clock - GT4</fullName>
+                <default>false</default>
+                <label>Biometric Clock - GT4</label>
+            </value>
+            <value>
+                <fullName>Biometric Clock - IT51</fullName>
+                <default>false</default>
+                <label>Biometric Clock - IT51</label>
+            </value>
+            <value>
+                <fullName>Optional Reader Modules</fullName>
+                <default>false</default>
+                <label>Optional Reader Modules</label>
+            </value>
+            <value>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <label>Support</label>
+            </value>
+            <value>
+                <fullName>Time Clock Badges</fullName>
+                <default>false</default>
+                <label>Time Clock Badges</label>
+            </value>
+            <value>
+                <fullName>Rental</fullName>
+                <default>false</default>
+                <label>Rental</label>
+            </value>
+            <value>
+                <fullName>OPRT</fullName>
+                <default>false</default>
+                <label>OPRT</label>
+            </value>
+            <value>
+                <fullName>TimeStar</fullName>
+                <default>false</default>
+                <label>TimeStar</label>
+            </value>
+            <value>
+                <fullName>Choice_iSolved</fullName>
+                <default>false</default>
+                <label>Choice_iSolved</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>WO</label>
+            </value>
+            <value>
+                <fullName>WO - Adds</fullName>
+                <default>false</default>
+                <label>WO - Adds</label>
+            </value>
+            <value>
+                <fullName>WO - ORK</fullName>
+                <default>false</default>
+                <label>WO - ORK</label>
+            </value>
+            <value>
+                <fullName>Choice_iSolved - Adds</fullName>
+                <default>false</default>
+                <label>Choice_iSolved - Adds</label>
+            </value>
+            <value>
+                <fullName>WO &amp; Choice</fullName>
+                <default>false</default>
+                <label>WO &amp; Choice</label>
+            </value>
+            <value>
+                <fullName>L&amp;DDirectAccs</fullName>
+                <default>false</default>
+                <label>L&amp;DDirectAccs</label>
+            </value>
+            <value>
+                <fullName>L&amp;DeLearning</fullName>
+                <default>false</default>
+                <label>L&amp;DeLearning</label>
+            </value>
+            <value>
+                <fullName>L&amp;Dtraining</fullName>
+                <default>false</default>
+                <label>L&amp;Dtraining</label>
+            </value>
+            <value>
+                <fullName>L&amp;Ddisc</fullName>
+                <default>false</default>
+                <label>L&amp;Ddisc</label>
+            </value>
+            <value>
+                <fullName>Talent Build</fullName>
+                <default>false</default>
+                <label>Talent Build</label>
+            </value>
+            <value>
+                <fullName>Leaders</fullName>
+                <default>false</default>
+                <label>Leaders</label>
+            </value>
+            <value>
+                <fullName>Culture</fullName>
+                <default>false</default>
+                <label>Culture</label>
+            </value>
+            <value>
+                <fullName>Alignment</fullName>
+                <default>false</default>
+                <label>Alignment</label>
+            </value>
+            <value>
+                <fullName>Performance</fullName>
+                <default>false</default>
+                <label>Performance</label>
+            </value>
+            <value>
+                <fullName>Wage/Salary</fullName>
+                <default>false</default>
+                <label>Wage/Salary</label>
+            </value>
+            <value>
+                <fullName>Compensation</fullName>
+                <default>false</default>
+                <label>Compensation</label>
+            </value>
+            <value>
+                <fullName>Risk</fullName>
+                <default>false</default>
+                <label>Risk</label>
+            </value>
+            <value>
+                <fullName>M&amp;A</fullName>
+                <default>false</default>
+                <label>M&amp;A</label>
+            </value>
+            <value>
+                <fullName>Travel</fullName>
+                <default>false</default>
+                <label>Travel</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

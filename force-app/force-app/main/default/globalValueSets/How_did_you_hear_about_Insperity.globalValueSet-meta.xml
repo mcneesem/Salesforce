@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>COI</fullName>
+        <default>false</default>
+        <label>COI</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Referral</fullName>
+        <default>false</default>
+        <label>Customer Referral</label>
+    </customValue>
+    <customValue>
+        <fullName>Email Ad</fullName>
+        <default>false</default>
+        <label>Email Ad</label>
+    </customValue>
+    <customValue>
+        <fullName>Employee Referral</fullName>
+        <default>false</default>
+        <label>Employee Referral</label>
+    </customValue>
+    <customValue>
+        <fullName>Event</fullName>
+        <default>false</default>
+        <label>Event</label>
+    </customValue>
+    <customValue>
+        <fullName>Friend Referral</fullName>
+        <default>false</default>
+        <label>Friend Referral</label>
+    </customValue>
+    <customValue>
+        <fullName>Previous Company</fullName>
+        <default>false</default>
+        <label>Previous Company</label>
+    </customValue>
+    <customValue>
+        <fullName>Print Ad</fullName>
+        <default>false</default>
+        <label>Print Ad</label>
+    </customValue>
+    <customValue>
+        <fullName>Radio Ad</fullName>
+        <default>false</default>
+        <label>Radio Ad</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Referral</fullName>
+        <default>false</default>
+        <label>Service Referral</label>
+    </customValue>
+    <customValue>
+        <fullName>Sponsorship</fullName>
+        <default>false</default>
+        <label>Sponsorship</label>
+    </customValue>
+    <customValue>
+        <fullName>TV Ad</fullName>
+        <default>false</default>
+        <label>TV Ad</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <masterLabel>How did you hear about Insperity?</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,3 @@
+Hi 
+
+Opportunity {!SBQQ__Quote__c.NSP_Opportunity_Name__c} has been approved . To view the Opportunity , {Click Here: https://insperity--sfqaph1.my.salesforce.com/{!SBQQ__Quote__c.SBQQ__Opportunity2Id__c}}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Referred_By_COI__c</fullName>
+    <description>Field used to track COI referral details</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Referred By (COI)</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>COI Referral Opportunities</relationshipLabel>
+    <relationshipName>COI_Referral_Opportunities</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

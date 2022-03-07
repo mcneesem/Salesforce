@@ -1,0 +1,15 @@
+<messaging:emailTemplate subject="Order Creation has failed for {!relatedTo.SBQQ__PrimaryQuote__r.Name}" recipientType="User" relatedToType="Opportunity">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  
+Hi Team,
+
+<p> There has been some error in submitting the quote for order. Please review the order and try to re-submit. </p>
+
+<p>To view the Opportunity , Click Here: <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.Id}" target="_parent"> Opportunity </apex:outputLink> </p>
+<p>To view the Quote, Click Here: <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.SBQQ__PrimaryQuote__c}" target="_parent"> Quote </apex:outputLink> </p>
+  </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

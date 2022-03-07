@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Donation</fullName>
+        <default>false</default>
+        <label>Donation</label>
+    </customValue>
+    <customValue>
+        <fullName>Match</fullName>
+        <default>false</default>
+        <label>Match</label>
+    </customValue>
+    <customValue>
+        <fullName>Does not apply</fullName>
+        <default>false</default>
+        <label>Does not apply</label>
+    </customValue>
+    <masterLabel>Referral Benefits Nonprofit org</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

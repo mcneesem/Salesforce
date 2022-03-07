@@ -1,0 +1,225 @@
+<aura:component controller  = "NSP_CreatePartnerAccount" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:attribute name="AccountObj" type="Account"  default="{sobjectType:'Account'}"/>
+<aura:attribute name="coverageArea" type="list" />
+<aura:attribute name="businessVertical" type="list" />
+<aura:attribute name="oneToTen" type="list" />
+<aura:attribute name="insperityHistory" type="list" />
+<aura:attribute name="cmpError" type="String" />
+<aura:attribute name="isModalOpen" type="boolean" default="false"/>
+<aura:attribute name="contactId" type="String" />  
+<aura:attribute name="isDisable" type="Boolean" default="true"/>
+<aura:attribute name="unlock" type="String" default="Unlock"/>  
+
+<aura:attribute name="state" type="list" />
+
+<aura:handler value="{!this}" name="init" action="{!c.doInit}" access="global"/>
+
+<h3 style = "margin-left: 100px;font-family:'Arial Bold', sans-serif;font-size: 20px;color:#004C97" class="slds-text-title_bold">Partner profile</h3>
+<BR/>
+<div style="margin-left: 100px;">
+    <div class="slds-grid slds-gutters" >
+        <div class="slds-col slds-size_1-of-2">
+            
+            <lightning:input aura:id="fieldId" type="text" name="Name" value="{!v.AccountObj.Name}" label="Partner Name"
+                                class="slds-medium-size_2-of-3" required = "true"/>
+            
+            <!-- Account Address inputs goes here.  START-->
+            <lightning:input type="text" name="Street" value="{!v.AccountObj.BillingStreet}" label="Street Address" 
+                                class="slds-medium-size_2-of-3"  required = "true"/> 
+            <lightning:input type="text" name="city" value="{!v.AccountObj.BillingCity}" label="City" 
+                                class="slds-medium-size_2-of-3"  required = "true"/> 
+            <lightning:select name="State" label="State"
+                                class="slds-medium-size_2-of-3"  value= "{!v.AccountObj.BillingState}" required = "true">
+                <aura:iteration items="{!v.state}" var="itr">
+                    <option value="{!itr}">{!itr}</option>
+                </aura:iteration>
+            </lightning:select>
+            <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.AccountObj.BillingPostalCode}" label="Zipcode" 
+                                class="slds-medium-size_2-of-3"  required = "true"/> 
+            
+            <BR/>
+            <!-- Account Address inputs goes here.  END-->               
+            
+            <lightning:select name="NSP_Coverage_Area__c" label="Coverage Area"
+                                class="slds-medium-size_2-of-3"      value= "{!v.AccountObj.NSP_Coverage_Area__c}">
+                <aura:iteration items="{!v.coverageArea}" var="itr">
+                    <option value="{!itr}">{!itr}</option>
+                    
+                </aura:iteration>
+            </lightning:select>
+            
+            
+            <lightning:select name="NSP_Business_Vertical__c" label="Business Vertical"
+                                class="slds-medium-size_2-of-3"    value= "{!v.AccountObj.NSP_Business_Vertical__c}">
+                <aura:iteration items="{!v.businessVertical}" var="itr">
+                    <option value="{!itr}">{!itr}</option>
+                </aura:iteration>
+            </lightning:select>
+            
+            <lightning:input type="text" name="NSP_Other_Vertical__c" value="{!v.AccountObj.NSP_Other_Vertical__c}" label="If Other, please list"
+                                class="slds-medium-size_2-of-3"/>
+            <lightning:textarea name="NSP_Partners_Business_Demographics__c" label="Describe the partner's business demographics" value="{!v.AccountObj.NSP_Partners_Business_Demographics__c}"
+                                class="slds-medium-size_2-of-3" />
+            <lightning:textarea name="NSP_Partners_Business_Community_Network__c" label="Describe the partner's business community network" value="{!v.AccountObj.NSP_Partners_Business_Community_Network__c}"
+                                class="slds-medium-size_2-of-3" />
+            
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            
+            <lightning:input type="text" name="NSP_Expected_Annual_Business_Growth__c" value="{!v.AccountObj.NSP_Expected_Annual_Business_Growth__c}" label="Partner's expected annual business growth"
+                                class="slds-medium-size_2-of-3"/>
+            
+            <lightning:input type="text" name="NSP_Partners_Chief_Decision_Maker__c" value="{!v.AccountObj.NSP_Partners_Chief_Decision_Maker__c}" label="Who is the chief decision maker on the partner's side?"
+                                class="slds-medium-size_2-of-3"/>
+            
+            <lightning:input type="text" name="NSP_Other_KeyInfluencers_Decision_Makers__c" value="{!v.AccountObj.NSP_Other_KeyInfluencers_Decision_Makers__c}" label="Are there other key influencers or decision makers?"
+                                class="slds-medium-size_2-of-3"/>
+            
+            
+            <!-- picklis NSP_Insperitys_History_with_This_Partner__c -->
+            
+            <lightning:select name="NSP_Insperitys_History_with_This_Partner__c" label="Describe Insperity's history with this partner"
+                                class="slds-medium-size_2-of-3"      value= "{!v.AccountObj.NSP_Insperitys_History_with_This_Partner__c}">
+                <aura:iteration items="{!v.insperityHistory}" var="itr">
+                    <option value="{!itr}">{!itr}</option>
+                </aura:iteration>
+            </lightning:select>
+            
+            <lightning:input type="text" name="NSP_Other_History_With_Partner__c" value="{!v.AccountObj.NSP_Other_History_With_Partner__c}" label="If Other, please list"
+                                class="slds-medium-size_2-of-3"/>
+            
+            
+            <lightning:input type="text" name="NSP_How_Long_Have_You_Had_a_Relation__c" value="{!v.AccountObj.NSP_How_Long_Have_You_Had_a_Relation__c}" label="How long have you had a relationship with them?"
+                                class="slds-medium-size_2-of-3"/>
+            <!-- picklis NSP_HowFamiliar_is_the_company_with_PEOs__c -->
+            <lightning:select name="NSP_HowFamiliar_is_the_company_with_PEOs__c" label="How familiar is the company with PEOs?"
+                                class="slds-medium-size_2-of-3" value= "{!v.AccountObj.NSP_HowFamiliar_is_the_company_with_PEOs__c}">
+                <aura:iteration items="{!v.oneToTen}" var="itr">
+                    <option value="{!itr}">{!itr}</option>
+                </aura:iteration>
+            </lightning:select>
+            <!-- picklis NSP_How_FamiliarIsCompany_with_Insperity -->
+            <lightning:select name="NSP_How_FamiliarIsCompany_with_Insperity__c" label="How familiar is the company with Insperity specifically?"
+                                class="slds-medium-size_2-of-3"  value= "{!v.AccountObj.NSP_How_FamiliarIsCompany_with_Insperity__c}">
+                <aura:iteration items="{!v.oneToTen}" var="itr">
+                    <option value="{!itr}">{!itr}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+    </div>
+    <BR/>
+    <h3 style = "font-family:'Arial Bold', sans-serif;font-size: 20px;color:#004C97" class="slds-text-title_bold">Business fit</h3>
+    <BR/>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <lightning:textarea name="NSP_DescribeBusinessFitWith_This_Partner__c" label="Describe the business fit with this partner. Why is the partnership a good one for the partner?" value="{!v.AccountObj.NSP_DescribeBusinessFitWith_This_Partner__c}"
+                                class="slds-medium-size_2-of-3" />
+            
+            <lightning:textarea name="NSP_Why_isThisRelationGood_For_Insperity__c" label="Why is this relationship a good fit for Insperity?" value="{!v.AccountObj.NSP_Why_isThisRelationGood_For_Insperity__c}"
+                                class="slds-medium-size_2-of-3" />
+            
+            <lightning:textarea name="NSP_DescribeTheJVPHowitllBe_Piloted__c" label="Is there a Joint Value Proposition  with this partner? If so, describe the JVP and how it will be piloted." value="{!v.AccountObj.NSP_DescribeTheJVPHowitllBe_Piloted__c}"
+                                class="slds-medium-size_2-of-3" />
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning:textarea name="NSP_ObstaclesAnticipatedInMutualBenifits__c" label="What obstacles do you anticipate with getting this partnership to start producing mutual benefits during the initial 90 days?" value="{!v.AccountObj.NSP_ObstaclesAnticipatedInMutualBenifits__c}"
+                                class="slds-medium-size_2-of-3" />
+            
+            
+            
+            <lightning:textarea name="NSP_If_So_WhoandHow_Successful_are_They__c" label="If so, who and how successful are they?" value="{!v.AccountObj.NSP_If_So_WhoandHow_Successful_are_They__c}"
+                                class="slds-medium-size_2-of-3" />   
+            
+            <lightning:select name="NSP_Do_They_Have_Any_Other_Partnerships__c" label="Do they have any other partnerships?" value="{!v.AccountObj.NSP_Do_They_Have_Any_Other_Partnerships__c}"
+                                class="slds-medium-size_2-of-3">
+                <option value="">choose one...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>        
+            </lightning:select>
+        </div>
+    </div>
+    <BR/>
+    <h3 style = "font-family:'Arial Bold', sans-serif;font-size: 20px;color:#004C97" class="slds-text-title_bold">Success metrics</h3>
+    <BR/>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <lightning:select name="NSP_Have_You_Worked_With_Them_Before_Now__c" label="Have you worked with them on any opportunities before now?"
+                                class="slds-medium-size_2-of-3"  value="{!v.AccountObj.NSP_Have_You_Worked_With_Them_Before_Now__c}">
+                <option value="">choose one...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>        
+            </lightning:select>
+            <lightning:select name="Any_Active_Opportunities_In_The_Pipeline__c" label="Any active opportunities in the pipeline?"
+                                class="slds-medium-size_2-of-3"   value="{!v.AccountObj.NSP_AnyActiveOpportunitiesInThe_Pipeline__c}">
+                <option value="">choose one...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>        
+            </lightning:select>
+            
+            
+            
+            <lightning:textarea name="NSP_WhatDoesSuccessLookLike_inShortTerm__c" label="What does success look like in the short term ?" value="{!v.AccountObj.NSP_WhatDoesSuccessLookLike_inShortTerm__c}"
+                                class="slds-medium-size_2-of-3" /> 
+            
+            <lightning:textarea name="NSP_Short_Term_KPIs_to_Measure_Success__c" label="What short-term KPIs are you using to measure success?" value="{!v.AccountObj.NSP_Short_Term_KPIs_to_Measure_Success__c}"
+                                class="slds-medium-size_2-of-3" /> 
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning:textarea name="NSP_WhatSuccessLooksLike_in_Intermediate__c" label="What does success look like in the intermediate term (3-5 years)?" value="{!v.AccountObj.NSP_WhatSuccessLooksLike_in_Intermediate__c}"
+                                class="slds-medium-size_2-of-3" />
+            
+            <lightning:textarea name="NSP_What_Intermediate_Term_KPIs_used__c" label="What intermediate-term KPIs are you using to measure success?" value="{!v.AccountObj.NSP_What_Intermediate_Term_KPIs_used__c}"
+                                class="slds-medium-size_2-of-3" />
+            
+            <lightning:textarea name="NSP_Why_isThisBetterFitFor_Affiliate_Pgm__c" label="Why do you think this is a better fit for the Affiliate program instead of Loyalty program?" value="{!v.AccountObj.NSP_Why_isThisBetterFitFor_Affiliate_Pgm__c}"
+                                class="slds-medium-size_2-of-3" />
+            <Br/>
+                <div  class="slds-scrollable_none">
+            <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="no" frameborder="0" width="100%" height="100%" allowtransparency="true"></iframe>
+                </div>   
+        </div>
+    </div>
+    <BR/>        
+</div>
+<div>
+    <lightning:button  variant="brand" label="SUBMIT" class="slds-align_absolute-center my-brand" onclick="{! c.handleClick }" disabled="{!v.isDisable}" />
+</div> 
+
+<!--</lightning:card> -->
+
+
+<aura:if isTrue="{!v.isModalOpen}">
+    <!-- Modal/Popup Box starts here-->
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- Modal/Popup Box Header Starts here-->
+            <header class="slds-modal__header slds-theme_error">
+                <lightning:buttonIcon iconName="utility:close"
+                                        onclick="{! c.closeModel }"
+                                        alternativeText="close"
+                                        variant="bare-inverse"
+                                        class="slds-modal__close"/>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium">ERROR</h2>
+            </header>
+            <!--Modal/Popup Box Body Starts here-->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p><b>{!v.cmpError}
+                    </b>
+                </p>
+            </div>
+            <!--Modal/Popup Box Footer Starts here-->
+            <footer class="slds-modal__footer">
+                
+                <lightning:button variant="brand"
+                                    label="OK"
+                                    title="OK"
+                                    class="my-brand"
+                                    onclick="{!c.closeModel}"/>
+            </footer>
+        </div>
+    </section>
+</aura:if>
+
+
+
+</aura:component>

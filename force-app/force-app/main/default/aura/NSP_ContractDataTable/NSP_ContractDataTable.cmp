@@ -1,0 +1,29 @@
+<aura:component controller="NSP_OrderManagement" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="accID" type="string"/>  
+    <aura:attribute name="selectedRow" type="Object"/>  
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="spinner" type="Boolean" default="true" />
+    <aura:if isTrue="{!v.spinner }">
+            <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this }" action="{! c.doInit }"/>
+    <lightning:tabset selectedTabId="activecont">
+        <lightning:tab label="Active Contracts" id="activecont">  
+            
+            <!-- the container element determine the height of the datatable -->
+            <div style="height: 300px slds-p-left_xxx-small table-test">
+                <lightning:datatable 
+                                     class="table-test"
+                                     columns="{!v.columns }"
+                                     data="{!v.data }"
+                                     keyField="id"
+                                     maxRowSelection="{!v.maxRowSelection }"
+                                     onrowselection="{!c.handleRowSelection}"/>
+            </div>
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

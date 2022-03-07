@@ -1,0 +1,17 @@
+<!--
+Author: Raj Raghavan
+Description: Custom component used to create a Task record for Referral.
+This component is called from a Quick Action on Account record
+ -->
+<aura:component controller="NSP_CreateReferralLead" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+  
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="spinner" type="Boolean" default="true"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>    
+    <aura:attribute name="cmpError" type="String" />
+    
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}" access="global"/> 
+    
+   
+    
+</aura:component>

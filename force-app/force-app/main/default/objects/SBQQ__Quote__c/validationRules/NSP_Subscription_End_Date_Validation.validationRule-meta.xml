@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Subscription_End_Date_Validation</fullName>
+    <active>false</active>
+    <errorConditionFormula>IF( AND( NOT(ISNULL( NSP_Talent_Connect_Subscription_End_Date__c )), NSP_Talent_Connect_Subscription_End_Date__c &lt;  NSP_Talent_Connect_Subscription_Date__c ), TRUE, null)
+&amp;&amp;
+NOT($Setup.NSP_Trigger_Switch__c.QuoteValidation__c)</errorConditionFormula>
+    <errorDisplayField>NSP_Talent_Connect_Subscription_End_Date__c</errorDisplayField>
+    <errorMessage>Subscription End Date must be after Subscription Start Date</errorMessage>
+</ValidationRule>

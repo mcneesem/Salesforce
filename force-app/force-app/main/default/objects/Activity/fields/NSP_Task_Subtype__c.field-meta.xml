@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Task_Subtype__c</fullName>
+    <externalId>false</externalId>
+    <label>Task Subtype</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_Task_type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Form Submission</fullName>
+                <default>false</default>
+                <label>Form Submission</label>
+            </value>
+            <value>
+                <fullName>Email Send</fullName>
+                <default>false</default>
+                <label>Email Send</label>
+            </value>
+            <value>
+                <fullName>Email Open</fullName>
+                <default>false</default>
+                <label>Email Open</label>
+            </value>
+            <value>
+                <fullName>Email Click</fullName>
+                <default>false</default>
+                <label>Email Click</label>
+            </value>
+            <value>
+                <fullName>Website Visit</fullName>
+                <default>false</default>
+                <label>Website Visit</label>
+            </value>
+            <value>
+                <fullName>Email Bounced</fullName>
+                <default>false</default>
+                <label>Email Bounced</label>
+            </value>
+            <value>
+                <fullName>WO Business Profile</fullName>
+                <default>false</default>
+                <label>WO Business Profile</label>
+            </value>
+            <value>
+                <fullName>WO Proposal</fullName>
+                <default>false</default>
+                <label>WO Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+                <label>WX Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Quote</fullName>
+                <default>false</default>
+                <label>WX Quote</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <label>Phone Call</label>
+            </value>
+            <value>
+                <fullName>Video Call</fullName>
+                <default>false</default>
+                <label>Video Call</label>
+            </value>
+            <value>
+                <fullName>Voicemail</fullName>
+                <default>false</default>
+                <label>Voicemail</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Postal Mail</fullName>
+                <default>false</default>
+                <label>Postal Mail</label>
+            </value>
+            <value>
+                <fullName>In-Person Meet</fullName>
+                <default>false</default>
+                <label>In-Person Meet</label>
+            </value>
+            <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
+                <fullName>Social Media</fullName>
+                <default>false</default>
+                <label>Social Media</label>
+            </value>
+            <value>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+                <label>LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Required for Booking</fullName>
+                <default>false</default>
+                <label>Required for Booking</label>
+            </value>
+            <value>
+                <fullName>Documents Missing</fullName>
+                <default>false</default>
+                <label>Documents Missing</label>
+            </value>
+            <value>
+                <fullName>BPA Debrief Call</fullName>
+                <default>false</default>
+                <label>BPA Debrief Call</label>
+            </value>
+            <value>
+                <fullName>Internal Meeting</fullName>
+                <default>false</default>
+                <label>Internal Meeting</label>
+            </value>
+            <value>
+                <fullName>Prospect Follow Up Meeting</fullName>
+                <default>false</default>
+                <label>Prospect Follow Up Meeting</label>
+            </value>
+            <value>
+                <fullName>Prospect Initial Meeting</fullName>
+                <default>false</default>
+                <label>Prospect Initial Meeting</label>
+            </value>
+            <value>
+                <fullName>Client Meeting</fullName>
+                <default>false</default>
+                <label>Client Meeting</label>
+            </value>
+            <value>
+                <fullName>Suitability Call</fullName>
+                <default>false</default>
+                <label>Suitability Call</label>
+            </value>
+            <value>
+                <fullName>Transition Meeting</fullName>
+                <default>false</default>
+                <label>Transition Meeting</label>
+            </value>
+            <value>
+                <fullName>Contracting</fullName>
+                <default>false</default>
+                <label>Contracting</label>
+            </value>
+            <value>
+                <fullName>SE Prospect Initial Meeting</fullName>
+                <default>false</default>
+                <label>SE Prospect Initial Meeting</label>
+            </value>
+            <value>
+                <fullName>SE Internal Meeting</fullName>
+                <default>false</default>
+                <label>SE Internal Meeting</label>
+            </value>
+            <value>
+                <fullName>SE Client Meeting</fullName>
+                <default>false</default>
+                <label>SE Client Meeting</label>
+            </value>
+            <value>
+                <fullName>SE Transition Meeting</fullName>
+                <default>false</default>
+                <label>SE Transition Meeting</label>
+            </value>
+            <value>
+                <fullName>SE Prospect Follow Up Meeting</fullName>
+                <default>false</default>
+                <label>SE Prospect Follow Up Meeting</label>
+            </value>
+            <value>
+                <fullName>Technical Demo</fullName>
+                <default>false</default>
+                <label>Technical Demo</label>
+            </value>
+            <value>
+                <fullName>Product Presentation</fullName>
+                <default>false</default>
+                <label>Product Presentation</label>
+            </value>
+            <value>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+                <label>Discovery Call</label>
+            </value>
+            <value>
+                <fullName>Birthday Call</fullName>
+                <default>false</default>
+                <label>Birthday Call</label>
+            </value>
+            <value>
+                <fullName>Partner Agreement</fullName>
+                <default>false</default>
+                <label>Partner Agreement</label>
+            </value>
+            <value>
+                <fullName>Gift Mailing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gift Mailing</label>
+            </value>
+            <value>
+                <fullName>Loyalty</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Loyalty</label>
+            </value>
+            <value>
+                <fullName>Manager Call</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Manager Call</label>
+            </value>
+            <value>
+                <fullName>New Lead</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New Lead</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>BPA Debrief Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Internal Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Prospect Follow Up Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Prospect Initial Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Client Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Suitability Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Transition Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Contracting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>SE Prospect Initial Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>SE Internal Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>SE Client Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>SE Transition Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>SE Prospect Follow Up Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Technical Demo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Product Presentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <controllingFieldValue>New Client Sales</controllingFieldValue>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <controllingFieldValue>Channels</controllingFieldValue>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <valueName>Discovery Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <valueName>WO Business Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <valueName>WO Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <valueName>WX Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <valueName>WX Quote</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Form Submission</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Email Send</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Email Open</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Email Click</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Website Visit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Email Bounced</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Client Sales</controllingFieldValue>
+            <valueName>Required for Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Client Sales</controllingFieldValue>
+            <valueName>Documents Missing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Phone Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Video Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Voicemail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Postal Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>In-Person Meet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Chat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Social Media</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>LinkedIn</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Birthday Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channels</controllingFieldValue>
+            <valueName>Partner Agreement</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

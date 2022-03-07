@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Register_Partner_Account_Status</fullName>
+    <active>true</active>
+    <description>This validation rule allows only system admin, sales admin and users with Channel Program Manager role to update Partner Account Status to Registered.</description>
+    <errorConditionFormula>AND(ISPICKVAL( Type, &quot;Partner&quot; ), 
+NOT(OR( $Profile.Name = &apos;System Administrator&apos;, $Profile.Name = &apos;Sales Administrator&apos;,  $UserRole.Name = &apos;Channel Program Manager&apos;) ), 
+ISPICKVAL(NSP_Status__c, &apos;Registered&apos;),
+ISCHANGED(NSP_Status__c))</errorConditionFormula>
+    <errorDisplayField>NSP_Status__c</errorDisplayField>
+    <errorMessage>Only Channel Program Managers can mark Partner Accounts as Registered.</errorMessage>
+</ValidationRule>

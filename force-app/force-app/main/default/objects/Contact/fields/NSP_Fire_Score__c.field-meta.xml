@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Fire_Score__c</fullName>
+    <description>Used to store the fire score. This is populated from eloqua integration</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicator of a lead&apos;s Fit, Intent, Recency, and Engagement. The higher the number, the more likely a lead is ready to buy.</inlineHelpText>
+    <label>Fire Score</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

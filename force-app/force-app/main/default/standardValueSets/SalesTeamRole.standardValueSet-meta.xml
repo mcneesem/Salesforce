@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Account Manager</fullName>
+        <default>false</default>
+        <label>Account Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Business Performance Advisor</fullName>
+        <default>false</default>
+        <label>Business Performance Advisor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>District Administrator</fullName>
+        <default>false</default>
+        <label>District Administrator</label>
+    </standardValue>
+    <standardValue>
+        <fullName>District Manager</fullName>
+        <default>false</default>
+        <label>District Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Channel Program Manager</fullName>
+        <default>false</default>
+        <label>Channel Program Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Executive</fullName>
+        <default>false</default>
+        <label>Executive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Lead Qualifier</fullName>
+        <default>false</default>
+        <label>Lead Qualifier</label>
+    </standardValue>
+    <standardValue>
+        <fullName>New Client Sales</fullName>
+        <default>false</default>
+        <label>New Client Sales</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Opportunity Owner</fullName>
+        <default>false</default>
+        <label>Opportunity Owner</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pre-Sales Consultant</fullName>
+        <default>false</default>
+        <label>Pre-Sales Consultant</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Engineer</fullName>
+        <default>false</default>
+        <label>Sales Engineer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Operations Manager</fullName>
+        <default>false</default>
+        <label>Sales Operations Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Engineer Manager</fullName>
+        <default>false</default>
+        <label>Sales Engineer Manager</label>
+    </standardValue>
+</StandardValueSet>

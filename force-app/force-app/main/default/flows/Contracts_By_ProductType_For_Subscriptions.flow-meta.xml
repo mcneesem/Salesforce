@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Call_Apex_Action</name>
+        <label>Call Apex Action</label>
+        <locationX>378</locationX>
+        <locationY>571</locationY>
+        <actionName>NSP_MultipleContractFutureClass</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>contractIds</name>
+            <value>
+                <elementReference>$Record.SBQQ__Contract__c</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>53.0</apiVersion>
+    <decisions>
+        <name>Bypass_Flag</name>
+        <label>Bypass ?</label>
+        <locationX>477</locationX>
+        <locationY>425</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Run</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Bypass</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_Apex_Action</targetReference>
+            </connector>
+            <label>Run</label>
+        </rules>
+    </decisions>
+    <description>Contract By Product Type For Subscriptions</description>
+    <formulas>
+        <name>Bypass</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c}</expression>
+    </formulas>
+    <interviewLabel>Contracts By ProductType For Subscriptions {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Contracts By ProductType For Subscriptions</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>587</locationX>
+        <locationY>143</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__Contract__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>SBQQ__Subscription__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>Call_Apex_After_1_Min</name>
+            <connector>
+                <targetReference>Bypass_Flag</targetReference>
+            </connector>
+            <label>Call Apex After 1 Min</label>
+            <offsetNumber>1</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>CreatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>ContractIdsFromSubs</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

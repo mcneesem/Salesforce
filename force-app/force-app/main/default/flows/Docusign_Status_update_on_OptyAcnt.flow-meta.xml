@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <decisions>
+        <name>IF_Related_to_Opportunity</name>
+        <label>IF Related to Opportunity</label>
+        <locationX>314</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunitylookup</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.dfsle__SourceId__c</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>006</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Lookup</targetReference>
+            </connector>
+            <label>Update the Opportunity lookup</label>
+        </rules>
+        <rules>
+            <name>Account_Lookup</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.dfsle__SourceId__c</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>LookuptoAccount</targetReference>
+            </connector>
+            <label>Update the Account Lookup</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Docusign Status update on OptyAcnt {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Docusign Status update on OptyAcnt</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>LookuptoAccount</name>
+        <label>Account Lookup</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>DS_Account__c</field>
+            <value>
+                <elementReference>$Record.dfsle__SourceId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Opportunity_Lookup</name>
+        <label>Update Opportunity Lookup</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>DS_Opportunity__c</field>
+            <value>
+                <elementReference>$Record.dfsle__SourceId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>IF_Related_to_Opportunity</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>dfsle__SourceId__c</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>006</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>dfsle__SourceId__c</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>001</stringValue>
+            </value>
+        </filters>
+        <object>dfsle__EnvelopeStatus__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

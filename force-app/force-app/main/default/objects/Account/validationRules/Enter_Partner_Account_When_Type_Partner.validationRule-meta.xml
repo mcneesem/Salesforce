@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enter_Partner_Account_When_Type_Partner</fullName>
+    <active>false</active>
+    <description>When the Account Type is set as Partner, populate the partner account lookup field</description>
+    <errorConditionFormula>AND(ISPICKVAL(Type, &quot;Partner&quot;), ISBLANK(NSP_Partner__c),
+NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
+$Profile.Name = &quot;Data Migration&quot;,
+$Profile.Name = &quot;Sales Administrator&quot;,
+$Profile.Name = &quot;Integration User&quot;))
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Partner__c</errorDisplayField>
+    <errorMessage>Please populate partner Account when Type is Partner</errorMessage>
+</ValidationRule>

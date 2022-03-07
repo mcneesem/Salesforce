@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Reference_Products__c</fullName>
+    <description>Field used to store reference products for this contact</description>
+    <externalId>false</externalId>
+    <label>Reference Products</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Applicant Tracking</fullName>
+                <default>false</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping/Accounting</fullName>
+                <default>false</default>
+                <label>Bookkeeping/Accounting</label>
+            </value>
+            <value>
+                <fullName>BPA</fullName>
+                <default>false</default>
+                <label>BPA</label>
+            </value>
+            <value>
+                <fullName>BPS</fullName>
+                <default>false</default>
+                <label>BPS</label>
+            </value>
+            <value>
+                <fullName>CSS</fullName>
+                <default>false</default>
+                <label>CSS</label>
+            </value>
+            <value>
+                <fullName>Employment Screening</fullName>
+                <default>false</default>
+                <label>Employment Screening</label>
+            </value>
+            <value>
+                <fullName>Expense Management</fullName>
+                <default>false</default>
+                <label>Expense Management</label>
+            </value>
+            <value>
+                <fullName>HR Consulting Services</fullName>
+                <default>false</default>
+                <label>HR Consulting Services</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
+            </value>
+            <value>
+                <fullName>Payroll/Human Capital Management</fullName>
+                <default>false</default>
+                <label>Payroll/Human Capital Management</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance or Organizational Planning</fullName>
+                <default>false</default>
+                <label>Time and Attendance or Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Workforce Acceleration</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration</label>
+            </value>
+            <value>
+                <fullName>Workforce Administration</fullName>
+                <default>false</default>
+                <label>Workforce Administration</label>
+            </value>
+            <value>
+                <fullName>Workforce Optimization</fullName>
+                <default>false</default>
+                <label>Workforce Optimization</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

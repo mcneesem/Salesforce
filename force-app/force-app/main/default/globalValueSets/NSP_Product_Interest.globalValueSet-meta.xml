@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Applicant Tracking</fullName>
+        <default>false</default>
+        <label>Applicant Tracking</label>
+    </customValue>
+    <customValue>
+        <fullName>Employment Screening</fullName>
+        <default>false</default>
+        <label>Employment Screening</label>
+    </customValue>
+    <customValue>
+        <fullName>Expense Management</fullName>
+        <default>false</default>
+        <label>Expense Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Full Service HR (Workforce Optimization)</fullName>
+        <default>false</default>
+        <label>Full Service HR (Workforce Optimization)</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Consulting Services</fullName>
+        <default>false</default>
+        <label>HR Consulting Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Insurance Services</fullName>
+        <default>false</default>
+        <label>Insurance Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Organizational Planning</fullName>
+        <default>false</default>
+        <label>Organizational Planning</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll &amp; Human Capital Management(Workforce Acceleration)</fullName>
+        <default>false</default>
+        <label>Payroll &amp; Human Capital Management(Workforce Acceleration)</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Management</fullName>
+        <default>false</default>
+        <label>Performance Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Recruiting Services</fullName>
+        <default>false</default>
+        <label>Recruiting Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Services</fullName>
+        <default>false</default>
+        <label>Retirement Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Time and Attendance</fullName>
+        <default>false</default>
+        <label>Time and Attendance</label>
+    </customValue>
+    <customValue>
+        <fullName>Full Service HR</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Full Service HR</label>
+    </customValue>
+    <customValue>
+        <fullName>WO</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WO</label>
+    </customValue>
+    <customValue>
+        <fullName>Bookkeeping Services</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Bookkeeping Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll/Human Capital Management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Payroll/Human Capital Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Quickbooks Integration(Insperity Integra)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Quickbooks Integration(Insperity Integra)</label>
+    </customValue>
+    <masterLabel>Product Interest</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

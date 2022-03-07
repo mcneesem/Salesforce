@@ -1,0 +1,10 @@
+<messaging:emailTemplate subject="Approval Request for {!relatedTo.Quote__r.NSP_Opportunity_Name__c} has been Rejected" relatedToType="sbaa__Approval__c">
+<messaging:plainTextEmailBody >
+Hi {!relatedTo.Quote__r.Owner.Name}
+Your Approval Request has been Rejected for Quote Number {!relatedTo.Quote__r.Name} for {!relatedTo.Quote__r.NSP_Account_Name__c}. 
+Please review below comments:
+Comments: {!relatedTo.sbaa__CommentsLong__c}
+ To view the Quote, Click Here : <apex:outputText value=" {!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}/{!relatedTo.Quote__r.Id}"/>
+            
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

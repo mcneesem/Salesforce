@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AccountTeamValidations__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check box to control account team object validation rules</description>
+    <externalId>false</externalId>
+    <label>AccountTeamValidations</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

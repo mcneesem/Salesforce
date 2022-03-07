@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ReferralEmployeesBusinessDivis__c</fullName>
+    <description>Field used to store Employee Business Division</description>
+    <externalId>false</externalId>
+    <label>Referral Employees Business Division</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Employment Screening</fullName>
+                <default>false</default>
+                <label>Employment Screening</label>
+            </value>
+            <value>
+                <fullName>Expense Management</fullName>
+                <default>false</default>
+                <label>Expense Management</label>
+            </value>
+            <value>
+                <fullName>Financial Services</fullName>
+                <default>false</default>
+                <label>Financial Services</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
+            </value>
+            <value>
+                <fullName>Organizational Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Payroll Services</fullName>
+                <default>false</default>
+                <label>Payroll Services</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance</fullName>
+                <default>false</default>
+                <label>Time and Attendance</label>
+            </value>
+            <value>
+                <fullName>Workforce Optimization</fullName>
+                <default>false</default>
+                <label>Workforce Optimization</label>
+            </value>
+            <value>
+                <fullName>Insperity Reveal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Insperity Reveal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

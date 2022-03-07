@@ -1,0 +1,45 @@
+<apex:page title="Partner Form"  showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <apex:includeLightning />     
+    
+    
+    <html  lang="en">
+        
+        <apex:slds />
+        <body>
+            <!-- REQUIRED SLDS WRAPPER -->
+            <apex:image value="{!URLFOR($Resource.NSP_InsperityLogo)}" style="height:135px;width:400px"/>
+            <div class="slds-scope" style="overflow-x: hidden;">
+                
+                <!-- HEADING AREA -->
+                <p style="height:90px;background-color:#004C97;font-family:'Arial Bold', sans-serif;font-size: 40px;color:white;padding-top: 20px;text-align: center;">Partner form</p>
+                <div class="myapp"  id="myDivId">
+                    <ul class="slds-list_dotted slds-m-top_large">
+                        <script>
+                        var myUserContext = "{!$User.UITheme}";
+                        var contactId = '{!$CurrentPage.parameters.ref}';                      
+                        $Lightning.use("c:NSP_PartnerFormApp", function() {
+                            $Lightning.createComponent(
+                                "c:NSP_PartnerForm",
+                                {"contactId" : contactId},
+                                "myDivId",
+                                function(cmp) {
+                                });
+                        });
+                        </script>
+                    </ul>
+                </div>
+                <!-- / PRIMARY CONTENT WRAPPER -->
+                <!-- FOOTER -->
+                <footer role="contentinfo" class="slds-p-around_large">
+                    <!-- LAYOUT GRID -->
+                    <div class="slds-grid slds-grid_align-spread">
+                    </div>
+                    <!-- / LAYOUT GRID -->
+                </footer>
+                <!-- / FOOTER -->
+                
+            </div>
+            
+        </body>
+    </html>
+</apex:page>

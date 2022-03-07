@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Assign_Lead_Validation_01</fullName>
+    <active>true</active>
+    <description>This validation rule is created as part of CR-020. This describes, Product of Interest, Zip Code, Number of Employees should be populated to check Assign Lead Check box for If user role is Inbound rep or Inbound Manager.</description>
+    <errorConditionFormula>AND( 
+  OR($UserRole.Name = &apos;Inbound Rep&apos;, 
+     $UserRole.Name = &apos;Inbound Manager&apos;),
+  OR(ISBLANK(NumberOfEmployees), 
+     ISBLANK(PostalCode),
+      INCLUDES(NSP_Product_Interest__c, &apos;&apos;)),
+       NSP_Assign_Lead__c = true)</errorConditionFormula>
+    <errorMessage>Please Populate Products of Interest, No. of Employees, Zip/Postal Code before selecting Assign Lead.</errorMessage>
+</ValidationRule>

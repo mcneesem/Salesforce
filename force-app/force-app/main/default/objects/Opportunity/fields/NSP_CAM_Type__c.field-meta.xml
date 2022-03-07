@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CAM_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>CAM Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type</controllingField>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Affil E</fullName>
+                <default>false</default>
+                <label>Affil E</label>
+            </value>
+            <value>
+                <fullName>Affil N</fullName>
+                <default>false</default>
+                <label>Affil N</label>
+            </value>
+            <value>
+                <fullName>Control E</fullName>
+                <default>false</default>
+                <label>Control E</label>
+            </value>
+            <value>
+                <fullName>Control N</fullName>
+                <default>false</default>
+                <label>Control N</label>
+            </value>
+            <value>
+                <fullName>Exception</fullName>
+                <default>false</default>
+                <label>Exception</label>
+            </value>
+            <value>
+                <fullName>Fein</fullName>
+                <default>false</default>
+                <label>Fein</label>
+            </value>
+            <value>
+                <fullName>New Acct E</fullName>
+                <default>false</default>
+                <label>New Acct E</label>
+            </value>
+            <value>
+                <fullName>New Acct N</fullName>
+                <default>false</default>
+                <label>New Acct N</label>
+            </value>
+            <value>
+                <fullName>Own/Fein</fullName>
+                <default>false</default>
+                <label>Own/Fein</label>
+            </value>
+            <value>
+                <fullName>Own/Fein (With New Ees)</fullName>
+                <default>false</default>
+                <label>Own/Fein (With New Ees)</label>
+            </value>
+            <value>
+                <fullName>Shared E</fullName>
+                <default>false</default>
+                <label>Shared E</label>
+            </value>
+            <value>
+                <fullName>Shared N</fullName>
+                <default>false</default>
+                <label>Shared N</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

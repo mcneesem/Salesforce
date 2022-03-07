@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Recipients_Email_Ids_TO__c</fullName>
+    <description>Field used to store list of email Ids to be included in TO field in an email. Make sure to add email Ids in proper format and separate each Id with a comma</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>If multiple emails to be included in TO, add comma separated emails</inlineHelpText>
+    <label>Recipients Email Ids(TO)</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

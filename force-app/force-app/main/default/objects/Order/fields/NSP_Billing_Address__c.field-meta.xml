@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Billing_Address__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Captures the Billing Address</description>
+    <externalId>false</externalId>
+    <label>Billing Address</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <filterItems>
+            <field>$Source.AccountId</field>
+            <operation>equals</operation>
+            <valueField>NSP_Address__c.NSP_Related_Site__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>NSP_Address__c.NSP_Address_Type__c</field>
+            <operation>equals</operation>
+            <value>Bill To</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>NSP_Address__c</referenceTo>
+    <relationshipLabel>Orders</relationshipLabel>
+    <relationshipName>BillingAddressOrders</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

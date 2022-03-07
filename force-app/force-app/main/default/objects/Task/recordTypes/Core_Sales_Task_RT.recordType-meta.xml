@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Core_Sales_Task_RT</fullName>
+    <active>true</active>
+    <label>Core Sales Task RT</label>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subject</picklist>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send Letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send Quote</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Addendum Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Back</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client reference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core Sales Task</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correspondance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Demo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email Open</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email send</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EmailBounced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form Submission</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Required for Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website visit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

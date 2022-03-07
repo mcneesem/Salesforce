@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Signers_List__c</fullName>
+    <description>store signer list against template name</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Signers List</label>
+    <required>false</required>
+    <type>TextArea</type>
+</CustomField>

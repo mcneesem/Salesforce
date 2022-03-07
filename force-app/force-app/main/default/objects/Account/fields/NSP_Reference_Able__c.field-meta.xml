@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Reference_Able__c</fullName>
+    <description>Used to check if the client is referenceable</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Reference Able</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>
