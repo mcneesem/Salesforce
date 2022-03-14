@@ -13,17 +13,7 @@ public class NSP_AccountTeamMemberTriggerHelperTest {
      */
     @testsetup
     static void testData(){
-         //Insert Test Account record
-        Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
-        insert account;
         
-    }
-
-    @isTest
-    static void testAccountTeamMemberInsert() {
-       
-        Account account = [SELECT Id FROM Account WHERE Name = 'TestAccount'];
-        //Insert Test User Record
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='Integration User'];
         UserRole role = [SELECT Id FROM UserRole WHERE Name='CEO'];
 
@@ -35,6 +25,17 @@ public class NSP_AccountTeamMemberTriggerHelperTest {
         username='insperitytestadminuser@insperity.com',
         IsActive=true);
         insert userobj;
+        
+    }
+
+    @isTest
+    static void testAccountTeamMemberInsert() {
+        //Insert Test Account record
+        Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
+        insert account;
+       // Account account = [SELECT Id FROM Account WHERE Name = 'TestAccount'];
+        //Insert Test User Record
+
         User user = [SELECT Alias FROM User WHERE Profile.Name LIKE 'Integration%' AND IsActive=true LIMIT 1];
 
         List<AccountTeamMember>  accountTeamMemberList = New List<AccountTeamMember>();
@@ -43,8 +44,7 @@ public class NSP_AccountTeamMemberTriggerHelperTest {
             accountTeamMemberList.add(New AccountTeamMember(AccountId = account.Id, UserId = user.Id,NSP_AIMS_Client__c = 'ateammember1'));
         } 
 
-        // Start Test
-        Test.startTest();
+
         system.runAs(user){
             insert accountTeamMemberList;
         }
@@ -53,15 +53,18 @@ public class NSP_AccountTeamMemberTriggerHelperTest {
         atmObj.Id = accountTeamMemberList[0].Id;
         atmObj.TeamMemberRole = NSP_SalesConstants.LeadQualifier;
         update atmObj;
-        
+        // Start Test
+        Test.startTest();
         System.assertEquals(NSP_SalesConstants.LeadQualifier, atmObj.TeamMemberRole);
         Test.stopTest();
     }
     
     @isTest
     static void testAccountTeamMemberNonInInsert() {
-       
-        Account account = [SELECT Id from Account WHERE Name = 'TestAccount'];
+        //Insert Test Account record
+        Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
+        insert account;
+       // Account account = [SELECT Id from Account WHERE Name = 'TestAccount'];
         //Insert Test User Record
         User user =[ SELECT Id,
        Name, 
@@ -77,17 +80,16 @@ public class NSP_AccountTeamMemberTriggerHelperTest {
             accountTeamMemberList.add(New AccountTeamMember(AccountId = account.Id, UserId = user.Id,NSP_AIMS_Client__c = 'ateammember1',NSP_Employee_Per_ID__c = 'test 123'));
         } 
 
-        // Start Test
-        Test.startTest();
         system.runAs(user){
             insert accountTeamMemberList;
         }
-        
+
         AccountTeamMember atmObj = new AccountTeamMember();
         atmObj.Id = accountTeamMemberList[0].Id;
         atmObj.TeamMemberRole = NSP_SalesConstants.LeadQualifier;
         update atmObj;
-        
+        // Start Test
+        Test.startTest();
         System.assertEquals(NSP_SalesConstants.LeadQualifier, atmObj.TeamMemberRole);
         Test.stopTest();
     }

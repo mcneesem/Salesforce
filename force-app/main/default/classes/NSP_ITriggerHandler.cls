@@ -33,11 +33,16 @@ public interface NSP_ITriggerHandler {
    *                
    */
     void afterUpdate(Map<Id, sObject> newMap, Map<Id, sObject> oldMap);
+
+    /**
+   * Represents after delete operation
+   * @param oldList List of old values of  Sobject   
+   * @param oldMap Map of Sobject id and Sobject         
+   *                
+   */
+     void afterDelete(List<sObject> oldList , Map<Id, sObject> oldMap);
           
    /* void beforeDelete(List<sObject> oldList , Map<Id, sObject> oldMap);     
-
-    void afterDelete(List<sObject> oldList , Map<Id, sObject> oldMap);
-
    void afterUnDelete(List<sObject> newList, Map<Id, sObject> newMap);*/
 
   // This method needs to be implemented to check whether or not trigger logic should run. You can remove this if this is not a requirement.

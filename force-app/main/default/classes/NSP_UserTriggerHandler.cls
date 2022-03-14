@@ -54,4 +54,14 @@ public class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
 */
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
     }
+
+    /**
+    * Handles after delete for Quote.
+    * @param oldList List of old Quote.
+    * @param oldMap Map of Old Quote. 
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

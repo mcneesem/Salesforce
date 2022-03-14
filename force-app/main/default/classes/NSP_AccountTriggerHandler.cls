@@ -70,4 +70,13 @@ public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
        // Share account with owner Sales office Public groups --STY-01786
         NSP_recordSharing.shareAccountonUpdate((Map<Id, Account>) newMap, (Map<Id, Account>) oldMap);
     }
+    /**
+    * Handles after delete for Account
+    * @param oldList List of old Account
+    * @param oldMap Map of Old Account
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

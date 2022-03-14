@@ -68,5 +68,15 @@ public class NSP_LeadTriggerHandler implements NSP_ITriggerHandler{
         // Share Lead with owner Sales office Public groups --STY-01786  
         NSP_recordSharing.shareLeadsonUpdate((Map<Id, Lead>) newMap,(Map<Id, Lead>) oldMap);
     }
+
+    /**
+    * Handles after delete for lead
+    * @param oldList List of old lead
+    * @param oldMap Map of Old lead
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
   
 }

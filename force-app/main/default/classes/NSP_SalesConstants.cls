@@ -110,6 +110,8 @@ public class NSP_SalesConstants {
     public static final String MIDMARKETSALESOFFICE = '4499';
     public static final String SalesOfficeObject = 'User';
     public static final String SalesOffice = 'NSP_Sales_Office__c';
-
-
+    public static final String HR_CONSULTING_SERVICES = 'HR Consulting Services';
+    public static final String WO_WS = 'WO/WS';
+    public static final String BPC_USER = 'Business Performance Consultant';
+    public static final String NEW_CLIENT_SALES = 'New Client Sales';
 }

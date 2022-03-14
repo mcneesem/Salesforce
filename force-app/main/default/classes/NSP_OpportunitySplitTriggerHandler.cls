@@ -60,4 +60,14 @@ public with sharing class NSP_OpportunitySplitTriggerHandler implements NSP_ITri
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         
     }
+    
+    /**
+    * Handles after delete for Opportunity Split.
+    * @param oldList List of old Opportunity Split.
+    * @param oldMap Map of Old Opportunity Split. 
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

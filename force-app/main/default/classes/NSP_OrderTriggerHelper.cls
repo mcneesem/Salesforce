@@ -81,6 +81,7 @@ public class NSP_OrderTriggerHelper {
         Map<Id,NSP_Address__c> addressMap; 
         Map<Id,Account> accountMap;
         String addressParam = 'Address';
+        String accountParam = 'Account';
 		
 		for(Order newOrder : newList){
 			Order oldOrder = OrderOldMap != null ? OrderOldMap.get(newOrder.Id):null;
@@ -139,22 +140,22 @@ public class NSP_OrderTriggerHelper {
                     Account billingAccount = accountMap.get(newOrder.NSP_Billing_Account__c);
                     hasBillinAccount = true;
                     if(!hasBillingAddress){
-                        copyBillingAddress(newOrder,billingAccount,null,addressParam);
+                        copyBillingAddress(newOrder,billingAccount,null,accountParam);
                     }
 
                     if(!hasShippingAddress){
-                        copyShippingAddress(newOrder,billingAccount,null,addressParam);
+                        copyShippingAddress(newOrder,billingAccount,null,accountParam);
                     }
                 }
 
                 if(newOrder.AccountId != null && accountMap != null && accountMap.containsKey(newOrder.AccountId )){
                     Account objAccount = accountMap.get(newOrder.AccountId);
                     if(!hasBillingAddress && !hasBillinAccount){
-                        copyBillingAddress(newOrder,objAccount,null,addressParam);
+                        copyBillingAddress(newOrder,objAccount,null,accountParam);
                     }
 
                     if(!hasShippingAddress && !hasBillinAccount){
-                        copyShippingAddress(newOrder,objAccount,null,addressParam);
+                        copyShippingAddress(newOrder,objAccount,null,accountParam);
                     }
 				}
 			}

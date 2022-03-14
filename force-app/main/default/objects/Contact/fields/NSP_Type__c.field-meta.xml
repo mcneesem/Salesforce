@@ -37,18 +37,6 @@
                 <default>false</default>
                 <label>Worksite Employee</label>
             </value>
-            <value>
-                <fullName>Contact</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Contact</label>
-            </value>
-            <value>
-                <fullName>Custom</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Custom</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

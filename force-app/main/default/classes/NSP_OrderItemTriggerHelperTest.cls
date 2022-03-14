@@ -48,6 +48,9 @@ public class NSP_OrderItemTriggerHelperTest{
         PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
         //create quote
         SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
+        // create quote lines
+        NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
+        // create order from quote
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         update objQuote;

@@ -81,7 +81,15 @@ public class NSP_OpportunityTriggerHandler implements NSP_ITriggerHandler{
         NSP_OpportunityTeamMemberAssignment.updateAndInsertOppTeamMember((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
         // Share Opportunity with owner Sales office Public groups --STY-01786 
         NSP_recordSharing.shareOpportunityonUpdate((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+        }  
     }
-        
+    /**
+    * Handles after delete for Opportunity
+    * @param oldList List of old Opportunity
+    * @param oldMap Map of Old Opportunity
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
     }
 }

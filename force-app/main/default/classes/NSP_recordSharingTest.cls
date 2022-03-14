@@ -8,67 +8,73 @@
 public class NSP_recordSharingTest {
     
     /***********************************************************************************************
-    * Variables
-    * ********************************************************************************************/
-	private static final String emailencodingkey = 'UTF-8';
-	private static final String languagekey = 'en_US'; 
-	private static final String timezonesidkey = 'America/Los_Angeles';   
+* Variables
+* ********************************************************************************************/
+    private static final String emailencodingkey = 'UTF-8';
+    private static final String languagekey = 'en_US'; 
+    private static final String timezonesidkey = 'America/Los_Angeles';   
     /***********************************************************************************************
-    * MethodName: testData
-    * Description : Creating test data for NSP_recordSharing
-    * ********************************************************************************************/
+* MethodName: testData
+* Description : Creating test data for NSP_recordSharing
+* ********************************************************************************************/
     @testSetup
     static void testData(){
         List<User> users = new List<User>();
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
         UserRole SalesLeaderRole = [SELECT Id FROM UserRole WHERE Name='Sales Leader'];
+        // Adding BPA User
         User BpaUser = new User(alias = 'jsmit', email='jsmith@acmetestusr.com', 
-                                emailencodingkey='UTF-8', lastname='Smith', 
-                                languagelocalekey='en_US', 
-                                localesidkey='en_US', profileid = profileobj.Id, userroleid = BPArole.Id,
-                                timezonesidkey='America/Los_Angeles', NSP_Sales_Office__c='301' ,
+                                emailencodingkey=emailencodingkey, lastname='Smith', 
+                                languagelocalekey=languagekey, 
+                                localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
+                                timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
                                 username='insperitytestadminuser@insperity.com.testUsr');
         users.add(BpaUser);
+        // Adding second BPA User
         User BpaUser2 = new User(alias = 'jBPA', email='jsmithyBPA@acmetest.com', 
-                                 emailencodingkey='UTF-8', lastname='Smith', 
-                                 languagelocalekey='en_US', 
-                                 localesidkey='en_US', profileid = profileobj.Id, userroleid = BPArole.Id,
-                                 timezonesidkey='America/Los_Angeles', NSP_Sales_Office__c='601' ,
+                                 emailencodingkey=emailencodingkey, lastname='Smith', 
+                                 languagelocalekey=languagekey, 
+                                 localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
+                                 timezonesidkey=timezonesidkey, NSP_Sales_Office__c='601' ,
                                  username='insperitytestadminuser@insperity.com.testBPA');
         users.add(BpaUser2);
+        // Adding Sales Leader User
         User SalesLeader = new User(alias = 'johnth', email='johnsmith@acme.com', 
-                                    emailencodingkey='UTF-8', lastname='Smith', 
-                                    languagelocalekey='en_US', 
-                                    localesidkey='en_US', profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
-                                    timezonesidkey='America/Los_Angeles', 
+                                    emailencodingkey=emailencodingkey, lastname='Smith', 
+                                    languagelocalekey=languagekey, 
+                                    localesidkey=languagekey, profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
+                                    timezonesidkey=timezonesidkey, 
                                     username='insperitytestadminuser@insperity.com.test2');
         
         users.add(SalesLeader);
+        // Adding second Sales Leader User
         User SalesLeader2 = new User(alias = 'jonth', email='johnsmith@acme.com', 
-                                     emailencodingkey='UTF-8', lastname='Smit', 
-                                     languagelocalekey='en_US', 
-                                     localesidkey='en_US', profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
-                                     timezonesidkey='America/Los_Angeles', 
+                                     emailencodingkey=emailencodingkey, lastname='Smit', 
+                                     languagelocalekey=languagekey, 
+                                     localesidkey=languagekey, profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
+                                     timezonesidkey=timezonesidkey, 
                                      username='insperitytestadminuser@insperity.com.SLeaderTest');
         users.add(SalesLeader2);
-        
+        // Adding Account Team User
         User accountTeamUser = new User(alias = 'jhnATM', email='johnsmith@aTM.com', 
-                                        emailencodingkey='UTF-8', lastname='Smit', 
-                                        languagelocalekey='en_US', 
-                                        localesidkey='en_US', profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
-                                        timezonesidkey='America/Los_Angeles',  NSP_Sales_Office__c='701',
+                                        emailencodingkey=emailencodingkey, lastname='Smit', 
+                                        languagelocalekey=languagekey, 
+                                        localesidkey=languagekey, profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
+                                        timezonesidkey=timezonesidkey,  NSP_Sales_Office__c='701',
                                         username='insperitytestadminuser@insperity.com.ATM');
         
         users.add(accountTeamUser);
+        // Adding second Account Team User
         User accountTeamGroupUser = new User(alias = 'jhAUser', email='johnsmith@aTMUser.com', 
-                                             emailencodingkey='UTF-8', lastname='Smit', 
-                                             languagelocalekey='en_US', 
-                                             localesidkey='en_US', profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
-                                             timezonesidkey='America/Los_Angeles', 
+                                             emailencodingkey=emailencodingkey, lastname='Smit', 
+                                             languagelocalekey=languagekey, 
+                                             localesidkey=languagekey, profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
+                                             timezonesidkey=timezonesidkey, 
                                              username='insperitytestadminuser@insperity.com.ATMUser');
         
         users.add(accountTeamGroupUser);
+        // Inserting Users 
         insert users;
         
         // Creating Groups 
@@ -80,7 +86,7 @@ public class NSP_recordSharingTest {
         gp3.Name='0701 Stamford 1';
         // Inserting groups
         List<Group> groups= new List<Group>{gp1, gp2, gp3};
-        Insert groups;
+            Insert groups;
         // adding Users to groups 
         GroupMember bpagm = new GroupMember (UserOrGroupId = BpaUser.Id, GroupId = gp1.Id);
         GroupMember nonBpagm = new GroupMember (UserOrGroupId = SalesLeader.Id, GroupId = gp1.Id);
@@ -88,23 +94,23 @@ public class NSP_recordSharingTest {
         GroupMember Salesleadergm= new GroupMember (UserOrGroupId = SalesLeader2.Id, GroupId = gp2.Id);
         GroupMember AccoutTeamgm= new GroupMember (UserOrGroupId = accountTeamGroupUser.Id, GroupId = gp3.Id);
         List<GroupMember> groupMemberList= new List<GroupMember>{bpagm,nonBpagm,bpaUsergm,Salesleadergm,AccoutTeamgm};
-        // Inserting Group Members
-        Insert groupMemberList;
+            // Inserting Group Members
+            Insert groupMemberList;
         // Inserting account ,opportunity and lead records
         System.runAs (BpaUser) {
             Test.startTest();
-            NSP_TestHelper.createLeadRecord(true); 
+            Lead ld=NSP_TestHelper.createLeadRecord(true); 
             Account acc1 = NSP_TestHelper.createAccount(true);
-            NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',true);
+            Opportunity opp= NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',true);
             Test.StopTest();
         }
         
     }
     
     /***********************************************************************************************
-    * MethodName: recordShareNonBPAUser
-    * Description : Sharing Sales records with non BPA role Users
-    * ********************************************************************************************/
+* MethodName: recordShareNonBPAUser
+* Description : Sharing Sales records with non BPA role Users
+* ********************************************************************************************/
     @isTest
     static void recordShareNonBPAUser(){
         try{
@@ -142,12 +148,13 @@ public class NSP_recordSharingTest {
         catch(Exception ex){
             ex.getStackTraceString();
         }
+        
     }
     
     /***********************************************************************************************
-    * MethodName: updateATMSharing
-    * Description : Sharing records with Account Team Users Sales Office Group Users on Update 
-    * ********************************************************************************************/
+* MethodName: updateATMSharing
+* Description : Sharing records with Account Team Users Sales Office Group Users on Update 
+* ********************************************************************************************/
     @isTest
     static void updateATMSharing(){
         try{
@@ -174,6 +181,34 @@ public class NSP_recordSharingTest {
                 Test.stopTest();
             }
             system.assertEquals(BpaUser2.Id, acTeam.NSP_User__c);
+        } 
+        catch(Exception ex){
+            ex.getStackTraceString();
+        }
+    }
+    /***********************************************************************************************
+* MethodName: removingATMSharing
+* Description : removing account access after ATM removal   
+* ********************************************************************************************/
+    @isTest
+    static void removingATMSharing(){
+        try{
+            // quering account team user 
+            User ATMuser=[Select Id , Name , Email , NSP_Sales_Office__c  from User WHERE Email = 'johnsmith@aTM.com' Limit 1];     
+            
+            // quering account record
+            Account acc1 = [Select Id , Name, OwnerId from Account WHERE Name = 'ABCTest Co' LIMIT 1];
+            // creating account team record
+            NSP_Account_Team__c acTeam=new NSP_Account_Team__c();
+            acTeam.NSP_Role__c=System.Label.NSP_AccountTeamMemberRole;
+            acTeam.NSP_User__c=ATMuser.Id;
+            acTeam.NSP_Account__c=acc1.Id;
+            insert acTeam;
+            Test.startTest();
+            delete acTeam;
+            Test.stopTest();
+            List<NSP_Account_Team__c> ATMUserList =[Select Id ,NSP_Account__c from NSP_Account_Team__c WHERE  NSP_Account__c =:acc1.Id ];
+            system.assertEquals(0, ATMUserList.size());
         } 
         catch(Exception ex){
             ex.getStackTraceString();

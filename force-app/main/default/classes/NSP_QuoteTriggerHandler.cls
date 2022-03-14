@@ -71,4 +71,13 @@ public class NSP_QuoteTriggerHandler implements NSP_ITriggerHandler{
       QuoteTriggerHelperObject.afterUpdateDirector((Map<Id, SBQQ__Quote__c>) newMap,(Map<Id, SBQQ__Quote__c>) oldMap);
        
   }
+  /**
+    * Handles after delete for Quote
+    * @param oldList List of old Quote
+    * @param oldMap Map of Old Quote
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

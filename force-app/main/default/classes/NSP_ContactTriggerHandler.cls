@@ -66,4 +66,13 @@ public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
         NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
         contactTriggerHelperObject.afterUpdateDirector((Map<Id, Contact>) newMap,(Map<Id, Contact>) oldMap);
     }
+    /**
+    * Handles after delete for Contact
+    * @param oldList List of old Contact
+    * @param oldMap Map of Old Contact
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

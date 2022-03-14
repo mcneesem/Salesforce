@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 03-11-2022
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 //
 // This code is provided as an example only, no warranty is expressed or implied. If you choose to use 
 // any or all of this sample code, you agree to assume all risk and liability associated with that use.
@@ -19,9 +26,10 @@ public with sharing class CLMDocumentTransfer {
     //
     // Authentication variables for CLM.DS - will need to be modified for CLM.CM
     //
-    //String dsAccountId = '951f9e95-35fd-4856-90e3-645d99a0026e';   //App Account API Id
-    String dsAccountId = 'e22ffda7-6a07-476c-89df-175b2404dd77';   //App Account API Id [QA]
     //String dsAccountId = '07bae8e0-f4aa-4b36-8886-efa661e3e9b0';   //App Account API Id [Dev]
+    //String dsAccountId = 'e22ffda7-6a07-476c-89df-175b2404dd77';   //App Account API Id [QA]
+    String dsAccountId = '3a9842f4-5bf5-4977-a139-8ce4d48e2e03';   //App Account API Id [UAT]
+    
     String iss = 'e68d1b70-c724-41ec-b907-4e3592da6ad8';    // Integration Key
     // String aud = 'account.docusign.com'; // prod
     //String aud = 'demo.docusign.net'; // demo / uat

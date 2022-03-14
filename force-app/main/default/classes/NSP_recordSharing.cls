@@ -6,7 +6,6 @@
 */
 
 public class NSP_recordSharing {
-    
     private static final string NSP_recordSharing = 'NSP_recordSharing';
     
     /***********************************************************************************************
@@ -102,7 +101,7 @@ public class NSP_recordSharing {
             }
             if(!accountshareList.isEmpty()){
                 insert accountshareList;  
-            } 
+            }
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(NSP_recordSharing,'nonBPAAccountSharing',ex.getMessage());
         }
@@ -146,30 +145,32 @@ public class NSP_recordSharing {
 * Params:       Map<Id,Account> accountMap
 * ********************************************************************************************/
     public static void accountTeamMembersharing(List<NSP_Account_Team__c> accountTeamList){
-        Set<Id> teammemberUserId = new Set<Id>();
-        Set<Id>accountIds= new Set<Id>();
-        Set<String>acTeamSalesOffice= new Set<String>();
-        Map<Id,String> accountOfficeMap= new Map<Id,String>();
         Set<Id>accountId= new Set<Id>();
-        Map<Id,String> accountSalesOfficeMap = new Map<Id,String>();
+        Set<Id>ATMUser= new Set<Id>();
+        Map<String,Id> SalesOfficeAccountMap= new Map<String,Id> ();
+        Map<String,List<Id>> SalesOfficeUsersMap= new  Map<String,List<Id>> ();
         try{
             for(NSP_Account_Team__c acTeam:accountTeamList){
                 accountId.add(acTeam.NSP_Account__c);
+                ATMUser.add(acTeam.NSP_User__c);
+                // accountTeamUserMap.put(acTeam.NSP_User__c,acTeam.NSP_Account__c);
             } 
-            List<Account> acList= [Select Id , Name, Owner.NSP_Sales_Office__c from account WHERE Id IN :accountId];
-            for(Account acc : acList){
-                accountSalesOfficeMap.put(acc.Id, acc.Owner.NSP_Sales_Office__c);
-            }
+            // Querying ATM User and its Sales Office
+            Map<Id,User> ATMUserMap= new  Map<Id,User>([Select Id, Name ,NSP_Sales_Office__c from User
+                                                        WHERE Id IN: ATMUser]);
+            
+            // Querying ATM Account and its Sales Office
+            Map<Id,Account> accountSalesOfficeMap= new Map<Id,Account>([Select Id , Name, OwnerId,Owner.NSP_Sales_Office__c from account
+                                                                        WHERE Id IN :accountId]);
             
             List<AccountShare> accountshareList = new List<AccountShare>();
             Map<String, String> getSalesOffice = getPicklistLabel();
             for(NSP_Account_Team__c acTeam:accountTeamList){
-                if(getSalesOffice.get(acTeam.NSP_Sales_Office__c)!=getSalesOffice.get(accountSalesOfficeMap.get(acTeam.NSP_Account__c))
-                   &&  acTeam.NSP_Role__c==System.Label.NSP_AccountTeamMemberRole){
-                       acTeamSalesOffice.add(getSalesOffice.get(acTeam.NSP_Sales_Office__c));
-                       teammemberUserId.add(acTeam.NSP_User__c); 
-                       accountIds.add(acTeam.NSP_Account__c);
-                       accountOfficeMap.put(acTeam.NSP_Account__c,getSalesOffice.get(acTeam.NSP_Account__r.Owner.NSP_Sales_Office__c));
+                if(accountSalesOfficeMap.containsKey(acTeam.NSP_Account__c) && getSalesOffice.get(ATMUserMap.get(acTeam.NSP_User__c).NSP_Sales_Office__c)!=getSalesOffice.get(accountSalesOfficeMap.get(acTeam.NSP_Account__c).Owner.NSP_Sales_Office__c)
+                   &&  acTeam.NSP_Role__c==System.Label.NSP_AccountTeamMemberRole ){
+                       // Creating a set of ATM User SalesOffice to fetch the related Public Group 
+                       SalesOfficeAccountMap.put(getSalesOffice.get(ATMUserMap.get(acTeam.NSP_User__c).NSP_Sales_Office__c),acTeam.NSP_Account__c);
+                       // Provide Edit Access to BPA User
                        AccountShare bpaAccountShare= new AccountShare();
                        bpaAccountShare.RowCause=NSP_SalesConstants.manualRowCause;
                        bpaAccountShare.UserOrGroupId=acTeam.NSP_User__c;
@@ -179,30 +180,82 @@ public class NSP_recordSharing {
                        accountshareList.add(bpaAccountShare);
                    }
             }
-            system.debug('accountshareList------'+accountshareList);
-            Set<Id> ATMsalesofficeGroupUsers = getgroupMembers(acTeamSalesOffice);
-            if(!ATMsalesofficeGroupUsers.isEmpty()){
-                for(NSP_Account_Team__c atm:accountTeamList){
-                    for(Id userId:ATMsalesofficeGroupUsers){
+            SalesOfficeUsersMap= getATMgroupMembers(SalesOfficeAccountMap);
+            if(SalesOfficeUsersMap.Size()>0){
+                for(String salesOffice:SalesOfficeUsersMap.keyset() ){
+                    for(Id grpMember : SalesOfficeUsersMap.get(salesOffice)){
                         AccountShare acshare= new AccountShare();
                         acshare.RowCause=NSP_SalesConstants.manualRowCause;
-                        acshare.UserOrGroupId=userId;
+                        acshare.UserOrGroupId=grpMember;
                         acshare.AccountAccessLevel=NSP_SalesConstants.editSharingAccess;
                         acShare.OpportunityAccessLevel=Label.NSP_OpportunityAccess;
-                        acshare.AccountId=atm.NSP_Account__c;
-                        accountshareList.add(acshare);
-                    } 
-                } 
+                        acshare.AccountId=SalesOfficeAccountMap.get(salesOffice);
+                        accountshareList.add(acshare); 
+                    }
+                }
+                
             }
-             system.debug('accountshareListfinal------'+accountshareList);
-            if(!accountshareList.isEmpty()){
-                insert accountshareList;  
+            if(!accountshareList.isEmpty()){ 
+                Database.Insert(accountshareList, false);
             } 
-             system.debug('accountshareList inserted------'+accountshareList);
+            
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(NSP_recordSharing,'accountTeamMembersharing',ex.getMessage());
         }
         
+    }
+    /***********************************************************************************************
+* MethodName: updateAccessOnATMRemoval
+* Description : remove Sharing access for ATM members after removal
+* Params:       Map<Id,Account> newAccountMap, Map<Id,Account>oldAccountMap
+* ********************************************************************************************/
+    public static void updateAccessOnATMRemoval(List<NSP_Account_Team__c> oldATMList , Map<Id,NSP_Account_Team__c> oldMap){
+        Set<Id> accountId = new  Set<Id>();
+        Set<Id> ATMUser = new  Set<Id>();
+        Set<String>acTeamSalesOffice= new Set<String>();
+        Map<String, String> getSalesOffice = getPicklistLabel();
+        for(NSP_Account_Team__c accountTeam:oldATMList){
+            if(accountTeam.NSP_Role__c==System.Label.NSP_AccountTeamMemberRole){
+                accountId.add(accountTeam.NSP_Account__c);
+            }
+        }
+        Map<Id,NSP_Account_Team__c> NSPTeamMap= new Map<Id,NSP_Account_Team__c>([Select Id ,NSP_Account_Team__c.NSP_Role__c,NSP_Account__c , NSP_User__c from NSP_Account_Team__c
+                                                                                 WHERE NSP_Account__c IN:accountId ]);
+        
+        List<AccountTeamMember> accountTeamMemberList = new  List<AccountTeamMember>(); 
+        for(NSP_Account_Team__c Atm: NSPTeamMap.values()){
+            if(!oldMap.containsKey(Atm.Id)){
+                AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
+                accountTeamMemberObj.AccountId = Atm.NSP_Account__c;
+                accountTeamMemberObj.AccountAccessLevel = NSP_IntegrationConstants.ACCOUNTACCESSLEVEL;
+                accountTeamMemberObj.TeamMemberRole = NSP_IntegrationConstants.TEAMMEMBERROLE;
+                accountTeamMemberObj.UserId = Atm.NSP_User__c;
+                accountTeamMemberList.add(accountTeamMemberObj);
+            }
+            
+        }
+        // Fetching Standard ATM records 
+        List<AccountTeamMember> accountTeamList=[Select  UserId, AccountId from AccountTeamMember WHERE 
+                                                 AccountId IN: accountId ];
+        
+        List <AccountShare> acShare= [Select Id , AccountAccessLevel,AccountId , RowCause , UserOrGroupId 
+                                      from accountShare WHERE AccountId IN: accountId And RowCause =: NSP_SalesConstants.manualRowCause];
+        // Removing Account Access for ATM Users and its related public group  
+        
+        if(!acShare.isEmpty()){
+            delete acShare; 
+        }
+        // Deleting Standard Account Team record 
+        if(!accountTeamList.isEmpty()){
+            delete accountTeamList;
+        }
+        // creating Standard AccountTeam Member records
+        if(!accountTeamMemberList.isEmpty()){
+            Database.Insert(accountTeamMemberList, false);       
+        }   
+        Map<Id,Account>ATMAccountMap= new Map<Id,Account>([Select Id ,Name, OwnerId from account WHERE Id IN:accountId ]);
+        nonBPAAccountSharing(ATMAccountMap);
+        accountTeamMembersharing(NSPTeamMap.values());
     }
     /***********************************************************************************************
 * MethodName: shareAccountonATMUpdate
@@ -312,7 +365,7 @@ public class NSP_recordSharing {
             }
             
             if(!OpportunityshareList.isEmpty()){
-                Database.SaveResult[] srList = Database.Insert(OpportunityshareList,false); 
+                Database.Insert(OpportunityshareList,false); 
             }     
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(NSP_recordSharing,'nonBPAOpportunitySharing',ex.getMessage());
@@ -409,4 +462,32 @@ public class NSP_recordSharing {
         } 
         return salesOfficePicklist;
     }
+    
+
+ /***********************************************************************************************
+* MethodName: getATMgroupMembers
+* Description : Method to retrieve group members from Public Group of ATM
+* Params:      Map<String,Id> salesOfficeMap
+* ********************************************************************************************/
+    public static Map<String,List<Id>> getATMgroupMembers(Map<String,Id> salesOfficeMap){
+        Set<Id> groupIdList= new Set<Id>();
+        Set<Id> groupMemberUsers= new Set<Id>();
+        Map<String,List<Id>> SalesGroupsMember= New Map<String,List<Id>>();
+        Map<Id,Group> SalesGroupMap = new Map<Id,Group> ([SELECT id ,name  FROM group
+                                                          WHERE name IN :salesOfficeMap.KeySet()]);
+        
+        Map<Id,groupMember> groupMemberList =new Map<Id,groupMember>([SELECT GroupId , userOrGroupId FROM groupMember
+                                                                      WHERE GroupId IN:SalesGroupMap.KeySet()]);
+        for(groupMember gp :groupMemberList.values()){
+            if(SalesGroupMap.containsKey(gp.GroupId)){
+                if (SalesGroupsMember.get(SalesGroupMap.get(gp.GroupId).Name) == null)
+                {
+                    SalesGroupsMember.put(SalesGroupMap.get(gp.GroupId).Name, new List <Id> ());
+                }
+                SalesGroupsMember.get(SalesGroupMap.get(gp.GroupId).Name).add(gp.userOrGroupId);
+            }
+        }
+        return SalesGroupsMember;
+    }
+    
 }

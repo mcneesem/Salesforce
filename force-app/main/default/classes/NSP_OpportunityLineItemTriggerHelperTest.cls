@@ -55,6 +55,9 @@ public class NSP_OpportunityLineItemTriggerHelperTest {
         PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
         //create quote
         SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
+        // create quote lines
+        NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
+        // create order from quote
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         objQuote.NSP_Billing_Address__c   = [SELECT id FROM NSP_Address__c WHERE NSP_Address_Type__c = 'Bill To' AND NSP_Related_Site__c =: objaccount.Id ].Id;

@@ -63,4 +63,13 @@ public class NSP_OpportunityTeamMemberTriggerHandler  implements NSP_ITriggerHan
         NSP_OpportunityTeamMemberTriggerHelper  oppTeamMemberTriggerHelperObject =  new NSP_OpportunityTeamMemberTriggerHelper();
         oppTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,OpportunityTeamMember>) newMap,(Map<Id,OpportunityTeamMember>) oldMap);
     }
+    /**
+    * Handles after delete for OpportunityTeamMember
+    * @param oldList List of old OpportunityTeamMember
+    * @param oldMap Map of Old OpportunityTeamMember
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

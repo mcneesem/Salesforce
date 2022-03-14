@@ -389,7 +389,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>DocuSign Details</label>
+        <label>Document Details</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -546,11 +546,6 @@
             <sortOrder>16</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.NSP_CreateQuote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>New_Core_Sales_Event</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>18</sortOrder>
@@ -589,6 +584,11 @@
             <actionName>New_Correspondence_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>25</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.NSP_CreateQuote</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>17</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

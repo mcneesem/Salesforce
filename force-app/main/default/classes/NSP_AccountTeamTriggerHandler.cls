@@ -68,4 +68,15 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
         // Share Account with account team member user  Sales office Public groups --STY-01786 
         NSP_recordSharing.shareAccountonATMUpdate((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap ); 
     }
+    /**
+    * Handles after delete for NSP_Account_Team__c.
+    * @param oldList List of old NSP_Account_Team__c.
+    * @param oldMap Map of Old NSP_Account_Team__c. 
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+        // removing Share access with account team member user  Sales office Public groups --STY-01786  
+        NSP_recordSharing.updateAccessOnATMRemoval((List<NSP_Account_Team__c>) oldList,(Map<Id,NSP_Account_Team__c>) oldMap); 
+    }
 }

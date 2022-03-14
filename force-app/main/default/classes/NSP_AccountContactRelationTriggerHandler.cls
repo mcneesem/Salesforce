@@ -62,4 +62,13 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
         NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
         accContactTriggerHelperObject.afterUpdateDirector((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
     }
+    /**
+    * Handles after delete for AccountContactRelation
+    * @param oldList List of old AccountContactRelation
+    * @param oldMap Map of Old AccountContactRelation
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

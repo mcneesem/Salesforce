@@ -348,6 +348,10 @@
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_WetSignature__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -389,7 +393,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>DocuSign Details</label>
+        <label>Document Details</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>

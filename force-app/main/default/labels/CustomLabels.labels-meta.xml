@@ -107,7 +107,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Envelope Configuration</shortDescription>
-        <value>a7r2D000000HhLJQA0</value>
+        <value>a8D8M0000008OIWUA2</value>
     </labels>
     <labels>
         <fullName>NSP_Benchmark_Date_Validation</fullName>
@@ -305,7 +305,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_FTA_Base_URL</shortDescription>
-        <value>https://testportalapps.insperity.com/financialcomparison/financialanalysis/</value>
+        <value>https://stageportalapps.insperity.com/financialcomparison/financialanalysis/</value>
     </labels>
     <labels>
         <fullName>NSP_FTA_OppId</fullName>
@@ -675,7 +675,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Recruiting Envelope Configuration</shortDescription>
-        <value>a7r2D000000HhLnQAK</value>
+        <value>a8D8M0000008OIdUAM</value>
     </labels>
     <labels>
         <fullName>NSP_RequestFirstCheckDate</fullName>
@@ -720,7 +720,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Standalone Envelope Configuration</shortDescription>
-        <value>a7r2D000000HhLhQAK</value>
+        <value>a8D8M0000008OISUA2</value>
     </labels>
     <labels>
         <fullName>NSP_SubmitApprovalError</fullName>
@@ -771,7 +771,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX Envelope Configuration</shortDescription>
-        <value>a7r2D000000HhLIQA0</value>
+        <value>a8D8M0000008OIVUA2</value>
     </labels>
     <labels>
         <fullName>Retirement_Services_For_Non_WO_Products</fullName>
@@ -816,7 +816,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_SingleSigner_Envelope_Configuration</shortDescription>
-        <value>a7r2D000000HhLoQAK</value>
+        <value>a8D8M0000008OIeUAM</value>
     </labels>
     <labels>
         <fullName>NSP_ReferralLeadErrorMessage</fullName>
@@ -868,5 +868,50 @@
         <protected>false</protected>
         <shortDescription>NSP_LeadTriggerError</shortDescription>
         <value>You dont have permission to take that action on this record.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ThankYou_Partner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP ThankYou Partner</shortDescription>
+        <value>/apex/ThankYou</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CANNOT_MOVE_TO_CLOSEDWON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
+        <value>You do not have access to move opportunity to Closed Won</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ExitCriteriaProductException</fullName>
+        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ExitCriteriaProductException</shortDescription>
+        <value>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_NonOwnerBasedCriteriaProducts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_NonOwnerBasedCriteriaProducts</shortDescription>
+        <value>Applicant Tracking,Employment Screening,Expense Management,HR Consulting,Insurance Services,Learning &amp; Development,Performance Management,Recruiting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OwnerBasedCriteriaProducts</fullName>
+        <categories>owner role check, BPA, BPC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
+        <value>Organizational Planning,Time &amp; Attendance,Workforce Acceleration,Workforce Administration</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Approve_Primary_Quote</fullName>
+        <categories>primary quote approval, proposal stage</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Approve Primary Quote</shortDescription>
+        <value>Primary Quote status must be Approved or Submitted To Order to move opportunity to Proposal</value>
     </labels>
 </CustomLabels>

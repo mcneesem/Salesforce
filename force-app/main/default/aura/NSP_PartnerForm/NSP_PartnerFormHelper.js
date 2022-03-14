@@ -2,8 +2,9 @@
     saveLead : function(component, event) {
         var action = component.get("c.createAccount");
         var accountObject = component.get("v.AccountObj");
+        var conObj = component.get("v.contactObj"); // Added as part of STY-02211
          action.setParams({ accountObject : JSON.stringify(accountObject),
-                       contactId : component.get("v.contactId") });
+                            contactObject : JSON.stringify(conObj)});
           action.setCallback(this, function(response) {
             var state = response.getState();
      
@@ -11,7 +12,7 @@
                 
                 if(response.getReturnValue() === "success"){
                     var base_url = window.location.origin
-                window.location.href = base_url +$A.get("$Label.c.NSP_ThankYou_Page");
+                    window.location.href = base_url +$A.get("$Label.c.NSP_ThankYou_Partner");
                 }else if(response.getReturnValue() === "exists"){
                     this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Duplicate_Account_Message"));
                 }
@@ -85,13 +86,4 @@
         });
         $A.enqueueAction(action);
     },
-    getCaptcha: function(component, eventz,errormsg) {
-        var vfURL = $A.get("{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}") ;
-        
-        window.addEventListener('message', function(event){
-            if(event.data === component.get("v.unlock") ){
-                component.set('v.isDisable', false); 
-            }
-        }, false);
-    }
 })

@@ -74,4 +74,13 @@ public class NSP_OpportunityLineItemTriggerHandler implements NSP_ITriggerHandle
        oliHelperObject.afterUpdateDirector((Map<Id, OpportunityLineItem>) newMap,(Map<Id, OpportunityLineItem>) oldMap);
         
     }
+     /**
+    * Handles after delete for OpportunityLineItem
+    * @param oldList List of old OpportunityLineItem
+    * @param oldMap Map of Old OpportunityLineItem
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 }

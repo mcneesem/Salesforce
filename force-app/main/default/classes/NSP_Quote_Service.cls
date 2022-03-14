@@ -17,7 +17,7 @@ public class NSP_Quote_Service {
     try {
         String queryParam;
         queryParam = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen'+'?'+
-        'aid='+'50202'+'&'+
+        'aid='+'65500'+'&'+
         'config='+templateId+'&'+
         'eos[0].Id='+recordId+'&'+
         'eos[0].System='+'Salesforce'+'&'+

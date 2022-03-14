@@ -70,6 +70,14 @@ public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
         }
         
     }
-
+  /**
+    * Handles after delete for Event
+    * @param oldList List of old Event
+    * @param oldMap Map of Old Event
+    * @return void             
+    *                
+    */ 
+     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 
 }
