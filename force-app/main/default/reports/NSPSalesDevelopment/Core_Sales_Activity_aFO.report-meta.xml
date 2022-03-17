@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Activity$Owner.Name</field>
+    </columns>
+    <columns>
+        <field>Activity$Account</field>
+    </columns>
+    <columns>
+        <field>Activity$NSP_Opportunity__c.Name</field>
+    </columns>
+    <columns>
+        <field>Activity$NSP_Opportunity__c.StageName</field>
+    </columns>
+    <columns>
+        <field>Activity$NSP_Opportunity__c.CloseDate</field>
+    </columns>
+    <columns>
+        <field>Activity$NSP_Event_Subtype__c</field>
+    </columns>
+    <columns>
+        <field>Activity$NSP_Event_Type__c</field>
+    </columns>
+    <columns>
+        <field>Activity$NSP_Task_Subtype__c</field>
+    </columns>
+    <columns>
+        <field>Activity$TaskSubtype</field>
+    </columns>
+    <currency>USD</currency>
+    <description>DL 02.18.2022</description>
+    <filter>
+        <criteriaItems>
+            <column>Activity$NSP_Event_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Core Sales</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Core Sales Activity</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activities_Deluxe_NSP__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Activity$CompletedDateTime</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
