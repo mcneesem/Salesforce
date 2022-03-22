@@ -80,91 +80,91 @@
             <value>
                 <fullName>BusinessProfileOnly</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>BusinessProfileOnly</label>
             </value>
             <value>
                 <fullName>BusinessProfileWithEEDatasheet</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>BusinessProfileWithEEDatasheet</label>
             </value>
             <value>
                 <fullName>CAMLetterofAssignment</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>CAMLetterofAssignment</label>
             </value>
             <value>
                 <fullName>CAMRenewalAddendum</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>CAMRenewalAddendum</label>
             </value>
             <value>
                 <fullName>CAMSuccessorTreatmentRepresentative</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>CAMSuccessorTreatmentRepresentative</label>
             </value>
             <value>
                 <fullName>CommissionOnlyEmployeesQuestionnaire</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>CommissionOnlyEmployeesQuestionnaire</label>
             </value>
             <value>
                 <fullName>EmployeeRecordServiceandOFEAddendum</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>EmployeeRecordServiceandOFEAddendum</label>
             </value>
             <value>
                 <fullName>EnrollmentFeeAddendumDocuSignMultiPayment</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>EnrollmentFeeAddendumDocuSignMultiPayment</label>
             </value>
             <value>
                 <fullName>ExecutiveSummaryGuide</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>ExecutiveSummaryGuide</label>
             </value>
             <value>
                 <fullName>ExhibitF401k</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>ExhibitF401k</label>
             </value>
             <value>
                 <fullName>GLALInsuranceCertificateRequestwithSample</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>GLALInsuranceCertificateRequestwithSample</label>
             </value>
             <value>
                 <fullName>GroupHealthHistoryOnly</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>GroupHealthHistoryOnly</label>
             </value>
             <value>
                 <fullName>MasterEnrollmentFeeAddendum</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>MasterEnrollmentFeeAddendum</label>
             </value>
             <value>
                 <fullName>MidMarketBPCSaleSheet</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>MidMarketBPCSaleSheet</label>
             </value>
             <value>
                 <fullName>NewClientRiskReviewOnly</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>NewClientRiskReviewOnly</label>
             </value>
         </valueSetDefinition>

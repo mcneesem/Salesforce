@@ -46182,7 +46182,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>NSP_PartnerForm</apexPage>
+        <apexPage>PartnerForm</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -46190,7 +46190,7 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>NSP_ThankYou_Page</apexPage>
+        <apexPage>ThankYou</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

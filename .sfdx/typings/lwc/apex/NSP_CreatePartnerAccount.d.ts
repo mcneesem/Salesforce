@@ -1,5 +1,5 @@
 declare module "@salesforce/apex/NSP_CreatePartnerAccount.createAccount" {
-  export default function createAccount(param: {accountObject: any, contactId: any}): Promise<any>;
+  export default function createAccount(param: {accountObject: any, contactObject: any}): Promise<any>;
 }
 declare module "@salesforce/apex/NSP_CreatePartnerAccount.getPiklistValues" {
   export default function getPiklistValues(param: {objectAPIName: any, fieldAPIName: any}): Promise<any>;

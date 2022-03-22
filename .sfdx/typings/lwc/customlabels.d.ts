@@ -478,3 +478,27 @@ declare module "@salesforce/label/c.NSP_LeadTriggerError" {
     var NSP_LeadTriggerError: string;
     export default NSP_LeadTriggerError;
 }
+declare module "@salesforce/label/c.NSP_ThankYou_Partner" {
+    var NSP_ThankYou_Partner: string;
+    export default NSP_ThankYou_Partner;
+}
+declare module "@salesforce/label/c.NSP_CANNOT_MOVE_TO_CLOSEDWON" {
+    var NSP_CANNOT_MOVE_TO_CLOSEDWON: string;
+    export default NSP_CANNOT_MOVE_TO_CLOSEDWON;
+}
+declare module "@salesforce/label/c.NSP_ExitCriteriaProductException" {
+    var NSP_ExitCriteriaProductException: string;
+    export default NSP_ExitCriteriaProductException;
+}
+declare module "@salesforce/label/c.NSP_NonOwnerBasedCriteriaProducts" {
+    var NSP_NonOwnerBasedCriteriaProducts: string;
+    export default NSP_NonOwnerBasedCriteriaProducts;
+}
+declare module "@salesforce/label/c.NSP_OwnerBasedCriteriaProducts" {
+    var NSP_OwnerBasedCriteriaProducts: string;
+    export default NSP_OwnerBasedCriteriaProducts;
+}
+declare module "@salesforce/label/c.NSP_Approve_Primary_Quote" {
+    var NSP_Approve_Primary_Quote: string;
+    export default NSP_Approve_Primary_Quote;
+}
