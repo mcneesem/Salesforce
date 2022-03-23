@@ -85,6 +85,15 @@
             {label: 'Field Name', fieldName: 'NSP_Field_Name__c', type: 'text'},
               {label: 'Old Value', fieldName: 'NSP_Old_Value__c', type: 'longText'},
               {label: 'New Value', fieldName: 'NSP_New_Value__c', type: 'longText'},
+              {label : 'Effective Date', fieldName: 'NSP_Effective_Date__c', type :'date',
+             sortable:false,typeAttributes: {  
+                                                                            day: 'numeric',  
+                                                                            month: 'short',  
+                                                                            year: 'numeric',  
+                                                                            hour: '2-digit',  
+                                                                            minute: '2-digit',  
+                                                                            second: '2-digit',  
+                                                                            hour12: true}},
               {label: 'Modified Date', fieldName: 'NSP_Modified_Date__c', type: 'date',
                sortable:false,typeAttributes: {  
                                                                             day: 'numeric',  

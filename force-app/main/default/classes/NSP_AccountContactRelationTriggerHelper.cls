@@ -91,4 +91,31 @@ public class NSP_AccountContactRelationTriggerHelper {
             NSP_CustomException.LogException(ex);
         } 
     }
+    /***********************************************************************************************
+    * MethodName: beforeUpsertDirector
+    * Description : This method will add the validation to not to create more than One ACR for an Account 
+    * Params:       List<AccountContactRelation> newList
+    *Author : Nischay Jindal
+    * ********************************************************************************************/   
+	public static void beforeUpsertDirector(List<AccountContactRelation> newList) {
+        try{
+            Set<Id> contactIdSet = new Set<Id>();
+            Set<Id> accountIdSet = new Set<Id>();
+            for(AccountContactRelation accConObj : newList){
+                if(accConObj.NSP_Is_Primary__c){
+                    contactIdSet.add(accConObj.ContactId);
+                    accountIdSet.add(accConObj.AccountId);
+                }
+            }
+            Map<Id,AccountContactRelation> accountContactMap= new Map<Id,AccountContactRelation>([Select Id ,ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation
+                                                                                                    WHERE (ContactId IN:contactIdSet OR AccountId IN:accountIdSet) AND NSP_Is_Primary__c = True ]);
+            for(AccountContactRelation accConObj : newList){
+                if(accountContactMap.size() > 0 && !accountContactMap.containsKey(accConObj.Id) ){
+                    accConObj.NSP_Is_Primary__c.addError(System.label.NSP_PrimaryContactValidation);
+                }
+            }
+            }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_AccountContactRelationTriggerHelper','beforeUpsertDirector',ex.getMessage()); 
+        }
+     }
 }

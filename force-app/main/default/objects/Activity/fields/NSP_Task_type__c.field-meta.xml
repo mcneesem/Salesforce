@@ -45,58 +45,60 @@
                 <label>Channels</label>
             </value>
             <value>
-                <fullName>Client reference</fullName>
+                <fullName>Form Submission</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Client reference</label>
-            </value>
-            <value>
-                <fullName>Demo</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Demo</label>
-            </value>
-            <value>
-                <fullName>Email Click</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Email Click</label>
-            </value>
-            <value>
-                <fullName>Email Open</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Email Open</label>
+                <label>Form Submission</label>
             </value>
             <value>
                 <fullName>Email send</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Email send</label>
             </value>
             <value>
-                <fullName>EmailBounced</fullName>
+                <fullName>Email Open</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>EmailBounced</label>
+                <label>Email Open</label>
             </value>
             <value>
-                <fullName>Form Submission</fullName>
+                <fullName>Email Click</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Form Submission</label>
-            </value>
-            <value>
-                <fullName>Required for Booking</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Required for Booking</label>
+                <label>Email Click</label>
             </value>
             <value>
                 <fullName>Website visit</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Website visit</label>
+            </value>
+            <value>
+                <fullName>EmailBounced</fullName>
+                <default>false</default>
+                <label>EmailBounced</label>
+            </value>
+            <value>
+                <fullName>Subscribed</fullName>
+                <default>false</default>
+                <label>Subscribed</label>
+            </value>
+            <value>
+                <fullName>Unsubscribed</fullName>
+                <default>false</default>
+                <label>Unsubscribed</label>
+            </value>
+            <value>
+                <fullName>Demo</fullName>
+                <default>false</default>
+                <label>Demo</label>
+            </value>
+            <value>
+                <fullName>Required for Booking</fullName>
+                <default>false</default>
+                <label>Required for Booking</label>
+            </value>
+            <value>
+                <fullName>Client reference</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Client reference</label>
             </value>
         </valueSetDefinition>
     </valueSet>

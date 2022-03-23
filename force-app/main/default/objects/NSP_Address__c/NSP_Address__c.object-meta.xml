@@ -90,8 +90,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <content>NSP_NewAddress_Related</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>

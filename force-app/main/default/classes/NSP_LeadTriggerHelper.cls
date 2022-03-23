@@ -37,6 +37,7 @@ public class NSP_LeadTriggerHelper {
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
+			dunsCheck(leadObject);
             
             //switch record type to Lead or Referral record type
             if (leadObject.RecordTypeId == NEW_LEAD_RT_ID) {
@@ -97,6 +98,7 @@ public class NSP_LeadTriggerHelper {
         List < Lead > payrollHCMList = new List < Lead > ();
         List < String > nationalAccountList = Label.NSP_National_Accounts.toUppercase().split(',');
         List < Lead > nationalAccountLeadList = new List < Lead > ();
+		Boolean isOwnerUpdated = false;
         /* Added as part of STY-01725 */
         List<String> inboundOrOutBoundUserList = Label.Inbound_and_Outbound_UserRole.split(',');
         /*********************/
@@ -117,10 +119,16 @@ public class NSP_LeadTriggerHelper {
             
             /* Added as part of DF-01301 */
             if(trigger.isupdate && trigger.isbefore){
+                if(userDetails.Id!=leadOldMap.get(leadId).OwnerId){
                 if(string.valueOf(leadOldMap.get(leadId).OwnerId).startsWith('005')){
                     ownerIdset.add(leadOldMap.get(leadId).OwnerId);
                 }
             }
+            }
+			/* Added as part of CR-027 */
+			if (leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != leadOldMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c) {
+                isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
+			}
             /* Added as part of DF-01301 */
             
             /* As part of DF-00998 comments
@@ -128,9 +136,12 @@ public class NSP_LeadTriggerHelper {
 * If the loggedIn user is not Inbound or Outbound solutions user, then No Lead assignment rules will trigger 
 */
             
-            if (inboundOrOutBoundUserList.contains(userDetails.UserRole.Name) 
-                && leadNewMap.get(leadId).NSP_Assign_Lead__c == true
-                && leadOldMap.get(leadId).Lead_Owner_Auto_Assignment__c == False) {
+            if ((inboundOrOutBoundUserList.contains(userDetails.UserRole.Name) && 
+			     leadNewMap.get(leadId).NSP_Assign_Lead__c == true && 
+				 leadOldMap.get(leadId).Lead_Owner_Auto_Assignment__c == False && 
+				 leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c == null) || 
+				 (leadNewMap.get(leadId).NSP_Lead_Routing__c == true && leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c == null) || 
+				 (leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && isOwnerUpdated == false)) {
                     if (String.isnotBlank(leadNewMap.get(leadId).company) && nationalAccountList.contains(leadNewMap.get(leadId).company.toUppercase())) {
                         //If the Lead Company is associated with National Account, route the correct National Account Queue
                         nationalAccountLeadList.add(leadNewMap.get(leadId));
@@ -178,6 +189,7 @@ public class NSP_LeadTriggerHelper {
             
             for (Id leadId: leadNewMap.keySet()) {
                 if(trigger.isupdate && trigger.isbefore){
+                    if(userDetails.Id!=leadOldMap.get(leadId).OwnerId){
                     if(string.valueOf(leadOldMap.get(leadId).OwnerId).startsWith('005')){
                         if(groupMemberList.isEmpty()){
                             leadNewMap.get(leadId).Id.addError(system.label.NSP_LeadTriggerError);  
@@ -186,6 +198,7 @@ public class NSP_LeadTriggerHelper {
                     }
                 }
             }
+        }
         }
         /* Added as part of DF-01301 */
         
@@ -205,7 +218,8 @@ public class NSP_LeadTriggerHelper {
         assignLeadToNationalAccountQueue(nationalAccountLeadList);
         //assigning leads to mid market queue in number of employees >=EMP_THRESH_150
         assignLeadToPayrollHCM(payrollHCMList);
-        
+		//Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
+        createContact(leadNewMap.Values());        
     }
     
     /**
@@ -415,48 +429,44 @@ public class NSP_LeadTriggerHelper {
 *                
 */
     
-    public void setContactasCOI(Map < String, Lead > accountLeadMap, Map < String, Lead > opportunityLeadMap) {
-        
-        List < AccountContactRelation > acrList = new List < AccountContactRelation > ();
-        List < OpportunityContactRole > ocrList = new List < OpportunityContactRole > ();
-        for (String accntID: accountLeadMap.keyset()) {
-            Lead leadObject = accountLeadMap.get(accntID);
-            
-            AccountContactRelation acrObject = new AccountContactRelation();
-            acrObject.AccountId = accntID;
-            acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
-            acrObject.Roles = leadObject.NSP_Referral_Source__c;
-            acrObject.NSP_isReferral__c = true;
-            acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
-            acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-            
-            acrList.add(acrObject);
-        }
-        
-        for (String opportunityId: opportunityLeadMap.keySet()) {
-            Lead leadObject = opportunityLeadMap.get(opportunityId);
-            
-            OpportunityContactRole ocrObject = new OpportunityContactRole();
-            ocrObject.OpportunityId = leadObject.convertedOpportunityId;
-            ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
-            ocrObject.Role = leadObject.NSP_Referral_Source__c;
-            ocrObject.NSP_isReferral__c = true;
-            ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
-            ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-            
-            ocrList.add(ocrObject);
-        }
-        
-        try {
-            insert acrList;
-            insert ocrList;
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
-        }
-        
+public void setContactasCOI(Map < String, Lead > accountLeadMap, Map < String, Lead > opportunityLeadMap) {
+    Set < Id > AccountIds = new Set < Id > ();
+    List < AccountContactRelation > acrList = new List < AccountContactRelation > ();
+    List < OpportunityContactRole > ocrList = new List < OpportunityContactRole > ();
+    for (String accntID: accountLeadMap.keyset()) {
+        AccountIds.add(accntID);
+        Lead leadObject = accountLeadMap.get(accntID);
+        AccountContactRelation acrObject = new AccountContactRelation();
+        acrObject.AccountId = accntID;
+        acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
+        acrObject.Roles = leadObject.NSP_Referral_Source__c;
+        acrObject.NSP_isReferral__c = true;
+        acrObject.NSP_Is_Primary__c = true;
+        acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
+        acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+        acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+        acrList.add(acrObject);
     }
+    for (String opportunityId: opportunityLeadMap.keySet()) {
+        Lead leadObject = opportunityLeadMap.get(opportunityId);
+        OpportunityContactRole ocrObject = new OpportunityContactRole();
+        ocrObject.OpportunityId = leadObject.convertedOpportunityId;
+        ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
+        ocrObject.Role = leadObject.NSP_Referral_Source__c;
+        ocrObject.NSP_isReferral__c = true;
+        ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
+        ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+        ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+        ocrList.add(ocrObject);
+    }
+    try {
+        insert acrList;
+        insert ocrList;
+        NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountIds);
+    } catch (Exception ex) {
+        NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactasCOI', ex.getMessage());
+    }
+}
     
     /**
 * This method accepts all oppportunity Ids during lead conversion and defaults the
@@ -557,5 +567,120 @@ insert tasksList;
                        leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
                    }
     }
-    
+	
+    /**
+* Method added for CR-027 
+* @param leadObject Current Lead Object Data. 
+* @return void  
+*/
+    public Boolean dunsCheck(Lead leadObject) {
+        List < Lead > inboundSolutionsList = new List < Lead > ();
+        List < String > zipCodeList = new List < String > ();
+        List < Lead > leadsForRoundRobin = new List < Lead > ();
+        Boolean isOwnerUpdated = false;
+        if (leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
+            List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c =: leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c AND NSP_Parent_Lead__c = NULL AND id !=: leadObject.id];
+            if (leadResult.size() == 1) {
+                for (Lead dunsLead: leadResult) {
+                    leadObject.NSP_Parent_Lead__c = dunsLead.Id;
+                    leadObject.OwnerId = dunsLead.OwnerId;
+                    isOwnerUpdated = true;
+                }
+            } else if (leadResult.isEmpty()) {
+                List < Account > accResult = [SELECT Id, OwnerId, Owner.Name, Owner.UserRole.Name, NSP_Account_Status__c FROM Account WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c =: leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c];
+                if (accResult.size() == 1) {
+                    isOwnerUpdated = true;
+                    for (Account dunsAcc: accResult) {
+                        if (dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && (dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER)) {
+                            leadObject.OwnerId = dunsAcc.OwnerId;
+                        }
+                        if (dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && (dunsAcc.Owner.UserRole.Name != System.Label.NSP_PartnerAccountRoles && dunsAcc.Owner.UserRole.Name != NSP_SalesConstants.BPC_USER)) {
+                            if (leadObject.PostalCode != null) {
+                                leadsForRoundRobin.add(leadObject);
+                                zipCodeList.add(leadObject.PostalCode);
+                            }
+                        } else if ((dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && (dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER)) || dunsAcc.NSP_Account_Status__c != NSP_SalesConstants.INACTIVE) {
+                            leadObject.OwnerId = dunsAcc.OwnerId;
+                        }
+                    }
+                    if (!leadsForRoundRobin.isEmpty()) {
+                        setLeadRegion(zipCodeList, leadsForRoundRobin);
+                    }
+                    else if(leadsForRoundRobin.isEmpty()){
+                        isOwnerUpdated = false;
+                    }
+                }
+            } else {
+                isOwnerUpdated = false;
+            }
+        }
+        return isOwnerUpdated;
+    }
+    /**
+* Method Name : createContact 
+* Description : Method to create Contact on Lead Conversion
+* Author : Raksha       Date : 11/03/2022
+* @param newContactList,contactOldMap.  
+* @return void  
+*/
+    public void createContact(List < Lead > newLeadList) {
+        Map < Id, Lead > parentMap = new Map < Id, Lead > ();
+        Map < Id, Id > mapLead = new Map < Id, Id > ();
+        List < Task > linkTaskList = new List < Task > ();
+        List < Event > linkEventList = new List < Event > ();
+        Set < Id > taskIdSet = new Set < Id > ();
+        Set < Id > eventIdSet = new Set < Id > ();
+        List < Database.LeadConvert > MassLeadconvert = new List < Database.LeadConvert > ();
+        for (Lead newLead: newLeadList) {
+            if (newLead.IsConverted) {
+                parentMap.put(newLead.Id, newLead);
+            }
+        }
+        List < Lead > leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, NSP_Parent_Lead__r.Status FROM Lead WHERE NSP_Parent_Lead__c IN: parentMap.keySet() AND NSP_Parent_Lead__r.Status !=: NSP_SalesConstants.LEAD_STATUS_QUALIFIED];
+        if (!leadResult.isEmpty()) {
+            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
+            Database.LeadConvert lc = new Database.LeadConvert();
+            for (Lead childLead: leadResult) {
+                if (!childLead.IsConverted) {
+                    taskIdSet.add(childLead.Id);
+                    mapLead.put(childLead.Id, parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId);
+                    lc.setLeadId(childLead.id);
+                    lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
+                    lc.setOwnerId(userinfo.getUserId());
+                    lc.setDoNotCreateOpportunity(TRUE);
+                    lc.setConvertedStatus(convertStatus.MasterLabel);
+                    MassLeadconvert.add(lc);
+                }
+            }
+            List < Task > taskList = [SELECT Id, WhatId, WhoId FROM Task WHERE WhoId IN: mapLead.keySet()];
+            List < Event > eventList = [SELECT Id, WhatId, WhoId FROM Event WHERE WhoId IN: mapLead.keySet()];
+            if (!taskList.isEmpty()) {
+                for (Task taskObj: taskList) {
+                    taskObj.WhatId = mapLead.get(taskObj.WhoId);
+                    taskObj.WhoId = null;
+                    linkTaskList.add(taskObj);
+                }
+            }
+            if (!eventList.isEmpty()) {
+                for (Event eventObj: eventList) {
+                    eventObj.WhatId = mapLead.get(eventObj.WhoId);
+                    eventObj.WhoId = null;
+                    linkEventList.add(eventObj);
+                }
+            }
+        }
+        try {
+            if (!MassLeadconvert.isEmpty()) {
+                Database.convertLead(MassLeadconvert);
+            }
+            if (!linkTaskList.isEmpty()) {
+                update linkTaskList;
+            }
+            if (!linkEventList.isEmpty()) {
+                update linkEventList;
+            }
+        } catch (Exception ex) {
+            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'createContact', ex.getMessage());
+        }
+    }    
 }

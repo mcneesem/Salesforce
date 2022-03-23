@@ -3,7 +3,7 @@
     <fullName>NSP_District_Manager__c</fullName>
     <description>Formula field to track Distric Manager of Activity Owner</description>
     <externalId>false</externalId>
-    <formula>Owner:User.NSP_District_Manager__r.FirstName &amp; &apos; &apos; &amp;  Owner:User.NSP_District_Manager__r.LastName</formula>
+    <formula>IF(NOT(ISNULL( NSP_Legacy_District_Manager__c )),NSP_Legacy_District_Manager__c , Owner:User.NSP_District_Manager__r.FirstName &amp; &apos; &apos; &amp;  Owner:User.NSP_District_Manager__r.LastName)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>District Manager</label>
     <required>false</required>

@@ -29,10 +29,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Primary_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Website</field>
             </layoutItems>
             <layoutItems>
@@ -237,10 +233,6 @@
                 <field>NSP_Template_Selection__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_PrimaryContactEmail__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Channel_Manager__c</field>
             </layoutItems>
@@ -440,6 +432,7 @@
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.ACCOUNT_NAME</fields>
+        <fields>NSP_Is_Primary__c</fields>
         <fields>ACCCONRELATION.ROLES</fields>
         <fields>NSP_isReferral__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>

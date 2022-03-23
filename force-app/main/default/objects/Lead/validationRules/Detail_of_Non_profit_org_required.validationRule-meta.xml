@@ -5,6 +5,7 @@
     <description>If referral benefits nonprofit organization then, Nonprofit name and Nonprofit Tax ID needs to be provided</description>
     <errorConditionFormula>AND($RecordType.Name=&quot;Referral&quot;,OR(ISPICKVAL( NSP_Referralbenefitsanonprofitorg__c ,&apos;Donation&apos;),
 ISPICKVAL( NSP_Referralbenefitsanonprofitorg__c ,&apos;Match&apos;)),
-OR(ISBLANK(NSP_Nonprofit_Organization_Name__c),ISBLANK(NSP_Nonprofit_Organization_Tax_Id__c)))</errorConditionFormula>
+OR(ISBLANK(NSP_Nonprofit_Organization_Name__c),ISBLANK(NSP_Nonprofit_Organization_Tax_Id__c)),
+$Setup.NSP_Trigger_Switch__c.LeadValidations__c != true)</errorConditionFormula>
     <errorMessage>Please enter the Nonprofit Organization Name and Nonprofit Organization Tax Id.</errorMessage>
 </ValidationRule>

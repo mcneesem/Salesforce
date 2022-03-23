@@ -22,6 +22,9 @@
                             <value>Account.Manage_Order</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.NSP_Update_NAICS_SIC</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.Referral_Log</value>
                         </valueListItems>
                         <valueListItems>

@@ -7,7 +7,7 @@
         <field>Lead.Activities$NSP_Activity_type__c</field>
     </columns>
     <columns>
-        <field>Lead.Activities$TaskSubtype</field>
+        <field>Lead.Activities$NSP_Task_Subtype__c</field>
     </columns>
     <columns>
         <field>Lead.Activities$Owner</field>

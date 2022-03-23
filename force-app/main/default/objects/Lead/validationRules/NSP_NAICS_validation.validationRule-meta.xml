@@ -3,7 +3,7 @@
     <fullName>NSP_NAICS_validation</fullName>
     <active>false</active>
     <description>The NAICS number should be exactly of 6 digits</description>
-    <errorConditionFormula>IF(AND(LEN(NSP_NAICS__c) &lt;&gt; 6,NOT(ISBLANK(NSP_NAICS__c))), TRUE,FALSE)</errorConditionFormula>
+    <errorConditionFormula>IF(AND(LEN(NSP_NAICS__c) &lt;&gt; 6, $Setup.NSP_Trigger_Switch__c.LeadValidations__c != true, NOT(ISBLANK(NSP_NAICS__c))), TRUE,FALSE)</errorConditionFormula>
     <errorDisplayField>NSP_NAICS__c</errorDisplayField>
     <errorMessage>NAICS number should be of 6 digits</errorMessage>
 </ValidationRule>

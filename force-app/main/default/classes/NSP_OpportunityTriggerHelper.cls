@@ -74,8 +74,6 @@ public class NSP_OpportunityTriggerHelper {
 		NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
 		//Setting direct assignments to opportunity records
 		oppHelperFuncObj.setDirectOpptyFieldsAssignments(newList);
-        // Calling method to stamp account owner email on opty reocord
-        oppHelperFuncObj.getAccountOwnerEmail(newList,accountIdSet);
         
         if(!opportunityWoWxList.isEmpty()){
             //Calling method to stamp WO/WX emails on oprty record
@@ -351,10 +349,11 @@ public class NSP_OpportunityTriggerHelper {
             //STY-01519 - Asset creation from Opportunity line item
             if(opportunityNewMap.get(opportunityId).stagename != opportunityOldMap.get(opportunityId).stagename
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
+               // Added as part of DF-01325 
+                NSP_EmailWithAttachment.sendClosedWonEmailNotifications(opportunityId,newOpportunity);
                    closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
                }
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
-            
             if(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO 
                && (String.isNotBlank(opportunityNewMap.get(opportunityId).NSP_Contribution_Level__c) 
                    && String.isNotBlank(opportunityNewMap.get(opportunityId).NSP_Frequency_of_Distribution__c))

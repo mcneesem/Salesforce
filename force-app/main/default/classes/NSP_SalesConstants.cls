@@ -89,6 +89,7 @@ public class NSP_SalesConstants {
     
     public static final String CALL_BACK_TASK = 'Call Back';
     public static final String LeadQualifier = 'Lead Qualifier';
+	public static final String LEAD_STATUS_QUALIFIED = 'Qualified';
     public static final String Account = 'Account';
     public static final String successResponse = 'success';
     public static final String existsResponse = 'exists';
@@ -114,4 +115,8 @@ public class NSP_SalesConstants {
     public static final String WO_WS = 'WO/WS';
     public static final String BPC_USER = 'Business Performance Consultant';
     public static final String NEW_CLIENT_SALES = 'New Client Sales';
+    public static final String MIDMARKETREGION  = 'Mid Market';
+    public static final String EloquaTaskRecordType  = 'Eloqua Task RT';
+
+
 }

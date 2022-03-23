@@ -31,7 +31,7 @@
     <div class="c-container">
         <lightning:card class="slds-card_boundary" iconName="{!v.iconName}">
             <aura:set attribute="title">
-                <b><a class="slds-card__header-link" onclick="{!c.handleGotoRelatedList}">{!(v.sobjectLabelPlural) + ' (' + (v.numberOfRecordsForTitle) + ')'}</a></b>
+                <b><a class="slds-card__header-link" >{!(v.sobjectLabelPlural) + ' (' + (v.numberOfRecordsForTitle) + ')'}</a></b>
             </aura:set>             
             <aura:if isTrue="{!not(empty(v.records))}">    
                 <p class="slds-p-horizontal_small">                  

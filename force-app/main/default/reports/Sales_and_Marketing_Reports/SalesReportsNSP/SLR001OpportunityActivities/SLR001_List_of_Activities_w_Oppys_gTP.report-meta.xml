@@ -78,9 +78,6 @@
         <field>ACCOUNT_OWNER_NAME</field>
     </columns>
     <columns>
-        <field>Account.NSP_Primary_Contact__c</field>
-    </columns>
-    <columns>
         <aggregateTypes>Sum</aggregateTypes>
         <field>STAGE_DURATION</field>
     </columns>

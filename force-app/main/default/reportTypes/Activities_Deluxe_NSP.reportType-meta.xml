@@ -349,11 +349,6 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Product_of_Interest__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Lead__c</field>
             <table>Activity</table>
         </columns>

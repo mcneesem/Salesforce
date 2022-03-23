@@ -30,6 +30,10 @@
                 <field>NSP_Account_Status__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Pending_Report_Comments__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Business_Type__c</field>
             </layoutItems>

@@ -5,11 +5,8 @@
         <description>Checks whether status is completed or not.</description>
         <name>Is_Completed</name>
         <label>Is Completed?</label>
-        <locationX>314</locationX>
-        <locationY>311</locationY>
-        <defaultConnector>
-            <targetReference>Update_Completed_Date_to_Null_if_Status_is_Empty</targetReference>
-        </defaultConnector>
+        <locationX>522</locationX>
+        <locationY>594</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isStatusCompleted</name>
@@ -19,6 +16,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Eloqua_Task_RT</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -36,10 +40,39 @@
                     <stringValue>Open</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Eloqua_Task_RT</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Update_Completed_Date_to_Null</targetReference>
             </connector>
             <label>isStatusOpen</label>
+        </rules>
+        <rules>
+            <name>ifEloquaRecord</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.FirstName</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Eloqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Integration User</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Eloqua_Record_Type</targetReference>
+            </connector>
+            <label>ifEloquaRecord</label>
         </rules>
     </decisions>
     <description>This flow describes about the updation of Completed Date on Task based on Status.</description>
@@ -60,7 +93,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -70,12 +103,48 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the record type id for the task Eloqua Recordtype</description>
+        <name>Get_Eloqua_Task_Id</name>
+        <label>Get Eloqua Task RecordId</label>
+        <locationX>518</locationX>
+        <locationY>347</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Completed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Eloqua_Task_RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <description>Completed Date is updated to Today based on Status.</description>
         <name>Update_Complete_Date</name>
         <label>Update Complete Date</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationX>217</locationX>
+        <locationY>662</locationY>
         <inputAssignments>
             <field>NSP_Completed_Date__c</field>
             <value>
@@ -88,29 +157,32 @@
         <description>Completed Date is updated to Null If Status is Open.</description>
         <name>Update_Completed_Date_to_Null</name>
         <label>Update Completed Date to Null</label>
-        <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationX>409</locationX>
+        <locationY>675</locationY>
         <inputAssignments>
             <field>NSP_Completed_Date__c</field>
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <description>Update Completed Date to Null if Status is Empty</description>
-        <name>Update_Completed_Date_to_Null_if_Status_is_Empty</name>
-        <label>Update Completed Date to Null if Status is Empty</label>
-        <locationX>578</locationX>
-        <locationY>431</locationY>
+        <description>This node is created to update the record type id for the Eloqua Tasks which are created by integration user for Eloqua</description>
+        <name>Update_Eloqua_Record_Type</name>
+        <label>Update Eloqua Record Type</label>
+        <locationX>732</locationX>
+        <locationY>675</locationY>
         <inputAssignments>
-            <field>NSP_Completed_Date__c</field>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Eloqua_Task_Id.Id</elementReference>
+            </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
-        <locationY>0</locationY>
+        <locationX>458</locationX>
+        <locationY>48</locationY>
         <connector>
-            <targetReference>Is_Completed</targetReference>
+            <targetReference>Get_Eloqua_Task_Id</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -125,4 +197,11 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>idTaskEloquaRT</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
