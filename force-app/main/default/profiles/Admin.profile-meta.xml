@@ -46119,14 +46119,14 @@
         <layout>Entitlement-Entitlement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
+        <layout>Event-Support Core Sales Events Layouts</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
+        <layout>Event-Support Core Sales Events Layouts</layout>
         <recordType>Event.Core_Sales_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
+        <layout>Event-Support Core Sales Events Layouts</layout>
         <recordType>Event.Mid_Market_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
