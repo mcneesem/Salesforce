@@ -252,6 +252,10 @@
             <fullName>Employee Referral</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>DnB</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>External Referral</fullName>
             <default>false</default>

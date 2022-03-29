@@ -25,6 +25,7 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
      *
      */
     public void beforeInsert(List<sObject> newList) {
+        NSP_AccountContactRelationTriggerHelper.beforeUpsertDirector((List<AccountContactRelation>) newList);
     }
 
     /**
@@ -48,6 +49,7 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
      */
 
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
+        NSP_AccountContactRelationTriggerHelper.beforeUpsertDirector((List<AccountContactRelation>) newMap.Values());
     }
 
     /**

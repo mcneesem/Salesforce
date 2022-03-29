@@ -11,10 +11,12 @@ public without sharing class  NSP_CreatePartnerAccount {
 *                
 */
     @AuraEnabled
-    public static String createAccount(String accountObject, String contactObject){ 
+    public static String createAccount(String accountObject,String contactId){ 
         //Response String
         String response;
+        Contact contactRecord = [SELECT id,NSP_Is_Partner_Account_Created__c,accountid FROM Contact WHERE id = :contactId];
           
+        if(!contactRecord.NSP_Is_Partner_Account_Created__c){
             try{
                 //Deserialising the account object
             Account accountRecord =(Account)JSON.deserialize(accountObject,Account.class);
@@ -29,11 +31,11 @@ public without sharing class  NSP_CreatePartnerAccount {
             
           //Inseting the accounts
                 Database.insert(accountRecord, dbDML);
-                /* As part of STY-02211, creating contact along with Account Record */
-                  Contact nContact =(Contact)JSON.deserialize(contactObject,Contact.class);
-                  nContact.accountid = accountRecord.id;
-                   Database.insert(nContact, dbDML);
-                 /* As part of STY-02211, creating contact along with Account Record */
+                //Updating the account on the contact reocrd
+                contactRecord.accountid = accountRecord.id;
+                contactRecord.NSP_Is_Partner_Account_Created__c = true;
+                update contactRecord;
+                
                   //Setting response as success             
                 response = NSP_SalesConstants.successResponse;
             }catch(Exception ex){
@@ -41,6 +43,10 @@ public without sharing class  NSP_CreatePartnerAccount {
                 NSP_CustomException.LogException(ex);
                 throw new AuraHandledException(ex.getMessage());
             }
+        }else{
+            //setting response as exists if the contact already has an account associated to it
+            response = NSP_SalesConstants.existsResponse;
+        }
         return response;
     }
     

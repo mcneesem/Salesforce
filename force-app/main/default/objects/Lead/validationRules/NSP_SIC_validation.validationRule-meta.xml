@@ -3,7 +3,7 @@
     <fullName>NSP_SIC_validation</fullName>
     <active>false</active>
     <description>The SIC number should be exactly of 4 digits</description>
-    <errorConditionFormula>IF(AND(LEN(NSP_SIC__c) &lt;&gt; 4,NOT(ISBLANK(NSP_SIC__c))), TRUE,FALSE)</errorConditionFormula>
+    <errorConditionFormula>IF(AND(LEN(NSP_SIC__c) &lt;&gt; 4,  $Setup.NSP_Trigger_Switch__c.LeadValidations__c != true,NOT(ISBLANK(NSP_SIC__c))), TRUE,FALSE)</errorConditionFormula>
     <errorDisplayField>NSP_SIC__c</errorDisplayField>
     <errorMessage>SIC number should be of 4 digits</errorMessage>
 </ValidationRule>

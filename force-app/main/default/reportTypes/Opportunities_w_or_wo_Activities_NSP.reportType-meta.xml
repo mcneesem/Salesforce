@@ -1330,11 +1330,6 @@
             <field>NSP_Account_Owner_Email__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Product_of_Interest__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
         <masterLabel>Activities</masterLabel>
     </sections>
 </ReportType>

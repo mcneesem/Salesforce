@@ -66,7 +66,8 @@ public without sharing class NSP_SingleRelatedListController {
             orderBy = (String)root.get(SORTED_BY_PARAM) + ' ' + (String)root.get(SORTED_DIRECTION_PARAM);        
             
             String query = 'Select '+fields+' From '+sobjectApiName +' WHERE ' +relatedFieldApiName+ '= :recordId Limit :numberOfRecords';
-            return Database.query(String.escapeSingleQuotes(query));
+            List<SObject> queryReults = Database.query(String.escapeSingleQuotes(query));
+            return NSP_HistoryTrackingVisibilityHandler.getAccessibleFieldList(queryReults,(Id)recordId);
         }  
         catch (Exception ex) {
 			throw new AuraHandledException(ErrorOccured + ex.getMessage());

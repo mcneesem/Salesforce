@@ -18,10 +18,7 @@
                 <behavior>Edit</behavior>
                 <field>WhoId</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Product_of_Interest__c</field>
-            </layoutItems>
+
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

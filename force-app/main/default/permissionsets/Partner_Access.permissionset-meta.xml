@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Compartmentalize Account Partner RecordType Access</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Partner Access</label>
+    <recordTypeVisibilities>
+        <recordType>Account.NSP_Partner_Client</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

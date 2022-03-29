@@ -3,5 +3,5 @@
     <apiVersion>52.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ThankYou</label>
+    <label>NSP_ThankYou_Page</label>
 </ApexPage>

@@ -45,10 +45,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBQQ__SalesRep__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
@@ -98,10 +94,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Description_Of_Services__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Opportunity_Owner_Email_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

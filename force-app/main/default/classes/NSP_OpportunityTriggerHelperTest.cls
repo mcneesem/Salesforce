@@ -298,5 +298,31 @@ public class NSP_OpportunityTriggerHelperTest {
       NSP_ChildOpportunitiesHelperFunctions.defaultFieldsOnChildOpportunity(cOppList, pOppIdSet);
         Test.stopTest();
     }
-
+     
+   /**
+    * @Description: This test method is used to cover sendClosedWonEmailNotifications method of NSP_EmailWithAttachment
+    * @Created date: 22/03/2022.
+    * @return void             
+    * @author : Nischay Jindal               
+    */
+        
+    @isTest
+        static void sendClosedWonEmailNotification(){
+           List<Opportunity> opportunityList = [SELECT Id,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
+           ContentVersion cvlist = new Contentversion(); 
+            cvlist.Title = 'WX_0_Delivery Order__completed'; 
+            cvlist.PathOnClient = 'test'; 
+            cvlist.VersionData = EncodingUtil.base64Decode('Unit Test Attachment Body');
+            cvlist.FirstPublishLocationId=opportunityList[0].Id;
+           insert cvlist;
+           Test.startTest();      
+            opportunity oppty = opportunityList[0];
+            oppty.NSP_DM_User__c = oppty.OwnerId;
+            oppty.NSP_DA_User__c = oppty.OwnerId;
+            oppty.NSP_BPA__c = oppty.OwnerId;
+            oppty.StageName = 'Closed Won';
+            update oppty;   
+           Test.stopTest();
+            System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
+        } 
 }

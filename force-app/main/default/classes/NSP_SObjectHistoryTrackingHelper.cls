@@ -14,7 +14,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable{
     
     private Map<Id, sObject> newMapSObject;
     private Map<Id, sObject> oldMapSObject;
-    public static final String CLIENTSEGMENTTYPE = 'NSP_Client_Segment_type__c';
+    public static final String CLIENTSEGMENTTYPE = 'Client Segment type';
     public static final String CLIENTSEGMENTDATE = 'NSP_Client_SegmentDate__c';
     
     public NSP_SObjectHistoryTrackingHelper(Map<Id, sObject> newMapSObject,Map<Id, sObject> oldMapSObject) {
@@ -63,8 +63,8 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable{
                         // for now - get the userid and modify date out of the new record
                         oht.NSP_Modified_By__c	 = (Id) newRec.get('LastModifiedById');
                         oht.NSP_Modified_Date__c = (Datetime) newRec.get('LastModifiedDate');
-                        //poulate Effective date if NSP_Client_Segment_type__c is changed on asset
-                        if(oht.NSP_Field_Name__c == CLIENTSEGMENTTYPE){
+                         //poulate Effective date if NSP_Client_Segment_type__c is changed on asset
+                         if(oht.NSP_Field_Name__c == String.valueOf(CLIENTSEGMENTTYPE)){
                         	oht.NSP_Effective_Date__c = (Datetime) newRec.get(CLIENTSEGMENTDATE);
                         }
                         trackList.add(oht);

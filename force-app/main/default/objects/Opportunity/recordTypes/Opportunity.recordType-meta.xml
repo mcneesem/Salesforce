@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Opportunity</fullName>
     <active>true</active>
@@ -688,34 +688,6 @@
     <picklistValues>
         <picklist>NSP_Merge_On_Demand_Template_Selection__c</picklist>
         <values>
-            <fullName>BusinessProfileOnly</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BusinessProfileWithEEDatasheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BusinessProfileWithRiskReview</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BusinessProfileWithRiskReviewandGHH</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CAMLetterofAssignment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CAMRenewalAddendum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CAMSuccessorTreatmentRepresentative</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>CafeteriaPlanQuestionnaireWorksheet</fullName>
             <default>false</default>
         </values>
@@ -724,31 +696,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CommissionOnlyEmployeesQuestionnaire</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ControlledGroupQuestionnaire</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>EmployeeRecordServiceandOFEAddendum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EnrollmentFeeAddendumDocuSignMultiPayment</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ExecutiveSummaryGuide</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ExhibitF401k</fullName>
             <default>false</default>
         </values>
         <values>
@@ -760,18 +712,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GLALInsuranceCertificateRequestwithSample</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GroupHealthHistoryOnly</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MasterEnrollmentFeeAddendum</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Mid-MarketClientServiceAgreement</fullName>
             <default>false</default>
         </values>
@@ -780,19 +720,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MidMarketBPCSaleSheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>NDA</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>NDAChannelPartner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NewClientRiskReviewOnly</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1062,6 +994,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Axcet HR Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BambooHR</fullName>
             <default>false</default>
         </values>
@@ -1312,7 +1248,8 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
+            <fullName
+      >Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2139,6 +2076,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AM%26AA - Alliance of Mergers an</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acisure</fullName>
             <default>false</default>
         </values>
@@ -2200,6 +2141,10 @@
         </values>
         <values>
             <fullName>Acrisure%2C Parelius Insurance S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acrisure%2C TASK Group LLC%2C dba</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2591,6 +2536,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EO Wisconsin</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EPIC - COOK MARAN</fullName>
             <default>false</default>
         </values>
@@ -2708,6 +2657,10 @@
         </values>
         <values>
             <fullName>KBI Benefits%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KRA Life Agency</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2831,6 +2784,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RSC - Krauter</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RSC Insurance Brokerage</fullName>
             <default>false</default>
         </values>
@@ -2852,6 +2809,10 @@
         </values>
         <values>
             <fullName>Strategic Wellness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SunPower Corporation</fullName>
             <default>false</default>
         </values>
         <values>

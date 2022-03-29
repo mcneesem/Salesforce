@@ -23,7 +23,7 @@ public class NSP_ContactTriggerHelperTest {
             contactList.add(New Contact(FirstName = 'FName'+idx, LastName = 'LName'+idx, AccountId = acc.Id));
         }
 
-        contactList.add(New Contact(FirstName = 'FName', LastName = 'LName', AccountId = acc.Id, NSP_IsPrimary__c = TRUE));
+        contactList.add(New Contact(FirstName = 'FName', LastName = 'LName', AccountId = acc.Id));
 
         // Start Test
         Test.startTest();
@@ -36,12 +36,6 @@ public class NSP_ContactTriggerHelperTest {
         conObj.LastName = 'testupdated';
         update conObj;
         
-        /*for(Contact c : contactList) {
-            contactMap.put(c.Id, c);
-        }*/
-        
-        //NSP_ContactTriggerHelper contactHelper = New NSP_ContactTriggerHelper();
-        //contactHelper.afterInsertDirector(contactList, contactMap);
         Test.stopTest();
         System.assertEquals(conObj.LastName,'testupdated');
     }

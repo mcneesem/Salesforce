@@ -1856,28 +1856,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Preffered_Contact_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Account.NSP_Previous_Company__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_PrimaryContactEmail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Primary_Contact_Phone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Primary_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2398,11 +2378,6 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>Asset.NSP_ProductBundle__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Asset.NSP_AIMS_First_Pay_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3902,11 +3877,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.NSP_IsPrimary__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.NSP_Is_Partner_Account_Created__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5052,11 +5022,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Event.NSP_Product_of_Interest__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Event.NSP_Recurrence_Interval__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5398,6 +5363,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.NSP_Any_Additional_Info__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.NSP_Lead_Routing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.NSP_Parent_Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7762,6 +7737,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Enrollment_Fee_Payment__c.NSP_Enrollment_Fee_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Enrollment_Fee_Payment__c.NSP_Oneforce_External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Contact_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8680,6 +8665,36 @@
         <field>NSP_Zip_To_City_Mapping__c.NSP_Zip__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Enrollment_Fee_Payment_1__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Enrollment_Fee_Payment_2__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Enrollment_Fee_Payment_3__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Enrollment_Fee_Payment_4__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Enrollment_Fee_Payment_5__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Enrollment_Fee_Payment_6__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.AccountId</field>
@@ -20138,11 +20153,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Task.NSP_Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Task.NSP_Product_of_Interest__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -46109,14 +46119,14 @@
         <layout>Entitlement-Entitlement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
+        <layout>Event-Support Core Sales Events Layouts</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
+        <layout>Event-Support Core Sales Events Layouts</layout>
         <recordType>Event.Core_Sales_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
+        <layout>Event-Support Core Sales Events Layouts</layout>
         <recordType>Event.Mid_Market_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -50782,15 +50792,11 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>PartnerForm</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>NSP_ReferralLeadForm</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>ThankYou</apexPage>
+        <apexPage>NSP_ThankYou_Page</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

@@ -48,6 +48,11 @@
                 <label>Axcel HR Solutions</label>
             </value>
             <value>
+                <fullName>Axcet HR Solutions</fullName>
+                <default>false</default>
+                <label>Axcet HR Solutions</label>
+            </value>
+            <value>
                 <fullName>BambooHR</fullName>
                 <default>false</default>
                 <label>BambooHR</label>

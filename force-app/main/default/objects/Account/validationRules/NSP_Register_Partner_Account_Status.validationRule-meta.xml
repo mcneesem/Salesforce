@@ -6,7 +6,7 @@
     <errorConditionFormula>AND(ISPICKVAL( Type, &quot;Partner&quot; ), 
 NOT(OR( $Profile.Name = &apos;System Administrator&apos;, $Profile.Name = &apos;Sales Administrator&apos;,  $UserRole.Name = &apos;Channel Program Manager&apos;) ), 
 ISPICKVAL(NSP_Status__c, &apos;Registered&apos;),
-ISCHANGED(NSP_Status__c))</errorConditionFormula>
+ISCHANGED(NSP_Status__c),$Setup.NSP_Trigger_Switch__c.AccountValidations__c != true)</errorConditionFormula>
     <errorDisplayField>NSP_Status__c</errorDisplayField>
     <errorMessage>Only Channel Program Managers can mark Partner Accounts as Registered.</errorMessage>
 </ValidationRule>

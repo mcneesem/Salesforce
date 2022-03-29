@@ -75,6 +75,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__RequiredByAsset__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_AIMS_First_Pay_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -188,6 +192,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Client_Segment_type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Current_Client_Segment_type__c</field>
             </layoutItems>
             <layoutItems>
@@ -252,7 +260,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Company_Name__c</field>
             </layoutItems>
-             <layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_ProductBundle__c</field>
             </layoutItems>

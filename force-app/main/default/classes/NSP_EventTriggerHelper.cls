@@ -3,7 +3,6 @@
 */
 public class NSP_EventTriggerHelper {
     
-    public static String DISCOVERY_CALL = 'Discovery Call';
     /* Iterates throught the list of new Event and passes the required attributes to other methods.
     * @param newList List of New Event.  
     * @return void             
@@ -22,7 +21,27 @@ public class NSP_EventTriggerHelper {
         
         public void afterInsertDirector(List<Event> newList, Map<Id, Event> eventNewMap){ 
             
-            updateOpportunitiesWithDiscoverCalls(newList);
+            Set<ID> updateOpportunityIDList = new Set<ID>();
+            List<Opportunity> updateOpportunityList = new List<Opportunity>();
+            for(Event event : newList){
+                if(event.NSP_Event_Subtype__c != null && event.NSP_Event_Subtype__c.equalsIgnoreCase('Discovery Call') && String.isNotBlank(event.WhatId) &&
+                   ((String)event.WhatId).startsWith('006')){
+                    updateOpportunityIDList.add(event.WhatId);
+                }
+            }
+    
+            List<Opportunity> listOpportunity = [SELECT ID, NSP_Ready_for_Integration_Sync__c FROM Opportunity 
+                                                 WHERE ID IN: updateOpportunityIDList]; //Capitalized WHERE Condition as part of code fix
+            for(Opportunity oppty : listOpportunity){
+                Opportunity opp = new Opportunity();
+                opp.Id = oppty.Id;
+                opp.NSP_Ready_for_Integration_Sync__c = true;
+                updateOpportunityList.add(opp);
+            }
+            if(!updateOpportunityList.isEmpty()){
+                Database.update(updateOpportunityList);
+            }
+                
         }
         
         /**
@@ -46,37 +65,28 @@ public class NSP_EventTriggerHelper {
     */
         
         public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){        
-            
-            updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
-        }   
-        
-        
-    public void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
-
-        String opportunity_prefix = Schema.SObjectType.Opportunity.getKeyPrefix();
-
-        Set<ID> updateOpportunityIDList = new Set<ID>();
-        List<Opportunity> updateOpportunityList = new List<Opportunity>();
-        for(Event event : newList){
-            if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
-                if(event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL) && 
-                   ((String)event.WhatId).startsWith(opportunity_prefix)){
+            Set<ID> updateOpportunityIDList = new Set<ID>();
+            List<Opportunity> updateOpportunityList = new List<Opportunity>();
+            for(Id eventId : eventNewMap.keySet()){   
+                Event event = eventNewMap.get(eventId);
+                if(event != NULL && event.NSP_Event_Subtype__c.equalsIgnoreCase('Discovery Call') && 
+                   ((String)event.WhatId).startsWith('006')){
                     updateOpportunityIDList.add(event.WhatId);
                 }           
-            }  
-        }
-        List<Opportunity> listOpportunity = [SELECT ID, NSP_Ready_for_Integration_Sync__c FROM Opportunity 
-                                             WHERE ID IN: updateOpportunityIDList]; //Capitalized WHERE Condition as part of code fix
-        for(Opportunity oppty : listOpportunity){
-            Opportunity opp = new Opportunity();
-            opp.Id = oppty.Id;
-            opp.NSP_Ready_for_Integration_Sync__c = true;
-            updateOpportunityList.add(opp);
-        }
-        if(!updateOpportunityList.isEmpty()){
-            Database.update(updateOpportunityList);
-        }
-        
-    }
+                
+            }
+            List<Opportunity> listOpportunity = [SELECT ID, NSP_Ready_for_Integration_Sync__c FROM Opportunity 
+                                                 WHERE ID IN: updateOpportunityIDList];  //Capitalized WHERE Condition as part of code fix
+            for(Opportunity oppty : listOpportunity){
+                Opportunity opp = new Opportunity();
+                opp.Id = oppty.Id;
+                opp.NSP_Ready_for_Integration_Sync__c = true;
+                updateOpportunityList.add(opp);
+            }
+            if(!updateOpportunityList.isEmpty()){
+                Database.update(updateOpportunityList);
+            }
+            
+        }       
         
     }

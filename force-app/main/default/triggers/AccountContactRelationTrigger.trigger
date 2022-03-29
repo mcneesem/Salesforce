@@ -1,7 +1,7 @@
 /**
  * Represents the AccountContactRelation trigger.
  */
-trigger AccountContactRelationTrigger on AccountContactRelation (after insert,after update) {
+trigger AccountContactRelationTrigger on AccountContactRelation (after insert,after update, before insert , before update) {
     NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
     //run if trigger switch is off
     if(!triggerSwitch.AccountContactRelationTrigger__c){

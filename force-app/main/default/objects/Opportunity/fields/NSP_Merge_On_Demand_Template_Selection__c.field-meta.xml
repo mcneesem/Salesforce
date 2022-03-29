@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Merge_On_Demand_Template_Selection__c</fullName>
-    <description>This field is used to store merge on demand template list name</description>
+    <description
+  >This field is used to store merge on demand template list name</description>
     <externalId>false</externalId>
     <label>Generate Document</label>
     <required>false</required>
@@ -52,10 +53,25 @@
                 <default>false</default>
                 <label>BusinessProfileWithRiskReview</label>
             </value>
-            <value>
+             <value>
                 <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
                 <default>false</default>
-                <label>EnrollmentFeeAddendumDocuSignSinglePayment</label>
+                <label>Enrollment Fee Single Payment Refundable</label>
+            </value>
+            <value>
+                <fullName>EnrollmentFeeMultiPaymentRefundable</fullName>
+                <default>false</default>
+                <label>Enrollment Fee Multi Payment Refundable</label>
+            </value>
+            <value>
+                <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
+                <default>false</default>
+                <label>Enrollment Fee Multi Payment Non Refundable</label>
+            </value>
+            <value>
+                <fullName>EnrollmentFeeCreditCardPayment</fullName>
+                <default>false</default>
+                <label>Docupay</label>
             </value>
             <value>
                 <fullName>FundingPacket</fullName>
@@ -80,91 +96,91 @@
             <value>
                 <fullName>BusinessProfileOnly</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>BusinessProfileOnly</label>
             </value>
             <value>
                 <fullName>BusinessProfileWithEEDatasheet</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>BusinessProfileWithEEDatasheet</label>
             </value>
             <value>
                 <fullName>CAMLetterofAssignment</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>CAMLetterofAssignment</label>
             </value>
             <value>
                 <fullName>CAMRenewalAddendum</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>CAMRenewalAddendum</label>
             </value>
             <value>
                 <fullName>CAMSuccessorTreatmentRepresentative</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>CAMSuccessorTreatmentRepresentative</label>
             </value>
             <value>
                 <fullName>CommissionOnlyEmployeesQuestionnaire</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>CommissionOnlyEmployeesQuestionnaire</label>
             </value>
             <value>
                 <fullName>EmployeeRecordServiceandOFEAddendum</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>EmployeeRecordServiceandOFEAddendum</label>
             </value>
             <value>
                 <fullName>EnrollmentFeeAddendumDocuSignMultiPayment</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>EnrollmentFeeAddendumDocuSignMultiPayment</label>
             </value>
             <value>
                 <fullName>ExecutiveSummaryGuide</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>ExecutiveSummaryGuide</label>
             </value>
             <value>
                 <fullName>ExhibitF401k</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>ExhibitF401k</label>
             </value>
             <value>
                 <fullName>GLALInsuranceCertificateRequestwithSample</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>GLALInsuranceCertificateRequestwithSample</label>
             </value>
             <value>
                 <fullName>GroupHealthHistoryOnly</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>GroupHealthHistoryOnly</label>
             </value>
             <value>
                 <fullName>MasterEnrollmentFeeAddendum</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>MasterEnrollmentFeeAddendum</label>
             </value>
             <value>
                 <fullName>MidMarketBPCSaleSheet</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>MidMarketBPCSaleSheet</label>
             </value>
             <value>
                 <fullName>NewClientRiskReviewOnly</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>NewClientRiskReviewOnly</label>
             </value>
         </valueSetDefinition>

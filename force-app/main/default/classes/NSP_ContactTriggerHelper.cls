@@ -36,37 +36,19 @@ public class NSP_ContactTriggerHelper {
 * @return void
 *                
 */
-    
-    public void afterInsertDirector(List<Contact> newList, Map<Id, Contact> newMap) {
-        Set<Id> accountIdSet = new Set<Id>();
-        List<Contact> clientRefernceContactList = new List<Contact>();
-        for(Contact conObj : newList){
-            if(conObj.NSP_Client_Reference__c){
-                clientRefernceContactList.add(conObj);
-            }
-            if(conObj.NSP_IsPrimary__c){
-                accountIdSet.add(conObj.AccountId);
-            }
-        }
-        
-        if(accountIdSet.size() > 0){
-            List<Account> accountList = new List<Account>();
-            for(ID accountId : accountIdSet){
-                Account accountObj = new Account();
-                accountObj.Id = accountId;
-                accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                accountList.add(accountObj);
-            }
-            
-            if(accountList.size() > 0){
-                update accountList;
-            }
-        }
-        
-        if(clientRefernceContactList.size() > 0){
-            createTaskforClientReference(clientRefernceContactList);
+
+public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > newMap) {
+    Set < Id > accountIdSet = new Set < Id > ();
+    List < Contact > clientRefernceContactList = new List < Contact > ();
+    for (Contact conObj: newList) {
+        if (conObj.NSP_Client_Reference__c) {
+            clientRefernceContactList.add(conObj);
         }
     }
+    if (clientRefernceContactList.size() > 0) {
+        createTaskforClientReference(clientRefernceContactList);
+    }
+}
     
     
     /**
@@ -143,21 +125,12 @@ public class NSP_ContactTriggerHelper {
     public void afterUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
         try{
             List<Contact> clientRefernceContactList = new List<Contact>();
-            Map<Id,Contact> contactOldMap = new Map<Id,Contact>();
-            Map<Id,Contact> contactNewMap = new Map<Id,Contact>();
-            Set<Id> accountIdSet = new Set<Id>();
             
             for(Contact conObj : newMap.values()){
                 if(conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c 
                    && conObj.NSP_Client_Reference__c){
                        clientRefernceContactList.add(conObj);
                    }
-                
-                if(conObj.NSP_IsPrimary__c){
-                    accountIdSet.add(conObj.AccountId);
-                    contactOldMap.put(conObj.Id,oldMap.get(conObj.Id));
-                    contactNewMap.put(conObj.Id,newMap.get(conObj.Id));
-                }
             }
             
             if(clientRefernceContactList.size() > 0){

@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Account_is_Required_on_Oppty_Creation</fullName>
     <active>true</active>
-    <errorConditionFormula>NSP_Parent_Opportunity__c=null &amp;&amp; AccountId = null</errorConditionFormula>
+    <errorConditionFormula>AND($Setup.NSP_Trigger_Switch__c.OpportunityValidations__c != TRUE, NSP_Parent_Opportunity__c = null, AccountId = null)</errorConditionFormula>
     <errorDisplayField>AccountId</errorDisplayField>
     <errorMessage>Complete this field.</errorMessage>
 </ValidationRule>

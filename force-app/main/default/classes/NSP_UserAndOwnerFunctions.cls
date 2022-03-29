@@ -19,7 +19,10 @@ public class NSP_UserAndOwnerFunctions {
         //get custom metadata for docusign template mapping
         
         try{
-            Map<Id, Account> mapAccountObject = new Map<Id, Account>([SELECT Id,Name,owner.email,NSP_Primary_Contact__c FROM Account WHERE id IN : accountIdSet]);
+            Map < Id, String > accountContactMap = new Map < Id, String > ();
+        	for (AccountContactRelation accountObj: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId, Account.Owner.Email from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountIdSet]) {
+            	    accountContactMap.put(accountObj.AccountId,accountObj.ContactId );
+        		}
             Map<Id, User> mapUserObject = new Map<Id, User>([SELECT Id,UserRole.Name,Manager.Id, Manager.Manager.Id FROM User WHERE Id IN :ownerIdset]);
             
             List<User> dummyUser = [select Id FROM User WHERE Name = :NSP_SalesConstants.DUMMY_USER_SIGNER LIMIT 1];
@@ -41,9 +44,9 @@ public class NSP_UserAndOwnerFunctions {
                 if(opportuntityObj.Legals_Counter_Signer__c == null){
                     opportuntityObj.Legals_Counter_Signer__c = dummyUser[0].Id;
                 }
-                if(mapAccountObject.containsKey(opportuntityObj.AccountId) && !test.isRunningTest()){  
-                    if(mapAccountObject.get(opportuntityObj.AccountId).NSP_Primary_Contact__c != null){
-                        opportuntityObj.NSP_Primary_Contact__c = mapAccountObject.get(opportuntityObj.AccountId).NSP_Primary_Contact__c;
+                if(accountContactMap.containsKey(opportuntityObj.AccountId) ){  
+                    if(accountContactMap.get(opportuntityObj.AccountId) != null){
+                        opportuntityObj.NSP_Primary_Contact__c = accountContactMap.get(opportuntityObj.AccountId);
                         
                     }else{
                         opportuntityObj.adderror(SELECT_PRIMARY_CONTACT);

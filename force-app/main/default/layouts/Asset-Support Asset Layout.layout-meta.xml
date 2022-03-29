@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>IsCompetitorProduct</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_AIMS_First_Pay_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -133,6 +137,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Client_SegmentDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Client_Segment_type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

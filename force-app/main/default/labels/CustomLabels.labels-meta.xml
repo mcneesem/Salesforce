@@ -870,48 +870,40 @@
         <value>You dont have permission to take that action on this record.</value>
     </labels>
     <labels>
-        <fullName>NSP_ThankYou_Partner</fullName>
+        <fullName>NSP_PrimaryContactValidation</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP ThankYou Partner</shortDescription>
-        <value>/apex/ThankYou</value>
+        <shortDescription>NSP_PrimaryContactValidation</shortDescription>
+        <value>This Account already has a Primary Contact identified for it. Accounts cannot have more than one Primary Contact.</value>
     </labels>
     <labels>
-        <fullName>NSP_CANNOT_MOVE_TO_CLOSEDWON</fullName>
+        <fullName>NSP_OpportunityAttachmentName</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
-        <value>You do not have access to move opportunity to Closed Won</value>
+        <shortDescription>NSP_OpportunityAttachmentName</shortDescription>
+        <value>WX_,_completed,Delivery Order</value>
     </labels>
     <labels>
-        <fullName>NSP_ExitCriteriaProductException</fullName>
-        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services</categories>
+        <fullName>NSP_OpportunityEmailTemplate</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP_ExitCriteriaProductException</shortDescription>
-        <value>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services</value>
+        <shortDescription>NSP_OpportunityEmailTemplate</shortDescription>
+        <value>NSP_Opportunity_Closed_Won</value>
     </labels>
     <labels>
-        <fullName>NSP_NonOwnerBasedCriteriaProducts</fullName>
+        <fullName>NSP_OpportunityTeamMembers</fullName>
+        <categories>Team Members for sending closed won notifications</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP_NonOwnerBasedCriteriaProducts</shortDescription>
-        <value>Applicant Tracking,Employment Screening,Expense Management,HR Consulting,Insurance Services,Learning &amp; Development,Performance Management,Recruiting Services</value>
+        <shortDescription>NSP_OpportunityTeamMembers</shortDescription>
+        <value>Lead Qualifier,Pre-Sales Consultant,Channel Program Manager,Sales Rep,Opportunity Owner,BPA,Executive,Account Manager,Sales Operations Manager</value>
     </labels>
     <labels>
-        <fullName>NSP_OwnerBasedCriteriaProducts</fullName>
-        <categories>owner role check, BPA, BPC</categories>
+        <fullName>NSP_Opportunity_Closed_Won_AlertAdditionalEmails</fullName>
+        <categories>Add Comma Separated email Ids</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-        <value>Organizational Planning,Time &amp; Attendance,Workforce Acceleration,Workforce Administration</value>
-    </labels>
-    <labels>
-        <fullName>NSP_Approve_Primary_Quote</fullName>
-        <categories>primary quote approval, proposal stage</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Approve Primary Quote</shortDescription>
-        <value>Primary Quote status must be Approved or Submitted To Order to move opportunity to Proposal</value>
+        <shortDescription>NSP_Opportunity_Closed_Won_AlertAdditionalEmails</shortDescription>
+        <value>pwc_qa@insperity.com</value>
     </labels>
 </CustomLabels>

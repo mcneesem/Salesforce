@@ -24,7 +24,8 @@ public class NSP_UserAndOwnerFunctionsTest {
         Account accoutObject1 = new Account();
         accoutObject1.Name = ACCOUNT_NAME;
         insert accoutObject1;       
-        
+        Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
+        insert account;
         System.runAs ( new User(Id = UserInfo.getUserId()) ) {
             Opportunity opportuniytObject3 = new Opportunity();
             opportuniytObject3 = NSP_TestHelper.createOpenOpportunity(accoutObject1.Id, OPP_TYPE, false);
@@ -46,6 +47,10 @@ public class NSP_UserAndOwnerFunctionsTest {
 */
     @isTest
     static void getQuoteOwnerTest(){
+        Account accObj = [Select Id,Name from Account WHERE Name= 'ABCTest Co'  LIMIT 1];
+        AccountContactRelation acrObj  = [Select Id , NSP_Is_Primary__c ,ContactId, IsActive from AccountContactRelation WHERE AccountId =: accObj.Id ];
+        acrObj.NSP_Is_Primary__c=true;
+       	update acrobj;
         List<Opportunity> opportunityList = [SELECT Id,AccountId, Name,NSP_Number_of_Employees__c,Type, NSP_PrimaryProduct__c,
                                              NSP_DM_User__c,NSP_DA_User__c,NSP_Merge_On_Demand_Template_Selection__c,SBQQ__PrimaryQuote__c,NSP_BPA__c,OwnerId FROM Opportunity 
                                              WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c =: NSP_SalesConstants.WX LIMIT 1];
@@ -86,5 +91,37 @@ public class NSP_UserAndOwnerFunctionsTest {
         Test.stopTest();
         System.assertEquals(oppty.NSP_BPA__c, UserInfo.getUserId());
     }
-    
+
+    /**
+    * @Description: This test method is used to cover getAccountOwnerEmail method of NSP_OpportunityTriggerHelperFunctions
+    * @Created date: 12/03/2022.
+    * @Author : Nischay Jindal
+    * @return void             
+    *                
+    */    
+@isTest
+public static void getAccountOwnerEmail(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id,AccountId, NSP_Primary_Contact__c,Name,NSP_Number_of_Employees__c,Type, NSP_PrimaryProduct__c,
+                                         NSP_DM_User__c,NSP_DA_User__c,NSP_Merge_On_Demand_Template_Selection__c,SBQQ__PrimaryQuote__c,NSP_BPA__c,OwnerId FROM Opportunity 
+                                         WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c =: NSP_SalesConstants.WX LIMIT 1];
+   
+    Account accRecord =[Select Id , Name from Account WHERE Name ='TestAccount' Limit 1];
+    Contact con = [Select Id , FirstName ,AccountId from Contact WHERE FirstName ='John'];
+    AccountContactRelation acr = new AccountContactRelation(); 
+    acr.IsActive= true;
+    acr.NSP_Is_Primary__c= true;
+    acr.Accountid = accRecord.id;
+    acr.Contactid = con.id; 
+    insert acr;
+    Set<Id> accountIds= new Set<Id>();
+    accountIds.add(accRecord.Id);
+    opportunity oppty = opportunityList[0];
+    oppty.AccountId=accRecord.Id;
+    update oppty;
+    NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(accountIds);
+    Test.stopTest();
+    Opportunity opp =[Select Id , NSP_Primary_Contact__c from Opportunity WHERE Id =:oppty.Id ];
+    system.assertEquals( acr.Contactid,opp.NSP_Primary_Contact__c);
+    }
 }
