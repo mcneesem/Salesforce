@@ -46284,7 +46284,7 @@
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Task Layout 0322</layout>
+        <layout>Task-Eloqua Page Layout</layout>
         <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -47200,15 +47200,15 @@
         <name>ContentWorkspaces</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateTopics</name>
     </userPermissions>
     <userPermissions>
@@ -47228,8 +47228,16 @@
         <name>EditTask</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditTopics</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>EditBrandTemplates</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>EditPublicTemplates</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -47244,7 +47252,7 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
@@ -47264,8 +47272,16 @@
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageInteraction</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ImportCustomObjects</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ImportLeads</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -47284,7 +47300,7 @@
         <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>RunReports</name>
     </userPermissions>
     <userPermissions>
@@ -47308,7 +47324,7 @@
         <name>SubmitMacrosAllowed</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>SubscribeToLightningReports</name>
     </userPermissions>
     <userPermissions>
@@ -47328,15 +47344,15 @@
         <name>ViewHelpLink</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewRoles</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewSetup</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewTrustMeasures</name>
     </userPermissions>
 </Profile>

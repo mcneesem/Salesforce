@@ -45575,7 +45575,7 @@
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Task Layout 0322</layout>
+        <layout>Task-Eloqua Page Layout</layout>
         <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -45647,7 +45647,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45683,9 +45683,9 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>dfsle__EnvelopeStatus__c</object>
@@ -45709,7 +45709,6 @@
         <object>opportunity</object>
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
-
      <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -45765,7 +45764,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45774,7 +45773,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45783,7 +45782,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45801,16 +45800,16 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
+        <allowRead>false</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>NSP_Tier_Tracking__c</object>
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -46003,18 +46002,18 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.Lead</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Lead.NSP_New_Lead_Record_Type</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Lead.Referral</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -46525,15 +46524,15 @@
         <name>ConvertLeads</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateTopics</name>
     </userPermissions>
     <userPermissions>
@@ -46541,7 +46540,7 @@
         <name>DistributeFromPersWksp</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditBrandTemplates</name>
     </userPermissions>
     <userPermissions>
@@ -46561,7 +46560,7 @@
         <name>EditPublicDocuments</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditPublicTemplates</name>
     </userPermissions>
     <userPermissions>
@@ -46569,7 +46568,7 @@
         <name>EditTask</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditTopics</name>
     </userPermissions>
     <userPermissions>
@@ -46585,11 +46584,19 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
+        <name>ImportCustomObjects</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ImportLeads</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>ImportPersonal</name>
     </userPermissions>
     <userPermissions>
@@ -46605,7 +46612,7 @@
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageInteraction</name>
     </userPermissions>
     <userPermissions>
@@ -46625,7 +46632,7 @@
         <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>RunReports</name>
     </userPermissions>
     <userPermissions>
@@ -46649,7 +46656,7 @@
         <name>SubmitMacrosAllowed</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>SubscribeToLightningReports</name>
     </userPermissions>
     <userPermissions>
@@ -46669,15 +46676,15 @@
         <name>ViewHelpLink</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewRoles</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewSetup</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewTrustMeasures</name>
     </userPermissions>
 </Profile>

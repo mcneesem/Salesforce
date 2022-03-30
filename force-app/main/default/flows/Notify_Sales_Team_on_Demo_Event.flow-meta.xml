@@ -401,16 +401,16 @@
         <dataType>Boolean</dataType>
         <expression>AND (ISNEW(),BEGINS( {!myVariable_current.WhoId} , &quot;00Q&quot;))</expression>
     </formulas>
-    <formulas>
+     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>ISNEW() &amp;&amp; ISPICKVAL([Event].NSP_Event_Type__c, &quot;Demo&quot; ) &amp;&amp; BEGINS([Event].WhatId , &quot;006&quot;)</stringValue>
+                <stringValue>ISNEW() &amp;&amp; BEGINS([Event].WhatId , &quot;006&quot;)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_13</name>
         <dataType>Boolean</dataType>
-        <expression>ISNEW() &amp;&amp; ISPICKVAL({!myVariable_current.NSP_Event_Type__c}, &quot;Demo&quot; ) &amp;&amp; BEGINS({!myVariable_current.WhatId} , &quot;006&quot;)</expression>
+        <expression>ISNEW() &amp;&amp; BEGINS({!myVariable_current.WhatId} , &quot;006&quot;)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>

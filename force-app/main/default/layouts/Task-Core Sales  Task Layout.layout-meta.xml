@@ -74,7 +74,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type</field>
+                <field>NSP_Task_type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

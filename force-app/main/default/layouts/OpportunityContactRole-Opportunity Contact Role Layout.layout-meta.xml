@@ -19,7 +19,7 @@
                 <field>Role</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>IsPrimary</field>
             </layoutItems>
             <layoutItems>

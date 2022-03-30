@@ -4,10 +4,10 @@
     <description>Used to store when was this company established</description>
     <externalId>false</externalId>
     <label>Year Established</label>
-    <precision>4</precision>
+    <length>4</length>
     <required>false</required>
-    <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
-    <type>Number</type>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

@@ -46288,7 +46288,7 @@
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Task Layout 0322</layout>
+        <layout>Task-Eloqua Page Layout</layout>
         <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -46340,72 +46340,71 @@
     <layoutAssignments>
         <layout>WorkThanks-Thanks Layout</layout>
     </layoutAssignments>
-    
-   <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>true</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>Lead</object>
-    <viewAllRecords>false</viewAllRecords>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Lead</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+ <objectPermissions>
+     <allowCreate>true</allowCreate>
+     <allowDelete>true</allowDelete>
+     <allowEdit>true</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>true</modifyAllRecords>
+     <object>Contact</object>
+     <viewAllRecords>true</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>true</allowDelete>
-    <allowEdit>true</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>true</modifyAllRecords>
-    <object>Contact</object>
-    <viewAllRecords>true</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>Campaign</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>Campaign</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>true</allowCreate>
+     <allowDelete>true</allowDelete>
+     <allowEdit>true</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>true</modifyAllRecords>
+     <object>Account</object>
+     <viewAllRecords>true</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>true</allowDelete>
-    <allowEdit>true</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>true</modifyAllRecords>
-    <object>Account</object>
-    <viewAllRecords>true</viewAllRecords>
+     <allowCreate>true</allowCreate>
+     <allowDelete>true</allowDelete>
+     <allowEdit>true</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>true</modifyAllRecords>
+     <object>NSP_Address__c</object>
+     <viewAllRecords>true</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>true</allowDelete>
-    <allowEdit>true</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>true</modifyAllRecords>
-    <object>NSP_Address__c</object>
-    <viewAllRecords>true</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>CLM_Document__c</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>CLM_Document__c</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>dfsle__EnvelopeStatus__c</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>dfsle__EnvelopeStatus__c</object>
-    <viewAllRecords>false</viewAllRecords>
- </objectPermissions>
- <objectPermissions>
-    <allowCreate>true</allowCreate>
+    <allowCreate>false</allowCreate>
     <allowDelete>false</allowDelete>
     <allowEdit>false</allowEdit>
     <allowRead>true</allowRead>
@@ -46423,13 +46422,13 @@
     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>NSP_Enrollment_Fee_Payment__c</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>NSP_Enrollment_Fee_Payment__c</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
     <allowCreate>true</allowCreate>
@@ -46468,40 +46467,40 @@
     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>true</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>Asset</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>true</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>Asset</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>NSP_Reward__c</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>NSP_Reward__c</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>NSP_Sub_Client__c</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>NSP_Sub_Client__c</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>false</allowDelete>
-    <allowEdit>false</allowEdit>
-    <allowRead>true</allowRead>
-    <modifyAllRecords>false</modifyAllRecords>
-    <object>NSP_Checklist__c</object>
-    <viewAllRecords>false</viewAllRecords>
+     <allowCreate>false</allowCreate>
+     <allowDelete>false</allowDelete>
+     <allowEdit>false</allowEdit>
+     <allowRead>true</allowRead>
+     <modifyAllRecords>false</modifyAllRecords>
+     <object>NSP_Checklist__c</object>
+     <viewAllRecords>false</viewAllRecords>
  </objectPermissions>
  <objectPermissions>
     <allowCreate>true</allowCreate>
@@ -46522,9 +46521,9 @@
     <viewAllRecords>false</viewAllRecords>
 </objectPermissions>
 <objectPermissions>
-    <allowCreate>true</allowCreate>
-    <allowDelete>true</allowDelete>
-    <allowEdit>true</allowEdit>
+    <allowCreate>false</allowCreate>
+    <allowDelete>false</allowDelete>
+    <allowEdit>false</allowEdit>
     <allowRead>true</allowRead>
     <modifyAllRecords>false</modifyAllRecords>
     <object>Quote</object>
@@ -47205,19 +47204,27 @@
         <name>ContentWorkspaces</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ConvertLeads</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
+        <name>EditPublicTemplates</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>EditBrandTemplates</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>CreateTopics</name>
     </userPermissions>
     <userPermissions>
@@ -47237,7 +47244,7 @@
         <name>EditTask</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditTopics</name>
     </userPermissions>
     <userPermissions>
@@ -47253,8 +47260,16 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ExportReport</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ImportCustomObjects</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ImportLeads</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -47273,7 +47288,7 @@
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageInteraction</name>
     </userPermissions>
     <userPermissions>
@@ -47293,7 +47308,7 @@
         <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>RunReports</name>
     </userPermissions>
     <userPermissions>
@@ -47317,7 +47332,7 @@
         <name>SubmitMacrosAllowed</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>SubscribeToLightningReports</name>
     </userPermissions>
     <userPermissions>
@@ -47337,15 +47352,15 @@
         <name>ViewHelpLink</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewRoles</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewSetup</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewTrustMeasures</name>
     </userPermissions>
 </Profile>

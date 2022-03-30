@@ -190,7 +190,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Description</field>
             </layoutItems>
         </layoutColumns>

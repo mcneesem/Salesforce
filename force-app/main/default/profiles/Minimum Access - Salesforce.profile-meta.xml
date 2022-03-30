@@ -67,8 +67,8 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningSales</application>
-        <default>false</default>
-        <visible>false</visible>
+        <default>true</default>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningSalesConsole</application>
@@ -97,7 +97,7 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Sales</application>
-        <default>true</default>
+        <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
@@ -5814,7 +5814,11 @@
         <field>Lead.DOZISF__ZoomInfo_Last_Updated__c</field>
         <readable>true</readable>
      </fieldPermissions>
-  
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.DOZISF__ZoomInfo_Non_Matched_Reason__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>LegalEntity.CompanyName</field>
@@ -45412,7 +45416,7 @@
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Task Layout 0322</layout>
+        <layout>Task-Eloqua Page Layout</layout>
         <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -45435,7 +45439,7 @@
         <layout>ThreatDetectionFeedback-Threat Detection Feedback Layout</layout>
     </layoutAssignments>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45444,7 +45448,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45453,7 +45457,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45462,7 +45466,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45471,7 +45475,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45480,7 +45484,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45489,7 +45493,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45507,7 +45511,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45552,7 +45556,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45561,7 +45565,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45570,7 +45574,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45579,7 +45583,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45588,7 +45592,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45597,7 +45601,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45606,7 +45610,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45624,10 +45628,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
+        <allowRead>false</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Quote</object>
         <viewAllRecords>false</viewAllRecords>

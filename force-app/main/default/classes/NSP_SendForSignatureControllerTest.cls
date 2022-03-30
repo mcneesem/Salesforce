@@ -18,6 +18,7 @@ public static final String ACCOUNTNAME ='testCustomer'; // Added as part of code
         List<Account> acc = [SELECT id, NSP_Partner_Lifecycle__c FROM Account WHERE Name =: ACCOUNTNAME LIMIT 1]; // Added as part of code scan fix
         PageReference pageRef = Page.NSP_SendForSignature;
         Test.setCurrentPage(pageRef);
+        ApexPages.currentPage().getParameters().put('id', acc[0].Id);
         test.startTest();
         ApexPages.StandardController sc = new ApexPages.StandardController(acc[0]);
         NSP_SendForSignatureController controller = new NSP_SendForSignatureController(sc);

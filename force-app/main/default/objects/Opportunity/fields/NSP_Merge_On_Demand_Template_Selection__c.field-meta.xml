@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Merge_On_Demand_Template_Selection__c</fullName>
-    <description
-  >This field is used to store merge on demand template list name</description>
+    <description>This field is used to store merge on demand template list name</description>
     <externalId>false</externalId>
     <label>Generate Document</label>
     <required>false</required>
@@ -19,19 +18,9 @@
                 <label>NDA</label>
             </value>
             <value>
-                <fullName>NDA_WetSignature</fullName>
-                <default>false</default>
-                <label>NDA_WetSignature</label>
-            </value>
-            <value>
                 <fullName>ClientServiceAgreement</fullName>
                 <default>false</default>
                 <label>ClientServiceAgreement</label>
-            </value>
-            <value>
-                <fullName>BusinessProfileWithRiskReviewandGHH</fullName>
-                <default>false</default>
-                <label>BusinessProfileWithRiskReviewandGHH</label>
             </value>
             <value>
                 <fullName>CafeteriaPlanQuestionnaireWorksheet</fullName>
@@ -49,11 +38,6 @@
                 <label>NDAChannelPartner</label>
             </value>
             <value>
-                <fullName>BusinessProfileWithRiskReview</fullName>
-                <default>false</default>
-                <label>BusinessProfileWithRiskReview</label>
-            </value>
-             <value>
                 <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
                 <default>false</default>
                 <label>Enrollment Fee Single Payment Refundable</label>
@@ -94,6 +78,16 @@
                 <label>Mid-MarketClientServiceAgreement</label>
             </value>
             <value>
+                <fullName>AnalysisDocumentsOver50ee</fullName>
+                <default>false</default>
+                <label>Analysis Documents Over 50 ee</label>
+            </value>
+            <value>
+                <fullName>AnalysisDocumentsUnder50ee</fullName>
+                <default>false</default>
+                <label>Analysis Documents Under 50 ee</label>
+            </value>
+            <value>
                 <fullName>BusinessProfileOnly</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -104,6 +98,18 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>BusinessProfileWithEEDatasheet</label>
+            </value>
+            <value>
+                <fullName>BusinessProfileWithRiskReview</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BusinessProfileWithRiskReview</label>
+            </value>
+            <value>
+                <fullName>BusinessProfileWithRiskReviewandGHH</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BusinessProfileWithRiskReviewandGHH</label>
             </value>
             <value>
                 <fullName>CAMLetterofAssignment</fullName>
@@ -176,6 +182,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MidMarketBPCSaleSheet</label>
+            </value>
+            <value>
+                <fullName>NDA_WetSignature</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NDA_WetSignature</label>
             </value>
             <value>
                 <fullName>NewClientRiskReviewOnly</fullName>

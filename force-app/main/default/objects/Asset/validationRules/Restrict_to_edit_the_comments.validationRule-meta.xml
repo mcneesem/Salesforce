@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_to_edit_the_comments</fullName>
+    <active>true</active>
+    <description>Not allow Comments field to be updated if logged in user is not DA</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(NSP_Pending_Report_Comments__c),
+    $UserRole.DeveloperName !=&apos;District_Administrator&apos;,
+    NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
+    $Profile.Name = &quot;Data Migration&quot;,
+    $Profile.Name = &quot;Sales Administrator&quot;,
+    $Profile.Name = &quot;Integration User&quot;))
+    )</errorConditionFormula>
+    <errorMessage>You don&apos;t have permission to update comments on asset.</errorMessage>
+</ValidationRule>

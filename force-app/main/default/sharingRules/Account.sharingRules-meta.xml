@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
-        <fullName>Share_All_Accounts</fullName>
-        <accessLevel>Read</accessLevel>
+        <fullName>Data_Gov_Account_Edit</fullName>
+        <accessLevel>Edit</accessLevel>
         <accountSettings>
             <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Read</contactAccessLevel>
-            <opportunityAccessLevel>Read</opportunityAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
         </accountSettings>
-        <label>Share All Accounts</label>
+        <label>Data Gov - Account &amp; Edit</label>
         <sharedTo>
-            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+            <group>NSP_Data_Governance_Group</group>
         </sharedTo>
         <criteriaItems>
-            <field>NSP_Account_Id__c</field>
+            <field>Name</field>
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
-        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>NSP_Share_Segment_Accounts_to_BPC_Role_Users</fullName>
@@ -40,25 +40,6 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Data_Gov_Account_Edit</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>Edit</opportunityAccessLevel>
-        </accountSettings>
-        <label>Data Gov - Account &amp; Edit</label>
-        <sharedTo>
-            <group>NSP_Data_Governance_Group</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>Name</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>NSP_Share_Segment_Accounts_to_BPC_Support_Group</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -75,6 +56,25 @@
             <field>NSP_Account_Segment__c</field>
             <operation>equals</operation>
             <value>MidMarket</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Share_All_Accounts</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <label>Share All Accounts</label>
+        <sharedTo>
+            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_Account_Id__c</field>
+            <operation>notEqual</operation>
+            <value></value>
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -112,7 +112,7 @@
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
-        <sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>BPA_owner_Account_to_NCS_group</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>

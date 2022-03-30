@@ -21,6 +21,7 @@ public class NSP_LeadTriggerHelper {
     private static final string LEAD_RT = 'Lead';
     private static final Id NEW_LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(NEW_LEAD_RT).getRecordTypeId();
     private static final Id LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(LEAD_RT).getRecordTypeId();
+    private static final string SYS_ADMIN = 'System Administrator';
     // Added as part of DF-01009
     private static final string REFERRAL_RECORDTYPE = 'Referral';
     private static final Id REFERRAL_RECORDTYPE_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(REFERRAL_RECORDTYPE).getRecordTypeId();
@@ -104,9 +105,10 @@ public class NSP_LeadTriggerHelper {
         /*********************/
         Set<String> salesOfficeSet=new Set<String>();
         Set<Id> ownerIdset = new Set<Id>();
+        List<String> MMBSPUserList = Label.MM_AND_BPC_USERROLE.split(',');
         /*********************/
         
-        User userDetails =[ SELECT Id, Name, UserRole.Name FROM User WHERE Id =: userinfo.getUserId() ];
+        User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
         /* Added as part of STY-01725 */
         //iterating over trigger.newmap
         for (Id leadId: leadNewMap.keySet()) {
@@ -116,15 +118,19 @@ public class NSP_LeadTriggerHelper {
                     //adding lead records to the list
                     fireScoreLeadList.add(leadNewMap.get(leadId));
                 }
-            
-            /* Added as part of DF-01301 */
-            if(trigger.isupdate && trigger.isbefore){
-                if(userDetails.Id!=leadOldMap.get(leadId).OwnerId){
-                if(string.valueOf(leadOldMap.get(leadId).OwnerId).startsWith('005')){
-                    ownerIdset.add(leadOldMap.get(leadId).OwnerId);
+        /* Added as part of DF-01301 */
+        if(trigger.isupdate && trigger.isbefore){
+            //Current logged in user not equal to Owner and logged in user profile not sys admin 
+            if(userDetails.Id!=leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name!=SYS_ADMIN){
+                //Check logged in user role not in Mid Market/BPS 
+                if(!MMBSPUserList.contains(userDetails.UserRole.Name) ){
+                    //Lead owner not a queue check
+                    if(leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType){
+                        ownerIdset.add(leadOldMap.get(leadId).OwnerId);
+                    }
                 }
             }
-            }
+        }
 			/* Added as part of CR-027 */
 			if (leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != leadOldMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c) {
                 isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
@@ -186,19 +192,20 @@ public class NSP_LeadTriggerHelper {
             if(!salesOfficeSet.isEmpty()){
                 groupMemberList =[SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId=: userinfo.getUserId() AND Group.Name IN :salesOfficeSet];
             }
-            
             for (Id leadId: leadNewMap.keySet()) {
                 if(trigger.isupdate && trigger.isbefore){
-                    if(userDetails.Id!=leadOldMap.get(leadId).OwnerId){
-                    if(string.valueOf(leadOldMap.get(leadId).OwnerId).startsWith('005')){
-                        if(groupMemberList.isEmpty()){
-                            leadNewMap.get(leadId).Id.addError(system.label.NSP_LeadTriggerError);  
-                            
-                        }  
+                    if(userDetails.Id!=leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name!=SYS_ADMIN){
+                        if(!MMBSPUserList.contains(userDetails.UserRole.Name) ){
+                            if(leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType){
+                                if(groupMemberList.isEmpty()){
+                                    leadNewMap.get(leadId).Id.addError(system.label.NSP_LeadTriggerError);  
+                                    
+                                }  
+                            }
+                        }
                     }
                 }
             }
-        }
         }
         /* Added as part of DF-01301 */
         
@@ -234,9 +241,9 @@ public class NSP_LeadTriggerHelper {
         Map < String, Lead > opportunityLeadMap = new Map < String, Lead > ();
         Set < Id > convertedOpportunityIdsSet = new Set < Id > ();
         List < Lead > nurturingLeadList = new List < Lead > ();
-        
+        Set<Id> accountId = new  Set<Id>();
         for (Lead leadObject: leadNewMap.values()) {
-            //temporarily added
+
             if (leadObject.isconverted && String.isNotBlank(leadObject.convertedOpportunityId)) {
                 convertedOpportunityIdsSet.add(leadObject.convertedOpportunityId);
             }
@@ -250,10 +257,15 @@ public class NSP_LeadTriggerHelper {
                 leadObject.NSP_Reason__c != leadOldMap.get(leadObject.Id).NSP_Reason__c) {
                     nurturingLeadList.add(leadObject);
                 }
+             // added as a part of story STY-02090
+            if(leadObject.isconverted){
+                accountId.add(leadObject.convertedAccountId);
+            }
         }
         
         setContactasCOI(accountLeadMap, opportunityLeadMap);
-        
+        // added as a part of story STY-02090
+         setContactAsPrimary(accountId);
         if (convertedOpportunityIdsSet.size() > 0) {
             defaultOpportunityFields(convertedOpportunityIdsSet);
         }
@@ -430,18 +442,15 @@ public class NSP_LeadTriggerHelper {
 */
     
 public void setContactasCOI(Map < String, Lead > accountLeadMap, Map < String, Lead > opportunityLeadMap) {
-    Set < Id > AccountIds = new Set < Id > ();
     List < AccountContactRelation > acrList = new List < AccountContactRelation > ();
     List < OpportunityContactRole > ocrList = new List < OpportunityContactRole > ();
     for (String accntID: accountLeadMap.keyset()) {
-        AccountIds.add(accntID);
         Lead leadObject = accountLeadMap.get(accntID);
         AccountContactRelation acrObject = new AccountContactRelation();
         acrObject.AccountId = accntID;
         acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
         acrObject.Roles = leadObject.NSP_Referral_Source__c;
         acrObject.NSP_isReferral__c = true;
-        acrObject.NSP_Is_Primary__c = true;
         acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
         acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
         acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
@@ -462,7 +471,6 @@ public void setContactasCOI(Map < String, Lead > accountLeadMap, Map < String, L
     try {
         insert acrList;
         insert ocrList;
-        NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountIds);
     } catch (Exception ex) {
         NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactasCOI', ex.getMessage());
     }
@@ -682,5 +690,41 @@ insert tasksList;
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'createContact', ex.getMessage());
         }
-    }    
+    }
+    
+    /**
+    * @MethodName: setContactAsPrimary
+    * @Description: Marks the converted contact as Primary Contact  ,added as a part of story STY-02090 
+    * @param Map<Id,Id> AccountContactMap. 
+    * @return void             
+    * @author : Nischay Jindal    
+    *           
+    */
+    public void setContactAsPrimary( Set<Id> AccountIds) {
+        try{
+             Set < Id > AccountId = new Set < Id > ();
+             List<AccountContactRelation >acrList = new List<AccountContactRelation >();
+            // checking for the existing Primary ACR associated with the account 
+             List < AccountContactRelation > accountContactRelationLists = [SELECT Id  ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE  AccountId IN: AccountIds And NSP_Is_Primary__c=true ];
+            if(!accountContactRelationLists.isEmpty()){
+                for(AccountContactRelation acr:accountContactRelationLists){
+                    AccountId.add(acr.AccountId);
+                }
+            } 
+            else if(accountContactRelationLists.isEmpty()){
+                 acrList = [SELECT Id  ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE  AccountId IN: AccountIds ];
+                 for (AccountContactRelation Acr: acrList) {
+                     AccountId.add(Acr.AccountId);
+                     Acr.NSP_Is_Primary__c = true;
+                 }
+                 if(!acrList.isEmpty()){
+                     Update acrList; 
+                 }
+             }
+             NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountId);
+         } catch (Exception ex) {
+             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactAsPrimary', ex.getMessage());
+         }
+         
+     }
 }
