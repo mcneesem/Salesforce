@@ -9,12 +9,8 @@ public class NSP_UserTriggerHelper {
 *                
 */
     public void beforeInsertUser(List < User > newList) {
-        for (User userObj: newList) {
-            if (userObj.Phone != null) {
-                updatePhoneNumber(newList);
-            }
-        }
-    }
+          updatePhoneNumber(newList);
+     }
     
     /**
 * Iterates throught the list of new User and passes the required attributes to other methods.
@@ -36,6 +32,7 @@ public class NSP_UserTriggerHelper {
 */
     public void updatePhoneNumber(List < User > currentRecordsList) {
         for (User contact: currentRecordsList) {
+            if(contact.Phone != null) {
             Pattern nonAlphanumeric = Pattern.compile('[^a-zA-Z0-9]');
             String initialNum = nonAlphanumeric.matcher(contact.Phone).replaceAll('').replace('ext', 'x');
             Pattern numFormat10Dig = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{4})');
@@ -57,6 +54,7 @@ public class NSP_UserTriggerHelper {
             } else {
                 contact.NSP_Formatted_Phone_Num__c = contact.Phone;
             }
+         }  
         }
     }
     

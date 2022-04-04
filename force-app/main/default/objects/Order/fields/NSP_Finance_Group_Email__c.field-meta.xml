@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Finance_Group_Email__c</fullName>
-    <defaultValue>&quot;ita.finance@mailinator.com&quot;</defaultValue>
+    <defaultValue>&quot;ita.finance@insperity.com.invalid&quot;</defaultValue>
     <description>Email Id of Finance Public group</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>

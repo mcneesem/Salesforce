@@ -1,4 +1,3 @@
-
 /**
 Apex Class Name      :  NSP_ValidateOpportunityStage 
 Version              :  1.0                                                                          
@@ -35,8 +34,8 @@ public class NSP_ValidateOpportunityStage {
                                                                              (SELECT Id, NSP_Event_Subtype__c,NSP_Status__c FROM Events WHERE NSP_Event_Subtype__c   != NULL)
                                                                              FROM Opportunity Where Id IN :oppIdList]);
         
-        Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
-        
+        Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c  FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
+        Map<Id,UserRole> NCSRole = new Map<Id,UserRole>([SELECT id FROM UserRole WHERE Name =: NSP_SalesConstants.NEW_CLIENT_SALES]);
         
         for(Opportunity opp:newList){        
             Opportunity oppFromMap=oppMapwithEventTask.get(opp.Id);
@@ -98,13 +97,9 @@ public class NSP_ValidateOpportunityStage {
                         if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
                             opp.addError(System.Label.NSP_AddBidNumber);
                         }
-                    } else if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || 
-                                                                    (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT 
-                                                                     && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){//DF-01080 subtype Amendment check added
-                                                                         opp.addError(System.Label.NSP_AddPrimaryQuote);
-                                                                     }
+                    } 
                 }
-                evaluateProposalStageCriteria(opp,quoteMap);
+                evaluateQuoteCriteria(opp,quoteMap);
             }
             //CR-031 removed Executive summary check and have added BPS Products condition
             if(opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
@@ -116,7 +111,7 @@ public class NSP_ValidateOpportunityStage {
                     }
                     
                 }else if(opp.NSP_PrimaryProduct__c==NSP_SalesConstants.WO || (opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && opp.NSP_Order_Generated__c)){
-                    if(opp.NSP_Docusign_Sent_Date__c == null && !opp.NSP_Closing_Appointment__c){
+                    if(!opp.NSP_Closing_Appointment__c){
                         opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);  
                     }
                 }
@@ -124,7 +119,9 @@ public class NSP_ValidateOpportunityStage {
             
             //closed-won criteria CR-031
             if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
-                evaluateClosedWonStageCriteria(opp);
+                //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
+                evaluateQuoteCriteria(opp,quoteMap);
+                evaluateClosedWonStageCriteria(opp,NCSRole);
             }
         }
         
@@ -150,6 +147,9 @@ public class NSP_ValidateOpportunityStage {
                        for(Event event:eventList){////looking for discovery
                            if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY){
                                scannedTask += HAS_DISCOVERY;
+                               if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
+                                   scannedTask += HAS_OPEN_EVENT;
+                               }
                            }
                        }
                    }
@@ -158,27 +158,15 @@ public class NSP_ValidateOpportunityStage {
                    if(!scannedTask.contains(HAS_DISCOVERY)){
                        opp.addError(System.Label.NSP_AddDiscoveryCalls);
                    }
+                   if(scannedTask.contains(HAS_OPEN_EVENT)){
+                       opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
+                   }
                }
-        if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX){
-            if(eventList!=null){
-                for(Event event:eventList){////looking for discovery
-                    if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY){
-                        if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
-                            scannedTask += HAS_OPEN_EVENT;
-                        }
-                    }
-                }
-            }
-            if(scannedTask.contains(HAS_OPEN_EVENT)){
-                opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
-            }
             
-        }
-        
     }
     
     /**
-* Evaluate entry criteria for proposal stage
+* Evaluate criteria related to quote
 * @param opportunityList list of New Opportunity.  
 * @param  list of events
 * @param list of tasks
@@ -186,16 +174,17 @@ public class NSP_ValidateOpportunityStage {
 *   
 *   added under CR-031          
 */ 
-    public static void evaluateProposalStageCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
+     public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
         try{
-            
-            if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO 
-               &&(!opp.NSP_Bypass_Docusign_Signature__c)){
+          
+            if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO){
                    if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                        if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                            if(opp.SBQQ__PrimaryQuote__c != null){
                                if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
                                    opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                               }else if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
+                                   opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
                                }
                            }else{
                                if(!test.isRunningTest()){
@@ -207,11 +196,15 @@ public class NSP_ValidateOpportunityStage {
                        if(opp.SBQQ__PrimaryQuote__c != null){
                            if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
                                opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                           }else if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
+                                   opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
                            }
                        }else{
-                           if(!test.isRunningTest()){
-                               opp.addError(System.Label.NSP_AddPrimaryQuote);
-                           }
+                           if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || 
+                                                                    (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT 
+                                                                     && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){//DF-01080 subtype Amendment check added
+                                                                         opp.addError(System.Label.NSP_AddPrimaryQuote);
+                                                                     }
                        } 
                    }
                }
@@ -229,12 +222,12 @@ public class NSP_ValidateOpportunityStage {
 *  * 
 *             
 */ 
-    public static void evaluateClosedWonStageCriteria(Opportunity opp){
+    public static void evaluateClosedWonStageCriteria(Opportunity opp,Map<Id,UserRole> NCSRole){
         if(ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) 
            && (opp.NSP_Opportunity_Owner_Role__c == NSP_SalesConstants.BPC_USER || opp.NSP_Opportunity_Owner_Role__c == NSP_SalesConstants.BPA_USER)
            && opp.NSP_Opportunity_Owner_Role__c != NSP_SalesConstants.NEW_CLIENT_SALES){
                opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-           }else if(opp.NSP_Opportunity_Owner_Role__c != NSP_SalesConstants.NEW_CLIENT_SALES && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
+           }else if(NCSRole.get(UserInfo.getUserRoleId()) == null && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
                opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
            }
         

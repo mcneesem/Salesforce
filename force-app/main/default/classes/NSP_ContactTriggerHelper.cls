@@ -22,13 +22,11 @@ public class NSP_ContactTriggerHelper {
             if(conObj.NSP_Client_Reference__c){
                 conObj.NSP_Client_Reference_Task_Date__c = system.today();
             }
-            if(conObj.Phone != null){
-                updatePhoneNumber(newList);
-            }
         }
+        //Format Phone number
+        updatePhoneNumber(newList);
+    }        
         
-    }
-    
     /**
 * Iterates throught the list of new Contact and passes the required attributes to other methods.
 * @param newList List of New Contact.
@@ -66,9 +64,9 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
                && conObj.NSP_Client_Reference__c){
                    conObj.NSP_Client_Reference_Task_Date__c = system.today();
                }
-               updatePhoneNum(newMap.Values(),oldMap);
         }
-        
+        //Format Phone Number
+         updatePhoneNum(newMap.Values(),oldMap);
         //for integration
         Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
         NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
@@ -175,6 +173,7 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
 */
 public void updatePhoneNumber(List<Contact> currentRecordsList) {
     for(Contact contact : currentRecordsList){
+        if(contact.Phone != null) {
         Pattern nonAlphanumeric = Pattern.compile('[^a-zA-Z0-9]');
         String initialNum = nonAlphanumeric.matcher(contact.Phone).replaceAll('').replace('ext','x');
         Pattern numFormat10Dig = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{4})');
@@ -194,6 +193,7 @@ public void updatePhoneNumber(List<Contact> currentRecordsList) {
         else {
             contact.NSP_Formatted_Phone_Num__c = contact.Phone;
         }
+        } 
     }
 }
 /**

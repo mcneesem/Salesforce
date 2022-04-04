@@ -10,14 +10,14 @@ public class NSP_Quote_Service {
  
 /**
 * Method for constructing Docusign CLM URL
-* @param  OpportunityId,templateId,name,accountName
+* @param  OpportunityId,templateId,name,accountName,aid
 */ 
     @AuraEnabled(cacheable=true)
-    public static string getDocuSignUrl(String recordId,String templateId,String name,String accountName){
+    public static string getDocuSignUrl(String recordId,String templateId,String name,String accountName,String aid){
     try {
         String queryParam;
         queryParam = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen'+'?'+
-        'aid='+'65500'+'&'+
+        'aid='+aid+'&'+
         'config='+templateId+'&'+
         'eos[0].Id='+recordId+'&'+
         'eos[0].System='+'Salesforce'+'&'+
@@ -25,10 +25,11 @@ public class NSP_Quote_Service {
         'eos[0].Name='+name+'&'+
         'eos[0].ScmPath='+'/Salesforce/Account/'+accountName+'/Opportunity';
         return queryParam;
-    }Catch(Exception Ex){
+    }
+    Catch(Exception Ex){
         throw new AuraHandledException(ex.getMessage());
     }
-    }
+}
 /**
 * Method for querying the contacts related to Billing account
 * @param  BillingAccount Id,customerSigner Id
@@ -47,10 +48,10 @@ public class NSP_Quote_Service {
           if(contactSet.contains(customerSigner)) {
               isValid = true;
           }
-        }Catch(Exception Ex){
+        }
+        Catch(Exception Ex){
             throw new AuraHandledException(ex.getMessage());
             }
    return isValid;
-    
-}	
+    }	
 }

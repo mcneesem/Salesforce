@@ -152,15 +152,15 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Opportunity Split</label>
+    <externalSharingModel>Private</externalSharingModel>
+    <label>Opportunity Credit</label>
     <nameField>
         <displayFormat>ES-{0000}</displayFormat>
-        <label>Split Number</label>
+        <label>Credit Number</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Opportunity Splits</pluralLabel>
+    <pluralLabel>Opportunity Credits</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

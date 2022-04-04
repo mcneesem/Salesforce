@@ -366,14 +366,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Executive_Summary_Generated__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Docusign_Sent_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
@@ -539,10 +531,6 @@
                 <field>NSP_Account_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_Owner_s_Email__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Account_Segment__c</field>
             </layoutItems>
@@ -605,10 +593,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_DiscoveryCallApptDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_DC_DateTime__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -1137,16 +1121,6 @@
         <fields>SALES.ACCOUNT.NAME</fields>
         <fields>CONTRACT.STATUS</fields>
         <relatedList>Contract.SBQQ__Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>QUOTE.QUOTENUMBER</fields>
-        <fields>QUOTE.NAME</fields>
-        <fields>QUOTE.ISSYNCING</fields>
-        <fields>QUOTE.EXPIRATIONDATE</fields>
-        <fields>QUOTE.SUBTOTAL</fields>
-        <fields>QUOTE.TOTALPRICE</fields>
-        <fields>CreatedBy</fields>
-        <relatedList>RelatedQuoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

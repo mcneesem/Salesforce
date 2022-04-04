@@ -64,15 +64,15 @@
                             <value>Opportunity.NSP_Create_Checklist</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Opportunity.SendWithDocuSign</value>
+                            <value>CustomButton.Opportunity.NSP_Merge_on_Demand_Send_for_Signature</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Opportunity.Add_Team_Member</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sales_Engineer_Manager</rightValue>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Sales Support</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

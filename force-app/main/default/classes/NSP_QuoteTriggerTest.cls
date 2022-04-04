@@ -236,7 +236,8 @@ public class NSP_QuoteTriggerTest {
                           languagelocalekey='en_US', 
                           localesidkey='en_US', profileid = profileobj.Id, userroleid = role.Id,
                           timezonesidkey='America/Los_Angeles', 
-                          username='insperitytestadminuser@insperity.com');
+                          username='insperitytestadminuser@insperity.com',
+                          IsActive=true);
         insert userobj;
         Id gpid =  [Select Id from Group WHERE Group.DeveloperName =  'NSP_CSS' LIMIT 1].Id;
         GroupMember gm = new GroupMember (UserOrGroupId = userobj.Id, GroupId = gpid);
@@ -277,21 +278,21 @@ public class NSP_QuoteTriggerTest {
         Account objAccount = [SELECT Id, Name FROM Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1]; //Added WHERE Condition as part of code fix
         Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objAccount.Id, NSP_QuoteTriggerTest.NEW_PRODUCT ,true);
         NSP_Address__c objBillingAddress = NSP_TestHelper.createCustomAddress();
-		objBillingAddress.NSP_Related_Site__c = objAccount.id;
-		insert objBillingAddress;
-		
-		NSP_Address__c objshippingAddress = NSP_TestHelper.createCustomAddress();
-		objshippingAddress.NSP_Address_Type__c = null;
-		objshippingAddress.NSP_Related_Site__c = objAccount.id;
-		insert objshippingAddress;
-		
+        objBillingAddress.NSP_Related_Site__c = objAccount.id;
+        insert objBillingAddress;
+        
+        NSP_Address__c objshippingAddress = NSP_TestHelper.createCustomAddress();
+        objshippingAddress.NSP_Address_Type__c = null;
+        objshippingAddress.NSP_Related_Site__c = objAccount.id;
+        insert objshippingAddress;
+        
         SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(objAccount.Id,objOpportunity.Id,false);
         objQuote.SBQQ__Type__c = NSP_CPQConstants.QUOTE_TYPE_NEW;
         insert objQuote;
-		Test.startTest();
+        Test.startTest();
         objQuote.NSP_Billing_Address__c = objBillingAddress.Id;
         objQuote.NSP_Shipping_Address__c = objshippingAddress.Id;
-		objQuote.NSP_Customer_Billing_Address__c = objBillingAddress.Id;
+        objQuote.NSP_Customer_Billing_Address__c = objBillingAddress.Id;
         objQuote.NSP_Customer_Shipping_Address__c = objshippingAddress.Id;
         objQuote.NSP_Product_Type__c = NSP_CPQConstants.QUOTE_PRODUCT_TYPE_WX;
         objQuote.NSP_Client_For_Life__c = 'WX';
@@ -299,7 +300,7 @@ public class NSP_QuoteTriggerTest {
         objQuote.NSP_Opportunity_Primary_Product__c = 'WX';
 
         update objQuote;
-		test.stopTest();
+        test.stopTest();
         System.assertEquals(objQuote.NSP_Client_For_Life__c, 'WX');
     }
     

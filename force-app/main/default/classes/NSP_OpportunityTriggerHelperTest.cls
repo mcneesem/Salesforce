@@ -214,7 +214,7 @@ public class NSP_OpportunityTriggerHelperTest {
         oppty.NSP_DA_User__c = oppty.OwnerId;
       
         
-        oppty.NSP_Merge_On_Demand_Template_Selection__c = 'CommissionOnlyEmployeesQuestionnaire';
+        oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
         update oppty;
         Test.stopTest();
         System.assertEquals(oppty.StageName, NSP_SalesConstants.ANALYSIS_STAGE); // Added as part of Code fix
@@ -237,7 +237,7 @@ public class NSP_OpportunityTriggerHelperTest {
         oppty.NSP_DA_User__c = oppty.OwnerId;
         oppty.NSP_BPA__c = oppty.OwnerId;
         oppty.StageName = 'Closed Won';
-        oppty.NSP_Merge_On_Demand_Template_Selection__c = 'CommissionOnlyEmployeesQuestionnaire';
+        oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
         
         update oppty;   
        Test.stopTest();
@@ -257,19 +257,15 @@ public class NSP_OpportunityTriggerHelperTest {
                                                    stagename,
                                              	   NSP_Signed_CSA__c,
                                              	   NSP_Signed_Delivery_Order__c, 
-                                                   NSP_Executive_Summary_Generated__c,
-                                                   NSP_Docusign_Sent_Date__c, 
-                                             	   CloseDate,
+                                                   CloseDate,
                                              	   NSP_Closing_Appointment__c,
                                                    OwnerId FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null ];
                
         Test.startTest();
-        opportunityList[0].NSP_Executive_Summary_Generated__c = true;  
         opportunityList[0].NSP_PrimaryProduct__c = NSP_SalesConstants.WX;  
         opportunityList[0].NSP_Signed_Delivery_Order__c = true;
          /* Added as part of test class coverage */
         opportunityList[0].NSP_Signed_CSA__c = true; 
-        opportunityList[0].NSP_Docusign_Sent_Date__c = date.today();
         opportunityList[0].NSP_Closing_Appointment__c = true;
          /* Added as part of test class coverage */
         update opportunityList[0];      

@@ -704,19 +704,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>FundingPacket</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>GLALInsuranceCertificateRequest</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Mid-MarketClientServiceAgreement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mid-MarketFundingPacket</fullName>
             <default>false</default>
         </values>
         <values>

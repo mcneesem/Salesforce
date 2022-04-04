@@ -2065,6 +2065,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.NSP_ProductBundle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Asset.SBQQ__AdditionalDiscountAmount__c</field>
         <readable>true</readable>
@@ -2337,11 +2342,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.SBQQ__VirtualAsset__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.NSP_ProductBundle__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4962,6 +4962,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__ProductOption__c.NSP_Active_W2_Employees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Talent_ConnectSubscription_StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Talent_Connect_Subscription_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Implementation_Start_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -95,7 +95,6 @@ public class NSP_OpportunityTriggerHelperFunctions {
     public void getAccountOwnerEmail(List < Opportunity > opportunityList, Set < String > accountIdSet) {
         //Map of account Id and Account object
         //  Modified by Nischay as a part of STY-02090 
-         Map < Id, Account > mapAccountObject = new Map < Id, Account > ([SELECT Id, Name, Owner.Email FROM Account WHERE id IN: accountIdSet]);
          Map < Id, String > accountContactMap = new Map < Id, String > ();
          //Map of account Id and Contact Id
          for (AccountContactRelation accountObj: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId, Account.Owner.Email from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountIdSet]) {
@@ -104,8 +103,7 @@ public class NSP_OpportunityTriggerHelperFunctions {
          
          //Iterating over the optys and stamping account owner email
          for (Opportunity opportunityObject: opportunityList) {
-             if (mapAccountObject.containsKey(opportunityObject.AccountId) && accountContactMap.containsKey(opportunityObject.AccountId) ) {
-                 opportunityObject.NSP_Account_Owner_s_Email__c = mapAccountObject.get(opportunityObject.AccountId).Owner.Email;
+             if ( accountContactMap.containsKey(opportunityObject.AccountId) ) {
                  opportunityObject.NSP_Primary_Contact__c = accountContactMap.get(opportunityObject.AccountId);
                  opportunityObject.NSP_Customer_Signer__c = accountContactMap.get(opportunityObject.AccountId);
              }
@@ -210,22 +208,20 @@ public class NSP_OpportunityTriggerHelperFunctions {
 public static void getAccountOwnerEmail(Set<Id> accountId) {
     //  Added by Nischay as a part of STY-02090 
     Map<Id,Id> accountOpportunityMap = new Map<Id,Id>();
-    List<Opportunity>opportunityList =[Select Id , Name,NSP_Customer_Signer__c ,NSP_Primary_Contact__c, NSP_Account_Owner_s_Email__c,AccountId from Opportunity WHERE AccountId IN:accountId];
+    List<Opportunity>opportunityList =[Select Id , Name,NSP_Customer_Signer__c ,NSP_Primary_Contact__c,AccountId from Opportunity WHERE AccountId IN:accountId];
      for(Opportunity opp:opportunityList){
          accountOpportunityMap.put(opp.AccountId,opp.Id);
      }
-    Map < Id, Account > mapAccountObject = new Map < Id, Account > ([SELECT Id, Name, Owner.Email FROM Account WHERE id IN: accountId]);
-    Map < Id, String > accountContactMap = new Map < Id, String > ();
+     Map < Id, String > accountContactMap = new Map < Id, String > ();
     for (AccountContactRelation accountObj: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId, Account.Owner.Email from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountId]) {
         accountContactMap.put(accountObj.AccountId,accountObj.ContactId );
     }
     List<Opportunity> UpdateOpplist = new List<Opportunity>();
     //Iterating over the optys and stamping account owner email
     for (Opportunity opportunityObject: opportunityList) {
-        if (mapAccountObject.containsKey(opportunityObject.AccountId)) {
+        if (accountContactMap.containsKey(opportunityObject.AccountId)) {
             Opportunity opp = new opportunity();
             opp.Id=opportunityObject.Id;
-            opp.NSP_Account_Owner_s_Email__c = mapAccountObject.get(opportunityObject.AccountId).Owner.Email;
             opp.NSP_Primary_Contact__c = accountContactMap.get(opportunityObject.AccountId);
             opp.NSP_Customer_Signer__c = accountContactMap.get(opportunityObject.AccountId);
             UpdateOpplist.add(opp);

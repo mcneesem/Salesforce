@@ -38,6 +38,8 @@ public class NSP_LeadTriggerHandler implements NSP_ITriggerHandler{
     public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
      // Share Lead with owner Sales office Public groups --STY-01786   
      NSP_recordSharing.nonBPALeadSharing(newList);
+     //DF-01461
+     NSP_recordSharing.queuedLeadRecordSharing(newList); 
     }
     
     /**

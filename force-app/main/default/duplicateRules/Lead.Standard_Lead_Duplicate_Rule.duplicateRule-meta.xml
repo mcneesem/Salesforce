@@ -4,7 +4,16 @@
     <actionOnUpdate>Allow</actionOnUpdate>
     <alertText>You&apos;re creating a duplicate record. We recommend you use an existing record instead.</alertText>
     <description>Duplicate Rule for Leads using the Standard Lead Matching Rule</description>
-    <duplicateRuleFilter xsi:nil="true"/>
+    <duplicateRuleFilter>
+        <booleanFilter xsi:nil="true"/>
+        <duplicateRuleFilterItems>
+            <field>Username</field>
+            <operation>notContain</operation>
+            <value>Eloqua</value>
+            <sortOrder>1</sortOrder>
+            <table>User</table>
+        </duplicateRuleFilterItems>
+    </duplicateRuleFilter>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Lead</matchRuleSObjectType>
         <matchingRule>NSP_Lead_Matching_Rule</matchingRule>

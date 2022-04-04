@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Producer__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -193,6 +197,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DoNotCall</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -613,11 +621,6 @@
             <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
@@ -702,6 +705,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>19</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewEvent</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedContent>
         <relatedContentItems>
@@ -744,7 +752,7 @@
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
-	    <relatedLists>
+    <relatedLists>
         <fields>FULL_NAME</fields>
         <fields>LEAD.COMPANY</fields>
         <fields>LEAD.PHONE</fields>

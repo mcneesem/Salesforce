@@ -76,7 +76,9 @@ present in that location*/
                   locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c =0;
                   if(locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id) != null){
                       //Incerementing the index after every assignment so that the lead is assigned to the next DA in the list
-                      leadObj.ownerid = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_District_Administrator__c;  
+                      if(leadObj.NSP_Zip_Based_Location__c != NSP_SalesConstants.MIDMARKETREGION){
+                        leadObj.ownerid = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_District_Administrator__c;  
+                      }
                       leadObj.NSP_Sales_Office__c = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_Sales_Office__c;
                       locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c = locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c +1;
                   }
@@ -86,11 +88,13 @@ present in that location*/
                  
                   // assigning owner to the lead record     
                   if(locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id) != null){
-                      leadObj.ownerid = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_District_Administrator__c;
-                      leadObj.NSP_Sales_Office__c = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_Sales_Office__c;
-                      if(!leadObj.Lead_Owner_Auto_Assignment__c){
-                          leadObj.Lead_Owner_Auto_Assignment__c=TRUE;
-                      }
+                        if(leadObj.NSP_Zip_Based_Location__c != NSP_SalesConstants.MIDMARKETREGION){
+                            leadObj.ownerid = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_District_Administrator__c;
+                        }
+                        leadObj.NSP_Sales_Office__c = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_Sales_Office__c;
+                        if(!leadObj.Lead_Owner_Auto_Assignment__c){
+                            leadObj.Lead_Owner_Auto_Assignment__c=TRUE;
+                        }
                       //Incerementing the index after every assignment so that the lead is assigned to the next DA in the list
                       locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c = locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c +1;
                   }

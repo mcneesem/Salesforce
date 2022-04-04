@@ -54,6 +54,7 @@ public class NSP_LeadTriggerHelperTest {
         officeAssignmentObj.NSP_Location_Name__c=officeObj.id;
         officeAssignmentObj.NSP_Office_Number__c=1;
         officeAssignmentObj.Name = '3300 New York 1';
+        officeAssignmentObj.NSP_Sales_Office__c = '301';
         //Inserting office assignment object
         Insert officeAssignmentObj;
         
@@ -122,7 +123,6 @@ public class NSP_LeadTriggerHelperTest {
         leadObject1.NumberOfEmployees =160;
         leadObject1.Company = 'Allstate123';
         leadObject1.Email = LEADCONVERTRECORD_EMAIL;
-        leadObject1.NSP_DC_DateTime__c = System.now();
 
         /* as part of STY-01725 */
         leadObject1.NSP_DC_SetDate__c =  date.today();
@@ -169,7 +169,6 @@ public class NSP_LeadTriggerHelperTest {
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         //Setting the fire score to greater than 80
         leadList[0].nsp_fire_score__c = 82;
-        leadList[0].NSP_DC_DateTime__c = System.now();
         leadList[0].PostalCode = '769767';
         leadList[0].Lead_Owner_Auto_Assignment__c = false;
         //leadList[0].Company = 'ALLSTATE';
@@ -347,7 +346,6 @@ public static void inBoundUserBeforeInsertTest(){
         ldObj.NumberOfEmployees = 100;
         ldObj.Company = 'mark';
         ldObj.Email = 'mark@gmail.com';
-        ldObj.NSP_DC_DateTime__c = System.now();
         ldObj.NSP_DC_SetDate__c =  date.today();
         Time myTime = Time.newInstance(1, 2, 3, 0);
         ldObj.NSP_DC_SetTime__c = myTime;

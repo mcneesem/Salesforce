@@ -16,7 +16,10 @@ public class NSP_FlowInterviewListControllerTest {
 */  
     static testMethod void getInterviewsTest() {
         Account  acc = NSP_TestHelper.createAccount(true);
-        Opportunity  opportuniytObject = NSP_TestHelper.createOpenOpportunity(acc.Id, OPP_TYPE, true);
+        Opportunity  opportuniytObject = NSP_TestHelper.createOpenOpportunity(acc.Id, OPP_TYPE, false);
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
+        opportuniytObject.NSP_Number_of_Employees__c = 100;
+        insert opportuniytObject;
         Test.startTest();
         NSP_FlowInterviewListController.getInterviews(opportuniytObject.ID);
         try{

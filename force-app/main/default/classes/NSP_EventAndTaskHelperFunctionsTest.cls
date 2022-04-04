@@ -28,6 +28,7 @@ public class NSP_EventAndTaskHelperFunctionsTest {
             opp.stagename = NSP_SalesConstants.ANALYSIS_STAGE;
             opp.NSP_PrimaryProduct__c = NSP_SalesConstants.WX;
             opp.NSP_Client_For_Life__c = NSP_SalesConstants.WX;
+            opp.NSP_Number_of_Employees__c = 100;
             insert opp;
         }  
     }

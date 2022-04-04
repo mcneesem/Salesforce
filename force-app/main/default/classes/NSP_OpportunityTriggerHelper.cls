@@ -208,10 +208,8 @@ public class NSP_OpportunityTriggerHelper {
             if(opportunityNewMap.get(opportunityId).StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) 
                && (opportunityNewMap.get(opportunityId).NSP_Closing_Appointment__c != opportunityOldMap.get(opportunityId).NSP_Closing_Appointment__c
                    || opportunityNewMap.get(opportunityId).NSP_Order_Generated__c != opportunityOldMap.get(opportunityId).NSP_Order_Generated__c
-                   || opportunityNewMap.get(opportunityId).NSP_Docusign_Sent_Date__c != opportunityOldMap.get(opportunityId).NSP_Docusign_Sent_Date__c
                    || opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c != opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c
-                   || opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c != opportunityOldMap.get(opportunityId).NSP_Signed_Delivery_Order__c
-                   || opportunityNewMap.get(opportunityId).NSP_Signed_CSA__c != opportunityOldMap.get(opportunityId).NSP_Signed_CSA__c)){
+                   || opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c != opportunityOldMap.get(opportunityId).NSP_Signed_Delivery_Order__c)){
                        opportunitiesToClosingStageList.add(opportunityNewMap.get(opportunityId));
                        
                    }
@@ -349,9 +347,7 @@ public class NSP_OpportunityTriggerHelper {
             //STY-01519 - Asset creation from Opportunity line item
             if(opportunityNewMap.get(opportunityId).stagename != opportunityOldMap.get(opportunityId).stagename
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
-               // Added as part of DF-01325 
-                NSP_EmailWithAttachment.sendClosedWonEmailNotifications(opportunityId,newOpportunity);
-                   closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
+                closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
                }
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
             if(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO 
@@ -428,7 +424,7 @@ public class NSP_OpportunityTriggerHelper {
     public void moveOpportunityToClosingStage(List<Opportunity> opportunityList){
         for(Opportunity opportunityRecord : opportunityList){
             
-            if(opportunityRecord.NSP_Docusign_Sent_Date__c != null && opportunityRecord.NSP_Closing_Appointment__c != null
+            if(opportunityRecord.NSP_Closing_Appointment__c != null
                && (((opportunityRecord.NSP_PrimaryProduct__c==NSP_SalesConstants.WO || opportunityRecord.NSP_PrimaryProduct__c==NSP_SalesConstants.WS) && opportunityRecord.NSP_Signed_CSA__c) 
                    || (opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WX && opportunityRecord.NSP_Signed_Delivery_Order__c) 
                    || (opportunityRecord.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && opportunityRecord.NSP_PrimaryProduct__c!=NSP_SalesConstants.WS && opportunityRecord.NSP_PrimaryProduct__c!=NSP_SalesConstants.WX))){

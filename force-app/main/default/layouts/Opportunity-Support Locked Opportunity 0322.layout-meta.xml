@@ -213,14 +213,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NSP_Executive_Summary_Generated__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Docusign_Sent_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>NSP_MidMarketNationalAccount__c</field>
             </layoutItems>
         </layoutColumns>
@@ -585,10 +577,6 @@
                 <field>NSP_Account_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_Owner_s_Email__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Account_Segment__c</field>
             </layoutItems>
@@ -651,10 +639,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_DC_SetDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_DC_DateTime__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

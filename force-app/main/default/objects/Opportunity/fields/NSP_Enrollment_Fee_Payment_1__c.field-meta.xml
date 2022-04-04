@@ -4,14 +4,10 @@
     <description>to save payment amount from enrollment fee payment if payment number is 1</description>
     <externalId>false</externalId>
     <label>Enrollment Fee Payment 1</label>
-    <summarizedField>NSP_Enrollment_Fee_Payment__c.NSP_Payment_Amount__c</summarizedField>
-    <summaryFilterItems>
-        <field>NSP_Enrollment_Fee_Payment__c.NSP_Payment_Number__c</field>
-        <operation>equals</operation>
-        <value>1</value>
-    </summaryFilterItems>
-    <summaryForeignKey>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</summaryForeignKey>
-    <summaryOperation>sum</summaryOperation>
+    <precision>14</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>Summary</type>
+    <type>Currency</type>
 </CustomField>

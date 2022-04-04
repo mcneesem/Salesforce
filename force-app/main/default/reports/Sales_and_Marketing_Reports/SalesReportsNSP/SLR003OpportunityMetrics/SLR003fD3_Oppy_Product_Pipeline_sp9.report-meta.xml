@@ -17,9 +17,6 @@
         <field>Opportunity$NSP_Account_Name__c</field>
     </columns>
     <columns>
-        <field>Opportunity$NSP_Account_Owner_s_Email__c</field>
-    </columns>
-    <columns>
         <field>Opportunity$NSP_AddonType__c</field>
     </columns>
     <columns>

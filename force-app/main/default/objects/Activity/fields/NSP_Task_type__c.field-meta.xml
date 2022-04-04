@@ -50,9 +50,9 @@
                 <label>Form Submission</label>
             </value>
             <value>
-                <fullName>Email send</fullName>
+                <fullName>Email Send</fullName>
                 <default>false</default>
-                <label>Email send</label>
+                <label>Email Send</label>
             </value>
             <value>
                 <fullName>Email Open</fullName>
@@ -65,14 +65,14 @@
                 <label>Email Click</label>
             </value>
             <value>
-                <fullName>Website visit</fullName>
+                <fullName>Website Visit</fullName>
                 <default>false</default>
-                <label>Website visit</label>
+                <label>Website Visit</label>
             </value>
             <value>
-                <fullName>EmailBounced</fullName>
+                <fullName>Email Bounced</fullName>
                 <default>false</default>
-                <label>EmailBounced</label>
+                <label>Email Bounced</label>
             </value>
             <value>
                 <fullName>Subscribed</fullName>
@@ -95,10 +95,10 @@
                 <label>Required for Booking</label>
             </value>
             <value>
-                <fullName>Client reference</fullName>
+                <fullName>Client Reference</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Client reference</label>
+                <label>Client Reference</label>
             </value>
         </valueSetDefinition>
     </valueSet>

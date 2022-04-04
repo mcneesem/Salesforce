@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
     <description>Use for mapping of custom field of lead to standard fields of account</description>
-    <interviewLabel>Lead Conversion -Update Fields on Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Lead Conversion - Update Fields on Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Conversion - Update Fields on Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -28,16 +28,24 @@
         <label>Update related account record</label>
         <locationX>176</locationX>
         <locationY>335</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ConvertedAccountId</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
             <field>Sic</field>
             <value>
-                <elementReference>$Record__Prior.NSP_SIC__c</elementReference>
+                <elementReference>$Record.NSP_SIC__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>SicDesc</field>
             <value>
-                <elementReference>$Record__Prior.NSP_SicDesc__c</elementReference>
+                <elementReference>$Record.NSP_SicDesc__c</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>

@@ -1848,6 +1848,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AM%26AA - Alliance of Mergers an</fullName>
+            <default>false</default>
+        </values>
+        <values>
+           <fullName>Acrisure%2C TASK Group LLC%2C dba</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acrisure LLC dba Connor Group</fullName>
             <default>false</default>
         </values>
@@ -2296,6 +2304,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EO Wisconsin</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EPIC - COOK MARAN</fullName>
             <default>false</default>
         </values>
@@ -2413,6 +2425,10 @@
         </values>
         <values>
             <fullName>KBI Benefits%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KRA Life Agency</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2536,6 +2552,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RSC - Krauter</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RSC Insurance Brokerage</fullName>
             <default>false</default>
         </values>
@@ -2557,6 +2577,10 @@
         </values>
         <values>
             <fullName>Strategic Wellness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SunPower Corporation</fullName>
             <default>false</default>
         </values>
         <values>

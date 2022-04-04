@@ -75,6 +75,13 @@
         <value>Please add Primary Quote before moving stage to Proposal</value>
     </labels>
     <labels>
+        <fullName>NSP_Docusign_Account_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Docusign Account Id</shortDescription>
+        <value>50202</value>
+    </labels>
+    <labels>
         <fullName>NSP_AddWOBusinessProfile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -110,13 +117,6 @@
         <protected>false</protected>
         <shortDescription>NSP_Asset_Product</shortDescription>
         <value>NSP_Asset_Product</value>
-    </labels>
-    <labels>
-        <fullName>NSP_BPS_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>BPS Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIWUA2</value>
     </labels>
     <labels>
         <fullName>NSP_Benchmark_Date_Validation</fullName>
@@ -182,7 +182,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Client For Life to Create Quote</shortDescription>
-         <value>Please select  Client For Life on Opportunity before creating quote.</value>
+         <value>Please select Primary Bundle on Opportunity before creating quote.</value>
     </labels>
     <labels>
         <fullName>NSP_Client_Reference_Task_Subject</fullName>
@@ -524,9 +524,8 @@
         <fullName>NSP_Non_WO_Closing_Appointment_Or_Docusign</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-    >Non WO Closing Appointment Or Docusign</shortDescription>
-         <value>For non WO opportunities please have a order generated AND closing appointment event OR docusign sent date populated</value>
+        <shortDescription>Non WO Closing Appointment Or Docusign</shortDescription>
+         <value>For non WO opportunities please have a order generated AND closing appointment event</value>
     </labels>
     <labels>
         <fullName>NSP_PRODINT_FULL_SERVICE_HR</fullName>
@@ -595,7 +594,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Primary Workforce Products</shortDescription>
-        <value>WO,WX,WS</value>
+        <value>WO,WX,WS,WA</value>
     </labels>
     <labels>
         <fullName>NSP_ProductNamesForAssetRenewalOpportunities</fullName>
@@ -697,13 +696,6 @@
         <value>Please enter valid  RPO Start Date and  RPO End Date</value>
     </labels>
     <labels>
-        <fullName>NSP_Recruiting_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Recruiting Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIdUAM</value>
-    </labels>
-    <labels>
         <fullName>NSP_RequestFirstCheckDate</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -743,13 +735,6 @@
         <value>Send For Signature</value>
     </labels>
     <labels>
-        <fullName>NSP_Standalone_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Standalone Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OISUA2</value>
-    </labels>
-    <labels>
         <fullName>NSP_SubmitApprovalError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -775,7 +760,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WO Closing Appointment or Docusign</shortDescription>
-         <value>Please create an Event with subtype Closing Appointment or have docusign sent date populated</value>
+         <value>Please create an Event with subtype Closing Appointment</value>
     </labels>
     <labels>
         <fullName>NSP_WO_Email_DL</fullName>
@@ -793,12 +778,12 @@
         <shortDescription>WX Email DL</shortDescription>
         <value>WXresults@insperity.com.invalid</value>
     </labels>
-    <labels>
-        <fullName>NSP_WX_Envelope_Configuration</fullName>
+	<labels>
+        <fullName>NSP_Sales_Envelope_Configuration</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>WX Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIVUA2</value>
+        <shortDescription>Sales Envelope Configuration</shortDescription>
+        <value>a7r2D000000HixfQAC</value>
     </labels>
     <labels>
         <fullName>Retirement_Services_For_Non_WO_Products</fullName>
@@ -838,14 +823,6 @@
         <protected>false</protected>
         <shortDescription>MovePartnerLifecycletoOnboarding</shortDescription>
         <value>Moving Partner LifeCycle to Onboarding</value>
-    </labels>
-    <labels>
-        <fullName>NSP_SingleSigner_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription
-    >NSP_SingleSigner_Envelope_Configuration</shortDescription>
-        <value>a8D8M0000008OIeUAM</value>
     </labels>
     <labels>
         <fullName>NSP_ReferralLeadErrorMessage</fullName>
@@ -968,7 +945,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-         <value>Organizational Planning,Time &amp; Attendance,Workforce Acceleration,Workforce Administration</value>
+         <value>Organizational Planning,Time &amp; Attendance,Workforce Acceleration,Workforce Administration,Workforce Optimization</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
@@ -991,5 +968,97 @@
         <protected>false</protected>
         <shortDescription>NSP_OpportunityWAAttachmentName</shortDescription>
         <value>WA_,_completed,Delivery Order</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Altula_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Altula Envelope Configuration</shortDescription>
+        <value>a8D8M0000008OIeUAM</value>
+    </labels>
+    <labels>
+        <fullName>NSP_HR_Services_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Services Envelope Configuration</shortDescription>
+        <value>a8D8M0000008OISUA2</value>
+    </labels>
+    <labels>
+        <fullName>NSP_BPS_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Envelope Configuration</shortDescription>
+        <value>a8D8M0000008OIWUA2</value>
+    </labels>
+        <labels>
+        <fullName>NSP_Recruiting_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recruiting Envelope Configuration</shortDescription>
+        <value>a8D8M0000008OIdUAM</value>
+    </labels>
+        <labels>
+        <fullName>NSP_Standalone_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standalone Envelope Configuration</shortDescription>
+        <value>a8D8M0000008OISUA2</value>
+    </labels>
+        <labels>
+        <fullName>NSP_WX_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Envelope Configuration</shortDescription>
+        <value>a8D8M0000008OIVUA2</value>
+    </labels>
+        <labels>
+        <fullName>NSP_SingleSigner_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_SingleSigner_Envelope_Configuration</shortDescription>
+        <value>a8D8M0000008OIeUAM</value>
+    </labels>
+        <labels>
+        <fullName>NSP_BPS_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Wet Envelope</shortDescription>
+        <value>a8D8M0000008OJsUAM</value>
+    </labels>
+        <labels>
+        <fullName>NSP_HR_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Wet Envelope</shortDescription>
+        <value>a8D8M0000008OJvUAM</value>
+    </labels>
+        <labels>
+        <fullName>NSP_Recruiting_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recruiting Wet Envelope</shortDescription>
+        <value>a8D8M0000008OJtUAM</value>
+    </labels>
+        <labels>
+        <fullName>NSP_WX_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Wet Envelope</shortDescription>
+        <value>a8D8M0000008OJuUAM</value>
+    </labels>
+     <labels>
+        <fullName>NSP_Sync_Primary_Quote_With_Opportunity</fullName>
+        <categories>primary product, client for life</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sync Primary Quote with Opportunity</shortDescription>
+        <value>Please update the Primary Product and Primary Bundle on the opportunity that matches the quote</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryContactValidationforContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_PrimaryContactValidationforContact</shortDescription>
+         <value>This Contact already has a Primary Account Contact Relationship identified for it. Contact cannot have more than one Primary Account Contact Relationship.</value>
     </labels>
 </CustomLabels>

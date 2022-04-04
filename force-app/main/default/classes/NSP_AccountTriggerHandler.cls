@@ -1,8 +1,7 @@
 /**
  * Represents the Account trigger handler.
  */
-
-public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
+public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_ITriggerHandler {
 
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
@@ -14,7 +13,7 @@ public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
      *
      */
 
-    public Boolean isDisabled(){
+    public Boolean isDisabled() {
         return TriggerDisabled;
     }
 
@@ -24,9 +23,9 @@ public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
      * @return void
      *
      */
-    public void beforeInsert(List<sObject> newList) {
-		NSP_AccountTriggerHelper  accountTriggerHelperObject =  new NSP_AccountTriggerHelper();
-        accountTriggerHelperObject.beforeInsertDirector((List<Account>) newList);
+    public void beforeInsert(List < sObject > newList) {
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+        accountTriggerHelperObject.beforeInsertDirector((List < Account > ) newList);
     }
 
     /**
@@ -36,11 +35,14 @@ public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
      * @return void
      *
      */
-    public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
-        NSP_AccountTriggerHelper  accountTriggerHelperObject =  new NSP_AccountTriggerHelper();
-        accountTriggerHelperObject.afterInsertDirector((List<Account>) newList, (Map<Id, Account>) newMap);
-        // Share account with owner Sales office Public groups --STY-01786
-        NSP_recordSharing.nonBPAAccountSharing((Map<Id, Account>) newMap);
+    public void afterInsert(List < sObject > newList, Map < Id, sObject > newMap) {
+
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+        if (!this.hasRun()) {
+            this.markRun();
+            accountTriggerHelperObject.afterInsertDirector((List < Account > ) newList, (Map < Id, Account > ) newMap);
+            NSP_recordSharing.nonBPAAccountSharing((Map < Id, Account > ) newMap);
+        }
     }
 
     /**
@@ -51,9 +53,9 @@ public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
      *
      */
 
-    public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_AccountTriggerHelper  accountTriggerHelperObject =  new NSP_AccountTriggerHelper();
-        accountTriggerHelperObject.beforeUpdateDirector((Map<Id, Account>) newMap, (Map<Id, Account>) oldMap);
+    public void beforeUpdate(Map < Id, sObject > newMap, Map < Id, sObject > oldMap) {
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+        accountTriggerHelperObject.beforeUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
     }
 
     /**
@@ -64,19 +66,16 @@ public class NSP_AccountTriggerHandler  implements NSP_ITriggerHandler {
      *                
      */
 
-    public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_AccountTriggerHelper  accountTriggerHelperObject =  new NSP_AccountTriggerHelper();
-        accountTriggerHelperObject.afterUpdateDirector((Map<Id, Account>) newMap, (Map<Id, Account>) oldMap);
-       // Share account with owner Sales office Public groups --STY-01786
-        NSP_recordSharing.shareAccountonUpdate((Map<Id, Account>) newMap, (Map<Id, Account>) oldMap);
+    public void afterUpdate(Map < Id, sObject > newMap, Map < Id, sObject > oldMap) {
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+
+        if (!this.hasRun()) {
+            this.markRun();
+            accountTriggerHelperObject.afterUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
+            NSP_recordSharing.shareAccountonUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
+
+        }
+
     }
-    /**
-    * Handles after delete for Account
-    * @param oldList List of old Account
-    * @param oldMap Map of Old Account
-    * @return void             
-    *                
-    */ 
-     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
-    }
+    public void afterDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {}
 }

@@ -70,7 +70,8 @@ public without sharing class NSP_EmailServicesUtilityTest {
         
         EmailTemplate vfEmailTemplate = [SELECT Id, Name FROM EmailTemplate WHERE Name!='' AND TemplateType='Visualforce' LIMIT 1];
         
-        NSP_EmailServicesUtility.sendVFEmailTemplate(userId,s1,vfEmailTemplate, opportunityRecord.Id);
+        List<Messaging.EmailFileAttachment> emailattachments = new List<Messaging.EmailFileAttachment>();
+        NSP_EmailServicesUtility.sendVFEmailTemplate(userId,s1,vfEmailTemplate, opportunityRecord.Id,emailattachments);
         Test.stopTest();
          system.assertequals(true,true);
     }

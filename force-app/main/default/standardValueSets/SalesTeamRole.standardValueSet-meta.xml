@@ -47,6 +47,11 @@
         <label>Opportunity Owner</label>
     </standardValue>
     <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
         <fullName>Pre-Sales Consultant</fullName>
         <default>false</default>
         <label>Pre-Sales Consultant</label>

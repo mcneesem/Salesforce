@@ -3,7 +3,9 @@
     <fullName>NSP_Envelope_Selector__c</fullName>
     <description>Envelope Selection Automation</description>
     <externalId>false</externalId>
-    <formula>IF(
+    <formula>IF( NSP_WetSignature__c == False , 
+
+IF(
 OR( NSP_Selected_Template__c == &apos;TimeStarHardware&apos;,
 NSP_Selected_Template__c == &apos;TimeStar&apos;,
 NSP_Selected_Template__c == &apos;BPS&apos;,
@@ -16,7 +18,7 @@ OR( NSP_Selected_Template__c == &apos;Recruiting&apos;,
 NSP_Selected_Template__c == &apos;RecruitingonDemand&apos;,
 NSP_Selected_Template__c == &apos;TalentConnectAmendment&apos; ), $Label.NSP_Recruiting_Envelope_Configuration,
 
-IF( NSP_Selected_Template__c == &apos;ALTULA&apos;, $Label.NSP_SingleSigner_Envelope_Configuration,
+IF( NSP_Selected_Template__c == &apos;ALTULA&apos;, $Label.NSP_Altula_Envelope_Configuration,
 
 IF( NSP_Selected_Template__c == null , &apos;&apos; ,
 
@@ -24,9 +26,9 @@ IF(
 OR( NSP_Selected_Template__c == &apos;StandardEmployeeHandbookSOW&apos;,
 NSP_Selected_Template__c == &apos;StandardClimateSurveySOW&apos;,
 NSP_Selected_Template__c == &apos;SalarySurveySOW&apos;,
-NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;), $Label.NSP_Standalone_Envelope_Configuration,
+NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;), $Label.NSP_HR_Services_Envelope_Configuration,
 
-$Label.NSP_WX_Envelope_Configuration) ) ) ) )</formula>
+$Label.NSP_WX_Envelope_Configuration) ) ) ) ) , NSP_Wet_Envelope_Selector__c )</formula>
     <label>Envelope Selector</label>
     <required>false</required>
     <trackTrending>false</trackTrending>

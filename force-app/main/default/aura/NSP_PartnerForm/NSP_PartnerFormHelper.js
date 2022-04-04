@@ -2,24 +2,23 @@
     saveLead : function(component, event) {
         var action = component.get("c.createAccount");
         var accountObject = component.get("v.AccountObj");
-         action.setParams({ accountObject : JSON.stringify(accountObject),
-                       contactId : component.get("v.contactId") });
-          action.setCallback(this, function(response) {
-            var state = response.getState();
-     
+        var conObj = component.get("v.contactObj"); // Added as part of STY-02211
+            action.setParams({ accountObject : JSON.stringify(accountObject),
+                            contactObject : JSON.stringify(conObj)});
+            action.setCallback(this, function(response) {
+            var state = response.getState();    
             if (state == "SUCCESS") {
-                
                 if(response.getReturnValue() === "success"){
                     var base_url = window.location.origin
-                window.location.href = base_url +$A.get("$Label.c.NSP_ThankYou_Page");
+                    window.location.href = base_url +$A.get("$Label.c.NSP_ThankYou_Partner");
+                    component.set("v.isSpinner", false);
                 }else if(response.getReturnValue() === "exists"){
                     this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Duplicate_Account_Message"));
-                }
-                
-                               
-            } else if (state =="ERROR") {
-               
+                    component.set("v.isSpinner", false);
+                }                              
+            } else if (state =="ERROR") {               
                 this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Error_Message"));
+                component.set("v.isSpinner", false);
             }
             
         });
@@ -27,9 +26,9 @@
     },
     getPicklistValues : function(component, event) {
         var action = component.get("c.returnAllPickListValues");
-       action.setCallback(this, function(response) {
+        action.setCallback(this, function(response) {
             var state = response.getState();
-
+    
             if (state == "SUCCESS") {
                 
                 var picklistvalues = response.getReturnValue();
@@ -49,8 +48,8 @@
                 component.set("v.AccountObj.NSP_Business_Vertical__c",picklistvalues.businessVertical[0]);
                 
             } else if (state =="ERROR") {
-               
-               this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Error_Message"));
+                
+                this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Error_Message"));
             }
             
         });
@@ -58,40 +57,31 @@
     },
     
     showErrorModal : function(component, eventz,errormsg) {
-         component.set("v.isModalOpen", true);
+            component.set("v.isModalOpen", true);
                 component.set("v.cmpError",errormsg);
     },
     
     getStatePicklistValues : function(component, event) {
         var action = component.get("c.getDependentMap");     
         action.setParams({ objDetail : component.get("v.AccountObj"),
-                       contrfieldApiName : 'BillingCountryCode',
-                         depfieldApiName : 'BillingStateCode'});
+                        contrfieldApiName : 'BillingCountryCode',
+                            depfieldApiName : 'BillingStateCode'});
         action.setCallback(this, function(response) {
             var state = response.getState();
-             
+                
             if (state == "SUCCESS") {
-                 
+                    
                 var picklistvalues = response.getReturnValue();
             
                 component.set("v.state",picklistvalues['United States']);
-               component.set("v.AccountObj.BillingState",picklistvalues['United States'][0]);
+                component.set("v.AccountObj.BillingState",picklistvalues['United States'][0]);
                 
             } else if (state =="ERROR") {
-             
-               this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Error_Message"));
+                
+                this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Error_Message"));
             }
             
         });
         $A.enqueueAction(action);
     },
-    getCaptcha: function(component, eventz,errormsg) {
-        var vfURL = $A.get("{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}") ;
-        
-        window.addEventListener('message', function(event){
-            if(event.data === component.get("v.unlock") ){
-                component.set('v.isDisable', false); 
-            }
-        }, false);
-    }
-})
+    })

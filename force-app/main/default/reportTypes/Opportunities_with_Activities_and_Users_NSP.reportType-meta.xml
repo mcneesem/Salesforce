@@ -42,11 +42,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Account_Owner_s_Email__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Activate_Business_Profile__c</field>
             <table>Opportunity</table>
         </columns>
@@ -252,11 +247,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Docusign_Sent_Date__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_EngageServiceTeam__c</field>
             <table>Opportunity</table>
         </columns>
@@ -273,11 +263,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_EnrollmentFeeNotes__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Executive_Summary_Generated__c</field>
             <table>Opportunity</table>
         </columns>
         <columns>

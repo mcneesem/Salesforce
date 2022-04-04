@@ -4795,11 +4795,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Event.NSP_Method__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Number_Attending__c</field>
         <readable>false</readable>
@@ -5087,7 +5082,7 @@
      <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Description</field>
-        <readable>false</readable>
+        <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
         <editable>false</editable>
@@ -5303,11 +5298,6 @@
         <editable>false</editable>
         <field>Lead.NSP_Discovery_Call_Appointment_Date__c</field>
         <readable>false</readable>
-     </fieldPermissions>
-     <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.NSP_DC_DateTime__c</field>
-        <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
         <editable>false</editable>
@@ -5955,7 +5945,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Account_Team__c.NSP_Role__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5975,7 +5965,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Account_Team__c.NSP_User__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8797,16 +8787,6 @@
  </fieldPermissions>
  <fieldPermissions>
     <editable>false</editable>
-    <field>Opportunity.NSP_Executive_Summary_Generated__c</field>
-    <readable>true</readable>
- </fieldPermissions>
- <fieldPermissions>
-    <editable>false</editable>
-    <field>Opportunity.NSP_Docusign_Sent_Date__c</field>
-    <readable>true</readable>
- </fieldPermissions>
- <fieldPermissions>
-    <editable>false</editable>
     <field>Opportunity.Legals_Counter_Signer__c</field>
     <readable>true</readable>
  </fieldPermissions>
@@ -9078,6 +9058,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.NSP_Finance_Group_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.NSP_Net_Total__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12121,6 +12106,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Talent_ConnectSubscription_StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Talent_Connect_Subscription_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Implementation_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductOption__c.NSP_Estimated_Number_Of_Employees__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13191,6 +13191,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Description_To_Store_Internal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Product_Amendment_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.NSP_Stop_Auto_Pricing__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13825,6 +13835,36 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Implementation_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Related_Setup_SKU__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Related_Setup_SKU_Missing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Secondary_NetTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Talent_Connect_Subscription_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.NSP_Talent_ConnectSubscription_StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.SBQQ__Source__c</field>
         <readable>false</readable>
@@ -14405,8 +14445,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.ApprovalStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.NSP_Customer_Key_Stakeholder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14602,6 +14647,61 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_DO_Signed_By_Billing_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_New_Licenses_Added__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_Additional_HoursTraining__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_OrgPlus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_New_Licenses_Added__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_Additional_Users__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.NSP_Insperity_Key_Stakeholder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_WOSS_OneTime_Svc__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_WOSS_Recurring_Svc__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_Training__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_PSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Renewal_PerformSmart__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15017,7 +15117,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_Scholarship_List_Unit_Price__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.NSP_Scholarship_Minimum_Fee__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -15965,9 +16070,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.NSP_Net_Total__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.NSP_Exclude_From_Report__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -19223,11 +19333,6 @@
         <editable>false</editable>
         <field>Task.NSP_Location__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Task.NSP_Method__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -45039,14 +45144,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_Order_Process_Builder</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
-        <flow>NSP_Order_Product_Process_Builder</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Quote_Process_Builder</flow>
     </flowAccesses>
     <flowAccesses>
@@ -45474,6 +45571,15 @@
         <object>Account</object>
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
+          <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>NSP_Account_Team__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
      <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -45520,7 +45626,7 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -45529,30 +45635,12 @@
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>NSP_SObject_History_Tracking__c</object>
-        <viewAllRecords>false</viewAllRecords>
-     </objectPermissions>
-     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>CLM_Document__c</object>
-        <viewAllRecords>false</viewAllRecords>
-     </objectPermissions>
-     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>dfsle__EnvelopeStatus__c</object>
         <viewAllRecords>false</viewAllRecords>
      </objectPermissions>
      <objectPermissions>
@@ -45708,7 +45796,7 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>NSP_ThankYou_Page</apexPage>
+        <apexPage>ThankYou_Page</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -46070,7 +46158,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Asset</tab>
@@ -46090,7 +46178,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Campaign</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Case</tab>
@@ -46106,7 +46194,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Contact</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-ContactRequest</tab>
@@ -46142,7 +46230,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Lead</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-LegalEntity</tab>
@@ -46162,7 +46250,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Opportunity</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Order</tab>

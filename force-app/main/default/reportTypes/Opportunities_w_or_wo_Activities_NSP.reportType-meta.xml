@@ -403,11 +403,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Executive_Summary_Generated__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_RenewalWithCompetitor__c</field>
             <table>Opportunity</table>
         </columns>
@@ -444,11 +439,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Parent_Opportunity__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Account_Owner_s_Email__c</field>
             <table>Opportunity</table>
         </columns>
         <columns>
@@ -819,11 +809,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Closing_Appointment__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Docusign_Sent_Date__c</field>
             <table>Opportunity</table>
         </columns>
         <columns>

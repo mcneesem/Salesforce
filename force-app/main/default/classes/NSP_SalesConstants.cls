@@ -107,6 +107,7 @@ public class NSP_SalesConstants {
     public static final String channelOperation = 'Channel Operations';
     public static final String manualRowCause = 'Manual';
     public static final String editSharingAccess = 'Edit';
+    public static final String readSharingAccess = 'Read';
     public static final String OPPORTUNITY_SUBTYPE_AMENDMENT = 'Amendment';
     public static final String MIDMARKETSALESOFFICE = '4499';
     public static final String SalesOfficeObject = 'User';
@@ -117,6 +118,7 @@ public class NSP_SalesConstants {
     public static final String NEW_CLIENT_SALES = 'New Client Sales';
     public static final String MIDMARKETREGION  = 'Mid Market';
     public static final String EloquaTaskRecordType  = 'Eloqua Task RT';
+    public static final String OpportunityTeamMemberRole  = 'Other';
 
 
 }

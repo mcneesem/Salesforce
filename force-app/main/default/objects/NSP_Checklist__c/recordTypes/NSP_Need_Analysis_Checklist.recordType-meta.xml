@@ -267,7 +267,11 @@
     <picklistValues>
         <picklist>NSP_Down_Payment__c</picklist>
         <values>
-            <fullName>Check</fullName>
+            <fullName>Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Card</fullName>
             <default>false</default>
         </values>
         <values>

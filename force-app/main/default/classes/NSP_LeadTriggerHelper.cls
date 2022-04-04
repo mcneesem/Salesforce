@@ -38,9 +38,7 @@ public class NSP_LeadTriggerHelper {
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
-			dunsCheck(leadObject);
-            
-            //switch record type to Lead or Referral record type
+			//switch record type to Lead or Referral record type
             if (leadObject.RecordTypeId == NEW_LEAD_RT_ID) {
                 leadObject.RecordTypeId = LEAD_RT_ID;
             }
@@ -63,10 +61,15 @@ public class NSP_LeadTriggerHelper {
             
             /* As part of DF-00998 comments, While Creating Lead From ELoqua Integration user or From Referral Form, Lead should get assigned to Inbound solutions Queue */
             List < String > externalUsers = Label.NSP_External_Users.split(',');
-            String createdUserName = leadObject.createdBy.FirstName;
+            //Added as part of DF-00998
+            String createdUserName = UserInfo.getFirstName();
             if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
                 inboundSolutionsList.add(leadObject);
             }
+			//change default 12 AM value of Discovery call set date to 12 PM.
+            if (leadObject.NSP_DC_SetDate__c !=null) {
+               leadObject.NSP_DC_SetDate__c += 1/2;
+			}
             
         }
         //calling method to stmap primary contact's email from partner account to lead
@@ -131,23 +134,20 @@ public class NSP_LeadTriggerHelper {
                 }
             }
         }
-			/* Added as part of CR-027 */
-			if (leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != leadOldMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c) {
-                isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
+		//change default 12 AM value of Discovery call set date to 12 PM.
+            if (leadNewMap.get(leadId).NSP_DC_SetDate__c != leadOldMap.get(leadId).NSP_DC_SetDate__c && leadNewMap.get(leadId).NSP_DC_SetDate__c !=null) {
+               leadNewMap.get(leadId).NSP_DC_SetDate__c += 1/2;
 			}
-            /* Added as part of DF-01301 */
+			/* Added as part of DF-01301 */
             
             /* As part of DF-00998 comments
 * If the loggedIn user is either Inbound or Outbound and Assign Lead Checkbox is checked then only Lead assignment rule will trigger
 * If the loggedIn user is not Inbound or Outbound solutions user, then No Lead assignment rules will trigger 
 */
             
-            if ((inboundOrOutBoundUserList.contains(userDetails.UserRole.Name) && 
+            if (inboundOrOutBoundUserList.contains(userDetails.UserRole.Name) && 
 			     leadNewMap.get(leadId).NSP_Assign_Lead__c == true && 
-				 leadOldMap.get(leadId).Lead_Owner_Auto_Assignment__c == False && 
-				 leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c == null) || 
-				 (leadNewMap.get(leadId).NSP_Lead_Routing__c == true && leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c == null) || 
-				 (leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && isOwnerUpdated == false)) {
+				 leadOldMap.get(leadId).Lead_Owner_Auto_Assignment__c == False) {
                     if (String.isnotBlank(leadNewMap.get(leadId).company) && nationalAccountList.contains(leadNewMap.get(leadId).company.toUppercase())) {
                         //If the Lead Company is associated with National Account, route the correct National Account Queue
                         nationalAccountLeadList.add(leadNewMap.get(leadId));
@@ -225,9 +225,7 @@ public class NSP_LeadTriggerHelper {
         assignLeadToNationalAccountQueue(nationalAccountLeadList);
         //assigning leads to mid market queue in number of employees >=EMP_THRESH_150
         assignLeadToPayrollHCM(payrollHCMList);
-		//Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
-        createContact(leadNewMap.Values());        
-    }
+	}
     
     /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
@@ -336,11 +334,15 @@ public class NSP_LeadTriggerHelper {
         List < Group > midMarketQueue = [SELECT Id, DeveloperName, name FROM Group WHERE Type = 'Queue'
                                          AND DeveloperName =: System.label.NSP_DEVELOPERNAME_MIDMARKET
                                         ];
-        for (Lead leadObject: midMarketLead) {
-            leadObject.OwnerId = midMarketQueue[0].id;
-            leadObject.Lead_Owner_Auto_Assignment__c = TRUE;
-            leadObject.NSP_Sales_Office__c = NSP_SalesConstants.MIDMARKETSALESOFFICE;
-        }
+                                        List < String > zipBasedLocationList = new List < String > ();
+                                        for (Lead leadObject: midMarketLead) {
+                                          leadObject.OwnerId = midMarketQueue[0].id;
+                                          leadObject.Lead_Owner_Auto_Assignment__c = TRUE;
+                                          leadObject.NSP_Zip_Based_Location__c = NSP_SalesConstants.MIDMARKETREGION;
+                                          zipBasedLocationList.add(leadObject.NSP_Zip_Based_Location__c);
+                                        }
+                                      //get office assignment details for Mid Market queue
+                                    NSP_RoundRobinAssigner.getOfficeAssignmentDetails(midMarketLead, zipBasedLocationList);
         
     }
     /**
@@ -702,29 +704,33 @@ insert tasksList;
     */
     public void setContactAsPrimary( Set<Id> AccountIds) {
         try{
-             Set < Id > AccountId = new Set < Id > ();
-             List<AccountContactRelation >acrList = new List<AccountContactRelation >();
+            Set < Id > AccountId = new Set < Id > ();
+            List<AccountContactRelation >acrList = new List<AccountContactRelation >();
+            Map<Id,Contact> accountContactMap= new Map<Id,Contact>([Select Id,AccountId from Contact WHERE AccountId IN:AccountIds]);
             // checking for the existing Primary ACR associated with the account 
-             List < AccountContactRelation > accountContactRelationLists = [SELECT Id  ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE  AccountId IN: AccountIds And NSP_Is_Primary__c=true ];
-            if(!accountContactRelationLists.isEmpty()){
+            List < AccountContactRelation > accountContactRelationLists = [SELECT Id  ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE  AccountId IN: AccountIds And NSP_Is_Primary__c=true ];
+           if(!accountContactRelationLists.isEmpty()){
                 for(AccountContactRelation acr:accountContactRelationLists){
                     AccountId.add(acr.AccountId);
                 }
             } 
             else if(accountContactRelationLists.isEmpty()){
-                 acrList = [SELECT Id  ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE  AccountId IN: AccountIds ];
-                 for (AccountContactRelation Acr: acrList) {
-                     AccountId.add(Acr.AccountId);
-                     Acr.NSP_Is_Primary__c = true;
-                 }
-                 if(!acrList.isEmpty()){
-                     Update acrList; 
-                 }
-             }
-             NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountId);
-         } catch (Exception ex) {
-             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactAsPrimary', ex.getMessage());
-         }
-         
-     }
+                acrList = [SELECT Id  ,NSP_Is_Primary__c, ContactId,AccountId from AccountContactRelation WHERE  ContactId IN: accountContactMap.KeySet()];
+                List<AccountContactRelation> UpdatedacrList= new List<AccountContactRelation>();
+                for (AccountContactRelation Acr: acrList) {
+                    AccountContactRelation acRecord= new AccountContactRelation();
+                    AccountId.add(Acr.AccountId);
+                    acRecord.Id= Acr.Id;
+                    acRecord.NSP_Is_Primary__c = true;
+                    UpdatedacrList.add(acRecord);
+                }
+                if(!UpdatedacrList.isEmpty()){
+                     Database.Update(UpdatedacrList, false);
+                }
+            }
+            NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountId);
+        } catch (Exception ex) {
+            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactAsPrimary', ex.getMessage());
+        }
+    }
 }

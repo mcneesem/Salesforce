@@ -17,6 +17,7 @@ import DO_SIGNED from "@salesforce/schema/Opportunity.NSP_DO_Sign_By_Billing_Acc
 import getDocuSignUrl from "@salesforce/apex/NSP_Quote_Service.getDocuSignUrl";
 import validateCustomerSigner from "@salesforce/apex/NSP_Quote_Service.validateCustomerSigner";
 import { CloseActionScreenEvent } from "lightning/actions";
+import docusignAccountId from "@salesforce/label/c.NSP_Docusign_Account_Id";
 
 export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api recordId;
@@ -41,6 +42,9 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api doSigned;
   isValid;
   contact;
+  label = {
+    docusignAccountId,
+  };
   connectedCallback() {}
 
   @wire(getRecord, {
@@ -186,13 +190,13 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       templateId: this.templateId,
       name: this.name,
       accountName: this.accountName,
+      aid: docusignAccountId,
     })
       .then((result) => {
         this.genUrl = result;
         this.navigateToVFPages(this.genUrl);
       })
       .catch((error) => {
-        //alert('apex error happened: '+JSON.stringify(error));
         this.error = error;
       });
   }

@@ -8,7 +8,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>Type</controllingField>
+        <controllingField>NSP_AddonType__c</controllingField>
         <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -73,5 +73,53 @@
                 <label>Shared N</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Affil E</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Affil N</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Control E</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Control N</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Exception</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Fein</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>New Acct E</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>New Acct N</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Own/Fein</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Own/Fein (With New Ees)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Shared E</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
+            <valueName>Shared N</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

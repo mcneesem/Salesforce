@@ -9,7 +9,7 @@ public class NSP_UserAndOwnerFunctionsTest {
     
     public static final String OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES = 'Retirement Services';
     public static final String ACCOUNT_NAME = 'Test Account1';  
-    public static final String DEMAND_TEMPLATE_SELECTION = 'CommissionOnlyEmployeesQuestionnaire'; 
+    public static final String NDA = 'NDA'; 
     public static final String OPP_TYPE = 'CAMS';
     
     /**
@@ -26,6 +26,7 @@ public class NSP_UserAndOwnerFunctionsTest {
         insert accoutObject1;       
         Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
         insert account;
+        NSP_TestHelper.createContact(account.id, true);
         System.runAs ( new User(Id = UserInfo.getUserId()) ) {
             Opportunity opportuniytObject3 = new Opportunity();
             opportuniytObject3 = NSP_TestHelper.createOpenOpportunity(accoutObject1.Id, OPP_TYPE, false);
@@ -47,10 +48,10 @@ public class NSP_UserAndOwnerFunctionsTest {
 */
     @isTest
     static void getQuoteOwnerTest(){
-        Account accObj = [Select Id,Name from Account WHERE Name= 'ABCTest Co'  LIMIT 1];
+        Account accObj = [Select Id,Name from Account WHERE Name= 'TestAccount'  LIMIT 1];
         AccountContactRelation acrObj  = [Select Id , NSP_Is_Primary__c ,ContactId, IsActive from AccountContactRelation WHERE AccountId =: accObj.Id ];
         acrObj.NSP_Is_Primary__c=true;
-       	update acrobj;
+        update acrobj;
         List<Opportunity> opportunityList = [SELECT Id,AccountId, Name,NSP_Number_of_Employees__c,Type, NSP_PrimaryProduct__c,
                                              NSP_DM_User__c,NSP_DA_User__c,NSP_Merge_On_Demand_Template_Selection__c,SBQQ__PrimaryQuote__c,NSP_BPA__c,OwnerId FROM Opportunity 
                                              WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c =: NSP_SalesConstants.WX LIMIT 1];
@@ -66,7 +67,7 @@ public class NSP_UserAndOwnerFunctionsTest {
         oppty.NSP_DM_User__c = oppty.OwnerId;
         oppty.NSP_DA_User__c = oppty.OwnerId;
         oppty.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
-        oppty.NSP_Merge_On_Demand_Template_Selection__c = DEMAND_TEMPLATE_SELECTION;
+        oppty.NSP_Merge_On_Demand_Template_Selection__c = NDA;
         
         update oppty;   
         Test.stopTest();
@@ -105,7 +106,7 @@ public class NSP_UserAndOwnerFunctionsTest {
         List<Opportunity> opportunityList = [SELECT Id,AccountId, NSP_Primary_Contact__c FROM Opportunity 
                                              WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c =: NSP_SalesConstants.WX LIMIT 1];
        
-    	Account accRecord =[Select Id , Name from Account WHERE Name ='ABCTest Co' Limit 1];
+        Account accRecord =[Select Id , Name from Account WHERE Name ='TestAccount' Limit 1];
         AccountContactRelation accr=[SELECT Id  ,ContactId,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE  AccountId =: accRecord.Id Limit 1  ];
         accr.NSP_Is_Primary__c= true;
         update accr;

@@ -54,7 +54,7 @@ Who is referring this new company?
         <lightning:input aura:id="fieldId" type="text" name="Company" value="{!v.LeadObj.Company}" label="Company"
                             required="true"  class="slds-medium-size_2-of-3"/> 
         <lightning:input type="text" name="FirstName" value="{!v.LeadObj.FirstName}" label="First Name"
-                            class="slds-medium-size_2-of-3"/>
+                            class="slds-medium-size_2-of-3"  required="true"/>
         <lightning:input aura:id="fieldId" type="text" name="Name" value="{!v.LeadObj.LastName}" label="Last Name"
                             class="slds-medium-size_2-of-3" required = "true"/>
         
@@ -125,7 +125,7 @@ Who is referring this new company?
                             class="slds-medium-size_2-of-3"  /> 
              <Br/>
              <div  class="slds-scrollable_none">
-            <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="no" frameborder="0" width="100%" height="100%" allowtransparency="true"></iframe>
+            <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="yes" frameborder="0" width="60%" height="100%" allowtransparency="true"></iframe>
             </div>  
     </div>
 </div>

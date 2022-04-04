@@ -17,5 +17,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>{!URLFOR(IF($Site.prefix == &apos;/s&apos;,&apos;/apex/dfsle__sending&apos;, $Site.Prefix +&apos;/apex/dfsle__sending&apos;), null, [sId = Opportunity.Id, templateId =  Opportunity.NSP_Merge_On_Demand_DocuSign_Template_Id__c , recordId = Opportunity.Id, title =  TEXT(Opportunity.NSP_Merge_On_Demand_Template_Selection__c ), quickSend = false, isEmbedded = false])}</url>
+    <url>{!URLFOR(IF($Site.prefix == &apos;/s&apos;,&apos;/apex/dfsle__sending&apos;, $Site.Prefix +&apos;/apex/dfsle__sending&apos;), null, [sId = Opportunity.Id,templateId = $Label.NSP_Sales_Envelope_Configuration ,  recordId = Opportunity.Id, title = TEXT(Opportunity.NSP_Merge_On_Demand_Template_Selection__c ), quickSend = false, isEmbedded = false])}</url>
 </WebLink>

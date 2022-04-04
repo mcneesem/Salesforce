@@ -118,7 +118,6 @@ public class NSP_ValidateOpportunityStageTest {
         }
         
         oppty.StageName = 'Closing';
-        oppty.NSP_Executive_Summary_Generated__c = true;
         
         try{
             update oppty; 

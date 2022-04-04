@@ -58,19 +58,9 @@
                 <label>Docupay</label>
             </value>
             <value>
-                <fullName>FundingPacket</fullName>
-                <default>false</default>
-                <label>FundingPacket</label>
-            </value>
-            <value>
                 <fullName>GLALInsuranceCertificateRequest</fullName>
                 <default>false</default>
                 <label>GLALInsuranceCertificateRequest</label>
-            </value>
-            <value>
-                <fullName>Mid-MarketFundingPacket</fullName>
-                <default>false</default>
-                <label>Mid-MarketFundingPacket</label>
             </value>
             <value>
                 <fullName>Mid-MarketClientServiceAgreement</fullName>
@@ -160,6 +150,12 @@
                 <label>ExhibitF401k</label>
             </value>
             <value>
+                <fullName>FundingPacket</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FundingPacket</label>
+            </value>
+            <value>
                 <fullName>GLALInsuranceCertificateRequestwithSample</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -176,6 +172,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MasterEnrollmentFeeAddendum</label>
+            </value>
+            <value>
+                <fullName>Mid-MarketFundingPacket</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Mid-MarketFundingPacket</label>
             </value>
             <value>
                 <fullName>MidMarketBPCSaleSheet</fullName>

@@ -59,6 +59,9 @@ public class NSP_EmailServicesUtility {
                 if(opportunity.NSP_PrimaryProduct__c=='WX'){
                     opportunityIdEmailTemplateMap.put(opportunity.Id, templatesForProductList[0].NSP_Email_Template_Name_API__c);
                     opptyMdtMap.put(opportunity.Id, templatesForProductList[0]);
+                }else if(opportunity.NSP_PrimaryProduct__c=='WA'){
+                    opportunityIdEmailTemplateMap.put(opportunity.Id, templatesForProductList[0].NSP_Email_Template_Name_API__c);
+                    opptyMdtMap.put(opportunity.Id, templatesForProductList[0]);
                 }else if(opportunity.NSP_PrimaryProduct__c=='WS' && opportunity.NSP_Number_of_Employees__c>=150){
                     opportunityIdEmailTemplateMap.put(opportunity.Id, templatesForProductList[0].NSP_Email_Template_Name_API__c);
                     opptyMdtMap.put(opportunity.Id, templatesForProductList[0]);
@@ -100,7 +103,8 @@ public class NSP_EmailServicesUtility {
             List<String> setTOList = New List<String>();
             Id targetObjectId = newOpportunityMap.get(opptyId).OwnerId;
             EmailTemplate template = new EmailTemplate();
-            if(newOpportunityMap.get(opptyId).NSP_PrimaryProduct__c == 'WX'){
+            if(newOpportunityMap.get(opptyId).NSP_PrimaryProduct__c == 'WX'  || 
+                newOpportunityMap.get(opptyId).NSP_PrimaryProduct__c == 'WA' ){
                 if(newOpportunityMap.get(opptyId).NSP_BPA__c != null){                    
                     setCCList.add(newOpportunityMap.get(opptyId).NSP_BPA__c);
                 }
@@ -121,8 +125,9 @@ public class NSP_EmailServicesUtility {
             }
             
             template = developerNameEmailTemplateMap.get(opportunityIdEmailTemplateMap.get(opptyId));
-            
-            emailMessage = sendVFEmailTemplate(targetObjectId, setCCList, template, opptyId);
+            // Added as a part of Defect DF-01325
+            List<Messaging.EmailFileAttachment> emailattachments=getOpportunityAttachments(opptyId);
+            emailMessage = sendVFEmailTemplate(targetObjectId, setCCList, template, opptyId,emailattachments);
             emailMessage.setToAddresses(setTOList);
             emailMessage.setUseSignature(true); 
             emailMessagesArray.add(emailMessage);            
@@ -144,7 +149,7 @@ Paratmenters: Id, String, EmailTemplate, Id
 Description: create a dynamic email message for the given template, To and CC email users.
 Return : Messaging.SingleEmailMessage
 **************************************/    
-    public static Messaging.SingleEmailMessage sendVFEmailTemplate(Id ToEmailUserid, String[] ToCcEmailUsers, EmailTemplate template, Id ObjectForMergeFieldsId){
+    public static Messaging.SingleEmailMessage sendVFEmailTemplate(Id ToEmailUserid, String[] ToCcEmailUsers, EmailTemplate template, Id ObjectForMergeFieldsId,List<Messaging.EmailFileAttachment> emailattachments){
         for(integer len=0; len<ToCcEmailUsers.size(); len++) {
             if(ToCcEmailUsers[len]==null){
                 ToCcEmailUsers.remove(len);
@@ -159,6 +164,9 @@ Return : Messaging.SingleEmailMessage
         emailMessageToOwner.setTemplateId(template.Id);
         emailMessageToOwner.setwhatId(ObjectForMergeFieldsId);              
         emailMessageToOwner.setSaveAsActivity(false);
+        if(!emailattachments.isEmpty()){
+            emailMessageToOwner.setFileAttachments(emailattachments);
+        }
         String orgwideEmailId = '';
         if(!String.isBlank(orgwideEmailId)){
             emailMessageToOwner.setOrgWideEmailAddressId(ID.valueOf(orgwideEmailId));
@@ -291,5 +299,41 @@ Return : boolean
         
         return isEmailSent;
     }
+
+    /***********************************************************************************************
+    * MethodName: getOpportunityAttachments
+    * Description : This method retreive the completed attachments for WX and WA Opportunity
+    * Params:      String recordId
+    * ********************************************************************************************/
+    public static  List<Messaging.EmailFileAttachment> getOpportunityAttachments(String recordId){
+    List<ContentDocumentLink> contentdocLinkList= [SELECT Id , ContentDocumentId FROM  
+                                                   ContentDocumentLink WHERE LinkedEntityId=:recordId ORDER BY SystemModstamp ASC ];
+    Set<Id> contentDocumentIds = new Set<Id>();
+    for(ContentDocumentLink cdl:contentdocLinkList){
+        contentDocumentIds.add(cdl.ContentDocumentId);
+    }
     
+    List<ContentVersion> contentversionList=[SELECT Id, Title, FileType,versiondata  FROM contentversion
+                                             WHERE ContentDocumentId IN: contentDocumentIds And IsLatest = true];
+    
+    List<Messaging.EmailFileAttachment> emailattachments = new List<Messaging.EmailFileAttachment>();
+    List<String>WxfileAttachmentName=System.Label.NSP_OpportunityWXAttachmentName.split(',');
+    List<String>WAfileAttachmentName=System.Label.NSP_OpportunityWAAttachmentName.split(',');
+    if(!contentversionList.isEmpty() && (!WxfileAttachmentName.isEmpty()||!WAfileAttachmentName.isEmpty())){
+        for(ContentVersion contentversions:contentversionList){
+            if((contentversions.Title.contains(WxfileAttachmentName[0]) && contentversions.Title.contains(WxfileAttachmentName[1]) 
+                && contentversions.Title.contains(WxfileAttachmentName[2])) ||
+               (contentversions.Title.contains(WAfileAttachmentName[0]) && contentversions.Title.contains(WAfileAttachmentName[1]) && 
+                contentversions.Title.contains(WAfileAttachmentName[2])) ){
+                    Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment(); 
+                    Blob Data = contentversions.VersionData;
+                    String AttachmentFileName=contentversions.Title+'.'+contentversions.FileType;
+                    efa.setFileName(AttachmentFileName);
+                    efa.setBody(Data);
+                    emailattachments.add(efa);  
+                } 
+        }
+    }
+    return emailattachments;
+    }
 }

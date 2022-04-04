@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
@@ -109,8 +109,8 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Channel Program</label>
-        <layoutColumns />
-        <layoutColumns />
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -255,10 +255,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_DunsNumber__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_NAICS__c</field>
             </layoutItems>
             <layoutItems>
@@ -392,8 +388,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field
-        >fferpcore__MaterializedShippingAddressValidated__c</field>
+                <field>fferpcore__MaterializedShippingAddressValidated__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -1298,6 +1293,7 @@
         <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.ACCOUNT_NAME</fields>
         <fields>ACCCONRELATION.ROLES</fields>
+        <fields>NSP_Is_Primary__c</fields>
         <fields>NSP_isReferral__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
@@ -1330,8 +1326,7 @@
         <fields>NSP_Account_Group__c.NAME</fields>
         <fields>NSP_Bill_To_Account__c</fields>
         <fields>NSP_Primary__c</fields>
-        <relatedList
-    >NSP_Account_Group_Member__c.NSP_Member_Account__c</relatedList>
+        <relatedList>NSP_Account_Group_Member__c.NSP_Member_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Product2</fields>
@@ -1372,7 +1367,6 @@
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
-        <fields>NSP_DunsNumber__c</fields>
         <fields>ACCOUNT.EMPLOYEES</fields>
         <fields>ACCOUNT.ADDRESS1_CITY</fields>
         <fields>ACCOUNT.PHONE1</fields>

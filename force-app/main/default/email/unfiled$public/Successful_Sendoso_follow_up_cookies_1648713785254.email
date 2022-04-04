@@ -1,0 +1,12 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body style="height: auto; min-height: auto;">Hi {{{Recipient.FirstName}}},<br />
+<br />
+Your cookies are on the way. We're really looking forward to talking with you soon about your PEO services and what could be going better. Let me know if there's anything I can do between now and your meeting.<br />
+<br />
+Thanks,<br />
+<br />
+{{{Sender.Signature}}}
+</body></html>

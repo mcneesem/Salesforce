@@ -1,7 +1,9 @@
 /**
 * Represents the Account trigger helper which handles all the logic.
-*/
-
+* -------------------------------------------------------------------------------------------------  
+* Modification History
+*	ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
+***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
     
     private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
@@ -23,23 +25,14 @@ public class NSP_AccountTriggerHelper {
             Set<String> docuSignTemplateName = new Set<String>();
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             for(Account accountObj : newList) {
-                
-                //collect all Partner Account records
-                if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID && accountObj.NSP_Account_Owners_Profile__c != System.Label.NSP_Integration_Profile_Name){
-                    accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION; // Added as part of DF-01154
-                    partnerAccountList.add(accountObj);
-                    userIdsSet.add(accountObj.OwnerId);
-                }               
-
-                
-                //Partner Accounts created from external Site
+                //Partner Accounts created from Partner Form. As part of DF-01476, when Partner Account is created from Partner Form, Loyalty Advisor 
+                // CPM will populate based on Zipcode
                 if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID 
-                   && accountObj.NSP_Account_Owners_Profile__c == System.Label.NSP_Integration_Profile_Name
-                   && String.isNotBlank(accountObj.BillingState)){
-                       accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION; // Added as part of DF-01154
-                       integrationAccountList.add(accountObj);
-                       stateCodeSet.add(accountObj.BillingState);
-                   }
+                && String.isNotBlank(accountObj.BillingState)){
+                    accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION; // Added as part of DF-01154
+                    integrationAccountList.add(accountObj);
+                    stateCodeSet.add(accountObj.BillingState);
+                }
                 
                 //create list to populate docusign template id for merge on demand templates
                 if(!String.isBlank(accountObj.NSP_Template_Selection__c)){
@@ -55,9 +48,6 @@ public class NSP_AccountTriggerHelper {
                 } 
             }
             
-            if(! partnerAccountList.isEmpty()){
-                setChannelPartnerAndLoyaltyAdvisor(partnerAccountList,userIdsSet);
-            }
             if(! integrationAccountList.isEmpty()){
                 setCPMAndLAForIntegrationAccounts(integrationAccountList,stateCodeSet);
             }
@@ -106,18 +96,10 @@ public class NSP_AccountTriggerHelper {
                 
                 if(accountNewMap.get(accountId).Ownerid != accountOldMap.get(accountId).Ownerid){
                     accountownerChangedList.add(accountNewMap.get(accountId));
-                    
-                    //collect all Partner Accounts WHERE Account owner is changed
+                                        
+                    //Partner Accounts created from Partner Form. As part of DF-01476, when Partner Account is created from Partner Form, Loyalty Advisor 
+                    // CPM will populate based on state
                     if(accountNewMap.get(accountId).RecordTypeId==PARTNER_RECORDTYPE_ID 
-                       && accountNewMap.get(accountId).NSP_Account_Owners_Profile__c != System.Label.NSP_Integration_Profile_Name){
-                           partnerAccountList.add(accountNewMap.get(accountId));
-                           userIdsSet.add(accountNewMap.get(accountId).OwnerId);
-                       }
-                    
-                    //Partner Accounts created from external Site
-                    
-                    if(accountNewMap.get(accountId).RecordTypeId==PARTNER_RECORDTYPE_ID 
-                       && accountNewMap.get(accountId).NSP_Account_Owners_Profile__c == System.Label.NSP_Integration_Profile_Name
                        && String.isNotBlank(accountNewMap.get(accountId).BillingStateCode)
                        && accountNewMap.get(accountId).BillingStateCode != accountOldMap.get(accountId).BillingStateCode){
                            integrationAccountList.add(accountNewMap.get(accountId));
@@ -150,10 +132,9 @@ public class NSP_AccountTriggerHelper {
             if(accountownerChangedList.size() > 0){
                 setAccountStageWhenOwnerChanged(accountownerChangedList);
             }
-            if(! partnerAccountList.isEmpty()){
-                setChannelPartnerAndLoyaltyAdvisor(partnerAccountList,userIdsSet);
+            if(! integrationAccountList.isEmpty()){
+                setCPMAndLAForIntegrationAccounts(integrationAccountList,stateCodeSet);
             }
-            
             //call updateTriggerclass for metadata check ad update integration sync field on account
             Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
@@ -368,45 +349,7 @@ public class NSP_AccountTriggerHelper {
         // Account records update.
         Update successAccountList;
     }
-    
-      
-    /*
-     * Description: This method accepts all Partner Accounts 
-     * and sets the Channel Program Manager(CPM) and Loyalty Advisor(LA) based on
-     * Account Owners Assigned office. CPM and LA are fetched from Office Assignment Object records
-     * @Param : List of New Accounts, accountsList
-     * @return type: void 
-*/
-    public static void setChannelPartnerAndLoyaltyAdvisor(List<Account> accountsList, Set<Id> userIdsSet) {
-        Map<String, NSP_Office_Assignment__c> officeAssignmentsMap = new Map<String, NSP_Office_Assignment__c>();
-        Set<String> officeNamesSet = new Set<String>();
-              
-        Map<Id, User> userMap = new Map<Id, User>([SELECT Id, NSP_Sales_Office__c FROM User WHERE Id IN :userIdsSet]);
         
-        for(Id userId : userMap.keySet()){
-            officeNamesSet.add(userMap.get(userId).NSP_Sales_Office__c);
-        }
-        
-        if(! officeNamesSet.isEmpty()){
-            List<NSP_Office_Assignment__c> officeAssignmentsList = [SELECT Id, Name, NSP_Channel_Program_Manager__c, NSP_Loyalty_Advisor__c,NSP_Sales_Office__c
-                                                                     FROM NSP_Office_Assignment__c WHERE NSP_Sales_Office__c IN :officeNamesSet AND NSP_isActive__c = TRUE];
-            
-            for(NSP_Office_Assignment__c officeAssignmentRecord : officeAssignmentsList){
-                officeAssignmentsMap.put(officeAssignmentRecord.Name, officeAssignmentRecord);
-            }
-            
-            for(Account accountRecord : accountsList){
-                if(userMap.containsKey(accountRecord.OwnerId)){
-                    String accountOwnersOffice = userMap.get(accountRecord.OwnerId).NSP_Sales_Office__c;
-                    if(! String.isBlank(accountOwnersOffice)){
-                        accountRecord.NSP_Channel_Program_Manager__c = officeAssignmentsMap.get(accountOwnersOffice).NSP_Channel_Program_Manager__c;
-                        accountRecord.NSP_Loyalty_Advisor__c = officeAssignmentsMap.get(accountOwnersOffice).NSP_Loyalty_Advisor__c;
-                    }   
-                }
-            }
-        }
-    }
-    
      /*
      * Description: This method accepts all Partner Accounts owned by Integration Users(created from External Site)
      * and sets the Channel Program Manager(CPM) and Loyalty Advisor(LA) based on
@@ -431,10 +374,6 @@ public class NSP_AccountTriggerHelper {
                 NSP_State_Assignment__c stateAssignment = stateAssignmentsMap.get(accountRecord.BillingState);
                 accountRecord.NSP_Channel_Program_Manager__c = stateAssignment.NSP_Channel_Program_Manager__c;
                 accountRecord.NSP_Loyalty_Advisor__c = stateAssignment.NSP_Loyalty_Advisor__c;
-        //If owner is integration user on creation of account then will set owner as channel program manager
-            if( stateAssignment.NSP_Channel_Program_Manager__c != null && stateAssignment.NSP_Channel_Program_Manager__r.IsActive){
-                accountRecord.OwnerId=stateAssignment.NSP_Channel_Program_Manager__c;
-                            }
             }
         }
     }  

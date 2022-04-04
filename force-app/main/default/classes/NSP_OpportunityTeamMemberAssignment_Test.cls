@@ -41,14 +41,15 @@ public class NSP_OpportunityTeamMemberAssignment_Test {
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Name = 'Test Oppty';
         opportuniytObject.AccountId = accoutObject1.id;
-        opportuniytObject.stagename = 'Analysis';
+        opportuniytObject.stagename = 'Discovery';
         opportuniytObject.CloseDate = date.today();
         opportuniytObject.CurrencyIsoCode ='USD';
-        opportuniytObject.NSP_PrimaryProduct__c = 'WO';
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
         opportuniytObject.NSP_Number_of_Employees__c = 100;
         opportuniytObject.Type ='CAMS';
         opportuniytObject.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         insert opportuniytObject;
+       
     }
     
     /**
@@ -58,7 +59,7 @@ public class NSP_OpportunityTeamMemberAssignment_Test {
 */
     @isTest
     static void insertOppTeamMemberTest() {
-        List<Opportunity> oppList = [SELECT Id, Name, OwnerId FROM Opportunity WHERE stagename = 'Analysis' LIMIT 1];
+        List<Opportunity> oppList = [SELECT Id, Name, OwnerId FROM Opportunity WHERE NSP_PrimaryProduct__c = 'WX' LIMIT 1];
         Test.startTest();
         NSP_OpportunityTeamMemberAssignment.insertOppTeamMember(oppList);
         Test.stopTest();
@@ -83,7 +84,7 @@ public class NSP_OpportunityTeamMemberAssignment_Test {
                            OwnerId,
                            Name 
                            FROM Opportunity
-                           WHERE stagename = 'Analysis'
+                           WHERE NSP_PrimaryProduct__c = 'WX'
                            LIMIT 1];
         User getUser = [SELECT Id, 
                         Email,

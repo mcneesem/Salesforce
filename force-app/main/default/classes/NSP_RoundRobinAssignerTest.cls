@@ -64,6 +64,7 @@ public class NSP_RoundRobinAssignerTest {
         officeAssignmentObj.NSP_Location_Name__c=officeObj.id;
         officeAssignmentObj.NSP_Office_Number__c=1;
         officeAssignmentObj.Name = '3300 New York 1';
+        officeAssignmentObj.NSP_Sales_Office__c = '3303';
         //insert office assignment
         Insert officeAssignmentObj;
         
@@ -73,6 +74,7 @@ public class NSP_RoundRobinAssignerTest {
         officeAssignmentObj1.NSP_Location_Name__c=officeObj.id;
         officeAssignmentObj1.NSP_Office_Number__c=2;
         officeAssignmentObj1.Name = '3301 New York 2';
+        officeAssignmentObj1.NSP_Sales_Office__c = '3301';
         //insert office assignment
         Insert officeAssignmentObj1;
         

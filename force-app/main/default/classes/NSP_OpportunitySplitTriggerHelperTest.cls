@@ -25,7 +25,7 @@ public class NSP_OpportunitySplitTriggerHelperTest {
         opportuniytObject.stagename = 'Analysis';
         opportuniytObject.CloseDate = date.today();
         opportuniytObject.CurrencyIsoCode ='USD';
-        opportuniytObject.NSP_PrimaryProduct__c = 'WO';
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
         opportuniytObject.NSP_Number_of_Employees__c = 100;
         opportuniytObject.Type ='CAMS';
         //Inserting Opportunity Object

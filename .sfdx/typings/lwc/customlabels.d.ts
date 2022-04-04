@@ -10,6 +10,10 @@ declare module "@salesforce/label/c.NSP_Account_Segment_Core_Sales" {
     var NSP_Account_Segment_Core_Sales: string;
     export default NSP_Account_Segment_Core_Sales;
 }
+declare module "@salesforce/label/c.MM_AND_BPC_USERROLE" {
+    var MM_AND_BPC_USERROLE: string;
+    export default MM_AND_BPC_USERROLE;
+}
 declare module "@salesforce/label/c.NSP_Account_Segment_Emerging_Growth" {
     var NSP_Account_Segment_Emerging_Growth: string;
     export default NSP_Account_Segment_Emerging_Growth;
@@ -478,9 +482,25 @@ declare module "@salesforce/label/c.NSP_LeadTriggerError" {
     var NSP_LeadTriggerError: string;
     export default NSP_LeadTriggerError;
 }
-declare module "@salesforce/label/c.NSP_ThankYou_Partner" {
-    var NSP_ThankYou_Partner: string;
-    export default NSP_ThankYou_Partner;
+declare module "@salesforce/label/c.NSP_PrimaryContactValidation" {
+    var NSP_PrimaryContactValidation: string;
+    export default NSP_PrimaryContactValidation;
+}
+declare module "@salesforce/label/c.NSP_OpportunityWXAttachmentName" {
+    var NSP_OpportunityWXAttachmentName: string;
+    export default NSP_OpportunityWXAttachmentName;
+}
+declare module "@salesforce/label/c.NSP_OpportunityEmailTemplate" {
+    var NSP_OpportunityEmailTemplate: string;
+    export default NSP_OpportunityEmailTemplate;
+}
+declare module "@salesforce/label/c.NSP_OpportunityTeamMemberRoles" {
+    var NSP_OpportunityTeamMemberRoles: string;
+    export default NSP_OpportunityTeamMemberRoles;
+}
+declare module "@salesforce/label/c.NSP_Opportunity_Closed_Won_AlertAdditionalEmails" {
+    var NSP_Opportunity_Closed_Won_AlertAdditionalEmails: string;
+    export default NSP_Opportunity_Closed_Won_AlertAdditionalEmails;
 }
 declare module "@salesforce/label/c.NSP_CANNOT_MOVE_TO_CLOSEDWON" {
     var NSP_CANNOT_MOVE_TO_CLOSEDWON: string;
@@ -501,4 +521,12 @@ declare module "@salesforce/label/c.NSP_OwnerBasedCriteriaProducts" {
 declare module "@salesforce/label/c.NSP_Approve_Primary_Quote" {
     var NSP_Approve_Primary_Quote: string;
     export default NSP_Approve_Primary_Quote;
+}
+declare module "@salesforce/label/c.NSP_ThankYou_Partner" {
+    var NSP_ThankYou_Partner: string;
+    export default NSP_ThankYou_Partner;
+}
+declare module "@salesforce/label/c.NSP_OpportunityWAAttachmentName" {
+    var NSP_OpportunityWAAttachmentName: string;
+    export default NSP_OpportunityWAAttachmentName;
 }

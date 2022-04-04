@@ -144,6 +144,14 @@
         </value>
     </constants>
     <constants>
+        <description>Created as part of DF-01547</description>
+        <name>conSalesSupportSpecialist</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sales_Support_Specialist</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>conSEMrole</name>
         <dataType>String</dataType>
         <value>
@@ -168,7 +176,7 @@
         <defaultConnectorLabel>Not BPA</defaultConnectorLabel>
         <rules>
             <name>Is_BPA_Decision</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>varUserProfile</leftValueReference>
                 <operator>Contains</operator>
@@ -181,6 +189,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>conBusinessPerformance</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conSalesSupportSpecialist</elementReference>
                 </rightValue>
             </conditions>
             <connector>

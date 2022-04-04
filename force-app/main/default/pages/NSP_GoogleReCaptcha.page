@@ -7,7 +7,15 @@ Author : Nischay Jindal
 <apex:page sidebar="false" showHeader="false" standardStylesheets="false" cache="false" id="pg" applyBodyTag="false" applyHtmlTag="false">
     <html>
         <head>
-           <script type='text/javascript'>
+       <style type="text/css">
+      .html_element{
+        min-height: 300px;
+		height: auto;
+  		width: 300px;
+  		background-color: powderblue !important; 
+      }
+       </style>
+           <script type='text/javascript'> 
                 var verifyCallback = function(response){
                 parent.postMessage("Unlock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
                     }

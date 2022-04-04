@@ -196,10 +196,6 @@
             <outputField>NSP_Workers_Comp_Renewal__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>NSP_DC_DateTime__c</inputField>
-            <outputField>NSP_DC_DateTime__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>NSP_DC_SetTime__c</inputField>
             <outputField>NSP_DC_SetTime__c</outputField>
         </mappingFields>

@@ -1536,11 +1536,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Method__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Number_Attending__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4477,11 +4472,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.NSP_Account_Owner_s_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.NSP_Account_Segment__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4741,11 +4731,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.NSP_Docusign_Sent_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.NSP_EngageServiceTeam__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4767,11 +4752,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Exception_Credit_Amount__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Opportunity.NSP_Executive_Summary_Generated__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7387,7 +7367,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_Scholarship_List_Unit_Price__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.NSP_Scholarship_Minimum_Fee__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7685,9 +7670,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.NSP_Exclude_From_Report__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7797,11 +7782,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Location__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Method__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,111 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Referral_Task</fullName>
-    <active>true</active>
-    <description>Record type for referral task, to be used when doing a referral in system</description>
-    <label>Referral Task</label>
-    <picklistValues>
-        <picklist>Priority</picklist>
-        <values>
-            <fullName>High</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Low</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Medium</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Status</picklist>
-        <values>
-            <fullName>Completed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Open</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Subject</picklist>
-        <values>
-            <fullName>Call</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Send Letter</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Send Quote</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Type</picklist>
-        <values>
-            <fullName>Addendum Request</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Call Back</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Client reference</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Core Sales Task</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correspondance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Demo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email Open</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email send</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EmailBounced</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Form Submission</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Marketing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Required for Booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Website visit</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
+        <active>true</active>
+        <description>Record type for referral task, to be used when doing a referral in system</description>
+        <label>Referral Task</label>
+        <picklistValues>
+            <picklist>NSP_Event_Subtype__c</picklist>
+            <values>
+                <fullName>Closing Appointment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WO Business Profile</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NSP_Event_Type__c</picklist>
+            <values>
+                <fullName>UH Suite Tickets</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NSP_Task_Subtype__c</picklist>
+            <values>
+                <fullName>Chat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Person Meet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partner Agreement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Presentation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Social Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Demo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Video Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voicemail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WO Business Profile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WO Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WX Quote</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NSP_Task_type__c</picklist>
+            <values>
+                <fullName>BPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Channels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Core Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Correspondence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Demo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eloqua</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid Market</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Client Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Required for Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Quote</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Addendum Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call Back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client reference</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Core Sales Task</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Correspondance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Demo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email send</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EmailBounced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Form Submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Required for Booking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Website visit</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
 </RecordType>
