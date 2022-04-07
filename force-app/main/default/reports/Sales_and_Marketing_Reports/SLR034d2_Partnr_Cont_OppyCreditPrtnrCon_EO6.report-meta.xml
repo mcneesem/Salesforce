@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.Account</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.Id</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.CloseDate</field>
-    </columns>
-    <columns>
         <field>NSP_Employee_Split__c$Id</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_PrimaryProduct__c</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.Account.Name</field>
     </columns>
     <columns>
         <field>NSP_Employee_Split__c$Name</field>
@@ -45,15 +27,6 @@
         <field>NSP_Employee_Split__c$NSP_User_Id__c.NSP_Sales_Number__c</field>
     </columns>
     <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.Owner</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.Owner.NSP_Sales_Number__c</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.Owner.NSP_Sales_Office__c</field>
-    </columns>
-    <columns>
         <field>NSP_Employee_Split__c$NSP_Partner__c.NSP_BPC_Rep__c</field>
     </columns>
     <columns>
@@ -63,16 +36,9 @@
         <field>NSP_Employee_Split__c$NSP_Partner__c.NSP_PAR_Recipient__c</field>
     </columns>
     <currency>USD</currency>
-    <description>Opportunity Splits with Partners Contacts Report;
+    <description>Opportunity Splits with Partners Contacts Report; First Sale with Contact info;
 Uses: Employee Splits (Deluxe) NSP Record Type</description>
     <filter>
-        <criteriaItems>
-            <column>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_PrimaryProduct__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>notEqual</operator>
-            <value>Applicant Tracking</value>
-        </criteriaItems>
         <criteriaItems>
             <column>NSP_Employee_Split__c$Name</column>
             <columnToColumn>false</columnToColumn>
@@ -82,13 +48,6 @@ Uses: Employee Splits (Deluxe) NSP Record Type</description>
         </criteriaItems>
         <criteriaItems>
             <column>NSP_Employee_Split__c$NSP_Office_Assignment__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>notContain</operator>
-            <value>apple</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>NSP_Employee_Split__c$NSP_Opportunity__c.Owner</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>notContain</operator>
@@ -115,7 +74,7 @@ Uses: Employee Splits (Deluxe) NSP Record Type</description>
         <field>NSP_Employee_Split__c$NSP_Partner__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>SLR-034d OppySplitPrtnrCon(OppSplitPart)</name>
+    <name>SLR-034d2 Partnr Cont. OppySplitPrtnrCon</name>
     <params>
         <name>co</name>
         <value>1</value>

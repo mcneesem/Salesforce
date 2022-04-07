@@ -464,7 +464,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreatePartnerAccount</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreatePartnerAccountTest</apexClass>
@@ -480,7 +480,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateReferralLead</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateReferralLeadTest</apexClass>
@@ -14952,6 +14952,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_No_of_Hiring_Managers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Legacy_OnDemand__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45183,6 +45188,10 @@
         <flow>net_promoter_score</flow>
     </flowAccesses>
     <layoutAssignments>
+        <layout>Account-Partner Account Layout 0422</layout>
+        <recordType>Account.NSP_Partner_Client</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountContactRole-Account Contact Role Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -45193,6 +45202,14 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ApiAnomalyEventStore-API Anomaly Event Store Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-WO Asset Layout</layout>
+        <recordType>Asset.WO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-WX Asset Layout</layout>
+        <recordType>Asset.NSP_Asset_Product</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AssetAction-Asset Action Layout</layout>
@@ -45424,6 +45441,17 @@
         <layout>NSP_Zip_To_City_Mapping__c-Zip To City Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Opportunity-Locked Opportunity 0322</layout>
+        <recordType>Opportunity.Opportunity_Locked</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Sales Administrator 0322</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Sales Administrator 0322</layout>
+        <recordType>Opportunity.Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>OpportunityContactRole-Opportunity Contact Role Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -45498,11 +45526,11 @@
         <layout>SessionHijackingEventStore-Session Hijacking Event Store Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Core Sales Task Layout 0322</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Task-BPS Task Layout 0322</layout>
         <recordType>Task.BPS_task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Core Sales Task Layout 0322</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Core Sales Task Layout 0322</layout>
@@ -45513,8 +45541,8 @@
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Page Layout</layout>
-        <recordType>Task.Eloqua_Task_RT</recordType>
+        <layout>Task-Core Sales Task Layout 0322</layout>
+        <recordType>Task.Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Mid Market Sales Task Layout 0322</layout>
@@ -45529,8 +45557,8 @@
         <recordType>Task.Referral_Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Core Sales Task Layout 0322</layout>
-        <recordType>Task.Task</recordType>
+        <layout>Task-Eloqua Page Layout</layout>
+        <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ThreatDetectionFeedback-Threat Detection Feedback Layout</layout>
@@ -45789,15 +45817,15 @@
     </objectPermissions>  
     <pageAccesses>
         <apexPage>PartnerForm</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>NSP_ReferralLeadForm</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>ThankYou_Page</apexPage>
-        <enabled>false</enabled>
+        <apexPage>ThankYou</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RecallQuote</apexPage>

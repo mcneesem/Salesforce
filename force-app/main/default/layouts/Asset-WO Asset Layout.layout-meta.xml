@@ -58,8 +58,8 @@
                 <field>NSP_Client_SegmentDate__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Current_Client_Segment_type__c</field>
+                <behavior>Edit</behavior>
+                <field>NSP_Client_Segment_type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

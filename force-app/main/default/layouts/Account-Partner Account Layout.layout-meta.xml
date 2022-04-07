@@ -429,16 +429,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>17</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>New_Core_Sales_Event</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>19</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>New_Mid_Market_Event</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>

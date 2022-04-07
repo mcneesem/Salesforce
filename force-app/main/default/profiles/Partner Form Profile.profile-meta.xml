@@ -7205,6 +7205,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Legacy_OnDemand__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_OnDemand_Notes__c</field>
         <readable>false</readable>

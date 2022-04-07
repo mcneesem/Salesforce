@@ -5,7 +5,7 @@
     <errorConditionFormula>NSP_Billing_Address__c != null &amp;&amp; 
 (
 ISBLANK(NSP_Billing_Address__r.NSP_Street__c)||
-ISBLANK(NSP_Billing_Address__r.NSP_State__c)||
+ISBLANK(TEXT(NSP_Billing_Address__r.NSP_State__c))||
 ISBLANK(NSP_Billing_Address__r.NSP_City__c)||
 ISBLANK(NSP_Billing_Address__r.NSP_Postal_Code__c)||
 ISBLANK(TEXT(NSP_Billing_Address__r.NSP_Country__c)) 

@@ -290,7 +290,7 @@
         <protected>false</protected>
         <shortDescription
     >NSP_ErrorMessageSumOfEEIsGreaterThanNumberOfEmployeesOnOppty</shortDescription>
-         <value>The sum of employee split is exceeding the total number of employees on related opportunity.</value>
+         <value>The sum of employee Credit is exceeding the total number of employees on related opportunity.</value>
     </labels>
     <labels>
         <fullName>NSP_Error_Message</fullName>
@@ -945,7 +945,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-         <value>Organizational Planning,Time &amp; Attendance,Workforce Acceleration,Workforce Administration,Workforce Optimization</value>
+         <value>Organizational Planning,Time &amp; Attendance,WA,WX</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
@@ -1055,10 +1055,19 @@
         <value>Please update the Primary Product and Primary Bundle on the opportunity that matches the quote</value>
     </labels>
     <labels>
-        <fullName>NSP_PrimaryContactValidationforContact</fullName>
+        <fullName>NSP_12_hours_Milliseconds</fullName>
+        <categories>12 hours, Milliseconds</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP_PrimaryContactValidationforContact</shortDescription>
-         <value>This Contact already has a Primary Account Contact Relationship identified for it. Contact cannot have more than one Primary Account Contact Relationship.</value>
+        <shortDescription>12 hours Milliseconds</shortDescription>
+        <value>43200000</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Account_Envelop_Configuration</fullName>
+        <categories>account template,docusign</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Envelop Configuration</shortDescription>
+        <value>a7r2D000000HhLTQA0</value>
     </labels>
 </CustomLabels>

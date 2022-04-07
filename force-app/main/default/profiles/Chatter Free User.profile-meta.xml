@@ -469,7 +469,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreatePartnerAccount</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreatePartnerAccountTest</apexClass>
@@ -485,7 +485,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateReferralLead</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateReferralLeadTest</apexClass>
@@ -15161,6 +15161,11 @@
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_No_of_Hiring_Managers__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Legacy_OnDemand__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -46170,15 +46175,15 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>PartnerForm</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>NSP_ReferralLeadForm</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>ThankYou_Page</apexPage>
-        <enabled>false</enabled>
+        <apexPage>ThankYou</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RecallQuote</apexPage>

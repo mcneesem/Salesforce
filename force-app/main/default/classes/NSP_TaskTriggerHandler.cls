@@ -27,16 +27,18 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
         }
     }
     
-    /**
-   * Handles after insert for Event
-   * @param newList List of New Event.
-   * @param newMap Map of New Event. 
+       /**
+   * Handles after insert for Task
+   * @param newList List of New Task.
+   * @param newMap Map of New Task. 
    * @return void             
    *                
    */
-    public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
-       
-    }
+  public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
+    NSP_TaskTriggerHelper  taskTriggerHelperObject =  new NSP_TaskTriggerHelper();
+    taskTriggerHelperObject.afterInsertDirector((List<Task>) newList,(Map<Id, Task>) newMap);
+   
+}
     
   /**
    * Handles before update for Event
@@ -54,16 +56,18 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
     }
     
 
-     /**
+   /**
    * Handles after update for Event
    * @param newMap Map of New Event.
    * @param oldMap Map of Old Event. 
    * @return void             
    *                
    */
-    public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-         
-    }
+  public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
+    NSP_TaskTriggerHelper  taskTriggerHelperObject =  new NSP_TaskTriggerHelper();     
+    taskTriggerHelperObject.afterUpdateDirector((Map<Id, Task>) newMap,(Map<Id, Task>) oldMap);
+}
+
 
     /**
    * Handles before delete for Contract

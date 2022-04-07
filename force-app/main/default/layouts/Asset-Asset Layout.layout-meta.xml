@@ -192,10 +192,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Client_Segment_type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Current_Client_Segment_type__c</field>
             </layoutItems>
             <layoutItems>

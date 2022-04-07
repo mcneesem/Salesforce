@@ -3,6 +3,16 @@
     <fullName>Rewards__c</fullName>
     <externalId>false</externalId>
     <label>Rewards?</label>
+    <summaryFilterItems>
+        <field>NSP_Reward__c.NSP_Sold_Reward__c</field>
+        <operation>notEqual</operation>
+        <value></value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>NSP_Reward__c.NSP_Discovery_Call_Reward__c</field>
+        <operation>notEqual</operation>
+        <value></value>
+    </summaryFilterItems>
     <summaryForeignKey>NSP_Reward__c.Opportunity__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
     <trackTrending>false</trackTrending>

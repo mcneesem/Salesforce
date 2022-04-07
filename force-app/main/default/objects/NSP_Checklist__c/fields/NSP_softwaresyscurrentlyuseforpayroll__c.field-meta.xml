@@ -3,7 +3,7 @@
     <fullName>NSP_softwaresyscurrentlyuseforpayroll__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>software/sys currently use for payroll?</label>
+    <label>Software/Sys currently use for payroll?</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

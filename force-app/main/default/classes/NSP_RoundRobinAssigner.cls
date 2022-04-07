@@ -52,7 +52,10 @@ public class NSP_RoundRobinAssigner {
       
       
       // Calling the round robin method
+      // As part of DF-DF-01618 added if condition.
+      if(!locationNameAndOfficeMap.isEmpty() && !locationNameAndDAMap.isEmpty()){
       doRoundRobin(locationNameAndOfficeMap,locationNameAndDAMap,leadsforRR);
+      }
   }
   
   /**

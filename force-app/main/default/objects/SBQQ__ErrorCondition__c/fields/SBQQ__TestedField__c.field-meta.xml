@@ -263,6 +263,21 @@
             <default>false</default>
             <label>NSP_Implementation_Start_Date__c</label>
         </value>
+        <value>
+            <fullName>NSP_Discount_Internal__c</fullName>
+            <default>false</default>
+            <label>NSP_Discount_Internal__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Legacy_OnDemand__c</fullName>
+            <default>false</default>
+            <label>NSP_Legacy_OnDemand__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Retention_Payment__c</fullName>
+            <default>false</default>
+            <label>NSP_Retention_Payment__c</label>
+        </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -307,6 +322,14 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>NSP_IWABenAdminSU_Booked__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Legacy_OnDemand__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Retention_Payment__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
@@ -378,6 +401,10 @@
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_Related_Setup_SKU_Missing__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Discount_Internal__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Product Option</controllingFieldValue>

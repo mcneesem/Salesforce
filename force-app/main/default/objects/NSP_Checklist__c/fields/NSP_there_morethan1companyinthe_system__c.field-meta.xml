@@ -3,7 +3,7 @@
     <fullName>NSP_there_morethan1companyinthe_system__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>there more than 1 company in the system?</label>
+    <label>There more than 1 company in the system?</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

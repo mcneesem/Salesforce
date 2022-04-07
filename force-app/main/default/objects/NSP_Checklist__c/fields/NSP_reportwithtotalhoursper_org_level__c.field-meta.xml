@@ -3,7 +3,7 @@
     <fullName>NSP_reportwithtotalhoursper_org_level__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>report with total hours per org level?</label>
+    <label>Report with total hours per org level?</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

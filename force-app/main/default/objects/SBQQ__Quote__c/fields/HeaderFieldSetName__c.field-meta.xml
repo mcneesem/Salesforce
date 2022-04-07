@@ -7,7 +7,7 @@ IF(INCLUDES(NSP_Product_Type__c, &quot;Workforce Acceleration&quot;), &quot;WX_Q
 IF(INCLUDES(NSP_Product_Type__c, &quot;Workforce Administration&quot;), &quot;WA_Quote_HeaderSet&quot;,
 IF(OR(INCLUDES(NSP_Product_Type__c, &quot;Talent Connect&quot;),INCLUDES(NSP_Product_Type__c, &quot;Learning and Development&quot;),INCLUDES(NSP_Product_Type__c, &quot;Organizational Planning&quot;),INCLUDES(NSP_Product_Type__c, &quot;Performance Management&quot;)),&quot;TC_Quote_Header&quot;,
 IF(OR( ISPICKVAL(NSP_Pricing_Model__c, &quot;Lasso&quot;), INCLUDES(NSP_Product_Type__c, &quot;IPS&quot;)),   &quot;IPS_QLE_Quote_Header&quot;, 
- &quot;SBQQ__LineEditor&quot;)))))</formula>
+IF(INCLUDES(NSP_Product_Type__c, &quot;Recruiting Services&quot;), &quot;Recruiting_Quote_HeaderSet&quot;, &quot;SBQQ__LineEditor&quot;))))))</formula>
     <label>HeaderFieldSetName</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

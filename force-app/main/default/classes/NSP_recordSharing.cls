@@ -19,7 +19,7 @@ public class NSP_recordSharing {
             for (Lead lead: leadList) {
                 ownerIds.add(lead.OwnerId);
              //Give read access to logged in user
-                if (lead.OwnerId.getSobjectType() == Group.SObjectType) {
+                if (lead.OwnerId.getSobjectType() == Group.SObjectType || lead.OwnerId.getSobjectType() == User.SObjectType) {
                 LeadShare ldshare = new LeadShare();
                 ldshare.RowCause = NSP_SalesConstants.manualRowCause;
                 ldshare.UserOrGroupId = userinfo.getUserId();

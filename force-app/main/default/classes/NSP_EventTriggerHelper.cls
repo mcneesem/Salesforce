@@ -23,6 +23,7 @@ public class NSP_EventTriggerHelper {
         public void afterInsertDirector(List<Event> newList, Map<Id, Event> eventNewMap){ 
             
             updateOpportunitiesWithDiscoverCalls(newList);
+            updateActivityDate(newList,null);  
         }
         
         /**
@@ -48,6 +49,7 @@ public class NSP_EventTriggerHelper {
         public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){        
             
             updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
+            updateActivityDate(eventNewMap.values(),eventOldMap);
         }   
         
         
@@ -78,5 +80,52 @@ public class NSP_EventTriggerHelper {
         }
         
     }
-        
+  /**
+* Method Name : updateActivityDate 
+* Description : Method to update last activity date on all related leads with same DUNS.
+* Date : 31/03/2021
+* @param newList List of New Event. 
+* @param eventOldMap Map of Old Event.   
+* @return void  
+*/
+        public void updateActivityDate(List<Event> newList,Map<Id,Event> eventOldMap){
+            Set < Id > leadIdSet = new Set < Id > ();
+            List < Lead > leadResult = new List<Lead> ();
+            List < Lead > leadWithDuns = new List<Lead> ();
+            Map < String, Date > lastActivityDateMap = new Map < String, Date > ();
+            List < Lead > leadToUpdate = new List<Lead> ();
+            for(Event event : newList){
+                Event oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
+                if((Trigger.isInsert || event.StartDateTime != oldEvent.StartDateTime) && event.StartDateTime != null && event.WhoId!= null)
+                leadIdSet.add(event.WhoId);
+            }
+            if(!leadIdSet.isEmpty()){
+                leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
+                if(!leadResult.isEmpty()) {
+                    for(Lead leadObj :leadResult){
+                        if(leadObj.LastActivityDate != null && leadObj.DNBoptimizer__DNB_D_U_N_S_Number__c !=null) {
+                            lastActivityDateMap.put(leadObj.DNBoptimizer__DNB_D_U_N_S_Number__c,leadObj.LastActivityDate);
+                        }
+                    }
+                    if(!lastActivityDateMap.isEmpty()) {
+                        leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c IN: lastActivityDateMap.keySet()];
+                        Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
+                        if(!leadWithDuns.isEmpty()){
+                            for(Lead leadObject : leadWithDuns){
+                                 leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
+                                 leadToUpdate.add(leadObject);
+                               }
+                        }
+                    }
+                }
+            }
+            try{
+                if(!leadToUpdate.isEmpty()){
+                    update leadToUpdate;
+                }
+            }
+            catch(Exception ex){
+                NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateActivityDate', ex.getMessage());
+            }
+        }
     }

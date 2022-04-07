@@ -98,6 +98,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_New_to_Old</name>
+        <label>Assign New to Old</label>
+        <locationX>927</locationX>
+        <locationY>1455</locationY>
+        <assignmentItems>
+            <assignToReference>GetOppty</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetOppty_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetAccount</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>BPAAssign</name>
         <label>BPAAssign</label>
         <locationX>999</locationX>
@@ -389,16 +405,16 @@
         </value>
     </constants>
     <decisions>
-        <name>ApplyAccess_FromScreenRouting</name>
+        <name>ApplyAccess_FromScreenRouting_0</name>
         <label>ApplyAccess&amp;FromScreenRouting</label>
-        <locationX>690</locationX>
-        <locationY>1455</locationY>
+        <locationX>581</locationX>
+        <locationY>1531</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Access</defaultConnectorLabel>
         <rules>
-            <name>Has_Access_From_Screen</name>
+            <name>Has_Access_From_Screen_0</name>
             <conditionLogic>((1 AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
@@ -457,12 +473,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>WelcomeScreen</targetReference>
+                <targetReference>WelcomeScreen_0</targetReference>
             </connector>
             <label>Has Access, From Screen</label>
         </rules>
         <rules>
-            <name>Has_Access_Non_Screen</name>
+            <name>Has_Access_Non_Screen_0</name>
             <conditionLogic>((1 AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
@@ -521,12 +537,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetAccount</targetReference>
+                <targetReference>GetOppty_0</targetReference>
             </connector>
             <label>Has Access, Non-Screen</label>
         </rules>
         <rules>
-            <name>SE_Has_Access_From_Screen</name>
+            <name>SE_Has_Access_From_Screen_0</name>
             <conditionLogic>(1 AND 2) OR( 3 AND 4) OR (5 AND 6)</conditionLogic>
             <conditions>
                 <leftValueReference>varNACount</leftValueReference>
@@ -871,10 +887,10 @@
     <decisions>
         <name>Interviews_Exist_Check</name>
         <label>Interviews Exist Check</label>
-        <locationX>728</locationX>
-        <locationY>1241</locationY>
+        <locationX>718</locationX>
+        <locationY>1262</locationY>
         <defaultConnector>
-            <targetReference>ApplyAccess_FromScreenRouting</targetReference>
+            <targetReference>ApplyAccess_FromScreenRouting_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -3784,8 +3800,8 @@
     <recordLookups>
         <name>GetAccount</name>
         <label>GetAccount</label>
-        <locationX>1029</locationX>
-        <locationY>1453</locationY>
+        <locationX>1030</locationX>
+        <locationY>1493</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetContact</targetReference>
@@ -3902,6 +3918,27 @@
         <faultConnector>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOppty_0</name>
+        <label>GetOppty</label>
+        <locationX>864</locationX>
+        <locationY>1596</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_New_to_Old</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -4038,7 +4075,7 @@
                     <elementReference>GetOppty.NSP_BPA__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -4070,7 +4107,7 @@
                     <elementReference>GetOppty.NSP_DA_User__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -4102,7 +4139,7 @@
                     <elementReference>GetOppty.NSP_DM_User__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -4134,7 +4171,7 @@
                     <elementReference>GetOppty.OwnerId</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -5004,7 +5041,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>ApplyAccess_FromScreenRouting</targetReference>
+            <targetReference>ApplyAccess_FromScreenRouting_0</targetReference>
         </connector>
         <fields>
             <name>FlowInterviewComponent</name>
@@ -6701,18 +6738,18 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>WelcomeScreen</name>
+        <name>WelcomeScreen_0</name>
         <label>WelcomeScreen</label>
-        <locationX>790</locationX>
-        <locationY>1715</locationY>
+        <locationX>771</locationX>
+        <locationY>1655</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>GetAccount</targetReference>
+            <targetReference>GetOppty_0</targetReference>
         </connector>
         <fields>
-            <name>WelcomeDisplaytext</name>
+            <name>WelcomeDisplaytext_0</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Hi {!$User.FirstName}, Click Next to Begin Your Checklist&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>

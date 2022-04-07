@@ -469,7 +469,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreatePartnerAccount</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreatePartnerAccountTest</apexClass>
@@ -485,7 +485,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateReferralLead</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateReferralLeadTest</apexClass>
@@ -14855,6 +14855,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_No_of_Hiring_Managers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Legacy_OnDemand__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45122,7 +45127,7 @@
         <layout>Asset-Asset Layout</layout>
         <recordType>Asset.NSP_CPQ_Asset</recordType>
     </layoutAssignments>
-   <layoutAssignments>
+    <layoutAssignments>
         <layout>Asset-WO Asset Layout</layout>
         <recordType>Asset.WO</recordType>
     </layoutAssignments>
@@ -45549,11 +45554,11 @@
         <layout>Solution-Solution Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Core Sales Task Layout 0322</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Task-BPS Task Layout 0322</layout>
         <recordType>Task.BPS_task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Core Sales Task Layout 0322</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Core Sales Task Layout 0322</layout>
@@ -45564,8 +45569,8 @@
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Page Layout</layout>
-        <recordType>Task.Eloqua_Task_RT</recordType>
+        <layout>Task-Core Sales Task Layout 0322</layout>
+        <recordType>Task.Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Mid Market Sales Task Layout 0322</layout>
@@ -45580,8 +45585,8 @@
         <recordType>Task.Referral_Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Core Sales Task Layout 0322</layout>
-        <recordType>Task.Task</recordType>
+        <layout>Task-Eloqua Page Layout</layout>
+        <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ThreatDetectionFeedback-Threat Detection Feedback Layout</layout>
@@ -45853,15 +45858,15 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>PartnerForm</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>NSP_ReferralLeadForm</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>ThankYou_Page</apexPage>
-        <enabled>false</enabled>
+        <apexPage>ThankYou</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RecallQuote</apexPage>

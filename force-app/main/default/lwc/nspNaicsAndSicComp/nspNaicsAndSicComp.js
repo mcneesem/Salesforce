@@ -26,7 +26,7 @@ export default class NspNaicsAndSicComp extends LightningElement {
   accountName;
   doneTypingInterval = 300;
   typingTimer;
-
+  isRenderCallbackActionExecuted = false;
   NAICS_codes = []; //list to store NAICS Codes from static resource js file
   NAICS_descs = []; //list to store NAICS Descriptions from static resource js file
 
@@ -111,8 +111,13 @@ export default class NspNaicsAndSicComp extends LightningElement {
   }
 
   //initialise fields, picklists on component load
-  connectedCallback() {
-    loadScript(this, nspCodesjs).then(() => {
+  renderedCallback() {
+    if(this.isRenderCallbackActionExecuted){
+      return;
+    }
+    this.isRenderCallbackActionExecuted = true;
+    Promise.all([
+    loadScript(this, nspCodesjs)]).then(() => {
       sicAndNaics = fetchIndustryCodes();
     });
 
@@ -244,7 +249,7 @@ export default class NspNaicsAndSicComp extends LightningElement {
     // select_list_2;
   }
 
-  renderedCallback() {}
+ // renderedCallback() {}
 
   //call this method with appropriate parameters to show success or error toast messages
   showToast(title, message, variant) {

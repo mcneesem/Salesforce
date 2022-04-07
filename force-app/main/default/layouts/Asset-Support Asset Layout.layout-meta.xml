@@ -81,6 +81,10 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opportunity__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -141,10 +145,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Client_Segment_type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Current_Client_Segment_type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

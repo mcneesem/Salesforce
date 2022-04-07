@@ -114,7 +114,7 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         //Opportunity list to capture opportunities created with HSA contribution data
         List<Opportunity> newTaskOpportunityList = new List<Opportunity>();
-        
+        Set<Id> OpportunityAccountId= new Set<Id>(); 
         for(Id opportunityId : opportunityNewMap.keySet()){
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
             if(opportunityNewMap.get(opportunityId).NSP_Ready_for_Integration_Sync__c){ 
@@ -126,6 +126,11 @@ public class NSP_OpportunityTriggerHelper {
                && ! String.isBlank(opportunityNewMap.get(opportunityId).NSP_Frequency_of_Distribution__c)){
                    newTaskOpportunityList.add(opportunityNewMap.get(opportunityId));
                }
+            // Added as a part of DF-01497   
+            if(opportunityNewMap.get(opportunityId).NSP_Primary_Contact__c==Null || 
+               opportunityNewMap.get(opportunityId).NSP_Customer_Signer__c==Null){
+                OpportunityAccountId.add(opportunityNewMap.get(opportunityId).accountId);
+            }
         }
         /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
         NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet);
@@ -133,7 +138,8 @@ public class NSP_OpportunityTriggerHelper {
         if(! newTaskOpportunityList.isEmpty()){
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
-        
+        // added as a part of DF-01497
+        getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
         // Send the list to publish event bus
         Id profileId=userinfo.getProfileId();
         String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
@@ -656,6 +662,27 @@ public class NSP_OpportunityTriggerHelper {
     }    
   
     }
-    
+     
+    /***********************************************************************************************
+    * MethodName: getRelatedACR
+    * Description : This method will fetch the Primary ACR records related to Opportunity Account
+    * Params:       Set<Id> accountId ,Set<Id>OpportunityIds
+    * ********************************************************************************************/  
+    public static void getRelatedACR(Set<Id> accountId ,Set<Id>OpportunityIds){
+      Map < Id, AccountContactRelation > accountACRMap = new Map < Id, AccountContactRelation > ();
+        Set<Id> OppAccountId = new Set<Id>();
+        for (AccountContactRelation accountContactRelation: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountId]) {
+            accountACRMap.put(accountContactRelation.AccountId,accountContactRelation );
+        }
+        List<Opportunity> OpportunityList =[Select Id, AccountId from Opportunity WHERE Id IN:OpportunityIds];
+        for(Opportunity opp:OpportunityList){
+            if(accountACRMap.containsKey(opp.AccountId) && accountACRMap.get(opp.AccountId)!=null){
+               OppAccountId.add(opp.AccountId); 
+            }
+        }
+        if(!OppAccountId.isEmpty()){
+            NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(OppAccountId);
+        }
+    }   
 
 }

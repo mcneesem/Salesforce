@@ -3,7 +3,7 @@
     <fullName>NSP_Demo_completed__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Demo completed?</label>
+    <label>Demo Completed?</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>

@@ -3,7 +3,7 @@
     <fullName>NSP_ifprocessinplacehowdoesthat_work__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>if process in place, how does that work?</label>
+    <label>If process in place, how does that work?</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

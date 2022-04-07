@@ -7,6 +7,22 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Opportunity.Add_Team_Member</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Sales Support</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Sales Operations</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Generate_Merge_On_Demand_Document</value>
                         </valueListItems>
                         <valueListItems>
@@ -65,16 +81,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Merge_on_Demand_Send_for_Signature</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Opportunity.Add_Team_Member</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>Sales Support</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

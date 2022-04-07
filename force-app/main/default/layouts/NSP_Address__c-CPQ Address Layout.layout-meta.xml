@@ -41,11 +41,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>NSP_State__c</field>
+                <field>NSP_Country__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>NSP_Country__c</field>
+                <field>NSP_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -146,8 +146,8 @@
             <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NSP_Address__c.Edit_Address</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>

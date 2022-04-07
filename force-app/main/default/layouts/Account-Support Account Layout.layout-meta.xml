@@ -101,6 +101,14 @@
                 <behavior>Edit</behavior>
                 <field>AccountSource</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Template_Selection__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -1269,12 +1277,12 @@
         <platformActionListItems>
             <actionName>New_Core_Sales_Event</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>18</sortOrder>
+            <sortOrder>16</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Account.NSP_Update_NAICS_SIC</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>19</sortOrder>
+            <sortOrder>17</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -1425,7 +1433,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h76000000Mqu6</masterLabel>
+        <masterLabel>00h2D000003VY0Q</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>1</sizeY>
         <summaryLayoutItems>

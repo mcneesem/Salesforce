@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_At_Hire_Payment__c</fullName>
-    <defaultValue>0.5</defaultValue>
+    <defaultValue>0.7</defaultValue>
     <description>Payment at Hire, used when Recruiting services are added to the quote. Default value is 50%</description>
     <externalId>false</externalId>
     <label>At Hire Payment</label>
