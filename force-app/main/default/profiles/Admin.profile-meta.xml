@@ -46223,7 +46223,7 @@
         <enabled>false</enabled>
         <flow>net_promoter_score</flow>
     </flowAccesses>
-    <layoutAssignments>
+   <layoutAssignments>
         <layout>Account-Support Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -46350,7 +46350,7 @@
     <layoutAssignments>
         <layout>Entitlement-Entitlement Layout</layout>
     </layoutAssignments>
-    <layoutAssignments>
+   <layoutAssignments>
         <layout>Event-Support Core Sales Events Layouts</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -46550,7 +46550,7 @@
     <layoutAssignments>
         <layout>NSP_Zip_To_City_Mapping__c-Zip To City Mapping Layout</layout>
     </layoutAssignments>
-    <layoutAssignments>
+   <layoutAssignments>
         <layout>Opportunity-Support Locked Opportunity 0322</layout>
         <recordType>Opportunity.Opportunity_Locked</recordType>
     </layoutAssignments>
