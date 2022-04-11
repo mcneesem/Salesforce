@@ -45580,7 +45580,7 @@
         <recordType>Account.NSP_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Account Layout</layout>
+        <layout>Account-Partner Account Layout 0422</layout>
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -45598,7 +45598,7 @@
     <layoutAssignments>
         <layout>ApiAnomalyEventStore-API Anomaly Event Store Layout</layout>
     </layoutAssignments>
-    <layoutAssignments>
+   <layoutAssignments>
         <layout>Asset-Asset Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -45700,14 +45700,14 @@
         <layout>Entitlement-Entitlement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Event-Event Layout</layout>
+        <layout>Event-Core Sales Events Layout 0322</layout>
         <recordType>Event.Core_Sales_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Event Layout</layout>
+        <layout>Event-Core Sales Events Layouts</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Event-Mid Market Sales 0322</layout>
         <recordType>Event.Mid_Market_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -45900,15 +45900,15 @@
         <layout>NSP_Zip_To_City_Mapping__c-Zip To City Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Opportunity Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-Opportunity Layout</layout>
-        <recordType>Opportunity.Opportunity</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-Opportunity Layout</layout>
+        <layout>Opportunity-Locked Opportunity 0322</layout>
         <recordType>Opportunity.Opportunity_Locked</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Sales Administrator 0322</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Sales Administrator 0322</layout>
+        <recordType>Opportunity.Opportunity</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityContactRole-Opportunity Contact Role Layout</layout>
@@ -46036,39 +46036,35 @@
         <layout>Solution-Solution Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Core Sales  Task Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Task-Task Layout</layout>
+        <layout>Task-BPS Task Layout 0322</layout>
         <recordType>Task.BPS_task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Task Layout</layout>
+        <layout>Task-Core Sales Task Layout 0322</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Core Sales Task Layout 0322</layout>
         <recordType>Task.Core_Sales_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Task Layout</layout>
+        <layout>Task-Core Sales Task Layout 0322</layout>
         <recordType>Task.Correspondence_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Eloqua Page Layout</layout>
+        <layout>Task-Core Sales Task Layout 0322</layout>
+        <recordType>Task.Task</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Eloqua Task Layout 0322</layout>
         <recordType>Task.Eloqua_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Task Layout</layout>
+        <layout>Task-Mid Market Sales Task Layout 0322</layout>
         <recordType>Task.Mid_Market_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Task Layout</layout>
+        <layout>Task-New Client Sales Task Layout 0322</layout>
         <recordType>Task.New_Client_Sales_RT</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Task-Task Layout</layout>
-        <recordType>Task.Referral_Task</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Task-Task Layout</layout>
-        <recordType>Task.Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ThreatDetectionFeedback-Threat Detection Feedback Layout</layout>

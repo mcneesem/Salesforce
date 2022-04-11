@@ -265,12 +265,29 @@
         <members>Lead-Referral Lead Layout</members>
         <members>Asset-WO Asset Layout</members>
         <members>Account-Account Layout</members>
-		<members>Account-Partner Account Layout</members>
-		<members>Account-Sales Account Layout</members>
-		<members>Account-Support Account Layout</members> 
+        <members>Account-Partner Account Layout</members>
+        <members>Account-Sales Account Layout</members>
+        <members>Account-Support Account Layout</members> 
         <members>NSP_Sub_Client__c-Sub Client Layout</members>
         <members>Asset-Asset Layout</members>
         <members>Asset-Support Asset Layout</members>
+        <members>Account-Partner Account Layout 0422</members>
+        <members>Asset-WX Asset Layout</members>
+        <members>Event-Core Sales Events Layout 0322</members>
+        <members>Event-Core Sales Events Layouts</members>
+        <members>Event-Support Core Sales Events Layouts</members>
+        <members>Event-Mid Market Sales 0322</members>
+        <members>Opportunity-Sales Manager 0322</members>
+        <members>Opportunity-Sales Administrator 0322</members>
+        <members>Opportunity-Locked Opportunity 0322</members>
+        <members>Opportunity-Support Locked Opportunity 0322</members>
+        <members>Opportunity-Support Opportunity Layout 0322</members>
+        <members>Task-Core Sales Task Layout 0322</members>
+        <members>Task-BPS Task Layout 0322</members>
+        <members>Task-Eloqua Task Layout 0322</members>
+        <members>Task-Mid Market Sales Task Layout 0322</members>
+        <members>Task-New Client Sales Task Layout 0322</members>
+        <members>Task-Referral Task Layout</members>
         <name>Layout</name>
     </types>
     <types>
@@ -1067,6 +1084,20 @@
         <members>pse__Proj__c.RET_Sales_to_NSP_401k_Form</members>
         <members>pse__Proj__c.RET_Startup_Set_Up_Form</members>
         <members>pse__Proj__c.TES_BPS</members>
+        <members>Account.NSP_Client</members>
+        <members>Account.NSP_Partner_Client</members>
+        <members>Asset.NSP_CPQ_Asset</members>
+        <members>Asset.WO</members>
+        <members>Asset.NSP_Asset_Product</members>
+        <members>Event.Core_Sales_Event_RT</members>
+        <members>Event.Mid_Market_Event_RT</members>
+        <members>Task.BPS_task_RT</members>
+        <members>Task.Core_Sales_Task_RT</members>
+        <members>Task.Correspondence_Task_RT</members>
+        <members>Task.Eloqua_Task_RT</members>
+        <members>Task.Mid_Market_Task_RT</members>
+        <members>Task.New_Client_Sales_RT</members>
+        <members>Task.Task</members>
         <name>RecordType</name>
     </types>
     <types>
@@ -1205,6 +1236,39 @@
         <members>Sales Operations</members>
         <members>Sales Manager</members>
         <members>Data Migration</members>
+        <members>Analytics Cloud Integration User</members>
+        <members>Analytics Cloud Security User</members>
+        <members>Channel Program Manager</members>
+        <members>ContractManager</members>
+        <members>CPQ Admin</members>
+        <members>CPQ Integration User</members>
+        <members>CPQ Sales User</members>
+        <members>CPQ Tech Support</members>
+        <members>Developer</members>
+        <members>End User</members>
+        <members>Executive Sponsor</members>
+        <members>Finance Order Processing</members>
+        <members>Finance Service</members>
+        <members>Inside Sales</members>
+        <members>Marketing</members>
+        <members>Marketing Channel</members>
+        <members>Marketing Leads</members>
+        <members>MarketingProfile</members>
+        <members>Minimum Access - Salesforce</members>
+        <members>Partner Community User</members>
+        <members>Read Only</members>
+        <members>Retail Sales</members>
+        <members>Sales Administrator</members>
+        <members>Sales Compensation</members>
+        <members>Sales Data Science</members>
+        <members>Sales Engineer</members>
+        <members>SalesforceIQ Integration User</members>
+        <members>Sales Insights Integration User</members>
+        <members>Sales Member</members>
+        <members>Sales Profile</members>
+        <members>Sales Support</members>
+        <members>SolutionManager</members>
+        <members>Standard</members>
 		<name>Profile</name>
 	</types>
     	<types>
