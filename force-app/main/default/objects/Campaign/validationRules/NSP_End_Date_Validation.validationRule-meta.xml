@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_End_Date_Validation</fullName>
+    <active>true</active>
+    <description>This validation rule is created as part of DF-01675. So that users will not be able to enter the End Date in past.</description>
+    <errorConditionFormula>EndDate &lt; Today()</errorConditionFormula>
+    <errorMessage>You cannot set a Campaign End Date in the past.</errorMessage>
+</ValidationRule>

@@ -10,7 +10,7 @@
                             <value>CustomButton.Account.NSP_Generate_Document</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Account.NSP_Send_for_Signature</value>
+                            <value>Account.Send_For_Signature_SalesAccount</value>
                         </valueListItems>
                         <valueListItems>
                             <value>FeedItem.PollPost</value>

@@ -35,7 +35,7 @@ public class NSP_CreatePartnerAccountTest {
         Account accObject = new Account();
         accObject.Name = 'Test Account1';
         //Seerialising the account and passing it to the method
-        NSP_CreatePartnerAccount.createAccount(JSON.serialize(accObject),cnt.id);
+        NSP_CreatePartnerAccount.createAccount(JSON.serialize(accObject), JSON.serialize(cnt));
         NSP_CreatePartnerAccount.returnAllPickListValues();
         Test.stopTest();
         //Assert statement

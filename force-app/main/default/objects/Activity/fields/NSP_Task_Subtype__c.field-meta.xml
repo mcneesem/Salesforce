@@ -191,11 +191,6 @@
                 <label>Product Presentation</label>
             </value>
             <value>
-                <fullName>Discovery Call</fullName>
-                <default>false</default>
-                <label>Discovery Call</label>
-            </value>
-            <value>
                 <fullName>Birthday Call</fullName>
                 <default>false</default>
                 <label>Birthday Call</label>
@@ -289,16 +284,6 @@
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
             <valueName>Product Presentation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <controllingFieldValue>Eloqua</controllingFieldValue>
-            <controllingFieldValue>New Client Sales</controllingFieldValue>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <controllingFieldValue>Channels</controllingFieldValue>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <valueName>Discovery Call</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Mid Market</controllingFieldValue>

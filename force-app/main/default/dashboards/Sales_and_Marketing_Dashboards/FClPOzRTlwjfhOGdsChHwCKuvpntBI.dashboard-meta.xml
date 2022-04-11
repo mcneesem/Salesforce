@@ -304,8 +304,8 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>SLR-034b Opportunity Splits (OppSplit)</header>
-                <report>SLR034SalesReportNSP/SLR034b_Opportunity_Splits_OppSplit_c2L</report>
+                <header>SLR-034b Opportunity Credits (OppCredit)</header>
+                <report>Sales_and_Marketing_Reports/SLR034b_Opportunity_Credits_OppCredit_c2L</report>
             </dashboardComponent>
             <rowIndex>22</rowIndex>
             <rowSpan>12</rowSpan>
