@@ -8556,6 +8556,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Rewards__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.NSP_Has_WS_Products__c</field>
         <readable>true</readable>
@@ -46054,9 +46059,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Solution-Solution Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Task-Core Sales  Task Layout</layout>
     </layoutAssignments>
      <layoutAssignments>
         <layout>Task-BPS Task Layout 0322</layout>

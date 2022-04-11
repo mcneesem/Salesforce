@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen?aid=65500&amp;config={!Account.NSP_Template_Selection__c}&amp;eos[0].Id={!Account.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=Account&amp;eos[0].Name={!Account.Name}&amp;eos[0].ScmPath=/Salesforce/Account/</url>
+    <url>https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen?aid={!$Setup.NSP_Docusign_Account_Details__c.Docusign_Account_Id__c}&amp;config={!Account.NSP_Template_Selection__c}&amp;eos[0].Id={!Account.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=Account&amp;eos[0].Name={!Account.Name}&amp;eos[0].ScmPath=/Salesforce/Account/</url>
 </WebLink>

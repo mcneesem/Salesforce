@@ -63,6 +63,7 @@ public class NSP_LeadTriggerHelper {
             
             /* As part of DF-00998 comments, While Creating Lead From ELoqua Integration user or From Referral Form, Lead should get assigned to Inbound solutions Queue */
             List < String > externalUsers = Label.NSP_External_Users.split(',');
+            //Added as part of DF-00998
             String createdUserName = UserInfo.getFirstName();
             if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
                 inboundSolutionsList.add(leadObject);
@@ -479,9 +480,6 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             acrObject.Roles = leadObject.NSP_Referral_Source__c;
             acrObject.NSP_isReferral__c = true;
-            acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
-            acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
             acrList.add(acrObject);
         }
         for (String opportunityId: opportunityLeadMap.keySet()) {
@@ -491,9 +489,6 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             ocrObject.Role = leadObject.NSP_Referral_Source__c;
             ocrObject.NSP_isReferral__c = true;
-            ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
-            ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
             ocrList.add(ocrObject);
         }
         try {

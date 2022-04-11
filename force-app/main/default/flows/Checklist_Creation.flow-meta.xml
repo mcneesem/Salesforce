@@ -4362,7 +4362,7 @@
                 <fields>
                     <name>BEFORE_DOWNLOAD_REMOVE_Specil_Provisions_LINE_2_SUBJECT_TO_APPROVAL_OF_ALL_TERM</name>
                     <dataType>Boolean</dataType>
-                    <fieldText>REMOVE Special Provisions</fieldText>
+                    <fieldText>Remove Special Provisions</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
@@ -4669,7 +4669,7 @@
                 <fields>
                     <name>Log_R_R_in_GENERAL_CONTRACT_screen1</name>
                     <dataType>Boolean</dataType>
-                    <fieldText>Log_R_R_in_GENERAL_CONTRACT_screen</fieldText>
+                    <fieldText>Log RR in GENERAL CONTRACT</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
@@ -6571,7 +6571,7 @@
                     <name>Currentl_payroll_processor</name>
                     <choiceReferences>Currentlpayrollprocessor</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>Currentl payroll processor?</fieldText>
+                    <fieldText>Currently payroll processor?</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>

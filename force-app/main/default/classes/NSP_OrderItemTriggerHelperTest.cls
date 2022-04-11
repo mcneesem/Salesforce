@@ -56,8 +56,12 @@ public class NSP_OrderItemTriggerHelperTest{
         update objQuote;
         system.assert(true, objQuote.SBQQ__Primary__c );
         Test.stopTest();
-
-
+        
+        list<OrderItem> orderItemList = new list<OrderItem>([select id from OrderItem where Order.SBQQ__Quote__c =:objQuote.Id]);
+        update orderItemList;
+        
+        delete orderItemList;
+        
     }
     
     

@@ -162,6 +162,19 @@
                     <value>Checklist_Creation</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-5843f753-8807-4ff6-9840-a5128ed09713</name>
@@ -197,7 +210,7 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>EQUAL</operator>
@@ -212,6 +225,16 @@
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Closing</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -579,18 +602,6 @@
                     <value>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>height</name>
-                    <value>400px</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabName</name>
-                </componentInstanceProperties>
-                <componentName>highspot:HighspotContent</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

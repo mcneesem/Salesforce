@@ -122,6 +122,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject1.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
         leadObject1.NumberOfEmployees =160;
         leadObject1.Company = 'Allstate123';
+        leadObject1.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject1.Email = LEADCONVERTRECORD_EMAIL;
 
         /* as part of STY-01725 */
@@ -191,7 +192,7 @@ public class NSP_LeadTriggerHelperTest {
         Task taskRecord = new Task(
             Subject='Discovery Call Task',
             NSP_Task_Type__c='Core Sales',
-            NSP_Task_SubType__c='Discovery Call',
+            NSP_Task_SubType__c='Client Meeting',
             OwnerId=UserInfo.getUserId(),
             WhoId=leadRecord.Id
         );
@@ -200,6 +201,7 @@ public class NSP_LeadTriggerHelperTest {
                 
         database.leadConvert lc = new database.leadConvert();
         lc.setLeadId(leadRecord.id);
+        lc.setOwnerId(UserInfo.getUserId());
         Test.startTest();
         leadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
         lc.setConvertedStatus(convertStatus.MasterLabel);
