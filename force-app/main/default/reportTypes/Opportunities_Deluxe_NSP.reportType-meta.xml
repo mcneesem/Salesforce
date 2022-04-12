@@ -199,6 +199,11 @@ Each record in this Report represents an Opportunity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Running_Owner__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Description</field>
             <table>Opportunity</table>
         </columns>
@@ -539,7 +544,22 @@ Each record in this Report represents an Opportunity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Running_Sales_Region__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Running_Sales_Office__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Requested_First_Check_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Running_SubRegion__c</field>
             <table>Opportunity</table>
         </columns>
         <columns>

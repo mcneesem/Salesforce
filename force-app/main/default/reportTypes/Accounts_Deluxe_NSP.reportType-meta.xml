@@ -483,11 +483,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Parent</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_PAR_Recipient__c</field>
             <table>Account</table>
         </columns>
@@ -1057,5 +1052,26 @@
             <table>Account</table>
         </columns>
         <masterLabel>ParentAccount</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner.CreatedBy</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner.CreatedBy.Id</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Created By</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy.Id</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Last Modified By</masterLabel>
     </sections>
 </ReportType>

@@ -29,7 +29,7 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Activity_type__c</field>
+            <field>Activity_type__c</field>
             <table>Activity</table>
         </columns>
         <columns>
@@ -119,6 +119,11 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Activity_type__c</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ActivityTimeOnly</field>
             <table>Activity</table>
         </columns>
@@ -180,11 +185,6 @@ Each record in this Report represents an Activity;</description>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Location__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Method__c</field>
             <table>Activity</table>
         </columns>
         <columns>
@@ -350,6 +350,36 @@ Each record in this Report represents an Activity;</description>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Lead__c</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c.Campaign.NSP_Campaign_Source__c</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c.NSP_Forecast__c</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c.NSP_ForecastPercent__c</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c.ForecastCategoryName</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c.NSP_Forecast_Status__c</field>
+            <table>Activity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c.NSP_LoyaltyProgram__c</field>
             <table>Activity</table>
         </columns>
         <masterLabel>Activities</masterLabel>

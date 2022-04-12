@@ -48,11 +48,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Number_of_Employees__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
@@ -257,5 +252,13 @@
             <table>NSP_Employee_Split__c</table>
         </columns>
         <masterLabel>Employee Splits</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Opportunity__c</field>
+            <table>NSP_Employee_Split__c</table>
+        </columns>
+        <masterLabel>Opportunity Splits</masterLabel>
     </sections>
 </ReportType>

@@ -340,7 +340,6 @@
             <field>pse__Is_Services_Opportunity__c</field>
             <table>Opportunity</table>
         </columns>
-       
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_ITAWOAmount__c</field>
@@ -946,7 +945,6 @@
             <field>NSP_Product_Interest__c</field>
             <table>Opportunity</table>
         </columns>
-        
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_WO_Approval_Submitter__c</field>
@@ -1143,11 +1141,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Location__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Method__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <columns>

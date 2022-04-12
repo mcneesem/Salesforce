@@ -885,6 +885,11 @@
             <field>NSP_Reference_Type__c</field>
             <table>Contact</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Formatted_Phone__c</field>
+            <table>Contact</table>
+        </columns>
         <masterLabel>Contacts</masterLabel>
     </sections>
     <sections>
@@ -1111,6 +1116,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CampaignMemberRecordType</field>
+            <table>Contact.CampaignMembers</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CampaignName__c</field>
             <table>Contact.CampaignMembers</table>
         </columns>
         <columns>

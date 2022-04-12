@@ -635,7 +635,6 @@
             <field>NSP_DescribeBusinessFitWith_This_Partner__c</field>
             <table>Lead</table>
         </columns>
-        
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_DescribeTheJVPHowitllBe_Piloted__c</field>
@@ -892,11 +891,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Lead__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Method__c</field>
             <table>Lead.Activities</table>
         </columns>
         <columns>

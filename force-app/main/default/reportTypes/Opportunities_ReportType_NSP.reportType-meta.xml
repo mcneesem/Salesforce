@@ -116,7 +116,6 @@
             <field>HasOpportunityLineItem</field>
             <table>Opportunity</table>
         </columns>
-        
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Pricebook2</field>
@@ -586,7 +585,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Channel_Partner__c</field>
             <table>Opportunity</table>
-        </columns>>
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_CollectedAtBooking__c</field>
