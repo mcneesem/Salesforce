@@ -885,6 +885,11 @@
             <field>NSP_Reference_Type__c</field>
             <table>Contact</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Formatted_Phone__c</field>
+            <table>Contact</table>
+        </columns>
         <masterLabel>Contacts</masterLabel>
     </sections>
     <sections>
@@ -1090,7 +1095,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Completed_Date__c</field>
+            <field>NSP_Completed_Date_Deprecated__c</field>
             <table>Contact.Activities</table>
         </columns>
         <columns>
@@ -1120,11 +1125,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Method__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Number_Attending__c</field>
             <table>Contact.Activities</table>
         </columns>
@@ -1141,11 +1141,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Documents_Missing__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Sales_Office__c</field>
             <table>Contact.Activities</table>
         </columns>
         <columns>

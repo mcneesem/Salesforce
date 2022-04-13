@@ -118,11 +118,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Option_Type__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
@@ -251,105 +246,7 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Id</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Type</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.CloseDate</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Name</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.RecordType</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.NSP_Product_type__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.NSP_PrimaryProduct__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <masterLabel>Opportunity</masterLabel>
-    </sections>
-    <sections>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.Name</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.Id</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_AIMS_Client__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_NAICS__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_User_Id__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_Status__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_Sales_Region__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_Sales_Proj_First_Date__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_Sales_Office__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.Type</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_PAR_Recipient__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Account.NSP_Partner__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <masterLabel>Account</masterLabel>
@@ -403,11 +300,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_User_Id__c.NSP_Sales_Region__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_User_Id__c.NSP_District_Administrator__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
@@ -471,74 +363,6 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.IsActive</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.NSP_Termination_Date__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.UserRole</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.Profile</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.Manager</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.NSP_Insperity_EID__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.NSP_Hire_Date__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.Name</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.Email</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.NSP_Sales_Region__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.NSP_Sales_Office__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Owner.NSP_Sales_Number__c</field>
-            <table>NSP_Employee_Split__c</table>
-        </columns>
-        <masterLabel>OpportunityOwner</masterLabel>
-    </sections>
-    <sections>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Partner__c.NSP_BPA__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
@@ -572,64 +396,64 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign</field>
+            <field>NSP_Opportunity__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.IsActive</field>
+            <field>NSP_Opportunity__c.Name</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.Id</field>
+            <field>NSP_Opportunity__c.NSP_Booked_Date__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.Name</field>
+            <field>NSP_Opportunity__c.NSP_1stPayInvoiceDate__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.Owner</field>
+            <field>NSP_Opportunity__c.NSP_BackOutDate__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.NSP_Campaign_Source__c</field>
+            <field>NSP_Opportunity__c.NSP_Number_of_EEs__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.NSP_Campaign_Type__c</field>
+            <field>NSP_Opportunity__c.NSP_Bid_approved__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.Description</field>
+            <field>NSP_Opportunity__c.CreatedDate</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.EndDate</field>
+            <field>NSP_Opportunity__c.NSP_DiscoveryCallApptDate__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.StartDate</field>
+            <field>NSP_Opportunity__c.NSP_Forecast__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.Status</field>
+            <field>NSP_Opportunity__c.NSP_ForecastPercent__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.Campaign.Type</field>
+            <field>NSP_Opportunity__c.NSP_Adds__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
-        <masterLabel>OpportunityCampaign</masterLabel>
+        <masterLabel>Opportunity Splits</masterLabel>
     </sections>
 </ReportType>

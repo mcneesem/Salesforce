@@ -73,6 +73,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CampaignName__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Owner</field>
             <table>Campaign</table>
         </columns>
@@ -261,6 +266,11 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Parent.CampaignName__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Parent.Name</field>
             <table>Campaign</table>
         </columns>
@@ -360,16 +370,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Owner.Name</field>
-            <table>Campaign</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Owner.NSP_District_Administrator__c</field>
-            <table>Campaign</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Owner.NSP_District_Manager__c</field>
             <table>Campaign</table>
         </columns>
         <columns>
