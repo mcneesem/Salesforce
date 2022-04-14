@@ -23,6 +23,9 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Type</field>
             </layoutItems>
@@ -55,6 +58,10 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Name</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>CloseDate</field>
@@ -433,10 +440,6 @@
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -492,11 +495,6 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-        <platformActionListItems>
-            <actionName>Opportunity.NSP_GenerateDoc</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
         <platformActionListItems>
             <actionName>NSP_Generate_Merge_On_Demand_Document</actionName>
             <actionType>CustomButton</actionType>
@@ -622,6 +620,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>25</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.NSP_GenerateDoc</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedContent>
         <relatedContentItems>
@@ -713,6 +716,15 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>PRODUCT2.NAME</fields>
+        <relatedList>Asset.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
