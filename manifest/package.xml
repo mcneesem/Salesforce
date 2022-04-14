@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-<?xml version="1.0" encoding="UTF-8"?>
-<Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>Insperity</members>
         <members>standard__LightningSales</members>
@@ -1292,7 +1290,5 @@
 		<members>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</members>
 		<name>WorkflowAlert</name>
 	</types>
-    <version>52.0</version>
-</Package>
     <version>52.0</version>
 </Package>
