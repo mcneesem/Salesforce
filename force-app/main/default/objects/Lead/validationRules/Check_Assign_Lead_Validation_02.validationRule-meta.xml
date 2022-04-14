@@ -11,7 +11,7 @@ ISBLANK(PostalCode),
 INCLUDES(NSP_Product_Interest__c, &apos;&apos;),
 ISNULL(NSP_DC_SetDate__c),
 ISNULL(NSP_DC_SetTime__c)),
-NSP_Assign_Lead__c = true)</errorConditionFormula>
+NSP_Lead_Routing__c = true)</errorConditionFormula>
     <errorMessage>Please Populate Products of Interest, No. of Employees, Zip/Postal Code, Time and 	
 Discovery Call Set Date before selecting Assign Lead.</errorMessage>
 </ValidationRule>

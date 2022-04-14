@@ -119,6 +119,6 @@ public class NSP_SalesConstants {
     public static final String MIDMARKETREGION  = 'Mid Market';
     public static final String EloquaTaskRecordType  = 'Eloqua Task RT';
     public static final String OpportunityTeamMemberRole  = 'Other';
-
+    public static final String TECHNOLOGY_SALES = 'Technology Sales';
 
 }

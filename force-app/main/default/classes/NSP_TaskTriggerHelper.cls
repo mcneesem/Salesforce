@@ -61,7 +61,7 @@ public void updateActivityDate(List<Task> newList,Map<Id,Task> eventOldMap){
     List < Lead > leadToUpdate = new List<Lead> ();
     for(Task event : newList){
         Task oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
-        if((Trigger.isInsert || event.Status != oldEvent.Status) && event.Status == 'Completed' && event.WhoId!= null)
+        if((Trigger.isInsert || event.Status != oldEvent.Status) && event.Status == NSP_SalesConstants.COMPLETED && event.WhoId!= null)
         leadIdSet.add(event.WhoId);
     }
     if(!leadIdSet.isEmpty()){

@@ -102,6 +102,7 @@ public class NSP_recordSharingTest {
             Lead ld=NSP_TestHelper.createLeadRecord(true); 
             Account acc1 = NSP_TestHelper.createAccount(true);
             Opportunity opp= NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',true);
+            NSP_Employee_Split__c oppcredit=NSP_TestHelper.createOpportunityCredit(opp.Id,'New Oppty Credit',true);
             Test.StopTest();
         }
         

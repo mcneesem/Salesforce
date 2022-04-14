@@ -17,6 +17,7 @@ public class NSP_ValidateOpportunityStage {
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
     public static List<string> ownerBasedCriteriaProducts = System.Label.NSP_OwnerBasedCriteriaProducts.split(',');
+    public static List<string> ownerBasedCriteriaRoles = System.Label.NSP_OwnerBasedCriteriaRoles.split(',');
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_WO_TASK = ' has WO Task ';
@@ -224,10 +225,10 @@ public class NSP_ValidateOpportunityStage {
     public static void evaluateClosedWonStageCriteria(Opportunity opp){
         Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
         Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
-        if(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name !=null &&  ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && (OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BPC_USER ||OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BPA_USER)
-        && currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name != NSP_SalesConstants.NEW_CLIENT_SALES  ){
+        if(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name !=null &&  ownerBasedCriteriaRoles.contains(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name)
+        && currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name != NSP_SalesConstants.NEW_CLIENT_SALES){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        }else if(ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && (OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name != NSP_SalesConstants.BPC_USER && OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name != NSP_SalesConstants.BPA_USER)
+        }else if(ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && !ownerBasedCriteriaRoles.contains(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name)
                 && userInfo.getUserId()!= opp.OwnerId){
                 opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
             }else if(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name !=null && currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name != NSP_SalesConstants.NEW_CLIENT_SALES && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){

@@ -106,6 +106,30 @@ public static Opportunity createOpenOpportunity(
         return opp;
     }
     /***********************************************************************************************
+    * MethodName: createOpportunity Credit
+    * Description : Creating Opportunity Credit record with related Opportunity
+    * Params: Id opportunityId,String type, Boolean insertRecord
+    * ********************************************************************************************/
+public static NSP_Employee_Split__c createOpportunityCredit(
+    Id opportunityId,
+    String type,
+    Boolean insertRecord
+) {
+    NSP_Employee_Split__c oppcredit = new NSP_Employee_Split__c(
+        NSP_Opportunity__c =opportunityId,
+        NSP_Enrollment_Fee__c = 10,
+        NSP_Number_of_Employees__c = 20,
+        NSP_Percent_Split__c = 10,
+        CurrencyIsoCode = DEFAULT_CURRENCY_CODE
+    );
+
+    if (insertRecord) {
+        insert oppcredit;
+    }
+
+    return oppcredit;
+}
+    /***********************************************************************************************
     * MethodName: createProduct
     * Description : Creating product record
     * Params: String productName, Boolean insertRecord

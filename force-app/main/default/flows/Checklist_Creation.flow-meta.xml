@@ -6571,7 +6571,7 @@
                     <name>Currentl_payroll_processor</name>
                     <choiceReferences>Currentlpayrollprocessor</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>Currently payroll processor?</fieldText>
+                    <fieldText>Current Payroll Processor?</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>

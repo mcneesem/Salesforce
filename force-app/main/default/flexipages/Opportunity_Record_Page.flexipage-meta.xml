@@ -24,12 +24,66 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Generate_Merge_On_Demand_Document</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Member</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Opportunity.NSP_GenerateDoc</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Sales Member</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Support</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Send_for_Signature_CPQ</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Member</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Opportunity.NSP_CreateQuote</value>
@@ -75,12 +129,58 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Opportunity.Financial_Analysis_Tool</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Member</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Operations</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Opportunity.NSP_Create_Checklist</value>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Merge_on_Demand_Send_for_Signature</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Member</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

@@ -9,6 +9,6 @@
   OR(ISBLANK(NumberOfEmployees), 
      ISBLANK(PostalCode),
       INCLUDES(NSP_Product_Interest__c, &apos;&apos;)),
-       NSP_Assign_Lead__c = true)</errorConditionFormula>
+      NSP_Lead_Routing__c = true)</errorConditionFormula>
     <errorMessage>Please Populate Products of Interest, No. of Employees, Zip/Postal Code before selecting Assign Lead.</errorMessage>
 </ValidationRule>

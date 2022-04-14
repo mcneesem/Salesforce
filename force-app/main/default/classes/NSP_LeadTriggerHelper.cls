@@ -68,10 +68,10 @@ public class NSP_LeadTriggerHelper {
             if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
                 inboundSolutionsList.add(leadObject);
             }
-            //change default 12 AM value of Discovery call set date to 12 PM.
-            if (leadObject.NSP_DC_SetDate__c !=null) {
-                leadObject.NSP_DC_SetDate__c += 1/2;
-            }
+            //if value Discovery call time is 12 AM , set it to 12 PMto 12 PM.
+            if (leadObject.NSP_DC_SetTime__c !=null && leadObject.NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
+                leadObject.NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
+             }
             
         }
         //calling method to stmap primary contact's email from partner account to lead
@@ -108,12 +108,6 @@ public class NSP_LeadTriggerHelper {
         Boolean isOwnerUpdated = false;
         /* Added as part of STY-01725 */
         List<String> inboundOrOutBoundUserList = Label.Inbound_and_Outbound_UserRole.split(',');
-        /*********************/
-        Set<String> salesOfficeSet=new Set<String>();
-        Set<Id> ownerIdset = new Set<Id>();
-        List<String> MMBSPUserList = Label.MM_AND_BPC_USERROLE.split(',');
-        /*********************/
-        
         User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
         /* Added as part of STY-01725 */
         //iterating over trigger.newmap
@@ -124,19 +118,6 @@ public class NSP_LeadTriggerHelper {
                     //adding lead records to the list
                     fireScoreLeadList.add(leadNewMap.get(leadId));
                 }
-            /* Added as part of DF-01301 */
-            if(trigger.isupdate && trigger.isbefore){
-                //Current logged in user not equal to Owner and logged in user profile not sys admin 
-                if(userDetails.Id!=leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name!=SYS_ADMIN){
-                    //Check logged in user role not in Mid Market/BPS 
-                    if(!MMBSPUserList.contains(userDetails.UserRole.Name) ){
-                        //Lead owner not a queue check
-                        if(leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType){
-                            ownerIdset.add(leadOldMap.get(leadId).OwnerId);
-                        }
-                    }
-                }
-            }
             /* Added as part of CR-027 */
             if(leadNewMap.get(leadId).NSP_Parent_Lead__c != leadOldMap.get(leadId).NSP_Parent_Lead__c){
                 List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE id = :leadNewMap.get(leadId).NSP_Parent_Lead__c];
@@ -150,10 +131,10 @@ public class NSP_LeadTriggerHelper {
                if(leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && leadNewMap.get(leadId).NSP_Lead_Routing__c == true && isOwnerUpdated == false) {
                    isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
                }
-            //change default 12 AM value of Discovery call set date to 12 PM.
-            if (leadNewMap.get(leadId).NSP_DC_SetDate__c != leadOldMap.get(leadId).NSP_DC_SetDate__c && leadNewMap.get(leadId).NSP_DC_SetDate__c !=null) {
-                leadNewMap.get(leadId).NSP_DC_SetDate__c += 1/2;
-            }   
+            // add 12 hours to time value if value is 12 AM- DF-01502
+            if (leadNewMap.get(leadId).NSP_DC_SetTime__c != leadOldMap.get(leadId).NSP_DC_SetTime__c && leadNewMap.get(leadId).NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
+                leadNewMap.get(leadId).NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
+			}  
             /* Added as part of DF-01301 */
             
             /* As part of DF-00998 comments
@@ -183,9 +164,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                       leadsForRoundRobin.add(leadNewMap.get(leadId));
                                                       zipCodeList.add(leadNewMap.get(leadId).PostalCode);
                                                   } 
-                    else {
-                        inboundSolutionsList.add(leadNewMap.get(leadId));
                     }      
+             else {
+              leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
                 }
             
             //collect all Leads to change AccountSegment value based on number of employees
@@ -193,39 +174,6 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                 updateAccountSegment(leadNewMap.get(leadId));
             }
         }
-        
-        /* Added as part of DF-01301 */
-        List<GroupMember> groupMemberList = new List<GroupMember>();
-        if(ownerIdset != null){
-            List<User> ownerIdList = [Select Id,ToLabel(NSP_Sales_Office__c) from User WHERE ID IN:ownerIdset];
-            if(!ownerIdList.isEmpty()){
-                for(User userList : ownerIdList){
-                    if(userList.NSP_Sales_Office__c != Null){
-                        salesOfficeSet.add(userList.NSP_Sales_Office__c);
-                    }
-                }
-            }
-            if(!salesOfficeSet.isEmpty()){
-                groupMemberList =[SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId=: userinfo.getUserId() AND Group.Name IN :salesOfficeSet];
-            }
-            for (Id leadId: leadNewMap.keySet()) {
-                if(trigger.isupdate && trigger.isbefore){
-                    if(userDetails.Id!=leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name!=SYS_ADMIN){
-                        if(!MMBSPUserList.contains(userDetails.UserRole.Name) ){
-                            if(leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType){
-                                if(groupMemberList.isEmpty()){
-                                    leadNewMap.get(leadId).Id.addError(system.label.NSP_LeadTriggerError);  
-                                    
-                                }  
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        /* Added as part of DF-01301 */
-        
-        
         //calling method to set the lead stage as per the fire score
         if (!fireScoreLeadList.isEmpty()) {
             setLeadStageToMarketingPriortisedLead(fireScoreLeadList, leadOldMap);
@@ -250,7 +198,64 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
         createContact(leadNewMap.Values());        
     }
-    
+/**
+* Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
+* @param leadNewMap Map of New leads. 
+* @param leadOldMap Map of Old leads. 
+* @return void             
+* @DF-01301-The District Administrator is able to reassign the Lead to themself.            
+*/
+    public void restrictLeadOwnerChange(Map < Id, Lead > leadNewMap, Map < Id, Lead > leadOldMap) {
+        //Set to hold the Salesoffices
+        Set < String > salesOfficeSet = new Set < String > ();
+        Set < Id > ownerIdset = new Set < Id > ();
+        //List to hold the groupmembers of salesoffices
+        List < String > MMBSPUserList = Label.MM_AND_BPC_USERROLE.split(',');
+        List < GroupMember > groupMemberList = new List < GroupMember > ();
+        User userDetails = [SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id = : userinfo.getUserId()];
+        for (Id leadId: leadNewMap.keySet()) {
+            if (trigger.isupdate && trigger.isbefore) {
+                //Current logged in user not equal to Owner and logged in user profile not sys admin 
+                if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN) {
+                    //Check logged in user role not in Mid Market/BPS 
+                    if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
+                        //Lead owner not a queue check
+                        if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
+                            ownerIdset.add(leadOldMap.get(leadId).OwnerId);
+                        }
+                    }
+                }
+            }
+        }
+        //Collect User salesoffice details
+        if (ownerIdset != null) {
+            List < User > ownerIdList = [Select Id, ToLabel(NSP_Sales_Office__c) from User WHERE ID IN: ownerIdset];
+            if (!ownerIdList.isEmpty()) {
+                for (User userList: ownerIdList) {
+                    if (userList.NSP_Sales_Office__c != Null) {
+                        salesOfficeSet.add(userList.NSP_Sales_Office__c);
+                    }
+                }
+            }
+            if (!salesOfficeSet.isEmpty()) {
+                groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userinfo.getUserId() AND Group.Name IN: salesOfficeSet];
+            }
+            //restrict lead edit access/change owner if logged in user not part of lead owner salesoffice group
+            for (Id leadId: leadNewMap.keySet()) {
+                if (trigger.isupdate && trigger.isbefore) {
+                    if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN) {
+                        if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
+                            if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
+                                if (groupMemberList.isEmpty()) {
+                                    leadNewMap.get(leadId).Id.addError(system.label.NSP_LeadTriggerError);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }    
     /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
 * @param leadNewMap Map of New leads. 
@@ -364,7 +369,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         List < String > zipBasedLocationList = new List < String > ();
         for (Lead leadObject: midMarketLead) {
             leadObject.OwnerId = midMarketQueue[0].id;
-            leadObject.Lead_Owner_Auto_Assignment__c = TRUE;
+          leadObject.NSP_Lead_Routing__c = FALSE;
             leadObject.NSP_Zip_Based_Location__c = NSP_SalesConstants.MIDMARKETREGION;
             zipBasedLocationList.add(leadObject.NSP_Zip_Based_Location__c);
         }
@@ -385,6 +390,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
         for(Lead leadObject : inBoundSolutionsList){
             leadObject.OwnerId = inBoundSolutionsQueue[0].id;
+          leadObject.NSP_Lead_Routing__c = FALSE;
         }
     }
     /**
@@ -399,7 +405,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                          ];
         for (Lead leadObject: payrollHCMLead) {
             leadObject.OwnerId = payrollHCMQueue[0].id;
-            leadObject.Lead_Owner_Auto_Assignment__c = TRUE;
+          leadObject.NSP_Lead_Routing__c = FALSE;
             
         }
         
@@ -425,7 +431,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                 if (leadObject.Company.equalsIgnoreCase(grpObject.Name)) {
                     //Assigning queue as the lead owner
                     leadObject.OwnerId = grpObject.id;
-                    leadObject.Lead_Owner_Auto_Assignment__c = TRUE;
+                  leadObject.NSP_Lead_Routing__c = FALSE;
                 }
             }
         }
@@ -623,6 +629,7 @@ public Boolean dunsCheck(Lead leadObject) {
             for (Lead dunsLead: leadResult) {
                 leadObject.NSP_Parent_Lead__c = dunsLead.Id;
                 leadObject.OwnerId = dunsLead.OwnerId;
+          leadObject.NSP_Lead_Routing__c = FALSE;
                 isOwnerUpdated = true;
             }
         } else if (leadResult.isEmpty()) {
@@ -631,10 +638,12 @@ public Boolean dunsCheck(Lead leadObject) {
                 for (Account dunsAcc: accResult) {
                     if (dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && (dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER)) {
                         leadObject.OwnerId = dunsAcc.OwnerId;
+              leadObject.NSP_Lead_Routing__c = FALSE;
                         isOwnerUpdated = true;
                     }
                     if (dunsAcc.NSP_Account_Status__c != NSP_SalesConstants.INACTIVE) {
                         leadObject.OwnerId = dunsAcc.OwnerId;
+              leadObject.NSP_Lead_Routing__c = FALSE;
                         isOwnerUpdated = true;
                     }
                 }
@@ -708,8 +717,7 @@ public void createContact(List < Lead > newLeadList) {
             Database.LeadConvert lc = new Database.LeadConvert();
             if (childLead.IsConverted == false) {
                 taskIdSet.add(childLead.Id);
-                if(convertedOpty != null)
-                mapLead.put(childLead.Id, convertedOpty);
+          if (convertedOpty != null) mapLead.put(childLead.Id, convertedOpty);
                 lc.setLeadId(childLead.id);
                 lc.setAccountId(accountId);
                 lc.setOwnerId(userinfo.getUserId());
