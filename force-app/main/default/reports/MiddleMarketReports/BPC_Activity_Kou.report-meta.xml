@@ -30,7 +30,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>Activity.Activity_type__c</field>
+        <field>Activity.NSP_Activity_Type_Reporting__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>BPC Activity</name>

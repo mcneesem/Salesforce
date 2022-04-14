@@ -16,7 +16,7 @@
         <field>Opportunity.NSP_PrimaryProduct__c</field>
     </columns>
     <columns>
-        <field>Activity.Activity_type__c</field>
+        <field>Activity.NSP_Activity_Type_Reporting__c</field>
     </columns>
     <columns>
         <field>Activity.NSP_Completed_Date__c</field>
