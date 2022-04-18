@@ -238,56 +238,71 @@
     </types>
     <types>
         <members>Campaign-Campaign Layout</members>
-        <members>NSP_Exception_Log__c-Exception Log Layout</members>
-        <members>pse__Proj__c-NSPK Install for Conversion Form</members>
-        <members>pse__Proj__c-PEO Project Layout</members>
-        <members>pse__Proj__c-RET Client Change Form</members>
-        <members>pse__Proj__c-RET Conversion Process Form</members>
-        <members>pse__Proj__c-RET Deconversion 2020 Form</members>
-        <members>pse__Proj__c-RET Interim Testing Form</members>
-        <members>pse__Proj__c-RET Merge Plan Form</members>
-        <members>pse__Proj__c-RET New Client Contact Form</members>
-        <members>pse__Proj__c-RET NSPK 401k Plan Merger</members>
-        <members>pse__Proj__c-RET ORK Set Up Form</members>
-        <members>pse__Proj__c-RET Plan Amendment 2020 Form</members>
-        <members>pse__Proj__c-RET Plan Termination Form</members>
-        <members>pse__Proj__c-RET Prior Plan Review Project Form</members>
-        <members>pse__Proj__c-RET Profit Sharing Form</members>
-        <members>pse__Proj__c-RET Project Plan Form</members>
-        <members>pse__Proj__c-RET Prototype Amendment Form</members>
-        <members>pse__Proj__c-RET Safe Harbor Retractions 2020 Form</members>
-        <members>pse__Proj__c-RET Sales to NSP 401k Form</members>
-        <members>pse__Proj__c-RET Startup Set Up Form</members>
-        <members>pse__Proj__c-TES%2BBPS</members>
-        <members>SBQQ__ErrorCondition__c-SBQQ__Error Condition Layout</members>
-        <members>SBQQ__QuoteLine__c-SBQQ__Quote Line Layout</members>
-        <members>Task-Task Layout</members>
-        <members>Lead-Referral Lead Layout</members>
-        <members>Asset-WO Asset Layout</members>
-        <members>Account-Account Layout</members>
-        <members>Account-Partner Account Layout</members>
-        <members>Account-Sales Account Layout</members>
-        <members>Account-Support Account Layout</members> 
-        <members>NSP_Sub_Client__c-Sub Client Layout</members>
-        <members>Asset-Asset Layout</members>
-        <members>Asset-Support Asset Layout</members>
-        <members>Account-Partner Account Layout 0422</members>
-        <members>Asset-WX Asset Layout</members>
-        <members>Event-Core Sales Events Layout 0322</members>
-        <members>Event-Core Sales Events Layouts</members>
-        <members>Event-Support Core Sales Events Layouts</members>
-        <members>Event-Mid Market Sales 0322</members>
-        <members>Opportunity-Sales Manager 0322</members>
-        <members>Opportunity-Sales Administrator 0322</members>
-        <members>Opportunity-Locked Opportunity 0322</members>
-        <members>Opportunity-Support Locked Opportunity 0322</members>
-        <members>Opportunity-Support Opportunity Layout 0322</members>
-        <members>Task-Core Sales Task Layout 0322</members>
-        <members>Task-BPS Task Layout 0322</members>
-        <members>Task-Eloqua Task Layout 0322</members>
-        <members>Task-Mid Market Sales Task Layout 0322</members>
-        <members>Task-New Client Sales Task Layout 0322</members>
-        <members>Task-Referral Task Layout</members>
+		<members>NSP_Exception_Log__c-Exception Log Layout</members>
+		<members>pse__Proj__c-NSPK Install for Conversion Form</members>
+		<members>pse__Proj__c-PEO Project Layout</members>
+		<members>pse__Proj__c-RET Client Change Form</members>
+		<members>pse__Proj__c-RET Conversion Process Form</members>
+		<members>pse__Proj__c-RET Deconversion 2020 Form</members>
+		<members>pse__Proj__c-RET Interim Testing Form</members>
+		<members>pse__Proj__c-RET Merge Plan Form</members>
+		<members>pse__Proj__c-RET New Client Contact Form</members>
+		<members>pse__Proj__c-RET NSPK 401k Plan Merger</members>
+		<members>pse__Proj__c-RET ORK Set Up Form</members>
+		<members>pse__Proj__c-RET Plan Amendment 2020 Form</members>
+		<members>pse__Proj__c-RET Plan Termination Form</members>
+		<members>pse__Proj__c-RET Prior Plan Review Project Form</members>
+		<members>pse__Proj__c-RET Profit Sharing Form</members>
+		<members>pse__Proj__c-RET Project Plan Form</members>
+		<members>pse__Proj__c-RET Prototype Amendment Form</members>
+		<members>pse__Proj__c-RET Safe Harbor Retractions 2020 Form</members>
+		<members>pse__Proj__c-RET Sales to NSP 401k Form</members>
+		<members>pse__Proj__c-RET Startup Set Up Form</members>
+		<members>pse__Proj__c-TES%2BBPS</members>
+		<members>SBQQ__ErrorCondition__c-SBQQ__Error Condition Layout</members>
+		<members>SBQQ__QuoteLine__c-SBQQ__Quote Line Layout</members>
+		<members>Task-Task Layout</members>
+		<members>Lead-Referral Lead Layout</members>
+		<members>Asset-WO Asset Layout</members>
+		<members>Account-Account Layout</members>
+		<members>Account-Partner Account Layout</members>
+		<members>Account-Sales Account Layout</members>
+		<members>Account-Support Account Layout</members> 
+		<members>NSP_Sub_Client__c-Sub Client Layout</members>
+		<members>Asset-Asset Layout</members>
+		<members>Asset-Support Asset Layout</members>
+		<members>Account-Partner Account Layout 0422</members>
+		<members>Asset-WX Asset Layout</members>
+		<members>Event-Core Sales Events Layout 0322</members>
+		<members>Event-Core Sales Events Layouts</members>
+		<members>Event-Support Core Sales Events Layouts</members>
+		<members>Event-Mid Market Sales 0322</members>
+		<members>Opportunity-Sales Manager 0322</members>
+		<members>Opportunity-Sales Administrator 0322</members>
+		<members>Opportunity-Locked Opportunity 0322</members>
+		<members>Opportunity-Support Locked Opportunity 0322</members>
+		<members>Opportunity-Support Opportunity Layout 0322</members>
+		<members>Task-Core Sales Task Layout 0322</members>
+		<members>Task-BPS Task Layout 0322</members>
+		<members>Task-Eloqua Task Layout 0322</members>
+		<members>Task-Mid Market Sales Task Layout 0322</members>
+		<members>Task-New Client Sales Task Layout 0322</members>
+		<members>Task-Referral Task Layout</members>
+		<members>Account-SBQQ__CPQ Account Layout</members>
+		<members>Account-V2 Sales Account Layout</members>
+		<members>Opportunity-BPA Opportunity Layout</members>
+		<members>Opportunity-Locked Opportunity</members>
+		<members>Opportunity-Opportunity Layout</members>
+		<members>Opportunity-Sales Engineer Opportunity Layout</members>
+		<members>Opportunity-Support Locked Opportunity</members>
+		<members>Opportunity-Support Opportunity Layout</members>
+		<members>Lead-Lead Layout</members>
+		<members>Lead-New Lead Page Layout</members>
+		<members>Lead-Support Lead Layout</members>
+		<members>Contact-Contact Layout</members>
+		<members>Contact-pse__Resource</members>
+		<members>Contact-Sales_Contact Layout</members>
+		<members>Contact-Support Sales_Contact Layout</members>
         <name>Layout</name>
     </types>
     <types>
