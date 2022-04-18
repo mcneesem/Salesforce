@@ -13,7 +13,7 @@
         <field>Activity$NSP_Opportunity__c</field>
     </columns>
     <columns>
-        <field>Activity$Activity_type__c</field>
+        <field>Activity$NSP_Activity_Type_Reporting__c</field>
     </columns>
     <currency>USD</currency>
     <description>How much sales activity can be tied back to marketing and channel attributions?</description>

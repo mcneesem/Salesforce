@@ -34,7 +34,7 @@ public class NSP_TaskTriggerHelperTest {
             WhatId = opportunityList[0].Id,
             NSP_Task_Type__c = 'BPS',
             RecordTypeId = taskRecTypeId,
-            NSP_Task_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
+            NSP_Task_Subtype__c = 'Client Meeting',
             Status='Open'
         );
         insert taskRec;

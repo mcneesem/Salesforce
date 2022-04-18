@@ -13,7 +13,7 @@
         <field>Opportunity$StageName</field>
     </columns>
     <columns>
-        <field>Opportunity.Activities__r$Activity_type__c</field>
+        <field>Opportunity.Activities__r$NSP_Activity_Type_Reporting__c</field>
     </columns>
     <columns>
         <field>Opportunity.Activities__r$Subject</field>

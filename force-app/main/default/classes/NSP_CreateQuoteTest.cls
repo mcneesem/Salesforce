@@ -23,11 +23,11 @@ public class NSP_CreateQuoteTest {
         List<Task> taskList = new List<Task>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
         Task taskRec = new Task(
-            Subject = 'Discovery Call',
+            Subject = 'Client Meeting',
             WhatId = opp.Id,
             NSP_Task_Type__c = 'BPS',
             RecordTypeId = taskRecTypeId,
-            NSP_Task_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
+            NSP_Task_Subtype__c = 'Client Meeting',
             Status='Completed'
         );
         taskList.add(taskRec);

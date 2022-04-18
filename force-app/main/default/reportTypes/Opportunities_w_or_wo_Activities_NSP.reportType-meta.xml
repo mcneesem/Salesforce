@@ -1330,7 +1330,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Activity_type__c</field>
+            <field>NSP_Activity_Type_Reporting__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <masterLabel>Activities</masterLabel>

@@ -192,7 +192,7 @@ public class NSP_LeadTriggerHelperTest {
         Task taskRecord = new Task(
             Subject='Discovery Call Task',
             NSP_Task_Type__c='Core Sales',
-            NSP_Task_SubType__c='Client Meeting',
+            NSP_Task_SubType__c='WX Quote',
             OwnerId=UserInfo.getUserId(),
             WhoId=leadRecord.Id
         );

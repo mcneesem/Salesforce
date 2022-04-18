@@ -29,7 +29,7 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Activity_type__c</field>
+            <field>NSP_Activity_Type_Reporting__c</field>
             <table>Activity</table>
         </columns>
         <columns>

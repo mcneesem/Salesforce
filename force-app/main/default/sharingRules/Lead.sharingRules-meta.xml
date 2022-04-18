@@ -48,4 +48,25 @@
             <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
         </sharedFrom>
     </sharingOwnerRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Referral_Lead_Sharing</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>This sharing rule is created as part of DF-01721. 
+When the referral lead is assigned to Inbound solutions queue, granting access to all salesforce users.</description>
+        <label>Referral Lead Sharing</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Referral</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>startsWith</operation>
+            <value>00G</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
 </SharingRules>

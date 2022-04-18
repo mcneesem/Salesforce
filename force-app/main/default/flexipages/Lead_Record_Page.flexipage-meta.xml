@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -72,8 +72,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>fields</name>
-                    <value
-          >NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,	NSP_Modified_By__r.Name</value>
+                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,	NSP_Modified_By__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedFieldApiName</name>
@@ -135,8 +134,7 @@
                     <name>scrolling</name>
                     <value>auto</value>
                 </componentInstanceProperties>
-                <componentName
-        >LID:SalesNavigatorMemberProfileComponent</componentName>
+                <componentName>LID:SalesNavigatorMemberProfileComponent</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-8afa48c8-9277-496a-9bf1-7d6263e67500</name>
@@ -164,8 +162,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value
-          >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;https://app-sso.zoominfo.com/bizservices/sso/saml/sp?authnConfigsId=4c97e4d0-3fb1-48de-9055-b11eea58db93&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;CLICK HERE FOR SSO&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</value>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;https://app-sso.zoominfo.com/bizservices/sso/saml/sp?authnConfigsId=4c97e4d0-3fb1-48de-9055-b11eea58db93&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;CLICK HERE FOR SSO&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
             </componentInstance>
@@ -284,8 +281,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName
-        >runtime_sales_activities:activityPanel</componentName>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-445698ef-4d06-4285-b420-42bfa49d64c9</name>
@@ -341,8 +337,7 @@
                     <name>displayOption</name>
                     <value>BOTH</value>
                 </componentInstanceProperties>
-                <componentName
-        >runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
+                <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -397,8 +392,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName
-        >runtime_sales_cadence:cadenceStepsCard</componentName>
+                <componentName>runtime_sales_cadence:cadenceStepsCard</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

@@ -5,7 +5,7 @@ Created Date         :  October 10, 2021
 Function             :  This class is used for Validate Opportunity Stage tests.
 Story                :                                                                             
 Modification Log     :                                                                               
-*	Harsha           October 10, 2021          First Iteration
+*   Harsha           October 10, 2021          First Iteration
 *
 ***************************************************************************************************
 */
@@ -52,7 +52,7 @@ public class NSP_ValidateOpportunityStageTest {
             WhatId = opp.Id,
             NSP_Task_Type__c = 'BPS',
             RecordTypeId = taskRecTypeId,
-            NSP_Task_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
+            NSP_Task_Subtype__c = 'Client Meeting',
             Status='Completed'
         );
         taskList.add(taskRec);
@@ -72,7 +72,7 @@ public class NSP_ValidateOpportunityStageTest {
             WhatId = opp2.Id,
             NSP_Task_Type__c = 'BPS',
             RecordTypeId = taskRecTypeId,
-            NSP_Task_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
+            NSP_Task_Subtype__c = 'Client Meeting',
             Status='Open'
         );
         taskList.add(taskRec2);

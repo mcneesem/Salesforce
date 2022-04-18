@@ -945,7 +945,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-         <value>Organizational Planning,Time &amp; Attendance,WA,WX</value>
+         <value>Organizational Planning,Time &amp; Attendance,WA,WX,Retirement Services,Applicant Tracking</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
@@ -1069,5 +1069,13 @@
         <protected>false</protected>
         <shortDescription>Account Envelop Configuration</shortDescription>
         <value>a7r2D000000HhLTQA0</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OwnerBasedCriteriaRoles</fullName>
+        <categories>owner role check, BPA, BPC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OwnerBasedCriteriaRoles</shortDescription>
+        <value>Business Performance Advisor,Business Performance Consultant,Technology Sales,Retirement Sales Manager,Retirement Sales Consultant</value>
     </labels>
 </CustomLabels>

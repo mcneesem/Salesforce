@@ -10,7 +10,7 @@
         <field>OPPORTUNITY_NAME</field>
     </columns>
     <columns>
-        <field>Activity.Activity_type__c</field>
+        <field>Activity.NSP_Activity_Type_Reporting__c</field>
     </columns>
     <columns>
         <field>Activity.NSP_Status__c</field>
@@ -22,7 +22,7 @@
     <description>What DCs are scheduled for my office(s)?</description>
     <filter>
         <criteriaItems>
-            <column>Activity.Activity_type__c</column>
+            <column>Activity.NSP_Activity_Type_Reporting__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>

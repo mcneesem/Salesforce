@@ -45695,7 +45695,7 @@
      </fieldPermissions>
      <fieldPermissions>
         <editable>false</editable>
-        <field>Activity.Activity_type__c</field>
+        <field>Activity.NSP_Activity_Type_Reporting__c</field>
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>

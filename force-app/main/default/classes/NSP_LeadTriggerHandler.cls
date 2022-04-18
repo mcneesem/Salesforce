@@ -54,6 +54,8 @@ public class NSP_LeadTriggerHandler implements NSP_ITriggerHandler{
         NSP_LeadTriggerHelper  LeadTriggerHelperObject =  new NSP_LeadTriggerHelper();
         
         LeadTriggerHelperObject.beforeUpdateDirector((Map<Id, Lead>) newMap,(Map<Id, Lead>) oldMap);
+        /*DF-01301*/
+        LeadTriggerHelperObject.restrictLeadOwnerChange((Map<Id, Lead>) newMap,(Map<Id, Lead>) oldMap); 
     }
     
     
