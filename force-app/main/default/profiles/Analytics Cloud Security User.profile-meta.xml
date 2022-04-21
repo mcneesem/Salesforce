@@ -45602,12 +45602,8 @@
     <layoutAssignments>
         <layout>ApiAnomalyEventStore-API Anomaly Event Store Layout</layout>
     </layoutAssignments>
-    <layoutAssignments>
+   <layoutAssignments>
         <layout>Asset-Asset Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Asset-Asset Layout</layout>
-        <recordType>Asset.NSP_Asset_Product</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Asset-Asset Layout</layout>
@@ -45616,6 +45612,10 @@
     <layoutAssignments>
         <layout>Asset-WO Asset Layout</layout>
         <recordType>Asset.WO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-WX Asset Layout</layout>
+        <recordType>Asset.NSP_Asset_Product</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AssetAction-Asset Action Layout</layout>
