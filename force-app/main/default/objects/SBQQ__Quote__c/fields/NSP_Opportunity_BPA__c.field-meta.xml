@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Opportunity_BPA__c</fullName>
-    <description>Has Opportunity&apos;s BPA value</description>
+    <description>Holds Opportunity&apos;s Owner Id</description>
     <externalId>false</externalId>
-    <formula>CASESAFEID(SBQQ__Opportunity2__r.NSP_BPA__r.Id)</formula>
+    <formula>CASESAFEID(SBQQ__Opportunity2__r.OwnerId)</formula>
     <label>Opportunity BPA</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -37,6 +37,7 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> opptyListToStampDocusignTemplateId = new List<Opportunity>();
         //set to store opportunity owner Ids when opportunity owner is changed/or when opportunity is created
         Set<Id> ownerIdsSet = new Set<Id>();
+        List<Opportunity> closedOppList =  new List<Opportunity>();
         //Iterating over the opportunity new list 
         for(Opportunity opportunityObject : newList){
             ownerIdsSet.add(opportunityObject.OwnerId);
@@ -68,8 +69,17 @@ public class NSP_OpportunityTriggerHelper {
             if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.OPPORTUNITY_TYPE_CAMS)) {
                 opportunityObject.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
             }
+
+              // checking for closeddate is lessthan today or Not
+            if(opportunityObject.CloseDate != null && opportunityObject.CloseDate < date.today()){
+            closedOppList.add(opportunityObject);
+            }
         }      
         
+               // Added as part of DF-01716
+       if(!closedOppList.isEmpty()){
+        validateClosedDate(closedOppList);
+        }
         
 		NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
 		//Setting direct assignments to opportunity records
@@ -179,7 +189,7 @@ public class NSP_OpportunityTriggerHelper {
         //docusign merge template
         Set<String> docuSignTemplateName = new Set<String>();
         List<Opportunity> opptyListToStampDocusignTemplateId = new List<Opportunity>();
-        
+        List<Opportunity> closedOppList =  new List<Opportunity>();
         //Iterating over the new opportunity map
         for(Id opportunityId : opportunityNewMap.keySet()){
             
@@ -255,7 +265,17 @@ public class NSP_OpportunityTriggerHelper {
                    MODownerIdSet.add(newOpportunity.OwnerId);
                    
                }
+
+                           // checking for closeddate is lessthan today or Not
+            if(newOpportunity.CloseDate != null && newOpportunity.CloseDate < date.today()){
+                closedOppList.add(newOpportunity);
+            }
         }
+
+                 // Added as part of DF-01716
+                 if(!closedOppList.isEmpty()){
+                    validateClosedDate(closedOppList);
+                }
         
 		NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
 		oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
@@ -684,5 +704,27 @@ public class NSP_OpportunityTriggerHelper {
             NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(OppAccountId);
         }
     }   
+
+        /***********************************************************************************************
+* MethodName: validateClosedDate
+* Description : This method will throw error when Opportunity close date is less than today for all users except for the users
+				in NCS Public group
+* Params:       List<Opportunity>OpportunityList
+* Defect:       DF-01716
+* ********************************************************************************************/ 
+public static void validateClosedDate(List<Opportunity> OpportunityList){
+    Id loggedInUserId = UserInfo.getUserId();
+    set<Id> ncsGrpMemIdSet = new set<Id>();
+    group ncsGroup = [SELECT Id,Name FROM group where group.Name ='NCS'];
+    for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId =: ncsGroup.Id]){
+        ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId); 
+    }
+        for(Opportunity opp: OpportunityList){
+            if(!ncsGrpMemIdSet.contains(loggedInUserId)){
+                opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
+            }  
+        }     
+    
+}
 
 }

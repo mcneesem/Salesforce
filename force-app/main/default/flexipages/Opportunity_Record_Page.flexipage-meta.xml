@@ -25,7 +25,7 @@
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Generate_Merge_On_Demand_Document</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -40,6 +40,11 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Sales Administrator</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -164,7 +169,7 @@
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Merge_on_Demand_Send_for_Signature</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 or 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -179,6 +184,11 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Sales Administrator</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

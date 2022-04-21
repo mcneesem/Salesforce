@@ -164,12 +164,11 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                       leadsForRoundRobin.add(leadNewMap.get(leadId));
                                                       zipCodeList.add(leadNewMap.get(leadId).PostalCode);
                                                   } 
+                                                  else {
+                                                    leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
+                                                     }   
                     }      
-             else {
-              leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
-                }
-            
-            //collect all Leads to change AccountSegment value based on number of employees
+           //collect all Leads to change AccountSegment value based on number of employees
             if (leadNewMap.get(leadId).NumberOfEmployees != leadOldMap.get(leadId).NumberOfEmployees) {
                 updateAccountSegment(leadNewMap.get(leadId));
             }

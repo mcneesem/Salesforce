@@ -1078,4 +1078,25 @@
         <shortDescription>NSP_OwnerBasedCriteriaRoles</shortDescription>
         <value>Business Performance Advisor,Business Performance Consultant,Technology Sales,Retirement Sales Manager,Retirement Sales Consultant</value>
     </labels>
+    <labels>
+        <fullName>NSP_Opportunity_Close_Date_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Close Date Validation</shortDescription>
+        <value>Close cannot be in the past.</value>
+    </labels>
+        <labels>
+        <fullName>NSP_Profile_To_Skip_OLI_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Profile_To_Skip_OLI_Validation</shortDescription>
+        <value>System Administrator,Data Migration,Integration User</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Product_Update_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity_Product_Update_Error_Message</shortDescription>
+        <value>Opportunity Line Items cannot be modified at this stage.</value>
+    </labels>
 </CustomLabels>

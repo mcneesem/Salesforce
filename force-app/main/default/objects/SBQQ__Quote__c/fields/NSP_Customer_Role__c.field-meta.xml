@@ -7,10 +7,16 @@
     <label>Customer Role</label>
     <lookupFilter>
         <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
         <filterItems>
             <field>Contact.AccountId</field>
             <operation>equals</operation>
             <valueField>$Source.SBQQ__Account__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Contact.AccountId</field>
+            <operation>notEqual</operation>
+            <value></value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

@@ -28,11 +28,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Employee_Split__c.NSP_Control_Group_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Employee_Split__c.NSP_Enrollment_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -139,11 +134,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Employee_Split__c.NSP_Split_Note__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Employee_Split__c.NSP_Sub_Product_Plan__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

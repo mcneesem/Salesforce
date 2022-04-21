@@ -37,6 +37,30 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>NSP_BPC_users_can_access_other_BPC_leads</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This rule allows the BPC Leads to other BPC Users</description>
+        <label>BPC users can access other BPC leads</label>
+        <sharedTo>
+            <role>Business_Performance_Consultant</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Consultant</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_Share_MM_Leads_with_MM_roles</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This Rule will allow the Mid Markets admins to other Mid Market Admin Leads</description>
+        <label>Share MM Leads with MM roles</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Administrator</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>NSP_View_All_Leads_Owned_by_Sales_Leader_and_subordinates</fullName>
         <accessLevel>Read</accessLevel>
         <description>This sharing rule grants read access to all the leads owned by Sales Leader and below roles with all users with Sales Leader and below roles</description>

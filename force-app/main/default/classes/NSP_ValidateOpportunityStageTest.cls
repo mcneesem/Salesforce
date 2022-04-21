@@ -62,7 +62,7 @@ public class NSP_ValidateOpportunityStageTest {
             WhatId = opp.Id,
             NSP_Task_Type__c = 'Core Sales',
             RecordTypeId = taskRecTypeId,
-            NSP_Task_Subtype__c = NSP_SalesConstants.WO_BUSINESS_PROFILE,
+            NSP_Task_Subtype__c = 'WO Proposal',
             Status='Open'
         );
         taskList.add(taskRec3);
