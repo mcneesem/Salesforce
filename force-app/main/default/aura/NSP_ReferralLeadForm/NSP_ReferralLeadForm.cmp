@@ -53,7 +53,7 @@ Who is referring this new company?
         
         <lightning:input aura:id="fieldId" type="text" name="Company" value="{!v.LeadObj.Company}" label="Company"
                             required="true"  class="slds-medium-size_2-of-3"/> 
-        <lightning:input type="text" name="FirstName" value="{!v.LeadObj.FirstName}" label="First Name"
+        <lightning:input aura:id="fieldId" type="text" name="FirstName" value="{!v.LeadObj.FirstName}" label="First Name"
                             class="slds-medium-size_2-of-3"  required="true"/>
         <lightning:input aura:id="fieldId" type="text" name="Name" value="{!v.LeadObj.LastName}" label="Last Name"
                             class="slds-medium-size_2-of-3" required = "true"/>
@@ -64,11 +64,11 @@ Who is referring this new company?
         <lightning:input aura:id="fieldId" type="email" name="Email" value="{!v.LeadObj.Email}" label="Email" 
                             class="slds-medium-size_2-of-3" required = "true" /> 
         
-        <lightning:input type="text" name="Title" value="{!v.LeadObj.Title}" label="Title" 
-                            class="slds-medium-size_2-of-3" /> 
+        <lightning:input aura:id="fieldId" type="text" name="Title" value="{!v.LeadObj.Title}" label="Title" 
+                            class="slds-medium-size_2-of-3" required = "true"/> 
         
         <lightning:input aura:id="fieldId" type="number" name="NumberOfEmployees" value="{!v.LeadObj.NumberOfEmployees}" label="Number Of Employees" 
-                            class="slds-medium-size_2-of-3" /> 
+                            class="slds-medium-size_2-of-3" required = "true"/> 
         <!-- Industry -->
         <lightning:select name="Industry" label="Industry"
                             class="slds-medium-size_2-of-3"  value= "{!v.LeadObj.Industry}">
@@ -77,8 +77,9 @@ Who is referring this new company?
             </aura:iteration>
         </lightning:select>
         
-        <lightning:select name="NSP_Howdoyouknowthepotentialcustomer__c" label="How do you know the potential customer?"
-                            class="slds-medium-size_2-of-3"  value= "{!v.LeadObj.NSP_Howdoyouknowthepotentialcustomer__c}">
+        <lightning:select aura:id="pCOptions" name="NSP_Howdoyouknowthepotentialcustomer__c" label="How do you know the potential customer?"
+                            class="slds-medium-size_2-of-3"  value= "{!v.LeadObj.NSP_Howdoyouknowthepotentialcustomer__c}" required = "true">
+            <option value="">---None---</option>
             <aura:iteration items="{!v.potentialCustomer}" var="itr">
                 <option value="{!itr}">{!itr}</option>
             </aura:iteration>

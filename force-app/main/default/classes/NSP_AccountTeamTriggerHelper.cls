@@ -95,37 +95,7 @@ public class NSP_AccountTeamTriggerHelper {
         }
     }
     
-    /**
-     * Iterates throught the list of new AccountTeam and passes the required attributes to other methods.
-     * @param newMap Map of AccountTeam.
-     * @param oldMap Map of AccountTeam.
-     * @return void
-     *                
-     */
-
-    public void beforeUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
-        List<NSP_Account_Team__c> newAccountTeamList = new List<NSP_Account_Team__c>(); 
-        Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>(); 
-        try{
-        for(Id accountTeamId : newMap.keySet()){
-            NSP_Account_Team__c newAccountTeam =  newMap.get(accountTeamId);
-            NSP_Account_Team__c oldAccountTeam =  oldMap.get(accountTeamId);
-            if(!String.isBlank(newAccountTeam.NSP_PER_ID__c) && newAccountTeam.NSP_PER_ID__c != oldAccountTeam.NSP_PER_ID__c){
-                accountTeamMemberEmployeePerIdSet.add(newAccountTeam.NSP_PER_ID__c);  
-                newAccountTeamList.add(newAccountTeam);
-            }
-            
-        }
-        if(accountTeamMemberEmployeePerIdSet.size() > 0){
-            populateEmployeePerIdOnATMBasedOnUserId(newAccountTeamList,accountTeamMemberEmployeePerIdSet);
-        }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        }
-    }
-        
-	
-    
+       
     /**
      * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
      * @param newMap Map of NSP_Account_Team__c.

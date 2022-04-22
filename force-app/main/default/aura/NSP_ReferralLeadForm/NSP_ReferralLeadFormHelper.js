@@ -7,7 +7,6 @@
                var picklistvalues = response.getReturnValue();
                component.set("v.industry",picklistvalues.industry);
                component.set("v.potentialCustomer",picklistvalues.potentialCustomer);
-               component.set("v.LeadObj.NSP_Howdoyouknowthepotentialcustomer__c",picklistvalues.potentialCustomer[0]);
                var piValues = [];
                for (var i = 0; i < picklistvalues.productofinterest.length; i++) {
                    piValues.push({

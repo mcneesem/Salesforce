@@ -302,6 +302,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>runtime_sales_cadence:cadenceStepsCard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>lbpm:actionList</componentName>
             </componentInstance>
         </itemInstances>

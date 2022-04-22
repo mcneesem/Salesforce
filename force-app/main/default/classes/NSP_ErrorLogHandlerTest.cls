@@ -21,11 +21,9 @@ public class NSP_ErrorLogHandlerTest {
             accountList.add(accObject);
         }
         //Using database.save result 
-        try{ 
-            Database.SaveResult[] result = Database.Insert(accountList, false);
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
-        }
+        Database.SaveResult[] result = Database.Insert(accountList, false);
+        NSP_ErrorLogHandler.logSaveResult('TestClass','TestMethod',result);
+        NSP_ErrorLogHandler.logSaveException('TestClass','TestMethod','result');
         Test.stopTest();
         System.assertEquals(accountList.size(), 5);
     }

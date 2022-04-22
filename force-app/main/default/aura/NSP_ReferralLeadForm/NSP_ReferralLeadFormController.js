@@ -18,7 +18,17 @@
            inputCmp.showHelpMessageIfInvalid();
            return validSoFar && !inputCmp.get('v.validity').valueMissing;
        }, true);
-       if (allValid) {
+       /* Added as part of DF-01739*/
+       var isNotPcValid = false;
+       var select = component.find('pCOptions');
+       if (!select.checkValidity()) {
+           select.showHelpMessageIfInvalid();
+           isNotPcValid = true;
+       }  else  {
+           isNotPcValid = false;
+       }
+       /* Added as part of DF-01739 Ends*/
+       if (allValid && !isNotPcValid) {
               helper.saveLead(component, event);
        }	  
    },

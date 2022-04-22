@@ -23,6 +23,7 @@ static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_A
         setQuoteDetailsOnInsert(newList);
         updateBillingAccountOnQuote(newList,null);
         updateBillingAndShippringAddressOnQuote(newList,null);
+        updateScholarshipEligibility(newList);
         
     }
     
@@ -41,6 +42,7 @@ static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_A
         initializeDefaultFieldValues(quoteNewMap,quoteOldMap);
         updateBillingAccountOnQuote(quoteNewMap.Values(),quoteOldMap);
         updateBillingAndShippringAddressOnQuote(quoteNewMap.Values(),quoteOldMap);
+        updateScholarshipEligibility(quoteNewMap.Values());
         
     }    
     
@@ -114,39 +116,7 @@ static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_A
         }
     }     
     
-    /**
-* Method added for STY-01332 to check if Scholarship pricing is eligible based on Opportunity BPA and Partner
-* @param currentRecordsList List of New Quote. 
-* @return void  
-*/
-    
-    public void updateScholarshipEligibility(List<SBQQ__Quote__c> currentRecordsList) {
-        List<String> userList = new List<String>();
-        List<String> partnerList = new List<String>();
-        
-        List<Group> groupM = [SELECT (SELECT UserOrGroupId FROM GroupMembers) FROM Group WHERE Name = :NSP_CPQConstants.SCHOLARSHIP_PUBLIC_GROUP];
-        if(groupM.size()>0) {
-        for (GroupMember groupMember : groupM[0].GroupMembers) {
-            userList.add(groupMember.UserOrGroupId);
-        }
-        }
-        //Fetch Custom metadata which holds the eligible partner accounts
-        List<NSP_Scholarship_Eligibility__mdt> eligiblePartner = NSP_Scholarship_Eligibility__mdt.getAll().values();
-        for(NSP_Scholarship_Eligibility__mdt partner:eligiblePartner) {
-            partnerList.add(partner.NSP_Partner__c.toUpperCase());
-        }
-        for(SBQQ__Quote__c quote : currentRecordsList){
-            if(userList.contains(quote.NSP_Opportunity_BPA__c)) {
-                quote.NSP_IsScholarshipEligibleBPA__c = true;
-            }
-            if(quote.NSP_Opportunity_Partner_Name__c != null && partnerList.contains(quote.NSP_Opportunity_Partner_Name__c.toUpperCase())) {
-                quote.NSP_IsScholarshipEligiblePartner__c = true;
-            }
-        }
-    }
-    
-    
-    /**
+ /**
 * Method Name : setImplementationDateForTalentConnect 
 * Description : Method to set Implementation Date on quote after 30 days of Subscription Start Date. Ref Story# STY-00402.
 * Author : Rakesh Das       Date : 28/06/2021
@@ -739,13 +709,12 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
 
     /**
 * @MethodName : updateScholarshipEligibilityUpdate
-* @param QuoteNewMap Map of New Quote. 
-* @param QuoteOldMap Map of Old Quote. 
+* @param newQuoteList List of New Quote. 
 * @Description : Method added for STY-01332 to check if Scholarship pricing is eligible based on Opportunity BPA and Partner 
 * @return void  
 */
     
-    public void updateScholarshipEligibilityUpdate(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap){
+    public void updateScholarshipEligibility(List<SBQQ__Quote__c> newQuoteList){
         List<String> userList = new List<String>();
         List<String> partnerList = new List<String>();
         
@@ -759,24 +728,27 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
         //Fetch Custom metadata which holds the eligible partner accounts
         List<NSP_Scholarship_Eligibility__mdt> eligiblePartner = NSP_Scholarship_Eligibility__mdt.getAll().values();
         for(NSP_Scholarship_Eligibility__mdt partner:eligiblePartner) {
-            partnerList.add(partner.NSP_Partner__c.toUpperCase());
+            if(partner.NSP_Partner__c != null){
+                partnerList.add(partner.NSP_Partner__c.toUpperCase());
+            }
         }
         
-        for (SBQQ__Quote__c quote: quoteNewMap.values()) {
-            
-            if(userList.contains(quote.NSP_Opportunity_BPA__c)) {
-                quote.NSP_IsScholarshipEligibleBPA__c = true;
-            } else {
+        for (SBQQ__Quote__c quote: newQuoteList) {
+            if(quote.NSP_Pricing_Model__c == NSP_CPQConstants.WX_PRICE_MODEL) {  
+                 if(userList.contains(quote.NSP_Opportunity_BPA__c)) {
+                    quote.NSP_IsScholarshipEligibleBPA__c = true;
+                } else {
                 quote.NSP_IsScholarshipEligibleBPA__c = false;
-            }
-            if(quote.NSP_Opportunity_Partner_Name__c != null && partnerList.contains(quote.NSP_Opportunity_Partner_Name__c.toUpperCase())){
-                quote.NSP_IsScholarshipEligiblePartner__c = true;
-            }
-            else{
-                quote.NSP_IsScholarshipEligiblePartner__c = false;
-            }
+                 }
+                 if(quote.NSP_Opportunity_Partner_Name__c != null && partnerList.contains(quote.NSP_Opportunity_Partner_Name__c.toUpperCase())){
+                  quote.NSP_IsScholarshipEligiblePartner__c = true;
+                 }
+                 else{
+                  quote.NSP_IsScholarshipEligiblePartner__c = false;
+                }
             
-        }
+            }
+         }
     }
   
     /**

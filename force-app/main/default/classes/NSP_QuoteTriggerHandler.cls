@@ -25,7 +25,6 @@ public class NSP_QuoteTriggerHandler implements NSP_ITriggerHandler{
   public void beforeInsert(List<sObject> newList) {
       
     NSP_QuoteTriggerHelper  QuoteTriggerHelperObject =  new NSP_QuoteTriggerHelper();  
-    QuoteTriggerHelperObject.updateScholarshipEligibility((List<SBQQ__Quote__c>)newList); 
     QuoteTriggerHelperObject.beforeInsertDirector((List<SBQQ__Quote__c>)newList);
     
   }
@@ -53,9 +52,7 @@ public class NSP_QuoteTriggerHandler implements NSP_ITriggerHandler{
     
       NSP_QuoteTriggerHelper  QuoteTriggerHelperObject =  new NSP_QuoteTriggerHelper();        
       QuoteTriggerHelperObject.beforeUpdateDirector((Map<Id, SBQQ__Quote__c>) newMap,(Map<Id, SBQQ__Quote__c>) oldMap);
-      QuoteTriggerHelperObject.updateScholarshipEligibilityUpdate((Map<Id, SBQQ__Quote__c>) newMap,(Map<Id, SBQQ__Quote__c>) oldMap);
-      
-  }
+ }
   
 
    /**

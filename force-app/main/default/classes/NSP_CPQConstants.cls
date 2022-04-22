@@ -52,6 +52,7 @@ public class NSP_CPQConstants {
     public static final String QUOTE_SCHOLARSHIP = 'IWXScholarship';
     //Static values for required pricing model
     public static final String LIST_PRICE_MODEL ='List Price';
+    public static final String WX_PRICE_MODEL ='WX';
     //Static values for Product Codes
     public static final String RECRUITING_BUNDLE ='RecruitingBundle';
 

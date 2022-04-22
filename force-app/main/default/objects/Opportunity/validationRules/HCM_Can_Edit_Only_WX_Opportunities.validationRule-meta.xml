@@ -3,7 +3,9 @@
     <fullName>HCM_Can_Edit_Only_WX_Opportunities</fullName>
     <active>true</active>
     <description>This validates that  HCM Sales Consultants can only edit opportunities with WX products</description>
-    <errorConditionFormula>AND(TEXT( NSP_PrimaryProduct__c ) &lt;&gt; &quot;WX&quot;,
+    <errorConditionFormula>AND(NOT(ISNEW()),
+TEXT( NSP_PrimaryProduct__c ) &lt;&gt; &quot;WX&quot;,
+ISBLANK(NSP_Product_Interest__c) ,
 $UserRole.DeveloperName =&quot;HCM_Sales_Consultant&quot;,
 NOT(OR($Profile.Name = &quot;System Administrator&quot; ,
 $Profile.Name = &quot;Data Migration&quot;,
