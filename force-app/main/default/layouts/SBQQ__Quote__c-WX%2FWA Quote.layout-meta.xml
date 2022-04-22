@@ -68,10 +68,6 @@
                 <field>SBQQ__Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Quantity_of_Estimated_Employees__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Opportunity_Type__c</field>
             </layoutItems>
@@ -97,7 +93,7 @@
         <label>Quote Info</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NSP_Product_Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -466,16 +462,7 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
-        <fields>SBQQ__Description__c</fields>
-        <fields>NSP_Quoted_Quantity__c</fields>
-        <fields>SBQQ__ListPrice__c</fields>
-        <fields>SBQQ__NetPrice__c</fields>
-        <fields>SBQQ__NetTotal__c</fields>
-        <fields>SBQQ__BillingFrequency__c</fields>
-        <fields>NSP_Net_Total__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -63,10 +63,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NSP_Total_Monthly_Fees__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>NSP_At_Hire_Payment_Delta__c</field>
             </layoutItems>
             <layoutItems>
@@ -362,6 +358,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_TC_Branded_Portal_Included__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Legacy_OnDemand__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
