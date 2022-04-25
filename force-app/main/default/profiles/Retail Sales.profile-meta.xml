@@ -8980,7 +8980,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Opportunity.NSP_Signed_CSA__c</field>
         <readable>true</readable>
     </fieldPermissions>

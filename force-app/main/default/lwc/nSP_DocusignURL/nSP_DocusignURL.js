@@ -18,6 +18,9 @@ import getDocuSignUrl from "@salesforce/apex/NSP_Quote_Service.getDocuSignUrl";
 import validateCustomerSigner from "@salesforce/apex/NSP_Quote_Service.validateCustomerSigner";
 import { CloseActionScreenEvent } from "lightning/actions";
 import docusignAccountId from "@salesforce/label/c.NSP_Docusign_Account_Id";
+import custSignerBill from "@salesforce/label/c.NSP_Customer_Signer_Billing_Account";
+import custSignerAcc from "@salesforce/label/c.NSP_Customer_Signer_Account";
+import ACCOUNT_ID from "@salesforce/schema/Opportunity.AccountId";
 
 export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api recordId;
@@ -40,10 +43,13 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api clientForLife;
   @api billingAccount;
   @api doSigned;
+  @api accountId;
   isValid;
   contact;
   label = {
     docusignAccountId,
+    custSignerBill,
+    custSignerAcc,
   };
   connectedCallback() {}
 
@@ -62,6 +68,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       CLIENT_FOR_LIFE,
       BILLING_ACCOUNT,
       DO_SIGNED,
+      ACCOUNT_ID,
     ],
   })
   recordUpdated({ error, data }) {
@@ -78,6 +85,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       this.clientForLife = data.fields.NSP_Client_For_Life__c.value;
       this.billingAccount = data.fields.NSP_Billing_Account__c.value;
       this.doSigned = data.fields.NSP_DO_Sign_By_Billing_Account__c.value;
+      this.accountId = data.fields.AccountId.value;
 
       if (
         this.hasQuote &&
@@ -145,7 +153,9 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
         );
       } else {
         if (this.doSigned) {
-          this.validateCustomerSigner();
+          this.validateCustomerSigner(this.billingAccount, custSignerBill);
+        } else if (!this.doSigned) {
+          this.validateCustomerSigner(this.accountId, custSignerAcc);
         } else {
           this.isQuoteValid = true;
           this.navigateToVFPage();
@@ -160,20 +170,16 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
     }
   }
 
-  validateCustomerSigner() {
+  validateCustomerSigner(account, message) {
     validateCustomerSigner({
-      billingAccount: this.billingAccount,
+      billingAccount: account,
       customerSigner: this.customerSigner,
     })
       .then((result) => {
         this.isValid = result;
         if (this.isValid === false) {
           this.isQuoteValid = false;
-          this.showToast(
-            "Error",
-            "Customer Signer must be a contact of Billing Account",
-            "error"
-          );
+          this.showToast("Error", message, "error");
         } else if (this.isValid) {
           this.navigateToVFPage();
         }

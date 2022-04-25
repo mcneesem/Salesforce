@@ -63,6 +63,7 @@ public class NSP_LeadTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
+        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         
@@ -89,6 +90,7 @@ public class NSP_LeadTriggerHelperTest {
         
         //List to store Lead objects
         List<Lead> leadList = new List<Lead>();
+        List<Lead> newLeadList = new List<Lead>();
         
         //Lead Creation
         Lead leadObject = new Lead();
@@ -96,12 +98,13 @@ public class NSP_LeadTriggerHelperTest {
         leadObject.lastname='Lead';
        
         leadObject.Company = 'TestClass';
-       leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
+        leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
         leadObject.NumberOfEmployees =150;
         leadObject.Email = 'testlead1@testlead1.com';
         leadObject.PostalCode = '10001';
         leadObject.NSP_Partner__c =accoutObject.Id;
         leadObject.NSP_Lead_Stage__c  =null;      
+        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '786543789';
         //Adding lead object to the list
         leadList.add(leadObject);
 
@@ -113,6 +116,7 @@ public class NSP_LeadTriggerHelperTest {
          leadObject3.Email = 'fbook@gmail.com';
          leadObject3.NSP_Partner__c =accoutObject.Id;
          leadObject3.NSP_Lead_Stage__c  =null;
+         leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
          leadList.add(leadObject3);
         
         //Lead Creation
@@ -157,6 +161,31 @@ public class NSP_LeadTriggerHelperTest {
         
         // Inserting lead object
         insert leadList;
+
+        Lead leadObject4 = new Lead();
+        leadObject4.firstname='TestLead1123';
+        leadObject4.lastname='Child';
+        leadObject4.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject4.NumberOfEmployees =160;
+        leadObject4.Company = 'Allstate123';
+        leadObject4.NSP_Referred_By_COI__c = contactObject.Id;
+        leadObject4.Email = 'test@test.com';
+        leadObject4.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
+        leadObject4.NSP_Lead_Routing__c = true;
+        newLeadList.add(leadObject4);
+        
+        Lead leadObject5 = new Lead();
+        leadObject5.firstname='TestLead113';
+        leadObject5.lastname='Acc';
+        leadObject5.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject5.NumberOfEmployees =160;
+        leadObject5.Company = 'Allstate123';
+        leadObject5.NSP_Referred_By_COI__c = contactObject.Id;
+        leadObject5.Email = 'test333@test.com';
+        leadObject5.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        leadObject5.NSP_Lead_Routing__c = true;
+        newLeadList.add(leadObject5);
+        insert newLeadList; 
     }
     
     /**

@@ -4,7 +4,7 @@
     <description>field to store first name of the referred person. This field is populated from Referral form force.com site</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>First Name</label>
+    <label>Referral First Name</label>
     <length>25</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

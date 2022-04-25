@@ -22,4 +22,8 @@
         <recordType>Task.BPS_task_RT</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Event.Core_Sales_Event_RT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
