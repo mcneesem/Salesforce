@@ -303,6 +303,12 @@
 		<members>Contact-pse__Resource</members>
 		<members>Contact-Sales_Contact Layout</members>
 		<members>Contact-Support Sales_Contact Layout</members>
+		<members>SBQQ__Quote__c-WX/WA Quote</members>
+		<members>SBQQ__Quote__c-WO/WS Quote</members>
+		<members>SBQQ__Quote__c-Standard Quote</members>
+		<members>SBQQ__Quote__c-Retirement Services</members>
+		<members>SBQQ__Quote__c-CPQ Admin Page Layout</members>
+		<members>dfsle__EnvelopeStatus__c-dfsle__DocuSign Envelope Status Layout</members>
         <name>Layout</name>
     </types>
     <types>

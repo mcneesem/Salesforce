@@ -93,7 +93,7 @@
         <label>Quote Info</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NSP_Product_Type__c</field>
             </layoutItems>
             <layoutItems>

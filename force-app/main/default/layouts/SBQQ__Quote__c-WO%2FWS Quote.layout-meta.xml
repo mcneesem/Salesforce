@@ -80,7 +80,7 @@
                 <field>SBQQ__Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NSP_Price_Book__c</field>
             </layoutItems>
         </layoutColumns>
@@ -93,7 +93,7 @@
         <label>Quote Info</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NSP_Product_Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -431,14 +431,14 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>SBQQ__CalculateQuote</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>SBQQ__EditLines</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SBQQ__CalculateQuote</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Submit_for_Approval</actionName>
