@@ -300,7 +300,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_DO_Signed_By_Billing_Account__c</field>
             </layoutItems>
             <layoutItems>

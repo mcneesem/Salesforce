@@ -101,6 +101,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>NSP_Total_EEs_All_Companies__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_PremierPathwayLink__c</field>
             </layoutItems>
         </layoutColumns>
@@ -364,8 +368,12 @@
                 <field>NSP_Calculated_Enrollment_Fee__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Total_EEs_All_Companies__c</field>
+                <behavior>Edit</behavior>
+                <field>NSP_1stPayDateActiveEmployees__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_ITAWOAmount__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -567,6 +575,11 @@
             <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Opportunity.NSP_CreateQuote</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>NSP_Send_for_Signature_CPQ</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>15</sortOrder>
@@ -592,19 +605,14 @@
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NSP_Financial_Anaylsis_Tool</actionName>
-            <actionType>CustomButton</actionType>
+            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Opportunity.NSP_Create_Checklist</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.NSP_CreateQuote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
