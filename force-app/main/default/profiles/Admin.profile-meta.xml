@@ -46402,18 +46402,18 @@
         <layout>Idea-Idea Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-Support Lead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-Support Lead Layout</layout>
         <recordType>Lead.Lead</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-New Lead Page Layout</layout>
+        <layout>Lead-Support Lead Layout</layout>
         <recordType>Lead.NSP_New_Lead_Record_Type</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Referral Lead Layout</layout>
+        <layout>Lead-Support Lead Layout</layout>
         <recordType>Lead.Referral</recordType>
     </layoutAssignments>
     <layoutAssignments>
