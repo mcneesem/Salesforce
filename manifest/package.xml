@@ -167,6 +167,18 @@
         <members>unfiled$public/NSP_Quote_Approved_Notification</members>
         <members>unfiled$public/NSP_Quote_Reject_Notification</members>
         <members>unfiled$public/NSP_RecallApprovalNotification</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/Applicant_Tracking</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/Performance_Management_or_Organizational_Planning</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/Time_Attendance</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WA</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WO</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WO_RJ_Advisor_deals_only</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WO_AND_Account_Name_AllState</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WO_AND_Account_Name_DKG</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WO_AND_Account_Name_United_Franchise_Group</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WO_or_WS_Number_of_Employees_is_150</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WX</members>
+        <members>Service_Notifications_for_Closed_Won_Opp/WX_WA_Amendment</members>
         <name>EmailTemplate</name>
     </types>
     <types>
@@ -308,6 +320,7 @@
 		<members>SBQQ__Quote__c-Standard Quote</members>
 		<members>SBQQ__Quote__c-Retirement Services</members>
 		<members>SBQQ__Quote__c-CPQ Admin Page Layout</members>
+        <members>SBQQ__Quote__c-Recruiting and Talent Connect</members>
 		<members>dfsle__EnvelopeStatus__c-dfsle__DocuSign Envelope Status Layout</members>
         <name>Layout</name>
     </types>
