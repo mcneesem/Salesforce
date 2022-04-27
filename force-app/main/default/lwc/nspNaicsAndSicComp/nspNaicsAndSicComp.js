@@ -7,10 +7,12 @@ import { refreshApex } from '@salesforce/apex';
 import getRecordDetails from "@salesforce/apex/NSP_NAICSandSICCompController.getRecordDetails";
 import saveRecordApex from "@salesforce/apex/NSP_NAICSandSICCompController.saveRecord";
 
-import nspCodesjs from "@salesforce/resourceUrl/NSP_NAICSAndSICCodes";
+//import nspCodesjs from "@salesforce/resourceUrl/NSP_NAICSAndSICCodes";
+import { fetchIndustryCodes } from "./nspNaicsAndSicCompHelper";
 import { loadScript } from "lightning/platformResourceLoader";
 import { getRecordNotifyChange } from 'lightning/uiRecordApi'; //DF-1164 
-let sicAndNaics;
+
+
 export default class NspNaicsAndSicComp extends LightningElement {
   @track Account = {};
   @api searchKeyword = "";
@@ -22,6 +24,7 @@ export default class NspNaicsAndSicComp extends LightningElement {
   @track searchFieldLabel;
   @track buttonLabel; //Save button label to Save NAICS or SIC
   @track sObjectApiName;
+  sicAndNaics;
   wireResult;
   accountName;
   doneTypingInterval = 300;
@@ -36,26 +39,40 @@ export default class NspNaicsAndSicComp extends LightningElement {
   CODES = []; //list to store picklist Codes based on NAICS/SIC selection
   DESCS = []; //list to store picklist Codes based on NAICS/SIC selection
 
+ 
+
+
+  //initialise fields, picklists on component load
+  connectedCallback() {
+    /*Promise.all([loadScript(this, nspCodesjs)]).then(() =>{sicAndNaics = fetchIndustryCodes();});*/
+    this.sicAndNaics = fetchIndustryCodes();
+    this.naicsOrSic = "SIC";
+    this.DESCS = this.SIC_descs;
+    this.CODES = this.SIC_codes;
+  }
+
+
+
   //to fetch initial field values from the account record and display on screen
-  @wire(getRecordDetails, { recordId: "$recordId" })
-  getAccountDetails(result) {
+  @wire (getRecordDetails, { recordId: "$recordId" })
+  getAccountDetails(result) { 
     this.wireResult = result;
     //set SIC/NAICS Codes/Descs with values present in the static resource js file
-    if (typeof sicAndNaics != "undefined") {
-      this.NAICS_codes = sicAndNaics.naicsCode;
-      this.NAICS_descs = sicAndNaics.naicsDesc;
-      this.SIC_codes = sicAndNaics.sicCode;
-      this.SIC_descs = sicAndNaics.sicDesc;
+    if (typeof this.sicAndNaics != "undefined") {
+      this.NAICS_codes = this.sicAndNaics.naicsCode;
+      this.NAICS_descs = this.sicAndNaics.naicsDesc;
+      this.SIC_codes = this.sicAndNaics.sicCode;
+      this.SIC_descs = this.sicAndNaics.sicDesc;
     }
 
     //set initial field values on screen load
-    if (result && result.data != undefined) {
+    if (result != undefined  && result.data != undefined  && result !=null ) {
       this.Account = result.data.recordMap;
       this.sObjectApiName = result.data.sObjectName;
       this.accountName = result.data.recordMap.Name;
       this.setPicklistValues();          
     }
-    //this.setPicklistValues();
+
   }
 
   //input values for Radio button to choose between NAICS and SIC
@@ -110,22 +127,7 @@ export default class NspNaicsAndSicComp extends LightningElement {
     this.industry_description = event.target.value.split(" - ")[1];
   }
 
-  //initialise fields, picklists on component load
-  renderedCallback() {
-    if(this.isRenderCallbackActionExecuted){
-      return;
-    }
-    this.isRenderCallbackActionExecuted = true;
-    Promise.all([
-    loadScript(this, nspCodesjs)]).then(() => {
-      sicAndNaics = fetchIndustryCodes();
-    });
 
-    this.naicsOrSic = "SIC";
-    this.DESCS = this.NAICS_descs;
-    this.CODES = this.NAICS_codes;
-    this.setPicklistValues();
-  }
 
   //method to set picklist values, field/button labels based on
   // the selection of NAICS or SIC in radio button
@@ -146,6 +148,7 @@ export default class NspNaicsAndSicComp extends LightningElement {
       this.industry_description = this.Account.NaicsDesc;
     } else if (this.naicsOrSic === "SIC") {
       for (let i = 0; i < this.SIC_descs.length; i++) {
+
         select_list_2.push({
           label: this.SIC_codes[i] + " - " + this.SIC_descs[i],
           value: this.SIC_codes[i] + " - " + this.SIC_descs[i],
@@ -153,8 +156,8 @@ export default class NspNaicsAndSicComp extends LightningElement {
       }
       this.industry_code = this.Account.Sic;
       this.industry_description = this.Account.SicDesc;
-    }
 
+    }
     this.select_list = select_list_2;
   }
 
@@ -192,7 +195,6 @@ export default class NspNaicsAndSicComp extends LightningElement {
       //to refresh the result variable to update the record with latest values
       //in the record retrieved from @wire method
       refreshApex(this.wireResult);
-      
     }).catch((error) => {
       this.showToast(
         "error",

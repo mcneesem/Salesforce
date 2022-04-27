@@ -33,8 +33,7 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> opportunityWoWxList =  new List<Opportunity>();
         List<Opportunity> childopportunityList =  new List<Opportunity>();
         Set<Id> parentOpportunityIdSet = new Set<Id>();
-        Set<String> docuSignTemplateName = new Set<String>();
-        List<Opportunity> opptyListToStampDocusignTemplateId = new List<Opportunity>();
+        
         //set to store opportunity owner Ids when opportunity owner is changed/or when opportunity is created
         Set<Id> ownerIdsSet = new Set<Id>();
         List<Opportunity> closedOppList =  new List<Opportunity>();
@@ -60,11 +59,6 @@ public class NSP_OpportunityTriggerHelper {
                 parentOpportunityIdSet.add(opportunityObject.NSP_Parent_Opportunity__c);
             }
             
-            //create list to populate docusign template id for merge on demand templates
-            if(!String.isBlank(opportunityObject.NSP_Merge_On_Demand_Template_Selection__c)){
-                opptyListToStampDocusignTemplateId.add(opportunityObject);
-                docuSignTemplateName.add(opportunityObject.NSP_Merge_On_Demand_Template_Selection__c);
-            }
             //If type is CAMS updating the stage to Analysis
             if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.OPPORTUNITY_TYPE_CAMS)) {
                 opportunityObject.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
@@ -100,11 +94,6 @@ public class NSP_OpportunityTriggerHelper {
         
         NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(newList,ownerIdsSet);
         
-        //call method to populate template id
-        if(opptyListToStampDocusignTemplateId.size() > 0){
-            oppHelperFuncObj.setDocuSignTemplateId(opptyListToStampDocusignTemplateId,docuSignTemplateName);
-            
-        }
             
     }
     
@@ -260,7 +249,6 @@ public class NSP_OpportunityTriggerHelper {
             if(!String.isBlank(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c) && 
                newOpportunity.NSP_Merge_On_Demand_Template_Selection__c != oldOpportunity.NSP_Merge_On_Demand_Template_Selection__c){
                    opptyListToStampDocusignTemplateId.add(newOpportunity);
-                   docuSignTemplateName.add(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c);
                    MODaccountIdSet.add(newOpportunity.Accountid);
                    MODownerIdSet.add(newOpportunity.OwnerId);
                    
@@ -314,9 +302,7 @@ public class NSP_OpportunityTriggerHelper {
         
         //call method to populate template id
         if(opptyListToStampDocusignTemplateId.size() > 0){
-            oppHelperFuncObj.setDocuSignTemplateId(opptyListToStampDocusignTemplateId,docuSignTemplateName);
             uofobj.setDummyUsers(opptyListToStampDocusignTemplateId,MODaccountIdSet,MODownerIdSet);
-            
         }
         
     }    

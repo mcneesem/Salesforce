@@ -536,6 +536,20 @@
         <value>Full Service HR (Workforce Optimization)</value>
     </labels>
     <labels>
+        <fullName>NSP_Customer_Signer_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signer Account</shortDescription>
+        <value>Customer Signer must be a related contact of Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Customer_Signer_Billing_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signer Billing Account</shortDescription>
+        <value>Customer Signer must be a related contact of Billing Account</value>
+    </labels>
+    <labels>
         <fullName>NSP_PRODINT_HCM</fullName>
         <categories>NSP Lead Assignment</categories>
         <language>en_US</language>

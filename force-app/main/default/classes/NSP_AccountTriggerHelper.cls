@@ -22,7 +22,6 @@ public class NSP_AccountTriggerHelper {
             Set<Id> userIdsSet = new Set<Id>();
             Set<String> stateCodeSet = new Set<String>();
             List<Account> integrationAccountList = new List<Account>(); //Accounts created from External Site
-            Set<String> docuSignTemplateName = new Set<String>();
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             for(Account accountObj : newList) {
                 //Partner Accounts created from Partner Form. As part of DF-01476, when Partner Account is created from Partner Form, Loyalty Advisor 
@@ -37,7 +36,6 @@ public class NSP_AccountTriggerHelper {
                 //create list to populate docusign template id for merge on demand templates
                 if(!String.isBlank(accountObj.NSP_Template_Selection__c)){
                     acctListToStampDocusignTemplateId.add(accountObj);
-                    docuSignTemplateName.add(accountObj.NSP_Template_Selection__c);
                 }
 
                 updateAccountSegment(accountObj);
@@ -53,7 +51,6 @@ public class NSP_AccountTriggerHelper {
             }
             //call method to populate template id
             if(acctListToStampDocusignTemplateId.size() > 0){
-                setDocuSignTemplateId(acctListToStampDocusignTemplateId,docuSignTemplateName);
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
             
@@ -80,7 +77,6 @@ public class NSP_AccountTriggerHelper {
             Set<Id> userIdsSet = new Set<Id>();
             Set<String> stateCodeSet = new Set<String>();
             List<Account> integrationAccountList = new List<Account>(); //Accounts created from External Site
-            Set<String> docuSignTemplateName = new Set<String>();
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             
             //Iterating over the new Account map
@@ -115,7 +111,7 @@ public class NSP_AccountTriggerHelper {
                     if(!String.isBlank(newAccount.NSP_Template_Selection__c) && 
                     newAccount.NSP_Template_Selection__c != oldAccount.NSP_Template_Selection__c){
                     acctListToStampDocusignTemplateId.add(newAccount);
-                    docuSignTemplateName.add(newAccount.NSP_Template_Selection__c);
+                    
                 }
 
                 if((newAccount.NSP_Signed_MOD_Document__c
@@ -148,8 +144,7 @@ public class NSP_AccountTriggerHelper {
 
             //call method to populate template id
             if(acctListToStampDocusignTemplateId.size() > 0){
-                setDocuSignTemplateId(acctListToStampDocusignTemplateId,docuSignTemplateName);
-            	setDummyUsers(acctListToStampDocusignTemplateId);
+                setDummyUsers(acctListToStampDocusignTemplateId);
             }
 
         }catch(Exception ex){
@@ -472,36 +467,6 @@ public static void handleTaskForPartnerContracts(List<Account> accountList){
         }
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
-        }
-    }
-
-/* Description: This method sets NSP_Merge_On_Demand_DocuSign_Template_Id__c
-     * 
-     * @param: setAcctTemplateIdList
-     * @param templateName
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     * author           | Date              | Description
-     * -------------------------------------------------------------------------------------
-     * harsha khiroya         	10/21/2021         	created this new method
-     * 
-     * 
-    */
-    public void setDocuSignTemplateId(List<Account> setAcctTemplateIdList,Set<String> templateName){
-        //get custom metadata for docusign template mapping
-        Map<String,NSP_DocuSign_Template_Mapping__mdt> templateNameIdMap = new Map<String,NSP_DocuSign_Template_Mapping__mdt>();
-        List<NSP_DocuSign_Template_Mapping__mdt> docusignTemplateMappingList = [SELECT NSP_Template_Id__c,NSP_Template_Name__c
-                                                                               From NSP_DocuSign_Template_Mapping__mdt WHERE NSP_Template_Name__c IN: templateName];
-        
-        for(NSP_DocuSign_Template_Mapping__mdt docuSignTemplateObj : docusignTemplateMappingList){
-            templateNameIdMap.put(docuSignTemplateObj.NSP_Template_Name__c,docuSignTemplateObj);
-        }
-        
-        for(Account AcctObj : setAcctTemplateIdList){
-            if(templateNameIdMap.containsKey(AcctObj.NSP_Template_Selection__c)){
-                AcctObj.NSP_Merge_On_Demand_DocuSign_Template_Id__c = templateNameIdMap.get(AcctObj.NSP_Template_Selection__c).NSP_Template_Id__c;
-            }
         }
     }
 

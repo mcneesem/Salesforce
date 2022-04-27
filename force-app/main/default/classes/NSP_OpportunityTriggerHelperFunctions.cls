@@ -166,38 +166,6 @@ public class NSP_OpportunityTriggerHelperFunctions {
 
     }
 
-
-    /*
-     * Description: This method takes all the opportunities where template selection is not null to
-     * populate template id based on custom metadata
-     * @param: newOpportunityList 
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     * author           | Date              | Description
-     * -------------------------------------------------------------------------------------
-     * CPQ stream          	10/28/2021         	created this new method
-     * 
-     * 
-     */
-    public void setDocuSignTemplateId(List < Opportunity > setOpptyTemplateIdList, Set < String > templateName) {
-        //get custom metadata for docusign template mapping
-        Map < String, NSP_DocuSign_Template_Mapping__mdt > templateNameIdMap = new Map < String, NSP_DocuSign_Template_Mapping__mdt > ();
-        List < NSP_DocuSign_Template_Mapping__mdt > docusignTemplateMappingList = [Select NSP_Template_Id__c, NSP_Template_Name__c
-            From NSP_DocuSign_Template_Mapping__mdt WHERE NSP_Template_Name__c IN: templateName
-        ];
-
-        for (NSP_DocuSign_Template_Mapping__mdt docuSignTemplateObj: docusignTemplateMappingList) {
-            templateNameIdMap.put(docuSignTemplateObj.NSP_Template_Name__c, docuSignTemplateObj);
-        }
-
-        for (Opportunity opportuntityObj: setOpptyTemplateIdList) {
-            if (templateNameIdMap.containsKey(opportuntityObj.NSP_Merge_On_Demand_Template_Selection__c)) {
-                opportuntityObj.NSP_Merge_On_Demand_DocuSign_Template_Id__c = templateNameIdMap.get(opportuntityObj.NSP_Merge_On_Demand_Template_Selection__c).NSP_Template_Id__c;
-            }
-        }
-    }
-
     /***********************************************************************************************
     * MethodName: getAccountOwnerEmail
     * Description : This method will update the Point of Contact and Customer Signer on Opportunity after Insert

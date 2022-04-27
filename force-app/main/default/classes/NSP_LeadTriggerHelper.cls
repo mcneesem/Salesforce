@@ -38,7 +38,9 @@ public class NSP_LeadTriggerHelper {
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
+          if(leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c != null){
             dunsCheck(leadObject);
+          }
             
             //switch record type to Lead or Referral record type
             if (leadObject.RecordTypeId == NEW_LEAD_RT_ID) {
@@ -106,6 +108,7 @@ public class NSP_LeadTriggerHelper {
         List < Lead > nationalAccountLeadList = new List < Lead > ();
         List < Lead > inboundSolutionsList = new List < Lead > ();
         Boolean isOwnerUpdated = false;
+      Lead parentLead = new Lead();
         /* Added as part of STY-01725 */
         List<String> inboundOrOutBoundUserList = Label.Inbound_and_Outbound_UserRole.split(',');
         User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
@@ -119,15 +122,10 @@ public class NSP_LeadTriggerHelper {
                     fireScoreLeadList.add(leadNewMap.get(leadId));
                 }
             /* Added as part of CR-027 */
-            if(leadNewMap.get(leadId).NSP_Parent_Lead__c != leadOldMap.get(leadId).NSP_Parent_Lead__c){
-                List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE id = :leadNewMap.get(leadId).NSP_Parent_Lead__c];
-                if (!leadResult.isempty()) {
-                    for (Lead dunsLead: leadResult) {
-                        leadNewMap.get(leadId).OwnerId = dunsLead.OwnerId;
+          if (leadNewMap.get(leadId).NSP_Parent_Lead__c != null && (leadNewMap.get(leadId).NSP_Parent_Lead__c != leadOldMap.get(leadId).NSP_Parent_Lead__c)) {
+            parentLead = leadNewMap.get(leadId);
                         isOwnerUpdated = true;
                     }
-                }
-            } 
                if(leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && leadNewMap.get(leadId).NSP_Lead_Routing__c == true && isOwnerUpdated == false) {
                    isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
                }
@@ -144,7 +142,8 @@ public class NSP_LeadTriggerHelper {
 if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true && 
  leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c == null && 
  leadNewMap.get(leadId).NSP_Parent_Lead__c == null) || 
-(leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && isOwnerUpdated == false && leadNewMap.get(leadId).NSP_Lead_Routing__c == true)) {
+              (leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && isOwnerUpdated == false && 
+               leadNewMap.get(leadId).NSP_Lead_Routing__c == true && leadNewMap.get(leadId).NSP_Parent_Lead__c == null)) {
                     if (String.isnotBlank(leadNewMap.get(leadId).company) && nationalAccountList.contains(leadNewMap.get(leadId).company.toUppercase())) {
                         //If the Lead Company is associated with National Account, route the correct National Account Queue
                         nationalAccountLeadList.add(leadNewMap.get(leadId));
@@ -168,18 +167,24 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                     leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
                                                      }   
                     }      
+          else {
+              leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
+          }
+          
            //collect all Leads to change AccountSegment value based on number of employees
             if (leadNewMap.get(leadId).NumberOfEmployees != leadOldMap.get(leadId).NumberOfEmployees) {
                 updateAccountSegment(leadNewMap.get(leadId));
             }
         }
+      if(parentLead != null){
+          updateChildOwner(parentLead);
+      }
         //calling method to set the lead stage as per the fire score
         if (!fireScoreLeadList.isEmpty()) {
             setLeadStageToMarketingPriortisedLead(fireScoreLeadList, leadOldMap);
         }
         //Roundrobin logic to assign leads to Sales Office
         if (!leadsForRoundRobin.isEmpty()) {
-            system.debug('------> Leads for Roundrobin');
             setLeadRegion(zipCodeList, leadsForRoundRobin);
         }
         //assigning leads to mid market queue in number of employees >=EMP_THRESH_150
@@ -197,6 +202,18 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
         createContact(leadNewMap.Values());        
     }
+  
+  public void updateChildOwner(Lead leadObj) {
+      List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE id = : leadObj.NSP_Parent_Lead__c];
+      Lead parentLeadToUpdate = new Lead();
+      List <Lead> parentToUpdate = new List <Lead>();
+      if (!leadResult.isEmpty()) {
+          for (Lead dunsLead: leadResult) {
+              leadObj.NSP_Skip_Validation__c= true;
+              leadObj.OwnerId = dunsLead.OwnerId;
+          }
+      }
+   }
 /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
 * @param leadNewMap Map of New leads. 
@@ -267,11 +284,21 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         Map < String, Lead > opportunityLeadMap = new Map < String, Lead > ();
         Set < Id > convertedOpportunityIdsSet = new Set < Id > ();
         List < Lead > nurturingLeadList = new List < Lead > ();
+      Lead childList = new Lead ();
+      Lead leadToUpdate = new Lead ();
         Set<Id> accountId = new  Set<Id>();
         for (Lead leadObject: leadNewMap.values()) {
             if (leadObject.isconverted && String.isNotBlank(leadObject.convertedOpportunityId)) {
                 convertedOpportunityIdsSet.add(leadObject.convertedOpportunityId);
             }
+          if(leadObject.OwnerId != leadOldMap.get(leadObject.Id).OwnerId){
+              childList = new Lead(Id=leadObject.id);
+              childList.OwnerId = leadObject.OwnerID;
+          }
+          if (leadObject.NSP_Skip_Validation__c == true) {
+              leadToUpdate = new Lead(Id=leadObject.id);
+              leadToUpdate.NSP_Skip_Validation__c= false;  
+          }
             if (leadObject.isconverted && !String.isBlank(leadObject.NSP_Referred_By_COI__c)) {
                 accountLeadMap.put(leadObject.convertedAccountId, leadObject);
                 opportunityLeadMap.put(leadObject.convertedOpportunityId, leadObject);
@@ -302,7 +329,12 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         if (nurturingLeadList.size() > 0) {
             createTasks(nurturingLeadList, leadOldMap);
         }
-        
+      if(leadToUpdate != null){
+          updateSkipValidationFlag(leadToUpdate);
+      }
+      if(childList != null){
+          updateChildLeadOwner(childList);
+      }
         //for tracking history - defect DF-00972
         if(leadNewMap.size() > 0 && !test.isRunningTest()){
             NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)leadNewMap, (Map<Id, sObject>)leadOldMap);
@@ -313,6 +345,54 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
     }
     
     /**
+* Stamps Parent lead owner on child leads
+* @param newList List of New leads. 
+* @return void             
+*                
+*/
+  public void updateChildLeadOwner(Lead leadObject) {
+      //iterating over new lead records
+      List <Lead> parentToUpdate = new List <Lead>();
+      AggregateResult[]  groupedResults =  [SELECT COUNT(Id) FROM Lead where NSP_Parent_Lead__c =:leadObject.Id]; 
+
+      if(groupedResults != null && !groupedResults.isEmpty()) {
+        List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE NSP_Parent_Lead__c != null AND NSP_Parent_Lead__c = : leadObject.Id];
+        if (!leadResult.isempty()) {
+            for (Lead dunsLead: leadResult) {
+                dunsLead.NSP_Skip_Validation__c = true;
+                dunsLead.ownerId = leadObject.OwnerId;
+                parentToUpdate.add(dunsLead);
+            }
+        }
+        try {
+            if(parentToUpdate != null && parentToUpdate.size() > 0) {
+                update parentToUpdate;
+            }
+        } catch (Exception ex) {
+            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateChildLeadOwner', ex.getMessage());
+        }
+      }
+      
+  }
+  
+  /**
+* Stamps Parent lead owner on child leads
+* @param newList List of New leads. 
+* @return void             
+*                
+*/
+  public void updateSkipValidationFlag(Lead leadToUpdate) {
+      //updating the child leads
+      try {
+          if(leadToUpdate != null) {
+              update leadToUpdate;
+          }
+      } catch (Exception ex) {
+          NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateSkipValidationFlag', ex.getMessage());
+      }
+  }   
+  
+  /**
 * Stamps partner email on lead record
 * @param newList List of New leads. 
 * @param acctIdSet set of account ids. 
@@ -623,19 +703,11 @@ public Boolean dunsCheck(Lead leadObject) {
     List < Lead > leadsForRoundRobin = new List < Lead > ();
     Boolean isOwnerUpdated = false;
     if (leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
-        List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c =: leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c AND NSP_Parent_Lead__c = NULL AND id !=: leadObject.id];
-        if (leadResult.size() == 1) {
-            for (Lead dunsLead: leadResult) {
-                leadObject.NSP_Parent_Lead__c = dunsLead.Id;
-                leadObject.OwnerId = dunsLead.OwnerId;
-          leadObject.NSP_Lead_Routing__c = FALSE;
-                isOwnerUpdated = true;
-            }
-        } else if (leadResult.isEmpty()) {
             List < Account > accResult = [SELECT Id, OwnerId, Owner.Name, Owner.UserRole.Name, NSP_Account_Status__c FROM Account WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c =: leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c];
             if (accResult.size() == 1) {
                 for (Account dunsAcc: accResult) {
-                    if (dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && (dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER)) {
+                  if (dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && dunsAcc.Owner.UserRole != null &&
+                      (dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER)) {
                         leadObject.OwnerId = dunsAcc.OwnerId;
               leadObject.NSP_Lead_Routing__c = FALSE;
                         isOwnerUpdated = true;
@@ -647,6 +719,18 @@ public Boolean dunsCheck(Lead leadObject) {
                     }
                 }
             }
+          else if (accResult.isEmpty()) {
+              List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c = : leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c AND NSP_Parent_Lead__c = NULL AND id != : leadObject.id];
+              if (leadResult.size() == 1) {
+                  for (Lead dunsLead: leadResult) {
+                      leadObject.NSP_Parent_Lead__c = dunsLead.Id;
+                      leadObject.NSP_Skip_Validation__c= true;  
+                      leadObject.OwnerId = dunsLead.OwnerId;
+                      leadObject.NSP_Lead_Routing__c = FALSE;
+                      isOwnerUpdated = true;
+                  }
+              } 
+            
         } else {
             isOwnerUpdated = false;
         }
@@ -674,7 +758,9 @@ public void createContact(List < Lead > newLeadList) {
     String convertedOpty;
     String accountId;
     Id child;
+      Id parent;
     List < Database.LeadConvert > MassLeadconvert = new List < Database.LeadConvert > ();
+      
     for (Lead newLead: newLeadList) {
         if (newLead.IsConverted && newLead.NSP_Parent_Lead__c == null && newLead.ConvertedOpportunityId != null) {
             parentMap.put(newLead.Id, newLead);
@@ -682,25 +768,24 @@ public void createContact(List < Lead > newLeadList) {
             childMap.put(newLead.Id, newLead);
             allLeadList.add(newLead.DNBoptimizer__DNB_D_U_N_S_Number__c);
             child = newLead.Id;
+              parent = newLead.NSP_Parent_Lead__c;
             convertedOpty = newLead.ConvertedOpportunityId;
             accountId = newLead.ConvertedAccountId;
         }
     }
+      
     if (parentMap != null && !parentMap.isEmpty()) {
-        parentResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, NSP_Parent_Lead__r.Status FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND NSP_Parent_Lead__c IN: parentMap.keySet()];
+          parentResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, NSP_Parent_Lead__r.Status FROM Lead WHERE NSP_Parent_Lead__c IN: parentMap.keySet()];
     } else if (childMap != null && !childMap.isEmpty()) {
-        childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c IN: allLeadList AND Id !=: child];
+          childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c FROM Lead WHERE ((DNBoptimizer__DNB_D_U_N_S_Number__c != null AND DNBoptimizer__DNB_D_U_N_S_Number__c IN: allLeadList) OR (DNBoptimizer__DNB_D_U_N_S_Number__c = null AND ((NSP_Parent_Lead__c = :parent) OR (Id = :parent))))  AND Id != : child];
     }
-    
     if (parentResult != null && !parentResult.isEmpty()) {
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
         for (Lead childLead: parentResult) {
             Database.LeadConvert lc = new Database.LeadConvert();
             if (!childLead.IsConverted) {
                 taskIdSet.add(childLead.Id);
-                if(parentMap != null && !parentMap.isEmpty() && parentMap.get(childLead.NSP_Parent_Lead__c) != null &&
-                parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId != null)
-                mapLead.put(childLead.Id, parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId);
+                  if (parentMap != null && !parentMap.isEmpty() && parentMap.get(childLead.NSP_Parent_Lead__c) != null && parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId != null) mapLead.put(childLead.Id, parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId);
                 lc.setLeadId(childLead.id);
                 lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
                 lc.setOwnerId(userinfo.getUserId());
@@ -744,15 +829,14 @@ public void createContact(List < Lead > newLeadList) {
             }
         }
     }
-    
     try {
         if (!MassLeadconvert.isEmpty()) {
             List < Database.LeadConvertResult > lcr = Database.convertLead(MassLeadconvert);
         }
-        if (!linkTaskList.isEmpty()) {
+          if (linkTaskList != null && !linkTaskList.isEmpty()) {
             update linkTaskList;
         }
-        if (!linkEventList.isEmpty()) {
+          if (linkEventList != null && !linkEventList.isEmpty()) {
             update linkEventList;
         }
     } catch (Exception ex) {

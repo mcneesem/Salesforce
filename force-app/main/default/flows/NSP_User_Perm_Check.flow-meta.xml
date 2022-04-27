@@ -152,6 +152,14 @@
         </value>
     </constants>
     <constants>
+        <description>Created as part of DF-01774.</description>
+        <name>conHCMSalesConsultant</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>HCM_Sales_Consultant</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>conNCS</name>
         <dataType>String</dataType>
         <value>
@@ -205,7 +213,7 @@
         <defaultConnectorLabel>Not BPA</defaultConnectorLabel>
         <rules>
             <name>Is_BPA_Decision</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8)</conditionLogic>
             <conditions>
                 <leftValueReference>varUserProfile</leftValueReference>
                 <operator>Contains</operator>
@@ -253,6 +261,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>conCustomerSuccessTeam</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conHCMSalesConsultant</elementReference>
                 </rightValue>
             </conditions>
             <connector>

@@ -8960,7 +8960,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Opportunity.NSP_Signed_CSA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -46448,6 +46448,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>SubmitQuote</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>NSP_SendForSignature</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <recordTypeVisibilities>

@@ -5066,6 +5066,16 @@
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.NSP_Skip_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.NSP_Last_Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.AnnualRevenue</field>
         <readable>false</readable>
@@ -7072,7 +7082,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Checklist__c.NSP_Signed_CSA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8776,7 +8786,7 @@
     <readable>true</readable>
  </fieldPermissions>
  <fieldPermissions>
-    <editable>true</editable>
+    <editable>false</editable>
     <field>Opportunity.NSP_NDA__c</field>
     <readable>true</readable>
  </fieldPermissions>
