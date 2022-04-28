@@ -1,0 +1,41 @@
+This client's information is now downloaded and available to you on the Client Reference Library.
+
+{!Account.NSP_AIMS_Client__c} - V{!Opportunity.NSP_BidVersion__c} 
+
+  # of EES Booked – {!Opportunity.NSP_Number_of_Employees__c}
+
+Insperity Premier Performance [add BPSKWInfo]
+
+Insperity Premier Timesheet / Insperity Premier Time & Attendance [add ITA-Order Processing]
+
+Salesforce Opportunity Link: {!Opportunity.Link}
+
+Thank you,
+
+{!User.Name}
+
+ATTACHED TO THIS EMAIL: Delivery Order
+
+****ADD THE MMNA CLOSING REQUEST SHEET TO EMAIL****
+
+***Recipients*** 
+In TO Line:
+Todd.bidwell@insperity.com;
+Agency@insperity.com
+
+In CC Line: 
+keith.simmons@insperity.com;
+michael.cassidy@insperity.com;
+shea.brown@insperity.com;
+thenationalaccountsserviceteam@insperity.com;
+orientation_request@insperity.com;
+orientationcoordinators@insperity.com;
+kristen.renton@insperity.com;
+catherine.houchins@insperity.com
+
+Send emails to the below based on Product:
+Applicant Tracking: Insperity.talentconnect@insperity.com
+Organizational Planning: bpskwinfo@insperity.com
+Performance Management bpskwinfo@insperity.com
+Time & Attendance: itaorderprocessing@insperity.com
+WX/WA: itaorderprocessing@insperity.com

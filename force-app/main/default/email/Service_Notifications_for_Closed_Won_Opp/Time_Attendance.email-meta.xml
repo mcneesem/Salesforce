@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Service Notification: Time &amp; Attendance</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Time &amp; Attendance</name>
+    <style>none</style>
+    <subject>Sale Booked for {!Opportunity.Account} / Product: {!Opportunity.NSP_PrimaryProduct__c}_{!Opportunity.Type}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

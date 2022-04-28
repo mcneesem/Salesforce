@@ -1,0 +1,18 @@
+Please see an attached Delivery Order for {!Opportunity.Account} with a relationship to Insperity of {!Opportunity.NSP_Client_For_Life__c}.
+
+Additional Implementation Details: (If Needed)
+
+Opportunity Link: {!Opportunity.Link}
+
+Thank you,
+
+{!User.Name}
+
+ATTACHED TO THIS EMAIL: Delivery Order
+
+***Recipients***
+In TO Line: BPA, DA, DM, RM
+ITAOrderProcessing@insperity.com
+
+In CC Line: 
+If Opportunity Product contains Performance Management or Organizational Planning products also include BPSKWInfo@insperity.com
