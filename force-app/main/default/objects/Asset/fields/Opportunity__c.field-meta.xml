@@ -7,7 +7,6 @@
     <label>Opportunity</label>
     <lookupFilter>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <filterItems>
             <field>Opportunity.AccountId</field>
             <operation>equals</operation>
@@ -16,13 +15,9 @@
         <filterItems>
             <field>Opportunity.StageName</field>
             <operation>equals</operation>
-            <value>Closing</value>
+            <value>Closed Won, Closing</value>
         </filterItems>
-        <filterItems>
-            <field>Opportunity.StageName</field>
-            <operation>equals</operation>
-            <value>Closed Won</value>
-        </filterItems>
+        <infoMessage>1 AND 2</infoMessage>
         <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>Opportunity</referenceTo>
