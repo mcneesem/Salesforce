@@ -681,7 +681,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_Quote_Service</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_Quote_ServiceTest</apexClass>
@@ -8526,6 +8526,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.NSP_Client_For_Life__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_Billing_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_DO_Sign_By_Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

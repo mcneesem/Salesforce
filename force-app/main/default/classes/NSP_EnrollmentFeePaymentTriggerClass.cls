@@ -1,5 +1,5 @@
 /**
-Apex Class Name      :  RollUpEnrollmentFeePayment
+Apex Class Name      :  NSP_EnrollmentFeePaymentTriggerClass
 Version              :  1.0                                                                          
 Created Date         :  03/07/2022   
 Function             :  This class is used Rollup Fee Payments and update on opportunity
@@ -11,7 +11,7 @@ Modification Log     :
 * Anil Kumar                 03/07/2022            First Iteration
 */
 
-public class RollUpEnrollmentFeePayment {
+public class NSP_EnrollmentFeePaymentTriggerClass {
     public static void sumofEnrollmentFee(List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee){
         Set<id> opportunityIds=new Set<id>(); //Holds the opportunity id's
         Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>(); //Holds the opportunity details to update

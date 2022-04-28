@@ -36,6 +36,11 @@
         <field>Opportunity.NSP_Enrollment_Fee_Payment_6__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Assets - Edit</label>
     <objectPermissions>

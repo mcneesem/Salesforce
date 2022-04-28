@@ -3,7 +3,11 @@
     <fullName>NSP_ProductBundle__c</fullName>
     <description>For Setting the Service Asset name from Product</description>
     <externalId>false</externalId>
-    <formula>Text(PricebookEntry.Product2.NSP_ProductBundle__c )</formula>
+    <formula>IF(CONTAINS('IWAPerCheckFee,IWACore,IWACoreW2', PricebookEntry.Product2.ProductCode),'WA',
+    IF(CONTAINS('IWXPerCheckFee,IWXBundleW2,IWXBundle', PricebookEntry.Product2.ProductCode),'WX', 
+    IF(AND(CONTAINS('IPSBaseFee,IPSPerCheck,IPSPerEE,IPSVendor,IPSW2', PricebookEntry.Product2.ProductCode),Opportunity.NSP_Partner__r.Name = 'Lasso LLC - Pyramid Staging'), 'WA', 
+    IF(AND(ISPICKVAL( Opportunity.NSP_Client_For_Life__c , 'WO/WS'),CONTAINS('IPSBaseFee,IPSPerCheck,IPSPerEE,IPSVendor,IPSW2', PricebookEntry.Product2.ProductCode)), 'WOSS',
+    IF(AND(NOT(ISPICKVAL( Opportunity.NSP_Client_For_Life__c , 'WO/WS')), CONTAINS('IPSBaseFee,IPSPerCheck,IPSPerEE,IPSVendor,IPSW2', PricebookEntry.Product2.ProductCode)),'Payroll Only','')))))</formula>
     <label>Product Bundle</label>
     <required>false</required>
     <type>Text</type>

@@ -28,8 +28,14 @@
     *                
     */
     public void beforeUpdateDirector(Map<Id, OpportunityLineItem> oliNewMap,Map<Id, OpportunityLineItem> oliOldMap){
-            
-        Map<Id,Opportunity> opportunityDetailsMap = new Map<Id,Opportunity>([Select Id, Name, StageName,NSP_PrimaryProduct__c,SBQQ__PrimaryQuote__c, SBQQ__PrimaryQuote__r.ApprovalStatus__c from Opportunity where Id IN : oliNewMap.keyset() ]);
+        
+        // Commenting out this code. Please refer to the latest comments on DF-01750
+        // Validation on Opportunity Product is no longer required.
+        /* Set<Id> opportunityIdSet = new Set<Id>();
+        for(OpportunityLineItem oliRecord : oliNewMap.values()){
+            opportunityIdSet.add(oliRecord.OpportunityId);
+        }
+        Map<Id,Opportunity> opportunityDetailsMap = new Map<Id,Opportunity>([Select Id, Name, StageName,NSP_PrimaryProduct__c,SBQQ__PrimaryQuote__c, SBQQ__PrimaryQuote__r.ApprovalStatus__c from Opportunity where Id IN : opportunityIdSet ]);
         List<String> opptyProductsToSkip = new List<String>{'WO','WS'};
         Set<String> profilesToSkip = new Set<String>(System.label.NSP_Profile_To_Skip_OLI_Validation.split(','));
         
@@ -39,10 +45,11 @@
         for(OpportunityLineItem newOli : oliNewMap.values()){
             if(opportunityDetailsMap.containsKey(newOli.OpportunityId)) {
                 Opportunity oppParentRec = opportunityDetailsMap.get(newOli.OpportunityId);
-                if((oppParentRec.StageName =='Closed Won' || oppParentRec.StageName =='Closed Lost') ||
-                    (oppParentRec.StageName !='Closed Won' && oppParentRec.StageName !='Closed Lost' && oppParentRec.SBQQ__PrimaryQuote__r.ApprovalStatus__c == 'Approved')) {
+                if(oppParentRec.SBQQ__PrimaryQuote__r.ApprovalStatus__c == 'Approved') {
+             //   if((oppParentRec.StageName =='Closed Won' || oppParentRec.StageName =='Closed Lost') ||
+             //       (oppParentRec.StageName !='Closed Won' && oppParentRec.StageName !='Closed Lost' && oppParentRec.SBQQ__PrimaryQuote__r.ApprovalStatus__c == 'Approved')) {
                     
-                    if(!opptyProductsToSkip.contains(oppParentRec.NSP_PrimaryProduct__c) && !profilesToSkip.contains(userprofileName)) {
+                    if(!profilesToSkip.contains(userprofileName)) {
                             OpportunityLineItem oldOliRec = oliOldMap.get(newOli.Id);
                         if(newOli.ServiceDate != oldOliRec.ServiceDate || newOli.Product2Id != oldOliRec.Product2Id ||  newOli.UnitPrice != oldOliRec.UnitPrice || newOli.OpportunityId != oldOliRec.OpportunityId
                             || newOli.Quantity != oldOliRec.Quantity || newOli.Description != oldOliRec.Description || newOli.NSP_Status__c != oldOliRec.NSP_Status__c
@@ -53,7 +60,7 @@
                     }
                 }  
             }   
-        }
+        } */
     }
 
     /**

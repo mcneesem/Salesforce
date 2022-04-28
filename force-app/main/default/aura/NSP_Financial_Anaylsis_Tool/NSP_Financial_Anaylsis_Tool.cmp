@@ -10,7 +10,7 @@
     <!--Calling recordData to load the Opportunity record-->
     <force:recordData aura:id="recordLoader"
     recordId="{!v.recordId}"
-    fields="Name,Account.Id,NSP_BidNumber__c,NSP_BidVersion__c"
+    fields="Name,Account.Id,NSP_BidNumber__c,NSP_BidVersion__c,Account.Name"
     targetFields="{!v.opportunityRecord}"
     targetError="{!v.recordLoadError}"
     recordUpdated="{!c.financialAnaylsisTool}"

@@ -196,14 +196,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CloseDiscoveryCallEvents</shortDescription>
-        <value>Please close all open discovery call Events</value>
+        <value>Please complete all open discovery call Events</value>
     </labels>
     <labels>
         <fullName>NSP_CloseDiscoveryCallTasks</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CloseDiscoveryCallTasks</shortDescription>
-        <value>Please close all open discovery call Tasks</value>
+        <value>Please complete all open discovery call Tasks</value>
     </labels>
     <labels>
         <fullName>NSP_Create_Signed_Delivery_Order</fullName>
@@ -1112,5 +1112,140 @@
         <protected>false</protected>
         <shortDescription>Opportunity_Product_Update_Error_Message</shortDescription>
         <value>Opportunity Line Items cannot be modified at this stage.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CANNOT_MOVE_TO_CLOSEDLOST</fullName>
+        <categories>closed lost, roles eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
+        <value>You do not have access to move opportunity to Closed Lost</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Close_Lost_Criteria_Roles</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Criteria Roles</shortDescription>
+        <value>District Administrator,Regional Administrator,Business Performance Advisor</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseBilling</shortDescription>
+        <value>Authorized Purchaser 1 should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseShipping</shortDescription>
+        <value>Authorized Purchaser 1 should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseBilling2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseBilling2</shortDescription>
+        <value>Authorized Purchaser 2 should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseShipping2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseShipping2</shortDescription>
+        <value>Authorized Purchaser 2 should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustRoleBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustRoleBilling</shortDescription>
+        <value>Customer Role should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustRoleShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustRoleShipping</shortDescription>
+        <value>Customer Role should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustStakeHolderBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustStakeholderBilling</shortDescription>
+        <value>Customer Stakeholder should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustStakeholderShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustStakeholderShipping</shortDescription>
+        <value>Customer Stakeholder should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryContactBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrimaryContactBilling</shortDescription>
+        <value>Primary Contact should be a related contact on Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryContactShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrimaryContactShipping</shortDescription>
+        <value>Primary Contact should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cust_Insperity_Signer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer and Insperity Signer</shortDescription>
+        <value>Please Update Customer Signer and Insperity Signer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cust_Signer_and_Approved_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cust Signer and Approved Err</shortDescription>
+        <value>Please update Customer Signer and you can generate delivery order documents only for approved quotes</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Customer_Signer_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signer Err</shortDescription>
+        <value>Please update Customer Signer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Insperity_Signer_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insperity Signer Err</shortDescription>
+        <value>Please Update Insperity Signer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_NonApprovedErr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NonApprovedErr</shortDescription>
+        <value>You can generate delivery order documents only for approved quotes</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryProductErr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrimaryProductErr</shortDescription>
+        <value>Delivery Order generation is not applicable for this Primary Product</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Signer_and_Approved_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insperity Signer and Approved Err</shortDescription>
+        <value>Please update Insperity Signer and you can generate delivery order documents only for approved quotes</value>
     </labels>
 </CustomLabels>

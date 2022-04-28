@@ -3175,12 +3175,12 @@
         <readable>false</readable>
      </fieldPermissions>
      <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.NSP_Campaign_Content_Delivered__c</field>
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.NSP_Campaign_CTA__c</field>
         <readable>true</readable>
      </fieldPermissions>
@@ -3200,22 +3200,22 @@
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.NSP_Campaign_Source__c</field>
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.NSP_Campaign_Target_Audience__c</field>
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.NSP_Campaign_Target_Intent__c</field>
         <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.NSP_Campaign_Traffic_Type__c</field>
         <readable>true</readable>
      </fieldPermissions>
@@ -7057,9 +7057,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Checklist__c.NSP_Signed_CSA__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Signed_CSA__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -46615,7 +46620,7 @@
         <name>ViewHelpLink</name>
     </userPermissions>
     <userPermissions>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
         <name>ViewRoles</name>
     </userPermissions>
     <userPermissions>

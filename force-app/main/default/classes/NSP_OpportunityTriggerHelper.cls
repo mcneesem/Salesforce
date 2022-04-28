@@ -618,18 +618,23 @@ public class NSP_OpportunityTriggerHelper {
         List<Asset> upsertList=new List<Asset>();
         New NSP_SrcToTargetObjectDataMover(null,'OppAsset')	;//initialize the class
         List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);	    
+        Map<Id, Asset> assetMap = new Map<Id, asset>();
+        for(Asset assetItem: assetfromCopier){
+            assetMap.put(assetItem.accountId,assetItem);
+        }
         List<Asset> existingAssets = [SELECT Id, Name,AccountId, Product2Id FROM Asset WHERE   AccountId in :accountIds AND RecordTypeId =:ASSET_RECORDTYPE_ID];
         Boolean isAssetFound=FALSE;
-        for(Asset draftAsset:assetfromCopier){
+        for(Id draftAsset:assetMap.keySet()){
             for(Asset existingAsset: existingAssets ){	
-                if(draftAsset.AccountId == existingAsset.AccountId  ){
+                if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
                     isAssetFound=TRUE;
                     Break;
                 }
             }
-            draftAsset.RecordTypeId = ASSET_RECORDTYPE_ID;
+            assetMap.get(draftAsset).RecordTypeId = ASSET_RECORDTYPE_ID;
+            assetMap.get(draftAsset).Status = NSP_SalesConstants.ONBOARDING;
             if(!isAssetFound){
-                upsertList.add(draftAsset); 
+                upsertList.add(assetMap.get(draftAsset)); 
             }
             isAssetFound=FALSE;
             

@@ -23,8 +23,19 @@
                 <label>Retirement Services</label>
             </value>
             <value>
+                <fullName>Insurance Services (Health &amp; Wellness)</fullName>
+                <default>false</default>
+                <label>Insurance Services (Health &amp; Wellness)</label>
+            </value>
+            <value>
+                <fullName>Insurance Services (Property &amp; Casualty)</fullName>
+                <default>false</default>
+                <label>Insurance Services (Property &amp; Casualty)</label>
+            </value>
+            <value>
                 <fullName>Insurance Services</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Insurance Services</label>
             </value>
         </valueSetDefinition>

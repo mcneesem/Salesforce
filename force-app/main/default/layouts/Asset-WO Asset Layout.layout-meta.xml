@@ -139,6 +139,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_CSA_Multiyear_End_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Opportunity__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -131,6 +131,26 @@
         <label>WX Choice Custom</label>
     </customValue>
     <customValue>
+        <fullName>Insperity 401k Plan</fullName>
+        <default>false</default>
+        <label>Insperity 401k Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity Customized Plan</fullName>
+        <default>false</default>
+        <label>Insperity Customized Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Plan</fullName>
+        <default>false</default>
+        <label>WX Choice Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Customized Plan</fullName>
+        <default>false</default>
+        <label>WX Choice Customized Plan</label>
+    </customValue>
+    <customValue>
         <fullName>TimeStar-Software-as-a-Service</fullName>
         <default>false</default>
         <isActive>false</isActive>
