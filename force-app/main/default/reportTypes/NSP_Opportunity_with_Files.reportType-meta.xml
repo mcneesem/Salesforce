@@ -748,11 +748,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Merge_On_Demand_Template_Selection__c</field>
             <table>Opportunity</table>
         </columns>

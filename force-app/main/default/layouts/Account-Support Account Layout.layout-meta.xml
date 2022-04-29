@@ -99,10 +99,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
             </layoutItems>
         </layoutColumns>

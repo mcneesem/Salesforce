@@ -52,10 +52,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Discovery Call</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Documents Missing</fullName>
             <default>false</default>
         </values>

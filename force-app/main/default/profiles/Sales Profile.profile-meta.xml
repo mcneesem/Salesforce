@@ -1325,11 +1325,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Minimum_Percentage__c</field>
         <readable>false</readable>
@@ -7011,16 +7006,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_DocuSign_Template_Mapping__mdt.NSP_Template_Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_DocuSign_Template_Mapping__mdt.NSP_Template_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_DocuSign_Template_Priority_Settings__mdt.NSP_Override__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8742,11 +8727,6 @@
         <editable>false</editable>
         <field>Opportunity.NSP_MedicalRenewal__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -45875,9 +45855,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_DocuSign_Signers__mdt-DocuSign Signers Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>NSP_DocuSign_Template_Mapping__mdt-DocuSign Template Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_DocuSign_Template_Priority_Settings__mdt-DocuSign Template Priority Setting Layout</layout>

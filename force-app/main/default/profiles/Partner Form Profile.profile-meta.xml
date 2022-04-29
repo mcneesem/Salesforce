@@ -4861,11 +4861,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.NSP_Merge_On_Demand_Template_Selection__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8245,9 +8240,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_DocuSign_Signers__mdt-DocuSign Signers Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>NSP_DocuSign_Template_Mapping__mdt-DocuSign Template Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_DocuSign_Template_Priority_Settings__mdt-DocuSign Template Priority Setting Layout</layout>
