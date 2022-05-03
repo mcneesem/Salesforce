@@ -1254,6 +1254,11 @@ Each record in this Report represents an Opportunity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Product_Services_Sold__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Team_Member__c</field>
             <table>Opportunity.Employee_Splits__r</table>
         </columns>
@@ -1265,6 +1270,36 @@ Each record in this Report represents an Opportunity;</description>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Opportunity__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Office_Assignment__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Number_of_Employees__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Percent_Split__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Enrollment_Fee__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Minimum_Met__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Sales_Credit__c</field>
             <table>Opportunity.Employee_Splits__r</table>
         </columns>
         <masterLabel>Oppt Splits</masterLabel>
