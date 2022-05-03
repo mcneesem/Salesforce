@@ -512,11 +512,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_DunsNumber__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_EF_Percentage__c</field>
             <table>Account</table>
         </columns>
@@ -738,11 +733,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Member_Reach__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
             <table>Account</table>
         </columns>
         <columns>

@@ -50,9 +50,6 @@
         <field>Account$NSP_NAICS__c</field>
     </columns>
     <columns>
-        <field>Account$Parent</field>
-    </columns>
-    <columns>
         <field>Account$NSP_Sales_Proj_First_Date__c</field>
     </columns>
     <columns>

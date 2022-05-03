@@ -85,6 +85,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>AccountId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_AIMS_First_Pay_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -138,6 +142,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_CSA_Multiyear_End_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opportunity__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -225,10 +225,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Channel_Program_Manager__c</field>
             </layoutItems>
             <layoutItems>

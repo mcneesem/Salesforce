@@ -134,6 +134,10 @@ public class NSP_QuoteApprovalPreValidation {
         List<String>  groupList = new List<String>();
 		String invoiceToEmail = null;
         String descriptionOfService = null;
+        String customerStakeHolder = null;
+        String customerRole = null;
+        String authorizedPurchaser = null;
+        String primaryContact = null;
         //quering user groups
         for(groupMember  objmember : [Select id,UserOrGroupId,GroupId,Group.DeveloperName,Group.Name FROM groupMember 
         WHERE UserOrGroupId =: userinfo.getUserId() AND Group.DeveloperName IN : groupname  ]) {
@@ -150,8 +154,8 @@ public class NSP_QuoteApprovalPreValidation {
 										  NSP_Bill_To_Street__c,NSP_Bill_To_State__c,NSP_Bill_To_City__c,NSP_Bill_To_Postal_Code__c,NSP_Bill_To_Country__c,
                                           NSP_Ship_To_Street__c,NSP_Ship_To_State__c,NSP_Ship_To_City__c,NSP_Ship_To_Postal_Code__c,NSP_Ship_To_Country__c,
                                           NSP_Benchmark_Job_End_Date__c,NSP_Benchmark_Job_Start_Date__c,NSP_Implementation_Start_Date__c,NSP_Talent_Connect_Subscription_End_Date__c,NSP_Talent_Connect_Subscription_Date__c,
-                                          NSP_RPO_End_Date__c,NSP_RPO_Start_Date__c,NSP_ProjRec_Start_Date__c,NSP_ProjRec_End_Date__c,NSP_Target_Date__c
-                                          FROM SBQQ__Quote__c WHERE Id=:QuoteId];
+                                          NSP_RPO_End_Date__c,NSP_RPO_Start_Date__c,NSP_ProjRec_Start_Date__c,NSP_ProjRec_End_Date__c,NSP_Target_Date__c,NSP_Customer_Stakeholder__c,NSP_Authorized_Purchaser_1__c,
+                                          NSP_Authorized_Purchaser_2__c,NSP_Customer_Role__c,SBQQ__PrimaryContact__c FROM SBQQ__Quote__c WHERE Id=:QuoteId];
 
         
         for(SBQQ__Quote__c quoteRec: quoteRecord) {
@@ -177,9 +181,78 @@ public class NSP_QuoteApprovalPreValidation {
                 errorMessageList.add(QUOTE_OWNER_MISMATCH_ERR_MESSAGE);
             } 
             }
-			invoiceToEmail = validateInvoiceToEmail(quoteRec.NSP_Invoice_To_Email__r.Id,quoteRec.NSP_Billing_Account__r.Id,quoteRec.SBQQ__Account__r.Id,quoteRec.NSP_DO_Signed_By_Billing_Account__c);
-            if(invoiceToEmail!= null) {
-                errorMessageList.add(invoiceToEmail); 
+            //Validate Invoice To Email
+            if(quoteRec.NSP_Invoice_To_Email__c != null){
+                if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == true){
+                    invoiceToEmail = validateContacts(quoteRec.NSP_Invoice_To_Email__c,quoteRec.NSP_Billing_Account__c,QuoteExtController.INVOICE_BILLING_ERR,true);
+                }
+                else if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == false){
+                    invoiceToEmail = validateContacts(quoteRec.NSP_Invoice_To_Email__c,quoteRec.SBQQ__Account__c,QuoteExtController.INVOICE_SHIPPING_ERR,true);
+                }
+                if(invoiceToEmail != null){
+                    errorMessageList.add(invoiceToEmail);
+                }
+            }
+              //Validate Customer Stake Holder
+            if(quoteRec.NSP_Customer_Stakeholder__c != null){
+                if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == true){
+                 customerStakeHolder =  validateContacts(quoteRec.NSP_Customer_Stakeholder__c,quoteRec.NSP_Billing_Account__c,QuoteExtController.CUST_STAKEHOLDER_BILLING_ERR,false);
+                }
+                else if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == false){
+                    customerStakeHolder = validateContacts(quoteRec.NSP_Customer_Stakeholder__c,quoteRec.SBQQ__Account__c,QuoteExtController.CUST_STAKEHOLDER_SHIPPING_ERR,false);
+                }
+                if(customerStakeHolder != null){
+                    errorMessageList.add(customerStakeHolder);
+               }
+            }
+            //Validate Authorized Purchaser 1
+            if(quoteRec.NSP_Authorized_Purchaser_1__c != null){
+                if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == true){
+                    authorizedPurchaser = validateContacts(quoteRec.NSP_Authorized_Purchaser_1__c,quoteRec.NSP_Billing_Account__c,QuoteExtController.AUTHORIZED_PURCHASE_BILL_ERR,false);
+                }
+                else if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == false){
+                    authorizedPurchaser = validateContacts(quoteRec.NSP_Authorized_Purchaser_1__c,quoteRec.SBQQ__Account__c,QuoteExtController.AUTHORIZED_PURCHASE_SHIP_ERR,false);
+                }
+                if(authorizedPurchaser != null){
+                    errorMessageList.add(authorizedPurchaser);
+                }
+            }
+            //Validate Authorized Purchaser 2
+            if(quoteRec.NSP_Authorized_Purchaser_2__c != null){
+                authorizedPurchaser = null;
+                if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == true){
+                    authorizedPurchaser = validateContacts(quoteRec.NSP_Authorized_Purchaser_2__c,quoteRec.NSP_Billing_Account__c,QuoteExtController.AUTHORIZED_PURCHASE2_BILL_ERR,false);
+                }
+                else if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == false){
+                    authorizedPurchaser = validateContacts(quoteRec.NSP_Authorized_Purchaser_2__c,quoteRec.SBQQ__Account__c,QuoteExtController.AUTHORIZED_PURCHASE2_SHIP_ERR,false);
+                }
+                if(authorizedPurchaser != null){
+                    errorMessageList.add(authorizedPurchaser);
+                }
+            }
+            //Validate Customer Role
+            if(quoteRec.NSP_Customer_Role__c != null){
+                if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == true){
+                    customerRole = validateContacts(quoteRec.NSP_Customer_Role__c,quoteRec.NSP_Billing_Account__c,QuoteExtController.CUST_ROLE_BILLING_ERR,false);
+                }
+                else if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == false){
+                    customerRole = validateContacts(quoteRec.NSP_Customer_Role__c,quoteRec.SBQQ__Account__c,QuoteExtController.CUST_ROLE_SHIPPING_ERR,false);
+                }
+                if(customerRole != null){
+                    errorMessageList.add(customerRole);
+                }
+            }
+            //Validate Primary Contact
+            if(quoteRec.SBQQ__PrimaryContact__c != null){
+                if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == true){
+                    primaryContact = validateContacts(quoteRec.SBQQ__PrimaryContact__c,quoteRec.NSP_Billing_Account__c,QuoteExtController.PRIMARY_CONTACT_BILL_ERR,false);
+                }
+                else if(quoteRec.NSP_DO_Signed_By_Billing_Account__c == false){
+                    primaryContact = validateContacts(quoteRec.SBQQ__PrimaryContact__c,quoteRec.SBQQ__Account__c,QuoteExtController.PRIMARY_CONTACT_SHIP_ERR,false);
+                }
+                if(primaryContact != null){
+                    errorMessageList.add(primaryContact);
+                }
             }
 			
 			/* check for billing address validation*/
@@ -267,41 +340,28 @@ public class NSP_QuoteApprovalPreValidation {
 * Method for querying all quoteline assocaited to a quote to check 
 * billing account address,shipping account address
 * submitting for approval
-* @param  ContactId Id ,BillingAccount Id,ShippingAccount Id,DOSigned Boolean
+* @param  ContactId Id ,AccountId Id,errMessage String
 */                                                                          
     
-public static String validateInvoiceToEmail(Id ContactId,Id BillingAccount,Id ShippingAccount,Boolean DOSigned)
+public static String validateContacts(Id cId,Id accountId,String errMessage,Boolean isValidateEmail)
 {
-    set<String> contactSet = new set<String>(); 
-  
-    if(DOSigned == true) {
-        List<Contact> contactList=[SELECT Id, Name FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :BillingAccount)];
+    Set<String> contactSet = new Set<String>(); 
+    List<Contact> contactList=[SELECT Id, Name FROM Contact WHERE Id IN (SELECT contactId FROM AccountContactRelation WHERE AccountId = :accountId)];
         
         for(Contact contactObj :contactList){ 
             contactSet.add(contactObj.Id); 
         } 
-        if(!contactSet.contains(ContactId)) {
-            return INVOICE_BILLING_ERR;
+        if(!contactSet.contains(cId)) {
+            return errMessage;
         }
-   }    
-   else{
-    List<Contact> contactList=[SELECT Id, Name FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :ShippingAccount)];
-       
-        for(Contact contactObj :contactList){ 
-             contactSet.add(contactObj.Id); 
-         } 
-        if(!contactSet.contains(ContactId)){
-        return INVOICE_SHIPPING_ERR;
-        }
-    }                
+        if(isValidateEmail == true) {
+          Contact contactObj=[SELECT Email FROM Contact WHERE Id =:cId];
+            if(contactObj.Email == null){ 
+                return INVOICE_EMAIL_ERR_MESSAGE;
+            }
+       }
+        return null;
     
-    Contact contactList=[SELECT Email FROM Contact WHERE Id =:ContactId];
-    if(contactList.Email == null){ 
-            return INVOICE_EMAIL_ERR_MESSAGE;
-    }
-   
-    return null;
-    
-}	
+}  
     
 }

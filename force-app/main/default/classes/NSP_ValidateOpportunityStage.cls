@@ -18,6 +18,7 @@ public class NSP_ValidateOpportunityStage {
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
     public static List<string> ownerBasedCriteriaProducts = System.Label.NSP_OwnerBasedCriteriaProducts.split(',');
     public static List<string> ownerBasedCriteriaRoles = System.Label.NSP_OwnerBasedCriteriaRoles.split(',');
+    public static List<string> closedLostCriteriaRoles = System.Label.NSP_Close_Lost_Criteria_Roles.split(',');
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_WO_TASK = ' has WO Task ';
@@ -122,6 +123,11 @@ public class NSP_ValidateOpportunityStage {
                 //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                 evaluateQuoteCriteria(opp,quoteMap);
                 evaluateClosedWonStageCriteria(opp);
+            }
+            
+            //closed-Lost criteria DF-1769
+            if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
+                evaluateClosedLostStageCriteria(opp);
             }
         }
         
@@ -243,8 +249,50 @@ public class NSP_ValidateOpportunityStage {
     * Author :     Nischay 
     * ********************************************************************************************/
     public static  Map<Id,User> getUserRole(String UserId){
-         Map<Id,User> userMap= new Map<Id,User>([SELECT Id, UserRole.Name FROM User WHERE Id =:UserId]);
+         Map<Id,User> userMap= new Map<Id,User>([SELECT Id, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id =:UserId]);
         	return userMap;
     }  
-   
+    
+    /**
+* Checks if current user can modify opportunity stage to closed lost
+* @param Opportunity opp
+*  
+* @return void             
+* @DF-01769 
+*/
+public static void evaluateClosedLostStageCriteria(Opportunity opp) {
+    Set < String > salesOfficeSet = new Set < String > ();
+    Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
+    Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
+    //if not same owner
+    
+    if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        //show error if role not equal to DA,RA or BPA
+        opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
+    }else if(closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name) && !currentUserRoleMap.containsKey(opp.OwnerId)){
+        //if Role is RA / BPA / DA and owner and current user is different - check sales office
+        if(getSalesOfficeGroup(userInfo.getUserId(),currentUserRoleMap.get(userInfo.getUserId()).NSP_Sales_Office__c) != getSalesOfficeGroup(opp.OwnerId,OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office__c)){
+            //if sales office is different - show error
+            opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
+        }
+        
+    }
+}    
+
+
+/**
+* gets the group id of sales office group of which user is member
+* @param Id userId
+* @param String SalesOffice
+*  
+* @return void             
+* @DF-01769 
+*/
+public static String getSalesOfficeGroup(Id userId, String SalesOffice){
+    List <GroupMember> groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userId and Group.Name =:SalesOffice];  
+    if(!groupMemberList.isEmpty()){
+        return groupMemberList[0].Group.Name;
+    }
+    return '';
+}
 }

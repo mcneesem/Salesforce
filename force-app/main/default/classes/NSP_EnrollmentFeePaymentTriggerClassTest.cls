@@ -1,5 +1,5 @@
 @isTest
-private class RollUpEnrollmentFeePaymentTest{
+private class NSP_EnrollmentFeePaymentTriggerClassTest{
   @testSetup
   static void setupTestData(){
     test.startTest();
@@ -38,7 +38,7 @@ private class RollUpEnrollmentFeePaymentTest{
     List<NSP_Enrollment_Fee_Payment__c> nsp_enrollment_fee_payment_Obj  =  [SELECT NSP_Opportunity__c,NSP_Payment_Amount__c,NSP_Payment_Method__c,NSP_Payment_Number__c,NSP_Payment_Status__c from NSP_Enrollment_Fee_Payment__c Limit 1];
     System.assertEquals(true,nsp_enrollment_fee_payment_Obj.size()>0);
     Delete nsp_enrollment_fee_payment_Obj;
-    RollUpEnrollmentFeePayment obj01 = new RollUpEnrollmentFeePayment();
-    RollUpEnrollmentFeePayment.sumofEnrollmentFee(nsp_enrollment_fee_payment_Obj);
+    NSP_EnrollmentFeePaymentTriggerClass obj01 = new NSP_EnrollmentFeePaymentTriggerClass();
+    NSP_EnrollmentFeePaymentTriggerClass.sumofEnrollmentFee(nsp_enrollment_fee_payment_Obj);
   }
 }

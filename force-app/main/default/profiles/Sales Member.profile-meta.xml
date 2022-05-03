@@ -681,7 +681,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_Quote_Service</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NSP_Quote_ServiceTest</apexClass>
@@ -1514,11 +1514,6 @@
         <editable>false</editable>
         <field>Account.NSP_Member_Reach__c</field>
         <readable>false</readable>
-     </fieldPermissions>
-     <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-        <readable>true</readable>
      </fieldPermissions>
      <fieldPermissions>
         <editable>false</editable>
@@ -7082,8 +7077,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Checklist__c.NSP_Signed_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Signed_CSA__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7324,16 +7324,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_DocuSign_Signers__mdt.NSP_Signer_Username__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_DocuSign_Template_Mapping__mdt.NSP_Template_Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_DocuSign_Template_Mapping__mdt.NSP_Template_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8626,6 +8616,16 @@
     <readable>true</readable>
  </fieldPermissions>
  <fieldPermissions>
+    <editable>false</editable>
+    <field>Opportunity.NSP_Account_Name__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+ <fieldPermissions>
+    <editable>false</editable>
+    <field>Opportunity.NSP_Selected_Template__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+ <fieldPermissions>
     <editable>true</editable>
     <field>Opportunity.NSP_ForecastPercent__c</field>
     <readable>true</readable>
@@ -8645,6 +8645,11 @@
     <field>Opportunity.NSP_Has_Primary_Quote__c</field>
     <readable>true</readable>
  </fieldPermissions>
+ <fieldPermissions>
+    <editable>false</editable>
+    <field>Opportunity.NSP_Quote_Status__c</field>
+    <readable>true</readable>
+</fieldPermissions>
  <fieldPermissions>
     <editable>false</editable>
     <field>Opportunity.NSP_Bypass_Docusign_Signature__c</field>
@@ -8875,6 +8880,16 @@
     <field>Opportunity.NSP_Client_For_Life__c</field>
     <readable>true</readable>
  </fieldPermissions>
+ <fieldPermissions>
+    <editable>true</editable>
+    <field>Opportunity.NSP_Billing_Account__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>false</editable>
+    <field>Opportunity.NSP_DO_Sign_By_Billing_Account__c</field>
+    <readable>true</readable>
+</fieldPermissions>
  <fieldPermissions>
     <editable>false</editable>
     <field>Opportunity.NSP_Insperity_Signer__c</field>
@@ -45609,9 +45624,6 @@
         <layout>NSP_DocuSign_Signers__mdt-DocuSign Signers Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NSP_DocuSign_Template_Mapping__mdt-DocuSign Template Mapping Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>NSP_DocuSign_Template_Priority_Settings__mdt-DocuSign Template Priority Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -46916,7 +46928,7 @@
         <name>ViewHelpLink</name>
     </userPermissions>
     <userPermissions>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
         <name>ViewRoles</name>
     </userPermissions>
     <userPermissions>

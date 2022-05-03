@@ -21,6 +21,13 @@ import docusignAccountId from "@salesforce/label/c.NSP_Docusign_Account_Id";
 import custSignerBill from "@salesforce/label/c.NSP_Customer_Signer_Billing_Account";
 import custSignerAcc from "@salesforce/label/c.NSP_Customer_Signer_Account";
 import ACCOUNT_ID from "@salesforce/schema/Opportunity.AccountId";
+import primaryProductErr from "@salesforce/label/c.NSP_PrimaryProductErr";
+import nonApprovedQuoteErr from "@salesforce/label/c.NSP_NonApprovedErr";
+import insperitySignerErr from "@salesforce/label/c.NSP_Insperity_Signer_Err";
+import custSignerErr from "@salesforce/label/c.NSP_Customer_Signer_Err";
+import custSignernApprovedErr from "@salesforce/label/c.NSP_Cust_Signer_and_Approved_Err";
+import inspSignernApprovedErr from "@salesforce/label/c.NSP_Signer_and_Approved_Err";
+import custInspSignerErr from "@salesforce/label/c.NSP_Cust_Insperity_Signer";
 
 export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api recordId;
@@ -50,6 +57,13 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
     docusignAccountId,
     custSignerBill,
     custSignerAcc,
+    primaryProductErr,
+    nonApprovedQuoteErr,
+    insperitySignerErr,
+    custSignerErr,
+    custSignernApprovedErr,
+    inspSignernApprovedErr,
+    custInspSignerErr,
   };
   connectedCallback() {}
 
@@ -96,61 +110,41 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
           this.bypassDocusign)
       ) {
         this.isQuoteValid = false;
-        this.showToast(
-          "Error",
-          "Delivery order generation is not applicable for this Primary Product",
-          "error"
-        );
+        this.showToast("Error", primaryProductErr, "error");
       } else if (
         this.quoteStatus != "Approved" &&
         this.customerSigner &&
         this.insperitySigner
       ) {
         this.isQuoteValid = false;
-        this.showToast(
-          "Error",
-          "You can generate delivery order documents only for approved quotes",
-          "error"
-        );
+        this.showToast("Error", nonApprovedQuoteErr, "error");
       } else if (
         !this.customerSigner &&
         this.quoteStatus == "Approved" &&
         this.insperitySigner
       ) {
         this.isQuoteValid = false;
-        this.showToast("Error", "Please update Customer Signer", "error");
+        this.showToast("Error", custSignerErr, "error");
       } else if (
         this.customerSigner &&
         this.quoteStatus == "Approved" &&
         !this.insperitySigner
       ) {
         this.isQuoteValid = false;
-        this.showToast("Error", "Please update Insperity Signer", "error");
+        this.showToast("Error", insperitySignerErr, "error");
       } else if (!this.customerSigner && this.quoteStatus != "Approved") {
         this.isQuoteValid = false;
-        this.showToast(
-          "Error",
-          "Please update Customer Signer and you can generate delivery order documents only for approved quotes",
-          "error"
-        );
+        this.showToast("Error", custSignernApprovedErr, "error");
       } else if (!this.insperitySigner && this.quoteStatus != "Approved") {
         this.isQuoteValid = false;
-        this.showToast(
-          "Error",
-          "Please update Insperity Signer and you can generate delivery order documents only for approved quotes",
-          "error"
-        );
+        this.showToast("Error", inspSignernApprovedErr, "error");
       } else if (
         !this.customerSigner &&
         this.quoteStatus == "Approved" &&
         !this.insperitySigner
       ) {
         this.isQuoteValid = false;
-        this.showToast(
-          "Error",
-          "Please update Customer Signer and Insperity Signer",
-          "error"
-        );
+        this.showToast("Error", custInspSignerErr, "error");
       } else {
         if (this.doSigned) {
           this.validateCustomerSigner(this.billingAccount, custSignerBill);
@@ -167,6 +161,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
 
     if (error) {
       this.error = error;
+      this.closeAction();
     }
   }
 

@@ -9,7 +9,7 @@
     </shares>
     <shares>
         <accessLevel>Manage</accessLevel>
-        <sharedTo>deployment.manager@insperity.com.sfuat</sharedTo>
+        <sharedTo>deployment.manager@insperity.com</sharedTo>
         <sharedToType>User</sharedToType>
     </shares>
 </WaveApplication>

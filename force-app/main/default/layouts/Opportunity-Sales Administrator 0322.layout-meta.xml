@@ -186,10 +186,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Legals_Counter_Signer__c</field>
             </layoutItems>
             <layoutItems>

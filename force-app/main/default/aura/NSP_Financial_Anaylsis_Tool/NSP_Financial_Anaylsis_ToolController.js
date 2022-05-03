@@ -12,7 +12,7 @@
                     FTAUrl+=$A.get("$Label.c.NSP_FTA_userFullName");
                     FTAUrl+=AuthUserMap.UserName;
                     FTAUrl+=$A.get("$Label.c.NSP_FTA_externalId")+component.get("v.opportunityRecord.Account.Id");
-                    FTAUrl+=$A.get("$Label.c.NSP_FTA_prospectName")+component.get("v.opportunityRecord.Name");
+                    FTAUrl+=$A.get("$Label.c.NSP_FTA_prospectName")+component.get("v.opportunityRecord.Account.Name");
                     FTAUrl+=$A.get("$Label.c.NSP_FTA_bidNumber");
                     var bidNumber=component.get("v.opportunityRecord.NSP_BidNumber__c");
                     var bidVersion=component.get("v.opportunityRecord.NSP_BidVersion__c");

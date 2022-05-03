@@ -57,6 +57,7 @@ private class QuoteExtControllerTests {
         Account woAccount = NSP_TestHelper.createAccount(false);
         woAccount.Name = 'WO Account';
         insert woAccount;
+        Contact contactObj = NSP_TestHelper.createContact(objAccount.id, true);
         String productName = 'Test Product Name';
         String vehicleTracking = 'Vehicle Tracking Unit';
         String clientForLife = 'WO/WS';
@@ -97,6 +98,11 @@ private class QuoteExtControllerTests {
              obj1quote.NSP_Has_WA_product__c = true;
              obj1quote.NSP_Billing_Account__c = woAccount.Id;
              obj1quote.NSP_OnDemand_Notes__c = 'test notes';
+             obj1quote.NSP_Billing_Account__c = woAccount.Id;
+             obj1quote.NSP_Customer_Stakeholder__c = contactObj.Id;
+             obj1quote.NSP_Authorized_Purchaser_1__c = contactObj.Id;
+             obj1quote.NSP_Customer_Role__c = contactObj.Id;
+             obj1quote.SBQQ__PrimaryContact__c = contactObj.Id;
              insert obj1quote;
          //Create QuoteLine    
          SBQQ__QuoteLine__c parentqli =  new SBQQ__QuoteLine__c(SBQQ__Product__c = testProduct.id,SBQQ__Quote__c = obj1quote.id);

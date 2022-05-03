@@ -3,11 +3,6 @@
     <description>This Permission Set gives Edit access to NDA &amp; CSA fields used for DocuSign signature.</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NSP_Merge_On_Demand_DocuSign_Template_Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.NSP_Signed_MOD_Document__c</field>
         <readable>false</readable>
     </fieldPermissions>

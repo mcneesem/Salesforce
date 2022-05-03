@@ -110,6 +110,16 @@
                 <default>false</default>
                 <label>Selected Insperity Talent Connect Implementation Services</label>
             </value>
+            <value>
+                <fullName>Selected Recruiting On Demand Services</fullName>
+                <default>false</default>
+                <label>Selected Recruiting On Demand Services</label>
+            </value>
+            <value>
+                <fullName>Selected Recruitment Pre-Employment Assessments</fullName>
+                <default>false</default>
+                <label>Selected Recruitment Pre-Employment Assessments</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

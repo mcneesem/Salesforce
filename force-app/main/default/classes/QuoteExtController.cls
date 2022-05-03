@@ -39,14 +39,24 @@ Modification Log     :
         public Boolean isRPODateInvalid{get;set;}
         public Boolean isProjectRecruitingDateInvalid{get;set;}
         public Boolean isBrandingTargetDateInvalid{get;set;}
+        public  Boolean isCustomerStakeHolderBilling{get;set;}
+        public  Boolean isCustomerStakeHolderShipping{get;set;}
+        public  Boolean isCustomerRoleBilling{get;set;}
+        public  Boolean isCustomerRoleShipping{get;set;}
+        public  Boolean isAutorizedPurchaseBilling{get;set;}
+        public  Boolean isAutorizedPurchaseShipping{get;set;}
+        public  Boolean isAutorizedPurchaseBilling2{get;set;}
+        public  Boolean isAutorizedPurchaseShipping2{get;set;}
+        public  Boolean isPrimaryContactBilling{get;set;}
+        public  Boolean isPrimaryContactShipping{get;set;}
 
         Static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
         Static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
         Static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
         Static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
         Static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
-        Static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
-        Static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
+        public Static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
+        public Static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
         
         Static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
         Static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
@@ -58,6 +68,16 @@ Modification Log     :
         public Static final String RPO_DATE_ERR=System.Label.NSP_RPO_Date_Validation_Error;
         public Static final String PROJECT_RECRUITING_DATE_ERR=System.Label.NSP_Project_Recruiting_Date_Validation_Error;
         public Static final String BRANDING_TARGET_DATE_ERR=System.Label.NSP_Branding_Target_Date_Validation_Error;
+        public Static final String CUST_STAKEHOLDER_BILLING_ERR=System.Label.NSP_CustStakeHolderBilling;
+        public Static final String CUST_STAKEHOLDER_SHIPPING_ERR=System.Label.NSP_CustStakeholderShipping;
+        public Static final String CUST_ROLE_SHIPPING_ERR=System.Label.NSP_CustRoleShipping;
+        public Static final String CUST_ROLE_BILLING_ERR=System.Label.NSP_CustRoleBilling;
+        public Static final String AUTHORIZED_PURCHASE_BILL_ERR=System.Label.NSP_AuthorizedPurchaseBilling;
+        public Static final String AUTHORIZED_PURCHASE_SHIP_ERR=System.Label.NSP_AuthorizedPurchaseShipping;
+        public Static final String AUTHORIZED_PURCHASE2_BILL_ERR=System.Label.NSP_AuthorizedPurchaseBilling2;
+        public Static final String AUTHORIZED_PURCHASE2_SHIP_ERR=System.Label.NSP_AuthorizedPurchaseShipping2;
+        public Static final String PRIMARY_CONTACT_BILL_ERR=System.Label.NSP_PrimaryContactBilling;
+        public Static final String PRIMARY_CONTACT_SHIP_ERR=System.Label.NSP_PrimaryContactShipping;
 
 
         public QuoteExtController(ApexPages.StandardController stdController) {
@@ -105,6 +125,16 @@ Modification Log     :
                 isRPODateInvalid = false;
                 isProjectRecruitingDateInvalid = false;
                 isBrandingTargetDateInvalid = false;
+                isCustomerStakeHolderBilling = false;
+                isCustomerStakeHolderShipping = false;
+                isCustomerRoleBilling = false;
+                isCustomerRoleShipping = false;
+                isAutorizedPurchaseBilling = false;
+                isAutorizedPurchaseShipping = false;
+                isPrimaryContactBilling = false;
+                isPrimaryContactShipping = false;
+                isAutorizedPurchaseBilling2 = false;
+                isAutorizedPurchaseShipping2 = false;
                 
             }
             
@@ -192,7 +222,54 @@ Modification Log     :
                     isBrandingTargetDateInvalid= true;
                     showQuoteError = true; 
                 }
-                
+                if(errorMessage.contains(CUST_STAKEHOLDER_BILLING_ERR)){
+                    isCustomerStakeHolderBilling= true;
+                    showQuoteError = true; 
+                }
+                if(errorMessage.contains(CUST_STAKEHOLDER_SHIPPING_ERR)){
+                    isCustomerStakeHolderShipping= true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(CUST_ROLE_SHIPPING_ERR)){
+                    isCustomerRoleShipping = true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(CUST_ROLE_BILLING_ERR)){
+                    isCustomerRoleBilling = true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(AUTHORIZED_PURCHASE_BILL_ERR)){
+                    isAutorizedPurchaseBilling = true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(AUTHORIZED_PURCHASE_SHIP_ERR)){
+                    isAutorizedPurchaseShipping = true;
+                    showQuoteError = true; 
+                }
+
+                if(errorMessage.contains(AUTHORIZED_PURCHASE2_BILL_ERR)){
+                    isAutorizedPurchaseBilling2 = true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(AUTHORIZED_PURCHASE2_SHIP_ERR)){
+                    isAutorizedPurchaseShipping2 = true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(PRIMARY_CONTACT_BILL_ERR)){
+                    isPrimaryContactBilling= true;
+                    showQuoteError = true; 
+                }
+    
+                if(errorMessage.contains(PRIMARY_CONTACT_SHIP_ERR)){
+                    isPrimaryContactShipping= true;
+                    showQuoteError = true; 
+                }
                 }
             }
         }
