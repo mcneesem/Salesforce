@@ -2,8 +2,13 @@
 <ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
     <folderShares>
         <accessLevel>Manage</accessLevel>
-        <sharedTo>deployment.manager@insperity.com</sharedTo>
+        <sharedTo>dakota.hockert@insperity.com</sharedTo>
         <sharedToType>User</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>Business_Development</sharedTo>
+        <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
         <accessLevel>View</accessLevel>

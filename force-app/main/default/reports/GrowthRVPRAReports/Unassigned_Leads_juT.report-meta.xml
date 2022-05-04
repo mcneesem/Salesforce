@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
-    <columns>
-        <field>Lead$Owner.UserRole</field>
-    </columns>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Lead$NSP_Sales_Office__c</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>true</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
     <columns>
         <field>Lead$Company</field>
     </columns>
@@ -41,14 +62,12 @@
         <field>Lead$NSP_Lead_Stage__c</field>
     </columns>
     <columns>
-        <field>Lead$Status</field>
-    </columns>
-    <columns>
         <field>Lead$NSP_PrimaryProduct__c</field>
     </columns>
     <currency>USD</currency>
     <description>How many WO/WX leads are assigned to my office DA but need to be assigned to a BPA?</description>
     <filter>
+        <booleanFilter>1 AND (2 OR 3) AND 4</booleanFilter>
         <criteriaItems>
             <column>Lead$Status</column>
             <columnToColumn>false</columnToColumn>
@@ -70,11 +89,28 @@
             <operator>equals</operator>
             <value>District Administrator,Regional Administrator</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Lead$NSP_Sales_Office__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>Lead$NSP_Sales_Office__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead$Status</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead$Owner.UserRole</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Unassigned Leads</name>

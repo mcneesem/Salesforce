@@ -90,9 +90,9 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>false</showSubTotals>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>Opportunity$NSP_1stPayInvoiceDate__c</dateColumn>
+        <dateColumn>Opportunity$CloseDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>
