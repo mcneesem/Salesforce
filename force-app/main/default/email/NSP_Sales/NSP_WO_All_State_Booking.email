@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="NEW CLIENT DOWNLOADED: ALLSTATE AGENCY -{!RelatedTo.Account.Name} / {!RelatedTo.Account.Client_Number_TA__c} / {!RelatedTo.NSP_BidVersion__c}" recipientType="User" relatedToType="Opportunity">
+<messaging:htmlEmailBody >
+   <html>
+    <head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+      <body>
+      <p>Congrats on this booking,!!</p>
+<p>{!RelatedTo.NSP_Client_Number_TA__c} - {!RelatedTo.NSP_BidVersion__c}</p>
+<p># of EEs Booked: {!RelatedTo.NSP_Number_of_Employees__c}</p>      
+      </body>
+      </html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

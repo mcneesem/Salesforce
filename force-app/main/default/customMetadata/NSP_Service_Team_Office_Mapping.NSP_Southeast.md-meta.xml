@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Southeast</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Sales_Offices__c</field>
+        <value xsi:type="xsd:string">3401 Charlotte 1
+1001 Orlando 1
+1061 Tampa 1
+1041 Ft. Lauderdale 1
+1101 Atlanta 1
+1102 Atlanta 2
+1103 Atlanta 3
+1104 Atlanta 4
+1501 Indianapolis 1
+3921 Pittsburgh 1
+4301 Nashville 1
+3421 Raleigh-Durham 1</value>
+    </values>
+    <values>
+        <field>NSP_Service_Team_Email__c</field>
+        <value xsi:type="xsd:string">southeastservice.notification@insperity.com.com.invalid</value>
+    </values>
+</CustomMetadata>

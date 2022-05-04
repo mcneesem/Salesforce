@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Recruiting_Svc_Per_Trans_Fee__c</fullName>
+    <description>In scope for Data Migration. OneForce.Partner.PartnerProfilePEO_RecruitingServicesPerTransacti_c</description>
+    <externalId>false</externalId>
+    <label>Recruiting Svc Per Trans Fee %</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payment_Plan__c</fullName>
+    <description>Due percentage upon receipt of invoice</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select 50% if 50% due immediately upon receipt of invoice and balance due Net 30 days from date of invoice OR
+30% if 33% due immediately upon receipt of invoice, 33% due Net 30 days and balance due Net 60 days from date of invoice</inlineHelpText>
+    <label>Payment Plan</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>50%</fullName>
+                <default>false</default>
+                <label>50%</label>
+            </value>
+            <value>
+                <fullName>30%</fullName>
+                <default>false</default>
+                <label>30%</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

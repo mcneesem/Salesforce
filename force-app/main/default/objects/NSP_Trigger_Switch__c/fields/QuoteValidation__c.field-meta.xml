@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QuoteValidation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>field to bypass quote validation</description>
+    <externalId>false</externalId>
+    <label>QuoteValidation</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

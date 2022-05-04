@@ -1,0 +1,2 @@
+A task that you created has been marked as complete. Please review.
+<a href="{!Task.Link}">{!Task.Subject}</a>

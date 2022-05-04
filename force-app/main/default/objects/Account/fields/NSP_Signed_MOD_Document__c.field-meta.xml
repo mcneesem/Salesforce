@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Signed_MOD_Document__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field indicates whether the Generated Document has been signed or not.</description>
+    <externalId>false</externalId>
+    <label>Document Signed</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,153 @@
+<!-- *************************************************************************************************   
+    Component Name :  NSP_DisplayQli
+    Version              :  1.0                                                                          
+    Created Date         :  June 19, 2021                                                           
+    Function             :  This component is used for approval email template
+   Modification Log     :                                                                               
+    ***************************************************************************************************  
+    * Developer                   Date                   Description                                     
+    ***************************************************************************************************  
+    * Raksha                     June 19, 20201               Created
+    *************************************************************************************************** -->
+    <apex:component controller="NSP_DisplayQliController" access="global" id="qliCmp">
+    <apex:attribute name="quoteId" description="This is the quote Id for the component." type="String" required="true" assignTo="{!quoteIdstr}" access="global" />
+    <style>
+        table,
+        th,
+        td {
+            border-collapse: collapse;
+        }
+       hr {
+            height: 1px;
+            border-width: 0;
+            color: rgb(0, 0, 0);
+            background-color: black;
+        }
+    </style>
+    <apex:variable value="{!1}" var="count" />
+    <apex:variable value="{!1}" var="countpepm" />
+    <apex:variable value="{!1}" var="countrecruting" />
+    <apex:variable value="{!1}" var="countComments" />
+    <p>
+        <apex:outputPanel rendered="{!approverCommentsList}">
+            <b>
+                <apex:outputText value="Approver's Comment :" />
+            </b>
+            <br />
+            <apex:repeat var="qli" value="{!ApproversComment}">
+                <apex:outputText value="{!qli.approverComment}" />
+                <br />
+            </apex:repeat>
+        </apex:outputPanel>
+    </p>
+    <p>
+        <apex:outputPanel rendered="{!quoteList}">
+            <table style="width: 100%;">
+                <tr style="text-align: center;">
+                    <th style="height: 30px; padding-right: 1%; padding-left: 1%;width: 4%; text-decoration: underline;">Unit <br /> Price</th>
+                    <th style="height: 30px; padding-right: 1%; padding-left: 3%;text-decoration: underline; width: 5%;">Discount <br /> Amt</th>
+                    <th style="height: 30px; padding-right: 1%; padding-left: 3%;text-decoration: underline; width: 5%;">Final <br /> Price</th>
+                    <th style="height: 30px; padding-right: 1%; padding-left: 0%;text-decoration: underline; width: 9%;">Discount %</th>
+                    <th style="height: 30px; text-align: left; padding-right: 1%; padding-left: 0%; text-decoration: underline;">Description</th>
+                </tr>
+                <apex:repeat var="qli" value="{!QliList}">
+                    <tr style="height: 30px; font-size: 14px;">
+                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 0%; width: 3%;">
+                            ${!qli.formattedUnitPrice}
+                        </td>
+                        <td style="height: 30px; text-align: right; padding-right: 2%; padding-left: 3%; width: 5%;">${!qli.formattedDiscPrice}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 2%; width: 5%;">${!qli.formattedFinalPrice}</td>
+                        <td style="height: 30px; text-align: center; padding-right: 3%; width: 9%;">
+                            <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
+                            <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
+                        </td>
+                        <td style="height: 30px; padding-right: 3%; padding-left: 0%;">
+                            <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),LEFT(qli.description, LEN(qli.description)-14),qli.description)}"> </apex:outputText>
+                            <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),' '+$Label.MinimumFeeItalic,'')}" escape="false" />
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+            <hr />
+            <table style="width: 100%;">
+                <apex:repeat var="qli" value="{!LastLine}">
+                    <tr style="height: 30px; font-size: 14px; font-weight: bold;">
+                        <td style="height: 30px; text-align: right; padding-right: 3%; padding-left: 0%; width: 2%;">
+                            ${!qli.formattedUnitPrice}
+                        </td>
+                        <td style="height: 30px; text-align: right; padding-right: 2%; width: 2%;">${!qli.formattedDiscPrice}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 1%; width: 2%;">${!qli.formattedFinalPrice}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 1%; width: 5%;">
+                            <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
+                            <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
+                        </td>
+                        <td style="height: 30px; padding-right: 1%; padding-left: 3%;">
+                            <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),LEFT(qli.description, LEN(qli.description)-14),qli.description)}"> </apex:outputText>
+                            <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),' '+$Label.MinimumFeeItalic,'')}" escape="false" />
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+            <hr />
+        </apex:outputPanel>
+    </p>
+    <br />
+    <p>
+        <apex:outputPanel rendered="{!pepmList}">
+            <table style="width: 100%;">
+                <tr style="text-align: left;">
+                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 3%;">Employees</th>
+                    <th style="height: 30px; padding-right: 1%; padding-left: 2%; text-decoration: underline; width: 5%;">Base PEPM</th>
+                    <th style="height: 30px; padding-right: 1%; padding-left: 3%; text-decoration: underline; width: 5%;">Final PEPM</th>
+                    <th style="height: 30px; padding-right: 1%; padding-left: 3%; text-decoration: underline; width:8%;">Discount %</th>
+                    <th style="height: 30px; text-align: left; padding-right: 0%; padding-left: 0%; text-decoration: underline;">Description</th>
+                </tr>
+                <apex:repeat var="qli" value="{!QliPEPMList}">
+                    <tr style="height: 30px; font-size: 14px;">
+                        <td style="height: 30px; text-align: center; padding-right: 3%; padding-left: 0%;">{!qli.numberOfEmployees}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 1%; width: 3%;padding-left: 2%;">
+                            ${!qli.formattedUnitPrice}
+                        </td>
+                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 3%; width: 3%;">${!qli.formattedFinalPrice}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 3%; padding-left: 3%; width: 8%;">
+                            <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
+                            <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
+                        </td>
+                        <td style="height: 30px; padding-right: 4%; padding-left: 0%;">{!qli.description}</td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </apex:outputPanel>
+    </p>
+    <p>
+        <apex:outputPanel rendered="{!recruitingServiceList}">
+            <table style="width: 100%;">
+                <tr style="text-align: left;">
+                    <th style="height: 30px; padding-right: 1%; width: 3%; text-decoration: underline;">Unit <br /> Price</th>
+                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 3%;">Discount <br /> Amt</th>
+                    <th style="height: 30px; padding-right: 2%; text-decoration: underline; width: 3%;">Final <br /> Price</th>
+                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 3%;">Nr of <br /> Positions</th>
+                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 6%;">Discount %</th>
+                    <th style="height: 30px; text-align: left; padding-right: 2%; padding-left: 0%; text-decoration: underline;">Description</th>
+                </tr>
+                <apex:repeat var="qli" value="{!QliRecruitingList}">
+                    <tr style="height: 30px; font-size: 14px;">
+                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 0%; width: 3%;">
+                            ${!qli.formattedUnitPrice}
+                        </td>
+                        <td style="height: 30px; text-align: right; padding-right: 3%; width: 3%;">${!qli.formattedDiscPrice}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 3%; width: 3%;">${!qli.formattedFinalPrice}</td>
+                        <td style="height: 30px; text-align: center; padding-right: 3%; width: 3%;">{!qli.position}</td>
+                        <td style="height: 30px; text-align: right; padding-right: 3%; width: 5%;">
+                            <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
+                            <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
+                        </td>
+                        <td style="height: 30px; padding-right: 4%; padding-left: 0%;">
+                            {!qli.description}
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </apex:outputPanel>
+    </p>
+</apex:component>

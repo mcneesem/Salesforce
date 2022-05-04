@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SBQQ__TestedField__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Field on the Quote object that should be used in testing this condition.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Field on the Quote object that should be used in testing this condition.</inlineHelpText>
+    <label>Tested Field</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>SBQQ__TestedObject__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Group Line Items</fullName>
+                <default>false</default>
+                <label>Group Line Items</label>
+            </value>
+            <value>
+                <fullName>Unit Price</fullName>
+                <default>false</default>
+                <label>Unit Price</label>
+            </value>
+            <value>
+                <fullName>SBQQ__ProductCode__c</fullName>
+                <default>false</default>
+                <label>SBQQ__ProductCode__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__ProductName__c</fullName>
+                <default>false</default>
+                <label>SBQQ__ProductName__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Product_Group__c</fullName>
+                <default>false</default>
+                <label>NSP_Product_Group__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Has_WA_product__c</fullName>
+                <default>false</default>
+                <label>NSP_Has_WA_product__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Product_Option_Type__c</fullName>
+                <default>false</default>
+                <label>NSP_Product_Option_Type__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__Type__c</fullName>
+                <default>false</default>
+                <label>SBQQ__Type__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Target_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_Target_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_RPO_Start_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_RPO_Start_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_ProjRec_End_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_ProjRec_End_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_ProjRec_Start_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_ProjRec_Start_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_RPO_End_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_RPO_End_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_No_of_Hiring_Managers__c</fullName>
+                <default>false</default>
+                <label>NSP_No_of_Hiring_Managers__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Pricing_Model__c</fullName>
+                <default>false</default>
+                <label>NSP_Pricing_Model__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Quantity_Validation__c</fullName>
+                <default>false</default>
+                <label>NSP_Quantity_Validation__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Active_W2_Employees__c</fullName>
+                <default>false</default>
+                <label>NSP_Active_W2_Employees__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Active_1099_Contractors__c</fullName>
+                <default>false</default>
+                <label>NSP_Active_1099_Contractors__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Multiple_Companies__c</fullName>
+                <default>false</default>
+                <label>NSP_Multiple_Companies__c</label>
+            </value>
+            <value>
+                <fullName>Total_Employess_of_all_companies__c</fullName>
+                <default>false</default>
+                <label>Total_Employess_of_all_companies__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Feature_Category__c</fullName>
+                <default>false</default>
+                <label>NSP_Feature_Category__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Action_Type__c</fullName>
+                <default>false</default>
+                <label>NSP_Action_Type__c</label>
+            </value>
+            <value>
+                <fullName>NSP_ActionType__c</fullName>
+                <default>false</default>
+                <label>NSP_ActionType__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Parent_Product_Code__c</fullName>
+                <default>false</default>
+                <label>NSP_Parent_Product_Code__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Parent_ProductCode__c</fullName>
+                <default>false</default>
+                <label>NSP_Parent_ProductCode__c</label>
+            </value>
+            <value>
+                <fullName>NSP_ITSTimeSimplicity_Quantity__c</fullName>
+                <default>false</default>
+                <label>NSP_ITSTimeSimplicity_Quantity__c</label>
+            </value>
+            <value>
+                <fullName>NSP_ITS_Telepunch_Users_Quantity__c</fullName>
+                <default>false</default>
+                <label>NSP_ITS_Telepunch_Users_Quantity__c</label>
+            </value>
+            <value>
+                <fullName>NSP_ITSUserLicense_Quantity__c</fullName>
+                <default>false</default>
+                <label>NSP_ITSUserLicense_Quantity__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Estimated_Number_Of_Employees__c</fullName>
+                <default>false</default>
+                <label>NSP_Estimated_Number_Of_Employees__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Number_Of_Boxes__c</fullName>
+                <default>false</default>
+                <label>NSP_Number_Of_Boxes__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Number_Of_Users__c</fullName>
+                <default>false</default>
+                <label>NSP_Number_Of_Users__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Custom_Pricing__c</fullName>
+                <default>false</default>
+                <label>NSP_Custom_Pricing__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__ListPrice__c</fullName>
+                <default>false</default>
+                <label>SBQQ__ListPrice__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Lock_On_QLI__c</fullName>
+                <default>false</default>
+                <label>NSP_Lock_On_QLI__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Opportunity_Primary_Product__c</fullName>
+                <default>false</default>
+                <label>NSP_Opportunity_Primary_Product__c</label>
+            </value>
+            <value>
+                <fullName>NSP_IWACoreSU_booked__c</fullName>
+                <default>false</default>
+                <label>NSP_IWACoreSU_booked__c</label>
+            </value>
+            <value>
+                <fullName>NSP_IWALeaveAdminSU_Booked__c</fullName>
+                <default>false</default>
+                <label>NSP_IWALeaveAdminSU_Booked__c</label>
+            </value>
+            <value>
+                <fullName>NSP_IWALearnDevSU_Booked__c</fullName>
+                <default>false</default>
+                <label>NSP_IWALearnDevSU_Booked__c</label>
+            </value>
+            <value>
+                <fullName>NSP_IWAACAAdminSU_Booked__c</fullName>
+                <default>false</default>
+                <label>NSP_IWAACAAdminSU_Booked__c</label>
+            </value>
+            <value>
+                <fullName>NSP_IWABenAdminSU_Booked__c</fullName>
+                <default>false</default>
+                <label>NSP_IWABenAdminSU_Booked__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__TotalDiscountAmount__c</fullName>
+                <default>false</default>
+                <label>SBQQ__TotalDiscountAmount__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__ProratedListPrice__c</fullName>
+                <default>false</default>
+                <label>SBQQ__ProratedListPrice__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__NetPrice__c</fullName>
+                <default>false</default>
+                <label>SBQQ__NetPrice__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Validate_ProjectRecruiting_Dates__c</fullName>
+                <default>false</default>
+                <label>NSP_Validate_ProjectRecruiting_Dates__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Validate_Pro_Start_End_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_Validate_Pro_Start_End_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Validate_TalentConnect_Sub_Date__c</fullName>
+                <default>false</default>
+                <label>NSP_Validate_TalentConnect_Sub_Date__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Related_Setup_SKU_Missing__c</fullName>
+                <default>false</default>
+                <label>NSP_Related_Setup_SKU_Missing__c</label>
+            </value>
+        <value>
+            <fullName>NSP_Talent_ConnectSubscription_StartDate__c</fullName>
+            <default>false</default>
+            <label>NSP_Talent_ConnectSubscription_StartDate__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Talent_Connect_Subscription_End_Date__c</fullName>
+            <default>false</default>
+            <label>NSP_Talent_Connect_Subscription_End_Date__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Implementation_Start_Date__c</fullName>
+            <default>false</default>
+            <label>NSP_Implementation_Start_Date__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Discount_Internal__c</fullName>
+            <default>false</default>
+            <label>NSP_Discount_Internal__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Legacy_OnDemand__c</fullName>
+            <default>false</default>
+            <label>NSP_Legacy_OnDemand__c</label>
+        </value>
+        <value>
+            <fullName>NSP_Retention_Payment__c</fullName>
+            <default>false</default>
+            <label>NSP_Retention_Payment__c</label>
+        </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Group Line Items</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>SBQQ__Type__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Pricing_Model__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Multiple_Companies__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Total_Employess_of_all_companies__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Opportunity_Primary_Product__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_IWACoreSU_booked__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_IWALeaveAdminSU_Booked__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_IWALearnDevSU_Booked__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_IWAACAAdminSU_Booked__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_IWABenAdminSU_Booked__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Legacy_OnDemand__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Retention_Payment__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>SBQQ__ProductCode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Product_Group__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Quote Line Group</controllingFieldValue>
+            <valueName>NSP_Product_Option_Type__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Quantity_Validation__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Action_Type__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_ActionType__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Parent_ProductCode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Custom_Pricing__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__ListPrice__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Lock_On_QLI__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__TotalDiscountAmount__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__ProratedListPrice__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__NetPrice__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Validate_ProjectRecruiting_Dates__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Validate_Pro_Start_End_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Validate_TalentConnect_Sub_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Related_Setup_SKU_Missing__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Discount_Internal__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Unit Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>SBQQ__ProductName__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Active_W2_Employees__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Active_1099_Contractors__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Feature_Category__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_ITSTimeSimplicity_Quantity__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_ITS_Telepunch_Users_Quantity__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_ITSUserLicense_Quantity__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Estimated_Number_Of_Employees__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Number_Of_Boxes__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Number_Of_Users__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_Target_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_RPO_Start_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_ProjRec_End_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_ProjRec_Start_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_RPO_End_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_No_of_Hiring_Managers__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_Talent_ConnectSubscription_StartDate__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_Talent_Connect_Subscription_End_Date__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NSP_Implementation_Start_Date__c</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

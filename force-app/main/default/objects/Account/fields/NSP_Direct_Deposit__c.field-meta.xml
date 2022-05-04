@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Direct_Deposit__c</fullName>
+    <description>Field to Direct Deposit Data</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Direct Deposit</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

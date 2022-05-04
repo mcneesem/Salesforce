@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Client Liaison</fullName>
+                    <default>false</default>
+                    <label>Client Liaison</label>
+                </value>
+                <value>
+                    <fullName>Payroll Specialist</fullName>
+                    <default>false</default>
+                    <label>Payroll Specialist</label>
+                </value>
+                <value>
+                    <fullName>HR Specialist</fullName>
+                    <default>false</default>
+                    <label>HR Specialist</label>
+                </value>
+                <value>
+                    <fullName>Benefits Specialist</fullName>
+                    <default>false</default>
+                    <label>Benefits Specialist</label>
+                </value>
+                <value>
+                    <fullName>Safety Consultant</fullName>
+                    <default>false</default>
+                    <label>Safety Consultant</label>
+                </value>
+                <value>
+                    <fullName>MidMarket Account Exec</fullName>
+                    <default>false</default>
+                    <label>MidMarket Account Exec</label>
+                </value>
+                <value>
+                    <fullName>Bus. Team-HRSp/CL</fullName>
+                    <default>false</default>
+                    <label>Bus. Team-HRSp/CL</label>
+                </value>
+                <value>
+                    <fullName>National Account Exec</fullName>
+                    <default>false</default>
+                    <label>National Account Exec</label>
+                </value>
+                <value>
+                    <fullName>Recruiting</fullName>
+                    <default>false</default>
+                    <label>Recruiting</label>
+                </value>
+                <value>
+                    <fullName>Performance Specialist</fullName>
+                    <default>false</default>
+                    <label>Performance Specialist</label>
+                </value>
+                <value>
+                    <fullName>Manager, HR Services</fullName>
+                    <default>false</default>
+                    <label>Manager, HR Services</label>
+                </value>
+                <value>
+                    <fullName>Payroll Supervisor</fullName>
+                    <default>false</default>
+                    <label>Payroll Supervisor</label>
+                </value>
+                <value>
+                    <fullName>Renewal Coordinator</fullName>
+                    <default>false</default>
+                    <label>Renewal Coordinator</label>
+                </value>
+                <value>
+                    <fullName>BPA</fullName>
+                    <default>false</default>
+                    <label>BPA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+</CustomField>

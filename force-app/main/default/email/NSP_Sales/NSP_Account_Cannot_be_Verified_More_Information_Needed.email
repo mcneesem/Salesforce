@@ -1,0 +1,1 @@
+The Account for {!Account.Name} cannot be verified because {!Account.NSP_Denial_Reason__c}. Please follow up with the {!Account.Name} to gather the necessary information to resolve and receive Partner verification.

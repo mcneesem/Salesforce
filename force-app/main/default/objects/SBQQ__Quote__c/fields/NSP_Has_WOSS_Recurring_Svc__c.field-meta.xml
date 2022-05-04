@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Has_WOSS_Recurring_Svc__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if WOSS Recurring products are added to the quote</description>
+    <externalId>false</externalId>
+    <label>Has WOSS Recurring Svc</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ABSD-PaulBook</fullName>
+        <default>false</default>
+        <label>ABSD-PaulBook</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG 101</fullName>
+        <default>false</default>
+        <label>ACG 101</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Arizona</fullName>
+        <default>false</default>
+        <label>ACG Arizona</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Atlanta</fullName>
+        <default>false</default>
+        <label>ACG Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Birmingham Network</fullName>
+        <default>false</default>
+        <label>ACG Birmingham Network</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Boston</fullName>
+        <default>false</default>
+        <label>ACG Boston</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Central Texas</fullName>
+        <default>false</default>
+        <label>ACG Central Texas</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Charlotte</fullName>
+        <default>false</default>
+        <label>ACG Charlotte</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Chicago</fullName>
+        <default>false</default>
+        <label>ACG Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Cincinnati</fullName>
+        <default>false</default>
+        <label>ACG Cincinnati</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Cleveland</fullName>
+        <default>false</default>
+        <label>ACG Cleveland</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Columbus</fullName>
+        <default>false</default>
+        <label>ACG Columbus</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Connecticut</fullName>
+        <default>false</default>
+        <label>ACG Connecticut</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Dallas/Fort Worth</fullName>
+        <default>false</default>
+        <label>ACG Dallas/Fort Worth</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Denver</fullName>
+        <default>false</default>
+        <label>ACG Denver</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Detroit</fullName>
+        <default>false</default>
+        <label>ACG Detroit</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG GLOBAL</fullName>
+        <default>false</default>
+        <label>ACG GLOBAL</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Houston</fullName>
+        <default>false</default>
+        <label>ACG Houston</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Indiana</fullName>
+        <default>false</default>
+        <label>ACG Indiana</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Kansas City</fullName>
+        <default>false</default>
+        <label>ACG Kansas City</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Kentucky</fullName>
+        <default>false</default>
+        <label>ACG Kentucky</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Los Angeles</fullName>
+        <default>false</default>
+        <label>ACG Los Angeles</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Louisiana</fullName>
+        <default>false</default>
+        <label>ACG Louisiana</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Maryland</fullName>
+        <default>false</default>
+        <label>ACG Maryland</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Minnesota</fullName>
+        <default>false</default>
+        <label>ACG Minnesota</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG National Capital</fullName>
+        <default>false</default>
+        <label>ACG National Capital</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Nebraska</fullName>
+        <default>false</default>
+        <label>ACG Nebraska</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG New Jersey</fullName>
+        <default>false</default>
+        <label>ACG New Jersey</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG New York</fullName>
+        <default>false</default>
+        <label>ACG New York</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG North Florida</fullName>
+        <default>false</default>
+        <label>ACG North Florida</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Orange County</fullName>
+        <default>false</default>
+        <label>ACG Orange County</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Orlando</fullName>
+        <default>false</default>
+        <label>ACG Orlando</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Philadelphia</fullName>
+        <default>false</default>
+        <label>ACG Philadelphia</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Pittsburgh</fullName>
+        <default>false</default>
+        <label>ACG Pittsburgh</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Portland</fullName>
+        <default>false</default>
+        <label>ACG Portland</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Raleigh Durham</fullName>
+        <default>false</default>
+        <label>ACG Raleigh Durham</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Richmond</fullName>
+        <default>false</default>
+        <label>ACG Richmond</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG San Diego</fullName>
+        <default>false</default>
+        <label>ACG San Diego</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG San Francisco</fullName>
+        <default>false</default>
+        <label>ACG San Francisco</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Seattle</fullName>
+        <default>false</default>
+        <label>ACG Seattle</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Silicon Valley</fullName>
+        <default>false</default>
+        <label>ACG Silicon Valley</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG South Florida</fullName>
+        <default>false</default>
+        <label>ACG South Florida</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG St. Louis</fullName>
+        <default>false</default>
+        <label>ACG St. Louis</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Tampa Bay</fullName>
+        <default>false</default>
+        <label>ACG Tampa Bay</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Tennessee</fullName>
+        <default>false</default>
+        <label>ACG Tennessee</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Utah</fullName>
+        <default>false</default>
+        <label>ACG Utah</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG W. Michigan</fullName>
+        <default>false</default>
+        <label>ACG W. Michigan</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Western New York</fullName>
+        <default>false</default>
+        <label>ACG Western New York</label>
+    </customValue>
+    <customValue>
+        <fullName>ACG Wisconsin</fullName>
+        <default>false</default>
+        <label>ACG Wisconsin</label>
+    </customValue>
+    <customValue>
+        <fullName>Acisure</fullName>
+        <default>false</default>
+        <label>Acisure</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, Bedrosian &amp; Assoc</fullName>
+        <default>false</default>
+        <label>Acrisure, Bedrosian &amp; Assoc</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, Bozzuto Insurance Se</fullName>
+        <default>false</default>
+        <label>Acrisure, Bozzuto Insurance Se</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, BXA Insurance</fullName>
+        <default>false</default>
+        <label>Acrisure, BXA Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, Filice San Jose</fullName>
+        <default>false</default>
+        <label>Acrisure, Filice San Jose</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, GHB Benefits</fullName>
+        <default>false</default>
+        <label>Acrisure, GHB Benefits</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, Health Consultants</fullName>
+        <default>false</default>
+        <label>Acrisure, Health Consultants</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, Insource Insurance</fullName>
+        <default>false</default>
+        <label>Acrisure, Insource Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, John James Benefits</fullName>
+        <default>false</default>
+        <label>Acrisure, John James Benefits</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, LLC</fullName>
+        <default>false</default>
+        <label>Acrisure, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, LLC dba Ashton Benef</fullName>
+        <default>false</default>
+        <label>Acrisure, LLC dba Ashton Benef</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, LLC dba Presidio</fullName>
+        <default>false</default>
+        <label>Acrisure, LLC dba Presidio</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, Parelius Insurance S</fullName>
+        <default>false</default>
+        <label>Acrisure, Parelius Insurance S</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, PGM LLC</fullName>
+        <default>false</default>
+        <label>Acrisure, PGM LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, TASK Group LLC, dba</fullName>
+        <default>false</default>
+        <label>Acrisure, TASK Group LLC, dba</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure dba Rigg Darlington</fullName>
+        <default>false</default>
+        <label>Acrisure dba Rigg Darlington</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure LLC dba Connor Group</fullName>
+        <default>false</default>
+        <label>Acrisure LLC dba Connor Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Advantage Benefits Solutions</fullName>
+        <default>false</default>
+        <label>Advantage Benefits Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>AEIS</fullName>
+        <default>false</default>
+        <label>AEIS</label>
+    </customValue>
+    <customValue>
+        <fullName>AFCEA - Armed Forces Communica</fullName>
+        <default>false</default>
+        <label>AFCEA - Armed Forces Communica</label>
+    </customValue>
+    <customValue>
+        <fullName>AHERN INS</fullName>
+        <default>false</default>
+        <label>AHERN INS</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group - CHS</fullName>
+        <default>false</default>
+        <label>Alera Group - CHS</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group - CPIHR</fullName>
+        <default>false</default>
+        <label>Alera Group - CPIHR</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group - Fall River Emp</fullName>
+        <default>false</default>
+        <label>Alera Group - Fall River Emp</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group - GCG Financial</fullName>
+        <default>false</default>
+        <label>Alera Group - GCG Financial</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group - Silberstein Insu</fullName>
+        <default>false</default>
+        <label>Alera Group - Silberstein Insu</label>
+    </customValue>
+    <customValue>
+        <fullName>AM&amp;AA - Alliance of Mergers an</fullName>
+        <default>false</default>
+        <label>AM&amp;AA - Alliance of Mergers an</label>
+    </customValue>
+    <customValue>
+        <fullName>American Westbrook Insurance</fullName>
+        <default>false</default>
+        <label>American Westbrook Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Archer Financial Group</fullName>
+        <default>false</default>
+        <label>Archer Financial Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Arrow Benefits Group</fullName>
+        <default>false</default>
+        <label>Arrow Benefits Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Arc</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Arc</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Enc</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Enc</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Gle</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Gle</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Irv</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Irv</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Los</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Los</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Pas</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Pas</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Red</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Red</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Rol</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Rol</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, San</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, San</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, She</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, She</label>
+    </customValue>
+    <customValue>
+        <fullName>Arroyo Insurance Services, Tor</fullName>
+        <default>false</default>
+        <label>Arroyo Insurance Services, Tor</label>
+    </customValue>
+    <customValue>
+        <fullName>Assurance LTD</fullName>
+        <default>false</default>
+        <label>Assurance LTD</label>
+    </customValue>
+    <customValue>
+        <fullName>Benchmark Planning</fullName>
+        <default>false</default>
+        <label>Benchmark Planning</label>
+    </customValue>
+    <customValue>
+        <fullName>Benefit Pro Insurance Services</fullName>
+        <default>false</default>
+        <label>Benefit Pro Insurance Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Benefits Alliance Insurance Se</fullName>
+        <default>false</default>
+        <label>Benefits Alliance Insurance Se</label>
+    </customValue>
+    <customValue>
+        <fullName>Benefits Texas</fullName>
+        <default>false</default>
+        <label>Benefits Texas</label>
+    </customValue>
+    <customValue>
+        <fullName>Beneflex Insurance Services, I</fullName>
+        <default>false</default>
+        <label>Beneflex Insurance Services, I</label>
+    </customValue>
+    <customValue>
+        <fullName>Broad Reach Benefits</fullName>
+        <default>false</default>
+        <label>Broad Reach Benefits</label>
+    </customValue>
+    <customValue>
+        <fullName>Brooks Jucha &amp; Associates</fullName>
+        <default>false</default>
+        <label>Brooks Jucha &amp; Associates</label>
+    </customValue>
+    <customValue>
+        <fullName>California Corporate Benefits</fullName>
+        <default>false</default>
+        <label>California Corporate Benefits</label>
+    </customValue>
+    <customValue>
+        <fullName>Campbell Petrie</fullName>
+        <default>false</default>
+        <label>Campbell Petrie</label>
+    </customValue>
+    <customValue>
+        <fullName>CFO Alliance</fullName>
+        <default>false</default>
+        <label>CFO Alliance</label>
+    </customValue>
+    <customValue>
+        <fullName>CMAA</fullName>
+        <default>false</default>
+        <label>CMAA</label>
+    </customValue>
+    <customValue>
+        <fullName>CMAA Lone Star Chapter</fullName>
+        <default>false</default>
+        <label>CMAA Lone Star Chapter</label>
+    </customValue>
+    <customValue>
+        <fullName>Colorado CEO Forum</fullName>
+        <default>false</default>
+        <label>Colorado CEO Forum</label>
+    </customValue>
+    <customValue>
+        <fullName>ConnectWise</fullName>
+        <default>false</default>
+        <label>ConnectWise</label>
+    </customValue>
+    <customValue>
+        <fullName>Core Benefit Services, Inc.</fullName>
+        <default>false</default>
+        <label>Core Benefit Services, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>DIGITAL INSURANCE</fullName>
+        <default>false</default>
+        <label>DIGITAL INSURANCE</label>
+    </customValue>
+    <customValue>
+        <fullName>Digital Insurance-fka Kistler</fullName>
+        <default>false</default>
+        <label>Digital Insurance-fka Kistler</label>
+    </customValue>
+    <customValue>
+        <fullName>Directory Marketing, Inc</fullName>
+        <default>false</default>
+        <label>Directory Marketing, Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>DKG Insurance &amp; Financial</fullName>
+        <default>false</default>
+        <label>DKG Insurance &amp; Financial</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Albany</fullName>
+        <default>false</default>
+        <label>EO Albany</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Arizona</fullName>
+        <default>false</default>
+        <label>EO Arizona</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Atlanta</fullName>
+        <default>false</default>
+        <label>EO Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Austin</fullName>
+        <default>false</default>
+        <label>EO Austin</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Baltimore</fullName>
+        <default>false</default>
+        <label>EO Baltimore</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Birmingham</fullName>
+        <default>false</default>
+        <label>EO Birmingham</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Boston</fullName>
+        <default>false</default>
+        <label>EO Boston</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Brooklyn</fullName>
+        <default>false</default>
+        <label>EO Brooklyn</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Bryan-College Station</fullName>
+        <default>false</default>
+        <label>EO Bryan-College Station</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Charlotte</fullName>
+        <default>false</default>
+        <label>EO Charlotte</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Chicago</fullName>
+        <default>false</default>
+        <label>EO Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Cincinnati</fullName>
+        <default>false</default>
+        <label>EO Cincinnati</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Cleveland</fullName>
+        <default>false</default>
+        <label>EO Cleveland</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Colorado</fullName>
+        <default>false</default>
+        <label>EO Colorado</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Columbus</fullName>
+        <default>false</default>
+        <label>EO Columbus</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Connecticut</fullName>
+        <default>false</default>
+        <label>EO Connecticut</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Dallas</fullName>
+        <default>false</default>
+        <label>EO Dallas</label>
+    </customValue>
+    <customValue>
+        <fullName>EO DC</fullName>
+        <default>false</default>
+        <label>EO DC</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Detroit</fullName>
+        <default>false</default>
+        <label>EO Detroit</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Fort Worth</fullName>
+        <default>false</default>
+        <label>EO Fort Worth</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Global</fullName>
+        <default>false</default>
+        <label>EO Global</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Hawaii</fullName>
+        <default>false</default>
+        <label>EO Hawaii</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Houston</fullName>
+        <default>false</default>
+        <label>EO Houston</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Idaho</fullName>
+        <default>false</default>
+        <label>EO Idaho</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Indianapolis</fullName>
+        <default>false</default>
+        <label>EO Indianapolis</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Iowa</fullName>
+        <default>false</default>
+        <label>EO Iowa</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Kansas City</fullName>
+        <default>false</default>
+        <label>EO Kansas City</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Knoxville</fullName>
+        <default>false</default>
+        <label>EO Knoxville</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Las Vegas</fullName>
+        <default>false</default>
+        <label>EO Las Vegas</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Los Angeles</fullName>
+        <default>false</default>
+        <label>EO Los Angeles</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Louisiana</fullName>
+        <default>false</default>
+        <label>EO Louisiana</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Minnesota</fullName>
+        <default>false</default>
+        <label>EO Minnesota</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Nashville</fullName>
+        <default>false</default>
+        <label>EO Nashville</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Nebraska</fullName>
+        <default>false</default>
+        <label>EO Nebraska</label>
+    </customValue>
+    <customValue>
+        <fullName>EO New Jersey</fullName>
+        <default>false</default>
+        <label>EO New Jersey</label>
+    </customValue>
+    <customValue>
+        <fullName>EO New York</fullName>
+        <default>false</default>
+        <label>EO New York</label>
+    </customValue>
+    <customValue>
+        <fullName>EO NY Long Island</fullName>
+        <default>false</default>
+        <label>EO NY Long Island</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Oklahoma City</fullName>
+        <default>false</default>
+        <label>EO Oklahoma City</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Orange County</fullName>
+        <default>false</default>
+        <label>EO Orange County</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Philadelphia</fullName>
+        <default>false</default>
+        <label>EO Philadelphia</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Pittsburgh</fullName>
+        <default>false</default>
+        <label>EO Pittsburgh</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Portland</fullName>
+        <default>false</default>
+        <label>EO Portland</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Raleigh-Durham</fullName>
+        <default>false</default>
+        <label>EO Raleigh-Durham</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Reno</fullName>
+        <default>false</default>
+        <label>EO Reno</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Sacramento</fullName>
+        <default>false</default>
+        <label>EO Sacramento</label>
+    </customValue>
+    <customValue>
+        <fullName>EO San Antonio</fullName>
+        <default>false</default>
+        <label>EO San Antonio</label>
+    </customValue>
+    <customValue>
+        <fullName>EO San Diego</fullName>
+        <default>false</default>
+        <label>EO San Diego</label>
+    </customValue>
+    <customValue>
+        <fullName>EO San Francisco</fullName>
+        <default>false</default>
+        <label>EO San Francisco</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Seattle</fullName>
+        <default>false</default>
+        <label>EO Seattle</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Southeast Virginia</fullName>
+        <default>false</default>
+        <label>EO Southeast Virginia</label>
+    </customValue>
+    <customValue>
+        <fullName>EO South Florida</fullName>
+        <default>false</default>
+        <label>EO South Florida</label>
+    </customValue>
+    <customValue>
+        <fullName>EO St. Louis</fullName>
+        <default>false</default>
+        <label>EO St. Louis</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Tampa Bay</fullName>
+        <default>false</default>
+        <label>EO Tampa Bay</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Tulsa</fullName>
+        <default>false</default>
+        <label>EO Tulsa</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Utah</fullName>
+        <default>false</default>
+        <label>EO Utah</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Western New York</fullName>
+        <default>false</default>
+        <label>EO Western New York</label>
+    </customValue>
+    <customValue>
+        <fullName>EO West Michigan</fullName>
+        <default>false</default>
+        <label>EO West Michigan</label>
+    </customValue>
+    <customValue>
+        <fullName>EO Wisconsin</fullName>
+        <default>false</default>
+        <label>EO Wisconsin</label>
+    </customValue>
+    <customValue>
+        <fullName>EPIC - COOK MARAN</fullName>
+        <default>false</default>
+        <label>EPIC - COOK MARAN</label>
+    </customValue>
+    <customValue>
+        <fullName>Esser Hayes Insurance Group</fullName>
+        <default>false</default>
+        <label>Esser Hayes Insurance Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Everstring</fullName>
+        <default>false</default>
+        <label>Everstring</label>
+    </customValue>
+    <customValue>
+        <fullName>Everstring - BDR</fullName>
+        <default>false</default>
+        <label>Everstring - BDR</label>
+    </customValue>
+    <customValue>
+        <fullName>Fiedler Insurance, LLC</fullName>
+        <default>false</default>
+        <label>Fiedler Insurance, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FIRE Drill</fullName>
+        <default>false</default>
+        <label>FIRE Drill</label>
+    </customValue>
+    <customValue>
+        <fullName>First Person Advisors</fullName>
+        <default>false</default>
+        <label>First Person Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>Fredericks Benefits</fullName>
+        <default>false</default>
+        <label>Fredericks Benefits</label>
+    </customValue>
+    <customValue>
+        <fullName>Gallagher Benefit Service</fullName>
+        <default>false</default>
+        <label>Gallagher Benefit Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestalt Growth Advisors (fka H</fullName>
+        <default>false</default>
+        <label>Gestalt Growth Advisors (fka H</label>
+    </customValue>
+    <customValue>
+        <fullName>Greater Houston Partnership</fullName>
+        <default>false</default>
+        <label>Greater Houston Partnership</label>
+    </customValue>
+    <customValue>
+        <fullName>Hanna Global Solutions</fullName>
+        <default>false</default>
+        <label>Hanna Global Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Heritage Companies, Inc</fullName>
+        <default>false</default>
+        <label>Heritage Companies, Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>Hilb Group - 360 Corporate Ben</fullName>
+        <default>false</default>
+        <label>Hilb Group - 360 Corporate Ben</label>
+    </customValue>
+    <customValue>
+        <fullName>Hilb Group of New England</fullName>
+        <default>false</default>
+        <label>Hilb Group of New England</label>
+    </customValue>
+    <customValue>
+        <fullName>Hilb Group of New York</fullName>
+        <default>false</default>
+        <label>Hilb Group of New York</label>
+    </customValue>
+    <customValue>
+        <fullName>Hilb Group - Rampart Benefit</fullName>
+        <default>false</default>
+        <label>Hilb Group - Rampart Benefit</label>
+    </customValue>
+    <customValue>
+        <fullName>Horstmann Financial and Insura</fullName>
+        <default>false</default>
+        <label>Horstmann Financial and Insura</label>
+    </customValue>
+    <customValue>
+        <fullName>HTG-HEARTLAND TECH GROUP, LLC</fullName>
+        <default>false</default>
+        <label>HTG-HEARTLAND TECH GROUP, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Pittsburgh</fullName>
+        <default>false</default>
+        <label>HUB Pittsburgh</label>
+    </customValue>
+    <customValue>
+        <fullName>IBTX</fullName>
+        <default>false</default>
+        <label>IBTX</label>
+    </customValue>
+    <customValue>
+        <fullName>IMA - Institute of Management</fullName>
+        <default>false</default>
+        <label>IMA - Institute of Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Inc 5000</fullName>
+        <default>false</default>
+        <label>Inc 5000</label>
+    </customValue>
+    <customValue>
+        <fullName>Innovative Cost Management Ser</fullName>
+        <default>false</default>
+        <label>Innovative Cost Management Ser</label>
+    </customValue>
+    <customValue>
+        <fullName>Intrepid Atlanta</fullName>
+        <default>false</default>
+        <label>Intrepid Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>IT By Design</fullName>
+        <default>false</default>
+        <label>IT By Design</label>
+    </customValue>
+    <customValue>
+        <fullName>J.D. Moschitto &amp; Associates, I</fullName>
+        <default>false</default>
+        <label>J.D. Moschitto &amp; Associates, I</label>
+    </customValue>
+    <customValue>
+        <fullName>Johnson &amp; Dugan Insurance Serv</fullName>
+        <default>false</default>
+        <label>Johnson &amp; Dugan Insurance Serv</label>
+    </customValue>
+    <customValue>
+        <fullName>JRG Advisors, LLC</fullName>
+        <default>false</default>
+        <label>JRG Advisors, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>KBI Benefits, Inc.</fullName>
+        <default>false</default>
+        <label>KBI Benefits, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>KRA Life Agency</fullName>
+        <default>false</default>
+        <label>KRA Life Agency</label>
+    </customValue>
+    <customValue>
+        <fullName>Lifeboat - World Wide Technolo</fullName>
+        <default>false</default>
+        <label>Lifeboat - World Wide Technolo</label>
+    </customValue>
+    <customValue>
+        <fullName>Maniaci Insurance Services, In</fullName>
+        <default>false</default>
+        <label>Maniaci Insurance Services, In</label>
+    </customValue>
+    <customValue>
+        <fullName>Melissa Whitaker International</fullName>
+        <default>false</default>
+        <label>Melissa Whitaker International</label>
+    </customValue>
+    <customValue>
+        <fullName>Mercury Partners Management, L</fullName>
+        <default>false</default>
+        <label>Mercury Partners Management, L</label>
+    </customValue>
+    <customValue>
+        <fullName>MMNA Agency – Commercial</fullName>
+        <default>false</default>
+        <label>MMNA Agency – Commercial</label>
+    </customValue>
+    <customValue>
+        <fullName>MMNA Agency – Exclusive</fullName>
+        <default>false</default>
+        <label>MMNA Agency – Exclusive</label>
+    </customValue>
+    <customValue>
+        <fullName>MMNA Agency – Independent</fullName>
+        <default>false</default>
+        <label>MMNA Agency – Independent</label>
+    </customValue>
+    <customValue>
+        <fullName>MMNA Raymond James</fullName>
+        <default>false</default>
+        <label>MMNA Raymond James</label>
+    </customValue>
+    <customValue>
+        <fullName>MMNA Raymond James – Commerci</fullName>
+        <default>false</default>
+        <label>MMNA Raymond James – Commerci</label>
+    </customValue>
+    <customValue>
+        <fullName>MMNA Raymond James – Package</fullName>
+        <default>false</default>
+        <label>MMNA Raymond James – Package</label>
+    </customValue>
+    <customValue>
+        <fullName>National Assoc of Insurance</fullName>
+        <default>false</default>
+        <label>National Assoc of Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>New Mountain Capital</fullName>
+        <default>false</default>
+        <label>New Mountain Capital</label>
+    </customValue>
+    <customValue>
+        <fullName>NFP Corporate Services (SE)</fullName>
+        <default>false</default>
+        <label>NFP Corporate Services (SE)</label>
+    </customValue>
+    <customValue>
+        <fullName>NFP - The DeChristopher Group</fullName>
+        <default>false</default>
+        <label>NFP - The DeChristopher Group</label>
+    </customValue>
+    <customValue>
+        <fullName>NSCA - National Systems Contra</fullName>
+        <default>false</default>
+        <label>NSCA - National Systems Contra</label>
+    </customValue>
+    <customValue>
+        <fullName>NVSBC-National Veteran Small B</fullName>
+        <default>false</default>
+        <label>NVSBC-National Veteran Small B</label>
+    </customValue>
+    <customValue>
+        <fullName>NVTC-Northern Virginia Technol</fullName>
+        <default>false</default>
+        <label>NVTC-Northern Virginia Technol</label>
+    </customValue>
+    <customValue>
+        <fullName>OneDigital FNA (Warrens Busine</fullName>
+        <default>false</default>
+        <label>OneDigital FNA (Warrens Busine</label>
+    </customValue>
+    <customValue>
+        <fullName>Pacific Unified Insurance</fullName>
+        <default>false</default>
+        <label>Pacific Unified Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Palmer &amp; Cay- NY</fullName>
+        <default>false</default>
+        <label>Palmer &amp; Cay- NY</label>
+    </customValue>
+    <customValue>
+        <fullName>Patriot Growth Insurance – Cap</fullName>
+        <default>false</default>
+        <label>Patriot Growth Insurance – Cap</label>
+    </customValue>
+    <customValue>
+        <fullName>Patriot Growth Insurance TATCH</fullName>
+        <default>false</default>
+        <label>Patriot Growth Insurance TATCH</label>
+    </customValue>
+    <customValue>
+        <fullName>PEACHTREE BENEFIT GROUP INC</fullName>
+        <default>false</default>
+        <label>PEACHTREE BENEFIT GROUP INC</label>
+    </customValue>
+    <customValue>
+        <fullName>Pentra</fullName>
+        <default>false</default>
+        <label>Pentra</label>
+    </customValue>
+    <customValue>
+        <fullName>PEO Canada - Houston</fullName>
+        <default>false</default>
+        <label>PEO Canada - Houston</label>
+    </customValue>
+    <customValue>
+        <fullName>PEO Canada Oklahoma City</fullName>
+        <default>false</default>
+        <label>PEO Canada Oklahoma City</label>
+    </customValue>
+    <customValue>
+        <fullName>ProCo Insurance Services</fullName>
+        <default>false</default>
+        <label>ProCo Insurance Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Professional Group Marketing,</fullName>
+        <default>false</default>
+        <label>Professional Group Marketing,</label>
+    </customValue>
+    <customValue>
+        <fullName>Progressive Benefit</fullName>
+        <default>false</default>
+        <label>Progressive Benefit</label>
+    </customValue>
+    <customValue>
+        <fullName>Quantum Energy Partners, LLC</fullName>
+        <default>false</default>
+        <label>Quantum Energy Partners, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>Receivables Management Associa</fullName>
+        <default>false</default>
+        <label>Receivables Management Associa</label>
+    </customValue>
+    <customValue>
+        <fullName>RSC Insurance Brokerage</fullName>
+        <default>false</default>
+        <label>RSC Insurance Brokerage</label>
+    </customValue>
+    <customValue>
+        <fullName>RSC - Krauter</fullName>
+        <default>false</default>
+        <label>RSC - Krauter</label>
+    </customValue>
+    <customValue>
+        <fullName>Sales Xceleration Chicago</fullName>
+        <default>false</default>
+        <label>Sales Xceleration Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>Smith McGehee Insurance</fullName>
+        <default>false</default>
+        <label>Smith McGehee Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Station Houston, Inc.</fullName>
+        <default>false</default>
+        <label>Station Houston, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>Strategic Wellness</fullName>
+        <default>false</default>
+        <label>Strategic Wellness</label>
+    </customValue>
+	<customValue>
+        <fullName>SunPower Corporation</fullName>
+        <default>false</default>
+        <label>SunPower Corporation</label>
+    </customValue>
+    <customValue>
+        <fullName>TBA - Texas Bankers Associatio</fullName>
+        <default>false</default>
+        <label>TBA - Texas Bankers Associatio</label>
+    </customValue>
+    <customValue>
+        <fullName>Telamon Human Capital Resource</fullName>
+        <default>false</default>
+        <label>Telamon Human Capital Resource</label>
+    </customValue>
+    <customValue>
+        <fullName>The Competitive Advantage Comp</fullName>
+        <default>false</default>
+        <label>The Competitive Advantage Comp</label>
+    </customValue>
+    <customValue>
+        <fullName>The Henehan Company</fullName>
+        <default>false</default>
+        <label>The Henehan Company</label>
+    </customValue>
+    <customValue>
+        <fullName>The IMA Financial Group, Inc</fullName>
+        <default>false</default>
+        <label>The IMA Financial Group, Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>The Jordan Company</fullName>
+        <default>false</default>
+        <label>The Jordan Company</label>
+    </customValue>
+    <customValue>
+        <fullName>The Signature B &amp; B Companies</fullName>
+        <default>false</default>
+        <label>The Signature B &amp; B Companies</label>
+    </customValue>
+    <customValue>
+        <fullName>The Vita Companies</fullName>
+        <default>false</default>
+        <label>The Vita Companies</label>
+    </customValue>
+    <customValue>
+        <fullName>The Whitmore Group</fullName>
+        <default>false</default>
+        <label>The Whitmore Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Top Workplaces</fullName>
+        <default>false</default>
+        <label>Top Workplaces</label>
+    </customValue>
+    <customValue>
+        <fullName>Trying Times</fullName>
+        <default>false</default>
+        <label>Trying Times</label>
+    </customValue>
+    <customValue>
+        <fullName>United Way Worldwide</fullName>
+        <default>false</default>
+        <label>United Way Worldwide</label>
+    </customValue>
+    <customValue>
+        <fullName>University Lab Partners</fullName>
+        <default>false</default>
+        <label>University Lab Partners</label>
+    </customValue>
+    <customValue>
+        <fullName>Venture Atlanta</fullName>
+        <default>false</default>
+        <label>Venture Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Atlanta</fullName>
+        <default>false</default>
+        <label>Vistage Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Austin</fullName>
+        <default>false</default>
+        <label>Vistage Austin</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Birmingham</fullName>
+        <default>false</default>
+        <label>Vistage Birmingham</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Boise</fullName>
+        <default>false</default>
+        <label>Vistage Boise</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Boston</fullName>
+        <default>false</default>
+        <label>Vistage Boston</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Buffalo</fullName>
+        <default>false</default>
+        <label>Vistage Buffalo</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Charlotte</fullName>
+        <default>false</default>
+        <label>Vistage Charlotte</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Chicago</fullName>
+        <default>false</default>
+        <label>Vistage Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Cincinnati</fullName>
+        <default>false</default>
+        <label>Vistage Cincinnati</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Colorado</fullName>
+        <default>false</default>
+        <label>Vistage Colorado</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Columbus</fullName>
+        <default>false</default>
+        <label>Vistage Columbus</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage CT</fullName>
+        <default>false</default>
+        <label>Vistage CT</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Dallas</fullName>
+        <default>false</default>
+        <label>Vistage Dallas</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Houston</fullName>
+        <default>false</default>
+        <label>Vistage Houston</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Indianapolis</fullName>
+        <default>false</default>
+        <label>Vistage Indianapolis</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Inland Empire</fullName>
+        <default>false</default>
+        <label>Vistage Inland Empire</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Kansas City</fullName>
+        <default>false</default>
+        <label>Vistage Kansas City</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Las Vegas</fullName>
+        <default>false</default>
+        <label>Vistage Las Vegas</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Los Angeles</fullName>
+        <default>false</default>
+        <label>Vistage Los Angeles</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Minneapolis</fullName>
+        <default>false</default>
+        <label>Vistage Minneapolis</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage New Jersey</fullName>
+        <default>false</default>
+        <label>Vistage New Jersey</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage NY</fullName>
+        <default>false</default>
+        <label>Vistage NY</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Orange County</fullName>
+        <default>false</default>
+        <label>Vistage Orange County</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Philadelphia</fullName>
+        <default>false</default>
+        <label>Vistage Philadelphia</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Phoenix</fullName>
+        <default>false</default>
+        <label>Vistage Phoenix</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Portland</fullName>
+        <default>false</default>
+        <label>Vistage Portland</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Raleigh</fullName>
+        <default>false</default>
+        <label>Vistage Raleigh</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage S. Central PA</fullName>
+        <default>false</default>
+        <label>Vistage S. Central PA</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Sacramento</fullName>
+        <default>false</default>
+        <label>Vistage Sacramento</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage San Antonio</fullName>
+        <default>false</default>
+        <label>Vistage San Antonio</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage San Diego</fullName>
+        <default>false</default>
+        <label>Vistage San Diego</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage San Francisco</fullName>
+        <default>false</default>
+        <label>Vistage San Francisco</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Seattle</fullName>
+        <default>false</default>
+        <label>Vistage Seattle</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage St. Louis</fullName>
+        <default>false</default>
+        <label>Vistage St. Louis</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Tri-State</fullName>
+        <default>false</default>
+        <label>Vistage Tri-State</label>
+    </customValue>
+    <customValue>
+        <fullName>Vistage Worldwide</fullName>
+        <default>false</default>
+        <label>Vistage Worldwide</label>
+    </customValue>
+    <masterLabel>Sub Partner</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

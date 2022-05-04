@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Total_Final_Monthly_Fees__c</fullName>
+    <description>Calculates the Total Final Monthly Fees</description>
+    <externalId>false</externalId>
+    <formula>IF( OR(ISPICKVAL( SBQQ__SubscriptionType__c ,&apos;Renewable&apos;),ISPICKVAL( SBQQ__SubscriptionType__c ,&apos;Evergreen&apos;)) ,
+( IF(NSP_Quoted_Quantity__c &gt; 0, NSP_Quoted_Quantity__c,SBQQ__Quantity__c) * SBQQ__NetPrice__c)
+,0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Final Monthly Fees</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

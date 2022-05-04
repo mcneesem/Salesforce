@@ -1,0 +1,2 @@
+Please note that {!Opportunity.Name} has moved from Proposal to Closing and requires a New Client Sales Specialists be assigned. Please click on the link below to add the appropriate person to the opportunity team
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

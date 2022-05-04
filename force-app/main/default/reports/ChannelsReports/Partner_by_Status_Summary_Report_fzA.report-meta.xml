@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Partner__c.Type</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Partner__c.NSP_Status__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Partner__c.NSP_Program__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Partner__c.NSP_Sub_Vertical__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Partner__c.Name</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Partner__c</field>
+    </columns>
+    <currency>USD</currency>
+    <description>Summary table of Partners by Status/Lifecyle</description>
+    <filter>
+        <criteriaItems>
+            <column>Account$NSP_Partner_Lifecycle__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account$NSP_Partner_Lifecycle__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Partner by Status- Summary Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_Deluxe_NSP__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Account$NSP_Account_Status_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enter_Partner_Account_For_Src_Is_Partner</fullName>
+    <active>true</active>
+    <description>Validation checks if partner account lookup field is populated when Lead source is Partner</description>
+    <errorConditionFormula>AND(ISPICKVAL(LeadSource, &quot;Partner&quot;),ISBLANK(NSP_Partner__c),
+     NOT( $Setup.NSP_Trigger_Switch__c.LeadValidations__c)
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Partner__c</errorDisplayField>
+    <errorMessage>Please enter Partner Account when Lead Source is Partner</errorMessage>
+</ValidationRule>

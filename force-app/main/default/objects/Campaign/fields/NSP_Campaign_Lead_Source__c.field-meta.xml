@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Campaign_Lead_Source__c</fullName>
+    <description>Picklist field to capture lead source for a campaign</description>
+    <externalId>false</externalId>
+    <label>Campaign Lead Source</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ABSD - Named Account</fullName>
+                <default>false</default>
+                <label>ABSD - Named Account</label>
+            </value>
+            <value>
+                <fullName>Afilliate</fullName>
+                <default>false</default>
+                <label>Afilliate</label>
+            </value>
+            <value>
+                <fullName>Bing</fullName>
+                <default>false</default>
+                <label>Bing</label>
+            </value>
+            <value>
+                <fullName>Broker</fullName>
+                <default>false</default>
+                <label>Broker</label>
+            </value>
+            <value>
+                <fullName>DoubleClick</fullName>
+                <default>false</default>
+                <label>DoubleClick</label>
+            </value>
+            <value>
+                <fullName>Event</fullName>
+                <default>false</default>
+                <label>Event</label>
+            </value>
+            <value>
+                <fullName>Facebook</fullName>
+                <default>false</default>
+                <label>Facebook</label>
+            </value>
+            <value>
+                <fullName>Google</fullName>
+                <default>false</default>
+                <label>Google</label>
+            </value>
+            <value>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+                <label>LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Loyalty Referral - COI</fullName>
+                <default>false</default>
+                <label>Loyalty Referral - COI</label>
+            </value>
+            <value>
+                <fullName>Loyalty Referral - Corporate Employee</fullName>
+                <default>false</default>
+                <label>Loyalty Referral - Corporate Employee</label>
+            </value>
+            <value>
+                <fullName>Loyalty Referral - Customer</fullName>
+                <default>false</default>
+                <label>Loyalty Referral - Customer</label>
+            </value>
+            <value>
+                <fullName>MM Partner</fullName>
+                <default>false</default>
+                <label>MM Partner</label>
+            </value>
+            <value>
+                <fullName>Pinterest</fullName>
+                <default>false</default>
+                <label>Pinterest</label>
+            </value>
+            <value>
+                <fullName>Stack Adapt</fullName>
+                <default>false</default>
+                <label>Stack Adapt</label>
+            </value>
+            <value>
+                <fullName>Strategic Alliance</fullName>
+                <default>false</default>
+                <label>Strategic Alliance</label>
+            </value>
+            <value>
+                <fullName>Twitter</fullName>
+                <default>false</default>
+                <label>Twitter</label>
+            </value>
+            <value>
+                <fullName>Youtube</fullName>
+                <default>false</default>
+                <label>Youtube</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

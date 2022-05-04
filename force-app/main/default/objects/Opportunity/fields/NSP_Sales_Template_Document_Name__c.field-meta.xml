@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Sales_Template_Document_Name__c</fullName>
+    <description>This field builds the conditional Generated Document File Name for Sales</description>
+    <externalId>false</externalId>
+    <formula>IF(  TEXT(NSP_PrimaryProduct__c) == &apos;WO&apos; &amp;&amp; NOT(ISBLANK(Account.NSP_AIMS_Client__c)),
+
+NSP_Account_Name__c + &quot;_&quot; + TEXT(NSP_Merge_On_Demand_Template_Selection__c) + &quot;_&quot; + Account.NSP_AIMS_Client__c + &quot;_&quot; ,
+
+NSP_Account_Name__c + &quot;_&quot; + TEXT(NSP_Merge_On_Demand_Template_Selection__c) + &quot;_&quot; )</formula>
+    <label>Sales Template Document Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

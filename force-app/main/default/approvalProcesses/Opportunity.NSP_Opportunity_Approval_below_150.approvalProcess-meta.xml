@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;=1 , NSP_WO_Number_of_Employees__c &lt;=4 , NSP_WO_Margin__c &lt; 155),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 5 ,NSP_WO_Number_of_Employees__c &lt;= 9 , NSP_WO_Margin__c &lt; 155 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 10 ,NSP_WO_Number_of_Employees__c &lt;= 19 , NSP_WO_Margin__c &lt; 138 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 20 ,NSP_WO_Number_of_Employees__c &lt;= 49 , NSP_WO_Margin__c &lt; 138 ),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 50, NSP_WO_Number_of_Employees__c &lt;= 149 ,NSP_WO_Margin__c &lt; 138)
+)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>SVP Approval</label>
+        <name>SVP_Approval</name>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;=1 , NSP_WO_Number_of_Employees__c &lt;=4 , NSP_WO_Margin__c &lt;= 261,NSP_WO_Margin__c &gt;= 155),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 5 ,NSP_WO_Number_of_Employees__c &lt;= 9 , NSP_WO_Margin__c &lt;= 199,NSP_WO_Margin__c &gt;= 155 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 10 ,NSP_WO_Number_of_Employees__c &lt;= 19 , NSP_WO_Margin__c &lt;= 159,NSP_WO_Margin__c &gt;= 138 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 20 ,NSP_WO_Number_of_Employees__c &lt;= 49 , NSP_WO_Margin__c &lt;= 146 ,NSP_WO_Margin__c &gt;= 138),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 50, NSP_WO_Number_of_Employees__c &lt;= 149 ,NSP_WO_Margin__c &lt;= 146,NSP_WO_Margin__c &gt;= 138 )
+)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>RVP Approval</label>
+        <name>RVP_Approval</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 5 ,NSP_WO_Number_of_Employees__c &lt;= 9 , NSP_WO_Margin__c &lt;= 241,NSP_WO_Margin__c &gt;= 225 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 10 ,NSP_WO_Number_of_Employees__c &lt;= 19 , NSP_WO_Margin__c &lt;= 201,NSP_WO_Margin__c &gt;= 185 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 20 ,NSP_WO_Number_of_Employees__c &lt;= 49 , NSP_WO_Margin__c &lt;= 181 ,NSP_WO_Margin__c &gt;= 165),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 50, NSP_WO_Number_of_Employees__c &lt;= 149 ,NSP_WO_Margin__c &lt;= 171,NSP_WO_Margin__c &gt;= 160 )
+)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>DM Approval</label>
+        <name>DM_Approval</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 5 ,NSP_WO_Number_of_Employees__c &lt;= 9 , NSP_WO_Margin__c &lt;= 224,NSP_WO_Margin__c &gt;= 200 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 10 ,NSP_WO_Number_of_Employees__c &lt;= 19 , NSP_WO_Margin__c &lt;= 184,NSP_WO_Margin__c &gt;= 160 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 20 ,NSP_WO_Number_of_Employees__c &lt;= 49 , NSP_WO_Margin__c &lt;= 164 ,NSP_WO_Margin__c &gt;= 147),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 50, NSP_WO_Number_of_Employees__c &lt;= 149 ,NSP_WO_Margin__c &lt;= 159,NSP_WO_Margin__c &gt;= 147 )
+)</formula>
+        </entryCriteria>
+        <label>RM Approval</label>
+        <name>RM_Approval</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <emailTemplate>unfiled$public/NSP_WO_OpportunityApproval</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;=1 , NSP_WO_Number_of_Employees__c &lt;=4 , NSP_WO_Margin__c &lt;= 261),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 5 ,NSP_WO_Number_of_Employees__c &lt;= 9 , NSP_WO_Margin__c &lt;= 241 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 10 ,NSP_WO_Number_of_Employees__c &lt;= 19 , NSP_WO_Margin__c &lt;= 201 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 20 ,NSP_WO_Number_of_Employees__c &lt;= 49 , NSP_WO_Margin__c &lt;= 181 ),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 50, NSP_WO_Number_of_Employees__c &lt;= 149 ,NSP_WO_Margin__c &lt;= 171 )
+)</formula>
+    </entryCriteria>
+    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Opportunity Approval below 150</label>
+    <processOrder>3</processOrder>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

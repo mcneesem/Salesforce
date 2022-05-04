@@ -1,0 +1,28 @@
+<!-- **************************************************************************************************   
+Component Name :  NSP_ReProcessContract
+Version              :  1.0                                                                          
+Created Date         :  October 10, 2021                                                             
+Function             :  This component is used as for RePRocess Contact	
+Story                :                                                                             
+Modification Log     :                                                                               
+*	Rakesh           October 10, 2021          First Iteration
+-->
+<aura:component controller="NSP_ContractController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    <aura:attribute name="validContract" type="Boolean" default="true" />
+    <div class="maincontent">
+        <aura:if isTrue="{! v.loaded }">
+
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Processing Contract.." />
+            </aura:set>
+        </aura:if>
+    </div>
+
+
+
+
+
+</aura:component>

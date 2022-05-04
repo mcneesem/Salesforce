@@ -1,0 +1,11 @@
+<html><head>
+	<title></title>
+</head>
+<body style="height: auto; min-height: auto;"><style type="text/css"><!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}-->
+</style>
+<span style="font-size:12px;"><span style="font-family:Arial,Helvetica,sans-serif;">Thank you for expressing interest in OrgPlus RealTime Professional.&nbsp; My name is {{{Sender.Name}}} and I am happy to help you navigate through any questions you may have on OrgPlus.<br />
+&nbsp;<br />
+OrgPlus can be an extremely helpful tool for managing, tracking and planning organizational changes. Our knowledgeable and experienced staff are here to help in any way we can.&nbsp;<br />
+I would like to schedule a time to formally introduce myself, show you a demonstration of OrgPlus and answer any questions you might have. &nbsp;I will be calling you to schedule a convenient time to talk. In the meantime, my contact information is below if you need to reach me.<br />
+<br />
+{{{Sender.Signature}}}</span></span></body></html>

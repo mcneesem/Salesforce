@@ -1,0 +1,2 @@
+An opportunity has been created for {!Opportunity.Account} and the owner has indicated an interest in Retirement Services. Please review the opportunity and take the necessary next steps.
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

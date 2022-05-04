@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Product_Interest__c</fullName>
+    <description>Product interest, identifies the product interests of lead. This field is populated during lead conversion</description>
+    <externalId>false</externalId>
+    <label>Product Interest</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Product_Interest</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

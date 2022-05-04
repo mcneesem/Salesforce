@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Houston</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Sales_Offices__c</field>
+        <value xsi:type="xsd:string">4401 Houston 1
+4405 Houston 2
+4407 Houston 3
+4409 Houston 4
+4411 Houston 5
+4413 Houston 6</value>
+    </values>
+    <values>
+        <field>NSP_Service_Team_Email__c</field>
+        <value xsi:type="xsd:string">houstonlocalservicenotifications@insperity.com.pwc.invalid</value>
+    </values>
+</CustomMetadata>

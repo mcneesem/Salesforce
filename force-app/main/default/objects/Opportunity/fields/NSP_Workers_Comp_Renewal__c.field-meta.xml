@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Workers_Comp_Renewal__c</fullName>
+    <description>Field to track Worker&apos;s compensation renewal month</description>
+    <externalId>false</externalId>
+    <label>Workers Comp Renewal</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Calendar_Months</valueSetName>
+    </valueSet>
+</CustomField>

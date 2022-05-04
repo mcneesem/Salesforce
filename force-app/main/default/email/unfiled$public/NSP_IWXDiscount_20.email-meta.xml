@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>NSP_IWXDiscount&gt;20%</name>
+    <style>none</style>
+    <subject>Opportunity {!SBQQ__Quote__c.NSP_Opportunity_Name__c} has been approved with {!SBQQ__Quote__c.NSP_IWXDiscount__c}% discount for WX.</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

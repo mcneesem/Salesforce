@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_EE_should_be_whole_number</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(CONTAINS(TEXT(NSP_Number_of_Employees__c),&quot;.&quot;),NOT( $Setup.NSP_Trigger_Switch__c.EmployeeSplitValidations__c))</errorConditionFormula>
+    <errorDisplayField>NSP_Number_of_Employees__c</errorDisplayField>
+    <errorMessage>Number of Employees should be whole number</errorMessage>
+</ValidationRule>

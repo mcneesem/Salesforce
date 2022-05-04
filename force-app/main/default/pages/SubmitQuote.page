@@ -1,0 +1,158 @@
+<!-- *************************************************************************************************   
+    Visualforce Page Name :  NSPSubmitQuote
+    Version              :  1.0                                                                          
+    Created Date         :  August 19, 2021                                                           
+    Function             :  This page will be used as in intermediate for submitting quote from approval
+    Story                :  
+    Modification Log     :                                                                               
+    ***************************************************************************************************  
+    * Developer                   Date                   Description                                     
+    ***************************************************************************************************  
+    * Raksha                   August 19, 2021             Created
+    *************************************************************************************************** -->
+    <apex:page standardController="SBQQ__Quote__c" extensions="QuoteExtController" lightningStyleSheets="true"  >
+   <apex:slds />
+   <apex:pageMessages />
+   <style type="text/css">
+      .buttonStyle{
+      margin-top: 7rem !important;
+      position : relative;
+      }
+      .buttonholder{
+       	margin-top: 15px;
+        position : absolute;
+       	z-index: 1000;
+       }
+   </style>
+   <script>     
+      function setupPage() {
+       sforce.one.showToast({
+      
+             "title": "Hello There!!",
+      
+             "message": "Approvals have been successfullly requested",
+      
+             "type": "success" 
+      
+         });
+      
+      }
+      
+   </script>
+   <apex:form styleclass="slds-tile" rendered="{!IF(AND(!doNotAllow,!showQuoteError),true,false) }">
+      <div class="slds-form-element">
+         <label class="slds-form-element__label slds-text-heading_small" for="form-element-01" >Discount Approval Comments (If needed)</label>
+         <div class="slds-form-element__control">
+            <apex:inputfield styleclass="slds-textarea" value="{!SBQQ__Quote__c.NSP_Submitter_Comment__c}" />
+            <apex:inputHidden value="{!SBQQ__Quote__c.NSP_Submitted_User_Role__c}"/>
+            <apex:inputHidden value="{!SBQQ__Quote__c.NSP_Submitted_User_Role_L2__c}"/>
+            <apex:inputHidden value="{!SBQQ__Quote__c.SBQQ__Status__c}"/>
+         </div>
+      </div>
+      <apex:commandButton styleclass="slds-button slds-button_brand slds-float_right slds-m-top_medium" action="{!onSubmit}" title="Next"  value="Next"/>
+      <apex:commandButton styleclass="slds-button slds-button_neutral slds-float_right slds-m-top_medium slds-m-right_medium" action="{!onCancel}" title="Cancel"  value="Cancel"/>
+   </apex:form>
+   <apex:form rendered="{!IF(OR(doNotAllow,invalidRequestedDate,isDescriptionOfServiceBlank,isInvoiceEmailBlank,isQuoteExpirationInvalid,quoteOwnerMismatch,invoiceToEmailBilling,invoiceToEmailShipping,isBillingAddressBlank,isShippingAddressBlank,isBillToAddressBlank,isShipToAddressBlank,showQuoteError ),true,false)}">
+      <div class="demo-only" >
+         <div class="slds-notify_container slds-is-relative">
+            <div class="slds-notify slds-notify_toast slds-theme_error" style="display: inline-grid" role="status">
+               <span class="slds-assistive-text">error</span>
+               <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+               </span>
+               <div style="slds-notify__content;  {!IF(doNotAllow == true && errorFromValidation == null , 'display:block', 'display:none')}">
+                  <h2 class="slds-text-heading_small ">{!$Label.NSP_SubmitApprovalError}</h2>
+               </div>
+                <apex:repeat value="{!multipleErrors}" var="error">
+               <div style="slds-notify__content; slds-p-top_medium; display: flow-root; {!IF(errorFromValidation != null , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!error}</h2>
+               </div>
+                </apex:repeat>
+               <div style="slds-notify__content; slds-p-top_medium; display: inline-grid; {!IF(invalidRequestedDate == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small"> {!$Label.NSP_RequestFirstCheckDate}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium;display: inline-grid;  {!IF(isInvoiceEmailBlank == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_InvoiceToEmailonQuote}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium;display: inline-grid;  {!IF(invoiceToEmailBilling == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_InvoiceEmailBilling}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium;display: inline-grid;  {!IF(invoiceToEmailShipping == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_InvoiceEmailShipping}</h2>
+               </div>
+               <div style="slds-notify__content;slds-p-top_medium;display: inline-grid; {!IF(isQuoteExpirationInvalid == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_QuoteExpirationDate}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isDescriptionOfServiceBlank == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Description_Of_Service}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(quoteOwnerMismatch == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Quote_Owner_Mismatch_Message}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isBillingAddressBlank == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_QuoteBillingAddressValidationMessage}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isShippingAddressBlank == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_QuoteShippingAddressValidationMessage}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isBillToAddressBlank == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_QuoteCustomerBillingAddressValidationMessage}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isShipToAddressBlank == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_QuoteCustomerShippingAddressValidationMessage}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isBenchmarkJobDateInvalid == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Benchmark_Date_Validation}</h2>
+            </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isImplementationDateInvalid == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Implementation_Start_Date_Error}</h2>
+         </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isTalentCpnnectSubDateInvalid == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Talent_Connect_Subscription_Error}</h2>
+      </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isRPODateInvalid== true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_RPO_Date_Validation_Error}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isProjectRecruitingDateInvalid == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Project_Recruiting_Date_Validation_Error}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isBrandingTargetDateInvalid == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Branding_Target_Date_Validation_Error}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isCustomerStakeHolderBilling == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_CustStakeHolderBilling}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isCustomerStakeHolderShipping == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_CustStakeholderShipping}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isCustomerRoleShipping == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_CustRoleShipping}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isCustomerRoleBilling == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_CustRoleBilling}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isAutorizedPurchaseBilling == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_AuthorizedPurchaseBilling}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isAutorizedPurchaseShipping == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_AuthorizedPurchaseShipping}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isAutorizedPurchaseBilling2 == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_AuthorizedPurchaseBilling2}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isAutorizedPurchaseShipping2 == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_AuthorizedPurchaseShipping2}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isPrimaryContactBilling == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_PrimaryContactBilling}</h2>
+               </div>
+               <div style="slds-notify__content; slds-p-top_medium; {!IF(isPrimaryContactShipping == true , 'display:block', 'display:none')}" >
+                  <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_PrimaryContactShipping}</h2>
+               </div>
+            </div>
+         </div>
+      </div>
+       <div >
+      <apex:commandButton styleclass="slds-button slds-button_neutral slds-float_right slds-m-top_xx-large slds-m-right_large" action="{!onCancel}" title="Cancel"  value="Cancel"/>
+       </div>
+   </apex:form>
+</apex:page>

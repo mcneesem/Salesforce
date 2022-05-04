@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Date_Can_not_be_in_the_past</fullName>
+    <active>false</active>
+    <description>Deactivating this validation rule as part of DF-01716</description>
+    <errorConditionFormula>AND(CloseDate &lt; TODAY (),  $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c!=TRUE)</errorConditionFormula>
+    <errorMessage>Close date can not be in the past date.</errorMessage>
+</ValidationRule>

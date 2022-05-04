@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Total_Cost_Per_Position__c</fullName>
+    <description>Calculates the Cost Per Position</description>
+    <externalId>false</externalId>
+    <formula>IF(AND(OR((ISPICKVAL(SBQQ__Quote__r.NSP_Pricing_Model__c,&apos;WO&apos;)),(ISPICKVAL(SBQQ__Quote__r.NSP_Pricing_Model__c,&apos;WS&apos;))),OR(SBQQ__ProductCode__c = &apos;IRSOOnDemandTier1&apos;,SBQQ__ProductCode__c = &apos;IRSOOnDemandTier2&apos;,SBQQ__ProductCode__c = &apos;IRSOOnDemandTier3&apos;)),&apos;Fee Inclusive&apos;, TEXT(SBQQ__NetPrice__c))</formula>
+    <label>Total Cost Per Position</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,5 @@
+Order form has been generated for the Opportunity - <a href="{!Opportunity.Link}">{!Opportunity.Name}</a>. 
+Please proceed with Signature process.<br/><br/>
+
+
+Thanks

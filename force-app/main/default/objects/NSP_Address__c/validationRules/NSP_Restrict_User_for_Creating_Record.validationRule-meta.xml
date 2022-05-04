@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Restrict_User_for_Creating_Record</fullName>
+    <active>true</active>
+    <description>Restrict non Integration profile Users for creating records. Updated the error message as part of DF-01313</description>
+    <errorConditionFormula>AND (ISNEW(),
+AND($Profile.Name !=&quot;System Administrator&quot; ,
+ $Profile.Name !=&quot;Integration User&quot; ) 
+)</errorConditionFormula>
+    <errorMessage>Addresses can only be updated by Integration or System Admin users.</errorMessage>
+</ValidationRule>

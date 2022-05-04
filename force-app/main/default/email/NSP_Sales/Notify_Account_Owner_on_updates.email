@@ -1,0 +1,2 @@
+Recently a change was made to the {!Account.Name} Account. Click the link below to review these changes.
+<a href="{!Account.Link}">{!Account.Name}</a>

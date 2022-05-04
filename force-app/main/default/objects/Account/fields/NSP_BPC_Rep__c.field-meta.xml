@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_BPC_Rep__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Field to capture Business Performance Cosnultant for this particular Account</description>
+    <externalId>false</externalId>
+    <label>BPC Rep</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>BPCRepAccounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

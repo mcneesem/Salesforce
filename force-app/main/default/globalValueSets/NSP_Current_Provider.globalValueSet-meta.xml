@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ADP</fullName>
+        <default>false</default>
+        <label>ADP</label>
+    </customValue>
+    <customValue>
+        <fullName>ADP Total Source</fullName>
+        <default>false</default>
+        <label>ADP Total Source</label>
+    </customValue>
+    <customValue>
+        <fullName>Advantec</fullName>
+        <default>false</default>
+        <label>Advantec</label>
+    </customValue>
+    <customValue>
+        <fullName>AlphaStaff</fullName>
+        <default>false</default>
+        <label>AlphaStaff</label>
+    </customValue>
+    <customValue>
+        <fullName>Axcet Hr Solutions</fullName>
+        <default>false</default>
+        <label>Axcet Hr Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Co-Advantage</fullName>
+        <default>false</default>
+        <label>Co-Advantage</label>
+    </customValue>
+    <customValue>
+        <fullName>Cobalt Astra</fullName>
+        <default>false</default>
+        <label>Cobalt Astra</label>
+    </customValue>
+    <customValue>
+        <fullName>Custom Business Solutions</fullName>
+        <default>false</default>
+        <label>Custom Business Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Emplicity</fullName>
+        <default>false</default>
+        <label>Emplicity</label>
+    </customValue>
+    <customValue>
+        <fullName>Employee Flexible</fullName>
+        <default>false</default>
+        <label>Employee Flexible</label>
+    </customValue>
+    <customValue>
+        <fullName>In House</fullName>
+        <default>false</default>
+        <label>In House</label>
+    </customValue>
+    <customValue>
+        <fullName>Lever 1</fullName>
+        <default>false</default>
+        <label>Lever 1</label>
+    </customValue>
+    <customValue>
+        <fullName>None</fullName>
+        <default>false</default>
+        <label>None</label>
+    </customValue>
+    <customValue>
+        <fullName>Oasis</fullName>
+        <default>false</default>
+        <label>Oasis</label>
+    </customValue>
+    <customValue>
+        <fullName>Odyssey OneSource</fullName>
+        <default>false</default>
+        <label>Odyssey OneSource</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Paychex</fullName>
+        <default>false</default>
+        <label>Paychex</label>
+    </customValue>
+    <customValue>
+        <fullName>ProSource</fullName>
+        <default>false</default>
+        <label>ProSource</label>
+    </customValue>
+    <customValue>
+        <fullName>Sequent</fullName>
+        <default>false</default>
+        <label>Sequent</label>
+    </customValue>
+    <customValue>
+        <fullName>SOI</fullName>
+        <default>false</default>
+        <label>SOI</label>
+    </customValue>
+    <customValue>
+        <fullName>Trinet</fullName>
+        <default>false</default>
+        <label>Trinet</label>
+    </customValue>
+    <customValue>
+        <fullName>Zenefits</fullName>
+        <default>false</default>
+        <label>Zenefits</label>
+    </customValue>
+    <masterLabel>Current Provider</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

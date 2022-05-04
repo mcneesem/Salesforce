@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Activity_type__c</fullName>
+    <description>Picklist field to capture type of Activity</description>
+    <externalId>false</externalId>
+    <label>Activity type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Form Submission</fullName>
+                <default>false</default>
+                <label>Form Submission</label>
+            </value>
+            <value>
+                <fullName>Email send</fullName>
+                <default>false</default>
+                <label>Email send</label>
+            </value>
+            <value>
+                <fullName>Email Open</fullName>
+                <default>false</default>
+                <label>Email Open</label>
+            </value>
+            <value>
+                <fullName>Email Click</fullName>
+                <default>false</default>
+                <label>Email Click</label>
+            </value>
+            <value>
+                <fullName>Website visit</fullName>
+                <default>false</default>
+                <label>Website visit</label>
+            </value>
+            <value>
+                <fullName>Demo</fullName>
+                <default>false</default>
+                <label>Demo</label>
+            </value>
+            <value>
+                <fullName>Required for Booking</fullName>
+                <default>false</default>
+                <label>Required for Booking</label>
+            </value>
+            <value>
+                <fullName>Client reference</fullName>
+                <default>false</default>
+                <label>Client reference</label>
+            </value>
+            <value>
+                <fullName>EmailBounced</fullName>
+                <default>false</default>
+                <label>EmailBounced</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

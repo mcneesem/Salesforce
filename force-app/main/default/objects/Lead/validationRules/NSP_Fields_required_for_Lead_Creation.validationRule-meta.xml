@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Fields_required_for_Lead_Creation</fullName>
+    <active>true</active>
+    <description>Mandatory fields for lead creation</description>
+    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.LeadValidations__c != true,OR(
+   ISBLANK( FirstName ),
+   AND(
+   ISBLANK( Phone ),
+   ISBLANK( Email )
+   )
+))</errorConditionFormula>
+    <errorMessage>Please enter values in these fields:
+FirstName, Phone or Email</errorMessage>
+    </ValidationRule>

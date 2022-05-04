@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Campaign_Target_Audience__c</fullName>
+    <description>Picklist field used to store the target audience for a particular campaign</description>
+    <externalId>false</externalId>
+    <label>Campaign Target Audience</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bottom of Funnel</fullName>
+                <default>false</default>
+                <label>Bottom of Funnel</label>
+            </value>
+            <value>
+                <fullName>CXO</fullName>
+                <default>false</default>
+                <label>CXO</label>
+            </value>
+            <value>
+                <fullName>HRD</fullName>
+                <default>false</default>
+                <label>HRD</label>
+            </value>
+            <value>
+                <fullName>Middle of Funnel</fullName>
+                <default>false</default>
+                <label>Middle of Funnel</label>
+            </value>
+            <value>
+                <fullName>SMB</fullName>
+                <default>false</default>
+                <label>SMB</label>
+            </value>
+            <value>
+                <fullName>Top of funnel</fullName>
+                <default>false</default>
+                <label>Top of funnel</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

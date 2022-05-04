@@ -1,0 +1,4 @@
+Hi {!SBQQ__Quote__c.OwnerFullName},
+<br/><br/>
+A renewal opportunity has been created for the product {!SBQQ__Quote__c.NSP_Product_Type__c} for customer {!SBQQ__Quote__c.NSP_Account_Name__c} that is terminating in {!SBQQ__Quote__c.NSP_Contract_Terminating_In_Days__c} days.<br/><br/>
+Here is the link to the Renewal Quote - <a href="{!SBQQ__Quote__c.Link}">{!SBQQ__Quote__c.Name}</a> for {!SBQQ__Quote__c.SBQQ__NetAmount__c}<br/><br/>

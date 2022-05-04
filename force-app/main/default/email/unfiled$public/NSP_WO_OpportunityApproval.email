@@ -1,0 +1,61 @@
+<messaging:emailTemplate subject="Opportunity Approval"
+  recipientType="User"
+  relatedToType="Opportunity"
+>
+  <messaging:htmlEmailBody >
+    <html>
+    <head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+      <body>
+      Hi, <br></br>
+      <p> The following line items for {!RelatedTo.Account.Name} are submitted to you for approval.<br></br>
+      Submitted By: {!RelatedTo.NSP_WO_Approval_Submitter__c}</p>
+      
+        <table>
+          <tr>
+            <th align="left">
+              Product
+            </th>
+            <th align="left">
+              Quantity
+            </th>
+            <th align="left">
+              Sales Price
+            </th>
+            <th align="left">
+              Margin
+            </th>
+          </tr>
+          <apex:repeat value="{!RelatedTo.OpportunityLineItems}" var="lineItem">
+            <tr>
+              <td>
+                {!lineItem.Product2.Name}
+              </td>
+              <td>
+                {!lineItem.Quantity}
+              </td>
+              <td>
+                {!lineItem.UnitPrice}
+              </td>
+              <td>
+                {!lineItem.NSP_Margin__c}
+              </td>
+            </tr>
+          </apex:repeat>
+        </table>
+        <p> To approve/reject this opportunity , reply to this email with one of these words in the first line of the email message:
+       APPROVE , APPROVED , YES , REJECT , REJECTED , NO. <br/>
+       If replying via email, you can also add comments on the second line.Comments will be stored with the approval request in Salesforce </p>
+       <br></br>
+       
+     
+      </body>
+    </html>
+  </messaging:htmlEmailBody>
+</messaging:emailTemplate>

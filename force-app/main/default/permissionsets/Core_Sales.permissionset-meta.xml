@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Core Sales User Permission Set</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Checklist__c.NSP_Are_you_a_qualified_large_employer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Checklist__c.NSP_Benefits_Broker_Contact_Information__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Checklist__c.NSP_If_yes_do_you_observe_ACA_mandates__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Core Sales</label>
+    <recordTypeVisibilities>
+        <recordType>Event.Core_Sales_Event_RT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Task.Core_Sales_Task_RT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

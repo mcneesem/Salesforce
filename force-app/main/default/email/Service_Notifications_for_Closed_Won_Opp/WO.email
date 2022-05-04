@@ -1,0 +1,52 @@
+This client's information is now downloaded and available to you on the Client Reference Library.
+
+Congrats on this, [BOOKED MONTH] booking!!
+{!Account.NSP_AIMS_Client__c} - V{!Opportunity.NSP_BidVersion__c}
+
+Service Team was engaged: YES   NO
+
+CRWC 
+
+TECH SOLUTION(S) SELECTED: (*delete appropriate Tech Solutions when they do not apply*)
+
+Insperity Premier Performance [add BPSKWInfo]
+
+Insperity Premier Timesheet / Insperity Premier Time & Attendance [add ITA-Order Processing]
+
+This client will receive XML upload or WebPayroll. If this is not correct and the client needs Premier Timesheet or Premier Time & Attendance, please engage a sales engineer to determine the correct option for them.
+
+Salesforce Opportunity Link: {!Opportunity.Link}
+
+Thank you, 
+
+{!User.Name}
+
+ATTACHED TO THIS EMAIL: Delivery Order
+
+****ADD THE RM****
+
+****ADD THE STP CHECKLIST****
+
+***ADD CREDIT APPROVAL TO EMAIL IF APPLICABLE***
+
+***ADD ADDENDUM NOTIFICATION IF APPLICABLE***
+
+****ADD THE MMNA CLOSING REQUEST SHEET TO EMAIL****
+
+***Recipients***
+In TO Line: 
+BPA, DA, DM, RM
+
+In CC Line:
+Prospective_Client@insperity.com;
+orientation_request@insperity.com;
+Implementationcoordinators@insperity.com;
+AllOnboardingManagers@insperity.com;
+OrientationCoordinators@insperity.com;
+
+Send emails to the below based on Product:
+Applicant Tracking: Insperity.talentconnect@insperity.com
+Organizational Planning: bpskwinfo@insperity.com
+Performance Management bpskwinfo@insperity.com
+Time & Attendance: itaorderprocessing@insperity.com
+WX/WA: itaorderprocessing@insperity.com

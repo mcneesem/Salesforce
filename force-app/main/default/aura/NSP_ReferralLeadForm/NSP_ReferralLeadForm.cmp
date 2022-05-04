@@ -1,0 +1,175 @@
+<!--
+@Author : Tejas Patkar
+@CreatedDate : 9/7/2021
+@Name : NSP_ReferralLeadForm
+@Description: Created to capture lead from Web 
+-->
+<aura:component controller  = "NSP_CreateReferralLead" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:attribute name="LeadObj" type="Lead"  default="{sobjectType:'Lead'}"/>
+
+<aura:attribute name="industry" type="list" />
+<aura:attribute name="potentialCustomer" type="list" />
+<aura:attribute name="PIlist" type="list" default="[]"/>
+<aura:attribute name="selectedPIList" type="list" />
+<aura:attribute name="isModalOpen" type="boolean" default="false"/>
+<aura:attribute name="isNonProfit" type="boolean" default="false"/>
+<aura:attribute name="state" type="list" />
+<aura:attribute name="cmpError" type="String" />
+<aura:attribute name="isDisable" type="Boolean" default="true"/>
+<aura:attribute name="unlock" type="String" default="Unlock"/>
+
+<aura:handler value="{!this}" name="init" action="{!c.doInit}" access="global"/>
+<!--<lightning:card  iconname="standard:lead"> -->
+<h3 style = "margin-left: 100px;font-family:'Arial Bold', sans-serif;font-size: 20px;color:#004C97" class="slds-text-title_bold">
+Who is referring this new company?
+</h3>
+<br/>
+<div style="margin-left: 100px;">
+<div class="slds-grid slds-gutters" >
+    <div class="slds-col slds-size_1-of-2">
+        
+        <lightning:input aura:id="fieldId" type="text" name="NSP_ReferralForm_First_Name__c" value="{!v.LeadObj.NSP_ReferralForm_First_Name__c}" label="First Name"
+                            required="true"  class="slds-medium-size_2-of-3"/> 
+        <lightning:input aura:id="fieldId" type="text" name="NSP_ReferralForm_Last_Name__c" value="{!v.LeadObj.NSP_ReferralForm_Last_Name__c}" label="Last Name"
+                            required="true"  class="slds-medium-size_2-of-3"/>
+    </div>
+    <div class="slds-col slds-size_1-of-2">
+        
+        <lightning:input aura:id="fieldId" type="text" name="NSP_ReferralForm_Company__c" value="{!v.LeadObj.NSP_ReferralForm_Company__c}" label="Company"
+                            required="true"  class="slds-medium-size_2-of-3"/> 
+        <lightning:input aura:id="fieldId" type="tel" name="NSP_ReferralForm_Phone__c" value="{!v.LeadObj.NSP_ReferralForm_Phone__c}" label="Phone"
+                            required="true"  class="slds-medium-size_2-of-3"/>
+        <lightning:input aura:id="fieldId" type="email" name="NSP_ReferralForm_Email__c" value="{!v.LeadObj.NSP_ReferralForm_Email__c}" label="Email"
+                            required="true"  class="slds-medium-size_2-of-3"/> 
+    </div>
+</div>
+</div>
+
+<h3 style = "margin-left: 100px;font-family:'Arial Bold', sans-serif;font-size: 20px;color:#004C97" class="slds-text-title_bold">Lead detail</h3>
+<BR/>
+<div style="margin-left: 100px;">
+<div class="slds-grid slds-gutters" >
+    <div class="slds-col slds-size_1-of-2">
+        
+        <lightning:input aura:id="fieldId" type="text" name="Company" value="{!v.LeadObj.Company}" label="Company"
+                            required="true"  class="slds-medium-size_2-of-3"/> 
+        <lightning:input aura:id="fieldId" type="text" name="FirstName" value="{!v.LeadObj.FirstName}" label="First Name"
+                            class="slds-medium-size_2-of-3"  required="true"/>
+        <lightning:input aura:id="fieldId" type="text" name="Name" value="{!v.LeadObj.LastName}" label="Last Name"
+                            class="slds-medium-size_2-of-3" required = "true"/>
+        
+        <lightning:input aura:id="fieldId" type="tel" name="Phone" value="{!v.LeadObj.Phone}" label="Phone" 
+                            class="slds-medium-size_2-of-3" required = "true" pattern="^(\s*\d\s*){10}$" messageWhenPatternMismatch="Phone number is not valid"/> 
+        
+        <lightning:input aura:id="fieldId" type="email" name="Email" value="{!v.LeadObj.Email}" label="Email" 
+                            class="slds-medium-size_2-of-3" required = "true" /> 
+        
+        <lightning:input aura:id="fieldId" type="text" name="Title" value="{!v.LeadObj.Title}" label="Title" 
+                            class="slds-medium-size_2-of-3" required = "true"/> 
+        
+        <lightning:input aura:id="fieldId" type="number" name="NumberOfEmployees" value="{!v.LeadObj.NumberOfEmployees}" label="Number Of Employees" 
+                            class="slds-medium-size_2-of-3" required = "true"/> 
+        <!-- Industry -->
+        <lightning:select name="Industry" label="Industry"
+                            class="slds-medium-size_2-of-3"  value= "{!v.LeadObj.Industry}">
+            <aura:iteration items="{!v.industry}" var="itr">
+                <option value="{!itr}">{!itr}</option>
+            </aura:iteration>
+        </lightning:select>
+        
+        <lightning:select aura:id="pCOptions" name="NSP_Howdoyouknowthepotentialcustomer__c" label="How do you know the potential customer?"
+                            class="slds-medium-size_2-of-3"  value= "{!v.LeadObj.NSP_Howdoyouknowthepotentialcustomer__c}" required = "true">
+            <option value="">---None---</option>
+            <aura:iteration items="{!v.potentialCustomer}" var="itr">
+                <option value="{!itr}">{!itr}</option>
+            </aura:iteration>
+        </lightning:select>
+        
+        <lightning:textarea name="NSP_Any_Additional_Info__c" label="Any Additional Info" value="{!v.LeadObj.NSP_Any_Additional_Info__c}"
+                            class="slds-medium-size_2-of-3" />
+        
+    </div>
+    <div class="slds-col slds-size_1-of-2">
+        <lightning:dualListbox aura:id="selectPI"
+                                name="Product of Interest"
+                                label="Select Product of Interest"
+                                sourceLabel="Available Product of Interest"
+                                selectedLabel="Selected Product of Interest"
+                                options="{!v.PIlist }"
+                                value="{!v.selectedPIList}"
+                                onchange="{!c.handlePIChange}"/>
+        
+            <lightning:select aura:id="nonprofitSelect"  name="NSP_Referralbenefitsanonprofitorg__c" label="Does this referral benefit a specific nonprofit organization?" value="{!v.LeadObj.NSP_Referralbenefitsanonprofitorg__c}"
+                            class="slds-medium-size_2-of-3" onchange="{!c.handleNonProfitChange}">
+                <option value="Donation">Donation</option>
+            <option value="Match">Match</option>        
+                <option value="Does not apply">Does not apply</option>
+        </lightning:select>
+        <aura:if isTrue="{!v.isNonProfit}">
+        <lightning:input aura:id="fieldId" type="text" name="Street" value="{!v.LeadObj.NSP_Nonprofit_Organization_Name__c}" label="Nonprofit Name" 
+                            class="slds-medium-size_2-of-3"  required = "true"/> 
+        <lightning:input aura:id="fieldId" type="text" name="Street" value="{!v.LeadObj.NSP_Nonprofit_Organization_Tax_Id__c}" label="Nonprofit Tax Id" 
+                            class="slds-medium-size_2-of-3" required = "true" /> 
+        </aura:if>
+        
+        <lightning:input type="text" name="Street" value="{!v.LeadObj.Street}" label="Street Address" 
+                            class="slds-medium-size_2-of-3"  /> 
+        <lightning:input type="text" name="city" value="{!v.LeadObj.city}" label="City" 
+                            class="slds-medium-size_2-of-3"  /> 
+        <lightning:select name="State" label="State"
+                            class="slds-medium-size_2-of-3"  value= "{!v.LeadObj.State}">
+            <aura:iteration items="{!v.state}" var="itr">
+                <option value="{!itr}">{!itr}</option>
+            </aura:iteration>
+        </lightning:select>
+        <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zipcode" 
+                            class="slds-medium-size_2-of-3"  /> 
+             <Br/>
+             <div  class="slds-scrollable_none">
+            <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="yes" frameborder="0" width="60%" height="100%" allowtransparency="true"></iframe>
+            </div>  
+    </div>
+</div>
+</div>
+
+<div>
+<BR/>
+    <p style="margin-left: 100px;" class="textfont">Please ensure the company you are referring is aware that representative from Insperity will be contacting them.
+</p>
+    <BR/>
+<lightning:button  variant="brand" label="SUBMIT" class="slds-align_absolute-center my-brand" onclick="{! c.handleSubmit }" disabled="{!v.isDisable}"  />
+
+</div> 
+
+<aura:if isTrue="{!v.isModalOpen}">
+<!-- Modal/Popup Box starts here-->
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <!-- Modal/Popup Box Header Starts here-->
+        <header class="slds-modal__header slds-theme_error">
+            <lightning:buttonIcon iconName="utility:close"
+                                    onclick="{! c.closeModel }"
+                                    alternativeText="close"
+                                    variant="bare-inverse"
+                                    class="slds-modal__close"/>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium">ERROR</h2>
+        </header>
+        <!--Modal/Popup Box Body Starts here-->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <p><b>{!v.cmpError}
+                </b>
+            </p>
+        </div>
+        <!--Modal/Popup Box Footer Starts here-->
+        <footer class="slds-modal__footer">
+            
+            <lightning:button variant="brand"
+                                label="OK"
+                                title="OK"
+                                class="my-brand"
+                                onclick="{!c.closeModel}"/>
+        </footer>
+    </div>
+</section>
+</aura:if>
+</aura:component>

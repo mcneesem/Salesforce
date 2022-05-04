@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Center of Influence</fullName>
+                <default>false</default>
+                <label>Center of Influence</label>
+            </value>
+            <value>
+                <fullName>Competitor</fullName>
+                <default>false</default>
+                <label>Competitor</label>
+            </value>
+            <value>
+                <fullName>Customer</fullName>
+                <default>false</default>
+                <label>Customer</label>
+            </value>
+            <value>
+                <fullName>Financial Services</fullName>
+                <default>false</default>
+                <label>Financial Services</label>
+            </value>
+            <value>
+                <fullName>Insperity</fullName>
+                <default>false</default>
+                <label>Insperity</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
+            </value>
+            <value>
+                <fullName>Partner</fullName>
+                <default>false</default>
+                <label>Partner</label>
+            </value>
+            <value>
+                <fullName>Perform &amp; Org Management</fullName>
+                <default>false</default>
+                <label>Perform &amp; Org Management</label>
+            </value>
+            <value>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+                <label>Prospect</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

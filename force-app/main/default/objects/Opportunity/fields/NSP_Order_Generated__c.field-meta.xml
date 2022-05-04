@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Order_Generated__c</fullName>
+    <description>Checkbox true if order is generated for this opportunity</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Order Generated</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

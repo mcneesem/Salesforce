@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>send for signature with vfpage</description>
+    <height>250</height>
+    <label>Send For Signature</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <page>NSP_SendForSignature</page>
+    <type>VisualforcePage</type>
+    <width>-100</width>
+</QuickAction>
