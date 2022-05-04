@@ -1278,7 +1278,9 @@
         <members>MarketingOperationsReports/Multiple_Attribution_Opportunities_Mi4</members>        
         <members>MarketingOperationsReports/Campaign_Influenced_Lost_Deals_H1c</members>        
         <members>MarketingOperationsReports/Campaign_Influenced_Pipeline_YI8</members>
-        <members>MarketingOperationsReports/Campaign_Influenced_Sales_L0I</members>         
+        <members>MarketingOperationsReports/Campaign_Influenced_Sales_L0I</members>
+        <members>BPSSalesReports/Retirement_Forecast_Report_NKR</members>       
+        <members>BPSSalesReports/Technology_Forecast_Report_bBc</members>           
         <name>Report</name>
     </types>
     <types>
