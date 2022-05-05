@@ -575,11 +575,6 @@
             <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.NSP_CreateQuote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>NSP_Send_for_Signature_CPQ</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>15</sortOrder>
@@ -613,6 +608,16 @@
             <actionName>Opportunity.NSP_Create_Checklist</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.NSP_CreateQuote</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>23</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -740,7 +745,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2D000003rWar</masterLabel>
+        <masterLabel>00h8M000000V0Fd</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

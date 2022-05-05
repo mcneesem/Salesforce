@@ -8552,6 +8552,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.NSP_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.NSP_Selected_Template__c</field>
         <readable>true</readable>
     </fieldPermissions>
