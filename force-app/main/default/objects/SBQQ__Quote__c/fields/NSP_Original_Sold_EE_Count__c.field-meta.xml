@@ -4,6 +4,7 @@
     <description>Total of W2 and 1099 employees</description>
     <externalId>false</externalId>
     <formula>NSP_WX_WA_1099_Contractors__c + NSP_WX_WA_Employees__c + NSP_Quantity_of_Estimated_Employees__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Original Sold Employee Count</label>
     <precision>18</precision>
     <required>false</required>

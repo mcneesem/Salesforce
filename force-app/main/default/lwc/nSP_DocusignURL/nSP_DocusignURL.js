@@ -28,6 +28,7 @@ import custSignerErr from "@salesforce/label/c.NSP_Customer_Signer_Err";
 import custSignernApprovedErr from "@salesforce/label/c.NSP_Cust_Signer_and_Approved_Err";
 import inspSignernApprovedErr from "@salesforce/label/c.NSP_Signer_and_Approved_Err";
 import custInspSignerErr from "@salesforce/label/c.NSP_Cust_Insperity_Signer";
+import bypassSignErr from "@salesforce/label/c.NSP_DO_Gen_Err";
 
 export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api recordId;
@@ -64,6 +65,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
     custSignernApprovedErr,
     inspSignernApprovedErr,
     custInspSignerErr,
+    bypassSignErr,
   };
   connectedCallback() {}
 
@@ -106,11 +108,13 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
         (this.primaryProduct == "Retirement Services" ||
           this.primaryProduct == "Learning & Development" ||
           (this.primaryProduct == "HR Consulting Services" &&
-            this.clientForLife == "WO/WS") ||
-          this.bypassDocusign)
+            this.clientForLife == "WO/WS"))
       ) {
         this.isQuoteValid = false;
         this.showToast("Error", primaryProductErr, "error");
+      } else if (this.bypassDocusign) {
+        this.isQuoteValid = false;
+        this.showToast("Error", bypassSignErr, "error");
       } else if (
         this.quoteStatus != "Approved" &&
         this.customerSigner &&
@@ -152,7 +156,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
           this.validateCustomerSigner(this.accountId, custSignerAcc);
         } else {
           this.isQuoteValid = true;
-          this.navigateToVFPage();
+          this.fetchDocusignURL();
         }
       }
 
@@ -164,7 +168,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       this.closeAction();
     }
   }
-
+  //Apex call to check if Customer Signer and Insperity Signers are valid
   validateCustomerSigner(account, message) {
     validateCustomerSigner({
       billingAccount: account,
@@ -176,16 +180,17 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
           this.isQuoteValid = false;
           this.showToast("Error", message, "error");
         } else if (this.isValid) {
-          this.navigateToVFPage();
+          this.fetchDocusignURL();
         }
       })
       .catch((error) => {
         this.error = error;
+        this.closeAction();
       });
   }
 
-  //Navigate to visualforce page
-  navigateToVFPage() {
+  //Apex call to fetch the docusign URL
+  fetchDocusignURL() {
     getDocuSignUrl({
       recordId: this.recordId,
       templateId: this.templateId,
@@ -195,13 +200,14 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
     })
       .then((result) => {
         this.genUrl = result;
-        this.navigateToVFPages(this.genUrl);
+        this.navigateToDocusign();
       })
       .catch((error) => {
         this.error = error;
+        this.closeAction();
       });
   }
-  navigateToVFPages() {
+  navigateToDocusign() {
     // Navigate to a URL
     this[NavigationMixin.Navigate]({
       type: "standard__webPage",

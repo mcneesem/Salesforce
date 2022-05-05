@@ -5,10 +5,8 @@
 * @strory   STY-00336
 */
 public class NSP_Quote_Service {
-    public NSP_Quote_Service() {
-    }
- 
-/**
+
+    /**
 * Method for constructing Docusign CLM URL
 * @param  OpportunityId,templateId,name,accountName,aid
 */ 
@@ -16,7 +14,7 @@ public class NSP_Quote_Service {
     public static string getDocuSignUrl(String recordId,String templateId,String name,String accountName,String aid){
     try {
         String queryParam;
-        queryParam = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen'+'?'+
+        queryParam = System.Label.NSP_Docusign_Base_URL+'?'+
         'aid='+aid+'&'+
         'config='+templateId+'&'+
         'eos[0].Id='+recordId+'&'+

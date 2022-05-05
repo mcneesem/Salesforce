@@ -2875,6 +2875,30 @@
             <fullName>SunPower Corporation</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Acrisure – VCG</fullName>
+            <default>false</default>
+        </values>
+                <values>
+            <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
+            <default>false</default>
+        </values>
+                <values>
+            <fullName>CertaPro – PA</fullName>
+            <default>false</default>
+        </values>
+                <values>
+            <fullName>Alera Group – Forum</fullName>
+            <default>false</default>
+        </values>
+                <values>
+            <fullName>Alera Group – TRISURE</fullName>
+            <default>false</default>
+        </values>
+                <values>
+            <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Sub_Vertical__c</picklist>

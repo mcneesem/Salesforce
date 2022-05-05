@@ -1,5 +1,5 @@
 /**
- * Author: Harsha Khiroya
+* Author: Harsha Khiroya
 * Represents test class for task trigger helper
 * Test Class to cover Task Trigger Handler and Helper classes 
 * Modified Date: 11 March 2022
@@ -7,9 +7,9 @@
 @isTest(SeeAllData=false)
 public class NSP_TaskTriggerHelperTest {
     
-     @testSetup
+    @testSetup
     static void testData() {
-    	Account accoutObject1 = new Account();
+        Account accoutObject1 = new Account();
         accoutObject1.Name = 'Test Account1';
         //inserting account object
         insert accoutObject1;
@@ -21,13 +21,30 @@ public class NSP_TaskTriggerHelperTest {
         
         //Inserting Opportunity Object
         insert opportuniytObject;
+        Lead leadObject = new Lead();
+        leadObject.firstname='Test';
+        leadObject.lastname='Lead';
+        leadObject.Company = 'TestClass';
+        leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
+        leadObject.NumberOfEmployees =150;
+        leadObject.Email = 'testlead1@testlead1.com';
+        leadObject.PostalCode = '10001';
+        leadObject.NSP_Lead_Stage__c  =null; 
+        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '123';
+        
+        insert leadObject;
     }
     
-	@isTest
+    @isTest
     static void testTaskInsert() {
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
-          List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE stagename = 'Discovery'];
+        List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE stagename = 'Discovery'];
+        Lead getLead = [SELECT Id, Name,LastActivityDate,DNBoptimizer__DNB_D_U_N_S_Number__c FROM Lead WHERE firstname = 'Test' LIMIT 1];
+        getLead.NumberOfEmployees = 123;
+        update getLead;
         Task taskRec;
+        Task taskRec1;
+        List<Task> taskList = new List<Task>();
         Test.startTest();
         taskRec = new Task(
             Subject = 'Discovery Call',
@@ -35,11 +52,23 @@ public class NSP_TaskTriggerHelperTest {
             NSP_Task_Type__c = 'BPS',
             RecordTypeId = taskRecTypeId,
             NSP_Task_Subtype__c = 'Client Meeting',
-            Status='Open'
+            NSP_Status__c='Open'
         );
-        insert taskRec;
-        taskRec.Status = 'Completed';
+        taskList.add(taskRec);
+        taskRec1 = new Task(
+            Subject = 'Discovery Call',
+            whoId = getLead.Id,
+            NSP_Task_Type__c = 'BPS',
+            RecordTypeId = taskRecTypeId,
+            NSP_Task_Subtype__c = 'Client Meeting',
+            NSP_Status__c='Open'
+        );
+        taskList.add(taskRec1);
+        insert taskList;
+        taskRec.NSP_Status__c = 'Completed';
         update taskRec;
+        taskRec1.NSP_Status__c = 'Completed';
+        update taskRec1;
         Test.stopTest();
         system.assertNotEquals(taskRec, null);
     }

@@ -1,17 +1,28 @@
 <apex:page title="Lead Form"  showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
     <apex:includeLightning />     
+    <style>
+        .slds-scope {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        }
+        @font-face{
+        font-family:'BrandoSans-TextFL';
+        src:url(/resource/NSP_Form_CSS);
+        }
+    </style>
     
     
     <html  lang="en">
         
         <apex:slds />
-        <body>
+        <body style = "font-family: BrandoSans-TextFL, sans-serif; font-weight: normal; margin: 0;">
             <!-- REQUIRED SLDS WRAPPER -->
-            <apex:image value="{!URLFOR($Resource.NSP_InsperityLogo)}" style="height:135px;width:400px"/>
+            <apex:image value="{!URLFOR($Resource.NSP_InsperityLogo)}" style="height: 55px; width: 12rem; display: block; padding-top: 0.72rem; padding-bottom: 0.72rem; margin: 0 auto;"/>
             <div class="slds-scope" style="overflow-x: hidden;">
                 
                 <!-- HEADING AREA -->
-                <p style="height:90px;background-color:#004C97;font-family:'Arial Bold', sans-serif;font-size: 40px;color:white;padding-top: 20px;text-align: center;">Referral form</p>
+                <h1 style="background-color:#004C97;font-family:BrandoSans-TextFL, sans-serif;font-size: 50px;color:white;padding: 60px;text-align: center;">Referral form</h1>
                 
                 
                 <div class="myapp"  id="myDivId">

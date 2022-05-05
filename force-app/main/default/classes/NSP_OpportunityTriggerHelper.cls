@@ -411,7 +411,8 @@ public class NSP_OpportunityTriggerHelper {
         //STY-01519 - Asset creation from Opportunity line item
         if(closedWonOpptyList.size() > 0){
             createAssetForCloseWonOpportunity(closedWonOpptyList);
-            NSP_EmailServicesUtility.sendEmailsTOService(closedWonOpptyList, opportunityNewMap, workforceProductsList);
+            // commented as a part of Defect-DF-01797
+            //NSP_EmailServicesUtility.sendEmailsTOService(closedWonOpptyList, opportunityNewMap, workforceProductsList);
         }
         
         if(newTaskOpportunityList.size() > 0){

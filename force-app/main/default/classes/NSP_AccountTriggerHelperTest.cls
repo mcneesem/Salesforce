@@ -9,6 +9,7 @@ public class NSP_AccountTriggerHelperTest {
 
     public static final String REFPROG3 = 'referralprogramiii';
     public static final String ACCOUNTTEST1 = 'AccountTest1';
+    public static final String AccountTestData1= 'AccountTestData1';
     public static final String ACCOUNTTEST = 'AccountTest';
     public static final String ACTIVE = 'ACTIVE';
     public static final String LASTNAME = 'TestClassUser' ;
@@ -48,6 +49,15 @@ public class NSP_AccountTriggerHelperTest {
             NSP_Sales_Office__c = '1401'
         );
         insert userRecord1;
+        List<Account>  accountList = New List<Account>();
+
+        for(integer count = 0; count < 5; count++) {
+            accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
+                            NSP_Delete_Account_Teams__c = system.now()));
+        }
+        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].ownerId = userRecord.Id;
+        insert accountList;
     }
     /**
      * Checks the Account After Insert Trigger
@@ -114,18 +124,12 @@ public class NSP_AccountTriggerHelperTest {
     @isTest
     static void testAccountUpdate() {
         
-        List<Account>  accountList = New List<Account>();
-        Set<Id> accIdSet = new Set<Id>(); // Added as part of Test class fix
-        Map<Id, Account> accountMapOld = new Map<Id, Account>();
-        Test.startTest();
-        for(integer count = 0; count < 5; count++) {
-            accountList.add(New Account(Name = 'AccountTest'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
-                            NSP_Delete_Account_Teams__c = system.now()));
-        }
-        User userRecord = [select id from User WHERE LastName = :LASTNAME];
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
-        accountList[0].ownerId = userRecord.Id;
-        insert accountList;
+        List<Account> accountList = [Select Id ,Name, NSP_Ready_for_Integration_Sync__c ,NSP_Account_Status__c,NSP_Template_Selection__c 
+										FROM Account WHERE Name Like '%AccountTestData%' ];
+        
+       Set<Id> accIdSet = new Set<Id>(); // Added as part of Test class fix
+       Map<Id, Account> accountMapOld = new Map<Id, Account>();
+       
         for(Account account : accountList) {
             accIdSet.add(account.Id);
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
@@ -133,8 +137,8 @@ public class NSP_AccountTriggerHelperTest {
             account.NSP_Template_Selection__c = 'referralProgramAF-I';
             accountMapOld.put(account.Id, account);
         }
-        Account account = [SELECT Id, Name FROM Account WHERE Name =:ACCOUNTTEST1 LIMIT 1];
-        system.assertEquals(ACCOUNTTEST1, account.Name);
+        Account account = [SELECT Id, Name FROM Account WHERE Name =:AccountTestData1 LIMIT 1];
+        system.assertEquals(AccountTestData1, account.Name);
         User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
         // Start Test
             List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c From Account WHERE Id =: accountMapOld.keySet()];
@@ -144,13 +148,14 @@ public class NSP_AccountTriggerHelperTest {
                 accountRecord.ownerId = userRecord1.Id;
                 accountRecord.NSP_Stage__c = 'Available';
             }
-            Update accountList;
+        Test.startTest();
+            Update accountUpdateList;
         NSP_AccountTriggerHelper helper = new NSP_AccountTriggerHelper();
         helper.setAccountStageWhenOwnerChanged(accountUpdateList);
         helper.updatePublishAccount(accIdSet);
         
         Test.stopTest();
-         system.assertEquals(ACCOUNTTEST1, account.Name);
+         system.assertEquals(AccountTestData1, account.Name);
     }
 
     /**

@@ -1435,6 +1435,36 @@
         <default>false</default>
         <label>Vistage Worldwide</label>
     </customValue>
+    <customValue>
+        <fullName>Acrisure – VCG</fullName>
+        <default>false</default>
+        <label>Acrisure – VCG</label>
+    </customValue>
+    <customValue>
+        <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
+        <default>false</default>
+        <label>Davidow Financial &amp; Insurance Services, Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>CertaPro – PA</fullName>
+        <default>false</default>
+        <label>CertaPro – PA</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group – Forum</fullName>
+        <default>false</default>
+        <label>Alera Group – Forum</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group – TRISURE</fullName>
+        <default>false</default>
+        <label>Alera Group – TRISURE</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
+        <default>false</default>
+        <label>Acrisure, The Benefits Group, Rochester Hills, MI</label>
+    </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

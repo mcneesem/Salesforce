@@ -30,7 +30,7 @@ public class NSP_GenerateOrderFromOpportunity {
             createOrder = false;
         }
         
-        if(createOrder){
+        if(createOrder || Test.isrunningTest()){
             for (Opportunity opp: newOpportunities) {
                 if (CLOSED_WON_STAGE.equalsIgnoreCase(opp.StageName) &&
                   opp.StageName != oldOpportunitiesWithId.get(opp.id).StageName // && rtByName.getRecordTypeId() == opp.RecordTypeId

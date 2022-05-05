@@ -82,6 +82,20 @@
         <value>50202</value>
     </labels>
     <labels>
+        <fullName>NSP_Docusign_Base_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Docusign Base URL</shortDescription>
+        <value>https://na11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DO_Gen_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DO Cannot be generated</shortDescription>
+        <value>Document cannot be generated for this Quote</value>
+    </labels>
+    <labels>
         <fullName>NSP_AddWOBusinessProfile</fullName>
         <language>en_US</language>
         <protected>false</protected>

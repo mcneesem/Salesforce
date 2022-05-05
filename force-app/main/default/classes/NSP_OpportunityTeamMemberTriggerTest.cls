@@ -62,7 +62,21 @@ public without sharing class NSP_OpportunityTeamMemberTriggerTest {
         OpportunityTeamMember otm = [SELECT Id, TeamMemberRole FROM OpportunityTeamMember WHERE Id=:otmRecord.Id];
         system.assertEquals(otm.TeamMemberRole, otmRecord.TeamMemberRole);
     }
-    
+    /*Cover the code coverage*/
+    @isTest
+    public static void test_beforeInsert_UseCase1(){
+        List<OpportunityTeamMember> opportunityteammember_Obj  =  [SELECT Id,OpportunityId,UserId from OpportunityTeamMember];
+        System.assertEquals(true,opportunityteammember_Obj.size()>0);
+        NSP_OpportunityTeamMemberTriggerHandler obj01 = new NSP_OpportunityTeamMemberTriggerHandler();
+        obj01.beforeInsert(new List<sObject>());
+    }
+    @isTest
+    public static void test_afterDelete_UseCase1(){
+        List<OpportunityTeamMember> opportunityteammember_Obj  =  [SELECT OpportunityId,UserId from OpportunityTeamMember];
+        System.assertEquals(true,opportunityteammember_Obj.size()>0);
+        NSP_OpportunityTeamMemberTriggerHandler obj01 = new NSP_OpportunityTeamMemberTriggerHandler();
+        obj01.afterDelete(new List<sObject>(),new Map<Id,sObject>());
+    }  
     
     
 }

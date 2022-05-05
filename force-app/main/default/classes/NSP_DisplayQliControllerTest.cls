@@ -95,6 +95,16 @@ public without sharing class NSP_DisplayQliControllerTest {
         qliWrapperList = displayQLIController.getQliPEPMList();
         system.assertEquals(true, qliWrapperList.size()>0);
     } 
+
+    @isTest
+    public static void getLastLine(){
+        List<NSP_DisplayQliController.QuotLinewrap> qliWrapperList = new List<NSP_DisplayQliController.QuotLinewrap>();
+        SBQQ__Quote__c quote = [SELECT Id, Name FROM SBQQ__Quote__c WHERE Name!=NULL LIMIT 1];
+        NSP_DisplayQliController displayQLIController = new NSP_DisplayQliController();
+        displayQLIController.quoteIdstr = quote.Id;
+        qliWrapperList = displayQLIController.getLastLine();
+        system.assertEquals(true, qliWrapperList.size()>0);
+    }
     
     @isTest
     public static void getQliRecruitingListTest(){
