@@ -93,6 +93,8 @@ public class NSP_AssetTriggerHelperTest {
             Asset assetObj = new Asset();
             assetObj.Id = assetList[0].ID;
             assetObj.NSP_Need_Rollup_Recalculation__c = true;
+            assetObj.NSP_Client_Segment_type__c ='Core';
+        	assetObj.NSP_Client_SegmentDate__c = system.Today().addDays(10);
             update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,NSP_Need_Rollup_Recalculation__c,NSP_Actual_Part_Time_EE_Count__c FROM 

@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
-    <columns>
-        <field>ASSIGNED</field>
-    </columns>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Activity.NSP_Activity_Type_Reporting__c</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>true</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
     <columns>
         <field>OPPORTUNITY_NAME</field>
     </columns>
@@ -30,6 +51,11 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
+        <field>ASSIGNED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
         <field>Activity.NSP_Activity_Type_Reporting__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
@@ -50,7 +76,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Activity.NSP_Completed_Date__c</dateColumn>
         <endDate>2022-03-07</endDate>

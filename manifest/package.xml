@@ -1186,6 +1186,101 @@
     </types>
     <types>
         <members>unfiled$public/Unmanned_Projects_Lsk</members>
+		<members>GrowthReports/Activity_Log_NGA</members>
+        <members>BPSSalesReports/BPS_Closed_Lost_Opportunities_LI7</members>
+        <members>BPSSalesReports/BPS_Leads_Xlf</members>
+        <members>BPSSalesReports/BPS_Open_Pipeline_Report_EgD</members>
+        <members>BPSSalesReports/BPS_EE_Forecast_RBs</members>
+        <members>BPSSalesReports/Unassigned_BPS_Leads_IKg</members>
+        <members>ChannelsReports/Active_Partner_Report_62M</members>
+        <members>ChannelsReports/Partner_Activity_wUl</members>
+        <members>ChannelsReports/Partner_Closed_Lost_Opportunities_5St</members>
+        <members>ChannelsReports/Partner_EE_Forecast_Khg</members>
+        <members>ChannelsReports/Partner_Open_Pipeline_Report_oC0</members>
+        <members>ChannelsReports/Partner_Sales_X2J</members>
+        <members>GrowthReports/Activity_Detail_j7h</members>
+        <members>GrowthReports/Activity_Log_NGA</members>
+        <members>BPSSalesReports/BPS_Closed_Lost_Opportunities_LI7</members>
+        <members>BPSSalesReports/BPS_Leads_Xlf</members>
+        <members>BPSSalesReports/BPS_Open_Pipeline_Report_EgD</members>
+        <members>BPSSalesReports/BPS_EE_Forecast_RBs</members>
+        <members>BPSSalesReports/Unassigned_BPS_Leads_IKg</members>
+        <members>ChannelsReports/Active_Partner_Report_62M</members>
+        <members>ChannelsReports/Partner_Activity_wUl</members>
+        <members>ChannelsReports/Partner_Closed_Lost_Opportunities_5St</members>
+        <members>ChannelsReports/Partner_EE_Forecast_Khg</members>
+        <members>SalesCompensationReports/Channel_Partner_Process_L3a</members>
+        <members>NewClientSalesReports/NCS_WO_Sales_Report_iaf</members>
+        <members>GrowthBPAReports/Core_Sales_EE_Forecast_8po</members>
+        <members>GrowthDADMReports/Core_Sales_EE_Forecast_Dtw</members>
+        <members>SalesOperationsReports/Core_Sales_EE_Forecast_rZS</members>
+        <members>GrowthRVPRAReports/Core_Sales_EE_Forecast_JD7</members>
+		<members>GrowthRMReports/Core_Sales_EE_Forecast_2G8</members>
+		<members>ChannelsReports/Partner_by_Status_Summary_Report_fzA</members>
+		<members>ChannelsReports/Partner_Sales_X2J</members>
+		<members>SalesCompensationReports/Rewards_Pending_to_Pay</members>
+		<members>BPSSalesReports/Unassigned_Technology_Leads_TJo</members>
+		<members>BPSSalesReports/Technology_Open_Pipeline_Report_9Fq</members>
+		<members>BPSSalesReports/Technology_Leads_kxz</members>
+		<members>BPSSalesReports/Technology_Closed_Lost_Opportunities_3Ej</members>
+		<members>NewClientSalesReports/NCS_WO_Sales_Report_iaf</members>
+		<members>SalesOperationsReports/Mid_Market_Deal_Team_Report_skY</members>
+		<members>SalesOperationsReports/Deal_Team_Report_lB8</members>
+		<members>SalesOperationsReports/WO_Backouts_Report_afz</members>
+		<members>BPSSalesReports/Demo_Activity_Report_XEq</members>
+		<members>BusinessDevelopmentReports/SDR_Activity_EXW</members>
+		<members>SalesCompensationReports/SDR_Activity_CA6</members>
+		<members>LoyaltyReports/Loyalty_Activity_gTe</members>
+		<members>ChannelsReports/Channel_Activity_wtA</members>
+		<members>MiddleMarketReports/BPC_Activity_Kou</members>
+		<members>SalesCompensationReports/BPA_Activity_DlU</members>
+		<members>BPSSalesReports/Unassigned_Retirement_Leads_1Uw</members>
+		<members>BPSSalesReports/Retirement_Open_Pipeline_Report_x9C</members>
+		<members>BPSSalesReports/Retirement_Leads_CrI</members>
+		<members>BPSSalesReports/Retirement_Closed_Lost_Opportunities_GDv</members>
+		<members>MiddleMarketReports/Unassigned_Middle_Market_Leads_Fvj</members>
+		<members>MiddleMarketReports/MidMarket_Open_Pipeline_Report_Fkx</members>
+		<members>MiddleMarketReports/Middle_Market_Leads_VFX</members>
+		<members>MiddleMarketReports/MidMarket_Forecast_Report_49P</members>
+		<members>MiddleMarketReports/MidMarket_Closed_Lost_Opportunities_JEy</members>
+		<members>LoyaltyReports/Loyalty_Open_Pipeline_Report_Jpq</members>
+		<members>LoyaltyReports/Loyalty_Closed_Lost_Opportunitie_sQi</members>
+		<members>LoyaltyReports/Loyalty_Activity_gTe</members>
+		<members>BPSSalesReports/Inside_Sales_Open_Pipeline_Report_OBY</members>
+		<members>BPSSalesReports/Inside_Sales_Closed_Lost_Opportunities_dbX</members>
+		<members>SalesOperationsReports/Copy_of_WX_Pending_Report_BkV</members>
+		<members>SalesOperationsReports/Copy_of_WO_Pending_Report_dso</members>
+		<members>GrowthReports/Upcoming_Discovery_Calls_x7H</members>
+		<members>GrowthBPAReports/Unassigned_Leads_YqJ</members>
+		<members>GrowthDADMReports/Unassigned_Leads_tZm</members>
+		<members>GrowthRMReports/Unassigned_Leads_17E</members>
+		<members>GrowthRVPRAReports/Unassigned_Leads_juT</members>
+		<members>GrowthBPAReports/My_Closed_Lost_Opportunities_Rep_gqR</members>
+		<members>GrowthDADMReports/My_Closed_Lost_Opportunities_D8W</members>
+		<members>GrowthRMReports/My_Closed_Lost_Opportunities_P7c</members>
+		<members>GrowthRVPRAReports/My_Closed_Lost_Opportunities_iP2</members>
+		<members>GrowthBPAReports/Copy_of_My_Open_Pipeline_Report_W32</members>
+		<members>GrowthDADMReports/My_Open_Pipeline_Report_ODO</members>
+		<members>GrowthRMReports/My_Open_Pipeline_Report_B7N</members>
+		<members>GrowthRVPRAReports/My_Open_Pipeline_Report_TuH</members>
+		<members>SalesOperationsReports/Core_Sales_EE_Forecast_rZS</members>
+		<members>GrowthBPAReports/Core_Sales_EE_Forecast_8po</members>
+		<members>GrowthDADMReports/Core_Sales_EE_Forecast_Dtw</members>
+		<members>GrowthRMReports/Core_Sales_EE_Forecast_2G8</members>
+		<members>GrowthRVPRAReports/Core_Sales_EE_Forecast_JD7</members>
+		<members>GrowthBPAReports/Assigned_Leads_1rR</members>
+        <members>GrowthDADMReports/</members>
+        <members>GrowthRMReports/Assigned_Leads_cWb</members>
+        <members>GrowthRVPRAReports/Assigned_Leads_JYO</members>
+		<members>MarketingOperationsReports/Activity_by_Attribution_FhX</members>
+		<members>BPSSalesReports/Retirement_Forecast_Report_NKR</members>       
+        <members>BPSSalesReports/Technology_Forecast_Report_bBc</members>
+        <members>MarketingOperationsReports/Multiple_Attribution_Opportunities_Mi4</members>        
+        <members>MarketingOperationsReports/Campaign_Influenced_Lost_Deals_H1c</members>        
+        <members>MarketingOperationsReports/Campaign_Influenced_Pipeline_YI8</members>
+        <members>MarketingOperationsReports/Campaign_Influenced_Sales_L0I</members>
+        <members>BPSSalesReports/Retirement_Forecast_Report_NKR</members>       
+        <members>BPSSalesReports/Technology_Forecast_Report_bBc</members>           
         <name>Report</name>
     </types>
     <types>
@@ -1305,9 +1400,32 @@
         <members>Standard</members>
 		<name>Profile</name>
 	</types>
-    	<types>
+	<types>
+        <members>Employee_Splits_Deluxe_NSP</members>
+        <members>Opportunities_Deluxe_NSP</members>
+        <members>Opportunities_Deluxe_NSPSplits</members>
+        <name>ReportType</name>
+    </types>
+    <types>
 		<members>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</members>
 		<name>WorkflowAlert</name>
 	</types>
+	<types>
+        <members>GrowthReports</members>
+        <members>BPSSalesReports</members>
+        <members>ChannelsReports</members>
+        <members>BusinessDevelopmentReports</members>
+        <members>MarketingOperationsReports</members>
+        <members>LoyaltyReports</members>
+        <members>SalesOperationsReports</members>
+        <members>SalesCompensationReports</members>
+        <members>NewClientSalesReports</members>
+        <members>GrowthBPAReports</members>
+        <members>GrowthDADMReports</members>
+        <members>GrowthRMReports</members>
+        <members>GrowthRVPRAReports</members>
+        <members>MiddleMarketReports</members>
+        <name>ReportFolder</name>
+    </types>
     <version>52.0</version>
 </Package>

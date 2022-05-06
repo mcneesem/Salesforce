@@ -86,4 +86,19 @@ public class NSP_SubClientTriggerTest {
                            WHERE NSP_Client__c = 'asset1' limit 1];
         system.assertEquals(assetobj1.NSP_Account_Status__c, 'Active');
     }
+     /*Cover the code coverage*/
+    @isTest
+    public static void test_beforeInsert_UseCase1(){
+        List<NSP_Sub_Client__c> subClientObj_Obj  =  [Select Id from NSP_Sub_Client__c ];
+        System.assertEquals(true,subClientObj_Obj.size()>0);
+        NSP_SubClientTriggerHandler obj01 = new NSP_SubClientTriggerHandler();
+        obj01.beforeInsert(new List<sObject>());
+    }
+    @isTest
+    public static void test_afterDelete_UseCase1(){
+        List<NSP_Sub_Client__c> subClientObj_Obj  =  [Select Id from NSP_Sub_Client__c];
+        System.assertEquals(true,subClientObj_Obj.size()>0);
+        NSP_SubClientTriggerHandler obj01 = new NSP_SubClientTriggerHandler();
+        obj01.afterDelete(new List<sObject>(),new Map<Id,sObject>());
+    }
 }

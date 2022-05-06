@@ -75,13 +75,6 @@
         <value>Please add Primary Quote before moving stage to Proposal</value>
     </labels>
     <labels>
-        <fullName>NSP_Docusign_Account_Id</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Docusign Account Id</shortDescription>
-        <value>50202</value>
-    </labels>
-    <labels>
         <fullName>NSP_AddWOBusinessProfile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -792,13 +785,6 @@
         <shortDescription>WX Email DL</shortDescription>
         <value>WXresults@insperity.com.invalid</value>
     </labels>
-	<labels>
-        <fullName>NSP_Sales_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Sales Envelope Configuration</shortDescription>
-        <value>a7r2D000000HixfQAC</value>
-    </labels>
     <labels>
         <fullName>Retirement_Services_For_Non_WO_Products</fullName>
         <language>en_US</language>
@@ -983,83 +969,6 @@
         <shortDescription>NSP_OpportunityWAAttachmentName</shortDescription>
         <value>WA_,_completed,Delivery Order</value>
     </labels>
-    <labels>
-        <fullName>NSP_Altula_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Altula Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIeUAM</value>
-    </labels>
-    <labels>
-        <fullName>NSP_HR_Services_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>HR Services Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OISUA2</value>
-    </labels>
-    <labels>
-        <fullName>NSP_BPS_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>BPS Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIWUA2</value>
-    </labels>
-        <labels>
-        <fullName>NSP_Recruiting_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Recruiting Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIdUAM</value>
-    </labels>
-        <labels>
-        <fullName>NSP_Standalone_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Standalone Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OISUA2</value>
-    </labels>
-        <labels>
-        <fullName>NSP_WX_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>WX Envelope Configuration</shortDescription>
-        <value>a8D8M0000008OIVUA2</value>
-    </labels>
-        <labels>
-        <fullName>NSP_SingleSigner_Envelope_Configuration</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP_SingleSigner_Envelope_Configuration</shortDescription>
-        <value>a8D8M0000008OIeUAM</value>
-    </labels>
-        <labels>
-        <fullName>NSP_BPS_Wet_Envelope</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>BPS Wet Envelope</shortDescription>
-        <value>a8D8M0000008OJsUAM</value>
-    </labels>
-        <labels>
-        <fullName>NSP_HR_Wet_Envelope</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>HR Wet Envelope</shortDescription>
-        <value>a8D8M0000008OJvUAM</value>
-    </labels>
-        <labels>
-        <fullName>NSP_Recruiting_Wet_Envelope</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Recruiting Wet Envelope</shortDescription>
-        <value>a8D8M0000008OJtUAM</value>
-    </labels>
-        <labels>
-        <fullName>NSP_WX_Wet_Envelope</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>WX Wet Envelope</shortDescription>
-        <value>a8D8M0000008OJuUAM</value>
-    </labels>
      <labels>
         <fullName>NSP_Sync_Primary_Quote_With_Opportunity</fullName>
         <categories>primary product, client for life</categories>
@@ -1075,14 +984,6 @@
         <protected>false</protected>
         <shortDescription>12 hours Milliseconds</shortDescription>
         <value>43200000</value>
-    </labels>
-    <labels>
-        <fullName>NSP_Account_Envelop_Configuration</fullName>
-        <categories>account template,docusign</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Account Envelop Configuration</shortDescription>
-        <value>a7r2D000000HhLTQA0</value>
     </labels>
     <labels>
         <fullName>NSP_OwnerBasedCriteriaRoles</fullName>
@@ -1247,5 +1148,104 @@
         <protected>false</protected>
         <shortDescription>Insperity Signer and Approved Err</shortDescription>
         <value>Please update Insperity Signer and you can generate delivery order documents only for approved quotes</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Altula_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Altula Envelope Configuration</shortDescription>
+        <value>a8N4x0000000kh9EAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_HR_Services_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Services Envelope Configuration</shortDescription>
+        <value>a8N4x0000000khEEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_BPS_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Envelope Configuration</shortDescription>
+        <value>a8N4x0000000kgzEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Recruiting_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recruiting Envelope Configuration</shortDescription>
+        <value>a8N4x0000000khTEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WX_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Envelope Configuration</shortDescription>
+        <value>a8N4x0000000khJEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_BPS_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Wet Envelope</shortDescription>
+        <value>a8N4x0000000kh4EAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_HR_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Wet Envelope</shortDescription>
+        <value>a8N4x0000000khFEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Recruiting_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recruiting Wet Envelope</shortDescription>
+        <value>a8N4x0000000khPEAQ</value>
+    </labels>
+        <labels>
+        <fullName>NSP_WX_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Wet Envelope</shortDescription>
+        <value>a8N4x0000000khOEAQ</value>
+    </labels>
+	<labels>
+        <fullName>NSP_Account_Envelope_Configuration</fullName>
+        <categories>account template,docusign</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Envelop Configuration</shortDescription>
+        <value>a8N4x0000000kgpEAA</value>
+    </labels>
+	<labels>
+        <fullName>NSP_Sales_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Envelope Configuration</shortDescription>
+        <value>a8N4x0000000kguEAA</value>
+    </labels>
+	<labels>
+        <fullName>NSP_Docusign_Account_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Docusign Account Id</shortDescription>
+        <value>24583</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Docusign_Base_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Docusign Base URL</shortDescription>
+        <value>https://na11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DO_Gen_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DO Cannot be generated</shortDescription>
+        <value>Document cannot be generated for this Quote</value>
     </labels>
 </CustomLabels>

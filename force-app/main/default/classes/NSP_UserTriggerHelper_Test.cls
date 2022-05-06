@@ -8,21 +8,45 @@
 @IsTest
 public with sharing class NSP_UserTriggerHelper_Test {
     public NSP_UserTriggerHelper_Test() {
-
+        
     }
-
+    
     @testSetup
     static void setupTestData(){
-       NSP_TestHelper.createUser(true);
-  }    
-
-  static testMethod void updatePhoneNumberTest(){
-    Test.startTest();
-    User users = [Select Id, Name,Phone from User WHERE Username =: NSP_TestHelper.DEFAULT_USERNAME LIMIT 1]; //Added WHERE Condition as part of code fix
-    users.Phone = '(312)6475261 ext415';
-    update users;
-    Test.stopTest();
-    System.assertEquals(users.Phone, '(312)6475261 ext415');
-}
-
+        User tUser =  NSP_TestHelper.createUser(false);
+        tUser.Phone = '(112)6475261 ext415';
+        insert tUser;
+    } 
+    /**
+* @Description: This test method is used to cover updatePhoneNumber method
+* @Created date: 04/28/2022.
+* @return void                           
+*/ 
+    static testMethod void updatePhoneNumberTest(){
+        Test.startTest();
+        User users = [Select Id, Name,Phone from User WHERE Username =: NSP_TestHelper.DEFAULT_USERNAME LIMIT 1]; //Added WHERE Condition as part of code fix
+        users.Phone = '(112)6475261 ext415';
+        update users;
+        users.Phone = '(122)6475261 ext415';
+        update users;
+        users.Phone = '(122)6475261 x415';
+        update users;
+        Test.stopTest();
+        system.assertEquals(users.Phone, '(122)6475261 x415');
+    }
+    /**
+* @Description: This test method is used to cover updatePhoneNumber method
+* @Created date: 04/28/2022.
+* @return void                           
+*/ 
+    static testMethod void updatePhoneNumberTest1(){
+        Test.startTest();
+        User tUser =  NSP_TestHelper.createUser(false);
+        tUser.Username = 'Test39@user.com';
+        tUser.Phone = '(312)6475261 ext415';
+        insert tUser;
+        Test.stopTest();
+        system.assertEquals(tUser.Phone, '(312)6475261 ext415');
+    }
+    
 }

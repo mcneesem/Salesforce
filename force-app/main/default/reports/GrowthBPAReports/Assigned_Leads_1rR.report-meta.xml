@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Lead$Status</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>true</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
     <columns>
         <field>Lead$Company</field>
     </columns>
@@ -35,21 +59,12 @@
         <field>Lead$LastModifiedDate</field>
     </columns>
     <columns>
-        <field>Lead$NSP_Lead_Stage__c</field>
-    </columns>
-    <columns>
-        <field>Lead$Status</field>
-    </columns>
-    <columns>
-        <field>Lead$Owner.UserRole</field>
-    </columns>
-    <columns>
         <field>Lead$NSP_PrimaryProduct__c</field>
     </columns>
     <currency>USD</currency>
     <description>How many leads are assigned to me/my office/ my region etc.?</description>
     <filter>
-        <booleanFilter>1 AND 2</booleanFilter>
+        <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <column>Lead$Status</column>
             <columnToColumn>false</columnToColumn>
@@ -58,11 +73,11 @@
             <value>Working,Nurturing,Qualified</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Lead$Owner.UserRole</column>
+            <column>Lead$NSP_PrimaryProduct__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Business Performance Advisor,Associate Business Performance Advisor</value>
+            <value>WX,WA,WO</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>
@@ -71,18 +86,25 @@
         <field>Lead$NSP_Sales_Office__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead$Status</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>Assigned Leads</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
     <reportType>Leads_Deluxe_NSP__c</reportType>
-    <scope>organization</scope>
+    <scope>user</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Lead$CreatedDate</dateColumn>
+        <endDate>2022-04-21</endDate>
         <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2022-01-01</startDate>
     </timeFrameFilter>
 </Report>

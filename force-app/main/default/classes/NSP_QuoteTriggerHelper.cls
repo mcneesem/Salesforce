@@ -264,9 +264,6 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
     Set<String> productsToBypassSignature = new Set<String>(System.Label.NSP_Primary_Products_To_Bypass_Signature.split(','));
     Set<String> groupsToBypassSignature = new Set<String>(System.Label.NSP_Groups_Can_Bypass_Signature.split(','));
     Set<String> groupname = new Set<String>(System.label.NSP_ApprovalSubmitterGroups.split(','));
-    List<GroupMember>  objmember = [Select id,UserOrGroupId,GroupId,Group.DeveloperName,Group.Name from GroupMember 
-                                      WHERE UserOrGroupId =: UserInfo.getUserId() AND Group.DeveloperName IN : groupname LIMIT 1 ];
-
     list<Opportunity> opportunityupdateList = new list<Opportunity>();
     set<Id> opportunityIdSet = new set<Id>();
     Map<String, NSP_Opportunity_To_Quote_Data_Map__mdt> pricebookConfigs = NSP_Opportunity_To_Quote_Data_Map__mdt.getAll();
@@ -391,7 +388,7 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
         }
         
         if(String.isNotEmpty(newQuote.NSP_Product_Type__c)){
-        if(newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_TC) && newQuote.SBQQ__LineItemCount__c == 0 && newQuote.NSP_Client_For_Life__c == NSP_CPQConstants.CLIENT_WOWS){
+        if(newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_TC) && newQuote.SBQQ__LineItemCount__c == 0 ){
             newQuote.NSP_BPS_Billing_Frequency__c = NSP_CPQConstants.MONTHLY;
         }
     }
@@ -410,18 +407,8 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
         
         if(productsToBypassSignature.contains(newQuote.NSP_Opportunity_Primary_Product__c)) {
             newQuote.NSP_Bypass_DocuSign_Signature__c = true;
-            if(newQuote.NSP_Opportunity_Primary_Product__c== NSP_CPQConstants.QUOTE_PRODUCT_TYPE_HRCS && newQuote.NSP_Client_For_Life__c != NSP_CPQConstants.CLIENT_WOWS) {
-                newQuote.NSP_Bypass_DocuSign_Signature__c = false;
-            }
         }
-        else {
-             if(objmember.size()>0){
-                if(newQuote.NSP_Bypass_DocuSign_Signature__c!=quoteOldMap.get(newQuote.Id).NSP_Bypass_DocuSign_Signature__c && !groupsToBypassSignature.contains(objmember[0].Group.Name)) {
-                    newQuote.NSP_Bypass_DocuSign_Signature__c.addError(BYPASS_SIGNATURE_NOT_ALLOWED); 
-                }
-             }
-        }
-        
+     
         if(newQuote.NSP_Client_For_Life__c == NSP_CPQConstants.CLIENT_WOWS && newQuote.NSP_Opportunity_Primary_Product__c == NSP_CPQConstants.OPPTY_WO && newQuote.NSP_Price_Book__c!=quoteOldMap.get(newQuote.Id).NSP_Price_Book__c) {
             //newQuote.SBQQ__PricebookId__c = null;
             if(!woapplicablePBMap.containsKey(newQuote.NSP_Price_Book__c)){
@@ -522,7 +509,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
    
     for(SBQQ__Quote__c newQuote : newQuotesList) {
         if(String.isNotEmpty(newQuote.NSP_Product_Type__c)){
-        if((newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_TC) && newQuote.SBQQ__LineItemCount__c == 0 && newQuote.NSP_Client_For_Life__c == NSP_CPQConstants.CLIENT_WOWS) || newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_LEARNDEV)){
+        if((newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_TC) && newQuote.SBQQ__LineItemCount__c == 0 ) || newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_LEARNDEV)){
         newQuote.NSP_BPS_Billing_Frequency__c = NSP_CPQConstants.MONTHLY;
         }
         }

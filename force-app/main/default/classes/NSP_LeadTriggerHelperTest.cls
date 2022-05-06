@@ -93,10 +93,11 @@ public class NSP_LeadTriggerHelperTest {
         List<Lead> newLeadList = new List<Lead>();
         
         //Lead Creation
+        Id referralLeadRecId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Referral').getRecordTypeId(); //Mani
         Lead leadObject = new Lead();
         leadObject.firstname='Test';
         leadObject.lastname='Lead';
-       
+        leadObject.recordTypeId = referralLeadRecId; //Mani
         leadObject.Company = 'TestClass';
         leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
         leadObject.NumberOfEmployees =150;
@@ -104,20 +105,21 @@ public class NSP_LeadTriggerHelperTest {
         leadObject.PostalCode = '10001';
         leadObject.NSP_Partner__c =accoutObject.Id;
         leadObject.NSP_Lead_Stage__c  =null;      
-        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '786543789';
+        leadObject.NSP_Lead_Routing__c = true;
+        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
         //Adding lead object to the list
         leadList.add(leadObject);
-
-         // STY-01725
-         Lead leadObject3 = new Lead();
-         leadObject3.firstname='Mark';
-         leadObject3.lastname='ZB';
-         leadObject3.Company = 'FBook';
-         leadObject3.Email = 'fbook@gmail.com';
-         leadObject3.NSP_Partner__c =accoutObject.Id;
-         leadObject3.NSP_Lead_Stage__c  =null;
-         leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
-         leadList.add(leadObject3);
+        
+        // STY-01725
+        Lead leadObject3 = new Lead();
+        leadObject3.firstname='Mark';
+        leadObject3.lastname='ZB';
+        leadObject3.Company = 'FBook';
+        leadObject3.Email = 'fbook@gmail.com';
+        leadObject3.NSP_Partner__c =accoutObject.Id;
+        leadObject3.NSP_Lead_Stage__c  =null;
+        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
+        leadList.add(leadObject3);
         
         //Lead Creation
         Lead leadObject1 = new Lead();
@@ -128,14 +130,14 @@ public class NSP_LeadTriggerHelperTest {
         leadObject1.Company = 'Allstate123';
         leadObject1.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject1.Email = LEADCONVERTRECORD_EMAIL;
-
+        
         /* as part of STY-01725 */
         leadObject1.NSP_DC_SetDate__c =  date.today();
         Time myTime = Time.newInstance(1, 2, 3, 0);
         leadObject1.NSP_DC_SetTime__c = myTime;
         leadObject1.NSP_Assign_Lead__c = true;
         /* as part of STY-01725 */
-
+        
         leadObject1.PostalCode = '10001';
         leadObject1.NSP_Partner__c =accoutObject.Id;
         leadObject1.NSP_Lead_Stage__c  =null;  
@@ -149,25 +151,25 @@ public class NSP_LeadTriggerHelperTest {
         Lead leadObject2 = new Lead();
         leadObject2.firstname='HelloTest';
         leadObject2.lastname='Employee';
-       leadObject2.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject2.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
         //leadObject2.NumberOfEmployees =140;
         leadObject2.Company = 'tmp';
         leadObject2.Email = 'tmp@tmp.com';
         leadObject2.PostalCode = '10001';
         leadObject2.NSP_Partner__c =accoutObject.Id;
         leadObject2.NumberOfEmployees  =160;  
-      //Adding lead object to the list 
+        //Adding lead object to the list 
         leadList.add(leadObject2);
         
         // Inserting lead object
         insert leadList;
-
+        
         Lead leadObject4 = new Lead();
         leadObject4.firstname='TestLead1123';
         leadObject4.lastname='Child';
         leadObject4.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
         leadObject4.NumberOfEmployees =160;
-        leadObject4.Company = 'Allstate123';
+        leadObject4.Company = 'ABC';
         leadObject4.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject4.Email = 'test@test.com';
         leadObject4.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
@@ -182,11 +184,27 @@ public class NSP_LeadTriggerHelperTest {
         leadObject5.Company = 'Allstate123';
         leadObject5.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject5.Email = 'test333@test.com';
-        leadObject5.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        leadObject5.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
         leadObject5.NSP_Lead_Routing__c = true;
+        
         newLeadList.add(leadObject5);
+        
+        Lead leadObject6 = new Lead();
+        leadObject6.firstname='TestLead1134';
+        leadObject6.lastname='Acc';
+        leadObject6.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject6.NumberOfEmployees =160;
+        leadObject6.Company = 'Allstate123';
+        leadObject6.NSP_Referred_By_COI__c = contactObject.Id;
+        leadObject6.Email = 'test333@test.com';
+        leadObject6.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject6.NSP_Parent_Lead__c = leadObject5.Id;
+        leadObject6.NSP_Lead_Routing__c = true;
+        newLeadList.add(leadObject6);
         insert newLeadList; 
     }
+    
+    
     
     /**
 * Checks the lead stage
@@ -206,7 +224,7 @@ public class NSP_LeadTriggerHelperTest {
         Test.startTest();
         //updating the lead record
         update leadList[0];
-
+        
         system.assert(leadList[0].nsp_fire_score__c == 82,true);
         Test.stopTest();
         
@@ -214,7 +232,7 @@ public class NSP_LeadTriggerHelperTest {
     
     @isTest
     public static void convertLeadTest(){
-       
+        
         Lead leadRecord = [SELECT Id, FirstName,OwnerId,NSP_Reason__c,Status, LastName, Email FROM Lead WHERE Email=:LEADCONVERTRECORD_EMAIL LIMIT 1];
         leadRecord.OwnerId=UserInfo.getUserId();
         update leadRecord;
@@ -227,7 +245,7 @@ public class NSP_LeadTriggerHelperTest {
         );
         
         insert taskRecord;
-                
+        
         database.leadConvert lc = new database.leadConvert();
         lc.setLeadId(leadRecord.id);
         lc.setOwnerId(UserInfo.getUserId());
@@ -256,139 +274,119 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
         system.assertEquals(LEADSTATUS, leadRecord.Status);
     }
-
+    
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method for Mid Market Queue for Inbound user
-* @Created date: 01/14/2021. 
-* @Story : STY-01725
+* @Description: This test method is used to cover beforeUpdateDirector method
+* @Created date: 04/29/2022. 
 * @return void             
-*                
-*/
-@isTest
-public static void inBoundUserTest(){
-    Lead leadObject = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
-                       WHERE Company = 'FBook'];
-    User getUser = [SELECT Id, Name, Email FROM User WHERE Email = 'testuser@test.com' LIMIT 1];
-    getUser.UserRoleId = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Name = 'Inbound Manager'][0].Id;
-    Database.update(getUser);
-    Test.startTest();
-    System.runAs(getUser) {
-        leadObject.NSP_DC_SetDate__c =  date.today();
-        leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
-        leadObject.NumberOfEmployees =150;
-        leadObject.PostalCode = '10001';
-        Time myTime = Time.newInstance(1, 2, 3, 0);
-        leadObject.NSP_DC_SetTime__c = myTime;
-        leadObject.NSP_Assign_Lead__c = true;
-        leadObject.Lead_Owner_Auto_Assignment__c = false;
+*     */           
+    @isTest
+    public static void dunsCheckBeforeUpdateTest(){ 
+        Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
+                        WHERE firstName = 'TestLead113'];
+        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        Test.startTest();
+        database.update(getLead);
+        Test.stopTest();
+        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+    }
+    /**
+* @Description: This test method is used to cover beforeUpdateDirector method
+* @Created date: 04/29/2022. 
+* @return void             
+*     */   
+    @isTest
+    public static void dunsCheckBeforeUpdateMidMarketTest(){ 
+        Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
+                        WHERE firstName = 'TestLead113'];
+        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
+        Test.startTest();
+        database.update(getLead);
+        Test.stopTest();
+        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+    }
+    /**
+* @Description: This test method is used to cover beforeUpdateDirector method
+* @Created date: 04/29/2022. 
+* @return void             
+*     */  
+    @isTest
+    public static void dunsCheckBeforeUpdateZipCodeTest(){ 
+        Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
+                        WHERE firstName = 'TestLead113'];
+        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.PostalCode = '10001';
+        getLead.NumberOfEmployees = 100;
+        Test.startTest();
+        database.update(getLead);
+        Test.stopTest();
+        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+    }
+    /**
+* @Description: This test method is used to cover beforeUpdateDirector method
+* @Created date: 04/29/2022. 
+* @return void             
+*     */  
+    @isTest
+    public static void dunsCheckBeforeUpdateCompanyTest(){ 
+        Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
+                        WHERE Company = 'TestClass'];
+        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.NSP_Lead_Routing__c = true;
+        getLead.Company = 'AllState';
+        Test.startTest();
+        database.update(getLead);
+        Test.stopTest();
+        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+    } 
+    /**
+* @Description: This test method is used to cover beforeUpdateDirector method
+* @Created date: 04/29/2022. 
+* @return void             
+*     */  
+    @isTest
+    public static void dunsCheckBeforeUpdateParentLeadTest(){ 
+        Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
+                        WHERE firstName = 'HelloTest'];
+        Lead getParentLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NSP_Parent_Lead__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
+                              WHERE firstName = 'TestLead1134'];
+        getLead.NSP_Parent_Lead__c = getParentLead.Id;
+        getLead.NumberOfEmployees = 100;
+        test.startTest();
+        database.update(getLead);
+        Test.stopTest();
+        system.assertEquals(getLead.NumberOfEmployees, 100);
+    } 
+    /**
+* @Description: This test method is used to cover beforeUpdateDirector method
+* @Created date: 04/29/2022. 
+* @return void             
+*     */  
+    @isTest
+    public static void dunsCheckBeforeInsertTest(){ 
+        Account accoutObject = new Account();
+        Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        accoutObject.Name = 'Test Account';
+        accoutObject.recordTypeId=partnerRecordTypeId;
+        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        //Inserting account object
+        insert accoutObject;
         
-        Database.update(leadObject);
-        Test.stopTest();
-        system.assertEquals(true, leadObject.NSP_Assign_Lead__c);
-    }
-}
-
-
-/**
-* @Description: This test method is used to cover beforeUpdateDirector method for round robin for Inbound user
-* @Created date: 01/14/2021. 
-* @Story : STY-01725
-* @return void             
-*                
-*/
-@isTest
-public static void inBoundUserRoundRoboinTest(){
-    Lead leadObject = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
-                       WHERE Company = 'FBook'];
-    User getUser = [SELECT Id, Name, Email FROM User WHERE Email = 'testuser@test.com' LIMIT 1];
-    getUser.UserRoleId = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Name = 'Inbound Manager'][0].Id;
-    Database.update(getUser);
-    
-    System.runAs(getUser) {
-        leadObject.NSP_DC_SetDate__c =  date.today();
-        leadObject.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
-        leadObject.NumberOfEmployees = 100;
-        leadObject.PostalCode = '10001';
-        Time myTime = Time.newInstance(1, 2, 3, 0);
-        leadObject.NSP_DC_SetTime__c = myTime;
-        leadObject.NSP_Assign_Lead__c = true;
-        leadObject.Lead_Owner_Auto_Assignment__c = false;
+        Lead nLead = new Lead();
+        nLead.firstname='HelloTest123';
+        nLead.lastname='Employee123';
+        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.Company = 'tmp123';
+        nLead.Email = 'tmp@tmp123.com';
+        nLead.PostalCode = '10001';
+        nLead.NumberOfEmployees  =160;  
+        nLead.NSP_Lead_Routing__c = true;
+        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
         Test.startTest();
-        Database.update(leadObject);
+        insert nLead;
         Test.stopTest();
-        system.assertEquals(true, leadObject.NSP_Assign_Lead__c);
-        
-    }
-}
-
-
-/**
-* @Description: This test method is used to cover beforeUpdateDirector method for Patroll HCM for Inbound user
-* @Created date: 01/14/2021. 
-* @Story : STY-01725
-* @return void             
-*                
-*/
-@isTest
-public static void inBoundUserPayRollHCMTest(){
-    Lead leadObject = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
-                       WHERE Company = 'FBook'];
-    User getUser = [SELECT Id, Name, Email FROM User WHERE Email = 'testuser@test.com' LIMIT 1];
-    getUser.UserRoleId = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Name = 'Inbound Manager'][0].Id;
-    Database.update(getUser);
+        system.assertEquals(nLead.NumberOfEmployees, 160);
+    } 
     
-    System.runAs(getUser) {
-        leadObject.NSP_DC_SetDate__c =  date.today();
-        leadObject.NSP_Product_Interest__c = 'Payroll & Human Capital Management(Workforce Acceleration)';
-        leadObject.NumberOfEmployees = 150;
-        leadObject.PostalCode = '10001';
-        Time myTime = Time.newInstance(1, 2, 3, 0);
-        leadObject.NSP_DC_SetTime__c = myTime;
-        leadObject.NSP_Assign_Lead__c = true;
-        leadObject.Lead_Owner_Auto_Assignment__c = false;
-        Test.startTest();
-        Database.update(leadObject);
-        Test.stopTest();
-        system.assertEquals(true, leadObject.NSP_Assign_Lead__c);
-    }
-}
-
-
-
-/**
-* @Description: This test method is used to cover beforeInsertDirector method for Inbound user
-* @Created date: 01/14/2021.
-* @Story : STY-01725
-* @return void             
-*                
-*/  
-@isTest
-public static void inBoundUserBeforeInsertTest(){
-    
-    User getUser = [SELECT Id, Name, Email FROM User WHERE Email = 'testuser@test.com' LIMIT 1];
-    getUser.UserRoleId = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Name = 'Inbound Manager'][0].Id;
-    Database.update(getUser);
-    
-    System.runAs(getUser) {
-        Lead ldObj = new Lead();
-        ldObj.firstname='mark';
-        ldObj.lastname='mark';
-        ldObj.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
-        ldObj.NumberOfEmployees = 100;
-        ldObj.Company = 'mark';
-        ldObj.Email = 'mark@gmail.com';
-        ldObj.NSP_DC_SetDate__c =  date.today();
-        Time myTime = Time.newInstance(1, 2, 3, 0);
-        ldObj.NSP_DC_SetTime__c = myTime;
-        ldObj.NSP_Assign_Lead__c = true;
-        ldObj.PostalCode = '10001';
-        ldObj.NSP_Lead_Stage__c  =null;  
-        ldObj.NSP_Referral_Source__c='COI';
-        Test.startTest();
-        Database.insert(ldObj);
-        Test.stopTest();
-        system.assertEquals(true, ldObj.NSP_Assign_Lead__c);
-    }
-}
-      
 }

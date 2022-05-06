@@ -4640,7 +4640,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Event.NSP_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8837,6 +8837,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Quote_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19835,7 +19840,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Task.NSP_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -33,6 +33,7 @@ public without sharing class NSP_AddressCtrlTest {
         System.assertEquals(addressRecordRetrieve.NSP_Country__c, address.NSP_Country__c);
         address = new NSP_Address__c();
         NSP_AddressCtrl.saveAddress(address);
+        NSP_AddressCtrl.getDefaultRecordType(); // Added as part of test class Fix
     }
     
     

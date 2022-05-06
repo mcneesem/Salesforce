@@ -102,6 +102,20 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject3.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         //Inserting Opportunity Object
         insert opportuniytObject3;
+
+        Opportunity opportuniytObject4 = new Opportunity();
+        opportuniytObject4.Name = 'Test Oppty Email';
+        opportuniytObject4.AccountId = accoutObject1.id;
+        opportuniytObject4.stagename = NSP_SalesConstants.ANALYSIS_STAGE;
+        opportuniytObject4.CloseDate = date.today();
+        opportuniytObject4.CurrencyIsoCode = CURRENCY_USD;
+        opportuniytObject4.NSP_PrimaryProduct__c = 'WA';
+        opportuniytObject4.NSP_Client_For_Life__c='WA';
+        opportuniytObject4.NSP_Number_of_Employees__c = 151; //!do not change. Test might fail
+        opportuniytObject4.Type ='CAMS';
+        opportuniytObject4.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
+        //Inserting Opportunity Object
+        insert opportuniytObject4;
         
         SBQQ__Quote__c quoteRec = new SBQQ__Quote__c();
         quoteRec.SBQQ__Opportunity2__c = opportuniytObject3.Id;
@@ -147,6 +161,44 @@ public class NSP_OpportunityTriggerHelperTest {
         
     }
     
+        /**
+* @Description: This test method is used to cover updatesOnChildOpportunity
+* @Created date: 04/29/2022. 
+* @return void             
+*                
+*/
+        @isTest
+        static void updatesOnChildOpportunityTest(){
+            UserRole ur = new UserRole(Name = 'Regional Administrator');
+            insert ur;
+            
+            User userRecord = new User(
+                ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+                UserRoleId =ur.Id,
+                LastName = 'TestClassUser',
+                Phone = '1231231231',
+                Email = 'testuser@test.com',
+                Username = 'testuser@test.com' + System.currentTimeMillis(),
+                CompanyName = 'TEST',
+                Title = 'title',
+                Alias = 'alias',
+                TimeZoneSidKey = 'America/Los_Angeles',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'en_US',
+                LocaleSidKey = 'en_US'
+            );
+            insert userRecord;
+            user getUser = [SELECT Id,UserRole.Name FROM User WHERE Id =:userRecord.Id ];
+            System.runAs(userRecord) {
+                Opportunity opp = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null LIMIT 1];
+                opp.ownerId = userRecord.Id;
+                opp.NSP_PrimaryProduct__c = 'Insurance Services';
+                opp.NSP_Lost_Reason__c = 'Backout';
+                opp.stagename = NSP_SalesConstants.CLOSED_LOST;
+                database.update(opp);
+                System.assertEquals(NSP_SalesConstants.CLOSED_LOST, opp.stagename);
+            }
+        }
     /**
 * Checks the update protion of the trigger
 * @param N/A. 
@@ -300,16 +352,16 @@ public class NSP_OpportunityTriggerHelperTest {
         Test.stopTest();
     }
      
-   /**
-    * @Description: This test method is used to cover sendClosedWonEmailNotifications method of NSP_EmailWithAttachment
+    /**
+    * @Description: This test method is used to cover sendClosedWonEmailNotifications for WX method of NSP_EmailWithAttachment
     * @Created date: 22/03/2022.
     * @return void             
     * @author : Nischay Jindal               
     */
         
     @isTest
-        static void sendClosedWonEmailNotification(){
-           List<Opportunity> opportunityList = [SELECT Id,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
+        static void sendClosedWonEmailNotificationWX(){
+           List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
            ContentVersion cvlist = new Contentversion(); 
             cvlist.Title = 'WX_0_Delivery Order__completed'; 
             cvlist.PathOnClient = 'test'; 
@@ -322,7 +374,42 @@ public class NSP_OpportunityTriggerHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = 'Closed Won';
-            update oppty;   
+            update oppty; 
+            List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
+            Map<Id,Opportunity> oppMap = new Map<Id,Opportunity>();
+            oppMap.put(oppty.Id,oppty);
+            NSP_EmailServicesUtility.sendEmailsTOService(oppMap.Values(),oppMap,workforceProductsList);
+           Test.stopTest();
+            System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
+        } 
+
+    /**
+    * @Description: This test method is used to cover sendClosedWonEmailNotifications for WA method of NSP_EmailWithAttachment
+    * @Created date: 22/03/2022.
+    * @return void             
+    * @author : Nischay Jindal               
+    */
+        
+    @isTest
+        static void sendClosedWonEmailNotificationWA(){
+           List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WA'];
+           ContentVersion cvlist = new Contentversion(); 
+            cvlist.Title = 'WA_0_Delivery Order__completed'; 
+            cvlist.PathOnClient = 'test'; 
+            cvlist.VersionData = EncodingUtil.base64Decode('Unit Test Attachment Body');
+            cvlist.FirstPublishLocationId=opportunityList[0].Id;
+           insert cvlist;
+           Test.startTest();      
+            opportunity oppty = opportunityList[0];
+            oppty.NSP_DM_User__c = oppty.OwnerId;
+            oppty.NSP_DA_User__c = oppty.OwnerId;
+            oppty.NSP_BPA__c = oppty.OwnerId;
+            oppty.StageName = 'Closed Won';
+            update oppty; 
+            List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
+            Map<Id,Opportunity> oppMap = new Map<Id,Opportunity>();
+            oppMap.put(oppty.Id,oppty);
+            NSP_EmailServicesUtility.sendEmailsTOService(oppMap.Values(),oppMap,workforceProductsList);
            Test.stopTest();
             System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
         } 
