@@ -107,6 +107,75 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DOZISF__ZoomInfo_Enrich_Status__c</picklist>
+        <values>
+            <fullName>Company Enrich Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enriched</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No-Match</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DnB_Email_Deliverability__c</picklist>
+        <values>
+            <fullName>Email Threat Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Excellent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Very Poor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DnB_Phone_Accuracy__c</picklist>
+        <values>
+            <fullName>Excellent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Very Poor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Industry</picklist>
         <values>
             <fullName>Agriculture</fullName>
@@ -248,11 +317,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Employee Referral</fullName>
+            <fullName>DnB</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>DnB</fullName>
+        <values>
+            <fullName>Employee Referral</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1273,91 +1342,11 @@
     <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
         <values>
-            <fullName>301</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>302</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>501</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>502</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>503</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>504</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>505</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>506</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>507</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>520</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>522</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>523</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>540</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>541</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>561</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>581</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>601</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>602</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>701</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>902</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>903</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1021</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1366,6 +1355,10 @@
         </values>
         <values>
             <fullName>1061</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1081</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1405,6 +1398,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1406</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1501</fullName>
             <default>false</default>
         </values>
@@ -1413,11 +1410,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1702</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>2100</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>2101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1430,6 +1435,10 @@
         </values>
         <values>
             <fullName>2202</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2203</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1454,6 +1463,14 @@
         </values>
         <values>
             <fullName>2901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>302</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1597,7 +1614,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4466</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4477</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1621,31 +1646,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>502</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>505</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>506</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>507</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>508</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2203</fullName>
+            <fullName>520</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1406</fullName>
+            <fullName>521</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1081</fullName>
+            <fullName>522</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2110</fullName>
+            <fullName>523</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1702</fullName>
+            <fullName>540</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1021</fullName>
+            <fullName>541</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>561</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>581</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>801</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1653,19 +1730,11 @@
             <default>false</default>
         </values>
         <values>
-             <fullName>801</fullName>
+            <fullName>902</fullName>
             <default>false</default>
         </values>
         <values>
-             <fullName>521</fullName>
-            <default>false</default>
-        </values>
-        <values>
-             <fullName>4477</fullName>
-            <default>false</default>
-        </values>
-        <values>
-             <fullName>4416</fullName>
+            <fullName>903</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1888,6 +1957,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acrisure %E2%80%93 VCG</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acrisure LLC dba Connor Group</fullName>
             <default>false</default>
         </values>
@@ -1952,7 +2025,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acrisure%2C The Benefits Group%2C Rochester Hills%2C MI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Advantage Benefits Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alera Group %E2%80%93 Forum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alera Group %E2%80%93 TRISURE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2084,6 +2169,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CertaPro %E2%80%93 PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Colorado CEO Forum</fullName>
             <default>false</default>
         </values>
@@ -2101,6 +2190,10 @@
         </values>
         <values>
             <fullName>DKG Insurance %26 Financial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Davidow Financial %26 Insurance Services%2C Inc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2817,30 +2910,6 @@
         </values>
         <values>
             <fullName>Vistage Worldwide</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acrisure – VCG</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CertaPro – PA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Alera Group – Forum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Alera Group – TRISURE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -36,32 +36,32 @@
                 <default>false</default>
                 <label>ReferralProgramAF-II</label>
             </value>
-			<value>
+            <value>
                 <fullName>ReferralProgramChamberBanks</fullName>
                 <default>false</default>
                 <label>Referral Program Chamber Banks</label>
             </value>
-			<value>
+            <value>
                 <fullName>ReferralProgramNationalNonRevShare</fullName>
                 <default>false</default>
                 <label>Referral Program National NonRev Share</label>
             </value>
-			<value>
+            <value>
                 <fullName>ReferralProgramNationalRevShare</fullName>
                 <default>false</default>
                 <label>Referral Program National RevShare</label>
             </value>
-			<value>
+            <value>
                 <fullName>ReferralProgramNonHealthBrokerAllianceCoSelling</fullName>
                 <default>false</default>
                 <label>Referral Program NonHealth Broker Alliance CoSelling</label>
             </value>
-			<value>
+            <value>
                 <fullName>TermsofParticipationTOPAllianceGeneralAgent</fullName>
                 <default>false</default>
                 <label>Terms of Participation TOP Alliance General Agent</label>
             </value>
-			<value>
+            <value>
                 <fullName>TOPAllianceCoSellingBrokerRev</fullName>
                 <default>false</default>
                 <label>TOP Alliance CoSelling Broker Rev</label>

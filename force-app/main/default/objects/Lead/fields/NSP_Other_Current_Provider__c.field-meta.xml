@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Other_Current_Provider__c</fullName>
     <description>Field used to store the name of current provider</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>If other, please indicate name of current provider</inlineHelpText>
     <label>Other</label>

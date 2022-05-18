@@ -3,6 +3,7 @@
     <fullName>NSP_OneForce_External_ID__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Used to store One force external ID</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>OneForce External ID</label>
     <length>80</length>

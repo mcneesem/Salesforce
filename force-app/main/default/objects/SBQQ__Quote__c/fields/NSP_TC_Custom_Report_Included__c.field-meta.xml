@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_TC_Custom_Report_Included__c</fullName>
-    <description>Internal field to check if product is present in quote.</description>
     <defaultValue>false</defaultValue>
+    <description>Internal field to check if product is present in quote.</description>
     <externalId>false</externalId>
     <label>Custom Report Included</label>
     <trackHistory>false</trackHistory>

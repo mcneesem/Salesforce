@@ -109,6 +109,13 @@
         </connector>
     </assignments>
     <constants>
+        <name>conBPC</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Business_Performance_Consultant</stringValue>
+        </value>
+    </constants>
+    <constants>
         <description>Added part of DF-01455</description>
         <name>conBPSAdministrator</name>
         <dataType>String</dataType>
@@ -123,11 +130,18 @@
             <stringValue>BPS_Sales_Manager</stringValue>
         </value>
     </constants>
-     <constants>
+    <constants>
         <name>conBPSTechnologySales</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Technology_Sales</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>conBusinessPerformance</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Business_Performance_Advisor</stringValue>
         </value>
     </constants>
     <constants>
@@ -138,10 +152,10 @@
         </value>
     </constants>
     <constants>
-        <name>conBusinessPerformance</name>
+        <name>conDA</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>Business_Performance_Advisor</stringValue>
+            <stringValue>District_Administrator</stringValue>
         </value>
     </constants>
     <constants>
@@ -160,10 +174,24 @@
         </value>
     </constants>
     <constants>
+        <name>conMA</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MidMarket_Administrator</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>conNCS</name>
         <dataType>String</dataType>
         <value>
             <stringValue>NSP_New_Client_Sales</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>conRA</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Regional_Administrator</stringValue>
         </value>
     </constants>
     <constants>
@@ -213,7 +241,7 @@
         <defaultConnectorLabel>Not BPA</defaultConnectorLabel>
         <rules>
             <name>Is_BPA_Decision</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12)</conditionLogic>
             <conditions>
                 <leftValueReference>varUserProfile</leftValueReference>
                 <operator>Contains</operator>
@@ -268,6 +296,34 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>conHCMSalesConsultant</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conBPC</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conDA</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conRA</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conMA</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -483,7 +539,7 @@
             <targetReference>UserInfoAssign</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>varIsBPA</name>
         <dataType>Boolean</dataType>

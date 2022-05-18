@@ -6,4 +6,8 @@
         <field>NSP_Is_Active__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
+    <values>
+        <field>NSP_Profiles_to_bypass_trigger__c</field>
+        <value xsi:nil="true"/>
+    </values>
 </CustomMetadata>

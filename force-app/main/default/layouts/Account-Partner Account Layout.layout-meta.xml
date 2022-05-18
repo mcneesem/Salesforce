@@ -417,6 +417,11 @@
             <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Account.Add_team_member</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>19</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.Manage_Order</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -470,6 +475,17 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NSP_Role__c</fields>
+        <fields>NSP_First_Name__c</fields>
+        <fields>NSP_Last_Name__c</fields>
+        <fields>NSP_User_ID__c</fields>
+        <fields>NSP_Email__c</fields>
+        <fields>NSP_Work_Phone__c</fields>
+        <relatedList>NSP_Account_Team__c.NSP_Account__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.ACCOUNT_NAME</fields>

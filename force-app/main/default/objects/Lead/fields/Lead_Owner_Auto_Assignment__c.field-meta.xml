@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lead_Owner_Auto_Assignment__c</fullName>
-    <description>Checkbox to check if the lead assignment was completed</description>
     <defaultValue>false</defaultValue>
+    <description>Checkbox to check if the lead assignment was completed</description>
     <externalId>false</externalId>
     <label>Lead Owner Auto Assignment</label>
     <trackFeedHistory>false</trackFeedHistory>

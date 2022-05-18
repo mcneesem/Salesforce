@@ -104,6 +104,9 @@
                         <valueListItems>
                             <value>ChangeRecordType</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.Add_team_member</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

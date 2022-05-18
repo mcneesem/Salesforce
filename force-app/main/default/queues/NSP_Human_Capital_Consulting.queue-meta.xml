@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>minh.le@insperity.com</email>
     <name>HR Consulting Services</name>
+    <queueMembers>
+        <users>
+            <user>minh.le@insperity.com</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
     </queueSobject>

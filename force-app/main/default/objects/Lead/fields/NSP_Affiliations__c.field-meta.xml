@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Affiliations__c</fullName>
     <description>Field used to store details about the Affiliations</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Affiliations</label>
     <length>20</length>

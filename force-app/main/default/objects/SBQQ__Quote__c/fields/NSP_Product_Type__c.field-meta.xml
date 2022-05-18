@@ -115,142 +115,142 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>RET- Legacy Non Revenue</controllingFieldValue>
-            <controllingFieldValue>RET- Legacy Revenue</controllingFieldValue>
+            <controllingFieldValue>RET- White Label FBT Fee Schedule</controllingFieldValue>
+            <controllingFieldValue>RET-WA Choice ER RK</controllingFieldValue>
+            <controllingFieldValue>RET-WA Choice ER RK/PPT</controllingFieldValue>
+            <controllingFieldValue>RET - Choice Fee Schedule #5</controllingFieldValue>
+            <controllingFieldValue>RET- Choice Fee Schedule #1</controllingFieldValue>
+            <controllingFieldValue>RET- Choice Fee Schedule #2</controllingFieldValue>
+            <controllingFieldValue>RET- Choice Fee Schedule #3</controllingFieldValue>
+            <controllingFieldValue>RET - Choice Fee Schedule #4</controllingFieldValue>
+            <controllingFieldValue>RET- NQDC Fee Schedule</controllingFieldValue>
+            <valueName>Choice Retirement Services</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>RET - WO no Admin</controllingFieldValue>
             <controllingFieldValue>RET - WO with Admin</controllingFieldValue>
-            <controllingFieldValue>RET - Bundled Plus #2</controllingFieldValue>
-            <controllingFieldValue>RET - Bundled Plus #3</controllingFieldValue>
             <controllingFieldValue>RET - Mid-Market #1</controllingFieldValue>
             <controllingFieldValue>RET - Mid-Market #2</controllingFieldValue>
             <controllingFieldValue>RET - Mid-Market #3</controllingFieldValue>
             <controllingFieldValue>RET - Participant Fee Only</controllingFieldValue>
             <controllingFieldValue>RET- Bundled Plus</controllingFieldValue>
+            <controllingFieldValue>RET- Legacy Non Revenue</controllingFieldValue>
+            <controllingFieldValue>RET - Bundled Plus #2</controllingFieldValue>
+            <controllingFieldValue>RET - Bundled Plus #3</controllingFieldValue>
+            <controllingFieldValue>RET- Legacy Revenue</controllingFieldValue>
             <valueName>WO Retirement Services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>RET- NQDC Fee Schedule</controllingFieldValue>
-            <controllingFieldValue>RET- White Label FBT Fee Schedule</controllingFieldValue>
-            <controllingFieldValue>RET-WA Choice ER RK</controllingFieldValue>
-            <controllingFieldValue>RET-WA Choice ER RK/PPT</controllingFieldValue>
-            <controllingFieldValue>RET - Choice Fee Schedule #4</controllingFieldValue>
-            <controllingFieldValue>RET - Choice Fee Schedule #5</controllingFieldValue>
-            <controllingFieldValue>RET- Choice Fee Schedule #1</controllingFieldValue>
-            <controllingFieldValue>RET- Choice Fee Schedule #2</controllingFieldValue>
-            <controllingFieldValue>RET- Choice Fee Schedule #3</controllingFieldValue>
-            <valueName>Choice Retirement Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>HR Consulting Services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>IPS</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>iSolved Hardware</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>List Price</controllingFieldValue>
             <controllingFieldValue>WX</controllingFieldValue>
+            <controllingFieldValue>WA</controllingFieldValue>
             <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>Lasso</controllingFieldValue>
-            <controllingFieldValue>List Price</controllingFieldValue>
-            <controllingFieldValue>WA</controllingFieldValue>
             <valueName>Lasso</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Learning and Development</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Organizational Planning</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Performance Management</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Recruiting Services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Retirement Services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Talent Connect</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
-            <controllingFieldValue>WA</controllingFieldValue>
-            <valueName>Time and Attendance Hardware</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Workforce Acceleration</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Workforce Administration</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>WOSS</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>WS Consulting Services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <controllingFieldValue>WO</controllingFieldValue>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Additional Timestar Products</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX</controllingFieldValue>
+            <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
+            <valueName>Time and Attendance Hardware</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>WO</controllingFieldValue>

@@ -3,6 +3,7 @@
     <fullName>SBQQ__BillingName__c</fullName>
     <deprecated>false</deprecated>
     <description>Name for the Bill To address.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Name for the Bill To address.</inlineHelpText>
     <label>Bill To Name</label>

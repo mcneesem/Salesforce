@@ -719,6 +719,11 @@
             <actionType>StandardButton</actionType>
             <sortOrder>17</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.Add_team_member</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>18</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedContent>
         <relatedContentItems>
@@ -842,6 +847,8 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NSP_Role__c</fields>
         <fields>NSP_First_Name__c</fields>
         <fields>NSP_Last_Name__c</fields>

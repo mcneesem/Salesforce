@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Order_Processing_Group_Email__c</fullName>
-    <description>Field used to store email address of Order Processing Group</description>
     <defaultValue>&quot;ita.finance@insperity.com.invalid&quot;</defaultValue>
+    <description>Field used to store email address of Order Processing Group</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Order Processing Group Email</label>

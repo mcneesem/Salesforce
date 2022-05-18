@@ -13,7 +13,6 @@
     </alerts>
     <alerts>
         <fullName>NSP_Notify_When_Demo_Assignment_exceeds_SLA</fullName>
-        <ccEmails>PwC_QA@insperity.com</ccEmails>
         <description>Notify When Demo Assignment exceeds SLA</description>
         <protected>false</protected>
         <recipients>
@@ -25,8 +24,6 @@
     </alerts>
     <alerts>
         <fullName>NSP_Required_For_Booking_Task_Email_Alert</fullName>
-        <ccEmails>PwC_QA@insperity.com</ccEmails>
-        <ccEmails>Arindam.Banerjee@insperity.com</ccEmails>
         <description>Required For Booking Task Email Alert</description>
         <protected>false</protected>
         <recipients>
@@ -37,8 +34,6 @@
     </alerts>
     <alerts>
         <fullName>NSP_Send_email_when_Demo_Activity_is_created_for_WO_WX_opportunities</fullName>
-        <ccEmails>PwC_QA@insperity.com</ccEmails>
-        <ccEmails>kamaljeet.chawla@pwc.com</ccEmails>
         <description>Send email when Demo Activity is created for WO/WX opportunities</description>
         <protected>false</protected>
         <recipients>

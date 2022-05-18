@@ -3,6 +3,7 @@
     <fullName>SBQQ__Value__c</fullName>
     <deprecated>false</deprecated>
     <description>Value to evaluate against.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Enter the value you want to match in the field you selected using the operator chosen.</inlineHelpText>
     <label>Filter Value</label>

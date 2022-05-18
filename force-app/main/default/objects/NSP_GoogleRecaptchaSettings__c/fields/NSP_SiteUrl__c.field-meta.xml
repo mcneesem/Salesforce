@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_SiteUrl__c</fullName>
     <description>Used to the sites URL</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>NSP_SiteUrl</label>
     <required>false</required>

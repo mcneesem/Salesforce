@@ -404,6 +404,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.Add_team_member</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
@@ -447,6 +452,7 @@
         <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.ACCOUNT_NAME</fields>
         <fields>ACCCONRELATION.ROLES</fields>
+        <fields>NSP_Is_Primary__c</fields>
         <fields>NSP_isReferral__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
@@ -571,6 +577,8 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NSP_Role__c</fields>
         <fields>NSP_First_Name__c</fields>
         <fields>NSP_Last_Name__c</fields>

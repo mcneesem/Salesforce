@@ -3,6 +3,7 @@
     <fullName>SBQQ__FilterValue__c</fullName>
     <deprecated>false</deprecated>
     <description>The value you want the tested variable to be evaluated against.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Enter the value you want the tested variable to be evaluated against. Date value must use this format: YYYY-MM-DD 00:00:00</inlineHelpText>
     <label>Filter Value</label>

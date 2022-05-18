@@ -94,7 +94,7 @@
     <picklistValues>
         <picklist>NSP_Benefits_Waiting_Period__c</picklist>
         <values>
-            <fullName>0 days</fullName>
+            <fullName>0 Days</fullName>
             <default>false</default>
         </values>
         <values>

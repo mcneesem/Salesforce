@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Producer__c</fullName>
     <description>This field is created as part of DF-01286</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Producer</label>
     <length>255</length>

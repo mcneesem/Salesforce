@@ -4,12 +4,12 @@
     <description>Field belongs to sales track</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
+    <inlineHelpText>Back out check box auto selected if the &quot;Back Out Date,Back Out Reason,Back Out Requestor&quot; values are not blank.</inlineHelpText>
     <label>Back Out By</label>
     <length>100</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <inlineHelpText>Back out check box auto selected if the "Back Out Date,Back Out Reason,Back Out Requestor" values are not blank.</inlineHelpText>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

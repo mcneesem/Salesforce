@@ -9,7 +9,6 @@
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -121,18 +120,6 @@
                 <fullName>Top-UHC  18</fullName>
                 <default>false</default>
                 <label>Top-UHC  18</label>
-            </value>
-            <value>
-                <fullName>Co Selling - Non Health  18</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Co Selling - Non Health  18</label>
-            </value>
-            <value>
-                <fullName>General Agent  ̶  UHC</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>General Agent  ̶  UHC</label>
             </value>
         </valueSetDefinition>
     </valueSet>

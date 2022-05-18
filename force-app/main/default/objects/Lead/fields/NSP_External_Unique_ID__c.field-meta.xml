@@ -3,6 +3,7 @@
     <fullName>NSP_External_Unique_ID__c</fullName>
     <caseSensitive>true</caseSensitive>
     <description>Field used to store external Unique Id for lead</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>External Unique ID</label>
     <length>25</length>

@@ -273,6 +273,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Opportunity_Type__c</picklist>
+        <values>
+            <fullName>Client Growth Credit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Product</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Product</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Renewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termination</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Payment_Cycle__c</picklist>
         <values>
             <fullName>Annual</fullName>
@@ -393,6 +416,37 @@
         </values>
         <values>
             <fullName>iSolved Hardware</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Select_Payroll_Frequency__c</picklist>
+        <values>
+            <fullName>Annually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bi-Weekly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>One Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semi-Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
             <default>false</default>
         </values>
     </picklistValues>

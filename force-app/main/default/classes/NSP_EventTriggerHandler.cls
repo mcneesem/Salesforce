@@ -1,4 +1,4 @@
- /**
+/**
  * Represents the Event trigger handler.
  */
 public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {

@@ -3,6 +3,7 @@
     <fullName>SBQQ__ComponentDescription__c</fullName>
     <deprecated>false</deprecated>
     <description>Description for the component represented by this option. This is used in conjunction with the Configured Description Pattern field on the Product object.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Description for the component represented by this option. This is used in conjunction with the Configured Description Pattern field on the Product object.</inlineHelpText>
     <label>Component Description</label>

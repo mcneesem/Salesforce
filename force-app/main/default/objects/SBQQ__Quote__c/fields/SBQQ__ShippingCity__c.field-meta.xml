@@ -3,6 +3,7 @@
     <fullName>SBQQ__ShippingCity__c</fullName>
     <deprecated>false</deprecated>
     <description>City on the Ship To address for this quote.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>City on the Ship To address for this quote.</inlineHelpText>
     <label>Ship To City</label>

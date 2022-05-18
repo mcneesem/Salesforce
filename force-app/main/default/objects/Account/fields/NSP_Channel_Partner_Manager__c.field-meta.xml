@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Channel_Partner_Manager__c</fullName>
-    <description>Field to track channel partner manager for this Account</description>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>Field to track channel partner manager for this Account</description>
     <externalId>false</externalId>
     <label>Channel Partner Manager</label>
     <referenceTo>User</referenceTo>

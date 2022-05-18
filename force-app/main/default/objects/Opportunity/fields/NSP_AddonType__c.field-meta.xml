@@ -96,18 +96,6 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>New Product</controllingFieldValue>
-            <valueName>Cross-sell</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Existing Product</controllingFieldValue>
-            <valueName>Amendment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Existing Product</controllingFieldValue>
-            <valueName>CAM</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Client Growth Credit</controllingFieldValue>
             <valueName>90 Day Lookback</valueName>
         </valueSettings>
@@ -118,6 +106,18 @@
         <valueSettings>
             <controllingFieldValue>Client Growth Credit</controllingFieldValue>
             <valueName>Extended Lookback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Product</controllingFieldValue>
+            <valueName>Cross-sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Product</controllingFieldValue>
+            <valueName>Amendment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Product</controllingFieldValue>
+            <valueName>CAM</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

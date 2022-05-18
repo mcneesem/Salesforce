@@ -112,6 +112,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>minHeight</name>
+                    <value>500</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>scrolling</name>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Insperity_Signer__c</fullName>
-    <description>Insperity Signer who will sign on the document.</description>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>Insperity Signer who will sign on the document.</description>
     <externalId>false</externalId>
     <label>Insperity Signer</label>
     <referenceTo>User</referenceTo>

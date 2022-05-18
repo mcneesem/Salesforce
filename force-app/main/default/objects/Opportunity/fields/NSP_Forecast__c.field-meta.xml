@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Forecast__c</fullName>
-    <description>Field used to track if opportunity is to be considered during forecast </description>
+    <description>Field used to track if opportunity is to be considered during forecast</description>
     <externalId>false</externalId>
     <label>Forecast</label>
     <required>false</required>

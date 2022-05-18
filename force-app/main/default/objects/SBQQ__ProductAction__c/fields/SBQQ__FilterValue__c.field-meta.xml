@@ -3,6 +3,7 @@
     <fullName>SBQQ__FilterValue__c</fullName>
     <deprecated>false</deprecated>
     <description>The value that will be updated in the chosen Filter Field.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Enter the value to be updated in the chosen Filter Field.</inlineHelpText>
     <label>Filter Value</label>

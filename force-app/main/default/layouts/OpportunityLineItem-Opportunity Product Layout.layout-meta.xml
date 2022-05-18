@@ -111,10 +111,10 @@
     <multilineLayoutFields>Quantity</multilineLayoutFields>
     <multilineLayoutFields>UnitPrice</multilineLayoutFields>
     <multilineLayoutFields>NSP_Margin__c</multilineLayoutFields>
+    <multilineLayoutFields>Description</multilineLayoutFields>
+    <multilineLayoutFields>TotalPrice</multilineLayoutFields>
     <multilineLayoutFields>NSP_Reserve__c</multilineLayoutFields>
     <multilineLayoutFields>ServiceDate</multilineLayoutFields>
-    <multilineLayoutFields>TotalPrice</multilineLayoutFields>
-    <multilineLayoutFields>Description</multilineLayoutFields>
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>

@@ -105,44 +105,21 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>WO</controllingFieldValue>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <valueName>Workforce Acceleration</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WO</controllingFieldValue>
-            <controllingFieldValue>WA</controllingFieldValue>
-            <valueName>Workforce Administration</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WA</controllingFieldValue>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <valueName>HR Consulting Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WA</controllingFieldValue>
-            <controllingFieldValue>Performance Management</controllingFieldValue>
-            <controllingFieldValue>WX</controllingFieldValue>
-            <valueName>Performance Management</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WA</controllingFieldValue>
             <controllingFieldValue>Organizational Planning</controllingFieldValue>
             <controllingFieldValue>WX</controllingFieldValue>
+            <controllingFieldValue>WA</controllingFieldValue>
             <valueName>Organizational Planning</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <valueName>Sage Time and Attendance/OrgPlus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
             <controllingFieldValue>WX</controllingFieldValue>
-            <valueName>iSolved Hardware</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WS</controllingFieldValue>
-            <valueName>WS Consulting Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Retirement Services</controllingFieldValue>
-            <valueName>Retirement Services</valueName>
+            <controllingFieldValue>WA</controllingFieldValue>
+            <valueName>Performance Management</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Recruiting Services</controllingFieldValue>
@@ -150,17 +127,8 @@
             <valueName>Recruiting Services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Learning &amp; Development</controllingFieldValue>
-            <valueName>Learning and Development</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Applicant Tracking</controllingFieldValue>
-            <valueName>TalentConnect</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Organizational Planning</controllingFieldValue>
-            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
-            <valueName>Sage Time and Attendance/OrgPlus</valueName>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Retirement Services</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
@@ -173,6 +141,38 @@
         <valueSettings>
             <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
             <valueName>Time and Attendance Hardware</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX</controllingFieldValue>
+            <controllingFieldValue>WA</controllingFieldValue>
+            <valueName>HR Consulting Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX</controllingFieldValue>
+            <controllingFieldValue>WA</controllingFieldValue>
+            <valueName>iSolved Hardware</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
+            <valueName>Workforce Acceleration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WA</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
+            <valueName>Workforce Administration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WS</controllingFieldValue>
+            <valueName>WS Consulting Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Applicant Tracking</controllingFieldValue>
+            <valueName>TalentConnect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Learning &amp; Development</controllingFieldValue>
+            <valueName>Learning and Development</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>4</visibleLines>

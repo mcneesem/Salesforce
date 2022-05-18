@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Partner__c</fullName>
-    <description>Lookup field used to relate to Parnter Account</description>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup field used to relate to Parnter Account</description>
     <externalId>false</externalId>
     <label>Partner</label>
     <lookupFilter>

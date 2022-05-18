@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Location__c</fullName>
     <description>Field used to store location</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Location</label>
     <length>80</length>

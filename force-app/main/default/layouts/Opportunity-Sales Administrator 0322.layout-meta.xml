@@ -25,6 +25,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Sub_Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
@@ -147,10 +151,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Assign_Sales_Engineer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Time_Entry_Recommendation__c</field>
             </layoutItems>
             <layoutItems>
@@ -228,8 +228,8 @@
                 <field>NSP_Client_For_Life__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__PrimaryQuote__c</field>
+                <behavior>Readonly</behavior>
+                <field>NSP_Primary_Quote_Link__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -365,7 +365,7 @@
                 <field>NSP_1_6_OfScheduleB__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_CollectedAtBooking__c</field>
             </layoutItems>
             <layoutItems>
@@ -377,8 +377,19 @@
                 <field>NSP_1stPayDateActiveEmployees__c</field>
             </layoutItems>
             <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_ITAWOAmount__c</field>
+                <field>NSP_Enrollment_Fee_Payment_1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Enrollment_Fee_Payment_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Enrollment_Fee_Payment_3__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -391,12 +402,35 @@
                 <field>NSP_InsperityFee__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
+                <field>NSP_WaivedInsperityFee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_1stPayInvoiceDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Total_EF_Due_Reps__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_EnrollmentFeeNotes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Enrollment_Fee_Payment_4__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Enrollment_Fee_Payment_5__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Enrollment_Fee_Payment_6__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -517,11 +551,6 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>ChangeOwnerOne</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
@@ -535,6 +564,11 @@
             <actionName>New_Core_Sales_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>New_Mid_Market_Task</actionName>
@@ -572,7 +606,7 @@
             <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>pse__NewEvent</actionName>
+            <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>15</sortOrder>
         </platformActionListItems>
@@ -759,7 +793,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Payment_Amount__c</fields>
         <fields>NSP_Payment_Date__c</fields>
+        <fields>NSP_Payment_Status__c</fields>
         <fields>NSP_Payment_Method__c</fields>
         <relatedList>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
@@ -770,7 +806,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8M000000V0Fc</masterLabel>
+        <masterLabel>00h2D000003ryoB</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

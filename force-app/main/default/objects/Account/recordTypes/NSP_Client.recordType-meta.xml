@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Client</fullName>
     <active>true</active>
-    <compactLayoutAssignment>Account_Compact_Layout</compactLayoutAssignment> 
+    <compactLayoutAssignment>Account_Compact_Layout</compactLayoutAssignment>
     <description>Client Record Type for Account</description>
     <label>Client</label>
     <picklistValues>
@@ -49,6 +49,21 @@
         </values>
         <values>
             <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DOZISF__ZoomInfo_Enrich_Status__c</picklist>
+        <values>
+            <fullName>Enriched</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No-Match</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -184,6 +199,48 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_AIMS_Service_Package__c</picklist>
+        <values>
+            <fullName>WO - AS Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Prop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Account_Segment__c</picklist>
+        <values>
+            <fullName>Core</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
@@ -228,45 +285,45 @@
     <picklistValues>
         <picklist>NSP_Agreement_Requested__c</picklist>
         <values>
-                <fullName>Affiliate Referral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Agent %E2%80%93 UHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MOU</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NDA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>National</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-Disclosure</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Referral Agreement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOP %28Alliance %E2%80%93 Non-Health%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOP %28Insurance Broker%29</fullName>
-                <default>false</default>
-            </values>
+            <fullName>Affiliate Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Association</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Agent %E2%80%93 UHC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MOU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Disclosure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOP %28Alliance %E2%80%93 Non-Health%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOP %28Insurance Broker%29</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Agreement_Type__c</picklist>
@@ -374,6 +431,417 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Assisted_by_Office_2__c</picklist>
+        <values>
+            <fullName>1001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1021</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1041</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1061</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1081</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1102</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1103</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1104</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1402</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1403</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1404</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1702</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2110</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2201</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2202</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2203</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2402</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>302</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3102</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3103</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3302</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3303</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3304</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3305</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3421</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3621</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3801</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3902</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3921</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4402</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4403</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4404</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4405</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4406</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4407</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4408</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4409</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4410</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4411</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4412</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4413</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4414</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4415</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4466</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4477</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4499</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4801</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>502</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>505</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>506</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>507</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>508</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>520</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>521</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>522</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>523</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>540</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>541</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>561</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>581</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>801</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>902</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>903</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Business_Vertical__c</picklist>
         <values>
             <fullName>Business Advisors</fullName>
@@ -405,6 +873,73 @@
         </values>
         <values>
             <fullName>Technology Advisors</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Channel_Program__c</picklist>
+        <values>
+            <fullName>Accounting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Performance Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capital Growth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Banking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Networking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contractor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engineering Program</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fractional Sales and Marketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Franchise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Purchasing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incubator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Broker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Local Affiliate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Member Club</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO Broker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology Advisor</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -611,6 +1146,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Engagement_Program__c</picklist>
+        <values>
+            <fullName>Elite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preferred</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Geographic_Reach__c</picklist>
+        <values>
+            <fullName>Local</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nationwide</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>State</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Have_You_Worked_With_Them_Before_Now__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -782,6 +1347,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Integrated_With__c</picklist>
+        <values>
+            <fullName>AIMS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Lead_Source__c</picklist>
+        <values>
+            <fullName>Channel Box Lead</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DM%2FBPA Referred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner Microsite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier I</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier II</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Legal_Entity_Type__c</picklist>
         <values>
             <fullName>Corp</fullName>
@@ -917,11 +1512,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>No Target Market Relationship</fullName>
+            <fullName>No Integration to Sales Model</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>No integration to Sales Model</fullName>
+            <fullName>No Target Market Relationship</fullName>
             <default>false</default>
         </values>
         <values>
@@ -941,7 +1536,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Payment Cut 0% Not Meeting Min</fullName>
+            <fullName>Payment Cut 0%25 Not Meeting Min</fullName>
             <default>false</default>
         </values>
         <values>
@@ -954,6 +1549,295 @@
         </values>
         <values>
             <fullName>Top Level Involvement</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Organization_Type__c</picklist>
+        <values>
+            <fullName>Association%2FNon-Profit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sole Proprietor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Partner_Industry__c</picklist>
+        <values>
+            <fullName>Advertising</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Architecture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Automotive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumer Goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fabrication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Contractor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Contractor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grant Funded%2FNon-Profit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industrial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Landscaping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Logistics - Distribution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Media %26 Entertainment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-profit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oil %26 Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pharmaceuticals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private Equity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Publishing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Real Estate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Research</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Restaurant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales %26 Mktg - Other Bus Svcs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telecommunications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wholesale Trade</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Partner_Lifecycle__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discovery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evaluation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offboarded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Probation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Partner_Status__c</picklist>
+        <values>
+            <fullName>ACTIVE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INACTIVE-EXPIRED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INACTIVE-TERMINATED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PROSPECTIVE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>REGISTERED</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Partner_Tier__c</picklist>
+        <values>
+            <fullName>Tier I</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Partner_Type_1__c</picklist>
+        <values>
+            <fullName>Business Advisory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value Added</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value Alignment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Partner_Type_2__c</picklist>
+        <values>
+            <fullName>Business Advisory</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -989,6 +1873,37 @@
         </values>
         <values>
             <fullName>SA - Natl</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Reason_looking_to_switch__c</picklist>
+        <values>
+            <fullName>Cost has risen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Currently with a local accounting firm%2C or payroll company%2C but looking for something more robust %E2%80%93 exploring PEO options for the first time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lack of response time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need something more robust %28This is usually for folks who started off with say a more technology %E2%80%98PEO%E2%80%99%2C or a local PEO%2C but they are now expanding into other states%2C so they need a PEO that can handle all states%2C multi-tax compliance%2C etc%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not delivering on what was promised</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poor Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Up for renewal and would like to explore options</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1061,91 +1976,11 @@
     <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
         <values>
-            <fullName>301</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>302</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>501</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>502</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>503</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>504</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>505</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>506</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>507</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>520</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>522</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>523</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>540</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>541</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>561</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>581</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>601</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>602</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>701</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>902</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>903</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1021</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1154,6 +1989,10 @@
         </values>
         <values>
             <fullName>1061</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1081</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1170,6 +2009,10 @@
         </values>
         <values>
             <fullName>1104</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1400</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1193,6 +2036,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1406</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1501</fullName>
             <default>false</default>
         </values>
@@ -1201,11 +2048,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1702</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1901</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>2100</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>2101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1218,6 +2077,10 @@
         </values>
         <values>
             <fullName>2202</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2203</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1242,6 +2105,14 @@
         </values>
         <values>
             <fullName>2901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>302</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1290,6 +2161,10 @@
         </values>
         <values>
             <fullName>3601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3621</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1385,7 +2260,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4466</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4477</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1409,31 +2292,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>502</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>505</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>506</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>507</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>508</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2203</fullName>
+            <fullName>520</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1406</fullName>
+            <fullName>521</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1081</fullName>
+            <fullName>522</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2110</fullName>
+            <fullName>523</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1702</fullName>
+            <fullName>540</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1021</fullName>
+            <fullName>541</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>561</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>581</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>801</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1441,19 +2376,11 @@
             <default>false</default>
         </values>
         <values>
-             <fullName>801</fullName>
+            <fullName>902</fullName>
             <default>false</default>
         </values>
         <values>
-             <fullName>521</fullName>
-            <default>false</default>
-        </values>
-        <values>
-             <fullName>4477</fullName>
-            <default>false</default>
-        </values>
-        <values>
-             <fullName>4416</fullName>
+            <fullName>903</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1936,11 +2863,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AM%26AA - Alliance of Mergers an</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acisure</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>AM%26AA - Alliance of Mergers an</fullName>
+            <fullName>Acrisure %E2%80%93 VCG</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2008,7 +2939,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acrisure%2C The Benefits Group%2C Rochester Hills%2C MI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Advantage Benefits Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alera Group %E2%80%93 Forum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alera Group %E2%80%93 TRISURE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2140,6 +3083,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CertaPro %E2%80%93 PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Colorado CEO Forum</fullName>
             <default>false</default>
         </values>
@@ -2157,6 +3104,10 @@
         </values>
         <values>
             <fullName>DKG Insurance %26 Financial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Davidow Financial %26 Insurance Services%2C Inc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2393,6 +3344,10 @@
         </values>
         <values>
             <fullName>EO Western New York</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EO Wisconsin</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2640,6 +3595,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RSC - Krauter</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RSC Insurance Brokerage</fullName>
             <default>false</default>
         </values>
@@ -2661,6 +3620,10 @@
         </values>
         <values>
             <fullName>Strategic Wellness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SunPower Corporation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2863,42 +3826,6 @@
             <fullName>Vistage Worldwide</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>RSC - Krauter</fullName>
-            <default>false</default>
-        </values>		
-        <values>
-            <fullName>EO Wisconsin</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SunPower Corporation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acrisure – VCG</fullName>
-            <default>false</default>
-        </values>
-                <values>
-            <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
-            <default>false</default>
-        </values>
-                <values>
-            <fullName>CertaPro – PA</fullName>
-            <default>false</default>
-        </values>
-                <values>
-            <fullName>Alera Group – Forum</fullName>
-            <default>false</default>
-        </values>
-                <values>
-            <fullName>Alera Group – TRISURE</fullName>
-            <default>false</default>
-        </values>
-                <values>
-            <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Sub_Vertical__c</picklist>
@@ -3004,6 +3931,53 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Template_Selection__c</picklist>
+        <values>
+            <fullName>MarketingReferalAllianceAgreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramAF-II</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramAssociations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramChamberBanks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramIII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramNationalNonRevShare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramNationalRevShare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReferralProgramNonHealthBrokerAllianceCoSelling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOPAllianceCoSellingBrokerRev</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TermsofParticipationTOPAllianceGeneralAgent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>referralProgramAF-I</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Time_Zone__c</picklist>
         <values>
             <fullName>Alaska</fullName>
@@ -3027,6 +4001,41 @@
         </values>
         <values>
             <fullName>Pacific</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Vertical__c</picklist>
+        <values>
+            <fullName>Business Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capital Markets</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Franchises</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Brokers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Member Organizations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Profit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology Advisors</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3346,53 +4355,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-	<picklistValues>
-            <picklist>NSP_Template_Selection__c</picklist>
-            <values>
-                <fullName>MarketingReferalAllianceAgreement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramAF-II</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramAssociations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramChamberBanks</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramIII</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramNationalNonRevShare</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramNationalRevShare</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ReferralProgramNonHealthBrokerAllianceCoSelling</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOPAllianceCoSellingBrokerRev</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TermsofParticipationTOPAllianceGeneralAgent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>referralProgramAF-I</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     <picklistValues>
         <picklist>pse__Services_Billing_Time_Period_Type__c</picklist>
         <values>

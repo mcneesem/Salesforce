@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_UTM_Term__c</fullName>
     <description>Field used to store UTM Term</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>UTM Term</label>
     <length>255</length>

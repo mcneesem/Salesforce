@@ -7,94 +7,93 @@
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
-            <restricted>false</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Corporate Marketing</fullName>
-                    <default>false</default>
-                    <label>Corporate Marketing</label>
-                </value>
-                <value>
-                    <fullName>IRSO Marketing</fullName>
-                    <default>false</default>
-                    <label>IRSO Marketing</label>
-                </value>
-                <value>
-                    <fullName>Sales</fullName>
-                    <default>false</default>
-                    <label>Sales</label>
-                </value>
-                <value>
-                    <fullName>Business Development</fullName>
-                    <default>false</default>
-                    <label>Business Development</label>
-                </value>
-                <value>
-                    <fullName>Channel Partner</fullName>
-                    <default>false</default>
-                    <label>Channel Partner</label>
-                </value>
-                <value>
-                    <fullName>Iem Marketing</fullName>
-                    <default>false</default>
-                    <label>Iem Marketing</label>
-                </value>
-                <value>
-                    <fullName>Ies Marketing</fullName>
-                    <default>false</default>
-                    <label>Ies Marketing</label>
-                </value>
-                <value>
-                    <fullName>Ifs Marketing</fullName>
-                    <default>false</default>
-                    <label>Ifs Marketing</label>
-                </value>
-                <value>
-                    <fullName>Iis Marketing</fullName>
-                    <default>false</default>
-                    <label>Iis Marketing</label>
-                </value>
-                <value>
-                    <fullName>Ipom Marketing</fullName>
-                    <default>false</default>
-                    <label>Ipom Marketing</label>
-                </value>
-                <value>
-                    <fullName>Ips Marketing</fullName>
-                    <default>false</default>
-                    <label>Ips Marketing</label>
-                </value>
-                <value>
-                    <fullName>Irs Marketing</fullName>
-                    <default>false</default>
-                    <label>Irs Marketing</label>
-                </value>
-                <value>
-                    <fullName>Ita Marketing</fullName>
-                    <default>false</default>
-                    <label>Ita Marketing</label>
-                </value>
-                <value>
-                    <fullName>Loy Pro</fullName>
-                    <default>false</default>
-                    <label>Loy Pro</label>
-                </value>
-                <value>
-                    <fullName>Referrals</fullName>
-                    <default>false</default>
-                    <label>Referrals</label>
-                </value>
-                <value>
-                    <fullName>Sales Office</fullName>
-                    <default>false</default>
-                    <label>Sales Office</label>
-                </value>
-                <value>
-                    <fullName>Sales Operations</fullName>
-                    <default>false</default>
-                    <label>Sales Operations</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Corporate Marketing</fullName>
+                <default>false</default>
+                <label>Corporate Marketing</label>
+            </value>
+            <value>
+                <fullName>IRSO Marketing</fullName>
+                <default>false</default>
+                <label>IRSO Marketing</label>
+            </value>
+            <value>
+                <fullName>Sales</fullName>
+                <default>false</default>
+                <label>Sales</label>
+            </value>
+            <value>
+                <fullName>Business Development</fullName>
+                <default>false</default>
+                <label>Business Development</label>
+            </value>
+            <value>
+                <fullName>Channel Partner</fullName>
+                <default>false</default>
+                <label>Channel Partner</label>
+            </value>
+            <value>
+                <fullName>Iem Marketing</fullName>
+                <default>false</default>
+                <label>Iem Marketing</label>
+            </value>
+            <value>
+                <fullName>Ies Marketing</fullName>
+                <default>false</default>
+                <label>Ies Marketing</label>
+            </value>
+            <value>
+                <fullName>Ifs Marketing</fullName>
+                <default>false</default>
+                <label>Ifs Marketing</label>
+            </value>
+            <value>
+                <fullName>Iis Marketing</fullName>
+                <default>false</default>
+                <label>Iis Marketing</label>
+            </value>
+            <value>
+                <fullName>Ipom Marketing</fullName>
+                <default>false</default>
+                <label>Ipom Marketing</label>
+            </value>
+            <value>
+                <fullName>Ips Marketing</fullName>
+                <default>false</default>
+                <label>Ips Marketing</label>
+            </value>
+            <value>
+                <fullName>Irs Marketing</fullName>
+                <default>false</default>
+                <label>Irs Marketing</label>
+            </value>
+            <value>
+                <fullName>Ita Marketing</fullName>
+                <default>false</default>
+                <label>Ita Marketing</label>
+            </value>
+            <value>
+                <fullName>Loy Pro</fullName>
+                <default>false</default>
+                <label>Loy Pro</label>
+            </value>
+            <value>
+                <fullName>Referrals</fullName>
+                <default>false</default>
+                <label>Referrals</label>
+            </value>
+            <value>
+                <fullName>Sales Office</fullName>
+                <default>false</default>
+                <label>Sales Office</label>
+            </value>
+            <value>
+                <fullName>Sales Operations</fullName>
+                <default>false</default>
+                <label>Sales Operations</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

@@ -201,6 +201,12 @@
                 <label>Partner Agreement</label>
             </value>
             <value>
+                <fullName>DEMO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>DEMO</label>
+            </value>
+            <value>
                 <fullName>Gift Mailing</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -225,6 +231,26 @@
                 <label>New Lead</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WO Business Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WO Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WX Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WX Quote</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
             <valueName>BPA Debrief Call</valueName>
@@ -284,26 +310,6 @@
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
             <valueName>Product Presentation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <valueName>WO Business Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <valueName>WO Proposal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <valueName>WX Proposal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <valueName>WX Quote</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eloqua</controllingFieldValue>

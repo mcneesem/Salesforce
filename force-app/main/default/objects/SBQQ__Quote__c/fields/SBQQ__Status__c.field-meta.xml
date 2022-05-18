@@ -47,7 +47,7 @@
                 <fullName>Rejected</fullName>
                 <default>false</default>
                 <label>Rejected</label>
-            </value> 
+            </value>
             <value>
                 <fullName>Customer Signed</fullName>
                 <default>false</default>

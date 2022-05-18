@@ -426,7 +426,7 @@
                 <fullName>NSP_Secoundry_Scholarship_Minimum_Fee__c</fullName>
                 <default>false</default>
                 <label>NSP_Secoundry_Scholarship_Minimum_Fee__c</label>
-            </value>	
+            </value>
             <value>
                 <fullName>NSP_Minimum_Fee_Discount_Amt__c</fullName>
                 <default>false</default>
@@ -453,14 +453,6 @@
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Product Option</controllingFieldValue>
             <valueName>Unit Price</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Quote Line</controllingFieldValue>
-           <valueName>NSP_Cost_Per_Position__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Quote Line</controllingFieldValue>
-            <valueName>NSP_Secondary_NetTotal__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -783,15 +775,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
-            <valueName>NSP_Positions__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_Secoundry_Scholarship_Minimum_Fee__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_Minimum_Fee_Discount_Amt__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Cost_Per_Position__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Secondary_NetTotal__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Positions__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>

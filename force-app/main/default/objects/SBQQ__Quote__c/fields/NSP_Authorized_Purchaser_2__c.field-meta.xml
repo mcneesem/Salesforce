@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Authorized_Purchaser_2__c</fullName>
-    <description>Lookup to Contact.</description>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to Contact.</description>
     <externalId>false</externalId>
     <label>Authorized Purchaser 2</label>
     <lookupFilter>

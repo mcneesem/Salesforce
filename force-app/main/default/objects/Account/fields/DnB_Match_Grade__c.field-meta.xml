@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DnB_Match_Grade__c</fullName>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Match Grade</label>
     <length>11</length>
