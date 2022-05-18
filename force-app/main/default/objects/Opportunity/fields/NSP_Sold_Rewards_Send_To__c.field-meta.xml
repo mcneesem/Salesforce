@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Sold_Rewards_Send_To__c</fullName>
-    <description>Field to Contact data to whom the Sold rewards are to be sent</description>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>Field to Contact data to whom the Sold rewards are to be sent</description>
     <externalId>false</externalId>
     <label>Sold Rewards Send To</label>
     <referenceTo>Contact</referenceTo>

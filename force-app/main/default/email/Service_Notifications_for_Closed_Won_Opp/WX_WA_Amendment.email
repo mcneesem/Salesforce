@@ -3,6 +3,7 @@ Please see an attached Delivery Order for {!Opportunity.Account} with a relation
 Additional Implementation Details: (If Needed)
 
 Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
 
 Thank you,
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Lock_Opportunity__c</fullName>
-    <description>Checkbox used to lock the opportunity record when the Opportunity is closed won/lost</description>
     <defaultValue>false</defaultValue>
+    <description>Checkbox used to lock the opportunity record when the Opportunity is closed won/lost</description>
     <externalId>false</externalId>
     <label>Lock Opportunity</label>
     <trackFeedHistory>false</trackFeedHistory>

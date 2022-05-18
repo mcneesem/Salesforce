@@ -61,16 +61,10 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
-        <fullName>Full Service HR</fullName>
+        <fullName>Payroll/Human Capital Management</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Full Service HR</label>
-    </customValue>
-    <customValue>
-        <fullName>WO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WO</label>
+        <label>Payroll/Human Capital Management</label>
     </customValue>
     <customValue>
         <fullName>Bookkeeping Services</fullName>
@@ -79,10 +73,16 @@
         <label>Bookkeeping Services</label>
     </customValue>
     <customValue>
-        <fullName>Payroll/Human Capital Management</fullName>
+        <fullName>WO</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Payroll/Human Capital Management</label>
+        <label>WO</label>
+    </customValue>
+    <customValue>
+        <fullName>Full Service HR</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Full Service HR</label>
     </customValue>
     <customValue>
         <fullName>Quickbooks Integration(Insperity Integra)</fullName>

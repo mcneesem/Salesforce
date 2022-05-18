@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_there_morethan1companyinthe_system__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>There more than 1 company in the system?</label>
     <length>255</length>

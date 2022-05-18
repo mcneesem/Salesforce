@@ -15,7 +15,7 @@ public class NSP_RoundRobinAssigner {
 * @return void             
 *                
 */
-  public static void getOfficeAssignmentDetails(List<Lead> leadsforRR,List<String> zipBasedLocationList){
+  public static void getOfficeAssignmentDetails(List<Lead> leadsforRR,List<String> zipBasedLocationList, Boolean isOwnerAssignment){
       //Map of location name and office records
       Map<String,NSP_Office__c> locationNameAndOfficeMap = new Map<String,NSP_Office__c>();
       //Map of office record ids and office records- used for finding the related records from the office 
@@ -54,7 +54,7 @@ public class NSP_RoundRobinAssigner {
       // Calling the round robin method
       // As part of DF-DF-01618 added if condition.
       if(!locationNameAndOfficeMap.isEmpty() && !locationNameAndDAMap.isEmpty()){
-      doRoundRobin(locationNameAndOfficeMap,locationNameAndDAMap,leadsforRR);
+      doRoundRobin(locationNameAndOfficeMap,locationNameAndDAMap,leadsforRR, isOwnerAssignment);
       }
   }
   
@@ -66,7 +66,7 @@ public class NSP_RoundRobinAssigner {
 * @return void             
 *                
 */
-  public static void doRoundRobin(Map<String,NSP_Office__c> locationNameAndOfficeMap, Map<String,List<NSP_Office_Assignment__c>> locationNameAndDAMap,List<Lead> leadsforRR){
+  public static void doRoundRobin(Map<String,NSP_Office__c> locationNameAndOfficeMap, Map<String,List<NSP_Office_Assignment__c>> locationNameAndDAMap,List<Lead> leadsforRR, Boolean isOwnerAssignment){
       
           //Iterating over the lead that needs to be assigned in round robin manner
           for(Lead leadObj : leadsforRR){           
@@ -79,7 +79,7 @@ present in that location*/
                   locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c =0;
                   if(locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id) != null){
                       //Incerementing the index after every assignment so that the lead is assigned to the next DA in the list
-                      if(leadObj.NSP_Zip_Based_Location__c != NSP_SalesConstants.MIDMARKETREGION){
+                      if(leadObj.NSP_Zip_Based_Location__c != NSP_SalesConstants.MIDMARKETREGION && isOwnerAssignment){
                         leadObj.ownerid = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_District_Administrator__c; 
                         leadObj.NSP_Lead_Routing__c=FALSE; 
                       }
@@ -92,7 +92,7 @@ present in that location*/
                  
                   // assigning owner to the lead record     
                   if(locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id) != null){
-                        if(leadObj.NSP_Zip_Based_Location__c != NSP_SalesConstants.MIDMARKETREGION){
+                        if(leadObj.NSP_Zip_Based_Location__c != NSP_SalesConstants.MIDMARKETREGION && isOwnerAssignment){
                             leadObj.ownerid = locationNameAndDAMap.get(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).id)[Integer.valueOf(locationNameAndOfficeMap.get(leadObj.NSP_Zip_Based_Location__c).NSP_Last_Index_Used__c)].NSP_District_Administrator__c;
                             leadObj.NSP_Lead_Routing__c=FALSE;
                         }

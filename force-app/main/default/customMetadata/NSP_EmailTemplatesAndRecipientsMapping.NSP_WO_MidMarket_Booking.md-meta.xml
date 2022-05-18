@@ -20,10 +20,10 @@
     </values>
     <values>
         <field>NSP_RecipientEmailIds_CC__c</field>
-        <value xsi:type="xsd:string">PwC_QA@insperity.com</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>NSP_Recipients_Email_Ids_TO__c</field>
-        <value xsi:type="xsd:string">PwC_QA@insperity.com</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

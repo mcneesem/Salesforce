@@ -401,7 +401,7 @@
         <dataType>Boolean</dataType>
         <expression>AND (ISNEW(),BEGINS( {!myVariable_current.WhoId} , &quot;00Q&quot;))</expression>
     </formulas>
-     <formulas>
+    <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>

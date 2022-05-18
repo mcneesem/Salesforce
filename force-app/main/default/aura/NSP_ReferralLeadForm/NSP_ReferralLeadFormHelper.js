@@ -62,7 +62,7 @@
         component.set("v.isModalOpen", true);
         component.set("v.cmpError",errormsg);
    },
-   getCaptcha: function(component, eventz,errormsg) {
+ /*  getCaptcha: function(component, eventz,errormsg) {
     var vfURL = $A.get("{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}") ;
     
     window.addEventListener('message', function(event){
@@ -70,5 +70,5 @@
             component.set('v.isDisable', false); 
         }
     }, false);
-}
+} */
 })

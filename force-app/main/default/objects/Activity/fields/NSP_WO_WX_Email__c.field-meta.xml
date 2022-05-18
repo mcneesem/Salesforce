@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_WO_WX_Email__c</fullName>
     <description>Field used to store WO/WX email address</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>WO WX Email</label>
     <required>false</required>

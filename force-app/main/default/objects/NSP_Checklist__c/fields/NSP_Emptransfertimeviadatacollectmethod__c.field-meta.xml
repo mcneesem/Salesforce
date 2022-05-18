@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Emptransfertimeviadatacollectmethod__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Emptransfertime via data collectmethod</label>
     <length>255</length>

@@ -3,10 +3,9 @@
     <fullName>NSP_Client_for_Life__c</fullName>
     <description>Client for Life picklist on Opportunity to determine client type. Changed Field label as part of DF-01363</description>
     <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Primary Bundle</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

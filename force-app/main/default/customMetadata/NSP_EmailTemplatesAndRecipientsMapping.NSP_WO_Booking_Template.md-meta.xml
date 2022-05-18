@@ -20,10 +20,10 @@
     </values>
     <values>
         <field>NSP_RecipientEmailIds_CC__c</field>
-        <value xsi:type="xsd:string">Prospective_Client@insperity.com.pwc.invalid,orientation_request@insperity.com.pwc.invalid,AllOSCoordinators@insperity.com.pwc.invalid,AllOnboardingManagers@insperity.com.pwc.invalid,OrientationCoordinators@insperity.com.pwc.invalid,ITAOrderProcessing@insperity.com.pwc.invalid,BPSKWInfo@insperity.com.pwc.invalid</value>
+        <value xsi:type="xsd:string">Prospective_Client@insperity.com.invalid.invalid,orientation_request@insperity.com.invalid.invalid,AllOSCoordinators@insperity.com.invalid.invalid,AllOnboardingManagers@insperity.com.invalid.invalid,OrientationCoordinators@insperity.com.invalid.invalid,ITAOrderProcessing@insperity.com.invalid.invalid,BPSKWInfo@insperity.com.invalid.invalid</value>
     </values>
     <values>
         <field>NSP_Recipients_Email_Ids_TO__c</field>
-        <value xsi:type="xsd:string">PwC_QA@insperity.com</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

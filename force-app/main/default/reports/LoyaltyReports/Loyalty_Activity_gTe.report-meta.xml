@@ -42,7 +42,7 @@
         <criteriaItems>
             <column>Opportunity.NSP_LoyaltyProgram__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Agency,Client,COI,Corporate Employee,Insperity Summit</value>
         </criteriaItems>
@@ -78,7 +78,6 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Activity.NSP_Completed_Date__c</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2022-01-01</startDate>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

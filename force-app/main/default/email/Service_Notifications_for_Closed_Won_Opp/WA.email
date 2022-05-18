@@ -15,6 +15,7 @@ Additional Implementation Details:
 (Data to be pulled from a text field on the Opportunity)[Text field to allow bullet points]
 
 Salesforce Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
 
 Thank you,
 

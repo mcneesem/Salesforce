@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Signed_Delivery_Order_Date__c</fullName>
     <description>mapped with signed delivery order date from opportunity product</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Signed Delivery Order Date</label>
     <required>false</required>

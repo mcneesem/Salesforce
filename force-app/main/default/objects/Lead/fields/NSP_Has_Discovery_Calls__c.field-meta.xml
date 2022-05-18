@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Has_Discovery_Calls__c</fullName>
-    <description>Field used to track if a lead has any discovery calls as Activities</description>
     <defaultValue>false</defaultValue>
+    <description>Field used to track if a lead has any discovery calls as Activities</description>
     <externalId>false</externalId>
     <label>Has Discovery Calls</label>
     <trackFeedHistory>false</trackFeedHistory>

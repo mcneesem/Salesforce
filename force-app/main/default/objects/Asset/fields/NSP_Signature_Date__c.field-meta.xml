@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Signature_Date__c</fullName>
     <description>Mapped to Opportunity Booked Date and is used only for service asset</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Signature Date</label>
     <required>false</required>

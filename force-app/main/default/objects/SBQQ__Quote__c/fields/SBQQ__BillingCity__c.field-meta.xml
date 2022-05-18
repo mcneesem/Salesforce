@@ -3,6 +3,7 @@
     <fullName>SBQQ__BillingCity__c</fullName>
     <deprecated>false</deprecated>
     <description>City of the Bill To address for this quote.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>City of the Bill To address for this quote.</inlineHelpText>
     <label>Bill To City</label>

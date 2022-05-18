@@ -1,4 +1,4 @@
-    public class NSP_OpportunityLineItemTriggerHelper {
+public class NSP_OpportunityLineItemTriggerHelper {
     /**
     * Iterates throught the oli map and identifies the records that needs to worked based on various criterias.
     * @param oliNewMap Map of New OpportunityLineItem. 

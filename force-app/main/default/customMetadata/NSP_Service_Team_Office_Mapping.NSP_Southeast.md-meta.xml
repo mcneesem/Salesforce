@@ -19,6 +19,6 @@
     </values>
     <values>
         <field>NSP_Service_Team_Email__c</field>
-        <value xsi:type="xsd:string">southeastservice.notification@insperity.com.com.invalid</value>
+        <value xsi:type="xsd:string">southeastservice.notification@insperity.com</value>
     </values>
 </CustomMetadata>

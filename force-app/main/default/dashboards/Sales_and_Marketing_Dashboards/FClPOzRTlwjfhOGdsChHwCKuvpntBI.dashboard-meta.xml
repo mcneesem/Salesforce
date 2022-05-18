@@ -341,7 +341,7 @@
                 </groupingSortProperties>
                 <header>SLR-028a Oppy with Team (OppTeam)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SLR028OpportunityTeamsMetrics/SLR028a_Oppy_with_Team_OppTeam_nRz</report>
+                <report>Sales_and_Marketing_Reports/SalesReportsNSP/SLR028OpportunityTeamsMetrics/SLR028a_Oppy_with_Team_OppTeam_nRz</report>
                 <showPercentage>false</showPercentage>
                 <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -400,7 +400,7 @@
                     </groupingSorts>
                 </groupingSortProperties>
                 <header>SLR-028aD1 Oppy with Team (OppTeam)</header>
-                <report>SLR028OpportunityTeamsMetrics/SLR028aD1_Oppy_with_Team_OppTeam_k9x</report>
+                <report>Sales_and_Marketing_Reports/SalesReportsNSP/SLR028OpportunityTeamsMetrics/SLR028aD1_Oppy_with_Team_OppTeam_k9x</report>
             </dashboardComponent>
             <rowIndex>34</rowIndex>
             <rowSpan>11</rowSpan>
@@ -455,7 +455,7 @@
                     </groupingSorts>
                 </groupingSortProperties>
                 <header>SLR-028aD1 Oppy with Team (OppTeam)</header>
-                <report>SLR028OpportunityTeamsMetrics/SLR028aD1_Oppy_with_Team_OppTeam_k9x</report>
+                <report>Sales_and_Marketing_Reports/SalesReportsNSP/SLR028OpportunityTeamsMetrics/SLR028aD1_Oppy_with_Team_OppTeam_k9x</report>
             </dashboardComponent>
             <rowIndex>34</rowIndex>
             <rowSpan>11</rowSpan>
@@ -492,7 +492,7 @@
                 </groupingSortProperties>
                 <header>SLR-003fD3 Oppy Product Pipeline</header>
                 <legendPosition>Right</legendPosition>
-                <report>SLR003OpportunityMetrics/SLR003fD3_Oppy_Product_Pipeline_sp9</report>
+                <report>Sales_and_Marketing_Reports/SalesReportsNSP/SLR003OpportunityMetrics/SLR003fD3_Oppy_Product_Pipeline_sp9</report>
                 <showPercentage>false</showPercentage>
                 <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -547,7 +547,7 @@
                 </flexComponentProperties>
                 <groupingSortProperties/>
                 <header>Loyalty Evnts</header>
-                <report>SLR001OpportunityActivities/SLR001h1_Oppy_Act_Loylty_OppLoyalty_rHC</report>
+                <report>Sales_and_Marketing_Reports/SLR001h1_Oppy_Act_Loylty_OppLoyalty_rHC</report>
             </dashboardComponent>
             <rowIndex>45</rowIndex>
             <rowSpan>11</rowSpan>

@@ -3,6 +3,7 @@
     <fullName>SBQQ__BillingState__c</fullName>
     <deprecated>false</deprecated>
     <description>State/Province of the Bill To address for this quote.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>State/Province of the Bill To address for this quote.</inlineHelpText>
     <label>Bill To State</label>

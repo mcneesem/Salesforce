@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Previous_Company__c</fullName>
     <description>Name of the Previous company from which you heard about Insperity</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>If previous company, please provide the previous company&apos;s name</inlineHelpText>
     <label>Previous Company</label>

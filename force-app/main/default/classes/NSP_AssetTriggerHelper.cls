@@ -52,11 +52,11 @@ public class NSP_AssetTriggerHelper {
                        aimsClientSet.add(assetObj.NSP_Client__c);
                    }
                    //if client segment type(future value to be assigned on effective date/client Segment date - backup the old value in current client segment type)
-                    if(assetObj.NSP_Client_Segment_type__c != null &&
+                   /* if(assetObj.NSP_Client_Segment_type__c != null &&
                     assetObj.NSP_Client_Segment_type__c != oldMap.get(assetObj.Id).NSP_Client_Segment_type__c && 
                     assetObj.NSP_Client_SegmentDate__c > system.today()){
                             assetObj.NSP_Current_Client_Segment_type__c = oldMap.get(assetObj.Id).NSP_Client_Segment_type__c;
-                    }
+                    }*/
             }
             
             //if(aimsClientSet.size() > 0){

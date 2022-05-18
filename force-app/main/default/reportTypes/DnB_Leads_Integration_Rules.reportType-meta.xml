@@ -1070,6 +1070,11 @@
             <field>DNBoptimizer__DnBContactRecord__c.DNBoptimizer__BusinessName__c</field>
             <table>Lead</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Lead_Owner_Role__c</field>
+            <table>Lead</table>
+        </columns>
         <masterLabel>Leads</masterLabel>
     </sections>
     <sections>

@@ -41,10 +41,6 @@
                 <outputField>BillingState</outputField>
             </mappingFields>
             <mappingFields>
-                <inputField>Street</inputField>
-                <outputField>BillingStreet</outputField>
-            </mappingFields>
-            <mappingFields>
                 <inputField>PostalCode</inputField>
                 <outputField>BillingPostalCode</outputField>
             </mappingFields>
@@ -55,6 +51,10 @@
             <mappingFields>
                 <inputField>Website</inputField>
                 <outputField>Website</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Street</inputField>
+                <outputField>BillingStreet</outputField>
             </mappingFields>
             <outputObject>Account</outputObject>
         </objectMapping>
@@ -103,7 +103,7 @@
             <outputObject>Contact</outputObject>
         </objectMapping>
     </duplicateRuleMatchRules>
-    <isActive>false</isActive>
+    <isActive>true</isActive>
     <masterLabel>Standard Lead Duplicate Rule</masterLabel>
     <operationsOnInsert>Alert</operationsOnInsert>
     <operationsOnInsert>Report</operationsOnInsert>

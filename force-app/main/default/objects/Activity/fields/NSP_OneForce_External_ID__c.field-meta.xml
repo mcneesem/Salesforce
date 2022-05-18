@@ -3,6 +3,7 @@
     <fullName>NSP_OneForce_External_ID__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Stores the OneForce Legacy ID for Task and Events</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>OneForce External ID</label>
     <length>255</length>

@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_CustomExternalId__c</fullName>
     <description>Custom External Id for data load from lower environment</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>Custom External Id</label>
     <length>25</length>

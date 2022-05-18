@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_PID__c</fullName>
     <description>Personal Identifier. Passed in from Eloqua</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>PID</label>
     <length>80</length>

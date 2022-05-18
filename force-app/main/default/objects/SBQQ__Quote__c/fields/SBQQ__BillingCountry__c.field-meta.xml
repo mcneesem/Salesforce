@@ -3,6 +3,7 @@
     <fullName>SBQQ__BillingCountry__c</fullName>
     <deprecated>false</deprecated>
     <description>Country of the Bill To address for this quote.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Country of the Bill To address for this quote.</inlineHelpText>
     <label>Bill To Country</label>

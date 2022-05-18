@@ -2,11 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Legacy_Campaign_ID__c</fullName>
     <description>Field used to retain campaign Id from a legacy system</description>
-    <caseSensitive>false</caseSensitive>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>Legacy Campaign ID</label>
     <length>25</length>
     <required>false</required>
     <type>Text</type>
-    <unique>true</unique>
+    <unique>false</unique>
 </CustomField>

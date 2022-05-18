@@ -9,7 +9,6 @@
     <type>Picklist</type>
     <valueSet>
         <controllingField>NSP_AddonType__c</controllingField>
-        <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>

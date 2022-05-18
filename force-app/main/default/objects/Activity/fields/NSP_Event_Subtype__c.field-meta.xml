@@ -26,6 +26,11 @@
                 <label>WO Business Profile</label>
             </value>
             <value>
+                <fullName>Demo</fullName>
+                <default>false</default>
+                <label>Demo</label>
+            </value>
+            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -126,12 +131,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>WX Quote</label>
-            </value>
-            <value>
-                <fullName>Demo</fullName>
-                <default>false</default>
-                <isActive>true</isActive>
-                <label>Demo</label>
             </value>
         </valueSetDefinition>
         <valueSettings>

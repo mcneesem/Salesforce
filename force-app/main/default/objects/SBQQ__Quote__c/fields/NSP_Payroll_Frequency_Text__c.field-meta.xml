@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Payroll_Frequency_Text__c</fullName>
     <description>This field value is shown on the WOSS DO</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Payroll Frequency Text</label>
     <length>255</length>

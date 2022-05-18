@@ -3,9 +3,11 @@
     <fullName>appirio_core__PIN__c</fullName>
     <deprecated>false</deprecated>
     <description>Used to authenticate feature-only users to the Sites pages</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Deprecated:PIN</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>TextArea</type>
 </CustomField>

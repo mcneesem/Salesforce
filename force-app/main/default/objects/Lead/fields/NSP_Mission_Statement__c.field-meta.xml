@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Mission_Statement__c</fullName>
     <description>Field used to store Mission statement</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Mission Statement</label>
     <required>false</required>

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>pwc_qa@insperity.com</email>
+    <email>hcmsales@insperity.com</email>
     <name>Payroll/HCM</name>
+    <queueMembers>
+        <users>
+            <user>alex.fennie@insperity.com</user>
+            <user>jimmy.coligan@insperity.com</user>
+            <user>kaitlynn.chamberlain@insperity.com</user>
+            <user>kaylee.reneau@insperity.com</user>
+            <user>shannon.koroll@insperity.com</user>
+            <user>stacy.sherman@insperity.com</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
     </queueSobject>

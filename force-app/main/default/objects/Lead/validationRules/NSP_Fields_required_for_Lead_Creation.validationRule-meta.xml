@@ -12,4 +12,4 @@
 ))</errorConditionFormula>
     <errorMessage>Please enter values in these fields:
 FirstName, Phone or Email</errorMessage>
-    </ValidationRule>
+</ValidationRule>

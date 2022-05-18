@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Closing_Docs_needed_NCS__c</fullName>
     <description>This field is used for sales stream</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Closing Docs needed (NCS)</label>
     <required>false</required>

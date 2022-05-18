@@ -159,6 +159,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Product Feature</label>
     <nameField>
+        <encryptionScheme>None</encryptionScheme>
         <label>Feature Name</label>
         <type>Text</type>
     </nameField>

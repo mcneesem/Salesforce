@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Override_Calculated_Quantity__c</fullName>
-    <description>Used for overriding system calculation on QLE quote header.</description>
     <defaultValue>false</defaultValue>
+    <description>Used for overriding system calculation on QLE quote header.</description>
     <externalId>false</externalId>
     <label>Override Calculated Quantity</label>
     <trackHistory>false</trackHistory>

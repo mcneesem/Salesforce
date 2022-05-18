@@ -3,6 +3,7 @@
     <fullName>NSP_Oneforce_External_ID__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Holds the legacy ID from the old OneForce System to maintain referential integrity.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>Oneforce External ID</label>
     <length>255</length>

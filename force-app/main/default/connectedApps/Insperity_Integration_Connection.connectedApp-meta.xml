@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>aashish.mahodaya@insperity.com</contactEmail>
+    <label>Insperity Integration Connection</label>
+    <oauthConfig>
+        <callbackUrl>https://login.salesforce.com</callbackUrl>
+        <certificate>QmFnIEF0dHJpYnV0ZXMNCiAgICBsb2NhbEtleUlEOiAwMSAwMCAwMCAwMCANCiAgICBmcmllbmRseU5hbWU6IFByb2RTRkludGVncmF0aW9uLmluc3Blcml0eS5jb20NCnN1YmplY3Q9QyA9IFVTLCBTVCA9IFRleGFzLCBMID0gS2luZ3dvb2QsIE8gPSAiSW5zcGVyaXR5LCBJbmMiLCBDTiA9IFByb2RTRkludGVncmF0aW9uLmluc3Blcml0eS5jb20NCg0KaXNzdWVyPUMgPSBVUywgTyA9ICJFbnRydXN0LCBJbmMuIiwgT1UgPSBTZWUgd3d3LmVudHJ1c3QubmV0L2xlZ2FsLXRlcm1zLCBPVSA9ICIoYykgMjAxMiBFbnRydXN0LCBJbmMuIC0gZm9yIGF1dGhvcml6ZWQgdXNlIG9ubHkiLCBDTiA9IEVudHJ1c3QgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgLSBMMUsNCg0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlHMkRDQ0JjQ2dBd0lCQWdJUUpmT2dGVTVxckRiNDc2SlpNTThsMXpBTkJna3Foa2lHOXcwQkFRc0ZBRENCDQp1akVMTUFrR0ExVUVCaE1DVlZNeEZqQVVCZ05WQkFvVERVVnVkSEoxYzNRc0lFbHVZeTR4S0RBbUJnTlZCQXNUDQpIMU5sWlNCM2QzY3VaVzUwY25WemRDNXVaWFF2YkdWbllXd3RkR1Z5YlhNeE9UQTNCZ05WQkFzVE1DaGpLU0F5DQpNREV5SUVWdWRISjFjM1FzSUVsdVl5NGdMU0JtYjNJZ1lYVjBhRzl5YVhwbFpDQjFjMlVnYjI1c2VURXVNQ3dHDQpBMVVFQXhNbFJXNTBjblZ6ZENCRFpYSjBhV1pwWTJGMGFXOXVJRUYxZEdodmNtbDBlU0F0SUV3eFN6QWVGdzB5DQpNVEEyTWpreE9UUTBNekphRncweU1qQTJNamt4T1RRME16RmFNSE14Q3pBSkJnTlZCQVlUQWxWVE1RNHdEQVlEDQpWUVFJRXdWVVpYaGhjekVSTUE4R0ExVUVCeE1JUzJsdVozZHZiMlF4RnpBVkJnTlZCQW9URGtsdWMzQmxjbWwwDQplU3dnU1c1ak1TZ3dKZ1lEVlFRREV4OVFjbTlrVTBaSmJuUmxaM0poZEdsdmJpNXBibk53WlhKcGRIa3VZMjl0DQpNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQWtwT2JjMmlzSEZhMk5XNzd5aFNTDQpudUtybnkwTXRSQ1dQZS9ncEtLNUpwQm1SRjRSNFg0VDYwVzc2cWt2VlFBeUZnUzBvUFJscDhRNXlETFlwc2I0DQpSSzk2OXVtZ2NVS3ZVVEFTcTVORFNOMGhqSnhaQnJ3bmd3MmlzNlR5TnNFMlVhVGFTVk1QSHpIeHo5dHo3RG1NDQo1Y2h1Mnhla3JOWERFM1VLMENFdXRNVjZVTTJvMExPOXVmaUdtTGZYTG1ONWRKa1E3YThtWFBHZXdIcHlGUjZCDQpJNE9zQUQrRGhaMGRRalhjMTlnaWhwNjlkNXBoT1VnNHJvbU5LUlVJS0d0WmluVjFkTFJIN0JkbUNFeHVPU1R3DQpUTU9vaTJoT3JUb2xzYjN0UzhIUjFPM2dvdCt3dzh3c1I3MEpWQ2pLRjJHZXQvV2YxN3I4aVFNYUlBenVQZTBpDQp0d0lEQVFBQm80SURIakNDQXhvd0RBWURWUjBUQVFIL0JBSXdBREFkQmdOVkhRNEVGZ1FVZ1c3TXh4SVJEdmFPDQpBL3lGTUNFeERMWG1tQ0l3SHdZRFZSMGpCQmd3Rm9BVWdxSndkTjI4VXovUGU5VDN6WCtuWU1ZS1RMOHdhQVlJDQpLd1lCQlFVSEFRRUVYREJhTUNNR0NDc0dBUVVGQnpBQmhoZG9kSFJ3T2k4dmIyTnpjQzVsYm5SeWRYTjBMbTVsDQpkREF6QmdnckJnRUZCUWN3QW9ZbmFIUjBjRG92TDJGcFlTNWxiblJ5ZFhOMExtNWxkQzlzTVdzdFkyaGhhVzR5DQpOVFl1WTJWeU1ETUdBMVVkSHdRc01Db3dLS0Ftb0NTR0ltaDBkSEE2THk5amNtd3VaVzUwY25WemRDNXVaWFF2DQpiR1YyWld3eGF5NWpjbXd3S2dZRFZSMFJCQ013SVlJZlVISnZaRk5HU1c1MFpXZHlZWFJwYjI0dWFXNXpjR1Z5DQphWFI1TG1OdmJUQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3RUdDQ3NHDQpBUVVGQndNQ01Fd0dBMVVkSUFSRk1FTXdOd1lLWUlaSUFZYjZiQW9CQlRBcE1DY0dDQ3NHQVFVRkJ3SUJGaHRvDQpkSFJ3Y3pvdkwzZDNkeTVsYm5SeWRYTjBMbTVsZEM5eWNHRXdDQVlHWjRFTUFRSUNNSUlCZ0FZS0t3WUJCQUhXDQplUUlFQWdTQ0FYQUVnZ0ZzQVdvQWRnRGZwVjZyYUlKUEgyeXQ3cmhmVGo1YTZzMmlFcVJxWG80N0VzQWdSRndxDQpjd0FBQVhwWlRVRk1BQUFFQXdCSE1FVUNJUURCaHlkeVlFb0VvQURvZGlSMFE2ZXBuUG1mSmdSZVZ6MTNBQ3h3DQplS2NDMUFJZ0ZtdGRldjRPWndRaENwNXhpVllycDljVjlBcXRsRlZsRkY5VmgxSGdOTmdBZHdCV0ZBYWFMOWZDDQo3TlAxNGIxRXNqN0hSbmE1dkprUlhNRHZsSmhWMW9uUTNRQUFBWHBaVFVGMUFBQUVBd0JJTUVZQ0lRRFFiMmtUDQp5TDRjZDdoWnVtMHBya2lNNitKZjlMY0pzZWplY0JsUlZ1SktZZ0loQU5VTnVlMWMwQm10WnhZMFBsVTZiY3VKDQo5WUd0Nnh6V1U5MDlWYms0d0RrREFIY0FScVZWNjNYNmtTQXd0YUtKYWZUemZSRXNRWFMrL1VtNGhhdnkvSEQrDQpiVWNBQUFGNldVMUJTd0FBQkFNQVNEQkdBaUVBcGF0QlJ5TDA3UWQyWThPMXdyU0c2ZmVWaW9nR29FYTJBQWZvDQp4ekdCbmd3Q0lRQ0tvR2RvQ0VkVjBqeXBBM056K3NHRGdQSHhrRWhiUmsrcmpFNnIzWlFUblRBTkJna3Foa2lHDQo5dzBCQVFzRkFBT0NBUUVBTHRHZVBuZzlLMXBCOGVDUGdCNEE3VDdZSU1oRnJZYmdqWXVxTXRRWDZMdTZEZEdEDQp4SysvcnR1RmN6WnMyMTR1NUJaWkY3QklQTXhJMWxyeGVWaXBleUhoMDZMeEVyVlJnME1NbXlkS2w2WTcveHAxDQo4a2h3ZmU3NXlyQ3I5bGFSUmdOQW5MbmNVVTNESVJ3OGUyTUFCYlJPQ3h3TEFydUc0U2UxRkc5Q0FrMThzL0NjDQo2U2k1OUdkL0h4ZzNmRWNXUHpkQ2RJcVJjbXNRdnNndy9zSnNmc1I3SDM4MmVpNlFldFRaWS9DMmhCL0lFVjlDDQorR0tET2ZkUU1VMFRmeVJYam1Vb0UrRHJZWVBibU5JeXhiMS9nT0paODNzTEVLYWlZdnhhM1Q4S1BwSmhNK3NwDQptTmRiOXJMeU5UcGRIekdJSzVqb1hVTjV4SnRJZ2dwWExmKy9ZQT09DQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tDQo=</certificate>
+        <consumerKey>3MVG9kBt168mda_9CJ70uoneNTIzsJfaLfpOC9b_HhUI9ctYOXgLz3fE7BugPv3uwD_rP1Nz4O4e2xf54YBfB</consumerKey>
+        <isAdminApproved>true</isAdminApproved>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isSecretRequiredForRefreshToken>true</isSecretRequiredForRefreshToken>
+        <scopes>Basic</scopes>
+        <scopes>Api</scopes>
+        <scopes>RefreshToken</scopes>
+        <scopes>CustomPermissions</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+    <profileName>Identity User</profileName>
+    <profileName>Minimum Access - Salesforce</profileName>
+    <profileName>Executive Sponsor</profileName>
+    <profileName>System Administrator</profileName>
+    <profileName>Contract Manager</profileName>
+    <profileName>Marketing User</profileName>
+    <profileName>CPQ Integration User</profileName>
+    <profileName>CPQ Admin</profileName>
+    <profileName>CPQ Sales User</profileName>
+    <profileName>CPQ Tech Support</profileName>
+    <profileName>Channel Program Manager</profileName>
+    <profileName>Finance Order Processing</profileName>
+    <profileName>Finance Service</profileName>
+    <profileName>Inside Sales</profileName>
+    <profileName>Integration User</profileName>
+    <profileName>Marketing</profileName>
+    <profileName>Marketing Channel</profileName>
+    <profileName>Marketing Leads</profileName>
+    <profileName>Sales Administrator</profileName>
+    <profileName>Sales Compensation</profileName>
+    <profileName>Sales Data Science</profileName>
+    <profileName>Sales Engineer</profileName>
+    <profileName>Sales Manager</profileName>
+    <profileName>Sales Member</profileName>
+    <profileName>Sales Operations</profileName>
+    <profileName>Sales Profile</profileName>
+    <profileName>Sales Support</profileName>
+    <profileName>Custom : Netskope Profile</profileName>
+</ConnectedApp>

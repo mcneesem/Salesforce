@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ExemptEmployeesDataCollectionMethod__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Exempt Employees: Data Collection Method</label>
     <length>255</length>

@@ -15,7 +15,7 @@
     <aura:attribute name="isNonProfit" type="boolean" default="false"/>
     <aura:attribute name="state" type="list" />
     <aura:attribute name="cmpError" type="String" />
-    <aura:attribute name="isDisable" type="Boolean" default="true"/>
+    <aura:attribute name="isDisable" type="Boolean" default="false"/>
     <aura:attribute name="unlock" type="String" default="Unlock"/>
     <aura:handler value="{!this}" name="init" action="{!c.doInit}" access="global"/>
     <!--<lightning:card  iconname="standard:lead"> -->
@@ -152,11 +152,11 @@
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="horizontal-medium" >       
                 <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zipcode" /> 
             </lightning:layoutItem>
-            <lightning:layoutItem flexibility="auto" size="8" smallDeviceSize="8" mediumDeviceSize="8" largeDeviceSize="8" padding="horizontal-medium" >       
+           <!-- <lightning:layoutItem flexibility="auto" size="8" smallDeviceSize="8" mediumDeviceSize="8" largeDeviceSize="8" padding="horizontal-medium" >       
                 <div  class="slds-scrollable_none">
                     <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="yes" frameborder="0" width="60%" height="100%" allowtransparency="true"></iframe>
                 </div>
-            </lightning:layoutItem>
+            </lightning:layoutItem> -->
         </lightning:layout>
     </lightning:layoutItem>
     

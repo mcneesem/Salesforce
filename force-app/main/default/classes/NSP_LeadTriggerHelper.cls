@@ -34,7 +34,12 @@ public class NSP_LeadTriggerHelper {
     public void beforeInsertDirector(List < Lead > newList) {
         //Set to store account ids
         Set < String > accountIdSet = new Set < String > ();
-        List<Lead> inboundSolutionsList =  new List<Lead>();  // Added as part of DF-01009    
+        List<Lead> inboundSolutionsList =  new List<Lead>();  // Added as part of DF-01009 
+         /* Added to Map Sales Office on insert if Zipcode is populated*/
+      List < Lead > zipCodeLeadList = new List < Lead > ();
+      List < String > zipCodeList = new List < String > ();
+      Boolean isOwnerAssignment = true; 
+      /* Added to Map Sales Office on insert if Zipcode is populated*/   
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
@@ -74,8 +79,20 @@ public class NSP_LeadTriggerHelper {
             if (leadObject.NSP_DC_SetTime__c !=null && leadObject.NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
                 leadObject.NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
              }
+              /*Added to Map Sales Office on insert if Zipcode is populated */
+          if(String.isNotBlank(leadObject.PostalCode)){
+            zipCodeLeadList.add(leadObject);
+            zipCodeList.add(leadObject.PostalCode);
+        }
+        /* Added to Map Sales Office on insert if Zipcode is populated */
             
         }
+         /* Added to Map Sales Office on insert if Zipcode is populated*/
+      if(!zipCodeLeadList.isEmpty() && !zipCodeList.isEmpty()){
+        isOwnerAssignment = false;
+        setLeadRegion(zipCodeList, zipCodeLeadList, isOwnerAssignment);
+    }
+    /* Added to Map Sales Office on insert if Zipcode is populated*/
         //calling method to stmap primary contact's email from partner account to lead
         if (!accountIdSet.isEmpty()) {
             putPartnerEmailOnLead(newList, accountIdSet);
@@ -111,6 +128,12 @@ public class NSP_LeadTriggerHelper {
       Lead parentLead = new Lead();
         /* Added as part of STY-01725 */
         List<String> inboundOrOutBoundUserList = Label.Inbound_and_Outbound_UserRole.split(',');
+        /* Added as part of DF-01846*/
+      List < Lead > zipCodeLeadList = new List < Lead > ();
+      List < String > zipCodeUpdateList = new List < String > ();
+      Boolean isOwnerAssignment = true;
+      Boolean isZipCodeUpdate = false;
+      /* Added as part of DF-01846*/
         User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
         /* Added as part of STY-01725 */
         //iterating over trigger.newmap
@@ -153,6 +176,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                   if (leadNewMap.get(leadId).NSP_Product_Interest__c.contains(System.label.NSP_PRODINT_FULL_SERVICE_HR)) {
                                                       /* If Emp >= 150 and Product of Interest is WO, then assign to mid market queue */
                                                       midMarketList.add(leadNewMap.get(leadId));
+                                                      isZipCodeUpdate = true;
                                                   } else if (leadNewMap.get(leadId).NSP_Product_Interest__c.contains(String.valueOf(System.label.NSP_PRODINT_HCM))) {
                                                       /*If Emp >= 150 and Product of Interest is WX, then assign to payroll/HCM queue */
                                                       payrollHCMList.add(leadNewMap.get(leadId));
@@ -162,6 +186,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                       /* If Postal Code is not blank, Number of Employees is null or < 150 and Product of interest is WO/WX assign to Sales office */
                                                       leadsForRoundRobin.add(leadNewMap.get(leadId));
                                                       zipCodeList.add(leadNewMap.get(leadId).PostalCode);
+                                                      isZipCodeUpdate = true;
                                                   } 
                                                   else {
                                                     leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
@@ -175,7 +200,19 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             if (leadNewMap.get(leadId).NumberOfEmployees != leadOldMap.get(leadId).NumberOfEmployees) {
                 updateAccountSegment(leadNewMap.get(leadId));
             }
+             /* Added as part of DF-01846*/
+          if( leadNewMap.get(leadId).PostalCode != leadOldMap.get(leadId).PostalCode &&
+          String.isNotBlank(leadNewMap.get(leadId).PostalCode) && isZipCodeUpdate == false){
+              zipCodeLeadList.add(leadNewMap.get(leadId));
+              zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode);
+          }
+       /* Added as part of DF-01846*/
         }
+
+      if(!zipCodeLeadList.isEmpty() && !zipCodeUpdateList.isEmpty()){
+        isOwnerAssignment = false;
+        setLeadRegion(zipCodeUpdateList, zipCodeLeadList, isOwnerAssignment);
+    }
       if(parentLead != null){
           updateChildOwner(parentLead);
       }
@@ -185,7 +222,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //Roundrobin logic to assign leads to Sales Office
         if (!leadsForRoundRobin.isEmpty()) {
-            setLeadRegion(zipCodeList, leadsForRoundRobin);
+            setLeadRegion(zipCodeList, leadsForRoundRobin, isOwnerAssignment);
         }
         //assigning leads to mid market queue in number of employees >=EMP_THRESH_150
         if (!midMarketList.isEmpty()){
@@ -454,7 +491,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //get office assignment details for Mid Market queue
         if(midMarketLead != null && zipBasedLocationList !=null && !zipBasedLocationList.isEmpty())
-            NSP_RoundRobinAssigner.getOfficeAssignmentDetails(midMarketLead, zipBasedLocationList);
+            NSP_RoundRobinAssigner.getOfficeAssignmentDetails(midMarketLead, zipBasedLocationList, true);
     }
     /**
 * Assigns the leads to the inBound Solutions Queue 
@@ -524,7 +561,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
 *                
 */
     
-    public void setLeadRegion(List < String > zipCodeList, List < Lead > leadsForRoundRobin) {
+    public void setLeadRegion(List < String > zipCodeList, List < Lead > leadsForRoundRobin, Boolean isOwnerAssignment) {
         //Get all the zip codes from zip tp city mapping custom setting
         Map < String, NSP_Zip_To_City_Mapping__c > zipMap = new Map < String, NSP_Zip_To_City_Mapping__c > ();
         //List of zip codes used by the lead records
@@ -544,7 +581,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //calling method for round robin assignment
         if (finalRoundRobinList != null && !finalRoundRobinList.isEmpty() && zipBasedLocationList!=null && !zipBasedLocationList.isEmpty()) {
-            NSP_RoundRobinAssigner.getOfficeAssignmentDetails(finalRoundRobinList, zipBasedLocationList);
+            NSP_RoundRobinAssigner.getOfficeAssignmentDetails(finalRoundRobinList, zipBasedLocationList, isOwnerAssignment);
         }
     }
     /**

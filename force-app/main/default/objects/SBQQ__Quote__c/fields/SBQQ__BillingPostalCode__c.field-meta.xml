@@ -3,6 +3,7 @@
     <fullName>SBQQ__BillingPostalCode__c</fullName>
     <deprecated>false</deprecated>
     <description>Postal Code of the Bill To address for this quote.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Postal Code of the Bill To address for this quote.</inlineHelpText>
     <label>Bill To Postal Code</label>

@@ -4,6 +4,7 @@ Additional Implementation Details: (If Needed)
 
 AIMS#: {!Account.NSP_AIMS_Client__c}
 Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
 
 Thank you,
 

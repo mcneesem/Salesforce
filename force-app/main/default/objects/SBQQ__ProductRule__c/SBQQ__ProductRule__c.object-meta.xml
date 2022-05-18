@@ -159,6 +159,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Product Rule</label>
     <nameField>
+        <encryptionScheme>None</encryptionScheme>
         <label>Product Rule Name</label>
         <type>Text</type>
     </nameField>

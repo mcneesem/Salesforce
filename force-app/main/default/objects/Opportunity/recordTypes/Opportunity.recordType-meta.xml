@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Opportunity</fullName>
     <active>true</active>
@@ -71,6 +71,109 @@
         </values>
         <values>
             <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Loss_Reason_Oracle__c</picklist>
+        <values>
+            <fullName>Abandoned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Backout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed by System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Default Won</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Features</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Global Pandemic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legacy Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Decision</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Interested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Qualified - Quickbooks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not a good fit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price%2FCost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prohibited Industry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Satisfied with Current</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Satisfied with Current Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transferred to MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unresponsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Competitor</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -688,6 +791,14 @@
     <picklistValues>
         <picklist>NSP_Merge_On_Demand_Template_Selection__c</picklist>
         <values>
+            <fullName>AnalysisDocumentsOver50ee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AnalysisDocumentsUnder50ee</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CafeteriaPlanQuestionnaireWorksheet</fullName>
             <default>false</default>
         </values>
@@ -701,6 +812,18 @@
         </values>
         <values>
             <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EnrollmentFeeCreditCardPayment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EnrollmentFeeMultiPaymentRefundable</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1240,8 +1363,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName
-      >Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
+            <fullName>Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1386,91 +1508,11 @@
     <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
         <values>
-            <fullName>301</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>302</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>501</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>502</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>503</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>504</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>505</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>506</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>507</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>520</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>522</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>523</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>540</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>541</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>561</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>581</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>601</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>602</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>701</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>902</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>903</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1021</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1479,6 +1521,10 @@
         </values>
         <values>
             <fullName>1061</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1081</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1495,6 +1541,10 @@
         </values>
         <values>
             <fullName>1104</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1400</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1518,6 +1568,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1406</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1501</fullName>
             <default>false</default>
         </values>
@@ -1526,11 +1580,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1702</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1901</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>2100</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>2101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1543,6 +1609,10 @@
         </values>
         <values>
             <fullName>2202</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2203</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1567,6 +1637,14 @@
         </values>
         <values>
             <fullName>2901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>302</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1615,6 +1693,10 @@
         </values>
         <values>
             <fullName>3601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3621</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1710,7 +1792,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4466</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4477</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1734,31 +1824,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>502</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>505</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>506</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>507</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>508</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2203</fullName>
+            <fullName>520</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1406</fullName>
+            <fullName>521</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1081</fullName>
+            <fullName>522</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2110</fullName>
+            <fullName>523</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1702</fullName>
+            <fullName>540</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1021</fullName>
+            <fullName>541</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>561</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>581</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>801</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1766,19 +1908,11 @@
             <default>false</default>
         </values>
         <values>
-             <fullName>801</fullName>
+            <fullName>902</fullName>
             <default>false</default>
         </values>
         <values>
-             <fullName>521</fullName>
-            <default>false</default>
-        </values>
-        <values>
-             <fullName>4477</fullName>
-            <default>false</default>
-        </values>
-        <values>
-             <fullName>4416</fullName>
+            <fullName>903</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2076,6 +2210,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acrisure %E2%80%93 VCG</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acrisure LLC dba Connor Group</fullName>
             <default>false</default>
         </values>
@@ -2140,7 +2278,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acrisure%2C The Benefits Group%2C Rochester Hills%2C MI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Advantage Benefits Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alera Group %E2%80%93 Forum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alera Group %E2%80%93 TRISURE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2272,6 +2422,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CertaPro %E2%80%93 PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Colorado CEO Forum</fullName>
             <default>false</default>
         </values>
@@ -2289,6 +2443,10 @@
         </values>
         <values>
             <fullName>DKG Insurance %26 Financial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Davidow Financial %26 Insurance Services%2C Inc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3007,153 +3165,129 @@
             <fullName>Vistage Worldwide</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Acrisure – VCG</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CertaPro – PA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Alera Group – Forum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Alera Group – TRISURE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
-            <picklist>NSP_Sub_Product__c</picklist>
-            <values>
-                <fullName>Abra Migration</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Add On Software</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CompuPayTime</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Descriptions Now</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dotcoms</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ExpenseAble Corporate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ExpenseAble Express</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hardware</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Health %26 Welfare</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Insperity 401k Plan</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Insperity Customized Plan</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OPRT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OPRT Express</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OPRT Renewal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OrgPlus Desktop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PerformSmart</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PerformSmart Renewal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Performance Now</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pro Services</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Property %26 Casualty</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sage OrgPlus</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sage Time</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TFW Migration</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TimeStar Mgd Hosted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TimeStar On Prem</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timestar SaaS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>UED Bundle</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>WX Choice Custom</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>WX Choice Customized Plan</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>WX Choice Plan</fullName>
-                <default>false</default>
-            </values>
+        <picklist>NSP_Sub_Product__c</picklist>
+        <values>
+            <fullName>Abra Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add On Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CompuPayTime</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Descriptions Now</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dotcoms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ExpenseAble Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ExpenseAble Express</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health %26 Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity 401k Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Customized Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPRT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPRT Express</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPRT Renewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OrgPlus Desktop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PerformSmart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PerformSmart Renewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Now</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pro Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property %26 Casualty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage OrgPlus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TFW Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar Mgd Hosted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar On Prem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timestar SaaS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UED Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Choice Custom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Choice Customized Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Choice Plan</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Template_Selection__c</picklist>
@@ -3331,6 +3465,25 @@
         </values>
         <values>
             <fullName>September</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Oppy_Type_NSP__c</picklist>
+        <values>
+            <fullName>BPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Acceleration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Optimization</fullName>
             <default>false</default>
         </values>
     </picklistValues>
