@@ -43,7 +43,7 @@
         <criteriaItems>
             <column>Activity$NSP_Event_Type__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>Core Sales</value>
         </criteriaItems>
@@ -61,6 +61,6 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Activity$CompletedDateTime</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

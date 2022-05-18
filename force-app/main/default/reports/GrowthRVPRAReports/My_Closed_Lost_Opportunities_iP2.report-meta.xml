@@ -82,6 +82,6 @@
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>Opportunity$CloseDate</dateColumn>
-        <interval>INTERVAL_CURPREVQ</interval>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

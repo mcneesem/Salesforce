@@ -50,14 +50,14 @@
         <criteriaItems>
             <column>Opportunity$NSP_Partner__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$StageName</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Closed Lost</value>
         </criteriaItems>
@@ -87,6 +87,6 @@
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>Opportunity$CloseDate</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

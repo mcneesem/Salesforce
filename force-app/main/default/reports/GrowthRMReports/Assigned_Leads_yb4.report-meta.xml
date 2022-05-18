@@ -56,17 +56,12 @@
         <criteriaItems>
             <column>Lead$Owner.UserRole</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Business Performance Advisor,Associate Business Performance Advisor</value>
         </criteriaItems>
     </filter>
-    <format>Summary</format>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>Lead$NSP_Sales_Office__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
+    <format>Tabular</format>
     <name>Assigned Leads</name>
     <params>
         <name>co</name>

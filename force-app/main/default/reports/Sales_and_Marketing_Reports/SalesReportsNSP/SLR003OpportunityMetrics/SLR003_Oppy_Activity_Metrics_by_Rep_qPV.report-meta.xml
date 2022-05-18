@@ -83,7 +83,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>,Applicant Tracking,Bookkeeping/Accounting,BPA,BPS,CSS,Employment Screening,Expense Management,Human Capital Consulting,Insurance Services,Payroll/Human Capital Management,Performance Management,Recruiting Services,Retirement Services,Time and Attendance or Organizational Planning,WX,Workforce Administration,WO</value>
+            <value>,Applicant Tracking,Bookkeeping/Accounting,BPA,BPS,CSS,Employment Screening,Expense Management,Insurance Services,Payroll/Human Capital Management,Performance Management,Recruiting Services,Retirement Services,Time and Attendance or Organizational Planning,WX,Workforce Administration,WO</value>
         </criteriaItems>
         <criteriaItems>
             <column>Activity.NSP_Event_Subtype__c</column>

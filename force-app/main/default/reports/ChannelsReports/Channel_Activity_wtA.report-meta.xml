@@ -48,7 +48,7 @@
         <criteriaItems>
             <column>Opportunity.NSP_Partner__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
@@ -84,8 +84,6 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Activity.NSP_Completed_Date__c</dateColumn>
-        <endDate>2022-03-07</endDate>
-        <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2021-01-01</startDate>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

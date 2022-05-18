@@ -9,6 +9,7 @@ Insperity Premier Performance [add BPSKWInfo]
 Insperity Premier Timesheet / Insperity Premier Time & Attendance [add ITA-Order Processing]
 
 Salesforce Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
 
 Thank you,
 

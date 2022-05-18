@@ -83,11 +83,6 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>Lead$NSP_Sales_Office__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
         <field>Lead$Status</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
@@ -97,14 +92,12 @@
         <value>1</value>
     </params>
     <reportType>Leads_Deluxe_NSP__c</reportType>
-    <scope>user</scope>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Lead$CreatedDate</dateColumn>
-        <endDate>2022-04-21</endDate>
-        <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2022-01-01</startDate>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

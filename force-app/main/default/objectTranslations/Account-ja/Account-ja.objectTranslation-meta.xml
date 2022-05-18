@@ -297,10 +297,6 @@
     </validationRules>
     <validationRules>
         <errorMessage></errorMessage>
-        <name>LID__Check_Company_Id_Value</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage></errorMessage>
         <name>NSP_Denial_Reason_when_Request_Denied</name>
     </validationRules>
     <validationRules>
@@ -326,29 +322,5 @@
     <webLinks>
         <label></label>
         <name>NSP_Generate_Document</name>
-    </webLinks>
-    <webLinks>
-        <label></label>
-        <name>SBQQ__Amend_Assets</name>
-    </webLinks>
-    <webLinks>
-        <label></label>
-        <name>SBQQ__Renew_Assets</name>
-    </webLinks>
-    <webLinks>
-        <label></label>
-        <name>fferpcore__ValidateBillingAddress</name>
-    </webLinks>
-    <webLinks>
-        <label></label>
-        <name>fferpcore__ValidateShippingAddress</name>
-    </webLinks>
-    <webLinks>
-        <label></label>
-        <name>pse__Account_Billing</name>
-    </webLinks>
-    <webLinks>
-        <label></label>
-        <name>pse__Create_Change_Request</name>
     </webLinks>
 </CustomObjectTranslation>

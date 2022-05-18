@@ -75,69 +75,7 @@
         <showSubTotals>true</showSubTotals>
         <timeFrameFilter>
             <dateColumn>Opportunity$CreatedDate</dateColumn>
-            <interval>INTERVAL_CUSTOM</interval>
-        </timeFrameFilter>
-    </block>
-    <block>
-        <blockInfo>
-            <blockId>B2</blockId>
-            <joinTable>NSP_Reward__c.Opportunity__c</joinTable>
-        </blockInfo>
-        <columns>
-            <field>NSP_Reward__c$NSP_Contact__c</field>
-        </columns>
-        <columns>
-            <field>NSP_Reward__c$Name</field>
-        </columns>
-        <columns>
-            <field>NSP_Reward__c$Id</field>
-        </columns>
-        <columns>
-            <field>NSP_Reward__c$NSP_Sold_Reward__c</field>
-        </columns>
-        <columns>
-            <field>NSP_Reward__c$NSP_Discovery_Call_Reward__c</field>
-        </columns>
-        <currency>USD</currency>
-        <filter>
-            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
-            <criteriaItems>
-                <column>NSP_Reward__c$Opportunity__c.Discovery_Completed__c</column>
-                <columnToColumn>false</columnToColumn>
-                <isUnlocked>true</isUnlocked>
-                <operator>equals</operator>
-                <value>1</value>
-            </criteriaItems>
-            <criteriaItems>
-                <column>NSP_Reward__c$Opportunity__c.NSP_Booked_Date__c</column>
-                <columnToColumn>false</columnToColumn>
-                <isUnlocked>true</isUnlocked>
-                <operator>notEqual</operator>
-                <value></value>
-            </criteriaItems>
-            <criteriaItems>
-                <column>NSP_Reward__c$Opportunity__c.Rewards__c</column>
-                <columnToColumn>false</columnToColumn>
-                <isUnlocked>true</isUnlocked>
-                <operator>lessThan</operator>
-                <value>1</value>
-            </criteriaItems>
-        </filter>
-        <format>Summary</format>
-        <name>Rewards Pending to Pay</name>
-        <params>
-            <name>co</name>
-            <value>1</value>
-        </params>
-        <reportType>Rewards__c</reportType>
-        <scope>organization</scope>
-        <showGrandTotal>true</showGrandTotal>
-        <showSubTotals>true</showSubTotals>
-        <sortColumn>NSP_Reward__c$Name</sortColumn>
-        <sortOrder>Asc</sortOrder>
-        <timeFrameFilter>
-            <dateColumn>NSP_Reward__c$CreatedDate</dateColumn>
-            <interval>INTERVAL_CUSTOM</interval>
+            <interval>INTERVAL_CURRENT</interval>
         </timeFrameFilter>
     </block>
     <blockInfo>

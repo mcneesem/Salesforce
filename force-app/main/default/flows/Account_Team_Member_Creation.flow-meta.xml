@@ -470,7 +470,7 @@
             <targetReference>RecordIdAssignment</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>accountteamvar</name>
         <dataType>SObject</dataType>

@@ -16,6 +16,7 @@ Insperity Premier Timesheet / Insperity Premier Time & Attendance [add ITA-Order
 This client will receive XML upload or WebPayroll. If this is not correct and the client needs Premier Timesheet or Premier Time & Attendance, please engage a sales engineer to determine the correct option for them.
 
 Salesforce Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
 
 Thank you,
 

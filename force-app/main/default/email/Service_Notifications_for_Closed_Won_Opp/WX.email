@@ -17,6 +17,7 @@ For any questions on the process or next steps please contact TESintake@insperit
 Additional Implementation Details: 
 
 Salesforce Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
 
 Thank you,
 

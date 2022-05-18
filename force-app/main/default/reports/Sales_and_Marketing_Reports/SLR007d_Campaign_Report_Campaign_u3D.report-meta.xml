@@ -100,7 +100,7 @@ based on Campaign (Deluxe) NSP Report Type</description>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>,Event,Demo Signup / Trial,Email,Referral Program,Search,Social Media,Thought Leadership,Website Direct,Other,Advertisement,Telemarketing,Banner Ads,Seminar / Conference,Public Relations,Partners</value>
+            <value>,Event,Demo Signup / Trial,Email,Referral Program,Search,Social Media,Thought Leadership,Website Direct,Other,Seminar / Conference</value>
         </criteriaItems>
         <criteriaItems>
             <column>Campaign$Owner.Name</column>

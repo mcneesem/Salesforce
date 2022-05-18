@@ -58,10 +58,6 @@ declare module "@salesforce/label/c.NSP_Asset_Product" {
     var NSP_Asset_Product: string;
     export default NSP_Asset_Product;
 }
-declare module "@salesforce/label/c.NSP_BPS_Envelope_Configuration" {
-    var NSP_BPS_Envelope_Configuration: string;
-    export default NSP_BPS_Envelope_Configuration;
-}
 declare module "@salesforce/label/c.NSP_Benchmark_Date_Validation" {
     var NSP_Benchmark_Date_Validation: string;
     export default NSP_Benchmark_Date_Validation;
@@ -290,6 +286,14 @@ declare module "@salesforce/label/c.NSP_PRODINT_FULL_SERVICE_HR" {
     var NSP_PRODINT_FULL_SERVICE_HR: string;
     export default NSP_PRODINT_FULL_SERVICE_HR;
 }
+declare module "@salesforce/label/c.NSP_Customer_Signer_Account" {
+    var NSP_Customer_Signer_Account: string;
+    export default NSP_Customer_Signer_Account;
+}
+declare module "@salesforce/label/c.NSP_Customer_Signer_Billing_Account" {
+    var NSP_Customer_Signer_Billing_Account: string;
+    export default NSP_Customer_Signer_Billing_Account;
+}
 declare module "@salesforce/label/c.NSP_PRODINT_HCM" {
     var NSP_PRODINT_HCM: string;
     export default NSP_PRODINT_HCM;
@@ -374,10 +378,6 @@ declare module "@salesforce/label/c.NSP_RPO_Date_Validation_Error" {
     var NSP_RPO_Date_Validation_Error: string;
     export default NSP_RPO_Date_Validation_Error;
 }
-declare module "@salesforce/label/c.NSP_Recruiting_Envelope_Configuration" {
-    var NSP_Recruiting_Envelope_Configuration: string;
-    export default NSP_Recruiting_Envelope_Configuration;
-}
 declare module "@salesforce/label/c.NSP_RequestFirstCheckDate" {
     var NSP_RequestFirstCheckDate: string;
     export default NSP_RequestFirstCheckDate;
@@ -397,10 +397,6 @@ declare module "@salesforce/label/c.NSP_Select_Primary_Contact" {
 declare module "@salesforce/label/c.NSP_SendForSignature" {
     var NSP_SendForSignature: string;
     export default NSP_SendForSignature;
-}
-declare module "@salesforce/label/c.NSP_Standalone_Envelope_Configuration" {
-    var NSP_Standalone_Envelope_Configuration: string;
-    export default NSP_Standalone_Envelope_Configuration;
 }
 declare module "@salesforce/label/c.NSP_SubmitApprovalError" {
     var NSP_SubmitApprovalError: string;
@@ -426,10 +422,6 @@ declare module "@salesforce/label/c.NSP_WX_Email_DL" {
     var NSP_WX_Email_DL: string;
     export default NSP_WX_Email_DL;
 }
-declare module "@salesforce/label/c.NSP_WX_Envelope_Configuration" {
-    var NSP_WX_Envelope_Configuration: string;
-    export default NSP_WX_Envelope_Configuration;
-}
 declare module "@salesforce/label/c.Retirement_Services_For_Non_WO_Products" {
     var Retirement_Services_For_Non_WO_Products: string;
     export default Retirement_Services_For_Non_WO_Products;
@@ -449,10 +441,6 @@ declare module "@salesforce/label/c.NSP_DEVELOPERNAME_INSIDESALES" {
 declare module "@salesforce/label/c.NSP_MovePartnerLifecycletoOnboarding" {
     var NSP_MovePartnerLifecycletoOnboarding: string;
     export default NSP_MovePartnerLifecycletoOnboarding;
-}
-declare module "@salesforce/label/c.NSP_SingleSigner_Envelope_Configuration" {
-    var NSP_SingleSigner_Envelope_Configuration: string;
-    export default NSP_SingleSigner_Envelope_Configuration;
 }
 declare module "@salesforce/label/c.NSP_ReferralLeadErrorMessage" {
     var NSP_ReferralLeadErrorMessage: string;
@@ -529,4 +517,160 @@ declare module "@salesforce/label/c.NSP_ThankYou_Partner" {
 declare module "@salesforce/label/c.NSP_OpportunityWAAttachmentName" {
     var NSP_OpportunityWAAttachmentName: string;
     export default NSP_OpportunityWAAttachmentName;
+}
+declare module "@salesforce/label/c.NSP_Sync_Primary_Quote_With_Opportunity" {
+    var NSP_Sync_Primary_Quote_With_Opportunity: string;
+    export default NSP_Sync_Primary_Quote_With_Opportunity;
+}
+declare module "@salesforce/label/c.NSP_12_hours_Milliseconds" {
+    var NSP_12_hours_Milliseconds: string;
+    export default NSP_12_hours_Milliseconds;
+}
+declare module "@salesforce/label/c.NSP_OwnerBasedCriteriaRoles" {
+    var NSP_OwnerBasedCriteriaRoles: string;
+    export default NSP_OwnerBasedCriteriaRoles;
+}
+declare module "@salesforce/label/c.NSP_Opportunity_Close_Date_Validation" {
+    var NSP_Opportunity_Close_Date_Validation: string;
+    export default NSP_Opportunity_Close_Date_Validation;
+}
+declare module "@salesforce/label/c.NSP_Profile_To_Skip_OLI_Validation" {
+    var NSP_Profile_To_Skip_OLI_Validation: string;
+    export default NSP_Profile_To_Skip_OLI_Validation;
+}
+declare module "@salesforce/label/c.Opportunity_Product_Update_Error_Message" {
+    var Opportunity_Product_Update_Error_Message: string;
+    export default Opportunity_Product_Update_Error_Message;
+}
+declare module "@salesforce/label/c.NSP_CANNOT_MOVE_TO_CLOSEDLOST" {
+    var NSP_CANNOT_MOVE_TO_CLOSEDLOST: string;
+    export default NSP_CANNOT_MOVE_TO_CLOSEDLOST;
+}
+declare module "@salesforce/label/c.NSP_Close_Lost_Criteria_Roles" {
+    var NSP_Close_Lost_Criteria_Roles: string;
+    export default NSP_Close_Lost_Criteria_Roles;
+}
+declare module "@salesforce/label/c.NSP_AuthorizedPurchaseBilling" {
+    var NSP_AuthorizedPurchaseBilling: string;
+    export default NSP_AuthorizedPurchaseBilling;
+}
+declare module "@salesforce/label/c.NSP_AuthorizedPurchaseShipping" {
+    var NSP_AuthorizedPurchaseShipping: string;
+    export default NSP_AuthorizedPurchaseShipping;
+}
+declare module "@salesforce/label/c.NSP_AuthorizedPurchaseBilling2" {
+    var NSP_AuthorizedPurchaseBilling2: string;
+    export default NSP_AuthorizedPurchaseBilling2;
+}
+declare module "@salesforce/label/c.NSP_AuthorizedPurchaseShipping2" {
+    var NSP_AuthorizedPurchaseShipping2: string;
+    export default NSP_AuthorizedPurchaseShipping2;
+}
+declare module "@salesforce/label/c.NSP_CustRoleBilling" {
+    var NSP_CustRoleBilling: string;
+    export default NSP_CustRoleBilling;
+}
+declare module "@salesforce/label/c.NSP_CustRoleShipping" {
+    var NSP_CustRoleShipping: string;
+    export default NSP_CustRoleShipping;
+}
+declare module "@salesforce/label/c.NSP_CustStakeHolderBilling" {
+    var NSP_CustStakeHolderBilling: string;
+    export default NSP_CustStakeHolderBilling;
+}
+declare module "@salesforce/label/c.NSP_CustStakeholderShipping" {
+    var NSP_CustStakeholderShipping: string;
+    export default NSP_CustStakeholderShipping;
+}
+declare module "@salesforce/label/c.NSP_PrimaryContactBilling" {
+    var NSP_PrimaryContactBilling: string;
+    export default NSP_PrimaryContactBilling;
+}
+declare module "@salesforce/label/c.NSP_PrimaryContactShipping" {
+    var NSP_PrimaryContactShipping: string;
+    export default NSP_PrimaryContactShipping;
+}
+declare module "@salesforce/label/c.NSP_Cust_Insperity_Signer" {
+    var NSP_Cust_Insperity_Signer: string;
+    export default NSP_Cust_Insperity_Signer;
+}
+declare module "@salesforce/label/c.NSP_Cust_Signer_and_Approved_Err" {
+    var NSP_Cust_Signer_and_Approved_Err: string;
+    export default NSP_Cust_Signer_and_Approved_Err;
+}
+declare module "@salesforce/label/c.NSP_Customer_Signer_Err" {
+    var NSP_Customer_Signer_Err: string;
+    export default NSP_Customer_Signer_Err;
+}
+declare module "@salesforce/label/c.NSP_Insperity_Signer_Err" {
+    var NSP_Insperity_Signer_Err: string;
+    export default NSP_Insperity_Signer_Err;
+}
+declare module "@salesforce/label/c.NSP_NonApprovedErr" {
+    var NSP_NonApprovedErr: string;
+    export default NSP_NonApprovedErr;
+}
+declare module "@salesforce/label/c.NSP_PrimaryProductErr" {
+    var NSP_PrimaryProductErr: string;
+    export default NSP_PrimaryProductErr;
+}
+declare module "@salesforce/label/c.NSP_Signer_and_Approved_Err" {
+    var NSP_Signer_and_Approved_Err: string;
+    export default NSP_Signer_and_Approved_Err;
+}
+declare module "@salesforce/label/c.NSP_Altula_Envelope_Configuration" {
+    var NSP_Altula_Envelope_Configuration: string;
+    export default NSP_Altula_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_HR_Services_Envelope_Configuration" {
+    var NSP_HR_Services_Envelope_Configuration: string;
+    export default NSP_HR_Services_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_BPS_Envelope_Configuration" {
+    var NSP_BPS_Envelope_Configuration: string;
+    export default NSP_BPS_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_Recruiting_Envelope_Configuration" {
+    var NSP_Recruiting_Envelope_Configuration: string;
+    export default NSP_Recruiting_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_WX_Envelope_Configuration" {
+    var NSP_WX_Envelope_Configuration: string;
+    export default NSP_WX_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_BPS_Wet_Envelope" {
+    var NSP_BPS_Wet_Envelope: string;
+    export default NSP_BPS_Wet_Envelope;
+}
+declare module "@salesforce/label/c.NSP_HR_Wet_Envelope" {
+    var NSP_HR_Wet_Envelope: string;
+    export default NSP_HR_Wet_Envelope;
+}
+declare module "@salesforce/label/c.NSP_Recruiting_Wet_Envelope" {
+    var NSP_Recruiting_Wet_Envelope: string;
+    export default NSP_Recruiting_Wet_Envelope;
+}
+declare module "@salesforce/label/c.NSP_WX_Wet_Envelope" {
+    var NSP_WX_Wet_Envelope: string;
+    export default NSP_WX_Wet_Envelope;
+}
+declare module "@salesforce/label/c.NSP_Account_Envelope_Configuration" {
+    var NSP_Account_Envelope_Configuration: string;
+    export default NSP_Account_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_Sales_Envelope_Configuration" {
+    var NSP_Sales_Envelope_Configuration: string;
+    export default NSP_Sales_Envelope_Configuration;
+}
+declare module "@salesforce/label/c.NSP_Docusign_Account_Id" {
+    var NSP_Docusign_Account_Id: string;
+    export default NSP_Docusign_Account_Id;
+}
+declare module "@salesforce/label/c.NSP_Docusign_Base_URL" {
+    var NSP_Docusign_Base_URL: string;
+    export default NSP_Docusign_Base_URL;
+}
+declare module "@salesforce/label/c.NSP_DO_Gen_Err" {
+    var NSP_DO_Gen_Err: string;
+    export default NSP_DO_Gen_Err;
 }

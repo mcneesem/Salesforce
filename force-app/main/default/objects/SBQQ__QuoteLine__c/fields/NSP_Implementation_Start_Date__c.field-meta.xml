@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Implementation_Start_Date__c</fullName>
     <description>Implementation Start date for Talent Connect.</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Implementation Start Date</label>
     <required>false</required>

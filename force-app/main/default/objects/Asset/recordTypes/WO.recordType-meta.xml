@@ -23,6 +23,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Account_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Client_Retained_Workers_Comp__c</picklist>
         <values>
             <fullName>100%25 Client</fullName>
@@ -34,229 +49,165 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SBQQ__BillingFrequency__c</picklist>
+        <picklist>NSP_Client_Segment_type__c</picklist>
         <values>
-            <fullName>Annual</fullName>
+            <fullName>Business Team</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Monthly</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__BillingType__c</picklist>
-        <values>
-            <fullName>Advance</fullName>
+            <fullName>Core</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Arrears</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__ChargeType__c</picklist>
-        <values>
-            <fullName>One-Time</fullName>
+            <fullName>Emerging Growth %28100%2B EEs%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Recurring</fullName>
+            <fullName>Emerging Growth %2850 - 99 EEs%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Usage</fullName>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Yet Defined</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SBQQ__DiscountScheduleType__c</picklist>
+        <picklist>NSP_Current_Client_Segment_type__c</picklist>
         <values>
-            <fullName>Range</fullName>
+            <fullName>Business Team</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Slab</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__OptionType__c</picklist>
-        <values>
-            <fullName>Accessory</fullName>
+            <fullName>Core</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Component</fullName>
+            <fullName>Emerging Growth %28100%2B EEs%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Related Product</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__PricingMethod__c</picklist>
-        <values>
-            <fullName>Block</fullName>
+            <fullName>Emerging Growth %2850 - 99 EEs%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cost</fullName>
+            <fullName>Middle Market</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Custom</fullName>
+            <fullName>Middle Market Enterprise</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>List</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Percent Of Total</fullName>
+            <fullName>Not Yet Defined</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Status</picklist>
+        <picklist>NSP_ProductBundle__c</picklist>
         <values>
-            <fullName>Installed</fullName>
+            <fullName>Payroll Only</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Obsolete</fullName>
+            <fullName>WA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Purchased</fullName>
+            <fullName>WA %28WO to WA%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Registered</fullName>
+            <fullName>WOSS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Shipped</fullName>
+            <fullName>WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX %28WO to WX%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>StatusReason</picklist>
+        <picklist>NSP_Product_Bundle__c</picklist>
         <values>
-            <fullName>Not Ready</fullName>
+            <fullName>Applicant Tracking</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Off</fullName>
+            <fullName>Employment Screening</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Offline</fullName>
+            <fullName>Expense Management</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Online</fullName>
+            <fullName>HR Consulting Services</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Paused</fullName>
+            <fullName>Insurance Services</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Standby</fullName>
+            <fullName>Learning %26 Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
         <values>
-            <fullName>301</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>302</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>501</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>502</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>503</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>504</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>505</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>506</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>507</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>520</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>522</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>523</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>540</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>541</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>561</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>581</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>601</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>602</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>701</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>902</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>903</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1021</fullName>
             <default>false</default>
         </values>
         <values>
@@ -265,6 +216,10 @@
         </values>
         <values>
             <fullName>1061</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1081</fullName>
             <default>false</default>
         </values>
         <values>
@@ -304,6 +259,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1406</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1501</fullName>
             <default>false</default>
         </values>
@@ -312,11 +271,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1702</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1901</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>2100</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>2101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -329,6 +300,10 @@
         </values>
         <values>
             <fullName>2202</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2203</fullName>
             <default>false</default>
         </values>
         <values>
@@ -353,6 +328,14 @@
         </values>
         <values>
             <fullName>2901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>302</fullName>
             <default>false</default>
         </values>
         <values>
@@ -496,7 +479,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4466</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4477</fullName>
             <default>false</default>
         </values>
         <values>
@@ -520,31 +511,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>502</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>505</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>506</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>507</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>508</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2203</fullName>
+            <fullName>520</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1406</fullName>
+            <fullName>521</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1081</fullName>
+            <fullName>522</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2110</fullName>
+            <fullName>523</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1702</fullName>
+            <fullName>540</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1021</fullName>
+            <fullName>541</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>561</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>581</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>801</fullName>
             <default>false</default>
         </values>
         <values>
@@ -552,19 +595,174 @@
             <default>false</default>
         </values>
         <values>
-             <fullName>801</fullName>
+            <fullName>902</fullName>
             <default>false</default>
         </values>
         <values>
-             <fullName>521</fullName>
+            <fullName>903</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Service_Package__c</picklist>
+        <values>
+            <fullName>WO - AS Agency</fullName>
             <default>false</default>
         </values>
         <values>
-             <fullName>4477</fullName>
+            <fullName>WO - Bundle Plus</fullName>
             <default>false</default>
         </values>
         <values>
-             <fullName>4416</fullName>
+            <fullName>WO - Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Prop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__BillingFrequency__c</picklist>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__BillingType__c</picklist>
+        <values>
+            <fullName>Advance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arrears</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__ChargeType__c</picklist>
+        <values>
+            <fullName>One-Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recurring</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Usage</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__DiscountScheduleType__c</picklist>
+        <values>
+            <fullName>Range</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Slab</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__OptionType__c</picklist>
+        <values>
+            <fullName>Accessory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Component</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Related Product</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__PricingMethod__c</picklist>
+        <values>
+            <fullName>Block</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Percent Of Total</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Installed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Obsolete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Purchased</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shipped</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>StatusReason</picklist>
+        <values>
+            <fullName>Not Ready</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Off</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paused</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standby</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -46,7 +46,7 @@
         <criteriaItems>
             <column>RECORDTYPE</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Event.Core_Sales_Event_RT,Task.Core_Sales_Task_RT</value>
         </criteriaItems>
@@ -83,14 +83,12 @@
         <value>1</value>
     </params>
     <reportType>OpportunityActivity</reportType>
-    <scope>user</scope>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Activity.NSP_Completed_Date__c</dateColumn>
-        <endDate>2022-03-04</endDate>
-        <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2021-01-01</startDate>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>
