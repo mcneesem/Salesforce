@@ -23,11 +23,6 @@
                 <label>ClientServiceAgreement</label>
             </value>
             <value>
-                <fullName>CafeteriaPlanQuestionnaireWorksheet</fullName>
-                <default>false</default>
-                <label>CafeteriaPlanQuestionnaireWorksheet</label>
-            </value>
-            <value>
                 <fullName>ControlledGroupQuestionnaire</fullName>
                 <default>false</default>
                 <label>ControlledGroupQuestionnaire</label>
@@ -118,6 +113,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>CAMSuccessorTreatmentRepresentative</label>
+            </value>
+            <value>
+                <fullName>CafeteriaPlanQuestionnaireWorksheet</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>CafeteriaPlanQuestionnaireWorksheet</label>
             </value>
             <value>
                 <fullName>CommissionOnlyEmployeesQuestionnaire</fullName>

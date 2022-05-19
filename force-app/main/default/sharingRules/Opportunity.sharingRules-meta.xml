@@ -49,6 +49,20 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NCS_Sales_Compensation_Opportunity_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>NCS Sales Compensation Opportunity Access</label>
+        <sharedTo>
+            <group>NSP_Sales_Compensation</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>StageName</field>
+            <operation>equals</operation>
+            <value>Closed Lost,Closing,Closed Won</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>All_Opportunities_Edit_access_to_Finance_Users</fullName>
         <accessLevel>Edit</accessLevel>

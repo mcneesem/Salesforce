@@ -799,10 +799,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CafeteriaPlanQuestionnaireWorksheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ClientServiceAgreement</fullName>
             <default>false</default>
         </values>
