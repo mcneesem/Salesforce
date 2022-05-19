@@ -32,7 +32,7 @@
         <criteriaItems>
             <column>Opportunity$NSP_Running_Sales_Region__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
@@ -59,6 +59,7 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_w_or_wo_Activities_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

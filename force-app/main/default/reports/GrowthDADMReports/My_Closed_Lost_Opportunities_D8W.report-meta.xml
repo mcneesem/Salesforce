@@ -56,7 +56,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>1</value>
+            <value>0</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>
@@ -76,6 +76,7 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_w_or_wo_Activities_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

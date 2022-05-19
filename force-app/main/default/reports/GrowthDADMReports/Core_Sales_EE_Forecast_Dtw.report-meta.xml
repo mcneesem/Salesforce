@@ -32,7 +32,7 @@
         <criteriaItems>
             <column>Opportunity$NSP_Forecast__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>Yes</value>
         </criteriaItems>
@@ -60,7 +60,7 @@
         <criteriaItems>
             <column>Opportunity$NSP_Running_Sales_Office__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
@@ -87,6 +87,7 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_Deluxe_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
