@@ -45,7 +45,7 @@
         <criteriaItems>
             <column>Activity$NSP_Opportunity__c.Campaign.NSP_Campaign_Source__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Corporate Marketing,IRSO Marketing,Sales,Business Development,Channel Partner,Iem Marketing,Ies Marketing,Ifs Marketing,Iis Marketing,Ipom Marketing,Ips Marketing,Irs Marketing,Ita Marketing,Loy Pro,Referrals,Sales Office,Sales Operations</value>
         </criteriaItems>
@@ -72,7 +72,6 @@
         <value>1</value>
     </params>
     <reportType>Activities_Deluxe_NSP__c</reportType>
-    <roleHierarchyFilter>Sales_Administrator</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

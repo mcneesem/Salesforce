@@ -61,6 +61,9 @@
     <columns>
         <field>Lead$NSP_Lead_Stage__c</field>
     </columns>
+    <columns>
+        <field>Lead$NSP_Product_Interest__c</field>
+    </columns>
     <currency>USD</currency>
     <description>How many leads are assigned to me/my office/ my region etc.?</description>
     <filter>
@@ -80,11 +83,11 @@
             <value>Business Performance Advisor,Associate Business Performance Advisor</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Lead$NSP_PrimaryProduct__c</column>
+            <column>Lead$NSP_Product_Interest__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>WX,WA,WO</value>
+            <value>Payroll &amp; Human Capital Management(Workforce Acceleration),Full Service HR (Workforce Optimization)</value>
         </criteriaItems>
         <criteriaItems>
             <column>Lead$NSP_Sales_Office__c</column>
@@ -116,7 +119,7 @@
         <value>1</value>
     </params>
     <reportType>Leads_Deluxe_NSP__c</reportType>
-    <scope>team</scope>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>

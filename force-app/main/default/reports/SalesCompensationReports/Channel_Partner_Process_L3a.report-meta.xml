@@ -50,7 +50,7 @@
         <criteriaItems>
             <column>Opportunity$NSP_Partner__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
@@ -62,14 +62,13 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_Deluxe_NSPSplits__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Opportunity$NSP_Booked_Date__c</dateColumn>
-        <endDate>2022-05-03</endDate>
-        <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2022-01-01</startDate>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

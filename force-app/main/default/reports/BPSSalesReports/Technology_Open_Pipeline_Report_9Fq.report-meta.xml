@@ -51,21 +51,21 @@
         <criteriaItems>
             <column>Opportunity$StageName</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Discovery,Analysis,Proposal,Closing</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$Name</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notContain</operator>
             <value>zzz</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$NSP_PrimaryProduct__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Organizational Planning,Performance Management</value>
         </criteriaItems>
@@ -89,6 +89,7 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_w_or_wo_Activities_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
@@ -97,6 +98,6 @@
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>Opportunity$CloseDate</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

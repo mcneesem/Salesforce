@@ -41,7 +41,7 @@
         <field>Lead$Status</field>
     </columns>
     <columns>
-        <field>Lead$NSP_PrimaryProduct__c</field>
+        <field>Lead$NSP_Product_Interest__c</field>
     </columns>
     <currency>USD</currency>
     <description>How many technology leads are assigned?</description>
@@ -55,18 +55,18 @@
             <value>Working,Nurturing,Qualified</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Lead$NSP_PrimaryProduct__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>Organizational Planning,Performance Management</value>
-        </criteriaItems>
-        <criteriaItems>
             <column>Lead$Owner.UserRole</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Technology Sales Consultant</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead$NSP_Product_Interest__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Organizational Planning,Performance Management</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>
@@ -85,10 +85,8 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>Lead$NSP_PrimaryProduct__c</sortColumn>
-    <sortOrder>Desc</sortOrder>
     <timeFrameFilter>
         <dateColumn>Lead$CreatedDate</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

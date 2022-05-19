@@ -44,7 +44,7 @@
         <field>Lead$Status</field>
     </columns>
     <columns>
-        <field>Lead$NSP_PrimaryProduct__c</field>
+        <field>Lead$NSP_Product_Interest__c</field>
     </columns>
     <currency>USD</currency>
     <description>How many  leads are in the mid market queue for assignment?</description>
@@ -75,10 +75,8 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>Lead$NSP_PrimaryProduct__c</sortColumn>
-    <sortOrder>Desc</sortOrder>
     <timeFrameFilter>
         <dateColumn>Lead$CreatedDate</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

@@ -10,13 +10,10 @@
         <field>NSP_Employee_Split__c$NSP_Opportunity__c</field>
     </columns>
     <columns>
-        <field>NSP_Employee_Split__c$NSP_Product_Services_Sold__c</field>
+        <field>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_PrimaryProduct__c</field>
     </columns>
     <columns>
         <field>NSP_Employee_Split__c$CreatedDate</field>
-    </columns>
-    <columns>
-        <field>NSP_Employee_Split__c$NSP_Closed_Date__c</field>
     </columns>
     <columns>
         <field>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_Booked_Date__c</field>
@@ -36,22 +33,30 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>NSP_Employee_Split__c$NSP_Enrollment_Fee__c</field>
     </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>NSP_Employee_Split__c$NSP_Sales_Credit__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>NSP_Employee_Split__c$NSP_Number_of_Employees__c</field>
+    </columns>
     <currency>USD</currency>
     <description>WO Sales For NCS Analysis</description>
     <filter>
         <criteriaItems>
-            <column>NSP_Employee_Split__c$NSP_Closed_Date__c</column>
+            <column>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_Booked_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
-            <column>NSP_Employee_Split__c$NSP_Product_Services_Sold__c</column>
+            <column>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_PrimaryProduct__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Workforce Optimization</value>
+            <value>WO</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>
@@ -71,7 +76,7 @@
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>NSP_Employee_Split__c$NSP_Closed_Date__c</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <dateColumn>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_Booked_Date__c</dateColumn>
+        <interval>INTERVAL_CURPREV1</interval>
     </timeFrameFilter>
 </Report>
