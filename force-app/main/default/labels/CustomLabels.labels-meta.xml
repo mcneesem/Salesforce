@@ -1011,7 +1011,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Close Lost Criteria Roles</shortDescription>
-        <value>District Administrator,Regional Administrator,Business Performance Advisor</value>
+        <value>District Administrator,Regional Administrator,Business Performance Advisor,Retirement Sales Consultant,BPS Administrator,Technology Sales,Customer Success Team,Insurance Sales Manager,Insurance Sales</value>
     </labels>
     <labels>
         <fullName>NSP_AuthorizedPurchaseBilling</fullName>
