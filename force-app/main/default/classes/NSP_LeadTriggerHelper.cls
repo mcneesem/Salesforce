@@ -22,6 +22,7 @@ public class NSP_LeadTriggerHelper {
     private static final Id NEW_LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(NEW_LEAD_RT).getRecordTypeId();
     private static final Id LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(LEAD_RT).getRecordTypeId();
     private static final string SYS_ADMIN = 'System Administrator';
+    private static final string INTEGRATION_PROFILE = 'Integration User';
     // Added as part of DF-01009
     private static final string REFERRAL_RECORDTYPE = 'Referral';
     private static final Id REFERRAL_RECORDTYPE_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(REFERRAL_RECORDTYPE).getRecordTypeId();
@@ -269,7 +270,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         for (Id leadId: leadNewMap.keySet()) {
             if (trigger.isupdate && trigger.isbefore) {
                 //Current logged in user not equal to Owner and logged in user profile not sys admin 
-                if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN) {
+                if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
                     //Check logged in user role not in Mid Market/BPS 
                     if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
                         //Lead owner not a queue check
@@ -296,7 +297,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             //restrict lead edit access/change owner if logged in user not part of lead owner salesoffice group
             for (Id leadId: leadNewMap.keySet()) {
                 if (trigger.isupdate && trigger.isbefore) {
-                    if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN) {
+                    if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
                         if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
                             if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
                                 if (groupMemberList.isEmpty()) {
