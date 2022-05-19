@@ -115,6 +115,20 @@
             <stringValue>Yes</stringValue>
         </value>
     </choices>
+    <constants>
+        <name>conBPSAdministrator</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BPS Administrator</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>conBPSSalesManager</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BPS Sales Manager</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Add_Another</name>
         <label>Add Another</label>
@@ -191,10 +205,31 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varIsBPA</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conBPSSalesManager</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conBPSAdministrator</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetOpptyteamMembers</targetReference>
             </connector>
-            <label>Is SEM or NCS</label>
+            <label>Is SEM or NCS or BPA</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -521,6 +556,10 @@
         </connector>
         <flowName>NSP_User_Perm_Check</flowName>
         <outputAssignments>
+            <assignToReference>varIsBPA</assignToReference>
+            <name>varIsBPA</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>varIsNCS</assignToReference>
             <name>varIsNCS</name>
         </outputAssignments>
@@ -535,6 +574,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varIsBPA</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>varIsNCS</name>

@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>Opportunity.Add_Team_Member</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
@@ -21,9 +21,14 @@
                                     <rightValue>Sales Operations</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.UserRole.Name}</leftValue>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
                                     <operator>CONTAINS</operator>
-                                    <rightValue>BPS Administrator, BPS Sales Manager, Sales Engineer Manager</rightValue>
+                                    <rightValue>BPS_Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>BPS_Sales_Manager</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
