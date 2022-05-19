@@ -479,13 +479,6 @@
         <value>AllState,Raymond James,UFG,VentureX</value>
     </labels>
     <labels>
-        <fullName>NSP_Salepprwk_Email</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP_Salepprwk_Email</shortDescription>
-        <value>salepprwk@insperity.com.invalid</value>
-    </labels>
-    <labels>
         <fullName>NSP_New_Client_Sales_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1245,5 +1238,47 @@
         <protected>false</protected>
         <shortDescription>Stamping CPM User, if partner Account is created by BPC</shortDescription>
         <value>0054x0000057OUa</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Core_And_MidMarket_Hierarchy_Role</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Core And MidMarket Hierarchy Role</shortDescription>
+        <value>Business Performance Advisor,District Administrator,Regional Manager,Regional VP,District Manager,Core Sales,Associate Business Performance Advisors,MidMarket Sales Leader,MidMarket Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustomerSuccessTeam_And_BPSAdministrator_Role</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP CustomerSuccessTeam And BPSAdministrator Role</shortDescription>
+        <value>Customer Success Team,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Other_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Other Primary Product</shortDescription>
+        <value>Employment Screening,Expense Management,Insurance Services,Learning &amp; Development,Recruiting Services,HR Consulting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OtherthanWorkforce_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP OtherthanWorkforce Primary Product</shortDescription>
+        <value>Applicant Tracking, Organizational Planning, Performance Management, Retirement Services, Time &amp; Attendance</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Salepprwk_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Salepprwk_Email</shortDescription>
+        <value>qa_pwc@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Workforce_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Workforce Primary Product</shortDescription>
+        <value>WX,WA,WO,WS</value>
     </labels>
 </CustomLabels>
