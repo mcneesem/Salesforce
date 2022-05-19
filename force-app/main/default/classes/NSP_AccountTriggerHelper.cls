@@ -20,19 +20,29 @@ public class NSP_AccountTriggerHelper {
         try{
             List<Account> partnerAccountList = new List<Account>();
             Set<Id> userIdsSet = new Set<Id>();
-            Set<String> stateCodeSet = new Set<String>();
-            List<Account> integrationAccountList = new List<Account>(); //Accounts created from External Site
+             /* Added as part of DF-01906 */
+             List<Account> bpaAccountList = new List<Account>();
+             Set<string> salesOfficeSet = new Set<String>();
+             User userDetails =[SELECT Id, Name, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+             /* Added as part of DF-01906 */
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             for(Account accountObj : newList) {
-                //Partner Accounts created from Partner Form. As part of DF-01476, when Partner Account is created from Partner Form, Loyalty Advisor 
-                // CPM will populate based on Zipcode
-                if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID 
-                && String.isNotBlank(accountObj.BillingState)){
-                    accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION; // Added as part of DF-01154
-                    integrationAccountList.add(accountObj);
-                    stateCodeSet.add(accountObj.BillingState);
-                }
                 
+                // Added as part of DF-01906 to populate CPM and LA based on Sales office of loggedin BPA
+                if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID){
+                    accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION;
+                        }
+                   if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID 
+                      && userDetails.UserRole.Name == NSP_SalesConstants.BPA_User && String.isNotBlank(userDetails.NSP_Sales_Office__c)){
+                          // Added as part of DF-01154
+                          bpaAccountList.add(accountObj);
+                          salesOfficeSet.add(userDetails.NSP_Sales_Office__c);
+                          
+                      }
+                   if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID 
+                      && userDetails.UserRole.Name == NSP_SalesConstants.BPC_USER){
+                       accountObj.NSP_Channel_Program_Manager__c = system.label.NSP_CPM_USER;
+                   }
                 //create list to populate docusign template id for merge on demand templates
                 if(!String.isBlank(accountObj.NSP_Template_Selection__c)){
                     acctListToStampDocusignTemplateId.add(accountObj);
@@ -46,9 +56,9 @@ public class NSP_AccountTriggerHelper {
                 } 
             }
             
-            if(! integrationAccountList.isEmpty()){
-                setCPMAndLAForIntegrationAccounts(integrationAccountList,stateCodeSet);
-            }
+            if(!bpaAccountList.isEmpty()){
+                setChannelPartnerAndLoyaltyAdvisor(bpaAccountList, salesOfficeSet);
+           }
             //call method to populate template id
             if(acctListToStampDocusignTemplateId.size() > 0){
                 setDummyUsers(acctListToStampDocusignTemplateId);
@@ -75,8 +85,6 @@ public class NSP_AccountTriggerHelper {
             List<Account> accountownerChangedList = new List<Account>();
             List<Account> partnerAccountList = new List<Account>();
             Set<Id> userIdsSet = new Set<Id>();
-            Set<String> stateCodeSet = new Set<String>();
-            List<Account> integrationAccountList = new List<Account>(); //Accounts created from External Site
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             
             //Iterating over the new Account map
@@ -92,15 +100,6 @@ public class NSP_AccountTriggerHelper {
                 
                 if(accountNewMap.get(accountId).Ownerid != accountOldMap.get(accountId).Ownerid){
                     accountownerChangedList.add(accountNewMap.get(accountId));
-                                        
-                    //Partner Accounts created from Partner Form. As part of DF-01476, when Partner Account is created from Partner Form, Loyalty Advisor 
-                    // CPM will populate based on state
-                    if(accountNewMap.get(accountId).RecordTypeId==PARTNER_RECORDTYPE_ID 
-                       && String.isNotBlank(accountNewMap.get(accountId).BillingStateCode)
-                       && accountNewMap.get(accountId).BillingStateCode != accountOldMap.get(accountId).BillingStateCode){
-                           integrationAccountList.add(accountNewMap.get(accountId));
-                           stateCodeSet.add(accountNewMap.get(accountId).BillingStateCode);
-                       }
                 }
 
                 if(accountNewMap.get(accountId).NumberOfEmployees != accountOldMap.get(accountId).NumberOfEmployees){
@@ -127,9 +126,6 @@ public class NSP_AccountTriggerHelper {
             }
             if(accountownerChangedList.size() > 0){
                 setAccountStageWhenOwnerChanged(accountownerChangedList);
-            }
-            if(! integrationAccountList.isEmpty()){
-                setCPMAndLAForIntegrationAccounts(integrationAccountList,stateCodeSet);
             }
             //call updateTriggerclass for metadata check ad update integration sync field on account
             Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
@@ -220,11 +216,12 @@ public class NSP_AccountTriggerHelper {
             }
             
             //for tracking history
+            if(!test.isRunningTest()){
             NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
             If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
                 System.enqueueJob(objectFieldHistoryHelper);  
             }
-
+        }
             // Send the list to publish event bus
             if(updateAccountList.size() > 0){
                 /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
@@ -344,34 +341,6 @@ public class NSP_AccountTriggerHelper {
         // Account records update.
         Update successAccountList;
     }
-        
-     /*
-     * Description: This method accepts all Partner Accounts owned by Integration Users(created from External Site)
-     * and sets the Channel Program Manager(CPM) and Loyalty Advisor(LA) based on
-     * Account's State. CPM and LA are fetched from State Assignment Object records
-     * @Param : List of New Accounts: accountsList and stateCodeSet
-     * @return type: void 
-*/
-    public static void setCPMAndLAForIntegrationAccounts(List<Account> accountsList, Set<String> stateCodeSet) {
-        Map<String, NSP_State_Assignment__c> stateAssignmentsMap = new Map<String, NSP_State_Assignment__c>();
-        
-        
-        List<NSP_State_Assignment__c> stateAssignments = [SELECT Id,Name, NSP_Channel_Program_Manager__c,NSP_State__c,NSP_Loyalty_Advisor__c,
-                                                          NSP_Channel_Program_Manager__r.IsActive
-                                                          FROM NSP_State_Assignment__c WHERE NSP_State__c IN :stateCodeSet];        
-        
-        for(NSP_State_Assignment__c stateAssignment : stateAssignments){
-            stateAssignmentsMap.put(stateAssignment.NSP_State__c, stateAssignment);
-        }
-        
-        for(Account accountRecord : accountsList){
-            if(stateAssignmentsMap.containsKey(accountRecord.BillingState)){
-                NSP_State_Assignment__c stateAssignment = stateAssignmentsMap.get(accountRecord.BillingState);
-                accountRecord.NSP_Channel_Program_Manager__c = stateAssignment.NSP_Channel_Program_Manager__c;
-                accountRecord.NSP_Loyalty_Advisor__c = stateAssignment.NSP_Loyalty_Advisor__c;
-            }
-        }
-    }  
 
         /*
      * Description: Method takes all Account records WHERE partner lifecycle is 
@@ -421,6 +390,48 @@ public static void handleTaskForPartnerContracts(List<Account> accountList){
         }
     }
 }
+
+  /*
+     * Description: This method is used to populate CPM and LA on Account on insertion based on BPA sales office group
+     * @Param : List of New Accounts: accountsList and salesOfficeSet
+     * @return type: void 
+     * Defect: DF-01906
+*/
+public static void setChannelPartnerAndLoyaltyAdvisor(List<Account> accList, Set<String> salesOfficeSet) {
+    Map<String, string> grpIdGrpMemMap = new Map<String, string>();
+    Map<String, string> grpNameCPMUserMap = new Map<String, string>();
+    Map<String, string> grpNameLAUserMap = new Map<String, string>();
+    try{
+          User userDetails =[SELECT Id, Name, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+        //mapping userId and group Name
+        for(GroupMember gMem : [SELECT groupId, group.Name, UserOrGroupId FROM GroupMember WHERE group.Name IN: salesOfficeSet]){
+            if(String.valueOf(gMem.UserOrGroupId).startsWith('005')){   
+                grpIdGrpMemMap.put(gMem.UserOrGroupId, gMem.group.Name);     
+            }
+        }
+        if(!grpIdGrpMemMap.isEmpty()){
+            //mapping  group Name and userId
+            for(User getUser : [SELECT Id, UserRoleId, userRole.Name FROM User 
+                                WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Manager') AND Id IN: grpIdGrpMemMap.keySet()]){
+                                    if(getUser.userRole.Name == 'Loyalty Advisor'){
+                                        grpNameLAUserMap.put(grpIdGrpMemMap.get(getUser.Id), getUser.Id);        
+                                    }else if(getUser.userRole.Name == 'Channel Program Manager'){
+                                        grpNameCPMUserMap.put(grpIdGrpMemMap.get(getUser.Id), getUser.Id);
+                                    }
+                                } 
+            for(Account ac : accList){
+                if(!grpNameLAUserMap.isEmpty() && grpNameLAUserMap.containsKey(userDetails.NSP_Sales_Office__c)){
+                    ac.NSP_Loyalty_Advisor__c = grpNameLAUserMap.get(userDetails.NSP_Sales_Office__c);      
+                }
+               if(!grpNameCPMUserMap.isEmpty() && grpNameCPMUserMap.containsKey(userDetails.NSP_Sales_Office__c)){
+                    ac.NSP_Channel_Program_Manager__c = grpNameCPMUserMap.get(userDetails.NSP_Sales_Office__c);      
+                }
+            }         
+        }
+    }catch(Exception ex){
+        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'setChannelPartnerAndLoyaltyAdvisor',ex.getMessage());
+    }
+} 
 
     /**
     * Based on the number of employees, Account segmentation field is populated.

@@ -47,9 +47,13 @@ public class NSP_OpportunityTriggerHelper {
                 accountIdSet.add(opportunityObject.Accountid); 
                 
                 //Checking if the product type on opty is WO/WX and its a parent opportunity
+                // Added as part of DF-01869 handled primary product for WO/WS or WA/WX
                 if(String.isnotBlank(opportunityObject.NSP_PrimaryProduct__c) &&
-                   (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) || opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX))
-                   && String.isBlank(opportunityObject.NSP_Parent_Opportunity__c)){                       
+                (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
+                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ||
+                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WA) ||
+                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX))
+                && String.isBlank(opportunityObject.NSP_Parent_Opportunity__c)){                       
                        opportunityWoWxList.add(opportunityObject);
                    }
             }
@@ -362,7 +366,9 @@ public class NSP_OpportunityTriggerHelper {
                 closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
                }
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
-            if(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO 
+            // Added as part of DF-01869 handled primary product for WO/WS or WA/WX
+            if((opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
+               opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WS) 
                && (String.isNotBlank(opportunityNewMap.get(opportunityId).NSP_Contribution_Level__c) 
                    && String.isNotBlank(opportunityNewMap.get(opportunityId).NSP_Frequency_of_Distribution__c))
                &&(String.isBlank(opportunityOldMap.get(opportunityId).NSP_Contribution_Level__c)
@@ -438,9 +444,16 @@ public class NSP_OpportunityTriggerHelper {
         for(Opportunity opportunityRecord : opportunityList){
             
             if(opportunityRecord.NSP_Closing_Appointment__c != null
-               && (((opportunityRecord.NSP_PrimaryProduct__c==NSP_SalesConstants.WO || opportunityRecord.NSP_PrimaryProduct__c==NSP_SalesConstants.WS) && opportunityRecord.NSP_Signed_CSA__c) 
-                   || (opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WX && opportunityRecord.NSP_Signed_Delivery_Order__c) 
-                   || (opportunityRecord.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && opportunityRecord.NSP_PrimaryProduct__c!=NSP_SalesConstants.WS && opportunityRecord.NSP_PrimaryProduct__c!=NSP_SalesConstants.WX))){
+            && (((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
+                  opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) && 
+                 opportunityRecord.NSP_Signed_CSA__c) 
+                || ((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WX ||
+                     opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WA) && 
+                    opportunityRecord.NSP_Signed_Delivery_Order__c) 
+                || (opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && 
+                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WS && 
+                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WX &&
+                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WA))){
                        opportunityRecord.StageName = NSP_SalesConstants.CLOSING_STAGE;
                    }
             

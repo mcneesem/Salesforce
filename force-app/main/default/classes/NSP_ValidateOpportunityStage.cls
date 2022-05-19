@@ -73,7 +73,9 @@ public class NSP_ValidateOpportunityStage {
                     
                     //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
                     //Perform WO
-                    if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO){
+                    // Added WS condition as part of DF-01869
+                    if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
+                    opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS){
                         
                         String scannedTask='';
                         if(taskList != null){
@@ -111,7 +113,8 @@ public class NSP_ValidateOpportunityStage {
                         opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                     }
                     
-                }else if(opp.NSP_PrimaryProduct__c==NSP_SalesConstants.WO || (opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && opp.NSP_Order_Generated__c)){
+                }else if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) || 
+                ((opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS) && opp.NSP_Order_Generated__c)){
                     if(!opp.NSP_Closing_Appointment__c){
                         opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);  
                     }
@@ -183,7 +186,7 @@ public class NSP_ValidateOpportunityStage {
      public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
         try{
           
-            if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO){
+            if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
                    if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                        if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                            if(opp.SBQQ__PrimaryQuote__c != null){

@@ -30,14 +30,26 @@ public class NSP_OpportunityTriggerHelperFunctions {
             //stamping Mid-Market sales team email on opportunity record
             opportunityObject.NSP_Mid_Market_Sales_Email__c = Label.NSP_Mid_Market_Sales_Email; //'midmarketleads@insperity.com'
             //stamping new client sales email on opportunity record.
-            opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_New_Client_Sales_Email;
+            //DF-01858
+            //opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_New_Client_Sales_Email;
              /*Added if condition as part of DF-01369 */
             if(trigger.isBefore && trigger.isInsert){
             opportunityObject.Name = opportunityObject.NSP_Account_Name__c + ' - ' + DateTime.now().format();
             }
             //STY-01818 - Setting Client for Life
             opportunityObject.NSP_Client_For_Life__c = setClientForLifeOnOppty(opportunityObject.NSP_Client_For_Life__c, opportunityObject.NSP_PrimaryProduct__c);
-
+            /*DF-01858-Start -NCS Notification trigger based on primary product & owner role*/
+            if(opportunityObject.NSP_Opportunity_Owner_Role__c!=NULL && opportunityObject.NSP_PrimaryProduct__c!=NULL){
+                if(!opportunityObject.NSP_Opportunity_Owner_Role__c.contains(System.label.NSP_CustomerSuccessTeam_And_BPSAdministrator_Role) && opportunityObject.NSP_PrimaryProduct__c.contains(System.label.NSP_Workforce_Primary_Product)){
+                    //stamping new client sales email on opportunity record.
+                    opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_New_Client_Sales_Email;
+                }else if(!opportunityObject.NSP_Opportunity_Owner_Role__c.contains(System.label.NSP_CustomerSuccessTeam_And_BPSAdministrator_Role) && opportunityObject.NSP_PrimaryProduct__c.contains(System.label.NSP_OtherthanWorkforce_Primary_Product)){
+                    opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_Salepprwk_Email;    
+                }else if(opportunityObject.NSP_Opportunity_Owner_Role__c.contains(System.label.NSP_Core_And_MidMarket_Hierarchy_Role) && opportunityObject.NSP_PrimaryProduct__c.contains(System.label.NSP_Other_Primary_Product)){
+                    opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_Salepprwk_Email;     
+                }
+            }
+            /*DF-01858-End*/
             //If backout fields are not blank checking backout check box to true
             if (opportunityObject.NSP_BackOutDate__c != null && String.isnotBlank(opportunityObject.NSP_BackOutReason__c) && String.isnotBlank(opportunityObject.NSP_BackOutRequestor__c)) {
                 opportunityObject.NSP_Back_Out__c = TRUE;
@@ -120,10 +132,10 @@ public class NSP_OpportunityTriggerHelperFunctions {
     public void stampWoWxEmailOnOpprtunity(List < Opportunity > opportunityList) {
         for (Opportunity opportunityObject: opportunityList) {
             //if product type is WO on opportunity the WO email DL
-            if (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO)) {
+            if (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) || opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)) {
                 opportunityObject.NSP_WO_WX_Results__c = Label.NSP_WO_Email_DL; //'results@insperity.com';
                 //if product type is WX on opportunity the WX email DL
-            } else if (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX)) {
+            } else if (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX) || opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WA)) {
                 opportunityObject.NSP_WO_WX_Results__c = Label.NSP_WX_Email_DL; //'WXresults@insperity.com';
             }
         }

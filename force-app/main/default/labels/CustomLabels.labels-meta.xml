@@ -479,6 +479,13 @@
         <value>AllState,Raymond James,UFG,VentureX</value>
     </labels>
     <labels>
+        <fullName>NSP_Salepprwk_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Salepprwk_Email</shortDescription>
+        <value>salepprwk@insperity.com.invalid</value>
+    </labels>
+    <labels>
         <fullName>NSP_New_Client_Sales_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1231,5 +1238,12 @@
         <protected>false</protected>
         <shortDescription>Account Envelop Configuration</shortDescription>
         <value>a8N4x0000000kgpEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CPM_USER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stamping CPM User, if partner Account is created by BPC</shortDescription>
+        <value>0054x0000057OUa</value>
     </labels>
 </CustomLabels>

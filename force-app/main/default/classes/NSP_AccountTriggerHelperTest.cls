@@ -7,6 +7,13 @@
 @isTest(SeeAllData=false)
 public class NSP_AccountTriggerHelperTest {
 
+       /***********************************************************************************************
+ Variables
+ ********************************************************************************************/
+   private static final String emailencodingkey = 'UTF-8';
+   private static final String languagekey = 'en_US'; 
+   private static final String timezonesidkey = 'America/Los_Angeles';   
+   /***********************************************************************************************/    
     public static final String REFPROG3 = 'referralprogramiii';
     public static final String ACCOUNTTEST1 = 'AccountTest1';
     public static final String AccountTestData1= 'AccountTestData1';
@@ -18,10 +25,15 @@ public class NSP_AccountTriggerHelperTest {
     @testSetup
     static void testData() {
 
+          UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
+        UserRole CPMrole = [SELECT Id FROM UserRole WHERE Name='Channel Program Manager'];
+         UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
+         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+ 	List<User> users = new List<User>();
         //Creating User
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Integration User'][0].Id,
-            LastName = LASTNAME,
+            LastName = 'TestClassUser',
             Email = 'testuser@test.com',
             Username = 'testuser@test.com' + System.currentTimeMillis(),
             CompanyName = 'TEST',
@@ -29,15 +41,39 @@ public class NSP_AccountTriggerHelperTest {
             Alias = 'alias',
             TimeZoneSidKey = 'America/Los_Angeles',
             EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = EN_US,
-            LocaleSidKey = EN_US,
-            NSP_Sales_Office__c = '1401'
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
         );
-        insert userRecord;
+        users.add(userRecord);
+       
+        User BpaUser = new User(alias = 'jsmit', email='jsmith@acmetestusr.com', 
+                                emailencodingkey=emailencodingkey, lastname='Smith', 
+                                languagelocalekey=languagekey, 
+                                localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
+                                timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
+                                username='insperitytestadminuser@insperity.com.testUsr');
+         users.add(BpaUser);
+        User cpmUser = new User(alias = 'jBPA', email='jsmithyBPA@acmetest.com', 
+                                 emailencodingkey=emailencodingkey, lastname='Smith', 
+                                 languagelocalekey=languagekey, 
+                                 localesidkey=languagekey, profileid = profileobj.Id, userroleid = CPMrole.Id,
+                                 timezonesidkey=timezonesidkey, NSP_Sales_Office__c='601' ,
+                                 username='insperitytestadminuser@insperity.com.testBPA');
+        users.add(cpmUser);
+        // Adding Sales Leader User
+        User lAUser = new User(alias = 'johnth', email='johnsmith@acme.com', 
+                                    emailencodingkey=emailencodingkey, lastname='Smith', 
+                                    languagelocalekey=languagekey, 
+                                    localesidkey=languagekey, profileid = profileobj.Id, userroleid = LArole.Id,
+                                    timezonesidkey=timezonesidkey, 
+                                    username='insperitytestadminuser@insperity.com.test2');
+        users.add(lAUser);
+        
+        
         User userRecord1 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
             LastName = 'TestClassUser1',
-            Email = 'testuser@test.com',
+            Email = 'testuser@test1.com',
             Username = 'testuser1@test.com' + System.currentTimeMillis(),
             CompanyName = 'TEST',
             Title = 'title',
@@ -48,17 +84,39 @@ public class NSP_AccountTriggerHelperTest {
             LocaleSidKey = EN_US,
             NSP_Sales_Office__c = '1401'
         );
-        insert userRecord1;
-        List<Account>  accountList = New List<Account>();
-
-        for(integer count = 0; count < 5; count++) {
-            accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
-                            NSP_Delete_Account_Teams__c = system.now()));
-        }
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
-        accountList[0].ownerId = userRecord.Id;
-        insert accountList;
+        users.add(userRecord1);
+        database.insert(users);
+         Group gp1= new Group();
+        gp1.Name='0302 Phoenix 2';
+            Insert gp1;
+          GroupMember cpaGm = new GroupMember (UserOrGroupId = cpmUser.Id, GroupId = gp1.Id);
+        GroupMember lAGm = new GroupMember (UserOrGroupId = lAUser.Id, GroupId = gp1.Id);
+        List<GroupMember> groupMemberList= new List<GroupMember>{cpaGm,lAGm};
+            // Inserting Group Members
+            Insert groupMemberList;
+      
     }
+     /***********************************************************************************************
+* MethodName: setChannelPartnerAndLoyaltyAdvisor
+* Description : This method is used to populate CPM and LA on Account on insertion based on BPA sales office group
+* ********************************************************************************************/
+ @isTest
+    static void setChannelPartnerAndLoyaltyAdvisorTest() {
+        User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmith@acmetestusr.com' Limit 1];
+        System.runAs (BpaUser) {
+            //Account creation
+            Test.startTest();
+        Account accoutObject = new Account();
+        Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        accoutObject.Name = ACCOUNTTEST1;
+        accoutObject.recordTypeId=partnerRecordTypeId;
+        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        insert accoutObject;
+            Test.stopTest();
+            System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
+        }
+    }
+    
     /**
      * Checks the Account After Insert Trigger
      * @param N/A. 
@@ -123,13 +181,19 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testAccountUpdate() {
-        
-        List<Account> accountList = [Select Id ,Name, NSP_Ready_for_Integration_Sync__c ,NSP_Account_Status__c,NSP_Template_Selection__c 
-										FROM Account WHERE Name Like '%AccountTestData%' ];
+        List<Account>  accountList = New List<Account>();
+         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@test1.com' Limit 1];
+        for(integer count = 0; count < 5; count++) {
+            accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
+                                        NSP_Delete_Account_Teams__c = system.now()));
+        }
+        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].ownerId = salesManagerUser.Id;
+        insert accountList;
         
        Set<Id> accIdSet = new Set<Id>(); // Added as part of Test class fix
        Map<Id, Account> accountMapOld = new Map<Id, Account>();
-       
+        Map<Id, Account> accountMapNew = new Map<Id, Account>();
         for(Account account : accountList) {
             accIdSet.add(account.Id);
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
@@ -137,25 +201,27 @@ public class NSP_AccountTriggerHelperTest {
             account.NSP_Template_Selection__c = 'referralProgramAF-I';
             accountMapOld.put(account.Id, account);
         }
-        Account account = [SELECT Id, Name FROM Account WHERE Name =:AccountTestData1 LIMIT 1];
-        system.assertEquals(AccountTestData1, account.Name);
+       
         User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
         // Start Test
-            List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c From Account WHERE Id =: accountMapOld.keySet()];
+            List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c From Account WHERE Id =: accountMapOld.keySet()];
             for(Account accountRecord : accountUpdateList) {
                 accountRecord.NSP_Delete_Account_Teams__c = system.now(); // Added as part of Test class fix
                 accountRecord.NSP_Ready_for_Integration_Sync__c = TRUE;
                 accountRecord.ownerId = userRecord1.Id;
                 accountRecord.NSP_Stage__c = 'Available';
+                 accountMapNew.put(accountRecord.Id, accountRecord);
             }
+         Update accountUpdateList;
         Test.startTest();
-            Update accountUpdateList;
+           
         NSP_AccountTriggerHelper helper = new NSP_AccountTriggerHelper();
         helper.setAccountStageWhenOwnerChanged(accountUpdateList);
         helper.updatePublishAccount(accIdSet);
-        
+         helper.afterUpdateDirector(accountMapNew, accountMapOld);
+         system.assertEquals(salesManagerUser.Id, accountList[0].ownerId);
         Test.stopTest();
-         system.assertEquals(AccountTestData1, account.Name);
+ 
     }
 
     /**
