@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Sales_Compensation_EFP_Read_Edit</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Read access to Sales Compensation on Enrollment Fee Payment records</description>
+        <label>Sales Compensation- EFP Read_Edit</label>
+        <sharedTo>
+            <group>NSP_Sales_Compensation</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>
