@@ -258,15 +258,15 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Enrollment_Fee_Payment_1__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Enrollment_Fee_Payment_2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Enrollment_Fee_Payment_3__c</field>
             </layoutItems>
         </layoutColumns>
@@ -280,7 +280,7 @@
                 <field>NSP_InsperityFee__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_WaivedInsperityFee__c</field>
             </layoutItems>
             <layoutItems>
@@ -303,15 +303,15 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Enrollment_Fee_Payment_4__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Enrollment_Fee_Payment_5__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Enrollment_Fee_Payment_6__c</field>
             </layoutItems>
         </layoutColumns>
@@ -324,23 +324,23 @@
         <label>Deal Detail</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Back_Out__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_BackOutDate__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_BackOutReason__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_BackOutRequestor__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Back_Out_By__c</field>
             </layoutItems>
             <layoutItems>
@@ -628,11 +628,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Clone</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>1</sortOrder>
@@ -671,6 +666,16 @@
             <actionName>Opportunity.Financial_Analysis_Tool</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -807,11 +812,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>NSP_Team_Member__c</fields>
-        <fields>NSP_Percent_Split__c</fields>
-        <fields>NSP_Number_of_Employees__c</fields>
-        <fields>NSP_Office_Assignment__c</fields>
-        <fields>NSP_Enrollment_Fee__c</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -829,7 +829,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4x000005h6Yi</masterLabel>
+        <masterLabel>00h2D000003VMPm</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
