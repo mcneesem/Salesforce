@@ -668,11 +668,6 @@
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -817,9 +812,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>NSP_Payment_Amount__c</fields>
-        <fields>NSP_Payment_Date__c</fields>
-        <fields>NSP_Payment_Status__c</fields>
         <fields>NSP_Payment_Method__c</fields>
+        <fields>NSP_Payment_Date__c</fields>
+        <fields>NSP_Payment_Cleared_Date__c</fields>
+        <fields>NSP_Payment_Status__c</fields>
         <relatedList>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
