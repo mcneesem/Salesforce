@@ -841,6 +841,85 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_MidMarketNationalAccount__c</picklist>
+        <values>
+            <fullName>AAA - The Auto Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allstate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ameriprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Best Western Hotels %26 Resorts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Charles Schwab</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commonwealth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Services Institute %28FSI%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Boat Club</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gradient Financial Group%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independent Agency%2F Allstate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PREVEER %28UFG franchise%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quantum Assurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Raymond James Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United Franchise Group %28UFG%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venture X Members %28tenants%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VentureX Locations %28UFG franchise%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Worldcom PR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Nonprofit__c</picklist>
         <values>
             <fullName>Match</fullName>
