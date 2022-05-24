@@ -105,6 +105,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Parent_Opportunity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_MidMarketNationalAccount__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
