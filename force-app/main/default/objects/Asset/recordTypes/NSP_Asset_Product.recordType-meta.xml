@@ -720,23 +720,27 @@
     <picklistValues>
         <picklist>Status</picklist>
         <values>
-            <fullName>Installed</fullName>
+            <fullName>Active</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Obsolete</fullName>
+            <fullName>On Demand</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Purchased</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Registered</fullName>
+            <fullName>Returned</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Shipped</fullName>
+            <fullName>Terminated</fullName>
             <default>false</default>
         </values>
     </picklistValues>
