@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>NCS_Notify</name>
+        <label>NCS Notify</label>
+        <locationX>230</locationX>
+        <locationY>835</locationY>
+        <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>NCS_Notify_0</name>
+        <label>NCS Notify</label>
+        <locationX>781</locationX>
+        <locationY>785</locationY>
+        <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>54.0</apiVersion>
     <constants>
         <name>conABPA</name>
@@ -83,9 +113,6 @@
         <label>Check Owner Role</label>
         <locationX>805</locationX>
         <locationY>371</locationY>
-        <defaultConnector>
-            <targetReference>Update_New_Client_Sales_Email_to_Blank</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Blank</defaultConnectorLabel>
         <rules>
             <name>Workforce_Product</name>
@@ -329,6 +356,35 @@
             <label>CoreAndMidMarketHierarchy</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>OwnerIDNullCheck</name>
+        <label>OwnerIDNullCheck</label>
+        <locationX>363</locationX>
+        <locationY>268</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Notnull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner.UserRoleId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Owner_Role</targetReference>
+            </connector>
+            <label>Notnull</label>
+        </rules>
+    </decisions>
     <interviewLabel>closingOpptyNotifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ClosingOpportunityNotifications</label>
     <processMetadataValues>
@@ -355,6 +411,9 @@
         <label>Update New Client Sales Email2</label>
         <locationX>762</locationX>
         <locationY>617</locationY>
+        <connector>
+            <targetReference>NCS_Notify_0</targetReference>
+        </connector>
         <inputAssignments>
             <field>NSP_New_Client_Sales_Email__c</field>
             <value>
@@ -364,23 +423,13 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_New_Client_Sales_Email_to_Blank</name>
-        <label>Update New Client Sales Email to Blank</label>
-        <locationX>948</locationX>
-        <locationY>546</locationY>
-        <inputAssignments>
-            <field>NSP_New_Client_Sales_Email__c</field>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Oppty_New_Client_Sales_Email</name>
         <label>Update Oppty New Client Sales Email</label>
         <locationX>271</locationX>
         <locationY>611</locationY>
+        <connector>
+            <targetReference>NCS_Notify</targetReference>
+        </connector>
         <inputAssignments>
             <field>NSP_New_Client_Sales_Email__c</field>
             <value>
@@ -393,7 +442,7 @@
         <locationX>672</locationX>
         <locationY>10</locationY>
         <connector>
-            <targetReference>Check_Owner_Role</targetReference>
+            <targetReference>OwnerIDNullCheck</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
