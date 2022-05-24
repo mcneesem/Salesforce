@@ -11913,7 +11913,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Quote_Owner__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
