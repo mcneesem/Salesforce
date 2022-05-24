@@ -69,6 +69,14 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Billed_EE_Count_Last_Month__c</field>
             </layoutItems>
+             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_AIMS_First_Pay_Date__c</field>
+            </layoutItems>
+             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_AIMS_Original_First_Pay_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
