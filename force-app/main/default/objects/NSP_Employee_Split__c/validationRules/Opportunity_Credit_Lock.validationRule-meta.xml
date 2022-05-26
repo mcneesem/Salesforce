@@ -3,7 +3,7 @@
         <fullName>Opportunity_Credit_Lock</fullName>
         <active>true</active>
         <description>Opportunity credit is locked when opportunity is lock.</description>
-        <errorConditionFormula>NSP_Opportunity__r.NSP_Lock_Opportunity__c = TRUE &amp;&amp;
+        <errorConditionFormula>ISPICKVAL(NSP_Opportunity__r.StageName, "Closed Won") &amp;&amp;
 $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c!=TRUE</errorConditionFormula>
         <errorMessage>Once Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team</errorMessage>
 </ValidationRule>
