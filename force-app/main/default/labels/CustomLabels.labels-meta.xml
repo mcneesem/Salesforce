@@ -902,11 +902,11 @@
     </labels>
     <labels>
         <fullName>NSP_ExitCriteriaProductException</fullName>
-        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services</categories>
+        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services, Expense Management</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_ExitCriteriaProductException</shortDescription>
-        <value>Employment Screening,Insurance Services,Retirement Services,Learning &amp; Development,HR Consulting Services</value>
+        <value>Employment Screening,Insurance Services,Retirement Services,Learning &amp; Development,HR Consulting Services,Expense Management</value>
     </labels>
     <labels>
         <fullName>NSP_NonOwnerBasedCriteriaProducts</fullName>
