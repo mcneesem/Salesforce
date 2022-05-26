@@ -29,6 +29,7 @@ public class NSP_AccountTriggerHelperTest {
         UserRole CPMrole = [SELECT Id FROM UserRole WHERE Name='Channel Program Manager'];
          UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
          Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+         UserRole DARole = [SELECT Id FROM UserRole WHERE Name = 'District Administrator'];
  	List<User> users = new List<User>();
         //Creating User
         User userRecord = new User(
@@ -69,6 +70,13 @@ public class NSP_AccountTriggerHelperTest {
                                     username='insperitytestadminuser@insperity.com.test2');
         users.add(lAUser);
         
+        User dAUser = new User(alias = 'jsmit', email='jsmithda@acmetestusr.com', 
+        emailencodingkey=emailencodingkey, lastname='Smithda', 
+        languagelocalekey=languagekey, 
+        localesidkey=languagekey, profileid = profileobj.Id, userroleid = DARole.Id,
+        timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
+        username='insperitytestadminuserda@insperity.com.testUsr');
+        users.add(dAUser);
         
         User userRecord1 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
@@ -91,7 +99,8 @@ public class NSP_AccountTriggerHelperTest {
             Insert gp1;
           GroupMember cpaGm = new GroupMember (UserOrGroupId = cpmUser.Id, GroupId = gp1.Id);
         GroupMember lAGm = new GroupMember (UserOrGroupId = lAUser.Id, GroupId = gp1.Id);
-        List<GroupMember> groupMemberList= new List<GroupMember>{cpaGm,lAGm};
+        GroupMember daGm = new GroupMember (UserOrGroupId = dAUser.Id, GroupId = gp1.Id);
+        List<GroupMember> groupMemberList= new List<GroupMember>{cpaGm,lAGm,daGm};
             // Inserting Group Members
             Insert groupMemberList;
       
@@ -117,6 +126,34 @@ public class NSP_AccountTriggerHelperTest {
         }
     }
     
+    
+       /***********************************************************************************************
+* MethodName: restrictAccountChange
+* Description : This method is used to allow DA to edit Account,  if the DA is in the same public group as the Account owner.
+* ********************************************************************************************/
+@isTest
+static void restrictAccountChangeTest() {
+    User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmith@acmetestusr.com' Limit 1];
+    System.runAs (BpaUser) {
+        //Account creation
+        Test.startTest();
+        Account accoutObject = new Account();
+        Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        accoutObject.Name = ACCOUNTTEST1;
+        accoutObject.recordTypeId=partnerRecordTypeId;
+        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543123';
+        accoutObject.NumberOfEmployees = 130;
+        insert accoutObject;
+        Test.stopTest();
+        System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
+    }
+    User daUser = [Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmithda@acmetestusr.com' Limit 1];
+    System.runAs (daUser) {
+        Account getBPAUserAccount = [SELECT Id, NumberOfEmployees FROM Account WHERE NumberOfEmployees = 130 LIMIT 1];
+        getBPAUserAccount.NumberOfEmployees = 140;
+    }
+}
+
     /**
      * Checks the Account After Insert Trigger
      * @param N/A. 

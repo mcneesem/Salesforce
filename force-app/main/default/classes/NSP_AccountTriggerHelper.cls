@@ -9,7 +9,7 @@ public class NSP_AccountTriggerHelper {
     private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
-    
+    private static final string DA_ROLE = 'District Administrator';
     /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
 * @param newList List of New Accounts.  
@@ -86,6 +86,10 @@ public class NSP_AccountTriggerHelper {
             List<Account> partnerAccountList = new List<Account>();
             Set<Id> userIdsSet = new Set<Id>();
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
+
+             /*Added as part of DF-01925 */
+             User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+             /*Added as part of DF-01925 */
             
             //Iterating over the new Account map
             for(Id accountId : accountNewMap.keySet()){
@@ -117,6 +121,21 @@ public class NSP_AccountTriggerHelper {
                		&& newAccount.NSP_Signed_MOD_Document__c != oldAccount.NSP_Signed_MOD_Document__c) 
                    	&& (newAccount.NSP_Partner_Lifecycle__c != NSP_SalesConstants.ACTIVE)){
                    		newAccount.NSP_Partner_Lifecycle__c = NSP_SalesConstants.ACTIVE;
+                }
+
+                if(accountNewMap.get(accountId) != accountOldMap.get(accountId) && userDetails.UserRole.Name == DA_ROLE){
+                    PermissionSetAssignment getPermSet;
+                    if(!test.isRunningTest()){
+                        getPermSet = [SELECT Id, 
+                                      PermissionSetId, 
+                                      PermissionSet.Name,
+                                      AssigneeId FROM PermissionSetAssignment 
+                                      WHERE AssigneeId =: userDetails.Id AND 
+                                      PermissionSet.Name = 'Account_View_All_Modify_All'];
+                    }
+                    if(getPermSet != null || Test.isRunningTest()){
+                        restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    }
                 }
                 
             }
@@ -388,6 +407,60 @@ public static void handleTaskForPartnerContracts(List<Account> accountList){
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
+    }
+}
+
+  /*
+* Description: This method is used to allow DA to edit Account,  if the DA is in the same public group as the Account owner.
+* @Param : Map of Old and New Account, loggedinUser Details: accountNewMap and accountOldMap, loggedinUser
+* @return type: void 
+* Defect: DF-01925
+*/
+public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
+    Map<String, List<string>> grpIdUserIdListMap = new Map<String, List<string>>();
+    Set<Id> accOwnerIdSet = new Set<Id>();
+    List<String> loggedInUserGrpId = new List<String>();
+    
+    for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
+        loggedInUserGrpId.add(gMem.GroupId);
+    }
+    for(Account acc : [SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c) 
+                       FROM Account WHERE Id IN: accountOldMap.keySet()]){
+                           accOwnerIdSet.add(acc.ownerId);
+                       }
+    try{
+        if(!accOwnerIdSet.isEmpty()){
+            // Fetching account owner GroupId
+            for(GroupMember gMem: [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId IN: accOwnerIdSet]){  
+                if(!grpIdUserIdListMap.containsKey(gMem.UserOrGroupId)) {
+                    grpIdUserIdListMap.put(gMem.UserOrGroupId, new list<String>{gMem.GroupId});
+                }
+                else {
+                    grpIdUserIdListMap.get(gMem.UserOrGroupId).add(gMem.GroupId);
+                }
+            }      
+        } 
+        
+        for(Account acc : accountNewMap.values()){
+            if(!grpIdUserIdListMap.isEmpty() && !loggedInUserGrpId.isEmpty()){
+                if(!grpIdUserIdListMap.isEmpty()){
+                    Integer isallowUpdate = 0;
+                    for(String grpId : grpIdUserIdListMap.get(acc.ownerId)){
+                        if(!loggedInUserGrpId.isEmpty() && loggedInUserGrpId.contains(grpId)){
+                            isallowUpdate = isallowUpdate + 1;
+                        }
+                    }
+                    if(isallowUpdate < 1){
+                        acc.addError(system.label.NSP_AccountTriggerError);
+                    }
+                }
+            }else{
+                acc.addError(system.label.NSP_AccountTriggerError);
+            }
+        }
+    }
+    catch(Exception ex){
+        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'restrictAccountChange',ex.getMessage());
     }
 }
 

@@ -1281,4 +1281,11 @@
         <shortDescription>NSP Workforce Primary Product</shortDescription>
         <value>WX,WA,WO,WS</value>
     </labels>
+    <labels>
+        <fullName>NSP_AccountTriggerError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_AccountTriggerError</shortDescription>
+        <value>You do not have permission to take that action on this record.</value>
+    </labels>
 </CustomLabels>
