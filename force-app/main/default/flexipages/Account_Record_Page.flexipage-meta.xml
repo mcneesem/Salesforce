@@ -193,6 +193,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+             <componentInstanceProperties>
                     <name>displayConnections</name>
                     <value>true</value>
                 </componentInstanceProperties>
