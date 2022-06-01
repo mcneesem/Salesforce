@@ -718,17 +718,18 @@ public class NSP_OpportunityTriggerHelper {
 * Defect:       DF-01716
 * ********************************************************************************************/ 
 public static void validateClosedDate(List<Opportunity> OpportunityList){
-    Id loggedInUserId = UserInfo.getUserId();
+       Id loggedInUserId = UserInfo.getUserId();   
     set<Id> ncsGrpMemIdSet = new set<Id>();
-    group ncsGroup = [SELECT Id,Name FROM group where group.Name ='NCS'];
-    for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId =: ncsGroup.Id]){
+      List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
+    List<group> ncsGroup = [SELECT Id,Name FROM group WHERE group.Name IN: groupList];
+    for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId IN: ncsGroup]){
         ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId); 
     }
         for(Opportunity opp: OpportunityList){
             if(!ncsGrpMemIdSet.contains(loggedInUserId)){
-                opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
+              opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
             }  
-        }     
+        } 
     
 }
 
