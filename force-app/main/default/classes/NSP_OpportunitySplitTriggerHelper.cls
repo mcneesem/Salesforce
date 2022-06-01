@@ -88,7 +88,7 @@ public class NSP_OpportunitySplitTriggerHelper {
         }
         // Iterating over Opportunity Split record and check if Number of EE is greater than Number of Employees on Opportunity or not.
         for(NSP_Employee_Split__c empSplit : newList){
-            if(mapOfOpportunityIdAndSumOfEE.containsKey(empSplit.NSP_Opportunity__c)){
+            if(mapOfOpportunityIdAndSumOfEE.containsKey(empSplit.NSP_Opportunity__c) && mapOfOpportunityIdAndSumOfEE.get(empSplit.NSP_Opportunity__c) != null){
                 finalSumOfEE = empSplit.NSP_Number_of_Employees__c + mapOfOpportunityIdAndSumOfEE.get(empSplit.NSP_Opportunity__c);
             }else{
                 finalSumOfEE = empSplit.NSP_Number_of_Employees__c;
