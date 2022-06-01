@@ -41,6 +41,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Exception_Credit_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Primary_Contact__c</field>
             </layoutItems>
             <layoutItems>
