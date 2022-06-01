@@ -93,6 +93,12 @@ public class NSP_LeadTriggerHelper {
         isOwnerAssignment = false;
         setLeadRegion(zipCodeList, zipCodeLeadList, isOwnerAssignment);
     }
+    /* Added as part of DF-01943*/
+        for(Lead zipLead : zipCodeLeadList){
+      if(String.isNotBlank(zipLead.NSP_Sales_Office__c)){
+        zipLead.NSP_Is_Sales_Office_Assigned__c = true;
+         }
+        }
     /* Added to Map Sales Office on insert if Zipcode is populated*/
         //calling method to stmap primary contact's email from partner account to lead
         if (!accountIdSet.isEmpty()) {
@@ -214,6 +220,13 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         isOwnerAssignment = false;
         setLeadRegion(zipCodeUpdateList, zipCodeLeadList, isOwnerAssignment);
     }
+      /* Added as part of DF-01943*/
+   for(Lead zipLead : zipCodeLeadList){
+    if(String.isNotBlank(zipLead.NSP_Sales_Office__c)){
+        zipLead.NSP_Is_Sales_Office_Assigned__c = true;
+    }
+}
+  /* Added as part of DF-01943*/
       if(parentLead != null){
           updateChildOwner(parentLead);
       }

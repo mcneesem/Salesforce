@@ -4078,6 +4078,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.NSP_Is_Sales_Office_Assigned__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Checklist__c.NSP_Send_email_to_Sales_PR_Info__c</field>
         <readable>true</readable>
     </fieldPermissions>

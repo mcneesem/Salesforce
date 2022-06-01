@@ -10,4 +10,9 @@
         <field>NSP_Checklist__c.NSP_Second_Covered_Pay_Period_End__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.NSP_Is_Sales_Office_Assigned__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 </Profile>
