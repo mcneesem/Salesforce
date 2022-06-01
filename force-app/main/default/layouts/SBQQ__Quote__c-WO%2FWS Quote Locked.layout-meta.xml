@@ -100,7 +100,7 @@
                 <field>NSP_Requested_First_Check_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>SBQQ__ExpirationDate__c</field>
             </layoutItems>
             <layoutItems>
@@ -506,7 +506,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2D000003VMQ2</masterLabel>
+        <masterLabel>00h4x000005h6Z5</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

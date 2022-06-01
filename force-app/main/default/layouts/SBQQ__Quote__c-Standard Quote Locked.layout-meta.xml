@@ -93,7 +93,7 @@
                 <field>NSP_Product_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>SBQQ__ExpirationDate__c</field>
             </layoutItems>
             <layoutItems>
@@ -445,7 +445,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2D000003VMQ0</masterLabel>
+        <masterLabel>00h4x000005h6Z3</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
