@@ -1634,17 +1634,17 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.NSP_Requested_Second_Pay_Date__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_Second_Covered_Pay_Period__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
                 <fieldItem>Record.NSP_Benefit_Classing__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NSP_Initial_Covered_Pay_Period__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NSP_Initial_Covered_Pay_Period_End__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1731,7 +1731,17 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.NSP_Initial_Covered_Pay_Period__c</fieldItem>
+                <fieldItem>Record.NSP_Requested_Second_Pay_Date__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NSP_Second_Covered_Pay_Period__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NSP_Second_Covered_Pay_Period_End__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

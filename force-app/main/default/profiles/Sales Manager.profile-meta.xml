@@ -2,34 +2,12 @@
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Employee_Split__c.NSP_Number_of_Employees__c</field>
+        <field>NSP_Checklist__c.NSP_Initial_Covered_Pay_Period_End__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>NSP_Office_Assignment__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>NSP_State_Assignment__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>NSP_Office__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Checklist__c.NSP_Second_Covered_Pay_Period_End__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 </Profile>

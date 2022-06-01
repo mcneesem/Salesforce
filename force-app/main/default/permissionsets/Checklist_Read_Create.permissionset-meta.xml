@@ -3703,6 +3703,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Checklist__c.NSP_Initial_Covered_Pay_Period_End__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Checklist__c.NSP_Input_CL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4064,6 +4069,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.NSP_Second_Covered_Pay_Period__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Checklist__c.NSP_Second_Covered_Pay_Period_End__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
