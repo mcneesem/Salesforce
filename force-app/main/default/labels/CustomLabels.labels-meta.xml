@@ -921,7 +921,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-        <value>Organizational Planning,Time &amp; Attendance,WA,WX,Retirement Services,Applicant Tracking</value>
+        <value>Organizational Planning,Time &amp; Attendance,WA,WX,Retirement Services</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
