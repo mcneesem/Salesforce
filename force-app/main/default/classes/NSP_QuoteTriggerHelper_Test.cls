@@ -38,10 +38,12 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         insert qlines;
         
         quote1.ApprovalStatus__c = 'Approved';
-       quote1.SBQQ__Status__c = 'Approved';
+        quote1.SBQQ__Status__c = 'Approved';
         quote1.SBQQ__Primary__c = true;
 
         update quote1;
+        SBQQ__Quote__c quote2 = quote1.clone();
+        insert quote2;
         System.assertEquals(quote1.ApprovalStatus__c, 'Approved');
         Test.stopTest();
 
