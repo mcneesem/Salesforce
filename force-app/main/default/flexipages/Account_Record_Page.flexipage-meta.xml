@@ -69,6 +69,9 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.Add_team_member</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>FeedItem.PollPost</value>
                         </valueListItems>
                         <valueListItems>
@@ -103,9 +106,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>ChangeRecordType</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Account.Add_team_member</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
