@@ -75,7 +75,9 @@ public class NSP_OpportunityTriggerHelper {
         }      
         
                // Added as part of DF-01716
-       if(!closedOppList.isEmpty()){
+               User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+               List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
+               if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
         validateClosedDate(closedOppList);
         }
         
@@ -259,13 +261,16 @@ public class NSP_OpportunityTriggerHelper {
                }
 
                            // checking for closeddate is lessthan today or Not
-            if(newOpportunity.CloseDate != null && newOpportunity.CloseDate < date.today()){
+            if(newOpportunity.CloseDate != null && newOpportunity.CloseDate < date.today() &&  
+               newOpportunity.NSP_Insperity_Signer__c == oldOpportunity.NSP_Insperity_Signer__c){
                 closedOppList.add(newOpportunity);
             }
         }
 
                  // Added as part of DF-01716
-                 if(!closedOppList.isEmpty()){
+                 User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+                 List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
+                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
                     validateClosedDate(closedOppList);
                 }
         

@@ -669,7 +669,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Quote Approval Bypass Profile</shortDescription>
-        <value>CPQ Admi,System Administrat</value>
+        <value>CPQ Admin,System Administrator</value>
     </labels>
     <labels>
         <fullName>NSP_Quote_Owner_Mismatch_Message</fullName>
@@ -974,7 +974,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Opportunity Close Date Validation</shortDescription>
-        <value>Close cannot be in the past.</value>
+        <value>Close Date cannot be in the past.</value>
     </labels>
     <labels>
         <fullName>NSP_Profile_To_Skip_OLI_Validation</fullName>
