@@ -17,4 +17,14 @@
 		<field>User.NSP_Sales_Office_Membership__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.NSP_Sub_Product__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_Sub_Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 </Profile>
