@@ -38,8 +38,8 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
         NSP_AccountTeamTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamTriggerHelper();
         accountTeamMemberTriggerHelperObject.afterInsertDirector((List<NSP_Account_Team__c>) newList, (Map<Id, NSP_Account_Team__c>) newMap);
-        // Share Account with account team member user  Sales office Public groups --STY-01786 
-        NSP_recordSharing.accountTeamMembersharing((List<NSP_Account_Team__c>) newList); 
+       // Added as a part of STY-02768
+       NSP_salesOfficeRecordSharing.accountTeamRecordSharing((Map<Id, NSP_Account_Team__c>) newMap);
     }
 
     /**
@@ -65,8 +65,6 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         NSP_AccountTeamTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamTriggerHelper();
         accountTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap);
-        // Share Account with account team member user  Sales office Public groups --STY-01786 
-        NSP_recordSharing.shareAccountonATMUpdate((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap ); 
     }
     /**
     * Handles after delete for NSP_Account_Team__c.
@@ -76,7 +74,7 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
     *                
     */ 
      public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
-        // removing Share access with account team member user  Sales office Public groups --STY-01786  
-        NSP_recordSharing.updateAccessOnATMRemoval((List<NSP_Account_Team__c>) oldList,(Map<Id,NSP_Account_Team__c>) oldMap); 
-    }
+        // Added as a part of STY-02768
+        NSP_salesOfficeRecordSharing.updateAccessOnATMRemoval((List<NSP_Account_Team__c>) oldList,(Map<Id,NSP_Account_Team__c>) oldMap);
+   }
 }

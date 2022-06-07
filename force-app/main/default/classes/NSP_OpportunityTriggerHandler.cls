@@ -44,8 +44,8 @@ public class NSP_OpportunityTriggerHandler implements NSP_ITriggerHandler{
             opportunityTriggerHelperObject.afterInsertDirector((List<Opportunity>) newList,(Map<Id, Opportunity>) newMap);
             //Added as part of STY-02066
             NSP_OpportunityTeamMemberAssignment.insertOppTeamMember((List<Opportunity>) newList);
-            // Share Opportunity with owner Sales office Public groups --STY-01786 
-            NSP_recordSharing.nonBPAOpportunitySharing((List<Opportunity>) newList);
+            // Share Opportunity with owner Sales office Public groups --STY-02768 
+            NSP_salesOfficeRecordSharing.opportunityRecordSharing((Map<Id, Opportunity>) newMap);
         }
     }
     
@@ -79,8 +79,9 @@ public class NSP_OpportunityTriggerHandler implements NSP_ITriggerHandler{
         opportunityTriggerHelperObject.afterUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
         //Added as part of STY-02066
         NSP_OpportunityTeamMemberAssignment.updateAndInsertOppTeamMember((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
-        // Share Opportunity with owner Sales office Public groups --STY-01786 
-        NSP_recordSharing.shareOpportunityonUpdate((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+        // Share Opportunity with owner Sales office Public groups --STY-02768 
+        NSP_salesOfficeRecordSharing.shareOpportunityonUpdate((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+       
         }  
     }
     /**

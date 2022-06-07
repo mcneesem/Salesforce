@@ -296,11 +296,11 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //Collect User salesoffice details
         if (ownerIdset != null) {
-            List < User > ownerIdList = [Select Id, ToLabel(NSP_Sales_Office__c) from User WHERE ID IN: ownerIdset];
+            List < User > ownerIdList = [Select Id, ToLabel(NSP_Sales_Office_Membership__c) from User WHERE ID IN: ownerIdset];
             if (!ownerIdList.isEmpty()) {
                 for (User userList: ownerIdList) {
-                    if (userList.NSP_Sales_Office__c != Null) {
-                        salesOfficeSet.add(userList.NSP_Sales_Office__c);
+                    if (userList.NSP_Sales_Office_Membership__c != Null) {
+                        salesOfficeSet.addAll(new List<String>(userList.NSP_Sales_Office_Membership__c.Split(';')));
                     }
                 }
             }

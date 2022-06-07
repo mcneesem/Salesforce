@@ -53,6 +53,8 @@ public class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
 *                
 */
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
+        // Added as a part of STY-02768
+        NSP_userSalesOfficeRecordSharing.ownerSalesofficeSharing((Map<Id, User>) newMap, (Map<Id, User>) oldMap);
     }
 
     /**

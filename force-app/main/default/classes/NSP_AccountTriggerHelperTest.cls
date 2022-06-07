@@ -125,34 +125,6 @@ public class NSP_AccountTriggerHelperTest {
             System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
         }
     }
-    
-    
-       /***********************************************************************************************
-* MethodName: restrictAccountChange
-* Description : This method is used to allow DA to edit Account,  if the DA is in the same public group as the Account owner.
-* ********************************************************************************************/
-@isTest
-static void restrictAccountChangeTest() {
-    User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmith@acmetestusr.com' Limit 1];
-    System.runAs (BpaUser) {
-        //Account creation
-        Test.startTest();
-        Account accoutObject = new Account();
-        Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
-        accoutObject.Name = ACCOUNTTEST1;
-        accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543123';
-        accoutObject.NumberOfEmployees = 130;
-        insert accoutObject;
-        Test.stopTest();
-        System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
-    }
-    User daUser = [Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmithda@acmetestusr.com' Limit 1];
-    System.runAs (daUser) {
-        Account getBPAUserAccount = [SELECT Id, NumberOfEmployees FROM Account WHERE NumberOfEmployees = 130 LIMIT 1];
-        getBPAUserAccount.NumberOfEmployees = 140;
-    }
-}
 
     /**
      * Checks the Account After Insert Trigger
