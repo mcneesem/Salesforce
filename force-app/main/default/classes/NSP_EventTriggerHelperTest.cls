@@ -54,10 +54,11 @@ public without sharing class NSP_EventTriggerHelperTest {
             NSP_Status__c='Open'
         );
         eventList.add(eventRec1);
-
+        Test.startTest();
         insert eventList;
         
         update eventList;
+        Test.stopTest();
         System.assertEquals(eventList[0].NSP_Task_Type__c, 'BPS');
     }
 }

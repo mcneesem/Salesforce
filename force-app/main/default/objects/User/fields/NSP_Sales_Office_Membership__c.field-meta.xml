@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Sales_Office_Membership__c</fullName>
+    <description>This field is created as a part of STY-02768.</description>
+    <externalId>false</externalId>
+    <label>Sales Office Membership</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Sales_Offices</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

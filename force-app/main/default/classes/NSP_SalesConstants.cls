@@ -120,5 +120,6 @@ public class NSP_SalesConstants {
     public static final String EloquaTaskRecordType  = 'Eloqua Task RT';
     public static final String OpportunityTeamMemberRole  = 'Other';
     public static final String TECHNOLOGY_SALES = 'Technology Sales';
-
+    public static final String officeProcessing = 'Processing Complete';
+    public static final String userId = '005';
 }
