@@ -11,6 +11,11 @@
         <field>Task.Upsell_Product_of_Interest__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Producer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Task-Referral Task Layout</layout>
         <recordType>Task.Referral_Task</recordType>
