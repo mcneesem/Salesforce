@@ -67,7 +67,7 @@ public class NSP_AccountTeamTriggerHelper {
                 //insert AccountTeamMeber
                 AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
                 accountTeamMemberObj.AccountId = accTeamMemberObj.NSP_Account__c;
-                accountTeamMemberObj.AccountAccessLevel = NSP_IntegrationConstants.ACCOUNTACCESSLEVEL;
+                accountTeamMemberObj.AccountAccessLevel = NSP_IntegrationConstants.ACCOUNTACCESSLEVELEDIT;
                 accountTeamMemberObj.TeamMemberRole = NSP_IntegrationConstants.TEAMMEMBERROLE;
                 accountTeamMemberObj.UserId = accTeamMemberObj.NSP_User__c;
                 accountTeamMemberList.add(accountTeamMemberObj);
