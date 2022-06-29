@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission set group is created as part of STY-02427.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>DA</label>
+    <permissionSets>Campaign_Influence</permissionSets>
+    <permissionSets>Checklist_Read_Create</permissionSets>
+    <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
+    <permissionSets>Enrollment_Fee_Edit</permissionSets>
+    <permissionSets>Grant_Modify_All_on_Lead_Object_for_DA</permissionSets>
+    <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
+    <permissionSets>Partner_Access</permissionSets>
+    <permissionSets>Xactly_Permission_Set</permissionSets>
+    <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
+    <permissionSets>force__SalesCloudEinsteinAll</permissionSets>
+    <permissionSets>force__VoiceOutbound</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
