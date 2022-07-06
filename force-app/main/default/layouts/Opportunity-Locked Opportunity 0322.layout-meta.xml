@@ -344,7 +344,7 @@
                 <field>NSP_CountAsSale__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_IPMRecommendation__c</field>
             </layoutItems>
             <layoutItems>
@@ -378,7 +378,7 @@
                 <field>NSP_NCSComments__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Time_Entry_Recommendation__c</field>
             </layoutItems>
             <layoutItems>
