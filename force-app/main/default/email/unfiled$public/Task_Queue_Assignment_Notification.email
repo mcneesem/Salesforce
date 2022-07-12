@@ -1,0 +1,6 @@
+A task titled {!Task.Subject} has been assigned to the Queue. 
+
+
+You can access it by clicking here: 
+
+{!Task.Link}
