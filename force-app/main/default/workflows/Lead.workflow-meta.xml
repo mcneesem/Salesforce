@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>NSP_Notify_Referral_Lead_Owner_Email_Alert</fullName>
-        <ccEmails>ruchi.lnu@pwc.com</ccEmails>
         <description>Email alert to lead record owners when a referral record is assigned to them</description>
         <protected>false</protected>
         <recipients>

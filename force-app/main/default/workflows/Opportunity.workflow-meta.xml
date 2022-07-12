@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account_with_more_than_1</fullName>
-        <ccEmails>PwC_QA@insperity.com</ccEmails>
         <description>Alert Mid Market sales when Opportunity created for Account with more than 150 employees</description>
         <protected>false</protected>
         <recipients>
@@ -55,7 +54,6 @@
     </alerts>
     <alerts>
         <fullName>NSP_Engage_Service_Team_Email</fullName>
-        <ccEmails>pwc_qa@insperity.com</ccEmails>
         <description>Engage Service Team Email</description>
         <protected>false</protected>
         <recipients>
@@ -167,7 +165,6 @@
     </alerts>
     <alerts>
         <fullName>NSP_Notify_Oppty_Owner_Email_Alert</fullName>
-        <ccEmails>pwc_qa@insperity.com</ccEmails>
         <description>Email alert to opty record owners when a record is assigned to them</description>
         <protected>false</protected>
         <recipients>
