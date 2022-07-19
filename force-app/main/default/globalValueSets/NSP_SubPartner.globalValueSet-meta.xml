@@ -246,11 +246,6 @@
         <label>ACG Wisconsin</label>
     </customValue>
     <customValue>
-        <fullName>Acisure</fullName>
-        <default>false</default>
-        <label>Acisure</label>
-    </customValue>
-    <customValue>
         <fullName>Acrisure, Bedrosian &amp; Assoc</fullName>
         <default>false</default>
         <label>Acrisure, Bedrosian &amp; Assoc</label>
@@ -291,6 +286,11 @@
         <label>Acrisure, John James Benefits</label>
     </customValue>
     <customValue>
+        <fullName>Acrisure, LBL Group</fullName>
+        <default>false</default>
+        <label>Acrisure, LBL Group</label>
+    </customValue>
+    <customValue>
         <fullName>Acrisure, LLC</fullName>
         <default>false</default>
         <label>Acrisure, LLC</label>
@@ -321,6 +321,11 @@
         <label>Acrisure, TASK Group LLC, dba</label>
     </customValue>
     <customValue>
+        <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
+        <default>false</default>
+        <label>Acrisure, The Benefits Group, Rochester Hills, MI</label>
+    </customValue>
+    <customValue>
         <fullName>Acrisure dba Rigg Darlington</fullName>
         <default>false</default>
         <label>Acrisure dba Rigg Darlington</label>
@@ -329,6 +334,11 @@
         <fullName>Acrisure LLC dba Connor Group</fullName>
         <default>false</default>
         <label>Acrisure LLC dba Connor Group</label>
+    </customValue>
+    <customValue>
+        <fullName>Acrisure – VCG</fullName>
+        <default>false</default>
+        <label>Acrisure – VCG</label>
     </customValue>
     <customValue>
         <fullName>Advantage Benefits Solutions</fullName>
@@ -366,6 +376,11 @@
         <label>Alera Group - Fall River Emp</label>
     </customValue>
     <customValue>
+        <fullName>Alera Group – Forum</fullName>
+        <default>false</default>
+        <label>Alera Group – Forum</label>
+    </customValue>
+    <customValue>
         <fullName>Alera Group - GCG Financial</fullName>
         <default>false</default>
         <label>Alera Group - GCG Financial</label>
@@ -374,6 +389,11 @@
         <fullName>Alera Group - Silberstein Insu</fullName>
         <default>false</default>
         <label>Alera Group - Silberstein Insu</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group – TRISURE</fullName>
+        <default>false</default>
+        <label>Alera Group – TRISURE</label>
     </customValue>
     <customValue>
         <fullName>AM&amp;AA - Alliance of Mergers an</fullName>
@@ -501,6 +521,11 @@
         <label>Campbell Petrie</label>
     </customValue>
     <customValue>
+        <fullName>CertaPro – PA</fullName>
+        <default>false</default>
+        <label>CertaPro – PA</label>
+    </customValue>
+    <customValue>
         <fullName>CFO Alliance</fullName>
         <default>false</default>
         <label>CFO Alliance</label>
@@ -531,6 +556,11 @@
         <label>Core Benefit Services, Inc.</label>
     </customValue>
     <customValue>
+        <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
+        <default>false</default>
+        <label>Davidow Financial &amp; Insurance Services, Inc</label>
+    </customValue>
+    <customValue>
         <fullName>DIGITAL INSURANCE</fullName>
         <default>false</default>
         <label>DIGITAL INSURANCE</label>
@@ -539,6 +569,11 @@
         <fullName>Digital Insurance-fka Kistler</fullName>
         <default>false</default>
         <label>Digital Insurance-fka Kistler</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Access</fullName>
+        <default>false</default>
+        <label>Direct Access</label>
     </customValue>
     <customValue>
         <fullName>Directory Marketing, Inc</fullName>
@@ -1098,7 +1133,7 @@
     <customValue>
         <fullName>Patriot Growth Insurance – Cap</fullName>
         <default>false</default>
-        <label>Patriot Growth Insurance – Cap</label>
+        <label>Patriot Growth Insurance – Capstone</label>
     </customValue>
     <customValue>
         <fullName>Patriot Growth Insurance TATCH</fullName>
@@ -1436,34 +1471,10 @@
         <label>Vistage Worldwide</label>
     </customValue>
     <customValue>
-        <fullName>Acrisure – VCG</fullName>
+        <fullName>Acisure</fullName>
         <default>false</default>
-        <label>Acrisure – VCG</label>
-    </customValue>
-    <customValue>
-        <fullName>Davidow Financial &amp; Insurance Services, Inc</fullName>
-        <default>false</default>
-        <label>Davidow Financial &amp; Insurance Services, Inc</label>
-    </customValue>
-    <customValue>
-        <fullName>CertaPro – PA</fullName>
-        <default>false</default>
-        <label>CertaPro – PA</label>
-    </customValue>
-    <customValue>
-        <fullName>Alera Group – Forum</fullName>
-        <default>false</default>
-        <label>Alera Group – Forum</label>
-    </customValue>
-    <customValue>
-        <fullName>Alera Group – TRISURE</fullName>
-        <default>false</default>
-        <label>Alera Group – TRISURE</label>
-    </customValue>
-    <customValue>
-        <fullName>Acrisure, The Benefits Group, Rochester Hills, MI</fullName>
-        <default>false</default>
-        <label>Acrisure, The Benefits Group, Rochester Hills, MI</label>
+        <isActive>false</isActive>
+        <label>Acisure</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>
