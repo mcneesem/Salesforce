@@ -13,9 +13,6 @@
     </fieldPermissions>
     <layoutAssignments>
         <layout>Opportunity-Support Opportunity Layout 0322</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-Support Opportunity Layout 0322</layout>
         <recordType>Opportunity.Opportunity</recordType>
     </layoutAssignments>
     <recordTypeVisibilities>
@@ -33,10 +30,6 @@
         <recordType>Opportunity.Opportunity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <layoutAssignments>
-        <layout>Task-Referral Task Layout</layout>
-        <recordType>Task.Referral_Task</recordType>
-    </layoutAssignments>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>
