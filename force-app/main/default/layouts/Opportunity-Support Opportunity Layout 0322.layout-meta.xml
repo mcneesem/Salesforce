@@ -56,6 +56,30 @@
                 <field>NSP_Opportunity_Owner_Role__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Enrollment_Fee_Payment_1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Enrollment_Fee_Payment_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Enrollment_Fee_Payment_3__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Enrollment_Fee_Payment_4__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Enrollment_Fee_Payment_5__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Enrollment_Fee_Payment_6__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Producer__c</field>
             </layoutItems>
@@ -297,21 +321,6 @@
                 <behavior>Edit</behavior>
                 <field>NSP_1stPayDateActiveEmployees__c</field>
             </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Payment_1__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Payment_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Payment_3__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -341,21 +350,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_EnrollmentFeeNotes__c</field>
-            </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Payment_4__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Payment_5__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Payment_6__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -542,35 +536,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SBQQ__AmendedContract__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Amount</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>sbaa__ApprovalStatus__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>sbaa__ApprovalStep__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>sbaa__Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Assign_Sales_Engineer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Back_Out_By__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__BatchProcess__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -583,10 +549,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Booked_Month__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Budget_Confirmed__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -609,16 +571,8 @@
                 <field>NSP_Closing_Appointment__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ContractId</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Contract_Terminating_In_Days__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__CreateContractedPrices__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -629,22 +583,6 @@
                 <field>NSP_Customer_Signature_Required__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Description</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__IsParentOpportunityServices__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__PreBilledAmount__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_DiscoveryCallApptDate__c</field>
             </layoutItems>
@@ -653,40 +591,12 @@
                 <field>Discovery_Completed__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Doc_Signer_Validated__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_DO_Sign_By_Billing_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_EnrollmentFeeAddendumRequest__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Exception_Credit_Amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ExpectedRevenue</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Financial_Analysis_Tool__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>ForecastCategoryName</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Forecast_Curve__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Group__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -702,14 +612,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>pse__Is_Change_Request__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Is_Services_Opportunity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Is_Parent_Opportunity_Closed_Lost__c</field>
             </layoutItems>
             <layoutItems>
@@ -719,10 +621,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Last_Updated__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LID__LinkedIn_Company_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -762,10 +660,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NextStep</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Nonprofit__c</field>
             </layoutItems>
             <layoutItems>
@@ -788,14 +682,6 @@
                 <behavior>Edit</behavior>
                 <field>Opportunity_ID_Oracle__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>CurrencyIsoCode</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__OrderGroupID__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -815,40 +701,12 @@
                 <field>NSP_Parent_Primary_Product_Changed__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Parent_Opportunity__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Partner_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>pse__Practice__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Pre_Billed_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_PremierPathwayLink__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Pricebook2Id</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Pricing_Model__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CampaignId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Primary_Project__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -860,39 +718,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IsPrivate</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Product_Interest__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>TotalOpportunityQuantity</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Quote_Owner__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__QuotePricebookId__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Quote_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Rate_Card_Discount_Limit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Rate_Card_Percentage_Discount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Rate_Card_Set__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -932,31 +766,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>pse__Region__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__Renewal__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__RenewedContract__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_RenewalWithCompetitor__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Rewards__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Rewards_Notes__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ROI_Analysis_Completed__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -965,22 +779,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Roll_Up_WO_Number_of_Employees__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Running_Owner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Running_Sales_Office__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Running_Sales_Region__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Running_SubRegion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -1001,14 +799,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Service_Team_Email__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>pse__Services_Attached_Percent_From_Products__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>pse__Services_Attached_From_Products__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -1032,22 +822,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>sbaa__StepApproved__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>sbaa__SubmittedDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>sbaa__SubmittedUser__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SyncedQuoteId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_TaxID__c</field>
             </layoutItems>
             <layoutItems>
@@ -1060,14 +834,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>pse__Test_Project_Start_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>pse__Test_Project_End_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_TransactionType__c</field>
             </layoutItems>
             <layoutItems>
@@ -1077,10 +843,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_TotalEnrollmentFee__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Wet_Envelope_Selector__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -1238,6 +1000,11 @@
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>29</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
@@ -1246,11 +1013,6 @@
             <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.PollPost</actionName>
@@ -1278,14 +1040,14 @@
             <sortOrder>27</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Opportunity.NSP_CreateQuote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>28</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>29</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -1339,7 +1101,7 @@
         <fields>NSP_Team_Member__c</fields>
         <fields>NSP_Percent_Split__c</fields>
         <fields>NSP_Number_of_Employees__c</fields>
-        <fields>NSP_Office_Assignment__c</fields>
+        <fields>NSP_Sales_Office__c</fields>
         <fields>CURRENCY_ISO_CODE</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
@@ -1434,7 +1196,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4x000005h6Yp</masterLabel>
+        <masterLabel>00h2D000003WTvl</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

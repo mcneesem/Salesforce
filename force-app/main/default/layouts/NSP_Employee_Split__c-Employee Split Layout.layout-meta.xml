@@ -27,10 +27,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Number_of_Employees__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Control_Group_ID__c</field>
             </layoutItems>
             <layoutItems>
@@ -43,7 +39,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Office_Assignment__c</field>
+                <field>NSP_Sales_Office__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

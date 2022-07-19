@@ -190,6 +190,20 @@ public class NSP_AccountTriggerHelper {
 * @return void
 *                
 */
+    
+    /* Description: This method send data to publishevent when some particular account field is changed.
+     * Modified this method to fire opportunity trigger when owner of account is changed which lead to change owner of opportunity.
+     * Added as part of service request - 569324.
+     * @param: newMap,oldMap
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * Rahul Singh         	07/11/2022        Modified this method
+     * 
+     * 
+    */
     public void afterUpdateDirector(Map<Id, Account> newMap, Map<Id, Account> oldMap) {
         List<Account> accountList = new List<Account>();	//list to store accounts to handle Tasks when Partner contract is generated
         try{
@@ -229,6 +243,17 @@ public class NSP_AccountTriggerHelper {
                 String profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
                 if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 publishEventBus(accountEvent, updateAccountList);
+                
+                List<Opportunity> oppUpdated = [SELECT Id FROM Opportunity Where OwnerId =:newMap.values().OwnerId AND LastModifiedById=:newMap.values().LastModifiedById AND LastModifiedDate =:newMap.values().LastModifiedDate];
+                List<Opportunity> listOppOwner = new List<Opportunity>();
+               //update opportunity to fire opportunity trigger
+                	if(oppUpdated.size() > 0){
+			        	for(Opportunity oppObj :oppUpdated ){
+                        oppObj.NSP_Ready_for_Integration_Sync__c = true; 
+                        listOppOwner.add(oppObj);
+                    	}
+                    update listOppOwner;
+                    }
                 }
             }
             
