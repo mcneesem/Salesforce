@@ -2,7 +2,7 @@
 * Represents the Account trigger helper which handles all the logic.
 * -------------------------------------------------------------------------------------------------  
 * Modification History
-*	ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
+*  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
     
@@ -114,9 +114,9 @@ public class NSP_AccountTriggerHelper {
                 }
 
                 if((newAccount.NSP_Signed_MOD_Document__c
-               		&& newAccount.NSP_Signed_MOD_Document__c != oldAccount.NSP_Signed_MOD_Document__c) 
-                   	&& (newAccount.NSP_Partner_Lifecycle__c != NSP_SalesConstants.ACTIVE)){
-                   		newAccount.NSP_Partner_Lifecycle__c = NSP_SalesConstants.ACTIVE;
+                   && newAccount.NSP_Signed_MOD_Document__c != oldAccount.NSP_Signed_MOD_Document__c) 
+                     && (newAccount.NSP_Partner_Lifecycle__c != NSP_SalesConstants.ACTIVE)){
+                       newAccount.NSP_Partner_Lifecycle__c = NSP_SalesConstants.ACTIVE;
                 }
                 
             }
@@ -170,11 +170,11 @@ public class NSP_AccountTriggerHelper {
             // Send the list to publish event bus
             if(accountEventList.size() > 0){
                 Id profileId=userinfo.getProfileId();
-				String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+        String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
                 /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
                 if(!profileName.containsIgnoreCase(System.label.NSP_Data_Migration_Profile_Name) || 
                    !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
-                	publishEventBus(accountEventList, updateResyncFlagAccountList);
+                  publishEventBus(accountEventList, updateResyncFlagAccountList);
                 }
             }
             
@@ -190,26 +190,12 @@ public class NSP_AccountTriggerHelper {
 * @return void
 *                
 */
-    
-    /* Description: This method send data to publishevent when some particular account field is changed.
-     * Modified this method to fire opportunity trigger when owner of account is changed which lead to change owner of opportunity.
-     * Added as part of service request - 569324.
-     * @param: newMap,oldMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     * author           | Date              | Description
-     * -------------------------------------------------------------------------------------
-     * Rahul Singh         	07/11/2022        Modified this method
-     * 
-     * 
-    */
     public void afterUpdateDirector(Map<Id, Account> newMap, Map<Id, Account> oldMap) {
-        List<Account> accountList = new List<Account>();	//list to store accounts to handle Tasks when Partner contract is generated
+        List<Account> accountList = new List<Account>();  //list to store accounts to handle Tasks when Partner contract is generated
         try{
             Map<Id,DateTime> accountTeamMDeleteMap = new Map<Id,DateTime>();
             Map<Id,String> accountTeamMDelete = new Map<Id,String>();
-			List<Integration_Account_Event__e> accountEvent = New List<Integration_Account_Event__e>();
+      List<Integration_Account_Event__e> accountEvent = New List<Integration_Account_Event__e>();
             List<Account> updateAccountList = new List<Account>();
             
             for(Account accObj : newMap.values()){
@@ -243,17 +229,6 @@ public class NSP_AccountTriggerHelper {
                 String profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
                 if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 publishEventBus(accountEvent, updateAccountList);
-                
-                List<Opportunity> oppUpdated = [SELECT Id FROM Opportunity Where OwnerId =:newMap.values().OwnerId AND LastModifiedById=:newMap.values().LastModifiedById AND LastModifiedDate =:newMap.values().LastModifiedDate];
-                List<Opportunity> listOppOwner = new List<Opportunity>();
-               //update opportunity to fire opportunity trigger
-                	if(oppUpdated.size() > 0){
-			        	for(Opportunity oppObj :oppUpdated ){
-                        oppObj.NSP_Ready_for_Integration_Sync__c = true; 
-                        listOppOwner.add(oppObj);
-                    	}
-                    update listOppOwner;
-                    }
                 }
             }
             
@@ -515,7 +490,7 @@ public static void setChannelPartnerAndLoyaltyAdvisor(List<Account> accList, Set
      * -------------------------------------------------------------------------------------
      * author           | Date              | Description
      * -------------------------------------------------------------------------------------
-     * Harsha Khiroya         	12/22/2021         	created this new method
+     * Harsha Khiroya           12/22/2021           created this new method
      * 
      * 
     */
