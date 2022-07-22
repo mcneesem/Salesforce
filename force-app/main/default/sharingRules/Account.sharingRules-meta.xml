@@ -79,6 +79,40 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingOwnerRules>
+        <fullName>Account_Access_All_BPS</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>As part of DF-01947, allowing BPS Admin and Sub ordinates to Edit Accounts.</description>
+        <label>Account Access All BPS</label>
+        <sharedTo>
+            <roleAndSubordinates>BPS_Administrator</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Access_All_SDR</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>As part of DF-01947, allowing SDR and Sub ordinates to Edit Accounts.</description>
+        <label>Account Access All SDR</label>
+        <sharedTo>
+            <roleAndSubordinates>Sales_Development_Rep</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Access_All_Sales</fullName>
         <accessLevel>Read</accessLevel>
         <accountSettings>
@@ -161,40 +195,6 @@
         </sharedTo>
         <sharedFrom>
             <role>Business_Performance_Advisor</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Access_All_BPS</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>As part of DF-01947, allowing BPS Admin and Sub ordinates to Edit Accounts.</description>
-        <label>Account Access All BPS</label>
-        <sharedTo>
-            <roleAndSubordinates>BPS_Administrator</roleAndSubordinates>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Access_All_SDR</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>As part of DF-01947, allowing SDR and Sub ordinates to Edit Accounts.</description>
-        <label>Account Access All SDR</label>
-        <sharedTo>
-            <roleAndSubordinates>Sales_Development_Rep</roleAndSubordinates>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

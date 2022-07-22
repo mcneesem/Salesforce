@@ -77,6 +77,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Campaign_Target_Intent__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sales_Office_Lookup__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

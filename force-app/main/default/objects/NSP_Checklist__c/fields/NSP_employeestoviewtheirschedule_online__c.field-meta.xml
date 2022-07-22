@@ -6,6 +6,7 @@
     <label>employees to view their schedule online?</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

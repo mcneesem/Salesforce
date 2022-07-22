@@ -10,9 +10,6 @@
         <field>NSP_Employee_Split__c$NSP_Opportunity__c</field>
     </columns>
     <columns>
-        <field>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_PrimaryProduct__c</field>
-    </columns>
-    <columns>
         <field>NSP_Employee_Split__c$CreatedDate</field>
     </columns>
     <columns>
@@ -50,13 +47,6 @@
             <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>NSP_Employee_Split__c$NSP_Opportunity__c.NSP_PrimaryProduct__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>WO</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>

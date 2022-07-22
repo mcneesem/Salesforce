@@ -16,6 +16,21 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>CPQ Account Layout</layout>
+        <sections>
+            <label>Informations supplémentaires</label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label>Liens personnalisés</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>Informations sur les renouvellements/durées identiques</label>
+            <section>Renewal/Co-Term Information</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Partner Account Layout</layout>
         <sections>
             <label></label>
@@ -59,6 +74,10 @@
         <sections>
             <label></label>
             <section>Partner Detail Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Partner Referral Details</section>
         </sections>
         <sections>
             <label></label>
@@ -255,14 +274,6 @@
     </layouts>
     <quickActions>
         <label></label>
-        <name>Add_team_member</name>
-    </quickActions>
-    <quickActions>
-        <label></label>
-        <name>Child_Account</name>
-    </quickActions>
-    <quickActions>
-        <label></label>
         <name>Manage_Order</name>
     </quickActions>
     <quickActions>
@@ -297,6 +308,10 @@
     </validationRules>
     <validationRules>
         <errorMessage></errorMessage>
+        <name>LID__Check_Company_Id_Value</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
         <name>NSP_Denial_Reason_when_Request_Denied</name>
     </validationRules>
     <validationRules>
@@ -322,5 +337,29 @@
     <webLinks>
         <label></label>
         <name>NSP_Generate_Document</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>SBQQ__Amend_Assets</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>SBQQ__Renew_Assets</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>fferpcore__ValidateBillingAddress</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>fferpcore__ValidateShippingAddress</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pse__Account_Billing</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pse__Create_Change_Request</name>
     </webLinks>
 </CustomObjectTranslation>

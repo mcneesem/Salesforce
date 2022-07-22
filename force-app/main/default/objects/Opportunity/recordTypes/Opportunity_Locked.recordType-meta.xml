@@ -792,23 +792,7 @@
     <picklistValues>
         <picklist>NSP_Merge_On_Demand_Template_Selection__c</picklist>
         <values>
-            <fullName>AnalysisDocumentsOver50ee</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AnalysisDocumentsUnder50ee</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ClientServiceAgreement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ControlledGroupQuestionnaire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -817,10 +801,6 @@
         </values>
         <values>
             <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EnrollmentFeeMultiPaymentRefundable</fullName>
             <default>false</default>
         </values>
         <values>
@@ -833,10 +813,6 @@
         </values>
         <values>
             <fullName>NDA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NDAChannelPartner</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1769,6 +1745,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4101</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4301</fullName>
             <default>false</default>
         </values>
@@ -2251,10 +2231,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Acisure</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Acrisure %E2%80%93 VCG</fullName>
             <default>false</default>
         </values>
@@ -2296,6 +2272,10 @@
         </values>
         <values>
             <fullName>Acrisure%2C John James Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acrisure%2C LBL Group</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2496,6 +2476,10 @@
         </values>
         <values>
             <fullName>Digital Insurance-fka Kistler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Access</fullName>
             <default>false</default>
         </values>
         <values>

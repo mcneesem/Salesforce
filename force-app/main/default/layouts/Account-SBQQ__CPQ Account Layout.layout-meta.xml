@@ -2,9 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -49,10 +46,6 @@
         <editHeading>true</editHeading>
         <label>Additional Information</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Type</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Industry</field>
@@ -268,7 +261,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hA000000YQ1SI</masterLabel>
+        <masterLabel>00h4x000005guHx</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

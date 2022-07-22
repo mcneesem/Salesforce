@@ -164,7 +164,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Channel Program DL</shortDescription>
-        <value>raj.raghavan@insperity.com</value>
+        <value>raj.raghavan@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_Client_For_Life_to_Create_Quote</fullName>
@@ -306,7 +306,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_FTA_Base_URL</shortDescription>
-        <value>https://portalapps.insperity.com/financialcomparison/financialanalysis/</value>
+        <value>https://testportalapps.insperity.com/financialcomparison/financialanalysis/</value>
     </labels>
     <labels>
         <fullName>NSP_FTA_OppId</fullName>
@@ -462,7 +462,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Mid Market Sales Email</shortDescription>
-        <value>midmarketleads@insperity.com</value>
+        <value>midmarketleads@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_MoveOpportunityToAnalysisiStage</fullName>
@@ -483,7 +483,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>New Client Sales Email</shortDescription>
-        <value>newclientsales@insperity.com</value>
+        <value>newclientsales@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_NoQuoteForWOProducts</fullName>
@@ -757,7 +757,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WO Email DL</shortDescription>
-        <value>results@insperity.com</value>
+        <value>results@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Email_DL</fullName>
@@ -1215,7 +1215,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Docusign Base URL</shortDescription>
-        <value>https://na11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
+        <value>https://DSinstance.springcm.com/atlas/doclauncher/OneClickDocGen</value>
     </labels>
     <labels>
         <fullName>NSP_DO_Gen_Err</fullName>

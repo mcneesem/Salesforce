@@ -1,5 +1,272 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account_with_more_than_1</fullName>
+        <description>Alert Mid Market sales when Opportunity created for Account with more than 150 employees</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Mid_Market_Sales_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_PotentialMidMarketOpportunity</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Alert_when_Order_is_Generated_for_an_Opportunity</fullName>
+        <description>Alert when Order is Generated for an Opportunity</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Order_Generated_for_Opportunity</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Child_Opportunity_Closed_Lost_Email_Alert</fullName>
+        <description>Child Opportunity Closed Lost Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_ChildOpportunityClosedLost</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</fullName>
+        <description>Email Alert Primary Product Change on Parent Oppty</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Primary_Product_Change_on_Parent_Oppty</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Email_Alert_to_Assign_Sales_Engineer_on_Demo_Request</fullName>
+        <description>Email Alert to Assign Sales Engineer on Demo Request</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_WO_WX_Results__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/Demo_Request_Submitted_Notify_to_Assign_Sales_Engineer</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Engage_Service_Team_Email</fullName>
+        <description>Engage Service Team Email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Service_Team_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Engage_Service_TeamVF</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Engage_Service_Team_Email_for_WX_Opportunities</fullName>
+        <ccEmails>wxservicenotification@insperity.com.invalid</ccEmails>
+        <description>Engage Service Team Email for WX Opportunities</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Service_Team_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Engage_Service_TeamVF</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Retirement_Services_Email_Alert</fullName>
+        <ccEmails>results@insperity.com.invalid</ccEmails>
+        <description>Interest in Retirement Services Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_WO_WX_Results__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_InterestinRetirementServices</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notice_of_Termination_for_Account_Owner</fullName>
+        <description>Notice of Termination for Account Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Notice_of_Termination_for_Account_Owner</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</fullName>
+        <description>Notify Account Owner on Creation of New Opportunity</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_NotifyAccountOwnersonOpportunityCreation</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_Account_owner_of_newly_created_Renewal_Opportunity</fullName>
+        <description>Notify Account owner of newly created Renewal Opportunity</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_NotifyAccountOwneronCreationofRenewalOpportunity</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_Opportunity_Owner_of_Closed_Won</fullName>
+        <description>Notify Opportunity Owner of Closed Won</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Business Performance Advisor</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Program Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Executive</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Lead Qualifier</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Opportunity Owner</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Pre-Sales Consultant</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Operations Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Rep</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Opportunity_Closed_Won</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_Oppty_Owner_Email_Alert</fullName>
+        <description>Email alert to opty record owners when a record is assigned to them</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_NotificationforOpportunityOwner</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_Renewal_Oppty_Owner_Email_Alert</fullName>
+        <description>Email alert to opty record owners when a renewal opportunity is assigned</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Renewal_NotificationforOpportunityOwner</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</fullName>
+        <description>Opportunity requires assignment to New Client Sales Specialist</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_New_Client_Sales_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Order_Failure_Notification</fullName>
+        <description>Order Failure Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Order_Processing_Group_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/NSP_OrderFailureNotification</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Parent_opportunity_Closed_Lost_Email_Alert</fullName>
+        <description>Parent opportunity Closed Lost Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_NotifyChildOptyWhenParentLost</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Schedule_Demo_For_Opportunity_At_Analysis_Stage</fullName>
+        <description>Schedule Demo For Opportunity At Analysis Stage</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Schedule_Demo_Activity_for_Opportunity</template>
+    </alerts>
+    <alerts>
+        <fullName>Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</fullName>
+        <description>Signed CSA Email to Opportunity Owner Manager&apos;s Manager</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Owner_Manager_s_Manager__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Signed_CSA_mail_notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Check_Lock_Opportunity_Checkbox</fullName>
+        <field>NSP_Lock_Opportunity__c</field>
+        <literalValue>1</literalValue>
+        <name>Check Lock Opportunity Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Uncheck_Lock_Opportunity_Checkbox</fullName>
+        <description>Opportunity is Unlocked for Edits</description>
+        <field>NSP_Lock_Opportunity__c</field>
+        <literalValue>0</literalValue>
+        <name>NSP Uncheck Lock Opportunity  Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Submitter</fullName>
+        <field>NSP_WO_Approval_Submitter__c</field>
+        <formula>$User.FirstName + &apos; &apos;+  $User.LastName</formula>
+        <name>Update Submitter</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
     <rules>
         <fullName>Demo Activity on Opportunity at Analysis stage</fullName>
         <active>false</active>
@@ -17,5 +284,31 @@
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>NSP Lock Opportunity for Edits</fullName>
+        <actions>
+            <name>Check_Lock_Opportunity_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Opportunity record is locked once the status is changed to Closed Won</description>
+        <formula>AND( ISPICKVAL(StageName , &quot;Closed Won&quot;), ISCHANGED(StageName)   )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>NSP Unlock Opportunity For Edit</fullName>
+        <actions>
+            <name>NSP_Uncheck_Lock_Opportunity_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>Closed Won</value>
+        </criteriaItems>
+        <description>Unlock the Opportunity when the Stage is NOT EQUAL to Closed Won</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

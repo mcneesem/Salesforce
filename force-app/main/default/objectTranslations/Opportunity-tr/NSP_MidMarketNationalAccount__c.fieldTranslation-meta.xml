@@ -3,31 +3,79 @@
     <label></label>
     <name>NSP_MidMarketNationalAccount__c</name>
     <picklistValues>
-        <masterLabel>Allstate Agency</masterLabel>
+        <masterLabel>AAA - The Auto Group</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Allstate Independent Agency</masterLabel>
+        <masterLabel>Allstate</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>DKG</masterLabel>
+        <masterLabel>Ameriprise</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Healthy Eyes Advantage</masterLabel>
+        <masterLabel>Best Western Hotels &amp; Resorts</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Raymond James Advisor</masterLabel>
+        <masterLabel>Charles Schwab</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>United Franchise Group</masterLabel>
+        <masterLabel>Commonwealth</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>YHN Practice</masterLabel>
+        <masterLabel>Financial Services Institute (FSI)</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Freedom Boat Club</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Gradient Financial Group, LLC</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Independent Agency/ Allstate</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>MidMarket</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Other</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>PREVEER (UFG franchise)</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Quantum Assurance</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Raymond James Advisors</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>United Franchise Group (UFG)</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Venture X Members (tenants)</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>VentureX Locations (UFG franchise)</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Worldcom PR</masterLabel>
         <translation></translation>
     </picklistValues>
 </CustomFieldTranslation>

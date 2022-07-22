@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>NSP_Notify_Account_Owner_for_Contact_from_Website</fullName>
+        <description>Notify Account Owner for Contact from Website</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Account_Owner_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Notify_Account_Owner_for_Contact_from_Website</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_When_Demo_Assignment_exceeds_SLA</fullName>
+        <description>Notify When Demo Assignment exceeds SLA</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_WO_WX_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Demo_assignment_has_exceeded_SLA</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Required_For_Booking_Task_Email_Alert</fullName>
+        <description>Required For Booking Task Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Required_For_Booking_Task_email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Send_email_when_Demo_Activity_is_created_for_WO_WX_opportunities</fullName>
+        <description>Send email when Demo Activity is created for WO/WX opportunities</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_WO_WX_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Demo_Request_Submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Lead_Owner_for_Lead_from_Website</fullName>
+        <description>Notify Lead Owner for Lead from Website</description>
+        <protected>false</protected>
+        <recipients>
+            <type>campaignMemberDerivedOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Notify_Lead_Owner_for_Lead_from_Website</template>
+    </alerts>
+    <alerts>
         <fullName>Task_Queue_Assignment_Notification</fullName>
         <description>Task Queue Assignment Notification</description>
         <protected>false</protected>
@@ -10,4 +63,20 @@
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Task_Queue_Assignment_Notification</template>
     </alerts>
+    <rules>
+        <fullName>NSP Demo Activity assignment has exceeded SLA</fullName>
+        <active>true</active>
+        <description>When Activity of Type demo is been created for an Opportunity and Assigned Sales Engineer field is blank even after 24hrs of creating the Activity then send email</description>
+        <formula>AND( NSP_Opportunity__c &lt;&gt; &apos;&apos;, ISPICKVAL( NSP_Activity_type__c , &apos;Demo&apos;), NSP_Assigned_Sales_Engineer__c = &apos;&apos;, OR(NSP_Opportunity_Product_Type__c = &apos;WO&apos;,NSP_Opportunity_Product_Type__c = &apos;WX&apos;) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>NSP_Notify_When_Demo_Assignment_exceeds_SLA</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Task.CreatedDate</offsetFromField>
+            <timeLength>24</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
 </Workflow>

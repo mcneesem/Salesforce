@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
-   <alerts>
+    <alerts>
         <fullName>Email_Alert_for_IWA_20_Approval</fullName>
-       <description>Email Alert for IWA&gt;20% Approval</description>
+        <description>Email Alert for IWA&gt;20% Approval</description>
         <protected>false</protected>
         <recipients>
             <field>NSP_Finance_Group_Email__c</field>
@@ -65,7 +65,6 @@
     </alerts>
     <alerts>
         <fullName>NSP_Email_To_Opportunity_Owner_on_Quote_Approval</fullName>
-        <ccEmails>PwC_QA@insperity.com</ccEmails>
         <description>Email To Opportunity Owner on Quote Approval</description>
         <protected>false</protected>
         <recipients>

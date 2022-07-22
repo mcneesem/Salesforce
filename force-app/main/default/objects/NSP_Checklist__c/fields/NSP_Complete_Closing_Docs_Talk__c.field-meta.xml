@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Complete Closing Docs Talk</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

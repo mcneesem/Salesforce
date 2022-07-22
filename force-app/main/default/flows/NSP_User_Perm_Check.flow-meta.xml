@@ -539,7 +539,7 @@
             <targetReference>UserInfoAssign</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>varIsBPA</name>
         <dataType>Boolean</dataType>

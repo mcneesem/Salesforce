@@ -31,6 +31,11 @@
         <label>Insurance Services</label>
     </customValue>
     <customValue>
+        <fullName>Quickbooks Integration(Insperity Integra)</fullName>
+        <default>false</default>
+        <label>Integra</label>
+    </customValue>
+    <customValue>
         <fullName>Organizational Planning</fullName>
         <default>false</default>
         <label>Organizational Planning</label>
@@ -61,12 +66,6 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
-        <fullName>Payroll/Human Capital Management</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Payroll/Human Capital Management</label>
-    </customValue>
-    <customValue>
         <fullName>Bookkeeping Services</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -85,10 +84,10 @@
         <label>Full Service HR</label>
     </customValue>
     <customValue>
-        <fullName>Quickbooks Integration(Insperity Integra)</fullName>
+        <fullName>Payroll/Human Capital Management</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Quickbooks Integration(Insperity Integra)</label>
+        <label>Payroll/Human Capital Management</label>
     </customValue>
     <masterLabel>Product Interest</masterLabel>
     <sorted>false</sorted>

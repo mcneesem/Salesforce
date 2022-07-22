@@ -61,7 +61,7 @@
         <default>false</default>
         <label>Loyalty</label>
     </standardValue>
-	    <standardValue>
+    <standardValue>
         <fullName>DnB</fullName>
         <default>false</default>
         <label>DnB</label>

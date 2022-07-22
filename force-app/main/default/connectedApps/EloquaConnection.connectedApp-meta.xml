@@ -4,11 +4,11 @@
     <label>EloquaConnection</label>
     <oauthConfig>
         <callbackUrl>https://apps.p04.eloqua.com/eloqua/salesforce/callback</callbackUrl>
-        <consumerKey>3MVG9kBt168mda_9CJ70uoneNTL0jUMwYOruq3xl6C.LEjVxt5xlcPcGKgIZ150RYrlgj50eC2T19m5A5krUa</consumerKey>
+        <consumerKey>3MVG9FG3dvS828gL.pckzEFAegbxIJGAxtDLk8r.QcYCAwCebZJTYGcI7SzxSJLNz75zdfAPHwHpYmi5TBESe</consumerKey>
         <isAdminApproved>false</isAdminApproved>
         <isConsumerSecretOptional>false</isConsumerSecretOptional>
         <isIntrospectAllTokens>false</isIntrospectAllTokens>
-        <isSecretRequiredForRefreshToken>true</isSecretRequiredForRefreshToken>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
         <scopes>Basic</scopes>
         <scopes>Api</scopes>
         <scopes>Web</scopes>

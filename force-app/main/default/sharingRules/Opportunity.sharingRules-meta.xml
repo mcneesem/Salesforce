@@ -35,6 +35,20 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>NCS_Sales_Compensation_Opportunity_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>NCS Sales Compensation Opportunity Access</label>
+        <sharedTo>
+            <group>NSP_Sales_Compensation</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>StageName</field>
+            <operation>equals</operation>
+            <value>Closing,Closed Lost,Closed Won</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Sales_Operation_Manager_Opportunity_Share_Access</fullName>
         <accessLevel>Edit</accessLevel>
         <description>This is required for SEM to assign SE (Sales Engineer) as part of Opportunity team.</description>
@@ -48,20 +62,6 @@
             <value>Analysis,Proposal</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>NCS_Sales_Compensation_Opportunity_Access</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>NCS Sales Compensation Opportunity Access</label>
-        <sharedTo>
-            <group>NSP_Sales_Compensation</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>StageName</field>
-            <operation>equals</operation>
-            <value>Closed Lost,Closing,Closed Won</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>All_Opportunities_Edit_access_to_Finance_Users</fullName>

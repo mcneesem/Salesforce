@@ -20,4 +20,8 @@
         <errorMessage></errorMessage>
         <name>Number_of_EE_should_be_whole_number</name>
     </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Opportunity_Credit_Lock</name>
+    </validationRules>
 </CustomObjectTranslation>

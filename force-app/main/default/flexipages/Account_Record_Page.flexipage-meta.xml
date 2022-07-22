@@ -86,7 +86,7 @@
                         <valueListItems>
                             <value>Account.Referral_Log</value>
                         </valueListItems>
-                         <valueListItems>
+                        <valueListItems>
                             <value>Account.New_Address</value>
                         </valueListItems>
                         <valueListItems>
@@ -193,7 +193,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-             <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>displayConnections</name>
                     <value>true</value>
                 </componentInstanceProperties>

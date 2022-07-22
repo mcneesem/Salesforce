@@ -4,11 +4,11 @@
     <label>Dataiku_DSS</label>
     <oauthConfig>
         <callbackUrl>wdvapdssd01:11000/dip/api/oauth2-callback</callbackUrl>
-        <consumerKey>3MVG9kBt168mda_9CJ70uoneNTPaHoJy3LCYCTnKcYQy.5D7F3O3my2q8VHJJWORUaElhuVqJgKKWkLSxajUW</consumerKey>
+        <consumerKey>3MVG9FG3dvS828gL.pckzEFAegbxIJGAxtDLk.EaddwjDKknRo8AeD2SPA5HJhA1fy9cVXzreAg2vr.L4q7qC</consumerKey>
         <isAdminApproved>false</isAdminApproved>
         <isConsumerSecretOptional>false</isConsumerSecretOptional>
         <isIntrospectAllTokens>false</isIntrospectAllTokens>
-        <isSecretRequiredForRefreshToken>true</isSecretRequiredForRefreshToken>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
         <scopes>Basic</scopes>
         <scopes>Api</scopes>
         <scopes>Web</scopes>

@@ -100,7 +100,7 @@
                 <field>NSP_Terminating_WO_WS__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Requested_First_Check_Date__c</field>
             </layoutItems>
             <layoutItems>

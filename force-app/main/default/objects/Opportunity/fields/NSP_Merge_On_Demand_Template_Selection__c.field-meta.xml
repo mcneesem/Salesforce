@@ -23,26 +23,6 @@
                 <label>ClientServiceAgreement</label>
             </value>
             <value>
-                <fullName>ControlledGroupQuestionnaire</fullName>
-                <default>false</default>
-                <label>ControlledGroupQuestionnaire</label>
-            </value>
-            <value>
-                <fullName>NDAChannelPartner</fullName>
-                <default>false</default>
-                <label>NDAChannelPartner</label>
-            </value>
-            <value>
-                <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
-                <default>false</default>
-                <label>Enrollment Fee Single Payment Refundable</label>
-            </value>
-            <value>
-                <fullName>EnrollmentFeeMultiPaymentRefundable</fullName>
-                <default>false</default>
-                <label>Enrollment Fee Multi Payment Refundable</label>
-            </value>
-            <value>
                 <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
                 <default>false</default>
                 <label>Enrollment Fee Multi Payment Non Refundable</label>
@@ -65,11 +45,13 @@
             <value>
                 <fullName>AnalysisDocumentsOver50ee</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Analysis Documents Over 50 ee</label>
             </value>
             <value>
                 <fullName>AnalysisDocumentsUnder50ee</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Analysis Documents Under 50 ee</label>
             </value>
             <value>
@@ -127,10 +109,28 @@
                 <label>CommissionOnlyEmployeesQuestionnaire</label>
             </value>
             <value>
+                <fullName>ControlledGroupQuestionnaire</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ControlledGroupQuestionnaire</label>
+            </value>
+            <value>
                 <fullName>EmployeeRecordServiceandOFEAddendum</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>EmployeeRecordServiceandOFEAddendum</label>
+            </value>
+            <value>
+                <fullName>EnrollmentFeeMultiPaymentRefundable</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Enrollment Fee Multi Payment Refundable</label>
+            </value>
+            <value>
+                <fullName>EnrollmentFeeAddendumDocuSignSinglePayment</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Enrollment Fee Single Payment Refundable</label>
             </value>
             <value>
                 <fullName>EnrollmentFeeAddendumDocuSignMultiPayment</fullName>
@@ -185,6 +185,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MidMarketBPCSaleSheet</label>
+            </value>
+            <value>
+                <fullName>NDAChannelPartner</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NDAChannelPartner</label>
             </value>
             <value>
                 <fullName>NDA_WetSignature</fullName>

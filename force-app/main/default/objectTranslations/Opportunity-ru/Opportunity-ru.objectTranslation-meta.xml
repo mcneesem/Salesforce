@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label></label>
+        <name>pse__OppDetailOnRRFromTemplateFieldSet</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>pse__Opportunity_Fields_For_Rate_Card_Set</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>sbaa__DealDesk</name>
+    </fieldSets>
     <layouts>
         <layout>BPA Opportunity Layout</layout>
         <sections>
@@ -230,6 +242,33 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Sales Operations Locked Opportunity 0322</layout>
+        <sections>
+            <label></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Deal Detail</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Enrollment Fee Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Premier Pathway</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Rewards Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Sales Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Support Locked Opportunity</layout>
         <sections>
             <label></label>
@@ -342,11 +381,23 @@
         <layout>Support Opportunity Layout 0322</layout>
         <sections>
             <label></label>
+            <section>Admin Support Fields</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Bid Details</section>
+        </sections>
+        <sections>
+            <label></label>
             <section>CPQ Document Details</section>
         </sections>
         <sections>
             <label></label>
-            <section>Document Details</section>
+            <section>Closing Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Docusign</section>
         </sections>
         <sections>
             <label></label>
@@ -358,23 +409,11 @@
         </sections>
         <sections>
             <label></label>
-            <section>Not Mapped to UI</section>
+            <section>Reason Lost</section>
         </sections>
         <sections>
             <label></label>
-            <section>Opportunity Closure</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Opportunity Investigation</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Opportunity Proposition</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Opportunity Won</section>
+            <section>Sales Support Details</section>
         </sections>
     </layouts>
     <quickActions>
@@ -424,6 +463,10 @@
     </validationRules>
     <validationRules>
         <errorMessage></errorMessage>
+        <name>LID__Check_Company_Id_Value</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
         <name>NCS_Locked_Opportunity_Backout_Access</name>
     </validationRules>
     <validationRules>
@@ -448,6 +491,10 @@
     </validationRules>
     <validationRules>
         <errorMessage></errorMessage>
+        <name>Only_NCS_can_Edit_Forecast_Category</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
         <name>Only_NCS_can_mark_opportunity_as_C_Won</name>
     </validationRules>
     <validationRules>
@@ -464,7 +511,19 @@
     </validationRules>
     <validationRules>
         <errorMessage></errorMessage>
+        <name>Restrict_to_edit_the_close_date_by_SE</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
         <name>Restrict_to_edit_the_stage_name_by_SE</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>pse__Discount_Rates_Must_Be_Between_0_to_100</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>pse__Opp_Rate_Card_Set_Currency_Mismatch</name>
     </validationRules>
     <webLinks>
         <label></label>
@@ -492,6 +551,58 @@
     </webLinks>
     <webLinks>
         <label></label>
+        <name>SBQQ__Amend_Assets</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>SBQQ__Amend_Contract</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>SBQQ__CreateOrder</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>SBQQ__Include_Document</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
         <name>SendWithDocuSign</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>XactlyCorp__Estimate_Incentives_Prod</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pse__Apply_Rate_Card_Discount</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pse__Create_Change_Request</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pse__Create_Project</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pse__Run_Revenue_Forecast</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>sbaa__PreviewApprovals</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>sbaa__RecallApprovals</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>sbaa__ResendRequestEmail</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>sbaa__SubmitForApproval</name>
     </webLinks>
 </CustomObjectTranslation>
