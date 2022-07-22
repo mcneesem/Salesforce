@@ -42,4 +42,8 @@
         <name>NSP_Sold_to_Paid_Checklist</name>
     </recordTypes>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Can_not_create_Booking_Checklist</name>
+    </validationRules>
 </CustomObjectTranslation>

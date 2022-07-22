@@ -1333,6 +1333,11 @@
             <field>NSP_Activity_Type_Reporting__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Upsell_Product_of_Interest__c</field>
+            <table>Opportunity.Activities__r</table>
+        </columns>
         <masterLabel>Activities</masterLabel>
     </sections>
 </ReportType>

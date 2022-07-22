@@ -16,19 +16,14 @@
     <columns>OPPORTUNITY.CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>NSP_Running_Sales_Office__c</field>
-        <operation>equals</operation>
-        <value>1</value>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>notEqual</operation>
+        <value>Closed Lost</value>
     </filters>
     <filters>
         <field>OPPORTUNITY.STAGE_NAME</field>
-        <operation>equals</operation>
-        <value>Proposal</value>
-    </filters>
-    <filters>
-        <field>NSP_PrimaryProduct__c</field>
-        <operation>equals</operation>
-        <value>WO</value>
+        <operation>notEqual</operation>
+        <value>Closed Won</value>
     </filters>
     <label>All Opportunities</label>
 </ListView>

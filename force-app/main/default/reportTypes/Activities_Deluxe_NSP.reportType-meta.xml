@@ -382,6 +382,11 @@ Each record in this Report represents an Activity;</description>
             <field>NSP_Opportunity__c.NSP_LoyaltyProgram__c</field>
             <table>Activity</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Upsell_Product_of_Interest__c</field>
+            <table>Activity</table>
+        </columns>
         <masterLabel>Activities</masterLabel>
     </sections>
     <sections>

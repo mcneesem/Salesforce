@@ -459,7 +459,7 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity__c.NSP_PrimaryProduct__c</field>
+            <field>NSP_Sales_Office__c</field>
             <table>NSP_Employee_Split__c</table>
         </columns>
         <masterLabel>Opportunity Credits</masterLabel>

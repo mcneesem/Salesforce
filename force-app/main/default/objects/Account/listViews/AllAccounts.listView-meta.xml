@@ -8,6 +8,7 @@
     <columns>CORE.USERS.FIRST_NAME</columns>
     <columns>CORE.USERS.LAST_NAME</columns>
     <columns>ACCOUNT.CREATED_DATE</columns>
+    <columns>NSP_Sales_Office__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>NSP_Running_Sales_Office__c</field>

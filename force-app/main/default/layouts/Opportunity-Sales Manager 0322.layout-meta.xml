@@ -612,16 +612,6 @@
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.NSP_Create_Checklist</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Opportunity.NSP_CreateQuote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>22</sortOrder>
@@ -630,6 +620,16 @@
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.NSP_Create_Checklist</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -691,8 +691,8 @@
         <fields>NSP_Team_Member__c</fields>
         <fields>NSP_Percent_Split__c</fields>
         <fields>NSP_Number_of_Employees__c</fields>
-        <fields>NSP_Office_Assignment__c</fields>
-        <fields>NSP_Enrollment_Fee__c</fields>
+        <fields>NSP_Sales_Office__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>

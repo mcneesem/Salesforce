@@ -3,23 +3,7 @@
     <label></label>
     <name>NSP_Merge_On_Demand_Template_Selection__c</name>
     <picklistValues>
-        <masterLabel>Analysis Documents Over 50 ee</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Analysis Documents Under 50 ee</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>CafeteriaPlanQuestionnaireWorksheet</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
         <masterLabel>ClientServiceAgreement</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>ControlledGroupQuestionnaire</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
@@ -28,14 +12,6 @@
     </picklistValues>
     <picklistValues>
         <masterLabel>Enrollment Fee Multi Payment Non Refundable</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Enrollment Fee Multi Payment Refundable</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Enrollment Fee Single Payment Refundable</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
@@ -48,10 +24,6 @@
     </picklistValues>
     <picklistValues>
         <masterLabel>NDA</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>NDAChannelPartner</masterLabel>
         <translation></translation>
     </picklistValues>
 </CustomFieldTranslation>

@@ -30,7 +30,7 @@ public class NSP_AccountTriggerHelperTest {
          UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
          Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
          UserRole DARole = [SELECT Id FROM UserRole WHERE Name = 'District Administrator'];
- 	List<User> users = new List<User>();
+   List<User> users = new List<User>();
         //Creating User
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Integration User'][0].Id,

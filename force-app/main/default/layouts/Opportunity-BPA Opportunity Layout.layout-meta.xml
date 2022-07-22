@@ -453,6 +453,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>13</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Opportunity.NSP_GenerateDoc</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -516,11 +521,6 @@
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>12</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Edit</actionName>
@@ -658,7 +658,7 @@
         <fields>NSP_Team_Member__c</fields>
         <fields>NSP_Percent_Split__c</fields>
         <fields>NSP_Number_of_Employees__c</fields>
-        <fields>NSP_Office_Assignment__c</fields>
+        <fields>NSP_Sales_Office__c</fields>
         <fields>CURRENCY_ISO_CODE</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
@@ -763,7 +763,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2D000003Wcwp</masterLabel>
+        <masterLabel>00h4x000005h6Yg</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -28,13 +28,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>VarAccountTeammember.NSP_Sales_Office__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Sales_Office</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>VarAccountTeammember.NSP_PER_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -163,6 +156,15 @@
             <label>userID Matches member</label>
         </rules>
     </decisions>
+    <dynamicChoiceSets>
+        <description>Sales Office</description>
+        <name>nsp_sales_office</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NSP_Sales_Office__c</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>ProductType</name>
         <dataType>Picklist</dataType>
@@ -373,10 +375,11 @@
                 <name>Account_Team_Addition_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Sales_Office</name>
+                    <name>Sales_Office_test</name>
+                    <choiceReferences>nsp_sales_office</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Sales Office</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>

@@ -12,19 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>ReferralProgramAssociations</fullName>
-                <default>false</default>
-                <label>ReferralProgramAssociations</label>
-            </value>
-            <value>
-                <fullName>ReferralProgramIII</fullName>
-                <default>false</default>
-                <label>ReferralProgramIII</label>
-            </value>
-            <value>
                 <fullName>MarketingReferalAllianceAgreement</fullName>
                 <default>false</default>
                 <label>MarketingReferalAllianceAgreement</label>
+            </value>
+            <value>
+                <fullName>NDAChannelPartner</fullName>
+                <default>false</default>
+                <label>NDAChannelPartner</label>
             </value>
             <value>
                 <fullName>referralProgramAF-I</fullName>
@@ -37,9 +32,19 @@
                 <label>ReferralProgramAF-II</label>
             </value>
             <value>
+                <fullName>ReferralProgramAssociations</fullName>
+                <default>false</default>
+                <label>ReferralProgramAssociations</label>
+            </value>
+            <value>
                 <fullName>ReferralProgramChamberBanks</fullName>
                 <default>false</default>
                 <label>Referral Program Chamber Banks</label>
+            </value>
+            <value>
+                <fullName>ReferralProgramIII</fullName>
+                <default>false</default>
+                <label>ReferralProgramIII</label>
             </value>
             <value>
                 <fullName>ReferralProgramNationalNonRevShare</fullName>

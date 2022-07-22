@@ -53,4 +53,12 @@
             <section>Billing and Shipping Information</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>SBQQ__Cannot_Contract_New_Order</name>
+    </validationRules>
+    <webLinks>
+        <label></label>
+        <name>SBQQ__EditOrderProducts</name>
+    </webLinks>
 </CustomObjectTranslation>
