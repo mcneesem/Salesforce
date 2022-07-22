@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DnB_Prefix__c</fullName>
+    <description>STY-01874 - DnB Optimizer integrated field. Mapped during Lead Conversion.</description>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
+    <inlineHelpText>The correct form of address for the individual (e.g., Dr., Professor, Lord).</inlineHelpText>
+    <label>D&amp;B Prefix</label>
+    <length>30</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

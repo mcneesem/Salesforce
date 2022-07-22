@@ -1,0 +1,47 @@
+<messaging:emailTemplate subject="DKG - NEW CLIENT DOWNLOADED / {!RelatedTo.Account.Name} / {!RelatedTo.Account.Client_Number_TA__c} / {!RelatedTo.NSP_BidVersion__c}" recipientType="User" relatedToType="Opportunity">
+  <messaging:htmlEmailBody >
+    <html>
+    <head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+      <body>
+        <p> Congrats on this booking,!!</p>
+        <p>{!RelatedTo.Account.Client_Number_TA__c} - {!RelatedTo.NSP_BidVersion__c}</p>
+        <p>{!RelatedTo.NSP_PrimaryProduct__c}  </p>  
+      
+        <table>
+          <tr>
+            <th align="left">
+              Product
+            </th>
+            <th align="left">
+              Quantity
+            </th>
+            <th align="left">
+              Sales Price
+            </th>
+          </tr>
+          <apex:repeat value="{!RelatedTo.OpportunityLineItems}" var="lineItem">
+            <tr>
+              <td>
+                {!lineItem.Product2.Name}
+              </td>
+              <td>
+                {!lineItem.Quantity}
+              </td>
+              <td>
+                {!lineItem.UnitPrice}
+              </td>
+            </tr>
+          </apex:repeat>
+        </table>      <br/>
+     This client will receive XML upload or WebPayroll. If this is not correct and the client needs Premier Timesheet or Premier Time and Attendance, please engage a sales engineer to determine the correct option for them.
+      </body>
+    </html>
+  </messaging:htmlEmailBody>
+</messaging:emailTemplate>

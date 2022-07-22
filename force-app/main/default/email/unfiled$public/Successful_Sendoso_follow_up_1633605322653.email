@@ -1,0 +1,12 @@
+<html><head>
+	<title></title>
+</head>
+<body style="height: auto; min-height: auto;">Hi {{{Recipient.FirstName}}},<br />
+<br />
+Great to hear you connected with my partner. As promised, find the link to your $25 eGift card that you an redeem to give back to a 401C non-profit in your neighborhood.<br />
+<br />
+Let me know if you can help with anything or if you have questions about how to redeem your funds.<br />
+<br />
+Thanks,<br />
+<br />
+{{{Sender.Signature}}}</body></html>

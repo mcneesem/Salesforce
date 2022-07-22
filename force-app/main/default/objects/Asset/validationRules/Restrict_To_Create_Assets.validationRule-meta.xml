@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_To_Create_Assets</fullName>
+    <active>true</active>
+    <description>restricting to create Asset is WO.</description>
+    <errorConditionFormula>AND(Product2.Name=&apos;Workforce Optimization&apos;,
+NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
+$Profile.Name = &quot;Data Migration&quot;,
+$Profile.Name = &quot;Sales Administrator&quot;,
+$Profile.Name = &quot;Integration User&quot;)))</errorConditionFormula>
+    <errorMessage>You don&apos;t have permission to create/edit Asset record.</errorMessage>
+</ValidationRule>

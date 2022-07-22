@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Southwestern</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Sales_Offices__c</field>
+        <value xsi:type="xsd:string">0302 Phoenix 2
+2901 Las Vegas 1
+4801 Seattle 1
+0501 Los Angeles 1
+0502 Los Angeles 2
+0503 Los Angeles 3
+0504 Los Angeles 4
+0505 Los Angeles 5
+0506 Los Angeles 6
+0540 San Diego 1
+0541 San Diego 2</value>
+    </values>
+    <values>
+        <field>NSP_Service_Team_Email__c</field>
+        <value xsi:type="xsd:string">westernsouthservicenotifications@insperity.com</value>
+    </values>
+</CustomMetadata>

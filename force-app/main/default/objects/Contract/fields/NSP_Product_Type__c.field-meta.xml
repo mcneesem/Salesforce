@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Product_Type__c</fullName>
+    <description>To store Priduct Type from Quote on contract.</description>
+    <externalId>false</externalId>
+    <label>Product Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HR Consulting Services</fullName>
+                <default>false</default>
+                <label>HR Consulting Services</label>
+            </value>
+            <value>
+                <fullName>IPS</fullName>
+                <default>false</default>
+                <label>IPS</label>
+            </value>
+            <value>
+                <fullName>iSolved Hardware</fullName>
+                <default>false</default>
+                <label>iSolved Hardware</label>
+            </value>
+            <value>
+                <fullName>Lasso</fullName>
+                <default>false</default>
+                <label>Lasso</label>
+            </value>
+            <value>
+                <fullName>Learning and Development</fullName>
+                <default>false</default>
+                <label>Learning and Development</label>
+            </value>
+            <value>
+                <fullName>Organizational Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Sage Time and Attendance/OrgPlus</fullName>
+                <default>false</default>
+                <label>Sage Time and Attendance/OrgPlus</label>
+            </value>
+            <value>
+                <fullName>Talent Connect</fullName>
+                <default>false</default>
+                <label>Talent Connect</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance</fullName>
+                <default>false</default>
+                <label>Time and Attendance</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance Cloud-Based</fullName>
+                <default>false</default>
+                <label>Time and Attendance Cloud-Based</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance Hardware</fullName>
+                <default>false</default>
+                <label>Time and Attendance Hardware</label>
+            </value>
+            <value>
+                <fullName>Workforce Acceleration</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration</label>
+            </value>
+            <value>
+                <fullName>Workforce Administration</fullName>
+                <default>false</default>
+                <label>Workforce Administration</label>
+            </value>
+            <value>
+                <fullName>WOSS</fullName>
+                <default>false</default>
+                <label>WOSS</label>
+            </value>
+            <value>
+                <fullName>WS Consulting Services</fullName>
+                <default>false</default>
+                <label>WS Consulting Services</label>
+            </value>
+            <value>
+                <fullName>Additional Timestar Products</fullName>
+                <default>false</default>
+                <label>Additional Timestar Products</label>
+            </value>
+            <value>
+                <fullName>WO Retirement Services</fullName>
+                <default>false</default>
+                <label>WO Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Choice Retirement Services</fullName>
+                <default>false</default>
+                <label>Choice Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Supplemental</fullName>
+                <default>false</default>
+                <label>Supplemental</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

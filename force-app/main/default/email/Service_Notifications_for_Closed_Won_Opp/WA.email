@@ -1,0 +1,32 @@
+This WA client is now booked and ready for implementation. Please see the necessary documents attached. 
+
+{!Opportunity.OwnerFirstName} –
+Congrats on this deal! 
+These WX deals have been booked for {!Opportunity.NSP_Booked_Month__c}.
+
+**NEXT STEPS**
+•	Within two business days a Project Manager will be assigned to this implementation 
+•	Once assigned, the Project Manager will contact the client with the Welcome Email requesting a time for the Kick-Off Call 
+•	BPA will be included in this communication and on the initial Kick-Off Call as an optional participant 
+
+For any questions on the process or next steps please contact TESintake@insperity.com 
+
+Additional Implementation Details: 
+(Data to be pulled from a text field on the Opportunity)[Text field to allow bullet points]
+
+Salesforce Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
+
+Thank you,
+
+{!User.Name}
+
+ATTACHED TO THIS EMAIL: Delivery Order
+
+***Recipients***
+In TO Line: BPA, DA, DM, RM
+ITAOrderProcessing@insperity.com
+
+Send emails to the below based on additional Products:
+Organizational Planning: bpskwinfo@insperity.com
+Performance Management bpskwinfo@insperity.com

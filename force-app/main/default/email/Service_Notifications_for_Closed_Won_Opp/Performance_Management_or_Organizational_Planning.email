@@ -1,0 +1,20 @@
+Please see an attached Delivery Order for {!Opportunity.Account} with a relationship to Insperity of {!Opportunity.NSP_Client_For_Life__c}.
+
+Additional Implementation Details: (If Needed)
+
+AIMS#: {!Account.NSP_AIMS_Client__c}
+Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
+
+Thank you,
+
+{!User.Name}
+
+ATTACHED TO THIS EMAIL: Delivery Order
+
+***Recipients***
+In TO Line: BPA, DA, DM, RM
+BPSKWInfo@insperity.com
+
+In CC Line: 
+If Opportunity Product contains Time & Attendance products also include ITAOrderProcessing@insperity.com

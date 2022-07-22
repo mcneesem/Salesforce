@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>WO RJ Advisor Booking</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Email_Template_Name_API__c</field>
+        <value xsi:type="xsd:string">NSP_WO_RJ_Advisor_Booking</value>
+    </values>
+    <values>
+        <field>NSP_Is_MidMarket__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_MidMarket_National_Account__c</field>
+        <value xsi:type="xsd:string">Raymond James Advisor</value>
+    </values>
+    <values>
+        <field>NSP_OpportunityProduct__c</field>
+        <value xsi:type="xsd:string">WO</value>
+    </values>
+    <values>
+        <field>NSP_RecipientEmailIds_CC__c</field>
+        <value xsi:type="xsd:string">Keith.Simmons@invalid.com,Michael.Cassidy@invalid.com,Shea.Brown@invalid.com,TheNationalAccountsServiceTeam@invalid.com,orientation_request@invalid.com,OrientationCoordinators@invalid.com,sten.Renton@invalid.com</value>
+    </values>
+    <values>
+        <field>NSP_Recipients_Email_Ids_TO__c</field>
+        <value xsi:type="xsd:string">RJadvisors@insperity.com.invalid,Todd.Bidwell@insperity.com.invalid,Heath.Goudreau@insperity.com.invalid,R.B.Ellis@insperity.com.invalid,ITAOrderProcessing@insperity.com.invalid</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>sbaa__TestedField__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Field tested when evaluating the Condition</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Field tested when evaluating the Condition</inlineHelpText>
+    <label>Tested Field</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Name</fullName>
+                <default>false</default>
+                <label>Name</label>
+            </value>
+            <value>
+                <fullName>Amount</fullName>
+                <default>false</default>
+                <label>Amount</label>
+            </value>
+            <value>
+                <fullName>Probability</fullName>
+                <default>false</default>
+                <label>Probability</label>
+            </value>
+            <value>
+                <fullName>NSP_Submitted_User_Role__c</fullName>
+                <default>false</default>
+                <label>NSP_Submitted_User_Role__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Has_WA_product__c</fullName>
+                <default>false</default>
+                <label>NSP_Has_WA_product__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Has_WX_product__c</fullName>
+                <default>false</default>
+                <label>NSP_Has_WX_product__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Free_Month__c</fullName>
+                <default>false</default>
+                <label>NSP_Free_Month__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Threshold_Percentage__c</fullName>
+                <default>false</default>
+                <label>NSP_Threshold_Percentage__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Minimum_Fee_Discount__c</fullName>
+                <default>false</default>
+                <label>NSP_Minimum_Fee_Discount__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Submitted_User_Role_L2__c</fullName>
+                <default>false</default>
+                <label>NSP_Submitted_User_Role_L2__c</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

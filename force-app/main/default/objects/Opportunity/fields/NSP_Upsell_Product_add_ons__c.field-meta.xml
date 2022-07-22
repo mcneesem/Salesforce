@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Upsell_Product_add_ons__c</fullName>
+    <description>Field to store upsell and add on products</description>
+    <externalId>false</externalId>
+    <label>Upsell Product add-ons</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BPS</fullName>
+                <default>false</default>
+                <label>BPS</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Insurance Services (Health &amp; Wellness)</fullName>
+                <default>false</default>
+                <label>Insurance Services (Health &amp; Wellness)</label>
+            </value>
+            <value>
+                <fullName>Insurance Services (Property &amp; Casualty)</fullName>
+                <default>false</default>
+                <label>Insurance Services (Property &amp; Casualty)</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Insurance Services</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

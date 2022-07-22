@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>301</fullName>
+        <default>false</default>
+        <label>0301 Phoenix 1</label>
+    </customValue>
+    <customValue>
+        <fullName>302</fullName>
+        <default>false</default>
+        <label>0302 Phoenix 2</label>
+    </customValue>
+    <customValue>
+        <fullName>501</fullName>
+        <default>false</default>
+        <label>0501 Los Angeles 1</label>
+    </customValue>
+    <customValue>
+        <fullName>502</fullName>
+        <default>false</default>
+        <label>0502 Los Angeles 2</label>
+    </customValue>
+    <customValue>
+        <fullName>503</fullName>
+        <default>false</default>
+        <label>0503 Los Angeles 3</label>
+    </customValue>
+    <customValue>
+        <fullName>504</fullName>
+        <default>false</default>
+        <label>0504 Los Angeles 4</label>
+    </customValue>
+    <customValue>
+        <fullName>505</fullName>
+        <default>false</default>
+        <label>0505 Los Angeles 5</label>
+    </customValue>
+    <customValue>
+        <fullName>506</fullName>
+        <default>false</default>
+        <label>0506 Los Angeles 6</label>
+    </customValue>
+    <customValue>
+        <fullName>507</fullName>
+        <default>false</default>
+        <label>0507 Los Angeles 7</label>
+    </customValue>
+    <customValue>
+        <fullName>508</fullName>
+        <default>false</default>
+        <label>0508 Los Angeles 8</label>
+    </customValue>
+    <customValue>
+        <fullName>520</fullName>
+        <default>false</default>
+        <label>0520 San Francisco 1</label>
+    </customValue>
+    <customValue>
+        <fullName>522</fullName>
+        <default>false</default>
+        <label>0522 San Francisco 3</label>
+    </customValue>
+    <customValue>
+        <fullName>521</fullName>
+        <default>false</default>
+        <label>0521 San Francisco 2</label>
+    </customValue>
+    <customValue>
+        <fullName>523</fullName>
+        <default>false</default>
+        <label>0523 San Francisco 4</label>
+    </customValue>
+    <customValue>
+        <fullName>540</fullName>
+        <default>false</default>
+        <label>0540 San Diego 1</label>
+    </customValue>
+    <customValue>
+        <fullName>541</fullName>
+        <default>false</default>
+        <label>0541 San Diego 2</label>
+    </customValue>
+    <customValue>
+        <fullName>561</fullName>
+        <default>false</default>
+        <label>0561 San Jose 1</label>
+    </customValue>
+    <customValue>
+        <fullName>581</fullName>
+        <default>false</default>
+        <label>0581 Sacramento 1</label>
+    </customValue>
+    <customValue>
+        <fullName>601</fullName>
+        <default>false</default>
+        <label>0601 Denver 1</label>
+    </customValue>
+    <customValue>
+        <fullName>602</fullName>
+        <default>false</default>
+        <label>0602 Denver 2</label>
+    </customValue>
+    <customValue>
+        <fullName>701</fullName>
+        <default>false</default>
+        <label>0701 Stamford 1</label>
+    </customValue>
+    <customValue>
+        <fullName>801</fullName>
+        <default>false</default>
+        <label>801 Delaware 1</label>
+    </customValue>
+    <customValue>
+        <fullName>901</fullName>
+        <default>false</default>
+        <label>901 Washington DC 1</label>
+    </customValue>
+    <customValue>
+        <fullName>902</fullName>
+        <default>false</default>
+        <label>0902 Washington DC 2</label>
+    </customValue>
+    <customValue>
+        <fullName>903</fullName>
+        <default>false</default>
+        <label>0903 Washington DC 3</label>
+    </customValue>
+    <customValue>
+        <fullName>1001</fullName>
+        <default>false</default>
+        <label>1001 Orlando 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1021</fullName>
+        <default>false</default>
+        <label>1021 Jacksonville 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1041</fullName>
+        <default>false</default>
+        <label>1041 Ft Lauderdale 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1061</fullName>
+        <default>false</default>
+        <label>1061 Tampa 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1081</fullName>
+        <default>false</default>
+        <label>1081 Miami 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1101</fullName>
+        <default>false</default>
+        <label>1101 Atlanta 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1102</fullName>
+        <default>false</default>
+        <label>1102 Atlanta 2</label>
+    </customValue>
+    <customValue>
+        <fullName>1103</fullName>
+        <default>false</default>
+        <label>1103 Atlanta 3</label>
+    </customValue>
+    <customValue>
+        <fullName>1104</fullName>
+        <default>false</default>
+        <label>1104 Atlanta 4</label>
+    </customValue>
+    <customValue>
+        <fullName>1400</fullName>
+        <default>false</default>
+        <label>1400 Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>1401</fullName>
+        <default>false</default>
+        <label>1401 Chicago 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1402</fullName>
+        <default>false</default>
+        <label>1402 Chicago 2</label>
+    </customValue>
+    <customValue>
+        <fullName>1403</fullName>
+        <default>false</default>
+        <label>1403 Chicago 3</label>
+    </customValue>
+    <customValue>
+        <fullName>1404</fullName>
+        <default>false</default>
+        <label>1404 Chicago 4</label>
+    </customValue>
+    <customValue>
+        <fullName>1405</fullName>
+        <default>false</default>
+        <label>1405 Chicago 5</label>
+    </customValue>
+    <customValue>
+        <fullName>1406</fullName>
+        <default>false</default>
+        <label>1406 Chicago 6</label>
+    </customValue>
+    <customValue>
+        <fullName>1501</fullName>
+        <default>false</default>
+        <label>1501 Indianapolis 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1701</fullName>
+        <default>false</default>
+        <label>1701 Kansas City 1</label>
+    </customValue>
+    <customValue>
+        <fullName>1702</fullName>
+        <default>false</default>
+        <label>1702 Kansas City 2</label>
+    </customValue>
+    <customValue>
+        <fullName>1901</fullName>
+        <default>false</default>
+        <label>1901 Louisiana 1</label>
+    </customValue>
+    <customValue>
+        <fullName>2100</fullName>
+        <default>false</default>
+        <label>2100 Maryland 1</label>
+    </customValue>
+    <customValue>
+        <fullName>2101</fullName>
+        <default>false</default>
+        <label>2101 Maryland 2</label>
+    </customValue>
+    <customValue>
+        <fullName>2110</fullName>
+        <default>false</default>
+        <label>2110 Maryland Blunt</label>
+    </customValue>
+    <customValue>
+        <fullName>2200</fullName>
+        <default>false</default>
+        <label>2200 Boston 1</label>
+    </customValue>
+    <customValue>
+        <fullName>2201</fullName>
+        <default>false</default>
+        <label>2201 Boston 2</label>
+    </customValue>
+    <customValue>
+        <fullName>2202</fullName>
+        <default>false</default>
+        <label>2202 Boston 3</label>
+    </customValue>
+    <customValue>
+        <fullName>2203</fullName>
+        <default>false</default>
+        <label>2203 Boston 4</label>
+    </customValue>
+    <customValue>
+        <fullName>2400</fullName>
+        <default>false</default>
+        <label>2400 Minneapolis 1</label>
+    </customValue>
+    <customValue>
+        <fullName>2401</fullName>
+        <default>false</default>
+        <label>2401 Minneapolis 2</label>
+    </customValue>
+    <customValue>
+        <fullName>2402</fullName>
+        <default>false</default>
+        <label>2402 Minneapolis 3</label>
+    </customValue>
+    <customValue>
+        <fullName>2601</fullName>
+        <default>false</default>
+        <label>2601 St Louis 1</label>
+    </customValue>
+    <customValue>
+        <fullName>2602</fullName>
+        <default>false</default>
+        <label>2602 St Louis 2</label>
+    </customValue>
+    <customValue>
+        <fullName>2901</fullName>
+        <default>false</default>
+        <label>2901 Las Vegas 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3101</fullName>
+        <default>false</default>
+        <label>3101 New Jersey 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3102</fullName>
+        <default>false</default>
+        <label>3102 New Jersey 2</label>
+    </customValue>
+    <customValue>
+        <fullName>3103</fullName>
+        <default>false</default>
+        <label>3103 New Jersey 3</label>
+    </customValue>
+    <customValue>
+        <fullName>3300</fullName>
+        <default>false</default>
+        <label>3300 New York 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3301</fullName>
+        <default>false</default>
+        <label>3301 New York 2</label>
+    </customValue>
+    <customValue>
+        <fullName>3302</fullName>
+        <default>false</default>
+        <label>3302 New York 3</label>
+    </customValue>
+    <customValue>
+        <fullName>3303</fullName>
+        <default>false</default>
+        <label>3303 New York 4</label>
+    </customValue>
+    <customValue>
+        <fullName>3304</fullName>
+        <default>false</default>
+        <label>3304 New York 5</label>
+    </customValue>
+    <customValue>
+        <fullName>3305</fullName>
+        <default>false</default>
+        <label>3305 New York 6</label>
+    </customValue>
+    <customValue>
+        <fullName>3401</fullName>
+        <default>false</default>
+        <label>3401 Charlotte 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3421</fullName>
+        <default>false</default>
+        <label>3421 Raleigh-Durham 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3601</fullName>
+        <default>false</default>
+        <label>3601 Columbus 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3621</fullName>
+        <default>false</default>
+        <label>3621 Cincinnati 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3701</fullName>
+        <default>false</default>
+        <label>3701 Oklahoma City 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3801</fullName>
+        <default>false</default>
+        <label>3801 Portland 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3901</fullName>
+        <default>false</default>
+        <label>3901 Philadelphia 1</label>
+    </customValue>
+    <customValue>
+        <fullName>3902</fullName>
+        <default>false</default>
+        <label>3902 Philadelphia 2</label>
+    </customValue>
+    <customValue>
+        <fullName>3921</fullName>
+        <default>false</default>
+        <label>3921 Pittsburgh 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4001</fullName>
+        <default>false</default>
+        <label>4001 Providence 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4101</fullName>
+        <default>false</default>
+        <label>4101 Greenville 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4301</fullName>
+        <default>false</default>
+        <label>4301 Nashville 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4400</fullName>
+        <default>false</default>
+        <label>4400 Corporate</label>
+    </customValue>
+    <customValue>
+        <fullName>4401</fullName>
+        <default>false</default>
+        <label>4401 Houston 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4402</fullName>
+        <default>false</default>
+        <label>4402 Austin 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4403</fullName>
+        <default>false</default>
+        <label>4403 San Antonio 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4404</fullName>
+        <default>false</default>
+        <label>4404 Dallas 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4405</fullName>
+        <default>false</default>
+        <label>4405 Houston 2</label>
+    </customValue>
+    <customValue>
+        <fullName>4406</fullName>
+        <default>false</default>
+        <label>4406 Dallas 2</label>
+    </customValue>
+    <customValue>
+        <fullName>4407</fullName>
+        <default>false</default>
+        <label>4407 Houston 3</label>
+    </customValue>
+    <customValue>
+        <fullName>4408</fullName>
+        <default>false</default>
+        <label>4408 Ft Worth 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4409</fullName>
+        <default>false</default>
+        <label>4409 Houston 4</label>
+    </customValue>
+    <customValue>
+        <fullName>4410</fullName>
+        <default>false</default>
+        <label>4410 Dallas 3</label>
+    </customValue>
+    <customValue>
+        <fullName>4411</fullName>
+        <default>false</default>
+        <label>4411 Houston 5</label>
+    </customValue>
+    <customValue>
+        <fullName>4412</fullName>
+        <default>false</default>
+        <label>4412 Dallas 4</label>
+    </customValue>
+    <customValue>
+        <fullName>4413</fullName>
+        <default>false</default>
+        <label>4413 Houston 6</label>
+    </customValue>
+    <customValue>
+        <fullName>4414</fullName>
+        <default>false</default>
+        <label>4414 Austin 2</label>
+    </customValue>
+    <customValue>
+        <fullName>4415</fullName>
+        <default>false</default>
+        <label>4415 Dallas 5</label>
+    </customValue>
+    <customValue>
+        <fullName>4416</fullName>
+        <default>false</default>
+        <label>4416 Houston 7</label>
+    </customValue>
+    <customValue>
+        <fullName>4466</fullName>
+        <default>false</default>
+        <label>4466 Inside Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>4477</fullName>
+        <default>false</default>
+        <label>4477 WA Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>4499</fullName>
+        <default>false</default>
+        <label>4499 Mid Market</label>
+    </customValue>
+    <customValue>
+        <fullName>4501</fullName>
+        <default>false</default>
+        <label>4501 Salt Lake City 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4701</fullName>
+        <default>false</default>
+        <label>4701 Norfolk 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4801</fullName>
+        <default>false</default>
+        <label>4801 Seattle 1</label>
+    </customValue>
+    <customValue>
+        <fullName>5001</fullName>
+        <default>false</default>
+        <label>5001 Milwaukee 1</label>
+    </customValue>
+    <masterLabel>Sales Offices</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

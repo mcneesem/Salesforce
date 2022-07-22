@@ -1,0 +1,20 @@
+Please see an attached Delivery Order for {!Opportunity.Account} with a relationship to Insperity of {!Opportunity.NSP_Client_For_Life__c}.
+
+Additional Implementation Details: (If Needed)
+
+AIMS#: {!Account.NSP_AIMS_Client__c}
+Opportunity Link: {!Opportunity.Link}
+Salesforce Account ID: {!Account.Id}
+
+Thank you,
+
+{!User.Name}
+
+
+** Instructions: 
+1.) Address To: line to BPA, DA, DM, RM and
+insperity.talentconnect@insperity.com
+2.) cut and paste recruiting.billing@insperity to the CC: line
+3.) Attach Delivery Order
+4.) Delete the instructions block
+** End Instructions

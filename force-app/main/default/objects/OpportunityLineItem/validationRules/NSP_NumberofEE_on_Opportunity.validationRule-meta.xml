@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_NumberofEE_on_Opportunity</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (ISPICKVAL(Opportunity.NSP_PrimaryProduct__c , &quot;WO&quot;),ISBLANK(Opportunity.NSP_Number_of_Employees__c),NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c))</errorConditionFormula>
+    <errorMessage>Number of employees cannot be blank on opportunity</errorMessage>
+</ValidationRule>

@@ -1,0 +1,1 @@
+A demo request has been created for <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> and needs to be assigned to a Sales Engineer. Please assign accordingly.

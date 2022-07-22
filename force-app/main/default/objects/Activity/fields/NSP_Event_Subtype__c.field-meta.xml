@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Event_Subtype__c</fullName>
+    <externalId>false</externalId>
+    <label>Event Subtype</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_Event_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+                <label>Discovery Call</label>
+            </value>
+            <value>
+                <fullName>Closing Appointment</fullName>
+                <default>false</default>
+                <label>Closing Appointment</label>
+            </value>
+            <value>
+                <fullName>WO Business Profile</fullName>
+                <default>false</default>
+                <label>WO Business Profile</label>
+            </value>
+            <value>
+                <fullName>Demo</fullName>
+                <default>false</default>
+                <label>Demo</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Gift Mailing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gift Mailing</label>
+            </value>
+            <value>
+                <fullName>In-Person Meet</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In-Person Meet</label>
+            </value>
+            <value>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Loyalty</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Loyalty</label>
+            </value>
+            <value>
+                <fullName>Manager Call</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Manager Call</label>
+            </value>
+            <value>
+                <fullName>New Lead</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New Lead</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Phone Call</label>
+            </value>
+            <value>
+                <fullName>Postal Mail</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Postal Mail</label>
+            </value>
+            <value>
+                <fullName>Product Presentation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Product Presentation</label>
+            </value>
+            <value>
+                <fullName>Social Media</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Social Media</label>
+            </value>
+            <value>
+                <fullName>Technical Demo</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Technical Demo</label>
+            </value>
+            <value>
+                <fullName>Video Call</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Video Call</label>
+            </value>
+            <value>
+                <fullName>Voicemail</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Voicemail</label>
+            </value>
+            <value>
+                <fullName>WO Proposal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WO Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WX Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Quote</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WX Quote</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Discovery Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Closing Appointment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Demo</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,2 @@
+You have been added as an opportunity team member for <a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
+Please click on the link above to access the opportunity in Salesforce.

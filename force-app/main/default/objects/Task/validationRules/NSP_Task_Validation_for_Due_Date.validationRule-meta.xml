@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Task_Validation_for_Due_Date</fullName>
+    <active>true</active>
+    <description>This rule will prevent the users to add the due date less than the Opportunity Close date</description>
+    <errorConditionFormula>AND(ActivityDate &lt; TODAY () ,
+BEGINS(  WhatId ,&quot;006&quot;),
+IsChanged(ActivityDate)
+)</errorConditionFormula>
+    <errorDisplayField>ActivityDate</errorDisplayField>
+    <errorMessage>Due date can not be in the past date.</errorMessage>
+</ValidationRule>

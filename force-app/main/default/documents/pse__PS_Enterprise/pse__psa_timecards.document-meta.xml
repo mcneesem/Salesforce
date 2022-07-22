@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The icon is associated with Missing Timecards, Timecard Splits, Timecards, Timecard Transmissions, Approve Multiple Timecards, Log a Timecard - New UI, Time Entry  and PSA Operations tab</description>
+    <internalUseOnly>false</internalUseOnly>
+    <name>timecards Icon</name>
+    <public>true</public>
+</Document>

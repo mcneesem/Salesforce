@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Scholarship_Eligibility</fullName>
+    <active>true</active>
+    <description>Validation rule to check if user is eligible to apply scholarship prices.</description>
+    <errorConditionFormula>AND(NSP_WX_Scholarship__c, OR(NSP_IsScholarshipEligibleBPA__c = false,NSP_IsScholarshipEligiblePartner__c = false)) &amp;&amp;
+NOT($Setup.NSP_Trigger_Switch__c.QuoteValidation__c)</errorConditionFormula>
+    <errorMessage>Scholarship Price isn&apos;t applicable for this Partner. Please uncheck the WX Scholarship checkbox</errorMessage>
+</ValidationRule>

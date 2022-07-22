@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Sub_Vertical__c</fullName>
+    <description>Used to track sub vertical the client belongs to</description>
+    <externalId>false</externalId>
+    <label>Sub Vertical</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Accounting</fullName>
+                <default>false</default>
+                <label>Accounting</label>
+            </value>
+            <value>
+                <fullName>Association</fullName>
+                <default>false</default>
+                <label>Association</label>
+            </value>
+            <value>
+                <fullName>Bank Lenders</fullName>
+                <default>false</default>
+                <label>Bank Lenders</label>
+            </value>
+            <value>
+                <fullName>Banks</fullName>
+                <default>false</default>
+                <label>Banks</label>
+            </value>
+            <value>
+                <fullName>Chambers</fullName>
+                <default>false</default>
+                <label>Chambers</label>
+            </value>
+            <value>
+                <fullName>Clubs</fullName>
+                <default>false</default>
+                <label>Clubs</label>
+            </value>
+            <value>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+                <label>Consulting</label>
+            </value>
+            <value>
+                <fullName>Country Club</fullName>
+                <default>false</default>
+                <label>Country Club</label>
+            </value>
+            <value>
+                <fullName>Financial Planners</fullName>
+                <default>false</default>
+                <label>Financial Planners</label>
+            </value>
+            <value>
+                <fullName>Fractional CXO</fullName>
+                <default>false</default>
+                <label>Fractional CXO</label>
+            </value>
+            <value>
+                <fullName>Incubators</fullName>
+                <default>false</default>
+                <label>Incubators</label>
+            </value>
+            <value>
+                <fullName>Investment Bankers</fullName>
+                <default>false</default>
+                <label>Investment Bankers</label>
+            </value>
+            <value>
+                <fullName>IT Distributor</fullName>
+                <default>false</default>
+                <label>IT Distributor</label>
+            </value>
+            <value>
+                <fullName>Legal</fullName>
+                <default>false</default>
+                <label>Legal</label>
+            </value>
+            <value>
+                <fullName>MSP</fullName>
+                <default>false</default>
+                <label>MSP</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Non UHC Broker-Benefits</fullName>
+                <default>false</default>
+                <label>Non UHC Broker-Benefits</label>
+            </value>
+            <value>
+                <fullName>Non UHC Broker-P&amp;C</fullName>
+                <default>false</default>
+                <label>Non UHC Broker-P&amp;C</label>
+            </value>
+            <value>
+                <fullName>PEO Broker</fullName>
+                <default>false</default>
+                <label>PEO Broker</label>
+            </value>
+            <value>
+                <fullName>Private Equity</fullName>
+                <default>false</default>
+                <label>Private Equity</label>
+            </value>
+            <value>
+                <fullName>Pro Services</fullName>
+                <default>false</default>
+                <label>Pro Services</label>
+            </value>
+            <value>
+                <fullName>UHC Broker-Benefits</fullName>
+                <default>false</default>
+                <label>UHC Broker-Benefits</label>
+            </value>
+            <value>
+                <fullName>UHC Broker-P&amp;C</fullName>
+                <default>false</default>
+                <label>UHC Broker-P&amp;C</label>
+            </value>
+            <value>
+                <fullName>VAR</fullName>
+                <default>false</default>
+                <label>VAR</label>
+            </value>
+            <value>
+                <fullName>Venture Capital</fullName>
+                <default>false</default>
+                <label>Venture Capital</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

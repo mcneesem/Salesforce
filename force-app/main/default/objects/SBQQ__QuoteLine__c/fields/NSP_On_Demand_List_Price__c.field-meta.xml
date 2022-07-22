@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_On_Demand_List_Price__c</fullName>
+    <description>Stores data for pricing matrix shown in recruiting template.</description>
+    <externalId>false</externalId>
+    <label>On Demand List Price</label>
+    <precision>15</precision>
+    <required>false</required>
+    <scale>3</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

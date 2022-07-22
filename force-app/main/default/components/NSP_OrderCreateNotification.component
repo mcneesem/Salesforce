@@ -1,0 +1,20 @@
+<apex:component controller="NSP_OrderNotification" access="global" id="qliCmp">
+ <apex:attribute name="orderId" description="This is the quote Id for the component."
+        type="String" required="true" assignTo="{!orderIdstr}" access="global"/>
+       <style>
+      table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+#test tr:last-child { font-weight: bold; }
+       </style> 
+   <apex:variable value="{!1}" var="count"/>
+   <p>
+
+    <apex:outputText value="Product Bundles :"/> <br/> 
+  <apex:repeat var="qli" value="{!ProductBundleList}">
+    <apex:outputText value="{!FLOOR(count)}. "/> <apex:outputText value="{!qli}"/> <br/>
+    <apex:variable var="count" value="{!count+ 1}"/>
+   </apex:repeat>   
+  </p>
+</apex:component>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Abra Migration</fullName>
+        <default>false</default>
+        <label>Abra Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>Add On Software</fullName>
+        <default>false</default>
+        <label>Add On Software</label>
+    </customValue>
+    <customValue>
+        <fullName>CompuPayTime</fullName>
+        <default>false</default>
+        <label>CompuPayTime</label>
+    </customValue>
+    <customValue>
+        <fullName>Descriptions Now</fullName>
+        <default>false</default>
+        <label>Descriptions Now</label>
+    </customValue>
+    <customValue>
+        <fullName>Dotcoms</fullName>
+        <default>false</default>
+        <label>Dotcoms</label>
+    </customValue>
+    <customValue>
+        <fullName>ExpenseAble Corporate</fullName>
+        <default>false</default>
+        <label>ExpenseAble Corporate</label>
+    </customValue>
+    <customValue>
+        <fullName>ExpenseAble Express</fullName>
+        <default>false</default>
+        <label>ExpenseAble Express</label>
+    </customValue>
+    <customValue>
+        <fullName>Hardware</fullName>
+        <default>false</default>
+        <label>Hardware</label>
+    </customValue>
+    <customValue>
+        <fullName>Health &amp; Welfare</fullName>
+        <default>false</default>
+        <label>Health &amp; Welfare</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT</fullName>
+        <default>false</default>
+        <label>OPRT</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT Express</fullName>
+        <default>false</default>
+        <label>OPRT Express</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT Renewal</fullName>
+        <default>false</default>
+        <label>OPRT Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>OrgPlus Desktop</fullName>
+        <default>false</default>
+        <label>OrgPlus Desktop</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Now</fullName>
+        <default>false</default>
+        <label>Performance Now</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart</fullName>
+        <default>false</default>
+        <label>PerformSmart</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart Renewal</fullName>
+        <default>false</default>
+        <label>PerformSmart Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>Property &amp; Casualty</fullName>
+        <default>false</default>
+        <label>Property &amp; Casualty</label>
+    </customValue>
+    <customValue>
+        <fullName>Pro Services</fullName>
+        <default>false</default>
+        <label>Pro Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Sage OrgPlus</fullName>
+        <default>false</default>
+        <label>Sage OrgPlus</label>
+    </customValue>
+    <customValue>
+        <fullName>Sage Time</fullName>
+        <default>false</default>
+        <label>Sage Time</label>
+    </customValue>
+    <customValue>
+        <fullName>TFW Migration</fullName>
+        <default>false</default>
+        <label>TFW Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>TimeStar Mgd Hosted</fullName>
+        <default>false</default>
+        <label>TimeStar Mgd Hosted</label>
+    </customValue>
+    <customValue>
+        <fullName>TimeStar On Prem</fullName>
+        <default>false</default>
+        <label>TimeStar On Prem</label>
+    </customValue>
+    <customValue>
+        <fullName>Timestar SaaS</fullName>
+        <default>false</default>
+        <label>Timestar SaaS</label>
+    </customValue>
+    <customValue>
+        <fullName>UED Bundle</fullName>
+        <default>false</default>
+        <label>UED Bundle</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Custom</fullName>
+        <default>false</default>
+        <label>WX Choice Custom</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity 401k Plan</fullName>
+        <default>false</default>
+        <label>Insperity 401k Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity Customized Plan</fullName>
+        <default>false</default>
+        <label>Insperity Customized Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Plan</fullName>
+        <default>false</default>
+        <label>WX Choice Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Customized Plan</fullName>
+        <default>false</default>
+        <label>WX Choice Customized Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>TimeStar-Software-as-a-Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>TimeStar-Software-as-a-Service</label>
+    </customValue>
+    <description>Global value set for sub products on Lead and Opportunity</description>
+    <masterLabel>Sub Product</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

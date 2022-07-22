@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_MidMarketNationalAccount__c</fullName>
+    <description>Picklist used to store Mid Market National Account details</description>
+    <externalId>false</externalId>
+    <label>MidMarket National Account</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Allstate Agency</fullName>
+                <default>false</default>
+                <label>Allstate Agency</label>
+            </value>
+            <value>
+                <fullName>Allstate Independent Agency</fullName>
+                <default>false</default>
+                <label>Allstate Independent Agency</label>
+            </value>
+            <value>
+                <fullName>Healthy Eyes Advantage</fullName>
+                <default>false</default>
+                <label>Healthy Eyes Advantage</label>
+            </value>
+            <value>
+                <fullName>Raymond James Advisor</fullName>
+                <default>false</default>
+                <label>Raymond James Advisor</label>
+            </value>
+            <value>
+                <fullName>YHN Practice</fullName>
+                <default>false</default>
+                <label>YHN Practice</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

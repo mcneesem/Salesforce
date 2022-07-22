@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_PrimaryCompetitor__c</fullName>
+    <description>Field used to track primary competitor</description>
+    <externalId>false</externalId>
+    <label>Primary Competitor</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADP</fullName>
+                <default>false</default>
+                <label>ADP</label>
+            </value>
+            <value>
+                <fullName>ADP Total Source</fullName>
+                <default>false</default>
+                <label>ADP Total Source</label>
+            </value>
+            <value>
+                <fullName>Able</fullName>
+                <default>false</default>
+                <label>Able</label>
+            </value>
+            <value>
+                <fullName>Advanstaff</fullName>
+                <default>false</default>
+                <label>Advanstaff</label>
+            </value>
+            <value>
+                <fullName>Advantec</fullName>
+                <default>false</default>
+                <label>Advantec</label>
+            </value>
+            <value>
+                <fullName>AlphaStaff</fullName>
+                <default>false</default>
+                <label>AlphaStaff</label>
+            </value>
+            <value>
+                <fullName>Axcel HR Solutions</fullName>
+                <default>false</default>
+                <label>Axcel HR Solutions</label>
+            </value>
+            <value>
+                <fullName>Axcet HR Solutions</fullName>
+                <default>false</default>
+                <label>Axcet HR Solutions</label>
+            </value>
+            <value>
+                <fullName>BambooHR</fullName>
+                <default>false</default>
+                <label>BambooHR</label>
+            </value>
+            <value>
+                <fullName>Cbiz</fullName>
+                <default>false</default>
+                <label>Cbiz</label>
+            </value>
+            <value>
+                <fullName>Co-Advantage</fullName>
+                <default>false</default>
+                <label>Co-Advantage</label>
+            </value>
+            <value>
+                <fullName>Cobalt Astra</fullName>
+                <default>false</default>
+                <label>Cobalt Astra</label>
+            </value>
+            <value>
+                <fullName>Custom Business Solutions</fullName>
+                <default>false</default>
+                <label>Custom Business Solutions</label>
+            </value>
+            <value>
+                <fullName>EmphasisHR</fullName>
+                <default>false</default>
+                <label>EmphasisHR</label>
+            </value>
+            <value>
+                <fullName>Emplicity</fullName>
+                <default>false</default>
+                <label>Emplicity</label>
+            </value>
+            <value>
+                <fullName>Employer Flexible</fullName>
+                <default>false</default>
+                <label>Employer Flexible</label>
+            </value>
+            <value>
+                <fullName>Engage</fullName>
+                <default>false</default>
+                <label>Engage</label>
+            </value>
+            <value>
+                <fullName>Extensis</fullName>
+                <default>false</default>
+                <label>Extensis</label>
+            </value>
+            <value>
+                <fullName>Fusion</fullName>
+                <default>false</default>
+                <label>Fusion</label>
+            </value>
+            <value>
+                <fullName>G&amp;A Partners</fullName>
+                <default>false</default>
+                <label>G&amp;A Partners</label>
+            </value>
+            <value>
+                <fullName>GovCon Pay</fullName>
+                <default>false</default>
+                <label>GovCon Pay</label>
+            </value>
+            <value>
+                <fullName>Gusto</fullName>
+                <default>false</default>
+                <label>Gusto</label>
+            </value>
+            <value>
+                <fullName>HR&amp;P</fullName>
+                <default>false</default>
+                <label>HR&amp;P</label>
+            </value>
+            <value>
+                <fullName>In House</fullName>
+                <default>false</default>
+                <label>In House</label>
+            </value>
+            <value>
+                <fullName>JustWorks</fullName>
+                <default>false</default>
+                <label>JustWorks</label>
+            </value>
+            <value>
+                <fullName>Legacy HR</fullName>
+                <default>false</default>
+                <label>Legacy HR</label>
+            </value>
+            <value>
+                <fullName>Lever 1</fullName>
+                <default>false</default>
+                <label>Lever 1</label>
+            </value>
+            <value>
+                <fullName>NEMR</fullName>
+                <default>false</default>
+                <label>NEMR</label>
+            </value>
+            <value>
+                <fullName>Nextep</fullName>
+                <default>false</default>
+                <label>Nextep</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>OEM PEO</fullName>
+                <default>false</default>
+                <label>OEM PEO</label>
+            </value>
+            <value>
+                <fullName>Odyssey OneSource</fullName>
+                <default>false</default>
+                <label>Odyssey OneSource</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paychex</fullName>
+                <default>false</default>
+                <label>Paychex</label>
+            </value>
+            <value>
+                <fullName>Paycom</fullName>
+                <default>false</default>
+                <label>Paycom</label>
+            </value>
+            <value>
+                <fullName>Paycor</fullName>
+                <default>false</default>
+                <label>Paycor</label>
+            </value>
+            <value>
+                <fullName>Payday</fullName>
+                <default>false</default>
+                <label>Payday</label>
+            </value>
+            <value>
+                <fullName>Paylocity</fullName>
+                <default>false</default>
+                <label>Paylocity</label>
+            </value>
+            <value>
+                <fullName>Prestige</fullName>
+                <default>false</default>
+                <label>Prestige</label>
+            </value>
+            <value>
+                <fullName>ProSource</fullName>
+                <default>false</default>
+                <label>ProSource</label>
+            </value>
+            <value>
+                <fullName>Questco</fullName>
+                <default>false</default>
+                <label>Questco</label>
+            </value>
+            <value>
+                <fullName>Sequent</fullName>
+                <default>false</default>
+                <label>Sequent</label>
+            </value>
+            <value>
+                <fullName>Sequoia</fullName>
+                <default>false</default>
+                <label>Sequoia</label>
+            </value>
+            <value>
+                <fullName>Tandem HR</fullName>
+                <default>false</default>
+                <label>Tandem HR</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Pay</fullName>
+                <default>false</default>
+                <label>Time &amp; Pay</label>
+            </value>
+            <value>
+                <fullName>Trinet</fullName>
+                <default>false</default>
+                <label>Trinet</label>
+            </value>
+            <value>
+                <fullName>Zenefits</fullName>
+                <default>false</default>
+                <label>Zenefits</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_BackOutReason__c</fullName>
+    <description>Field used to store back out reason</description>
+    <externalId>false</externalId>
+    <label>Back Out Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Covid-19</fullName>
+                <default>false</default>
+                <label>Covid-19</label>
+            </value>
+            <value>
+                <fullName>Didn&apos;t Align with Insperity Values</fullName>
+                <default>false</default>
+                <label>Didn&apos;t Align with Insperity Values</label>
+            </value>
+            <value>
+                <fullName>Feature/Functionality Limitation</fullName>
+                <default>false</default>
+                <label>Feature/Functionality Limitation</label>
+            </value>
+            <value>
+                <fullName>Funding Issue (Payroll)</fullName>
+                <default>false</default>
+                <label>Funding Issue (Payroll)</label>
+            </value>
+            <value>
+                <fullName>Key Decision Maker Change</fullName>
+                <default>false</default>
+                <label>Key Decision Maker Change</label>
+            </value>
+            <value>
+                <fullName>No Longer Wants Product</fullName>
+                <default>false</default>
+                <label>No Longer Wants Product</label>
+            </value>
+            <value>
+                <fullName>Non Payment</fullName>
+                <default>false</default>
+                <label>Non Payment</label>
+            </value>
+            <value>
+                <fullName>Non Responsive</fullName>
+                <default>false</default>
+                <label>Non Responsive</label>
+            </value>
+            <value>
+                <fullName>Service/Implementation Issue</fullName>
+                <default>false</default>
+                <label>Service/Implementation Issue</label>
+            </value>
+            <value>
+                <fullName>Thought Service Level was PEO-like</fullName>
+                <default>false</default>
+                <label>Thought Service Level was PEO-like</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

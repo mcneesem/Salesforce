@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Order_Product_Type__c</fullName>
+    <description>Indicates the product type by which order gets created</description>
+    <externalId>false</externalId>
+    <formula>IF(SBQQ__RequiredBy__c !=null, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;), SBQQ__Quote__r.NSP_Has_WX_product__c = true ),&apos;IWX Bundle&apos;, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
+SBQQ__Quote__r.NSP_Has_WA_product__c = true),&apos;IWA Bundle&apos;, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
+SBQQ__Quote__r.NSP_Has_IPS__c = true),&apos;IPS Conversion&apos;, TEXT(SBQQ__RequiredBy__r.NSP_Product_Type__c)))),IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),SBQQ__ProductCode__c =&apos;ITSTimeSimplicitySU&apos;),SBQQ__Quote__r.NSP_Has_WX_product__c = true), &apos;IWX Bundle&apos;, IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),SBQQ__ProductCode__c =&apos;ITSTimeSimplicitySU&apos;),
+SBQQ__Quote__r.NSP_Has_WA_product__c = true),&apos;IWA Bundle&apos;, IF(AND(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
+SBQQ__Quote__r.NSP_Has_IPS__c = true),&apos;IPS Conversion&apos;, IF(AND(SBQQ__ProductCode__c =&apos;IPSSU&apos;,SBQQ__Quote__r.NSP_Has_LASSO_product__c = true),&apos;Lasso&apos;, TEXT(NSP_Product_Type__c))))))</formula>
+    <label>Order Product Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

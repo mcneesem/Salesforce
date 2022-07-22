@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DontAllowtoUpdateOwner</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT(ISBLANK(NSP_Parent_Lead__c)) , ISCHANGED(OwnerId),NSP_Skip_Validation__c == false,NSP_Parent_Lead__r.IsConverted == false)</errorConditionFormula>
+    <errorMessage>Child Owner cannot be updated. Please update the Parent&apos;s Owner.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable" >
+    <article class="slds-card">
+         <div class="slds-card__body slds-card__body_inner ">
+             <div class="slds-align_absolute-center">
+                 <lightning:formattedUrl value="https://insperity.mindtickle.com" label="SkillMaster Link" tooltip="Go to SkillMaster website" /></div>
+             </div>
+    </article>
+</aura:component>

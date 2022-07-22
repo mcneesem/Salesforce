@@ -1,0 +1,41 @@
+<!--
+Name: NSP_GoogleReCaptcha
+Description: This page was created to capture the Google Recaptcha from the User 
+Date: 18/02/22
+Author : Nischay Jindal
+-->
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" cache="false" id="pg" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head>
+       <style type="text/css">
+      .html_element{
+        min-height: 300px;
+		height: auto;
+  		width: 300px;
+  		background-color: powderblue !important; 
+      }
+       </style>
+           <script type='text/javascript'> 
+                var verifyCallback = function(response){
+                parent.postMessage("Unlock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
+                    }
+            var onloadCallback = function() {
+                grecaptcha.render('html_element', {
+                    'sitekey' : "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteKey__c}", 
+                    'callback' : verifyCallback,
+                });
+            };
+            </script>
+        </head>
+        <body>
+            <form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+                <div id="html_element">
+                </div>
+                <br/>
+                <input type="submit" value="Submit" style="display:none"/>
+            </form>
+              <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async="" defer="" > </script>
+           
+        </body>
+    </html>
+</apex:page>

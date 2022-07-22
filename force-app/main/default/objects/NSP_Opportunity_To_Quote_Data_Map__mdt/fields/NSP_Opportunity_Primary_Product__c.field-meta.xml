@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Opportunity_Primary_Product__c</fullName>
+    <description>Field hold the opportunity primary product</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Opportunity Primary Product</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Applicant Tracking</fullName>
+                <default>true</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Consulting Services</fullName>
+                <default>false</default>
+                <label>Consulting Services</label>
+            </value>
+            <value>
+                <fullName>Employment Screening</fullName>
+                <default>false</default>
+                <label>Employment Screening</label>
+            </value>
+            <value>
+                <fullName>Expense Management</fullName>
+                <default>false</default>
+                <label>Expense Management</label>
+            </value>
+            <value>
+                <fullName>Human Capital Management</fullName>
+                <default>false</default>
+                <label>Human Capital Management</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
+            </value>
+            <value>
+                <fullName>Learning &amp; Development</fullName>
+                <default>false</default>
+                <label>Learning &amp; Development</label>
+            </value>
+            <value>
+                <fullName>Organizational Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>Workforce Optimization</label>
+            </value>
+            <value>
+                <fullName>WA</fullName>
+                <default>false</default>
+                <label>Workforce Administration</label>
+            </value>
+            <value>
+                <fullName>WX</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration</label>
+            </value>
+            <value>
+                <fullName>WS</fullName>
+                <default>false</default>
+                <label>Workforce Synchronization</label>
+            </value>
+            <value>
+                <fullName>HR Consulting Services</fullName>
+                <default>false</default>
+                <label>HR Consulting Services</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

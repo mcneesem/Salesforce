@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RelatedTo_WhoID_TA__c</fullName>
+    <description>RelatedTo_WhoID_TA [TA created this for testing Reports - do not propagate]</description>
+    <externalId>false</externalId>
+    <formula>IF(!ISBLANK(WhoId),
+    CASE(LEFT(WhoId, 3),
+        &quot;003&quot;, &quot;Contact&quot;,
+        &quot;00Q&quot;, &quot;Lead&quot;,
+        &quot;Other&quot;
+    ),
+/*ELSE*/
+    NULL
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>RelatedTo_WhoID_TA [TA created this for testing Reports - do not propagate]</inlineHelpText>
+    <label>RelatedTo_WhoID_TA</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="Approval Request for {!relatedTo.NSP_Opportunity_Name__c} has been Approved" recipientType="User" relatedToType="SBQQ__Quote__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <p>
+Hi {!relatedTo.Owner.Name}
+</p>
+Your Approval Request has been Approved for Quote Number {!relatedTo.Name} for {!relatedTo.NSP_Account_Name__c}. Please review below comments:
+
+ <p>
+    <c:NSP_DisplayApproverComment quoteId="{!relatedTo.Id}" />
+  </p>
+
+<p> To view the Quote, Click Here: <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.Id}" target="_parent"> {!relatedTo.Name} </apex:outputLink> </p>
+
+  </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

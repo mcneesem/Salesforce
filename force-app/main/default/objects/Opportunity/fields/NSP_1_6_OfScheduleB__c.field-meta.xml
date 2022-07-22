@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_1_6_OfScheduleB__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field to check if this opportunity belongs to 1/6th of Schedule B</description>
+    <externalId>false</externalId>
+    <label>1/6 of Schedule B</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

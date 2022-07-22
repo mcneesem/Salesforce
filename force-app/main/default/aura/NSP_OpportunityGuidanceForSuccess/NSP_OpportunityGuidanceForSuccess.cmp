@@ -1,0 +1,34 @@
+<aura:component controller="NSP_GuidanceForSuccessController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    <aura:attribute name="opportunityRecord" type="Opportunity" default="null"/>
+    <aura:attribute name="guidanceMessage" type="String"/>
+    <aura:attribute name="guidanceForSuccessMdtRecords" type="NSP_Opportunity_Stage_Guidance_Path__mdt[]" default="null"/>
+    <aura:handler name="change" value="{!v.opportunityRecord}" action="{!c.onRecordChange}" />
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="StageName, NSP_PrimaryProduct__c,NSP_Number_of_Employees__c,NSP_Account_Segment__c"
+                      targetFields="{!v.opportunityRecord}"
+                      />
+    
+    <lightning:card>
+        <div class="slds-m-left_x-small slds-text-longform">
+            <aura:if isTrue="{!v.guidanceMessage}">
+                <span class="gfs-font-style preserve-spaces  slds-text-body_regular"><i>{!v.guidanceMessage}</i></span>
+            </aura:if>
+        </div>
+    </lightning:card>
+    
+</aura:component>
+
+<!-- 
+
+
+
+            <aura:if isTrue="{!v.opportunityRecord.StageName == 'Analysis'}">
+                <ul class="slds-text-align_left">
+                    <li>Analysis</li>
+                    <li>Analysis</li>
+                    <li>Analysis</li>
+                </ul>
+            </aura:if>
+-->

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>401k_sales@insperity.com.invalid</email>
+    <name>Retirement Services</name>
+    <queueMembers>
+        <users>
+            <user>charlotte.gallo@insperity.com</user>
+            <user>hollie.green@insperity.com</user>
+            <user>megan.laumbach@insperity.com</user>
+            <user>rebecca.smith@insperity.com</user>
+            <user>sherri.langford@insperity.com</user>
+            <user>staci.peoples@insperity.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Task</sobjectType>
+    </queueSobject>
+</Queue>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Quote_Sharing_for_Approver_Groups</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives Edit access to quote when submitted for approval</description>
+        <label>Quote Sharing for Approver Groups</label>
+        <sharedTo>
+            <group>All_Approvers_Group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>ApprovalStatus__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Edit_access_to_Finance_users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing rule to give Edit access of quotes to Finance Users</description>
+        <label>Quote Edit access to Finance users</label>
+        <sharedTo>
+            <group>NSP_Finance_Users_Edit_Access_Group</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Read_Sharing_for_CPQ_Admin_Group</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Gives read  access to all quotes.</description>
+        <label>Quote  Read Sharing for CPQ Admin Group</label>
+        <sharedTo>
+            <group>NSP_CPQ_Admin</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Admin_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for Admin Group</label>
+        <sharedTo>
+            <group>NSP_CPQ_Admin</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_CPQ_Admin</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_CSS_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This rule gives Read / Write access to all quotes created by CSS group members/</description>
+        <label>Quote Sharing for CSS Group</label>
+        <sharedTo>
+            <group>NSP_CSS</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_CSS</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Finance_Edit_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for Finance Edit Group</label>
+        <sharedTo>
+            <group>NSP_Finance_Users_Edit_Access_Group</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Finance_Users_Edit_Access_Group</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_HR_Consulting_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for HR Consulting Group</label>
+        <sharedTo>
+            <group>NSP_HR_Consulting</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_HR_Consulting</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Inside_Sales_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for Inside Sales Group</label>
+        <sharedTo>
+            <group>NSG_Inside_Sales</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSG_Inside_Sales</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_LearnDev_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for LearnDev Group</label>
+        <sharedTo>
+            <group>NSP_Learning_and_Development</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Learning_and_Development</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_MidMarket_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for MidMarket Group</label>
+        <sharedTo>
+            <group>NSP_SE_MidMarket</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_SE_MidMarket</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Recruiting_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Give read and write access to quote owned by same group members</description>
+        <label>Quote Sharing for Recruiting Group</label>
+        <sharedTo>
+            <group>NSP_Recruiting_Services</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Recruiting_Services</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Retail_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for Retail Group</label>
+        <sharedTo>
+            <group>NSP_Retail_Sales</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Retail_Sales</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Retirement_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for Retirement Group</label>
+        <sharedTo>
+            <group>NSP_Retirement_Services</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Retirement_Services</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_SE_Group_1</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for SE Group 1</label>
+        <sharedTo>
+            <group>NSP_SE_Group_1</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_SE_Group_1</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_SE_Group_2</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for SE Group 2</label>
+        <sharedTo>
+            <group>NSP_SE_Group_2</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_SE_Group_2</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_SE_Group_3</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for SE Group 3</label>
+        <sharedTo>
+            <group>NSP_SE_Group_3</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_SE_Group_3</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_Support_Renewal_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for Support Renewal Group</label>
+        <sharedTo>
+            <group>NSP_Support_Renewal_Specialists</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Support_Renewal_Specialists</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_TalentConnect_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for TalentConnect Group</label>
+        <sharedTo>
+            <group>NSP_Talent_Connect</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_Talent_Connect</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_WS_Consulting_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for WS Consulting Group</label>
+        <sharedTo>
+            <group>NSP_WS_Consulting</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_WS_Consulting</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Quote_Sharing_for_iSolved_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Gives read and write access to quotes owned by members of same group.</description>
+        <label>Quote Sharing for iSolved Group</label>
+        <sharedTo>
+            <group>NSP_iSolved_Service</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>NSP_iSolved_Service</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Share_Quotes_with_Finance_Read_Access_Users</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Provides Read Access of All quotes o Finance Read Access group Users</description>
+        <label>Share Quotes with Finance Read Access Users</label>
+        <sharedTo>
+            <group>NSP_Finance_Users_Read_Access_Group</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

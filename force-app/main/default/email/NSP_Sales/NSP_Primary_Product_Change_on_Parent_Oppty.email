@@ -1,0 +1,3 @@
+Please be aware that the primary product is changing for the {!Opportunity.pse__Parent_Opportunity__c} Opportunity. This change will impact your child opportunity, so please go in and update accordingly.
+<BR/>
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

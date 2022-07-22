@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Lead_Source__c</fullName>
+    <description>In scope for Data Migration. OneForce.Partner.PartnerProfilePEO_LeadSource_c</description>
+    <externalId>false</externalId>
+    <label>Lead Source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Channel Box Lead</fullName>
+                <default>false</default>
+                <label>Channel Box Lead</label>
+            </value>
+            <value>
+                <fullName>DM/BPA Referred</fullName>
+                <default>false</default>
+                <label>DM/BPA Referred</label>
+            </value>
+            <value>
+                <fullName>Partner Microsite</fullName>
+                <default>false</default>
+                <label>Partner Microsite</label>
+            </value>
+            <value>
+                <fullName>Tier I</fullName>
+                <default>false</default>
+                <label>Tier I</label>
+            </value>
+            <value>
+                <fullName>Tier II</fullName>
+                <default>false</default>
+                <label>Tier II</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

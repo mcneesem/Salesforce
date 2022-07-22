@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Show_On_Recruitment_Template__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if product should be shown on Recruitment Email template</description>
+    <externalId>false</externalId>
+    <label>Show On Recruitment Template</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

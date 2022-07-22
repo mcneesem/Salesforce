@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Use_For_Partner_Key_Internal__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Internal field Used to check if a partner code from metadata will be used in Trigger code.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Use For Partner Key (Internal)</label>
+    <type>Checkbox</type>
+</CustomField>

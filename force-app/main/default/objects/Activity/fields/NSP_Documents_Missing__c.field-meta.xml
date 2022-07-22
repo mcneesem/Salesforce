@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Documents_Missing__c</fullName>
+    <description>Multiselect picklist to track the missing documents</description>
+    <externalId>false</externalId>
+    <label>Documents Missing</label>
+    <required>false</required>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Enrollment Fee Payment</fullName>
+                <default>false</default>
+                <label>Enrollment Fee Payment</label>
+            </value>
+            <value>
+                <fullName>Final Pricing and Review approval</fullName>
+                <default>false</default>
+                <label>Final Pricing and Review approval</label>
+            </value>
+            <value>
+                <fullName>Signed Schedule B</fullName>
+                <default>false</default>
+                <label>Signed Schedule B</label>
+            </value>
+            <value>
+                <fullName>Signed CSA</fullName>
+                <default>false</default>
+                <label>Signed CSA</label>
+            </value>
+            <value>
+                <fullName>Signed CPQ</fullName>
+                <default>false</default>
+                <label>Signed CPQ</label>
+            </value>
+            <value>
+                <fullName>FLSA Approval</fullName>
+                <default>false</default>
+                <label>FLSA Approval</label>
+            </value>
+            <value>
+                <fullName>Credit Approval</fullName>
+                <default>false</default>
+                <label>Credit Approval</label>
+            </value>
+            <value>
+                <fullName>Total monthly fees</fullName>
+                <default>false</default>
+                <label>Total monthly fees</label>
+            </value>
+            <value>
+                <fullName>CSA addendums</fullName>
+                <default>false</default>
+                <label>CSA addendums</label>
+            </value>
+            <value>
+                <fullName>Renewal Addendum</fullName>
+                <default>false</default>
+                <label>Renewal Addendum</label>
+            </value>
+            <value>
+                <fullName>Pricing and Review</fullName>
+                <default>false</default>
+                <label>Pricing and Review</label>
+            </value>
+            <value>
+                <fullName>Revolution Addendum</fullName>
+                <default>false</default>
+                <label>Revolution Addendum</label>
+            </value>
+            <value>
+                <fullName>Union Agreement</fullName>
+                <default>false</default>
+                <label>Union Agreement</label>
+            </value>
+            <value>
+                <fullName>Owner outside Payroll</fullName>
+                <default>false</default>
+                <label>Owner outside Payroll</label>
+            </value>
+            <value>
+                <fullName>Tech Solution docs</fullName>
+                <default>false</default>
+                <label>Tech Solution docs</label>
+            </value>
+            <value>
+                <fullName>Signed Delivery Order</fullName>
+                <default>false</default>
+                <label>Signed Delivery Order</label>
+            </value>
+            <value>
+                <fullName>Sales Engineer Questionnaire</fullName>
+                <default>false</default>
+                <label>Sales Engineer Questionnaire</label>
+            </value>
+            <value>
+                <fullName>BPA Commission Checklist</fullName>
+                <default>false</default>
+                <label>BPA Commission Checklist</label>
+            </value>
+            <value>
+                <fullName>WX Sold to Paid Checklist</fullName>
+                <default>false</default>
+                <label>WX Sold to Paid Checklist</label>
+            </value>
+            <value>
+                <fullName>Rush Approval</fullName>
+                <default>false</default>
+                <label>Rush Approval</label>
+            </value>
+            <value>
+                <fullName>Service Intake Form</fullName>
+                <default>false</default>
+                <label>Service Intake Form</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

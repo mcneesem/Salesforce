@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_On_Primary_Quote_for_WO_WS</fullName>
+    <active>true</active>
+    <description>Validation to restrict user to mark a quote as primary on insert if Primary Product is WO/WS</description>
+    <errorConditionFormula>AND(
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
+ISNEW(),
+SBQQ__Primary__c = TRUE,
+OR(ISPICKVAL(NSP_Opportunity_Primary_Product__c, &quot;WO&quot;), ISPICKVAL(NSP_Opportunity_Primary_Product__c, &quot;WS&quot;))  
+)
+&amp;&amp;
+NOT($Setup.NSP_Trigger_Switch__c.QuoteValidation__c)</errorConditionFormula>
+    <errorDisplayField>SBQQ__Primary__c</errorDisplayField>
+    <errorMessage>Quote cannot be marked as Primary on creation for WO and WS.</errorMessage>
+</ValidationRule>

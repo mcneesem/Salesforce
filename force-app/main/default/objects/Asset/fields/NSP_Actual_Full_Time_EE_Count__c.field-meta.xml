@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Actual_Full_Time_EE_Count__c</fullName>
+    <description>This field is used for integration</description>
+    <externalId>false</externalId>
+    <label>Actual Full Time EE count</label>
+    <summarizedField>NSP_Sub_Client__c.NSP_Actual_Full_Time_EE_Count__c</summarizedField>
+    <summaryForeignKey>NSP_Sub_Client__c.NSP_Asset__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

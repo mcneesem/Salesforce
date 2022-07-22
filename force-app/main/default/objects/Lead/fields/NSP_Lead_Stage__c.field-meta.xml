@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Lead_Stage__c</fullName>
+    <description>Field used to store details about the Lead stage</description>
+    <externalId>false</externalId>
+    <label>Lead Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Non-Prioritized</fullName>
+                <default>true</default>
+                <label>Non-Prioritized</label>
+            </value>
+            <value>
+                <fullName>Prioritized</fullName>
+                <default>false</default>
+                <label>Prioritized</label>
+            </value>
+            <value>
+                <fullName>Sales Ready</fullName>
+                <default>false</default>
+                <label>Sales Ready</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

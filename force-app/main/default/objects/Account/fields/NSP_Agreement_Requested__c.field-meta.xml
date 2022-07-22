@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Agreement_Requested__c</fullName>
+    <description>Field to capture kind of Agreement that is requested</description>
+    <externalId>false</externalId>
+    <label>Agreement Requested</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Affiliate Referral</fullName>
+                <default>false</default>
+                <label>Affiliate Referral</label>
+            </value>
+            <value>
+                <fullName>Association</fullName>
+                <default>false</default>
+                <label>Association</label>
+            </value>
+            <value>
+                <fullName>General Agent – UHC</fullName>
+                <default>false</default>
+                <label>General Agent – UHC</label>
+            </value>
+            <value>
+                <fullName>MOU</fullName>
+                <default>false</default>
+                <label>MOU</label>
+            </value>
+            <value>
+                <fullName>NDA</fullName>
+                <default>false</default>
+                <label>NDA</label>
+            </value>
+            <value>
+                <fullName>National</fullName>
+                <default>false</default>
+                <label>National</label>
+            </value>
+            <value>
+                <fullName>Non-Disclosure</fullName>
+                <default>false</default>
+                <label>Non-Disclosure</label>
+            </value>
+            <value>
+                <fullName>Referral Agreement</fullName>
+                <default>false</default>
+                <label>Referral Agreement</label>
+            </value>
+            <value>
+                <fullName>TOP (Alliance – Non-Health)</fullName>
+                <default>false</default>
+                <label>TOP (Alliance – Non-Health)</label>
+            </value>
+            <value>
+                <fullName>TOP (Insurance Broker)</fullName>
+                <default>false</default>
+                <label>TOP (Insurance Broker)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,8 @@
+<messaging:emailTemplate subject="Retraction of Approval Request for {!relatedTo.Quote__r.NSP_Opportunity_Name__c}" relatedToType="sbaa__Approval__c">
+<messaging:plainTextEmailBody >
+Hi
+
+You don't need to approve Quote Number {!relatedTo.Quote__r.Name} for {!relatedTo.Quote__r.NSP_Account_Name__c} because the quote is being revised.
+        
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

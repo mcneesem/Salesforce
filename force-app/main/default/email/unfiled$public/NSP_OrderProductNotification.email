@@ -1,0 +1,18 @@
+<messaging:emailTemplate subject="Quote has been submitted for Order Creation. {!relatedTo.Order.SBQQ__Quote__r.Name}" recipientType="User" relatedToType="OrderItem">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  
+Hi Team,
+
+<p> The quote has been submitted for order creation. </p>
+
+<p>To view the Opportunity , Click Here: <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.Order.OpportunityId}" target="_parent"> Opportunity </apex:outputLink> </p>
+<p>To view the Order, Click Here: <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.OrderId}" target="_parent"> Order </apex:outputLink> </p>
+  <p>
+  <c:NSP_OrderCreateNotification orderId="{!relatedTo.OrderId}" />
+  </p>
+  </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

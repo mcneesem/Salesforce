@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Check_Minimum_Fee__c</fullName>
+    <description>Indicates whether The Final Minimum Fee or the Net Total has to be used in Template Document</description>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISNULL(NSP_Max_Quantity__c)),  IF(SBQQ__Quote__r.NSP_Multiple_Companies__c &amp;&amp; SBQQ__Quote__r.Total_Employess_of_all_companies__c
+&lt;=NSP_Max_Quantity__c &amp;&amp; NSP_Multiple_CompaniesQuantityApplicable__c, true,  IF(NSP_Quoted_Quantity__c &lt;= NSP_Max_Quantity__c, true, false) ) , false)</formula>
+    <label>Check Minimum Fee</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

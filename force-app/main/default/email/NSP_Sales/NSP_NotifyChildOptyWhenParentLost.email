@@ -1,0 +1,2 @@
+The parent opportunity for {!Opportunity.Name} has been closed. Please visit the child opportunity associated with this record and disposition accordingly.
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

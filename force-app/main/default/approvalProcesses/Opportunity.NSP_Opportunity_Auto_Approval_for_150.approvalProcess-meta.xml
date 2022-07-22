@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>false</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>ApproveRecord</ifCriteriaNotMet>
+        <label>Step 1</label>
+        <name>Step_1</name>
+    </approvalStep>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>OR(
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 1 , NSP_WO_Number_of_Employees__c &lt;= 4,NSP_WO_Margin__c &gt;= 262),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 5 ,NSP_WO_Number_of_Employees__c &lt;= 9 , NSP_WO_Margin__c &gt;= 242),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 10 ,NSP_WO_Number_of_Employees__c &lt;= 19 , NSP_WO_Margin__c &gt;= 202),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 20 ,NSP_WO_Number_of_Employees__c &lt;= 49 , NSP_WO_Margin__c &gt;= 182),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 50, NSP_WO_Number_of_Employees__c &lt;= 149, NSP_WO_Margin__c &gt;= 138 )
+)</formula>
+    </entryCriteria>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Opportunity Auto Approval for 150</label>
+    <processOrder>4</processOrder>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

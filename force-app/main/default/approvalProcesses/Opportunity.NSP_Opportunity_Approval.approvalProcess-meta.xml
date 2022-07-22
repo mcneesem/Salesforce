@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &lt; 250 ,  NSP_WO_Margin__c &gt;= 135 , NSP_WO_Margin__c &lt;= 140),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 250 ,NSP_WO_Number_of_Employees__c &lt; 500 ,  NSP_WO_Margin__c = 130 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 500 ,NSP_WO_Number_of_Employees__c &lt; 1000 ,  NSP_WO_Margin__c = 125 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 1000 ,NSP_WO_Number_of_Employees__c &lt; 1500 ,  NSP_WO_Margin__c = 120 ),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 2000,  NSP_WO_Margin__c = 115 ),
+
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &lt; 250,  NSP_WS_Margin__c &gt;= 115 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 250 ,NSP_WS_Number_of_Employees__c &lt; 500 ,  NSP_WS_Margin__c = 110 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 500 ,NSP_WS_Number_of_Employees__c &lt; 1000 ,  NSP_WS_Margin__c = 105 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 1000 ,NSP_WS_Number_of_Employees__c &lt; 1500 ,  NSP_WS_Margin__c = 100 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 2000 ,  NSP_WS_Margin__c = 95 )
+)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>BPC Approver</label>
+        <name>BPC_Approver</name>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &lt; 250 ,  NSP_WO_Margin__c &gt; 125 , NSP_WO_Margin__c &lt;= 134),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 250 ,NSP_WO_Number_of_Employees__c &lt; 500 ,  NSP_WO_Margin__c  &gt; 120, NSP_WO_Margin__c &lt;= 129 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 500 ,NSP_WO_Number_of_Employees__c &lt; 1000 ,  NSP_WO_Margin__c  &gt; 115, NSP_WO_Margin__c &lt;= 124 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 1000 ,NSP_WO_Number_of_Employees__c &lt; 1500 ,  NSP_WO_Margin__c  &gt; 110, NSP_WO_Margin__c &lt;= 119 ),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 2000,  NSP_WO_Margin__c  &gt; 105, NSP_WO_Margin__c &lt;= 114 ),
+
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &lt; 250,  NSP_WS_Margin__c &gt; 105 , NSP_WS_Margin__c &lt;= 114 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 250 ,NSP_WS_Number_of_Employees__c &lt; 500 ,  NSP_WS_Margin__c &gt; 100 , NSP_WS_Margin__c &lt;= 109 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 500 ,NSP_WS_Number_of_Employees__c &lt; 1000 ,  NSP_WS_Margin__c &gt; 95 , NSP_WS_Margin__c &lt;= 104 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 1000 ,NSP_WS_Number_of_Employees__c &lt; 1500 ,  NSP_WS_Margin__c &gt; 92.50 , NSP_WS_Margin__c &lt;= 99 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 2000 ,  NSP_WS_Margin__c &gt; 90 , NSP_WS_Margin__c &lt;= 94 ),
+AND(NSP_Has_WO_Products__c,NSP_WS_Reserve__c &gt; 3),
+AND(NSP_Has_WS_Products__c,NSP_WS_Reserve__c &gt; 3)
+)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Michael Approval</label>
+        <name>Michael_Approval</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <entryCriteria>
+            <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &lt; 250 ,  NSP_WO_Margin__c &lt;= 125),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 250 ,NSP_WO_Number_of_Employees__c &lt; 500 ,  NSP_WO_Margin__c &lt;= 120 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 500 ,NSP_WO_Number_of_Employees__c &lt; 1000 ,  NSP_WO_Margin__c &lt;= 115 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 1000 ,NSP_WO_Number_of_Employees__c &lt; 1500 ,  NSP_WO_Margin__c &lt;= 110 ),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 2000,  NSP_WO_Margin__c &lt;= 105 ),
+
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &lt; 250,  NSP_WS_Margin__c &lt;= 105 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 250 ,NSP_WS_Number_of_Employees__c &lt; 500 ,  NSP_WS_Margin__c &lt;= 100 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 500 ,NSP_WS_Number_of_Employees__c &lt; 1000 ,  NSP_WS_Margin__c &lt;= 95 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 1000 ,NSP_WS_Number_of_Employees__c &lt; 1500 ,  NSP_WS_Margin__c &lt;= 92.50 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 2000 ,  NSP_WS_Margin__c &lt;= 90 )
+)</formula>
+        </entryCriteria>
+        <label>Keith Approval</label>
+        <name>Keith_Approval</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <emailTemplate>unfiled$public/NSP_WO_OpportunityApproval</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>OR(AND( NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &lt;= 249,NSP_WO_Number_of_Employees__c &gt;= 150 ,NSP_WO_Margin__c &lt;= 140),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 250 ,NSP_WO_Number_of_Employees__c &lt; 500 , NSP_WO_Margin__c &lt;= 130 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 500 ,NSP_WO_Number_of_Employees__c &lt; 1000 , NSP_WO_Margin__c &lt;= 125 ),
+AND(NSP_Has_WO_Products__c, NSP_WO_Number_of_Employees__c &gt;= 1000 ,NSP_WO_Number_of_Employees__c &lt; 1500 , NSP_WO_Margin__c &lt;= 120 ),
+AND(NSP_Has_WO_Products__c,NSP_WO_Number_of_Employees__c &gt;= 2000, NSP_WO_Margin__c &lt;= 115 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &lt; 250, NSP_WS_Margin__c &lt;= 120 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 250 ,NSP_WS_Number_of_Employees__c &lt; 500 , NSP_WS_Margin__c &lt;= 110 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 500 ,NSP_WS_Number_of_Employees__c &lt; 1000 , NSP_WS_Margin__c &lt;= 105 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 1000 ,NSP_WS_Number_of_Employees__c &lt; 1500 , NSP_WS_Margin__c &lt;= 100 ),
+AND(NSP_Has_WS_Products__c, NSP_WS_Number_of_Employees__c &gt;= 2000 , NSP_WS_Margin__c &lt;= 95 ))</formula>
+    </entryCriteria>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Opportunity Approval</label>
+    <processOrder>1</processOrder>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

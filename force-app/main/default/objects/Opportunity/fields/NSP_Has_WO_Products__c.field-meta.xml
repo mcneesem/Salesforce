@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Has_WO_Products__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checkbox is checked if this opportunity has any WO Products</description>
+    <externalId>false</externalId>
+    <label>Has WO Products</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

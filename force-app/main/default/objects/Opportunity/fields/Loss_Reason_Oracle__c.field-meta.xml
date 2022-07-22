@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loss_Reason_Oracle__c</fullName>
+    <description>Loss Reason (Oracle)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Loss Reason (Oracle)</inlineHelpText>
+    <label>Loss Reason (Oracle)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Abandoned</fullName>
+                <default>false</default>
+                <label>Abandoned</label>
+            </value>
+            <value>
+                <fullName>Backout</fullName>
+                <default>false</default>
+                <label>Backout</label>
+            </value>
+            <value>
+                <fullName>Client</fullName>
+                <default>false</default>
+                <label>Client</label>
+            </value>
+            <value>
+                <fullName>Closed by System</fullName>
+                <default>false</default>
+                <label>Closed by System</label>
+            </value>
+            <value>
+                <fullName>Competitor</fullName>
+                <default>false</default>
+                <label>Competitor</label>
+            </value>
+            <value>
+                <fullName>Declined</fullName>
+                <default>false</default>
+                <label>Declined</label>
+            </value>
+            <value>
+                <fullName>Default Won</fullName>
+                <default>false</default>
+                <label>Default Won</label>
+            </value>
+            <value>
+                <fullName>Features</fullName>
+                <default>false</default>
+                <label>Features</label>
+            </value>
+            <value>
+                <fullName>Global Pandemic</fullName>
+                <default>false</default>
+                <label>Global Pandemic</label>
+            </value>
+            <value>
+                <fullName>Implementation</fullName>
+                <default>false</default>
+                <label>Implementation</label>
+            </value>
+            <value>
+                <fullName>Legacy Client</fullName>
+                <default>false</default>
+                <label>Legacy Client</label>
+            </value>
+            <value>
+                <fullName>No Contact</fullName>
+                <default>false</default>
+                <label>No Contact</label>
+            </value>
+            <value>
+                <fullName>No Decision</fullName>
+                <default>false</default>
+                <label>No Decision</label>
+            </value>
+            <value>
+                <fullName>Not a good fit</fullName>
+                <default>false</default>
+                <label>Not a good fit</label>
+            </value>
+            <value>
+                <fullName>Not Interested</fullName>
+                <default>false</default>
+                <label>Not Interested</label>
+            </value>
+            <value>
+                <fullName>Not Qualified - Quickbooks</fullName>
+                <default>false</default>
+                <label>Not Qualified - Quickbooks</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Price/Cost</fullName>
+                <default>false</default>
+                <label>Price/Cost</label>
+            </value>
+            <value>
+                <fullName>Prohibited Industry</fullName>
+                <default>false</default>
+                <label>Prohibited Industry</label>
+            </value>
+            <value>
+                <fullName>Satisfied with Current</fullName>
+                <default>false</default>
+                <label>Satisfied with Current</label>
+            </value>
+            <value>
+                <fullName>Satisfied with Current Process</fullName>
+                <default>false</default>
+                <label>Satisfied with Current Process</label>
+            </value>
+            <value>
+                <fullName>Timing</fullName>
+                <default>false</default>
+                <label>Timing</label>
+            </value>
+            <value>
+                <fullName>Transferred to MidMarket</fullName>
+                <default>false</default>
+                <label>Transferred to MidMarket</label>
+            </value>
+            <value>
+                <fullName>Unresponsive</fullName>
+                <default>false</default>
+                <label>Unresponsive</label>
+            </value>
+            <value>
+                <fullName>WO Competitor</fullName>
+                <default>false</default>
+                <label>WO Competitor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

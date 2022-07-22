@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>NCS Group</name>
+    <queueMembers>
+        <users>
+            <user>amanda.thornton@insperity.com</user>
+            <user>amber.wilson@insperity.com</user>
+            <user>brittany.deaville@insperity.com</user>
+            <user>chelsea.smelley@insperity.com</user>
+            <user>crystal.mendoza@insperity.com</user>
+            <user>lisa.andrews@insperity.com</user>
+            <user>natalie.thaggard@insperity.com</user>
+            <user>nicole.parker@insperity.com</user>
+            <user>samantha.womack@insperity.com</user>
+            <user>shaun.pegoda@insperity.com</user>
+            <user>terri.bosley@insperity.com</user>
+            <user>theresa.currie@insperity.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Task</sobjectType>
+    </queueSobject>
+</Queue>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Agreement_Type__c</fullName>
+    <description>Field to capture the type of Agreement</description>
+    <externalId>false</externalId>
+    <label>Agreement Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AF I</fullName>
+                <default>false</default>
+                <label>AF I</label>
+            </value>
+            <value>
+                <fullName>AF I STD (NS)</fullName>
+                <default>false</default>
+                <label>AF I STD (NS)</label>
+            </value>
+            <value>
+                <fullName>AF II - ASSN</fullName>
+                <default>false</default>
+                <label>AF II - ASSN</label>
+            </value>
+            <value>
+                <fullName>AF II - Chamber/Bank</fullName>
+                <default>false</default>
+                <label>AF II - Chamber/Bank</label>
+            </value>
+            <value>
+                <fullName>AF II - Custom</fullName>
+                <default>false</default>
+                <label>AF II - Custom</label>
+            </value>
+            <value>
+                <fullName>AF II - National</fullName>
+                <default>false</default>
+                <label>AF II - National</label>
+            </value>
+            <value>
+                <fullName>AF II - National Non-Rev</fullName>
+                <default>false</default>
+                <label>AF II - National Non-Rev</label>
+            </value>
+            <value>
+                <fullName>AF II - STD</fullName>
+                <default>false</default>
+                <label>AF II - STD</label>
+            </value>
+            <value>
+                <fullName>AF III STD (RS)</fullName>
+                <default>false</default>
+                <label>AF III STD (RS)</label>
+            </value>
+            <value>
+                <fullName>Alliance Referral</fullName>
+                <default>false</default>
+                <label>Alliance Referral</label>
+            </value>
+            <value>
+                <fullName>Co Selling - Non Health</fullName>
+                <default>false</default>
+                <label>Co Selling - Non Health</label>
+            </value>
+            <value>
+                <fullName>Co-Selling</fullName>
+                <default>false</default>
+                <label>Co-Selling</label>
+            </value>
+            <value>
+                <fullName>Custom</fullName>
+                <default>false</default>
+                <label>Custom</label>
+            </value>
+            <value>
+                <fullName>General Agent – UHC</fullName>
+                <default>false</default>
+                <label>General Agent – UHC</label>
+            </value>
+            <value>
+                <fullName>MOU</fullName>
+                <default>false</default>
+                <label>MOU</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Regional Assn</fullName>
+                <default>false</default>
+                <label>Regional Assn</label>
+            </value>
+            <value>
+                <fullName>Sponsorship</fullName>
+                <default>false</default>
+                <label>Sponsorship</label>
+            </value>
+            <value>
+                <fullName>TOP - UHC</fullName>
+                <default>false</default>
+                <label>TOP - UHC</label>
+            </value>
+            <value>
+                <fullName>AFF – III STD (RS) 18</fullName>
+                <default>false</default>
+                <label>AFF – III STD (RS) 18</label>
+            </value>
+            <value>
+                <fullName>Top-UHC  18</fullName>
+                <default>false</default>
+                <label>Top-UHC  18</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

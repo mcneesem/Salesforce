@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SBQQ__Configuration_Attribute</fullName>
+    <active>true</active>
+    <description>Configuration Attribute associated to a product</description>
+    <label>Configuration Attribute</label>
+    <picklistValues>
+        <picklist>SBQQ__TargetField__c</picklist>
+        <values>
+            <fullName>Discount %28%25%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discount %28Amt%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Active_1099_Contractors%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Active_W2_Employees%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Implementation_Start_Date%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Number_of_Checks%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Talent_ConnectSubscription_StartDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Talent_Connect_Subscription_End_Date%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unit Price</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

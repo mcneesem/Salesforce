@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Pricebook_MissMatch_Validation_WX</fullName>
+    <active>false</active>
+    <errorConditionFormula>SBQQ__Opportunity2__r.Pricebook2.Name == &apos;Non-CPQ Product Pricebook&apos; &amp;&amp;  SBQQ__PriceBook__r.Name  == &apos;WX Pricebook&apos;
+&amp;&amp;  SBQQ__Primary__c</errorConditionFormula>
+    <errorMessage>Please Update the Opportunity Pricebook to WX Pricebook and Client For life to WX and  Primary Product to Workforce Acceleration to make the quote Primary.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Western</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Sales_Offices__c</field>
+        <value xsi:type="xsd:string">0561 San Jose 1
+0601 Denver 1
+0602 Denver 2
+4801 Seattle 1
+0520 San Francisco 1
+0522 San Francisco 3
+0523 San Francisco 4
+3801 Portland 1
+0581 Sacramento 1
+4501 Salt Lake City 1</value>
+    </values>
+    <values>
+        <field>NSP_Service_Team_Email__c</field>
+        <value xsi:type="xsd:string">westernnorthservicenotifications@insperity.com</value>
+    </values>
+</CustomMetadata>

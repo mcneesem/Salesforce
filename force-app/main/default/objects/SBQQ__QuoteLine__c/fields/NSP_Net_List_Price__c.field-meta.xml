@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Net_List_Price__c</fullName>
+    <description>Field indicate net total based on list price to be used for setup calculation</description>
+    <externalId>false</externalId>
+    <formula>IF( NSP_Max_Quantity__c &gt;= NSP_Quoted_Quantity__c, MAX(SBQQ__ListPrice__c* NSP_Quoted_Quantity__c,NSP_Final_Minimum_Fee__c) ,
+IF( SBQQ__HasConsumptionSchedule__c , SBQQ__ListPrice__c* NSP_Quoted_Quantity__c ,
+IF( AND( TEXT(SBQQ__BillingFrequency__c) = &quot;Annual&quot;, ISPICKVAL( SBQQ__PricingMethod__c , &quot;List&quot;), SBQQ__Product__r.SBQQ__SubscriptionTerm__c = 1) , SBQQ__ListPrice__c * NSP_Quoted_Quantity__c * 12 ,
+SBQQ__NetTotal__c ) )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Net List Price</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

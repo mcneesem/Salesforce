@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_to_edit_subclient</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(!ISNEW(),
+NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
+$Profile.Name = &quot;Data Migration&quot;,
+$Profile.Name = &quot;Sales Administrator&quot;,
+$Profile.Name = &quot;Integration User&quot;))
+)</errorConditionFormula>
+    <errorMessage>You dont have permission to edit on this record.</errorMessage>
+</ValidationRule>

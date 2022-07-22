@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Submission_type__c</fullName>
+    <description>Field used to store the type of submission</description>
+    <externalId>false</externalId>
+    <label>Submission type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sales ready</fullName>
+                <default>false</default>
+                <label>Sales ready</label>
+            </value>
+            <value>
+                <fullName>White paper downloaded</fullName>
+                <default>false</default>
+                <label>White paper downloaded</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

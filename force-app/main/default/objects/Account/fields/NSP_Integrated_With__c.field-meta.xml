@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Integrated_With__c</fullName>
+    <externalId>false</externalId>
+    <label>Integrated With</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AIMS</fullName>
+                <default>false</default>
+                <label>AIMS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <available>true</available>
+    <description>Email to be sent to opportunity owner when the Quote is Approved</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Quote Approval Email to Opportunity Owner</name>
+    <packageVersions>
+        <majorNumber>234</majorNumber>
+        <minorNumber>2</minorNumber>
+        <namespace>SBQQ</namespace>
+    </packageVersions>
+    <style>none</style>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
