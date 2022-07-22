@@ -1,6 +1,0 @@
-Hi {!SBQQ__Quote__c.OwnerFullName}
-
-Your Approval Request has been Approved for Quote Number {!SBQQ__Quote__c.Name} for {!SBQQ__Quote__c.NSP_Account_Name__c}. Please review below comments:
-
-Comments: {!SBQQ__Quote__c.NSP_Submitter_Comment__c}
-To view the Quote, Click Here : {!SBQQ__Quote__c.Link}

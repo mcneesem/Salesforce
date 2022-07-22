@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Used to determine priority of docusign templates in case of combinations.</description>
-    <label>DocuSign Template Priority Setting</label>
-    <pluralLabel>DocuSign Template Priority Settings</pluralLabel>
-    <visibility>Public</visibility>
-</CustomObject>

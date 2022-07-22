@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NSP_Heard_From_Friends_Name</fullName>
-    <active>true</active>
-    <description>If &quot;How did you hear about Insperity&quot; is Friend then the Friend field cannot be empty and need to have Friend&apos;s Name entered</description>
-    <errorConditionFormula>AND(ISPICKVAL( NSP_How_did_you_hear_about_Insperity__c,&apos;Friend Referral&apos;), ISBLANK(NSP_Friend__c),NOT( $Setup.NSP_Trigger_Switch__c.LeadValidations__c))</errorConditionFormula>
-    <errorDisplayField>NSP_Friend__c</errorDisplayField>
-    <errorMessage>Please enter Friend&apos;s Name from whom you heard about Insperity</errorMessage>
-</ValidationRule>

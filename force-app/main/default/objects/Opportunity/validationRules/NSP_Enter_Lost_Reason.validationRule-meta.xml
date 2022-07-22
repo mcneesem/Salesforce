@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NSP_Enter_Lost_Reason</fullName>
-    <active>false</active>
-    <description>Loss reason is required if opportunity is closed lost</description>
-    <errorConditionFormula>AND(AND(ISPICKVAL(StageName, &quot;Closed Lost&quot; ), ISPICKVAL( NSP_Lost_Reason__c , &quot;&quot; )), NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c))</errorConditionFormula>
-    <errorDisplayField>NSP_Lost_Reason__c</errorDisplayField>
-    <errorMessage>Please select a reason.</errorMessage>
-</ValidationRule>

@@ -1,3 +1,0 @@
-A {!Opportunity.Type} opportunity has been created for {!Account.Name}. Please review the opportunity and take the necessary next steps by clicking the link below.
-<BR/> 
-<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

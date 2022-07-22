@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Hesap için vergi muafiyet sertifikası. Hesap için vergi toplamanız gerekmiyorsa ve finans ekibiniz vergi muafiyeti sertifikalarını manuel olarak takip edip doğrularsa bir değer girin.</help>
-    <label></label>
-    <name>fferpcore__ExemptionCertificate__c</name>
-</CustomFieldTranslation>

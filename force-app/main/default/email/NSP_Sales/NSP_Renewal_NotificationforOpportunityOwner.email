@@ -1,4 +1,0 @@
-Hi {!Opportunity.OwnerFullName},
-<br/><br/>
-A renewal opportunity has been created for the product : {!Opportunity.NSP_Secondary_Products__c} for customer : {!Opportunity.Account} that is terminating in {!Opportunity.NSP_Contract_Terminating_In_Days__c} days.<br/><br/>
-Here is the link to the Renewal Quote - {!Opportunity.NSP_Primary_Quote_Link__c}<br/><br/>

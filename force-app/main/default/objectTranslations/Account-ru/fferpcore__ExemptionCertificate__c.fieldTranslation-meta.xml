@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Свидетельство об освобождении от уплаты налогов для аккаунта. Введите значение, если вы не обязаны собирать налог для учетной записи, а ваша финансовая группа отслеживает и проверяет свидетельства об освобождении от налогов вручную.</help>
-    <label></label>
-    <name>fferpcore__ExemptionCertificate__c</name>
-</CustomFieldTranslation>

@@ -1,3 +1,0 @@
-<design:component>
-    <design:attribute name="leadRecordId" label="Record Id" />	
-</design:component>

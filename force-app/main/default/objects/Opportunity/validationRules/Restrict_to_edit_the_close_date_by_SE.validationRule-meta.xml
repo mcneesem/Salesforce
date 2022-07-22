@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Restrict_to_edit_the_close_date_by_SE</fullName>
-    <active>true</active>
-    <description>Restricted to edit the close date by Sales Engineer</description>
-    <errorConditionFormula>AND(NOT(ISNEW()), ISCHANGED( CloseDate ), $UserRole.Name = &quot;Sales Engineer&quot;)</errorConditionFormula>
-    <errorMessage>Sales Engineers may not change the Close Date. Please reach out to the Opportunity Owner.</errorMessage>
-</ValidationRule>

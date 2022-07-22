@@ -1,3 +1,0 @@
-Hi Finance team,
-
-Opportunity {!SBQQ__Quote__c.NSP_Opportunity_Name__c} has been approved with {!SBQQ__Quote__c.NSP_IWADiscount__c}% discount for WA . To view the Quote, Click Here: {!SBQQ__Quote__c.Link}

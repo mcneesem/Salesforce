@@ -1,3 +1,0 @@
-A new Partner Account has been created for {!Account.Name}. Please click the link below to review and assign the Account accordingly.
-<BR/>
-<a href="{!Account.Link}">{!Account.Name}</a>

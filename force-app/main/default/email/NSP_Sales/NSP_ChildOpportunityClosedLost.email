@@ -1,2 +1,0 @@
-Your opportunity for {!Opportunity.Name} has been marked as Closed Lost because the parent opportunity has been moved into a Closed Lost status. The record can be reviewed below.
-<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

@@ -1,6 +1,0 @@
-Please note that {!Opportunity.Name} with product {!Opportunity.NSP_PrimaryProduct__c} has moved from Proposal to Closing and requires that a New Client Sales Specialists be assigned. Please click on the link below to add the appropriate person to the opportunity team.
-<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
-<BR/> 
-<BR/> 
-Primary Product: {!Opportunity.NSP_PrimaryProduct__c}<BR/> 
-Created by Title: {!Opportunity.OwnerTitle}

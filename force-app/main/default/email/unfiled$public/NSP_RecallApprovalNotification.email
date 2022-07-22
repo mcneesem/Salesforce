@@ -1,3 +1,0 @@
-Hi 
-
-You don't need to approve Quote Number {!SBQQ__Quote__c.Name} for {!SBQQ__Quote__c.NSP_Account_Name__c} because the quote is being revised.

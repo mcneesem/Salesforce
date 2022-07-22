@@ -1,3 +1,0 @@
-Please note that you've been assigned a new lead for {!Lead.Company}
-You can view additional details by clicking the link below.
-<a href="{!Lead.Link}">{!Lead.Name}</a>

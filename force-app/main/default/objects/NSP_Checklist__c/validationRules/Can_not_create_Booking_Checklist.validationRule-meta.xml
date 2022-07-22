@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Can_not_create_Booking_Checklist</fullName>
-    <active>true</active>
-    <errorConditionFormula>$UserRole.Name = &quot;Business Performance Advisor&quot; &amp;&amp;  RecordType.DeveloperName = &quot;NSP_Booking_Checklist&quot;</errorConditionFormula>
-    <errorMessage>You are not authorized to use Booking Checklist</errorMessage>
-</ValidationRule>

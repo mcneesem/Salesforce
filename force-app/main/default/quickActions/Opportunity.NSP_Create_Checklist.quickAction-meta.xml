@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>This button is used to create checklist</description>
-    <flowDefinition>Checklist_Creation</flowDefinition>
-    <label>Create Checklist</label>
-    <optionsCreateFeedItem>false</optionsCreateFeedItem>
-    <type>Flow</type>
-</QuickAction>

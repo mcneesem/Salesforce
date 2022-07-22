@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Certificado de isenção de impostos para a conta. Insira um valor se você não precisar coletar impostos para a conta e sua equipe financeira rastrear e verificar os certificados de isenção de impostos manualmente.</help>
-    <label></label>
-    <name>fferpcore__ExemptionCertificate__c</name>
-</CustomFieldTranslation>

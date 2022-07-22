@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Набор прейскурантов, состоящий из нескольких отдельных прейскурантов, определяет, какие прейскуранты применяются к проекту.</help>
-    <label></label>
-    <name>pse__Rate_Card_Set__c</name>
-    <relationshipLabel></relationshipLabel>
-</CustomFieldTranslation>

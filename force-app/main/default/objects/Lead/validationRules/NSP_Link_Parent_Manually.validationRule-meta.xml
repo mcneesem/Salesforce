@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NSP_Link_Parent_Manually</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(ISCHANGED(NSP_Parent_Lead__c), NSP_Parent_Lead__r.NSP_Parent_Lead__c != null)</errorConditionFormula>
-    <errorDisplayField>NSP_Parent_Lead__c</errorDisplayField>
-    <errorMessage>New Leads can only be linked to a Parent Lead</errorMessage>
-</ValidationRule>

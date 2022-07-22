@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Seçilirse, tüm mevcut faturalandırma etkinliği öğeleri, yeni bir faturalandırma etkinliği oluşturmak yerine mevcut bir faturalandırma etkinliğine eklenir.</help>
-    <label></label>
-    <name>pse__Add_BEIs_To_Existing_Batches__c</name>
-</CustomFieldTranslation>

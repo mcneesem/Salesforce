@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>This custom metadata is used to store recipient email Ids and corresponding email template names and used in apex email utility class to send emails when the opportunity is progressed to closed won</description>
-    <label>Email Templates and Recipients Mapping</label>
-    <pluralLabel>Email Templates and Recipients Mapping</pluralLabel>
-    <visibility>Public</visibility>
-</CustomObject>
