@@ -55,7 +55,23 @@
             } */
             }//end of for loop   
         }        
-    }
+    },
+ 
+ //557355 - get opportunity details and then select the appropriate guidance message for the opportunity
+ getOpportunityDetails : function(component, opportunityRecordId) {
+    var action = component.get("c.getOpportunityDetails");
+     	action.setParams({recordId : opportunityRecordId});
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            if(state === "SUCCESS"){
+                var opportunityDetails = response.getReturnValue();                
+                component.set("v.opportunityRecord", opportunityDetails);
+            	this.setGuidanceMessages(component, component.get("v.opportunityRecord")); 
+            }
+            
+        });
+      $A.enqueueAction(action);
+ }
 })
 
 //[{"MasterLabel":"AnalysisRetirement","Message__c":"1. Plan review, product options, design elements, testing etc.\r\n\r\n
