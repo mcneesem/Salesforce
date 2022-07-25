@@ -17,4 +17,24 @@ public class NSP_GuidanceForSuccessController {
         return guidanceMessages;
     }
     
+    /* Description: This method queries the required field from opportunity with recordId
+     * @param: recordId
+     * @return: Opportunity
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * Harsha Khiroya    07/14/2022          created this new method - ticket 557355
+    */
+    @AuraEnabled
+    public static Opportunity getOpportunityDetails(String recordId){
+        Opportunity opportunityRecord;
+        try{
+            opportunityRecord = [Select Id, NSP_Account_Segment__c, NSP_PrimaryProduct__c,StageName,NSP_Number_of_Employees__c from Opportunity where Id =: recordId];
+        }catch(Exception ex){
+            throw new NSP_CustomException(ex);
+        }
+        return opportunityRecord;
+    }
+    
 }
