@@ -7,14 +7,14 @@
                 <stringValue>NSP_Send_email_when_Demo_Event_is_created_for_WO_WX_opportunities</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_17_A1</name>
+        <name>myRule_19_A1</name>
         <label>Notify When Demo Activity is Created</label>
-        <locationX>1700</locationX>
+        <locationX>1900</locationX>
         <locationY>200</locationY>
         <actionName>Event.NSP_Send_email_when_Demo_Event_is_created_for_WO_WX_opportunities</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision18</targetReference>
+            <targetReference>myDecision20</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -190,9 +190,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_17_pmetdec</targetReference>
+                <targetReference>myRule_17_A1</targetReference>
             </connector>
-            <label>Demo Event with WO/WX Opportunity</label>
+            <label>Event Related to Demo Opportunity</label>
         </rules>
     </decisions>
     <decisions>
@@ -206,6 +206,9 @@
         <label>myDecision18</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision20</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_19</name>
@@ -218,9 +221,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_19_A1</targetReference>
+                <targetReference>myRule_19_pmetdec</targetReference>
             </connector>
-            <label>Demo Activity Created on Opportunity record</label>
+            <label>Demo Event with WO/WX Opportunity</label>
         </rules>
     </decisions>
     <decisions>
@@ -252,6 +255,34 @@
                 <targetReference>myRule_3_A1</targetReference>
             </connector>
             <label>Update Related Opportunity</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>9.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision20</name>
+        <label>myDecision20</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_21</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_21</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_21_A1</targetReference>
+            </connector>
+            <label>Demo Activity Created on Opportunity record</label>
         </rules>
     </decisions>
     <decisions>
@@ -317,16 +348,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>myRule_17_pmetdec</name>
+        <name>myRule_19_pmetdec</name>
         <label>Previously Met Decision</label>
-        <locationX>1700</locationX>
+        <locationX>1900</locationX>
         <locationY>100</locationY>
         <defaultConnector>
-            <targetReference>myRule_17_A1</targetReference>
+            <targetReference>myRule_19_A1</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
         <rules>
-            <name>myRule_17_pmetnullrule</name>
+            <name>myRule_19_pmetnullrule</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -336,22 +367,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_17_A1</targetReference>
+                <targetReference>myRule_19_A1</targetReference>
             </connector>
             <label>Previously Met - Null</label>
         </rules>
         <rules>
-            <name>myRule_17_pmetrule</name>
+            <name>myRule_19_pmetrule</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_17_pmetrule</leftValueReference>
+                <leftValueReference>formula_myRule_19_pmetrule</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myDecision18</targetReference>
+                <targetReference>myDecision20</targetReference>
             </connector>
             <label>Previously Met - Prev</label>
         </rules>
@@ -364,7 +395,7 @@
                 <stringValue>Today()</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_3_A1_2832625752</name>
+        <name>formula_4_myRule_3_A1_0457336841</name>
         <dataType>Date</dataType>
         <expression>Today()</expression>
     </formulas>
@@ -375,7 +406,7 @@
                 <stringValue>Today()</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_6_A1_9841937065</name>
+        <name>formula_7_myRule_6_A1_9029210452</name>
         <dataType>Date</dataType>
         <expression>Today()</expression>
     </formulas>
@@ -427,10 +458,23 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>ISNEW() &amp;&amp; ISPICKVAL([Event].NSP_Event_Type__c, &quot;Demo&quot;) &amp;&amp; BEGINS([Event].WhatId, &quot;006&quot; ) &amp;&amp; (ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WO&quot; ) || ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WX&quot; ))</stringValue>
+                <stringValue>ISNEW() &amp;&amp; ISPICKVAL([Event].NSP_Event_type__c , &quot;Demo&quot;)  &amp;&amp; BEGINS([Event].WhatId, &quot;006&quot;) 
+&amp;&amp; (ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WO&quot; ) || ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WX&quot; ))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_17</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW() &amp;&amp; ISPICKVAL({!myVariable_current.NSP_Event_Type__c} , &quot;Demo&quot;)  &amp;&amp; BEGINS({!myVariable_current.WhatId}, &quot;006&quot;) 
+&amp;&amp; (ISPICKVAL({!myVariable_current.NSP_Opportunity__r.NSP_PrimaryProduct__c}, &quot;WO&quot; ) || ISPICKVAL({!myVariable_current.NSP_Opportunity__r.NSP_PrimaryProduct__c}, &quot;WX&quot; ))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>ISNEW() &amp;&amp; ISPICKVAL([Event].NSP_Event_Type__c, &quot;Demo&quot;) &amp;&amp; BEGINS([Event].WhatId, &quot;006&quot; ) &amp;&amp; (ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WO&quot; ) || ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WX&quot; ))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_19</name>
         <dataType>Boolean</dataType>
         <expression>ISNEW() &amp;&amp; ISPICKVAL({!myVariable_current.NSP_Event_Type__c}, &quot;Demo&quot;) &amp;&amp; BEGINS({!myVariable_current.WhatId}, &quot;006&quot; ) &amp;&amp; (ISPICKVAL({!myVariable_current.NSP_Opportunity__r.NSP_PrimaryProduct__c}, &quot;WO&quot; ) || ISPICKVAL({!myVariable_current.NSP_Opportunity__r.NSP_PrimaryProduct__c}, &quot;WX&quot; ))</expression>
     </formulas>
@@ -441,7 +485,7 @@
                 <stringValue>ISNEW() &amp;&amp; ISPICKVAL([Event].NSP_Event_Type__c, &quot;Demo&quot;) &amp;&amp; BEGINS([Event].WhatId, &quot;006&quot; ) &amp;&amp; (ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WO&quot; ) || ISPICKVAL([Event].NSP_Opportunity__r.NSP_PrimaryProduct__c, &quot;WX&quot; ))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_17_pmetrule</name>
+        <name>formula_myRule_19_pmetrule</name>
         <dataType>Boolean</dataType>
         <expression>ISNEW() &amp;&amp; ISPICKVAL({!myVariable_old.NSP_Event_Type__c}, &quot;Demo&quot;) &amp;&amp; BEGINS({!myVariable_old.WhatId}, &quot;006&quot; ) &amp;&amp; (ISPICKVAL({!myVariable_old.NSP_Opportunity__r.NSP_PrimaryProduct__c}, &quot;WO&quot; ) || ISPICKVAL({!myVariable_old.NSP_Opportunity__r.NSP_PrimaryProduct__c}, &quot;WX&quot; ))</expression>
     </formulas>
@@ -452,7 +496,7 @@
                 <stringValue>ISPICKVAL([Event].NSP_Event_Type__c , &quot;Demo&quot;) &amp;&amp; BEGINS([Event].WhatId , &quot;006&quot;) &amp;&amp; ISCHANGED([Event].NSP_Status__c ) &amp;&amp; ISPICKVAL([Event].NSP_Status__c , &quot;Completed&quot;) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_19</name>
+        <name>formula_myRule_21</name>
         <dataType>Boolean</dataType>
         <expression>ISPICKVAL({!myVariable_current.NSP_Event_Type__c} , &quot;Demo&quot;) &amp;&amp; BEGINS({!myVariable_current.WhatId} , &quot;006&quot;) &amp;&amp; ISCHANGED({!myVariable_current.NSP_Status__c} ) &amp;&amp; ISPICKVAL({!myVariable_current.NSP_Status__c} , &quot;Completed&quot;)</expression>
     </formulas>
@@ -489,7 +533,7 @@
         <dataType>Boolean</dataType>
         <expression>AND (ISNEW(),BEGINS( {!myVariable_current.WhoId} , &quot;00Q&quot;), ISPICKVAL({!myVariable_current.NSP_Event_Subtype__c} , &quot;Discovery Call&quot;))</expression>
     </formulas>
-    <interviewLabel>Notify_Sales_Team_on_Demo_Event-5_InterviewLabel</interviewLabel>
+    <interviewLabel>Notify_Sales_Team_on_Demo_Event-2_InterviewLabel</interviewLabel>
     <label>Notify Sales Team on Demo Event</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -870,6 +914,90 @@
         <processMetadataValues>
             <name>evaluationType</name>
             <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Event]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_17_A1</name>
+        <label>Copy Wo WX Email from Oppty record</label>
+        <locationX>1700</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myDecision18</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>WO WX Email</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>NSP_WO_WX_Email__c</field>
+            <value>
+                <elementReference>myVariable_current.NSP_Opportunity__r.NSP_WO_WX_Results__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Event</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
                 <stringValue>criteria</stringValue>
             </value>
         </processMetadataValues>
@@ -891,9 +1019,9 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_19_A1</name>
+        <name>myRule_21_A1</name>
         <label>Update Has Demo Activity on Opportunity record</label>
-        <locationX>1900</locationX>
+        <locationX>2100</locationX>
         <locationY>200</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1075,7 +1203,7 @@
             </processMetadataValues>
             <field>NSP_Last_Updated__c</field>
             <value>
-                <elementReference>formula_4_myRule_3_A1_2832625752</elementReference>
+                <elementReference>formula_4_myRule_3_A1_0457336841</elementReference>
             </value>
         </inputAssignments>
         <object>Opportunity</object>
@@ -1159,7 +1287,7 @@
             </processMetadataValues>
             <field>NSP_Last_Updated__c</field>
             <value>
-                <elementReference>formula_7_myRule_6_A1_9841937065</elementReference>
+                <elementReference>formula_7_myRule_6_A1_9029210452</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>

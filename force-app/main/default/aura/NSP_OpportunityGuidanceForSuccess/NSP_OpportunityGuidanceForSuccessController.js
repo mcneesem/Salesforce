@@ -7,7 +7,8 @@
                 var guidanceForSuccessMdtRecords = response.getReturnValue();                
                 component.set("v.guidanceForSuccessMdtRecords", guidanceForSuccessMdtRecords);
                 if(component.get("v.guidanceForSuccessMdtRecords")!=null){
-                    helper.setGuidanceMessages(component, component.get("v.opportunityRecord"));            
+                    //Get the opportunity details first - 557355
+                    helper.getOpportunityDetails(component, component.get("v.recordId"));
                 }
             }
             
