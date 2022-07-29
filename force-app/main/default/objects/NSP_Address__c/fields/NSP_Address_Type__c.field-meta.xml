@@ -41,17 +41,6 @@
                 <default>false</default>
                 <label>Reporting</label>
             </value>
-            <value>
-                <fullName>Billing</fullName>
-                <default>false</default>
-                <label>Billing</label>
-            </value>
-            <value>
-                <fullName>Account Address</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Account Address</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
