@@ -22,6 +22,31 @@
                 <label>Ship To</label>
             </value>
             <value>
+                <fullName>Delivery</fullName>
+                <default>false</default>
+                <label>Delivery</label>
+            </value>
+            <value>
+                <fullName>U.S. Mail</fullName>
+                <default>false</default>
+                <label>U.S. Mail</label>
+            </value>
+            <value>
+                <fullName>Worksite</fullName>
+                <default>false</default>
+                <label>Worksite</label>
+            </value>
+            <value>
+                <fullName>Reporting</fullName>
+                <default>false</default>
+                <label>Reporting</label>
+            </value>
+            <value>
+                <fullName>Billing</fullName>
+                <default>false</default>
+                <label>Billing</label>
+            </value>
+            <value>
                 <fullName>Account Address</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
