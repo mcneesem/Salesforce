@@ -29,8 +29,7 @@ public class NSP_AccountTriggerHelperTest {
         UserRole CPMrole = [SELECT Id FROM UserRole WHERE Name='Channel Program Manager'];
          UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
          Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
-         UserRole DARole = [SELECT Id FROM UserRole WHERE Name = 'District Administrator'];
-   List<User> users = new List<User>();
+ 	List<User> users = new List<User>();
         //Creating User
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Integration User'][0].Id,
@@ -70,13 +69,6 @@ public class NSP_AccountTriggerHelperTest {
                                     username='insperitytestadminuser@insperity.com.test2');
         users.add(lAUser);
         
-        User dAUser = new User(alias = 'jsmit', email='jsmithda@acmetestusr.com', 
-        emailencodingkey=emailencodingkey, lastname='Smithda', 
-        languagelocalekey=languagekey, 
-        localesidkey=languagekey, profileid = profileobj.Id, userroleid = DARole.Id,
-        timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
-        username='insperitytestadminuserda@insperity.com.testUsr');
-        users.add(dAUser);
         
         User userRecord1 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
@@ -92,18 +84,33 @@ public class NSP_AccountTriggerHelperTest {
             LocaleSidKey = EN_US,
             NSP_Sales_Office__c = '1401'
         );
+        User userRecord2 = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
+            LastName = 'TestClassUser2',
+            Email = 'testuser@test2.com',
+            Username = 'testuser2@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = EN_US,
+            LocaleSidKey = EN_US,
+            NSP_Sales_Office__c = '1401'
+        );
         users.add(userRecord1);
+        users.add(userRecord2);
         database.insert(users);
          Group gp1= new Group();
         gp1.Name='0302 Phoenix 2';
             Insert gp1;
           GroupMember cpaGm = new GroupMember (UserOrGroupId = cpmUser.Id, GroupId = gp1.Id);
         GroupMember lAGm = new GroupMember (UserOrGroupId = lAUser.Id, GroupId = gp1.Id);
-        GroupMember daGm = new GroupMember (UserOrGroupId = dAUser.Id, GroupId = gp1.Id);
-        List<GroupMember> groupMemberList= new List<GroupMember>{cpaGm,lAGm,daGm};
+        List<GroupMember> groupMemberList= new List<GroupMember>{cpaGm,lAGm};
             // Inserting Group Members
             Insert groupMemberList;
-      
+        
+        
     }
      /***********************************************************************************************
 * MethodName: setChannelPartnerAndLoyaltyAdvisor
@@ -125,7 +132,7 @@ public class NSP_AccountTriggerHelperTest {
             System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
         }
     }
-
+    
     /**
      * Checks the Account After Insert Trigger
      * @param N/A. 
@@ -229,6 +236,79 @@ public class NSP_AccountTriggerHelperTest {
         helper.updatePublishAccount(accIdSet);
          helper.afterUpdateDirector(accountMapNew, accountMapOld);
          system.assertEquals(salesManagerUser.Id, accountList[0].ownerId);
+        Test.stopTest();
+ 
+    }
+    
+    
+    /* Description: This method send data to publishevent when some particular account field is changed.
+     * Created this method to fire opportunity trigger when owner of account is changed which lead to change owner of opportunity.
+     * Chages made as part of Service Request- 569324
+     * @param: newMap,oldMap
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * Rahul Singh         	07/11/2022        Created this method
+     * 
+     * 
+    */
+    
+    @isTest
+    static void testAccountAndOppUpdate() {
+      
+         User userForOpp1 = [select id from User WHERE LastName = 'TestClassUser1'];
+         User userForOpp2 = [select id from User WHERE LastName = 'TestClassUser2'];
+       
+        
+        Account accoutObject3 = new Account();
+        Id partnerRecordTypeId1 = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        //Create Account
+        accoutObject3.Name = 'ACCOUNTTEST3';
+        accoutObject3.recordTypeId=partnerRecordTypeId1;
+        accoutObject3.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543986';
+        accoutObject3.NSP_Ready_for_Integration_Sync__c = TRUE;
+        accoutObject3.NSP_Account_Status__c = ACTIVE;
+        accoutObject3.NSP_Template_Selection__c = 'referralProgramAF-I';
+        accoutObject3.NSP_Delete_Account_Teams__c = system.now();
+        accoutObject3.NSP_Partner_Lifecycle__c = 'Onboarding';
+        insert accoutObject3;
+        //Create Opportunity
+        Opportunity opportuniytObject = new Opportunity();
+        opportuniytObject.Name = 'Test Oppty';
+        opportuniytObject.AccountId = accoutObject3.Id;
+        opportuniytObject.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject.CloseDate = date.today();
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
+        opportuniytObject.NSP_Number_of_Employees__c = 100;
+        //Inserting Opportunity Object
+        insert opportuniytObject;
+        system.debug('ownerid - '+opportuniytObject.Id);
+        Map<Id, Account> accountMapOldForOpp = new Map<Id, Account>();
+        Map<Id, Account> accountMapNewForOpp = new Map<Id, Account>();
+        Account accountUpdateListForOpp1 = [Select Id, Name, NSP_Account_Owners_Profile__c,LastModifiedById,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c,ownerId , LastModifiedDate From Account WHERE Name= 'ACCOUNTTEST3'];
+               
+        accountMapOldForOpp.put(accountUpdateListForOpp1.Id, accountUpdateListForOpp1);
+        List<Account> accounts=new List<Account>();
+        accounts=[Select Id,(select Id,name from opportunities) from account where Id =: opportuniytObject.ownerId];
+        opportuniytObject.ownerId = userForOpp2.Id;
+        update opportuniytObject;
+        Account accountUpdateListForOpp = [Select Id, Name, NSP_Account_Owners_Profile__c,LastModifiedById,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c,ownerId , LastModifiedDate From Account WHERE Name= 'ACCOUNTTEST3'];
+           
+                accountUpdateListForOpp.NSP_Delete_Account_Teams__c = system.now(); // Added as part of Test class fix
+                accountUpdateListForOpp.NSP_Ready_for_Integration_Sync__c = TRUE;
+                accountUpdateListForOpp.ownerId = userForOpp2.Id;
+                accountUpdateListForOpp.NSP_Stage__c = 'Available';
+        Update accountUpdateListForOpp;
+        accountMapNewForOpp.put(accountUpdateListForOpp.Id, accountUpdateListForOpp);
+
+        // Start Test
+           
+        Test.startTest();
+           
+        NSP_AccountTriggerHelper helper = new NSP_AccountTriggerHelper();
+        helper.afterUpdateDirector(accountMapNewForOpp, accountMapOldForOpp);
         Test.stopTest();
  
     }
