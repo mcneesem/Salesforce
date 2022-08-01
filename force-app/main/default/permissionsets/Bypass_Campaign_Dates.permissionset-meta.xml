@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Campaign_Date</name>
+    </customPermissions>
+    <description>Perm set to be added to Perm set group to bypass campaign date by the role mentioned in Perm set group.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Campaign Dates</label>
+</PermissionSet>
