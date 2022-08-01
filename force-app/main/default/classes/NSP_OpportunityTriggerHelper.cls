@@ -667,7 +667,7 @@ public class NSP_OpportunityTriggerHelper {
     
 /*
 * Description: accepts a list of Opportunities with Partener accounts and
-* sets the Partenr Lifecycle field on Account to Active
+* sets the Partenr Lifecycle field on Account to Onboarding
 * @param : List<Opportunity>, Set<Id> AccountIdSet
 * -------------------------------------------------------------------------------------
 * author           | Date              | Description
@@ -678,11 +678,12 @@ public class NSP_OpportunityTriggerHelper {
 */    
     public static void setPartnerAccount(List<Opportunity> opportunityList, Set<Id> accountsIdSet){
         List<Account> accountList = new List<Account>();
-        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, NSP_Partner_Lifecycle__c FROM Account WHERE Id IN :accountsIdSet]);
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, NSP_Partner_Lifecycle__c,NSP_Onboarding_Contract_Date__c FROM Account WHERE Id IN :accountsIdSet]);
         
         for(Opportunity opportunityRecord : opportunityList){
-            if(accountMap.get(opportunityRecord.AccountId).NSP_Partner_Lifecycle__c != NSP_SalesConstants.ACTIVE){
-                accountMap.get(opportunityRecord.AccountId).NSP_Partner_Lifecycle__c = NSP_SalesConstants.ACTIVE;
+            if(accountMap.get(opportunityRecord.AccountId).NSP_Partner_Lifecycle__c != NSP_SalesConstants.ONBOARDING){
+                accountMap.get(opportunityRecord.AccountId).NSP_Partner_Lifecycle__c = NSP_SalesConstants.ONBOARDING;
+                accountMap.get(OpportunityRecord.AccountId).NSP_Onboarding_Contract_Date__c = system.today();
                 accountList.add(accountMap.get(opportunityRecord.AccountId));
             }
         }
