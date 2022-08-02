@@ -2,7 +2,7 @@
 * Represents the Account trigger helper which handles all the logic.
 * -------------------------------------------------------------------------------------------------  
 * Modification History
-*  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
+*   ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
     
@@ -86,6 +86,10 @@ public class NSP_AccountTriggerHelper {
             List<Account> partnerAccountList = new List<Account>();
             Set<Id> userIdsSet = new Set<Id>();
             List<Account> acctListToStampDocusignTemplateId = new List<Account>();
+
+             /*Added as part of DF-01925 */
+             User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+             /*Added as part of DF-01925 */
             
             //Iterating over the new Account map
             for(Id accountId : accountNewMap.keySet()){
@@ -113,11 +117,25 @@ public class NSP_AccountTriggerHelper {
                     
                 }
 
+                
+                if(accountNewMap.get(accountId) != accountOldMap.get(accountId) && userDetails.UserRole.Name == DA_ROLE){
+                    PermissionSetAssignment getPermSet;
+                    if(!test.isRunningTest()){
+                        getPermSet = [SELECT Id, 
+                                      PermissionSetId, 
+                                      PermissionSet.Name,
+                                      AssigneeId FROM PermissionSetAssignment 
+                                      WHERE AssigneeId =: userDetails.Id AND 
+                                      PermissionSet.Name = 'Account_View_All_Modify_All'];
+                    }
+                    if(getPermSet != null || Test.isRunningTest()){
+                        restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    }
+                }
                 //cherwel ticket 556472
                 if(accountNewMap.get(accountId).NSP_Partner_Lifecycle__c != accountOldMap.get(accountId).NSP_Partner_Lifecycle__c && accountNewMap.get(accountId).NSP_Partner_Lifecycle__c == NSP_SalesConstants.ONBOARDING){
                     newAccount.NSP_Onboarding_Contract_Date__c = system.today();
                 }
-                
             }
             
             if(accountList.size() > 0){
@@ -169,11 +187,11 @@ public class NSP_AccountTriggerHelper {
             // Send the list to publish event bus
             if(accountEventList.size() > 0){
                 Id profileId=userinfo.getProfileId();
-        String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+                String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
                 /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
                 if(!profileName.containsIgnoreCase(System.label.NSP_Data_Migration_Profile_Name) || 
                    !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
-                  publishEventBus(accountEventList, updateResyncFlagAccountList);
+                    publishEventBus(accountEventList, updateResyncFlagAccountList);
                 }
             }
             
@@ -189,25 +207,12 @@ public class NSP_AccountTriggerHelper {
 * @return void
 *                
 */
-    /* Description: This method send data to publishevent when some particular account field is changed.
-     * Modified this method to fire opportunity trigger when owner of account is changed which lead to change owner of opportunity.
-     * Modified as part of service request - 569324.
-     * @param: newMap,oldMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     * author           | Date              | Description
-     * -------------------------------------------------------------------------------------
-     * Rahul Singh         	07/11/2022        Modified this method
-     * 
-     * 
-    */
     public void afterUpdateDirector(Map<Id, Account> newMap, Map<Id, Account> oldMap) {
-        List<Account> accountList = new List<Account>();  //list to store accounts to handle Tasks when Partner contract is generated
+        List<Account> accountList = new List<Account>();    //list to store accounts to handle Tasks when Partner contract is generated
         try{
             Map<Id,DateTime> accountTeamMDeleteMap = new Map<Id,DateTime>();
             Map<Id,String> accountTeamMDelete = new Map<Id,String>();
-      List<Integration_Account_Event__e> accountEvent = New List<Integration_Account_Event__e>();
+            List<Integration_Account_Event__e> accountEvent = New List<Integration_Account_Event__e>();
             List<Account> updateAccountList = new List<Account>();
             
             for(Account accObj : newMap.values()){
@@ -241,16 +246,6 @@ public class NSP_AccountTriggerHelper {
                 String profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
                 if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 publishEventBus(accountEvent, updateAccountList);
-                List<Opportunity> oppUpdated = [SELECT Id FROM Opportunity Where OwnerId =:newMap.values().OwnerId AND LastModifiedById=:newMap.values().LastModifiedById AND LastModifiedDate =:newMap.values().LastModifiedDate];
-                List<Opportunity> listOppOwner = new List<Opportunity>();
-               //update opportunity to fire opportunity trigger
-                	if(oppUpdated.size() > 0){
-			        	for(Opportunity oppObj :oppUpdated ){
-                        oppObj.NSP_Ready_for_Integration_Sync__c = true; 
-                        listOppOwner.add(oppObj);
-                    	}
-                    update listOppOwner;
-                    }
                 }
             }
             
@@ -414,6 +409,60 @@ public static void handleTaskForPartnerContracts(List<Account> accountList){
 }
 
   /*
+* Description: This method is used to allow DA to edit Account,  if the DA is in the same public group as the Account owner.
+* @Param : Map of Old and New Account, loggedinUser Details: accountNewMap and accountOldMap, loggedinUser
+* @return type: void 
+* Defect: DF-01925
+*/
+public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
+    Map<String, List<string>> grpIdUserIdListMap = new Map<String, List<string>>();
+    Set<Id> accOwnerIdSet = new Set<Id>();
+    List<String> loggedInUserGrpId = new List<String>();
+    
+    for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
+        loggedInUserGrpId.add(gMem.GroupId);
+    }
+    for(Account acc : [SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c) 
+                       FROM Account WHERE Id IN: accountOldMap.keySet()]){
+                           accOwnerIdSet.add(acc.ownerId);
+                       }
+    try{
+        if(!accOwnerIdSet.isEmpty()){
+            // Fetching account owner GroupId
+            for(GroupMember gMem: [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId IN: accOwnerIdSet]){  
+                if(!grpIdUserIdListMap.containsKey(gMem.UserOrGroupId)) {
+                    grpIdUserIdListMap.put(gMem.UserOrGroupId, new list<String>{gMem.GroupId});
+                }
+                else {
+                    grpIdUserIdListMap.get(gMem.UserOrGroupId).add(gMem.GroupId);
+                }
+            }      
+        } 
+        
+        for(Account acc : accountNewMap.values()){
+            if(!grpIdUserIdListMap.isEmpty() && !loggedInUserGrpId.isEmpty()){
+                if(!grpIdUserIdListMap.isEmpty()){
+                    Integer isallowUpdate = 0;
+                    for(String grpId : grpIdUserIdListMap.get(acc.ownerId)){
+                        if(!loggedInUserGrpId.isEmpty() && loggedInUserGrpId.contains(grpId)){
+                            isallowUpdate = isallowUpdate + 1;
+                        }
+                    }
+                    if(isallowUpdate < 1){
+                        acc.addError(system.label.NSP_AccountTriggerError);
+                    }
+                }
+            }else{
+                acc.addError(system.label.NSP_AccountTriggerError);
+            }
+        }
+    }
+    catch(Exception ex){
+        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'restrictAccountChange',ex.getMessage());
+    }
+}
+
+  /*
      * Description: This method is used to populate CPM and LA on Account on insertion based on BPA sales office group
      * @Param : List of New Accounts: accountsList and salesOfficeSet
      * @return type: void 
@@ -512,7 +561,7 @@ public static void setChannelPartnerAndLoyaltyAdvisor(List<Account> accList, Set
      * -------------------------------------------------------------------------------------
      * author           | Date              | Description
      * -------------------------------------------------------------------------------------
-     * Harsha Khiroya           12/22/2021           created this new method
+     * Harsha Khiroya           12/22/2021          created this new method
      * 
      * 
     */
