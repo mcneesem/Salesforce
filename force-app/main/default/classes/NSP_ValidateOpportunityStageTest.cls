@@ -25,6 +25,31 @@ public class NSP_ValidateOpportunityStageTest {
         opp.NSP_Partner__c=acnt.Id;
         insert opp;   
         
+        User userRecord = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+            LastName = 'TestClassUser',
+            Email = 'testuser@test.com',
+            Username = 'testuser@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+        //Inserting users that can be used in the test class data setup
+        insert userRecord;
+        
+        Opportunity opp3=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
+        opp3.StageName = 'Discovery';
+        opp3.NSP_Number_of_Employees__c=12;
+        opp3.NSP_BidNumber__c='123987';
+        opp3.NSP_PrimaryProduct__c = 'WO';
+        opp3.NSP_Partner__c=acnt.Id;
+        opp3.ownerid= userRecord.id;
+        insert opp3;  
+        
         Opportunity opp1=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
         opp1.StageName = 'Proposal';
         opp1.NSP_PrimaryProduct__c = 'WX';
@@ -35,6 +60,7 @@ public class NSP_ValidateOpportunityStageTest {
             ex.getStackTraceString();
         }
         
+        
         Opportunity opp2=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
         opp2.StageName = 'Discovery';
         opp2.NSP_BidNumber__c='unique123';
@@ -42,7 +68,14 @@ public class NSP_ValidateOpportunityStageTest {
             insert opp2;   
         }catch(Exception ex){
             ex.getStackTraceString();
-        }        
+        }  
+
+        OpportunityTeamMember oppMember = new OpportunityTeamMember();
+        oppMember.OpportunityId = opp3.id;
+        oppMember.UserId = UserInfo.getUserId();
+        oppMember.TeamMemberRole = 'Business Performance Advisor';
+        insert oppMember;   
+        
         //Adding Tasks and Events to lists.
         List<Task> taskList = new List<Task>();
         List<Event> eventList = new List<Event>();
@@ -287,7 +320,7 @@ public class NSP_ValidateOpportunityStageTest {
                                                        NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c from OpportunityLineItem limit 1];
         test.startTest();
         
-        New NSP_SrcToTargetObjectDataMover(null,'OppAsset')	;//initialize the class
+        New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;//initialize the class
         List<SObject> newlist = NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);
         test.stopTest();
         system.assertNotEquals(null, newlist);
@@ -305,7 +338,7 @@ public class NSP_ValidateOpportunityStageTest {
         fieldsToQueryList.add('Id');
         Map<String,String> filterMap = new Map<String,String>();
         filterMap.put('Name','testAsset, test Asset1');
-        New NSP_SrcToTargetObjectDataMover(null,'OppAsset')	;
+        New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;
         try{
         NSP_SrcToTargetObjectDataMover.constructSourceQuery(fieldsToQueryList,filterMap);
         }catch(Exception ex){
@@ -314,7 +347,7 @@ public class NSP_ValidateOpportunityStageTest {
         test.stopTest();
         system.assertEquals('Id',fieldsToQueryList[0]);
     }
-     @isTest
+    @isTest
     public static void evaluateClosedLostStageCriteria_Test(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' Limit 1];
          Opportunity oppty = oppList[0];
@@ -324,6 +357,23 @@ public class NSP_ValidateOpportunityStageTest {
             //oppty.Loss_Reason__c='';
             try{
                 update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        test.stopTest();
+}
+    @isTest
+    public static void evaluateClosedLostStageCriteria2_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+         Opportunity oppty = oppList[0];
+        test.startTest();
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
