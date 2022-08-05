@@ -20,6 +20,12 @@ public class NSP_ValidateOpportunityStage {
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
     public static List<string> ownerBasedCriteriaRoles = System.Label.NSP_OwnerBasedCriteriaRoles.split(',');
     public static List<string> closedLostCriteriaRoles = System.Label.NSP_Close_Lost_Criteria_Roles.split(',');
+    public static List<string> closeLostRolesforBusinessPerformanceConsultant = System.Label.Close_Lost_Roles_for_Business_Performance_Consultant.split(',');
+    public static List<string> closeLostRolesforRetirementSalesConsultant = System.Label.Close_Lost_Roles_for_Retirement_Sales_Consultant.split(',');
+    public static List<string> closeLostRolesforInsuranceSales = System.Label.Close_Lost_Roles_for_Insurance_Sales.split(',');
+    public static List<string> closeLostRolesforTechnologySales = System.Label.Close_Lost_Roles_for_Technology_Sales.split(',');
+    public static List<string> closeLostRolesforRecruitingSales = System.Label.Close_Lost_Roles_for_Recruiting_Sales.split(',');
+    public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_WO_TASK = ' has WO Task ';
@@ -259,7 +265,7 @@ public class NSP_ValidateOpportunityStage {
     * ********************************************************************************************/
     public static  Map<Id,User> getUserRole(String UserId){
          Map<Id,User> userMap= new Map<Id,User>([SELECT Id, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id =:UserId]);
-        	return userMap;
+            return userMap;
     }  
     
     /**
@@ -269,13 +275,18 @@ public class NSP_ValidateOpportunityStage {
 * @return void             
 * @DF-01769 
 */
+/*Modified Logic for Close Lost  
+ * Date- 8/4/2022
+ * Developer- Ruchi
+ * Ticket-10350
+ */ 
 public static void evaluateClosedLostStageCriteria(Opportunity opp) {
+    Integer canCloseLost =0;
     Set < String > salesOfficeSet = new Set < String > ();
     Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
     Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
-    //if not same owner
     
-    if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+    /*if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
         //show error if role not equal to DA,RA or BPA
         opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
     }else if(closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name) && !currentUserRoleMap.containsKey(opp.OwnerId)){
@@ -285,6 +296,32 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
         }
         
+    }*/
+    List<ID> TeamMemberList = new List<ID>();
+    List<OpportunityTeamMember> OpportunityTeamMemberList = [SELECT Id, UserId, TeamMemberRole from OpportunityTeamMember where OpportunityId = : opp.Id and TeamMemberRole =: closeLostRoleinOpportunityTeam];
+    if(!OpportunityTeamMemberList.isEmpty()) {
+        for(OpportunityTeamMember oppTeamMember : OpportunityTeamMemberList){
+         TeamMemberList.add(oppTeamMember.UserId);
+    }
+    }
+    
+    if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RETIREMENT_SALES_CONSULTANT && closeLostRolesforRetirementSalesConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.INSURANCE_SALES && closeLostRolesforInsuranceSales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RECRUITING_SALES && closeLostRolesforRecruitingSales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.TECHNOLOGY_SALES && closeLostRolesforTechnologySales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }else if(opp.ownerid == userInfo.getUserId()){
+        canCloseLost++;
+    }else if(TeamMemberList.contains(userInfo.getUserId())){
+        canCloseLost++;
+    }
+    if(canCloseLost == 0){
+        opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
     }
 }    
 
