@@ -9,10 +9,12 @@ public class NSP_TaskTriggerHelper {
         List<User> userdetails = [SELECT id, NSP_Sales_Office__c from User where id = : UserInfo.getUserId()];
         for(Task taskObj : newList){
             if(String.isBlank(taskObj.NSP_Sales_Office__c) && String.isBlank(taskObj.NSP_OneForce_External_ID__c)){
-            	taskObj.NSP_Sales_Office__c = userdetails[0].NSP_Sales_Office__c;
+                taskObj.NSP_Sales_Office__c = userdetails[0].NSP_Sales_Office__c;
             }
         }
-    }	
+        
+        updateActivitySales(newList,null);
+    }   
     public void afterInsertDirector(List<Task> newList, Map<Id, Task> taskNewMap){ 
         updateActivityDate(newList,null); 
     }    
@@ -32,6 +34,7 @@ public void beforeUpdateDirector(Map<Id, Task> taskNewMap,Map<Id, Task> taskOldM
             taskNewMap.get(taskId).NSP_Sales_Office__c = userdetails[0].NSP_Sales_Office__c;
         }
     }
+    updateActivitySales(taskNewMap.values(),taskOldMap);
    }   
 /**
     * Iterates throught the list of new Events and passes the required attributes to other methods.
@@ -93,5 +96,49 @@ public void updateActivityDate(List<Task> newList,Map<Id,Task> eventOldMap){
         NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateActivityDate', ex.getMessage());
     }
 }
+    
+     /**
+* Method Name : updateActivitySales 
+* Description : Method to update sales region, sales devison and sales office.
+* Date : 08/09/2022
+* @param newList List of New Task. 
+* @param OldTaskMap Map of Old Task.   
+* @return void  
+*/
 
+public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
+    
+    set<Id> ownerIdSet = new set<Id>();
+    for(Task newTask : newList)
+    {
+        Task oldTask = OldTaskMap != null ? OldTaskMap.get(newTask.Id):null;
+        
+        if(Trigger.isInsert || newTask.OwnerId != oldTask.OwnerId )
+        {
+            ownerIdSet.add(newTask.ownerId);    
+        }
+    }
+    
+    if(ownerIdSet.Size() > 0)
+    {
+        Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+        system.debug('userIdMap '+userIdMap);
+        for(Task newTask : newList)
+        {
+            Task oldTask = OldTaskMap != null ? OldTaskMap.get(newTask.Id):null;
+            
+            if(Trigger.isInsert || newTask.OwnerId != oldTask.OwnerId )
+            {
+                if(userIdMap.containsKey(newTask.ownerId))
+                {
+                    user eachUser = userIdMap.get(newTask.OwnerId);
+                    newTask.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                    newTask.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newTask.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                }                   
+            }
+        }    
+    }
+  }  
+    
 }

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Running_Sales_Office__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT($User.NSP_Sales_Office__c) = TEXT( Owner:User.NSP_Sales_Office__c)</formula>
+    <formula>TEXT($User.NSP_Sales_Office__c) = TEXT(NSP_Sales_Office__c)</formula>
     <label>Running Sales Office</label>
     <type>Checkbox</type>
 </CustomField>
