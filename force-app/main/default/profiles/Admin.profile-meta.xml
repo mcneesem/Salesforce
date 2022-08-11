@@ -13721,6 +13721,9 @@
         <flow>net_promoter_score</flow>
     </flowAccesses>
     <layoutAssignments>
+        <layout>NSP_Sales_Office_Mapping__c-Sales Office Mapping Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Support Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -14674,6 +14677,15 @@
         <object>Snapshot_Account__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>NSP_Sales_Office_Mapping__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <pageAccesses>
         <apexPage>NSP_GoogleReCaptcha</apexPage>
         <enabled>true</enabled>
@@ -14913,6 +14925,10 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>Highspot_Content</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>NSP_Sales_Office_Mapping__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
