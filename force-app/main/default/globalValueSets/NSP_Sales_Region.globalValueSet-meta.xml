@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Central 1</fullName>
+        <default>false</default>
+        <label>Central 1</label>
+    </customValue>
+    <customValue>
+        <fullName>Central 2</fullName>
+        <default>false</default>
+        <label>Central 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Central 3</fullName>
+        <default>false</default>
+        <label>Central 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Eastern 1</fullName>
+        <default>false</default>
+        <label>Eastern 1</label>
+    </customValue>
+    <customValue>
+        <fullName>Eastern 2</fullName>
+        <default>false</default>
+        <label>Eastern 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Eastern 3</fullName>
+        <default>false</default>
+        <label>Eastern 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Northeast 1</fullName>
+        <default>false</default>
+        <label>Northeast 1</label>
+    </customValue>
+    <customValue>
+        <fullName>Northeast 2</fullName>
+        <default>false</default>
+        <label>Northeast 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Northeast 3</fullName>
+        <default>false</default>
+        <label>Northeast 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Western 1</fullName>
+        <default>false</default>
+        <label>Western 1</label>
+    </customValue>
+    <customValue>
+        <fullName>Western 2</fullName>
+        <default>false</default>
+        <label>Western 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Western 3</fullName>
+        <default>false</default>
+        <label>Western 3</label>
+    </customValue>
+    <masterLabel>Sales Region</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Running_User_Region__c</fullName>
+    <externalId>false</externalId>
+    <formula>TEXT($User.NSP_SalesRegion__c) = TEXT(NSP_Sales_Region__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Running User Region</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
