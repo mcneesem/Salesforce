@@ -68,35 +68,36 @@ public class NSP_TaskTriggerHelperTest {
         taskRec.NSP_Status__c = 'Completed';
         update taskRec;
         taskRec1.NSP_Status__c = 'Completed';
+        taskRec1.Status = 'Completed';
         update taskRec1;
         Test.stopTest();
         system.assertNotEquals(taskRec, null);
     }
-
+    
     @isTest
-    static void salesOfficeDetails() {
-        User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
-        currentUser.NSP_Sales_Office__c = '301';
-        currentUser.NSP_SalesRegion__c = 'Central 1';
-        currentUser.NSP_SalesDivision__c = 'Central';
-        update currentUser;
-        Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
-       
-        Test.startTest();
-         List<Task> taskList = new List<Task>();
-       
-       Task taskRec = new Task(
-           Subject = 'Discovery Call',
-           OwnerId = UserInfo.getUserId(),
-           NSP_Task_Type__c = 'BPS',
-           RecordTypeId = taskRecTypeId,
-           NSP_Task_Subtype__c = 'Client Meeting',
-           NSP_Status__c='Open'
-       );
-       taskList.add(taskRec);
-       
-       insert taskList;
-        Test.stopTest();
+     static void salesOfficeDetails() {
+         User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
+         currentUser.NSP_Sales_Office__c = '301';
+         currentUser.NSP_SalesRegion__c = 'Central 1';
+         currentUser.NSP_SalesDivision__c = 'Central';
+         update currentUser;
+         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
         
-    }
+         Test.startTest();
+          List<Task> taskList = new List<Task>();
+        
+        Task taskRec = new Task(
+            Subject = 'Discovery Call',
+            OwnerId = UserInfo.getUserId(),
+            NSP_Task_Type__c = 'BPS',
+            RecordTypeId = taskRecTypeId,
+            NSP_Task_Subtype__c = 'Client Meeting',
+            NSP_Status__c='Open'
+        );
+        taskList.add(taskRec);
+        
+        insert taskList;
+         Test.stopTest();
+         
+     }
 }
