@@ -25,6 +25,10 @@ public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
    *                
    */
     public void beforeInsert(List<sObject> newList) {
+         if(NSP_EventTriggerHandler.runOnce){
+            NSP_EventTriggerHelper  eventTriggerHelperObject =  new NSP_EventTriggerHelper();  
+            eventTriggerHelperObject.beforeInsertDirector((List<Event>)newList);
+        }
         
     }
     
@@ -51,7 +55,11 @@ public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
    */
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         
-        
+        if(NSP_EventTriggerHandler.runOnce){
+            NSP_EventTriggerHelper  eventTriggerHelperObject =  new NSP_EventTriggerHelper();        
+            eventTriggerHelperObject.beforeUpdateDirector((Map<Id, Event>) newMap,(Map<Id, Event>) oldMap);
+            
+        }
     }
     
 
