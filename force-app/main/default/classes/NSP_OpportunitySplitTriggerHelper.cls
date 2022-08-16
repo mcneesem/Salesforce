@@ -34,6 +34,8 @@ public class NSP_OpportunitySplitTriggerHelper {
         if(!listOfOpptySplit.isEmpty()){
             autoPopulateAccount(listOfOpptySplit, setOfOpptyId);
         }
+        
+        setSalesOfficeDetails(newList, null);
     }
 
     public void beforeUpdateDirector(Map<Id, NSP_Employee_Split__c> opportunitySplitNewMap, Map<Id, NSP_Employee_Split__c> opportunitySplitOldMap){
@@ -52,6 +54,8 @@ public class NSP_OpportunitySplitTriggerHelper {
         if(!listOfOpportunitySplit.isEmpty()){
             throwErrorWhenSumOfEmployeeExceed(listOfOpportunitySplit, setOfOpportunityId);
         }
+        
+        setSalesOfficeDetails(opportunitySplitNewMap.values(), opportunitySplitOldMap);
     }
 
     /**
@@ -122,6 +126,53 @@ public class NSP_OpportunitySplitTriggerHelper {
             if(mapOfOpportunityIdAndAccountId.containsKey(empSplit.NSP_Opportunity__c)){
                 empSplit.NSP_Account__c = mapOfOpportunityIdAndAccountId.get(empSplit.NSP_Opportunity__c);
             }
+        }
+    }
+    
+    /**
+* This method is used to set Office division,region on Opportunity Split from sales office mapping.
+* @param newList List of New Opportunity Split.  
+* @param setOfOpp Set of Opportunity id.
+* @return void             
+*                
+*/
+    
+    public void setSalesOfficeDetails(List<NSP_Employee_Split__c> newList, Map<Id, NSP_Employee_Split__c> opportunitySplitOldMap)
+    {
+        set<string> salesOfficeSet = new set<string>();
+        for(NSP_Employee_Split__c newSplit : newList)
+        {
+            NSP_Employee_Split__c oldSplit = opportunitySplitOldMap != null ? opportunitySplitOldMap.get(newSplit.Id):null;
+            if((Trigger.isInsert || newSplit.NSP_Sales_Office__c != oldSplit.NSP_Sales_Office__c) && string.isNotBlank(newSplit.NSP_Sales_Office__c) && !newSplit.NSP_Override_Sales_Region_Division__c)
+            {
+                salesOfficeSet.add(newSplit.NSP_Sales_Office__c);
+            }
+        }
+        
+        if(salesOfficeSet.Size() > 0)
+        {
+            map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
+                                                            FROM NSP_Sales_Office_Mapping__c 
+                                                            WHERE NSP_Sales_Office__c In : salesOfficeSet AND isActive__c = true])
+            {
+                salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
+            }
+            
+            for(NSP_Employee_Split__c newSplit : newList)
+            {
+                NSP_Employee_Split__c oldSplit = opportunitySplitOldMap != null ? opportunitySplitOldMap.get(newSplit.Id):null;
+                if((Trigger.isInsert || newSplit.NSP_Sales_Office__c != oldSplit.NSP_Sales_Office__c) && string.isNotBlank(newSplit.NSP_Sales_Office__c) &&  !newSplit.NSP_Override_Sales_Region_Division__c)
+                {
+                    if(salesOfficeToMappingMap.containsKey(newSplit.NSP_Sales_Office__c))
+                    {
+                        NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newSplit.NSP_Sales_Office__c);
+                        newSplit.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; 
+                        newSplit.NSP_Sales_Region__c = officeMapping.NSP_Sales_Region__c; 
+                    }
+                }
+            }
+            
         }
     }
 }

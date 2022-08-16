@@ -95,4 +95,27 @@ public class NSP_OpportunitySplitTriggerHelperTest {
         System.assertEquals(opp[0].AccountId, updatedAccountOnOppSplit.NSP_Account__c, 'NSP_Account__c on Opp Split will be auto populated with Opportunity Account');
         test.stopTest();
     }
+    
+    @isTest
+   public static void salesOfficeTest()
+   {
+       NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
+        officeMapping.NSP_Sales_Office__c = '1081';
+        officeMapping.NSP_Sales_Division__c = 'Central';
+        officeMapping.NSP_Sales_Region__c = 'Central 1';
+        officeMapping.NSP_Start_Date__c = system.today()-1;
+        officeMapping.NSP_End_Date__c = system.today()+100;
+        insert officeMapping;
+       
+        List<Opportunity> opp = [SELECT AccountId, NSP_Number_of_Employees__c FROM Opportunity WHERE NSP_Number_of_Employees__c = 100];
+
+        // Creating Opportunity Split Record
+        NSP_Employee_Split__c oppSplit = new NSP_Employee_Split__c ();
+        oppSplit.NSP_Opportunity__c = opp[0].id;
+        oppSplit.NSP_Number_of_Employees__c = 90;
+		oppSplit.NSP_Sales_Office__c = '1081';
+        test.startTest();
+        insert oppSplit;
+       test.stopTest();
+   }
 }
