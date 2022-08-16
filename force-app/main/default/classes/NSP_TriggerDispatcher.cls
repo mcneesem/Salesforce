@@ -48,12 +48,12 @@ public class NSP_TriggerDispatcher {
                     //Invoke after delete trigger handler
                     handler.afterDelete(trigger.old, trigger.oldMap);
             }
-            /*  when BEFORE_DELETE {
-                //Invoke before delete trigger handler
+            when BEFORE_DELETE {
+                //Invoke before delete trigger handler // Uncommeted for ticket 582488
                 handler.beforeDelete(trigger.old, trigger.oldMap);
             }
             
-            when AFTER_UNDELETE {
+            /*when AFTER_UNDELETE {
                 //Invoke after undelete trigger handler
                 handler.afterUnDelete(trigger.new, trigger.newMap);
             }*/

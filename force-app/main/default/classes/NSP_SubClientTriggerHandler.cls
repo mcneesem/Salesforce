@@ -66,6 +66,16 @@ public class NSP_SubClientTriggerHandler implements NSP_ITriggerHandler{
         subClientTriggerObj.afterUpdateDirector((Map<Id, NSP_Sub_Client__c>)newMap,(Map<Id, NSP_Sub_Client__c>)oldMap);
         
     }
+    
+    /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+    
      /**
     * Handles after delete for Sub Client
     * @param oldList List of old Sub Client

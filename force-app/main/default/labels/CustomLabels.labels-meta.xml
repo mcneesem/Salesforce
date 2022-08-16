@@ -1336,4 +1336,25 @@
         <shortDescription>Close Lost Roles for Technology Sales</shortDescription>
         <value>BPS Administrator,BPS Sales Manager</value>
     </labels>
+    <labels>
+        <fullName>CANNOT_DELETE_ACCOUNT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CANNOT_DELETE_ACCOUNT</shortDescription>
+        <value>You do not have permission to delete Accounts</value>
+    </labels>
+    <labels>
+        <fullName>CANNOT_DELETE_LEAD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CANNOT_DELETE_LEAD</shortDescription>
+        <value>You do not have permission to delete Leads.</value>
+    </labels>
+    <labels>
+        <fullName>CanDeleteAccountLead</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CanDeleteAccountLead</shortDescription>
+        <value>System Administrator,Sales Administrator</value>
+    </labels>
 </CustomLabels>
