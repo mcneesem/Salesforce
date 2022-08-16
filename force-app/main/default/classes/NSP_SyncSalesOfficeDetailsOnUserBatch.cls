@@ -82,13 +82,14 @@ global class NSP_SyncSalesOfficeDetailsOnUserBatch implements Database.Batchable
                     {
                         userUpdateList.add(eachuser);  // add to list
                     }
-                }
+                }     
                 
-                if(userUpdateList.Size() > 0)
+            }
+            
+            if(userUpdateList.Size() > 0)
                 {
                      Database.update(userUpdateList,false); // update user list
                 }
-            }
         }    
     }
     
