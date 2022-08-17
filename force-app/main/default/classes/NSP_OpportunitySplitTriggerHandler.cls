@@ -62,6 +62,16 @@ public with sharing class NSP_OpportunitySplitTriggerHandler implements NSP_ITri
     }
     
     /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+    
+    
+    /**
     * Handles after delete for Opportunity Split.
     * @param oldList List of old Opportunity Split.
     * @param oldMap Map of Old Opportunity Split. 

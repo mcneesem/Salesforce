@@ -65,6 +65,16 @@ public class NSP_AccountTeamMemberTriggerHandler  implements NSP_ITriggerHandler
         NSP_AccountTeamMemberTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamMemberTriggerHelper();
         accountTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,AccountTeamMember>) newMap,(Map<Id,AccountTeamMember>) oldMap);
     }
+    
+    /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+    
      /**
     * Handles after delete for AccountTeamMember
     * @param oldList List of old AccountTeamMember

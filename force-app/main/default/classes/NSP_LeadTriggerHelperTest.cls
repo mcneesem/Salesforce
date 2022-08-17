@@ -48,6 +48,22 @@ public class NSP_LeadTriggerHelperTest {
         //Inserting users that can be used in the test class data setup
         insert userRecord;
         
+        User userRecord1 = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
+            LastName = 'TestClassUser1',
+            Email = 'testuser1@test.com',
+            Username = 'testuser1@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+        //Inserting users that can be used in the test class data setup
+        insert userRecord1;
+        
         //Create office assignment record
         NSP_Office_Assignment__c officeAssignmentObj =  new NSP_Office_Assignment__c();
         officeAssignmentObj.NSP_District_Administrator__c= userRecord.id;
@@ -388,5 +404,42 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
         system.assertEquals(nLead.NumberOfEmployees, 160);
     } 
-    
+
+/* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Harsha Khiroya      08/08/2022           Created this method - test method for admin user
+*/    
+    @isTest
+    static void testLeadDeleteByAdmin() {
+      User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
+        // Start Test
+        Test.startTest();
+        	delete leadList[0];   
+        Test.stopTest();
+        system.assertNotEquals(null,leadList);
+ 	}
+
+/* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Harsha Khiroya      08/08/2022           Created this method - test method for non admin user(sales manager here)
+*/
+    @isTest
+    static void testLeadDeleteByNonAdmin() {
+      User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
+        // Start Test
+        Test.startTest();
+        system.runAs(userRecord1){
+            try{
+        		delete leadList; 
+            }catch(Exception ex){
+                system.assertNotEquals(null, ex);
+            }
+        }
+        Test.stopTest();
+        
+ 	}
 }

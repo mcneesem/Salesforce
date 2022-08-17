@@ -2,7 +2,7 @@
  * Represents the AccountTeamMember trigger handler.
  */
 public class NSP_OpportunityTeamMemberTriggerHandler  implements NSP_ITriggerHandler{
-	
+    
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
 
@@ -63,6 +63,16 @@ public class NSP_OpportunityTeamMemberTriggerHandler  implements NSP_ITriggerHan
         NSP_OpportunityTeamMemberTriggerHelper  oppTeamMemberTriggerHelperObject =  new NSP_OpportunityTeamMemberTriggerHelper();
         oppTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,OpportunityTeamMember>) newMap,(Map<Id,OpportunityTeamMember>) oldMap);
     }
+    
+    /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+    
     /**
     * Handles after delete for OpportunityTeamMember
     * @param oldList List of old OpportunityTeamMember
