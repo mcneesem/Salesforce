@@ -56,6 +56,15 @@ public class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
         // Added as a part of STY-02768
         NSP_userSalesOfficeRecordSharing.ownerSalesofficeSharing((Map<Id, User>) newMap, (Map<Id, User>) oldMap);
     }
+    
+    /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
 
     /**
     * Handles after delete for Quote.

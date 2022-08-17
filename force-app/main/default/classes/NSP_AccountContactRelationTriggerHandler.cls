@@ -3,7 +3,7 @@
  */
 
 public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHandler {
-	
+    
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
 
@@ -64,6 +64,16 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
         NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
         accContactTriggerHelperObject.afterUpdateDirector((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
     }
+    
+    /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+    
     /**
     * Handles after delete for AccountContactRelation
     * @param oldList List of old AccountContactRelation

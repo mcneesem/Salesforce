@@ -2,7 +2,7 @@
  * Represents the AccountTeam trigger handler.
  */
 public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
-	
+    
      //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
 
@@ -66,6 +66,17 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
         NSP_AccountTeamTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamTriggerHelper();
         accountTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap);
     }
+    
+    /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+    
+    
     /**
     * Handles after delete for NSP_Account_Team__c.
     * @param oldList List of old NSP_Account_Team__c.

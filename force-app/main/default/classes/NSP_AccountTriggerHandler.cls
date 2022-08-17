@@ -79,5 +79,20 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
         }
 
     }
+    
+/**
+* Handles before delete for Account.
+* @param oldList List, oldMap of New Account.
+* @return void
+* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         08/08/2022           Created this method
+     */
+    public void beforeDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+        accountTriggerHelperObject.restrictDelete((List < Account >) oldList, (Map < Id, Account > ) oldMap);
+    }
+    
     public void afterDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {}
 }

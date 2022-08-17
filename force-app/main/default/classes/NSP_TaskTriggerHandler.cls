@@ -69,6 +69,15 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
 }
 
 
+/**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
+
     /**
    * Handles before delete for Contract
    * @param oldList Map of old Contract.

@@ -30,7 +30,7 @@ public class NSP_AccountTriggerHelperTest {
          UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
          Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
          UserRole DARole = [SELECT Id FROM UserRole WHERE Name = 'District Administrator'];
-    List<User> users = new List<User>();
+   List<User> users = new List<User>();
         //Creating User
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Integration User'][0].Id,
@@ -125,34 +125,6 @@ public class NSP_AccountTriggerHelperTest {
             System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
         }
     }
-    
-    
-       /***********************************************************************************************
-* MethodName: restrictAccountChange
-* Description : This method is used to allow DA to edit Account,  if the DA is in the same public group as the Account owner.
-* ********************************************************************************************/
-@isTest
-static void restrictAccountChangeTest() {
-    User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmith@acmetestusr.com' Limit 1];
-    System.runAs (BpaUser) {
-        //Account creation
-        Test.startTest();
-        Account accoutObject = new Account();
-        Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
-        accoutObject.Name = ACCOUNTTEST1;
-        accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543123';
-        accoutObject.NumberOfEmployees = 130;
-        insert accoutObject;
-        Test.stopTest();
-        System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
-    }
-    User daUser = [Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmithda@acmetestusr.com' Limit 1];
-    System.runAs (daUser) {
-        Account getBPAUserAccount = [SELECT Id, NumberOfEmployees FROM Account WHERE NumberOfEmployees = 130 LIMIT 1];
-        getBPAUserAccount.NumberOfEmployees = 140;
-    }
-}
 
     /**
      * Checks the Account After Insert Trigger
@@ -338,5 +310,55 @@ static void restrictAccountChangeTest() {
         Test.stopTest();
         Account account = [SELECT Id, Name FROM Account WHERE Name= :ACCOUNTTEST1 LIMIT 1];
         system.assertEquals(ACCOUNTTEST1, account.Name);
+    }
+    
+    /* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Harsha Khiroya      08/08/2022           Created this method - test class for non admin user(sales manager here)
+*/    
+  @isTest
+    static void testAccountDeleteByAdmin() {
+        Account accountObject3 = new Account();
+        Id partnerRecordTypeId1 = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        //Create Account
+        accountObject3.Name = 'ACCOUNTTEST3';
+        accountObject3.recordTypeId=partnerRecordTypeId1;
+        insert accountObject3;
+        
+        // Start Test
+        Test.startTest();
+        delete accountObject3;   
+        Test.stopTest();
+     system.assertNotEquals(null, accountObject3);
+    }
+/* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Harsha Khiroya      08/08/2022           Created this method - test class for non admin user(sales manager here)
+*/    
+    @isTest
+    static void testAccountDeleteByNonAdmin() {
+      
+        User userRec = [select id from User WHERE LastName = 'TestClassUser1'];
+         
+        Account accountObject3 = new Account();
+        Id partnerRecordTypeId1 = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        //Create Account
+        accountObject3.Name = 'ACCOUNTTEST3';
+        accountObject3.recordTypeId=partnerRecordTypeId1;
+        insert accountObject3;
+        
+        // Start Test
+        Test.startTest();
+        system.runAs(UserRec){
+            try{
+            delete accountObject3; 
+            }catch(Exception ex){
+                system.assertNotEquals(null, ex);
+            }
+        }
+        Test.stopTest();
+     
     }
 }
