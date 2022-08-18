@@ -1337,6 +1337,13 @@
         <value>BPS Administrator,BPS Sales Manager</value>
     </labels>
     <labels>
+        <fullName>NSP_Sales_Office_Mapping_Overlap_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Office Mapping Overlap Error</shortDescription>
+        <value>Start Date and End Date overlap&apos;s with this record</value>
+    </labels>
+    <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
