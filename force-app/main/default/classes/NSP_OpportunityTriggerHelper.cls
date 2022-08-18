@@ -20,7 +20,6 @@ public class NSP_OpportunityTriggerHelper {
     public static final String SELECT_PRIMARY_CONTACT = System.Label.NSP_Select_Primary_Contact;
     private static final string ASSET_RECORDTYPE = System.Label.NSP_Asset_Product;
     public static final Id ASSET_RECORDTYPE_ID = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(ASSET_RECORDTYPE).getRecordTypeId();
-    public static boolean valueAssignedFromUser = false;
     
 /**
 * Iterates throught the list of new Opportunity and passes the required attributes to other methods.
@@ -100,7 +99,6 @@ public class NSP_OpportunityTriggerHelper {
         }        
         
         NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(newList,ownerIdsSet);
-        setSalesOfficeDetails(newList,null); // added for STY-03154
         
             
     }
@@ -315,8 +313,6 @@ public class NSP_OpportunityTriggerHelper {
         if(opptyListToStampDocusignTemplateId.size() > 0){
             uofobj.setDummyUsers(opptyListToStampDocusignTemplateId,MODaccountIdSet,MODownerIdSet);
         }
-        
-        setSalesOfficeDetails(opportunityNewMap.values(),opportunityOldMap); // added for STY-03154
         
     }    
     
@@ -742,81 +738,5 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         } 
     
 }
-
-/* Description: This method sets sales office details from user 
-     * 
-     * @param: opportunityList, opportunityMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  08/05/2022          created this new method added for STY-03154
-     * 
-     * 
-    */
-    
-    public void setSalesOfficeDetails(List<Opportunity> newList,Map<Id, Opportunity> opportunityOldMap)
-    {
-        set<Id> ownerIdSet = new set<Id>(); // owner id set
-        set<string> officeSet = new set<string>(); // sales office set
-        set<Id> recordToProcess = new set<Id>();  // record to be process set
-        set<string> opportunityStageSet = new set<string>{'Discovery','Analysis','Proposal','Closing'};
-        for(Opportunity newOpportunity: newList)
-        {
-            Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-            if((Trigger.isInsert || newOpportunity.OwnerId != oldOpportunity.OwnerId) 
-               && newOpportunity.OwnerId != null && opportunityStageSet.contains(newOpportunity.StageName)) // value assigned when owner is changed
-            {
-                ownerIdSet.add(newOpportunity.OwnerId);
-            }
-            else if(Trigger.isUpdate && newOpportunity.NSP_Sales_Office__c != oldOpportunity.NSP_Sales_Office__c && String.isNotBlank(newOpportunity.NSP_Sales_Office__c) && !valueAssignedFromUser ) // value assigned when sales office is changed.
-            {
-                recordToProcess.add(newOpportunity.Id);
-                officeSet.add(newOpportunity.NSP_Sales_Office__c);
-            }
-            
-        }
-        
-        if(ownerIdSet.Size() > 0)
-        {
-            // values assigned from users
-            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-            for(Opportunity newOpportunity: newList)
-            {
-                Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-                if((Trigger.isInsert || newOpportunity.OwnerId != oldOpportunity.OwnerId) && newOpportunity.OwnerId != null && userIdMap.containsKey(newOpportunity.OwnerId))
-                {
-                    user eachUser = userIdMap.get(newOpportunity.OwnerId);
-                    newOpportunity.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                    newOpportunity.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                    newOpportunity.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                    valueAssignedFromUser = true;
-                }
-            }
-        }
-        // values assigned from sales office mapping
-        if(officeSet.Size() > 0)
-        {
-            map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
-            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
-                                                            FROM NSP_Sales_Office_Mapping__c 
-                                                            WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true])
-            {
-                salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
-            }
-            
-            
-            for(Opportunity newOpportunity: newList)
-            {
-                if(Trigger.isUpdate && recordToProcess.contains(newOpportunity.Id) && salesOfficeToMappingMap.containsKey(newOpportunity.NSP_Sales_Office__c))
-                {
-                    NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newOpportunity.NSP_Sales_Office__c);
-                    newOpportunity.NSP_Sales_Region__c = officeMapping.NSP_Sales_Region__c; // sales region
-                    newOpportunity.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; // sales division
-                }
-            }
-        }
-    }
 
 }

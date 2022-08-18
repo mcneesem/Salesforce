@@ -110,8 +110,6 @@ public class NSP_LeadTriggerHelper {
         if(!inboundSolutionsList.isEmpty()){
             assignLeadToInboundSolutions(inboundSolutionsList);
         }
-        
-        setSalesOfficeDetails(newList,null); // added for STY-03154
     }
     
     /**
@@ -255,7 +253,6 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
         createContact(leadNewMap.Values());        
-        setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
     }
   
   public void updateChildOwner(Lead leadObj) {
@@ -1007,49 +1004,6 @@ public void createContact(List < Lead > newLeadList) {
             }
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateNonProfitOrgFields', ex.getMessage());
-        }
-    }
-   
-    /* Description: This method sets sales office details from user 
-     * 
-     * @param: leadList, leadMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  08/05/2022          created this new method added for STY-03154
-     * 
-     * 
-    */
-    
-    public void setSalesOfficeDetails(List<Lead> newList,Map<Id, Lead> leadOldMap)
-    {
-        set<Id> ownerIdSet = new set<Id>();
-        for(Lead newLead: newList)
-        {
-            Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
-            if((Trigger.isInsert || newLead.OwnerId != oldLead.OwnerId) && newLead.OwnerId != null)
-            {
-                ownerIdSet.add(newLead.OwnerId);
-            }
-            
-        }
-        
-        if(ownerIdSet.Size() > 0)
-        {
-            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-            for(Lead newLead: newList)
-            {
-                Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
-                if((Trigger.isInsert || newLead.OwnerId != oldLead.OwnerId) && newLead.OwnerId != null && userIdMap.containsKey(newLead.OwnerId))
-                {
-                    user eachUser = userIdMap.get(newLead.OwnerId);
-                    newLead.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                    newLead.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                    newLead.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                }
-            }
         }
     }
    

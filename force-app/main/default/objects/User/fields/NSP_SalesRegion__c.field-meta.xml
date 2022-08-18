@@ -7,7 +7,56 @@
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>NSP_SalesDivision__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>NSP_Sales_Region</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Northeast</controllingFieldValue>
+            <valueName>Northeast 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Northeast</controllingFieldValue>
+            <valueName>Northeast 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Northeast</controllingFieldValue>
+            <valueName>Northeast 3</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Central 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Central 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Central 3</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eastern</controllingFieldValue>
+            <valueName>Eastern 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eastern</controllingFieldValue>
+            <valueName>Eastern 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eastern</controllingFieldValue>
+            <valueName>Eastern 3</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Western 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Western 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Western 3</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
