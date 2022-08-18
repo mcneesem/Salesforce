@@ -312,10 +312,10 @@ public class NSP_OpportunityTriggerHelperTest {
         List<Opportunity> opportunityList = [SELECT ID,
                                                    NSP_PrimaryProduct__c,
                                                    stagename,
-                                             	   NSP_Signed_CSA__c,
-                                             	   NSP_Signed_Delivery_Order__c, 
+                                                   NSP_Signed_CSA__c,
+                                                   NSP_Signed_Delivery_Order__c, 
                                                    CloseDate,
-                                             	   NSP_Closing_Appointment__c,
+                                                   NSP_Closing_Appointment__c,
                                                    OwnerId FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null ];
                
         Test.startTest();
@@ -344,7 +344,7 @@ public class NSP_OpportunityTriggerHelperTest {
         Set<Id> pOppIdSet = new Set<Id>();
         List<Opportunity> cOppList = new List<Opportunity>();
     List<Opportunity> opportunityList = [SELECT Id, stagename, NSP_PrimaryProduct__c, NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c FROM Opportunity 
-                                             	WHERE NSP_Parent_Opportunity__c != null LIMIT 1]; 
+                                                WHERE NSP_Parent_Opportunity__c != null LIMIT 1]; 
         pOppIdSet.add(opportunityList[0].NSP_Parent_Opportunity__c);
         cOppList.add(opportunityList[0]);
         Test.startTest();
@@ -418,10 +418,12 @@ public class NSP_OpportunityTriggerHelperTest {
     * @Description: This test method is used to cover createClosedLostRegenTasks method of NSP_OpportunityTriggerHelper
     * @Created date: 13/04/2022.
     * @return void             
-    * @author : Nischay Jindal               
+    * @author : Nischay Jindal
+    * Commented this menthod as this is no longer needed
+    * @Commented By: Ruchi Roy               
     */
         
-    @isTest
+    /**@isTest
         static void createClosedLostRegenTasks(){
            List<Opportunity> opportunityList = [SELECT Id,AccountId,NSP_Regen_Date__c,NSP_Lost_Reason__c,StageName, OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 Limit 1];
            try {
@@ -440,7 +442,7 @@ public class NSP_OpportunityTriggerHelperTest {
              e.getMessage();
                  }
         } 
-        
+        **/
    /**
    * @Description: This test method is used to cover validateClosedDate method
    * @Created date: 04/20/2022.

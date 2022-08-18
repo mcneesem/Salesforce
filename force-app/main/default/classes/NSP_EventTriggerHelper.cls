@@ -9,7 +9,9 @@ public class NSP_EventTriggerHelper {
     * @return void             
     *                
     */
-        public void beforeInsertDirector(List<Event> newList){        
+        public void beforeInsertDirector(List<Event> newList){
+            
+             updateEventSales(newList,null);
         }
         
         /**
@@ -35,6 +37,7 @@ public class NSP_EventTriggerHelper {
     */
         
         public void beforeUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
+            updateEventSales(eventNewMap.values(),eventOldMap);
             
         }    
         
@@ -128,4 +131,49 @@ public class NSP_EventTriggerHelper {
                 NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateActivityDate', ex.getMessage());
             }
         }
+    
+/**
+* Method Name : updateEventSales 
+* Description : Method to update sales region, sales devison and sales office.
+* Date : 08/12/2022
+* @param newList List of New Event. 
+* @param OldEventMap Map of Old Event.   
+* @return void  
+*/
+
+    public void updateEventSales(List<Event> newList,Map<Id,Event> OldEventMap){
+    
+    set<Id> ownerIdSet = new set<Id>();
+    for(Event newEvent : newList)
+    {
+        Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
+        
+        if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId )
+        {
+            ownerIdSet.add(newEvent.ownerId);    
+        }
+    }
+    
+    if(ownerIdSet.Size() > 0)
+    {
+        Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+        
+        for(Event newEvent : newList)
+        {
+            Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
+            
+            if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId )
+            {
+                if(userIdMap.containsKey(newEvent.ownerId))
+                {
+                    user eachUser = userIdMap.get(newEvent.OwnerId);
+                    newEvent.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                    newEvent.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newEvent.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                }                   
+            }
+        }    
+    }
+  }  
+    
     }
