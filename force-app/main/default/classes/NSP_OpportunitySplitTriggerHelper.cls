@@ -70,7 +70,7 @@ public class NSP_OpportunitySplitTriggerHelper {
         Map<Id, Decimal> mapOfOpportunityIdAndSumOfEE         = new Map<Id, Decimal> ();
         Map<Id, Opportunity> mapOfOpportunityIdAndOpportunity = new Map<Id, Opportunity> ();
         Decimal finalSumOfEE;
-		// Aggregate query to get Sum of Number of EE on Opportunity Split
+        // Aggregate query to get Sum of Number of EE on Opportunity Split
         AggregateResult[] groupedResults = [SELECT SUM(NSP_Number_of_Employees__c),NSP_Opportunity__c 
                                             FROM NSP_Employee_Split__c 
                                             WHERE NSP_Opportunity__c IN :setOfOpp and ID NOT IN : newList
@@ -99,8 +99,8 @@ public class NSP_OpportunitySplitTriggerHelper {
             }
             if(mapOfOpportunityIdAndOpportunity.containsKey(empSplit.NSP_Opportunity__c)){
                 if(finalSumOfEE > mapOfOpportunityIdAndOpportunity.get(empSplit.NSP_Opportunity__c).NSP_Number_of_Employees__c){
-                	empSplit.addError(System.Label.NSP_ErrorMessageSumOfEEIsGreaterThanNumberOfEmployeesOnOppty);
-            	}
+                    empSplit.addError(System.Label.NSP_ErrorMessageSumOfEEIsGreaterThanNumberOfEmployeesOnOppty);
+                }
             }
         }
     }
@@ -143,7 +143,8 @@ public class NSP_OpportunitySplitTriggerHelper {
         for(NSP_Employee_Split__c newSplit : newList)
         {
             NSP_Employee_Split__c oldSplit = opportunitySplitOldMap != null ? opportunitySplitOldMap.get(newSplit.Id):null;
-            if((Trigger.isInsert || newSplit.NSP_Sales_Office__c != oldSplit.NSP_Sales_Office__c) && string.isNotBlank(newSplit.NSP_Sales_Office__c) && !newSplit.NSP_Override_Sales_Region_Division__c)
+            if((Trigger.isInsert || newSplit.NSP_Sales_Office__c != oldSplit.NSP_Sales_Office__c || newSplit.NSP_Override_Sales_Region_Division__c != oldSplit.NSP_Override_Sales_Region_Division__c) 
+            && string.isNotBlank(newSplit.NSP_Sales_Office__c) && !newSplit.NSP_Override_Sales_Region_Division__c)
             {
                 salesOfficeSet.add(newSplit.NSP_Sales_Office__c);
             }
@@ -162,7 +163,8 @@ public class NSP_OpportunitySplitTriggerHelper {
             for(NSP_Employee_Split__c newSplit : newList)
             {
                 NSP_Employee_Split__c oldSplit = opportunitySplitOldMap != null ? opportunitySplitOldMap.get(newSplit.Id):null;
-                if((Trigger.isInsert || newSplit.NSP_Sales_Office__c != oldSplit.NSP_Sales_Office__c) && string.isNotBlank(newSplit.NSP_Sales_Office__c) &&  !newSplit.NSP_Override_Sales_Region_Division__c)
+                if((Trigger.isInsert || newSplit.NSP_Sales_Office__c != oldSplit.NSP_Sales_Office__c || newSplit.NSP_Override_Sales_Region_Division__c != oldSplit.NSP_Override_Sales_Region_Division__c) 
+                   && string.isNotBlank(newSplit.NSP_Sales_Office__c) &&  !newSplit.NSP_Override_Sales_Region_Division__c)
                 {
                     if(salesOfficeToMappingMap.containsKey(newSplit.NSP_Sales_Office__c))
                     {
