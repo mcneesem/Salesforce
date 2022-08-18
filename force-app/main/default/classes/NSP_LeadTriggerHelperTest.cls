@@ -404,6 +404,32 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
         system.assertEquals(nLead.NumberOfEmployees, 160);
     } 
+    
+    @isTest
+    public static void salesOfficetest()
+    {
+        User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
+         currentUser.NSP_Sales_Office__c = '301';
+         currentUser.NSP_SalesRegion__c = 'Central 1';
+         currentUser.NSP_SalesDivision__c = 'Central';
+         update currentUser;
+        
+        Test.startTest();
+        Lead nLead = new Lead();
+        nLead.firstname='HelloTest123';
+        nLead.lastname='Employee123';
+        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.Company = 'tmp123';
+        nLead.Email = 'tmp@tmp123.com';
+        nLead.PostalCode = '10001';
+        nLead.NumberOfEmployees  =160;  
+        nLead.NSP_Lead_Routing__c = true;
+        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+       
+        insert nLead;
+        Test.stopTest();
+    }
+    
 
 /* Ticket 582488
 * author           | Date              | Description
