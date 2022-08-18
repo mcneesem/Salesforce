@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Division_and_region_validation_for_BPA</fullName>
-    <active>true</active>
-    <errorConditionFormula>(ISCHANGED( NSP_Sales_Division__c ) ||ISCHANGED( NSP_Sales_Region__c )) &amp;&amp;
-($UserRole.DeveloperName = &apos;Associate_Business_Performance_Advisors&apos; || $UserRole.DeveloperName = &apos;Business_Performance_Advisor&apos;)
-&amp;&amp; $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c!=TRUE</errorConditionFormula>
-    <errorMessage>Sales Division and Sales Region are currently are locked for update. Please contact New Client Sales for fields to be adjusted</errorMessage>
-</ValidationRule>
