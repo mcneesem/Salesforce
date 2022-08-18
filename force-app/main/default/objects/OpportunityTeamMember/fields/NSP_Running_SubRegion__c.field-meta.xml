@@ -3,7 +3,7 @@
     <fullName>NSP_Running_SubRegion__c</fullName>
     <description>BPA Reporting Visibility: Fields &amp; List Views</description>
     <externalId>false</externalId>
-    <formula>$User.NSP_Sales_Region__c = User.NSP_Sales_Region__c</formula>
+    <formula>/*$User.NSP_SalesRegion__c = User.NSP_SalesRegion__c*/ false</formula>
     <label>Running SubRegion</label>
     <type>Checkbox</type>
 </CustomField>

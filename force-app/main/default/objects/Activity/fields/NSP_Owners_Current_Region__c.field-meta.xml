@@ -3,7 +3,7 @@
     <fullName>NSP_Owners_Current_Region__c</fullName>
     <description>Field used to copy Activity Owner&apos;s Sales Region</description>
     <externalId>false</externalId>
-    <formula>IF(NOT(ISNULL(NSP_Legacy_Owner_Region__c)), NSP_Legacy_Owner_Region__c, Owner:User.NSP_Sales_Region__c)</formula>
+    <formula>IF(NOT(ISNULL(NSP_Legacy_Owner_Region__c)), NSP_Legacy_Owner_Region__c, TEXT(Owner:User.NSP_SalesRegion__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Owner&apos;s Current Region</label>
     <required>false</required>
