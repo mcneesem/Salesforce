@@ -24,4 +24,40 @@
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Oppty_Credits_Edit_access_to_BPA_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to Business_Performance_Advisor Role Users</description>
+        <label>Oppty Credits Edit access to BPA Role</label>
+        <sharedTo>
+            <role>Business_Performance_Advisor</role>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Oppty_Credits_Edit_access_to_District_Administrator_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to District Administrator Role Users</description>
+        <label>Oppty Credits Edit access to District Administrator Role</label>
+        <sharedTo>
+            <role>District_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Oppty_Credits_Edit_access_to_Sales_Administrator_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to Sales Administrator  Role Users</description>
+        <label>Oppty Credits Edit access to Sales Administrator  Role</label>
+        <sharedTo>
+            <role>Sales_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
 </SharingRules>

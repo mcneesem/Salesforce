@@ -6,10 +6,7 @@
     <errorConditionFormula>ISPICKVAL(NSP_Opportunity__r.StageName, &quot;Closed Won&quot;) &amp;&amp;
 $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c!=TRUE &amp;&amp; ($UserRole.DeveloperName != &quot;New_Client_Sales&quot; &amp;&amp; 
  $UserRole.DeveloperName != &quot;Sales_Compensation&quot; &amp;&amp;
- $UserRole.DeveloperName != &apos;Associate_Business_Performance_Advisors&apos; &amp;&amp; 
- $UserRole.DeveloperName != &apos;Business_Performance_Advisor&apos;&amp;&amp;
- $UserRole.DeveloperName != &quot;Sales_Administrator&quot; &amp;&amp;
- $UserRole.DeveloperName != &quot;District_Administrator&quot; 
+ $UserRole.DeveloperName != &quot;Sales_Administrator&quot;  
 )
 &amp;&amp; (
  $Profile.Name  &lt;&gt; &apos;Data Migration&apos; &amp;&amp;
