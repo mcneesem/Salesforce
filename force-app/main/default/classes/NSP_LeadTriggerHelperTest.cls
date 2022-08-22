@@ -413,6 +413,14 @@ public class NSP_LeadTriggerHelperTest {
          currentUser.NSP_SalesRegion__c = 'Central 1';
          currentUser.NSP_SalesDivision__c = 'Central';
          update currentUser;
+
+         NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
+        officeMapping.NSP_Sales_Office__c = '1081';
+        officeMapping.NSP_Sales_Division__c = 'Central';
+        officeMapping.NSP_Sales_Region__c = 'Central 1';
+        officeMapping.NSP_Start_Date__c = system.today()-1;
+        officeMapping.NSP_End_Date__c = system.today()+100;
+        insert officeMapping; 
         
         Test.startTest();
         Lead nLead = new Lead();
@@ -427,6 +435,9 @@ public class NSP_LeadTriggerHelperTest {
         nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
        
         insert nLead;
+        
+        nLead.NSP_Sales_Office__c = '1081';
+        update nLead;
         Test.stopTest();
     }
     
