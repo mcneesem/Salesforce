@@ -1026,29 +1026,74 @@ public void createContact(List < Lead > newLeadList) {
     public void setSalesOfficeDetails(List<Lead> newList,Map<Id, Lead> leadOldMap)
     {
         set<Id> ownerIdSet = new set<Id>();
+        set<string> officeSet = new set<string>(); // sales office set
+        set<Id> recordToOwnerProcess = new set<Id>();  // record to be process set
+        set<Id> recordToOfficeProcess = new set<Id>();  // record to be process set
+        map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
+        Map<Id,User> userIdMap;
+        
         for(Lead newLead: newList)
         {
             Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
-            if((Trigger.isInsert || newLead.OwnerId != oldLead.OwnerId) && newLead.OwnerId != null)
+            if(Trigger.isInsert)
             {
+                if(String.isNotBlank(newLead.NSP_Sales_Office__c))
+                {
+                    officeSet.add(newLead.NSP_Sales_Office__c);
+                }
+                else if(newLead.OwnerId != null)
+                {
+                    ownerIdSet.add(newLead.OwnerId);
+                }
+            }
+            else if(Trigger.isUpdate && newLead.OwnerId != oldLead.OwnerId && newLead.OwnerId != null)
+            {
+                recordToOwnerProcess.add(newLead.Id);
                 ownerIdSet.add(newLead.OwnerId);
+            }
+            else if(Trigger.isUpdate && newLead.NSP_Sales_Office__c != oldLead.NSP_Sales_Office__c && String.isNotBlank(newLead.NSP_Sales_Office__c))
+            {
+                recordToOfficeProcess.add(newLead.Id);
+                officeSet.add(newLead.NSP_Sales_Office__c);
             }
             
         }
         
         if(ownerIdSet.Size() > 0)
         {
-            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-            for(Lead newLead: newList)
+            userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+            
+        }
+        
+        // values assigned from sales office mapping
+        if(officeSet.Size() > 0)
+        {
+            
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
+                                                            FROM NSP_Sales_Office_Mapping__c 
+                                                            WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true])
             {
-                Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
-                if((Trigger.isInsert || newLead.OwnerId != oldLead.OwnerId) && newLead.OwnerId != null && userIdMap.containsKey(newLead.OwnerId))
-                {
-                    user eachUser = userIdMap.get(newLead.OwnerId);
-                    newLead.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                    newLead.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                    newLead.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                }
+                salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
+            }
+            
+            
+        }
+        
+        
+        for(Lead newLead: newList)
+        {
+            if( (Trigger.isInsert || recordToOfficeProcess.contains(newLead.Id)) &&  String.isNotBlank(newLead.NSP_Sales_Office__c) && salesOfficeToMappingMap.containsKey(newLead.NSP_Sales_Office__c))
+            {
+                NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newLead.NSP_Sales_Office__c);
+                newLead.NSP_Sales_Region__c = officeMapping.NSP_Sales_Region__c; // sales region
+                newLead.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; // sales division
+            }
+            else if((Trigger.isInsert || recordToOwnerProcess.contains(newLead.Id)) && newLead.OwnerId != null && userIdMap.containsKey(newLead.OwnerId))
+            {
+                user eachUser = userIdMap.get(newLead.OwnerId);
+                newLead.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                newLead.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                newLead.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
             }
         }
     }
