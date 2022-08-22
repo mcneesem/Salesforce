@@ -66,4 +66,9 @@
         <default>false</default>
         <label>DnB</label>
     </standardValue>
+    <standardValue>
+        <fullName>TAM</fullName>
+        <default>false</default>
+        <label>TAM</label>
+    </standardValue>
 </StandardValueSet>
