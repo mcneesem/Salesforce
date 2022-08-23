@@ -1088,7 +1088,7 @@ public void createContact(List < Lead > newLeadList) {
                 newLead.NSP_Sales_Region__c = officeMapping.NSP_Sales_Region__c; // sales region
                 newLead.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; // sales division
             }
-            else if((Trigger.isInsert || recordToOwnerProcess.contains(newLead.Id)) && newLead.OwnerId != null && userIdMap.containsKey(newLead.OwnerId))
+            else if((Trigger.isInsert || recordToOwnerProcess.contains(newLead.Id)) && newLead.OwnerId != null && userIdMap!= null && userIdMap.containsKey(newLead.OwnerId))
             {
                 user eachUser = userIdMap.get(newLead.OwnerId);
                 newLead.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
