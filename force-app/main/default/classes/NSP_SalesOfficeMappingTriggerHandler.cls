@@ -66,6 +66,16 @@ public class NSP_SalesOfficeMappingTriggerHandler  implements NSP_ITriggerHandle
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         
     }
+      /**
+     * Handles before delete.
+     * @param oldList List, OldMap Map.
+     * @return void
+     * 582488/582491- Added beforeDelete method as this is referred in in NSP_ITriggerHandler
+     * Added BY- Ruchi
+     * Date - 8/18/2022
+    **/
+    public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    }
     /**
     * Handles after delete for NSP_Sales_Office_Mapping__c .
     * @param oldList List of old NSP_Sales_Office_Mapping__c .
