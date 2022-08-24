@@ -49,4 +49,34 @@ public class NSP_ContactTriggerHelperTest {
         Test.stopTest();
         System.assertEquals(conObj.LastName,'testupdated');
     }
+
+    @isTest
+    static void testSalesOffice()
+    {
+         User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
+         currentUser.NSP_Sales_Office__c = '301';
+         currentUser.NSP_SalesRegion__c = 'Central 1';
+         currentUser.NSP_SalesDivision__c = 'Central';
+         update currentUser;
+        
+        Account acc = New Account(Name = 'TestAccount', AccountNumber = '12345');
+        insert acc;
+
+        List<Contact>  contactList = New List<Contact>();
+
+        for(integer idx = 0; idx < 5; idx++) {
+            contactList.add(New Contact(FirstName = 'FName'+idx, LastName = 'LName'+idx, AccountId = acc.Id));
+        }
+
+        contactList.add(New Contact(FirstName = 'FName', LastName = 'LName', AccountId = acc.Id,phone = '8987678652'));
+		contactList.add(New Contact(FirstName = 'FName T', LastName = 'LNameT', AccountId = acc.Id,phone = '1987678654',NSP_Client_Reference__c = true,NSP_Reference_Products__c = 'Applicant Tracking',NSP_Reference_Type__c  = 'Client Testimonial'));
+
+        // Start Test
+        Test.startTest();
+        if(contactList.size() > 0) {
+            insert contactList;
+        }
+        Test.stopTest();
+        
+    }
 }
