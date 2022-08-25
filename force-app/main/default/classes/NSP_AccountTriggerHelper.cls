@@ -62,6 +62,8 @@ setDummyUsers(acctListToStampDocusignTemplateId);
 }catch(Exception ex){
 NSP_CustomException.LogException(ex);
 }
+        setSalesOfficeDetails(newList,null);
+        
 }
 /**
 * Iterates throught the Account map and identifies the records that needs to worked based on various criterias.
@@ -127,6 +129,7 @@ setDummyUsers(acctListToStampDocusignTemplateId);
 }catch(Exception ex){
 NSP_CustomException.LogException(ex);
 }
+        setSalesOfficeDetails(accountNewMap.values(),accountOldMap);
 }
 /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -488,4 +491,96 @@ accountObj.NSP_Channel_Program_Manager__c = dummyUser[0].Id;
 NSP_CustomException.LogException(ex);
 }
 }
+
+/* Description: This method sets sales office details from user 
+     * 
+     * @param: accountList
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     *  Date              | Description
+     * -------------------------------------------------------------------------------------
+     *  08/05/2022          created this new method added for STY-03154
+     * 
+     * 
+    */
+    
+    public void setSalesOfficeDetails(List<Account> newList,Map<Id, Account> accountOldMap)
+    {
+        set<Id> ownerIdSet = new set<Id>();
+        set<Id> accountIdSet = new set<Id>();
+        set<String> salesOfficeSet = new set<String>();
+        for(Account newAccount: newList)
+        {
+            Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id):null;
+            if((Trigger.isInsert || newAccount.OwnerId != oldAccount.OwnerId) && newAccount.OwnerId != null)
+            {
+                ownerIdSet.add(newAccount.OwnerId);
+                if(newAccount.Id  != null)
+                {
+                    accountIdSet.add(newAccount.Id); 
+                }
+                
+            }
+            else if(Trigger.isUpdate && string.isNotBlank(newAccount.NSP_Sales_Office__c) && !system.isQueueable() &&
+                    (newAccount.NSP_Sales_Office__c != oldAccount.NSP_Sales_Office__c || 
+                     newAccount.NSP_Sales_Division__c != oldAccount.NSP_Sales_Division__c || 
+                     newAccount.NSP_SalesRegion__c != oldAccount.NSP_SalesRegion__c ))
+                    {
+                        salesOfficeSet.add(newAccount.NSP_Sales_Office__c);
+                    }
+            
+        }
+        
+        if(ownerIdSet.Size() > 0)
+        {
+            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c FROM user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+            set<Id> accountWithActiveAssetSet = new set<Id>();
+            for(Asset eachAsset : [SELECT id,AccountId from Asset where (status = 'Active' OR NSP_Account_Status__c = 'Active') AND AccountId In : accountIdSet ])
+            {
+                accountWithActiveAssetSet.add(eachAsset.AccountId);
+            }
+            
+            for(Account newAccount: newList)
+            {
+                Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id):null;
+                if((Trigger.isInsert || (newAccount.OwnerId != oldAccount.OwnerId && !accountWithActiveAssetSet.contains(newAccount.Id))) && newAccount.OwnerId != null && userIdMap.containsKey(newAccount.OwnerId) )
+                {
+                    user eachUser = userIdMap.get(newAccount.OwnerId);
+                    newAccount.NSP_SalesRegion__c = eachUser.NSP_SalesRegion__c;  // sales region
+                    newAccount.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                }
+            }
+        }
+        
+         if(salesOfficeSet.Size() > 0)
+        {
+            map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
+                                                            FROM NSP_Sales_Office_Mapping__c 
+                                                            WHERE NSP_Sales_Office__c In : salesOfficeSet AND isActive__c = true])
+            {
+                salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
+            }
+            
+            for(Account newAccount: newList)
+            {
+                Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id):null;
+               if(Trigger.isUpdate && string.isNotBlank(newAccount.NSP_Sales_Office__c) && 
+                    (newAccount.NSP_Sales_Office__c != oldAccount.NSP_Sales_Office__c || 
+                     newAccount.NSP_Sales_Division__c != oldAccount.NSP_Sales_Division__c || 
+                     newAccount.NSP_SalesRegion__c != oldAccount.NSP_SalesRegion__c ))
+                  {
+                    if(salesOfficeToMappingMap.containsKey(newAccount.NSP_Sales_Office__c))
+                    {
+                        NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newAccount.NSP_Sales_Office__c);
+                        newAccount.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; 
+                        newAccount.NSP_SalesRegion__c = officeMapping.NSP_Sales_Region__c; 
+                    }
+                }
+            }
+            
+		    }
+	  }
 }

@@ -361,4 +361,47 @@ public class NSP_AccountTriggerHelperTest {
         Test.stopTest();
      
     }
+	
+   /**
+   Description : Test method for setSalesOfficeDetails  STY-03153
+   */
+   @isTest
+   static void salesOfficeTest()
+   {
+       User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
+         currentUser.NSP_Sales_Office__c = '301';
+         currentUser.NSP_SalesRegion__c = 'Central 1';
+         currentUser.NSP_SalesDivision__c = 'Central';
+         update currentUser;
+       NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
+        officeMapping.NSP_Sales_Office__c = '1081';
+        officeMapping.NSP_Sales_Division__c = 'Central';
+        officeMapping.NSP_Sales_Region__c = 'Central 1';
+        officeMapping.NSP_Start_Date__c = system.today()-1;
+        officeMapping.NSP_End_Date__c = system.today()+100;
+        insert officeMapping;
+       
+       NSP_Sales_Office_Mapping__c office1Mapping = new NSP_Sales_Office_Mapping__c();
+        office1Mapping.NSP_Sales_Office__c = '301';
+        office1Mapping.NSP_Sales_Division__c = 'Central';
+        office1Mapping.NSP_Sales_Region__c = 'Central 1';
+        office1Mapping.NSP_Start_Date__c = system.today()-1;
+        office1Mapping.NSP_End_Date__c = system.today()+200;
+        insert office1Mapping;
+       
+        Test.startTest();
+            Account accoutObject = new Account();
+            Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+            accoutObject.Name = ACCOUNTTEST1;
+            accoutObject.recordTypeId=partnerRecordTypeId;
+            accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+            insert accoutObject;
+            accoutObject.NSP_Sales_Office__c = '1081';
+            update accoutObject;
+            
+        Test.stopTest();
+        System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
+       
+       
+    }
 }
