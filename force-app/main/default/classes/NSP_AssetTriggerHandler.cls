@@ -37,7 +37,8 @@ public class NSP_AssetTriggerHandler implements NSP_ITriggerHandler{
      *
      */
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
-        
+        NSP_AssetTriggerHelper assetTriggerHelperObj = new NSP_AssetTriggerHelper();
+       assetTriggerHelperObj.afterInsertDirector((List<Asset>)newList,(Map<Id, Asset>)newMap); 
     }
 
     /**

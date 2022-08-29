@@ -5,6 +5,11 @@
 public class NSP_AssetTriggerHelper {
     
     
+    private static final string assetWoType = 'WO';
+    private static final string assetwxType = 'WX_WA';
+    private static final Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetWoType).getRecordTypeId();
+    private static final Id asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetwxType).getRecordTypeId();
+    
     /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
 * @param newList List of New Accounts.  
@@ -31,6 +36,18 @@ public class NSP_AssetTriggerHelper {
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
+    }
+    
+    /**
+* Iterates throught the list of new Account and passes the required attributes to other methods.
+* @param newList List of New Account.
+* @param newMap List of New Account.
+* @return void
+*                
+*/    
+    public void afterInsertDirector(List<Asset> newList, Map<Id, Asset> newMap) {
+        
+        updateInvoiceDate(newList,newMap);
     }
     
     /**
@@ -67,6 +84,7 @@ public class NSP_AssetTriggerHelper {
             NSP_CustomException.LogException(ex);
         }
     }
+   
   
      /**
 * Iterates throught the list of new Assets and passes the required attributes to other methods.
@@ -81,6 +99,8 @@ public class NSP_AssetTriggerHelper {
                 System.enqueueJob(objectFieldHistoryHelper);  
             }
         }
+        
+         updateInvoiceDate(newMap.values(),oldMap);
     }
     /*
     public void rollUpSubClientToAsset(Set<String> aimsClientSet,List<Asset> assetListToUpdate){
@@ -206,5 +226,65 @@ public class NSP_AssetTriggerHelper {
             }*/
       //  }
    // } */
+   // 
+  
+/**
+* Iterates throught the list of new Assets and passes the required attributes to other methods.
+* @param newList, oldMap List of Assets.  
+* @return void             
+* Created By: Rahul Singh
+* Date :8/29/2022
+*/
+    public void updateInvoiceDate(List<Asset> newList,Map<Id, Asset> oldMap){
+        
+      set<Id> idSet = new set<Id>();
+      set<Id> idwxset = new set<Id>();   
+        List <opportunity> oppList = new List<opportunity> (); 
+        if(newList.size() > 0){
+            for(Asset newAsset :newList){
+          		Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
+				if((Trigger.isInsert && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL)
+                  ||(newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL) ){
+					idSet.add(newAsset.opportunity__c);
+				}
+				else if((Trigger.isInsert && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)
+                       ||(newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)){
+					idwxset.add(newAsset.opportunity__c);
+                   
+				}
+		
+		}
+
+	if(idSet.Size() > 0){
+		List<Asset> assetResult = [SELECT Id, NSP_AIMS_First_Pay_Date__c,opportunity__c FROM Asset where opportunity__c In :IdSet AND NSP_AIMS_First_Pay_Date__c !=NULL order by NSP_AIMS_First_Pay_Date__c DESC limit 1];
+        for(Asset assetWo: assetResult){
+            oppList.add(new Opportunity(id = assetWo.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWo.NSP_AIMS_First_Pay_Date__c));
+	
+        }
+			}
+
+	
+	if(idwxset.Size() > 0){
+			List<Asset> assetWxResult = [SELECT Id, NSP_First_Pay_Date__c, opportunity__c FROM Asset where opportunity__c In :idwxset AND NSP_First_Pay_Date__c !=NULL order by NSP_First_Pay_Date__c DESC limit 1];
+		   for(Asset assetWx: assetWxResult){
+             oppList.add(new Opportunity(id = assetWx.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWx.NSP_First_Pay_Date__c));
+				
+        }	
+       
+			}
+
+       try{
+        if(!oppList.isEmpty()){
+            update oppList;
+        }
+    }
+    catch(Exception ex){
+        NSP_ErrorLogHandler.logSaveException('NSP_AssetTriggerHelper', 'updateInvoiceDate', ex.getMessage());
+    }
+
+        }
+    }
+
+
     
 }
