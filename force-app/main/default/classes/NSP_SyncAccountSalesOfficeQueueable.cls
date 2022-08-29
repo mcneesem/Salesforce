@@ -13,18 +13,15 @@ public class NSP_SyncAccountSalesOfficeQueueable implements Queueable  {
     public void execute(QueueableContext context) {
         // get account
         list<Account> accountUpdateList = new list<Account>();
-        for(Account eachAccount : [SELECT id,NSP_Sales_Office__c,NSP_SalesRegion__c,NSP_Sales_Division__c,Owner.NSP_Sales_Office__c ,Owner.NSP_SalesDivision__c,Owner.NSP_SalesRegion__c,
-                                  	(SELECT id from Assets WHERE status = 'Active' OR NSP_Account_Status__c = 'Active') 
-                                  FROM Account WHERE ownerId IN : ownerIdSet  ])
+        for(Account eachAccount : [SELECT id,NSP_Sales_Office__c,NSP_SalesRegion__c,NSP_Sales_Division__c,Owner.NSP_Sales_Office__c ,Owner.NSP_SalesDivision__c,Owner.NSP_SalesRegion__c
+                                  	FROM Account WHERE ownerId IN : ownerIdSet  ])
         {
             
-            if(eachAccount.Assets != null && eachAccount.Assets.Size() < 1) // check if account does not have active asset
-            {
                eachAccount.NSP_SalesRegion__c = eachAccount.Owner.NSP_SalesRegion__c;  // sales region
                eachAccount.NSP_Sales_Division__c = eachAccount.Owner.NSP_SalesDivision__c; // sales division
                eachAccount.NSP_Sales_Office__c = eachAccount.Owner.NSP_Sales_Office__c; // sales office
                accountUpdateList.add(eachAccount);
-            }
+            
         }
         
         if(accountUpdateList.Size() > 0)
