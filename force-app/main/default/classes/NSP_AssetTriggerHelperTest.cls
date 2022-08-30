@@ -26,6 +26,21 @@ public class NSP_AssetTriggerHelperTest {
         accoutObject1.Name = 'Test Account1';
         insert accoutObject1;
         
+        Account accoutObject2 = new Account();
+        accoutObject2.Name = 'Test Account2';
+        insert accoutObject2;
+        
+        Account accoutObject3 = new Account();
+        accoutObject3.Name = 'Test Account3';
+        insert accoutObject3;
+         
+        Opportunity opportuniytObject = new Opportunity();
+        opportuniytObject.Name = 'Test Oppty';
+        opportuniytObject.AccountId = accoutObject2.id;
+        opportuniytObject.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject.CloseDate = date.today();
+        //Inserting Opportunity Object
+        insert opportuniytObject;
         //Create Asset
         Asset assetObj = new Asset();
         assetObj.accountId = accoutObject.Id;
@@ -41,6 +56,14 @@ public class NSP_AssetTriggerHelperTest {
         assetObj1.name = 'asset2';
         assetObj1.NSP_Need_Rollup_Recalculation__c = true;
         insert assetObj1;
+		 
+		//Create Asset
+        Asset assetObj2 = new Asset();
+        assetObj2.accountId = accoutObject3.Id;
+        assetObj2.NSP_Client__c = 'asset3';
+        assetObj2.opportunity__c = opportuniytObject.Id;
+        assetObj2.name = 'asset3';
+        insert assetObj2;
         
         List<NSP_Sub_Client__c> subClientList = new List<NSP_Sub_Client__c>();
         for(integer icount = 0 ; icount< 5 ;icount++){
@@ -102,5 +125,53 @@ public class NSP_AssetTriggerHelperTest {
     	System.assertEquals(true, assetList1[0].NSP_Need_Rollup_Recalculation__c);
     
     }
+  /**
+* Checks the update protion of the trigger of WX_WA record type
+* Created by Rahul Singh
+* Date : 8/29/2022
+* @param N/A. 
+* @return void                          
+*/    
+     @isTest
+    static void afterUpdateWXTest() {
+        
+        Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WX_WA').getRecordTypeId();
+        List<Asset> assetList = [SELECT ID,Name FROM Asset WHERE Name = 'asset3'];
+        Test.startTest();
+        Asset assetObj = new Asset();
+        assetObj.Id = assetList[0].ID;
+        assetObj.recordtypeid = new_Asset_RT_ID;
+        assetObj.NSP_First_Pay_Date__c = date.today();
+        update assetObj;
+        Test.stopTest();
+        List<Asset> assetList1 = [SELECT ID,Name, NSP_First_Pay_Date__c FROM Asset WHERE Name = 'asset3'];
+		System.assertEquals(date.today(), assetList1[0].NSP_First_Pay_Date__c);
+        
+    }
+
+/**
+* Checks the update protion of the trigger of WO record type
+* Created by Rahul Singh
+* Date : 8/29/2022
+* @param N/A. 
+* @return void                          
+*/    
+     @isTest
+    static void afterUpdateWOTest() {
+        
+        Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
+        List<Asset> assetList = [SELECT ID,Name FROM Asset WHERE Name = 'asset3'];
+        Test.startTest();
+        Asset assetObj = new Asset();
+        assetObj.Id = assetList[0].ID;
+        assetObj.recordtypeid = new_Asset_RT_ID;
+        assetObj.NSP_AIMS_First_Pay_Date__c = date.today();
+        update assetObj;
+        Test.stopTest();
+        List<Asset> assetList1 = [SELECT ID,Name,NSP_AIMS_First_Pay_Date__c FROM Asset WHERE Name = 'asset3'];
+		System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
+        
+    }
+    
     
 }
