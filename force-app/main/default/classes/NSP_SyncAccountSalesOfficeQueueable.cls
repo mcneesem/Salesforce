@@ -11,7 +11,7 @@ public class NSP_SyncAccountSalesOfficeQueueable implements Queueable  {
         this.ownerIdSet = userIdSet;
     }
     public void execute(QueueableContext context) {
-        // get account
+        // get account removed the asset condition
         list<Account> accountUpdateList = new list<Account>();
         for(Account eachAccount : [SELECT id,NSP_Sales_Office__c,NSP_SalesRegion__c,NSP_Sales_Division__c,Owner.NSP_Sales_Office__c ,Owner.NSP_SalesDivision__c,Owner.NSP_SalesRegion__c
                                   	FROM Account WHERE ownerId IN : ownerIdSet  ])
