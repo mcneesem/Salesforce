@@ -24,11 +24,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Sales_Region__c</field>
+                <field>NSP_Sales_Office_Membership__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Sub_Region__c</field>
+                <field>NSP_SalesDivision__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_SalesRegion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -99,6 +103,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>dfsle__CanManageAccount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Job_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
