@@ -547,11 +547,6 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>New_Core_Sales_Task</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>New_Mid_Market_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
@@ -612,6 +607,16 @@
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.NSP_Create_Checklist</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Opportunity.NSP_CreateQuote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>22</sortOrder>
@@ -622,14 +627,9 @@
             <sortOrder>23</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
+            <actionName>New_Core_Sales_Task</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.NSP_Create_Checklist</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>21</sortOrder>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
