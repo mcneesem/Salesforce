@@ -3,6 +3,7 @@
     <fullName>NSP_End_Date_Validation</fullName>
     <active>true</active>
     <description>This validation rule is created as part of DF-01675. So that users will not be able to enter the End Date in past.</description>
-    <errorConditionFormula>AND (EndDate &lt; Today(),  $Setup.NSP_Trigger_Switch__c.CampaignValidations__c != true)   &lt;&gt; ($Permission.Bypass_Campaign_Date)</errorConditionFormula>
+    <errorConditionFormula>AND (EndDate &lt; Today(), $Setup.NSP_Trigger_Switch__c.CampaignValidations__c != true,
+NOT($Permission.Bypass_Campaign_Date))</errorConditionFormula>
     <errorMessage>You cannot set a Campaign End Date in the past.</errorMessage>
 </ValidationRule>
