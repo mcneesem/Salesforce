@@ -25,31 +25,6 @@ public class NSP_ValidateOpportunityStageTest {
         opp.NSP_Partner__c=acnt.Id;
         insert opp;   
         
-        User userRecord = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
-            LastName = 'TestClassUser',
-            Email = 'testuser@test.com',
-            Username = 'testuser@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US'
-        );
-        //Inserting users that can be used in the test class data setup
-        insert userRecord;
-        
-        Opportunity opp3=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
-        opp3.StageName = 'Discovery';
-        opp3.NSP_Number_of_Employees__c=12;
-        opp3.NSP_BidNumber__c='123987';
-        opp3.NSP_PrimaryProduct__c = 'WO';
-        opp3.NSP_Partner__c=acnt.Id;
-        opp3.ownerid= userRecord.id;
-        insert opp3;  
-        
         Opportunity opp1=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
         opp1.StageName = 'Proposal';
         opp1.NSP_PrimaryProduct__c = 'WX';
@@ -68,13 +43,7 @@ public class NSP_ValidateOpportunityStageTest {
             insert opp2;   
         }catch(Exception ex){
             ex.getStackTraceString();
-        }  
-
-        OpportunityTeamMember oppMember = new OpportunityTeamMember();
-        oppMember.OpportunityId = opp3.id;
-        oppMember.UserId = UserInfo.getUserId();
-        oppMember.TeamMemberRole = 'Business Performance Advisor';
-        insert oppMember;   
+        }   
         
         //Adding Tasks and Events to lists.
         List<Task> taskList = new List<Task>();
@@ -154,6 +123,52 @@ public class NSP_ValidateOpportunityStageTest {
         OLI.Quantity = 1;
         OLI.UnitPrice = 1;
         insert OLI;
+        
+        // Test data for Close Lost Scenario
+        User userRecord1 = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+            LastName = 'TestClassUser',
+            Email = 'testuser1@test.com',
+            Username = 'testuser1@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+        insert userRecord1; 
+        
+        Opportunity opp3=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
+        opp3.StageName = 'Discovery';
+        opp3.NSP_Number_of_Employees__c=200;
+        opp3.NSP_BidNumber__c='123987';
+        opp3.NSP_PrimaryProduct__c = 'WO';
+        opp3.NSP_Partner__c=acnt.Id;
+        opp3.ownerid= userRecord1.id;
+        insert opp3; 
+        OpportunityTeamMember oppMember = new OpportunityTeamMember();
+        oppMember.OpportunityId = opp3.id;
+        oppMember.UserId = UserInfo.getUserId();
+        oppMember.TeamMemberRole = 'Business Performance Advisor';
+        insert oppMember;   
+        
+        User userRecord2 = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+            LastName = 'TestClassUser',
+            Email = 'testuser2@test.com',
+            Username = 'testuser2@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+        insert userRecord2;
+        
     }
     // Test for validations when Opportunity stage is set to Closing
     @isTest
@@ -378,6 +393,164 @@ public class NSP_ValidateOpportunityStageTest {
                 ex.getStackTraceString();
             }
           
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_BPC_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
+        User userRecord1 = userRecord1List[0];
+        userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Business Performance Consultant'][0].Id;
+        update userRecord1;
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
+        update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_RSC_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
+        User userRecord1 = userRecord1List[0];
+        userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Retirement Sales Consultant'][0].Id;
+        update userRecord1;
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Retirement Sales Manager'][0].Id;
+        update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_IC_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
+        User userRecord1 = userRecord1List[0];
+        userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Insurance Sales'][0].Id;
+        update userRecord1;
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Insurance Sales Manager'][0].Id;
+        update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_RS_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
+        User userRecord1 = userRecord1List[0];
+        userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Recruiting Sales'][0].Id;
+        update userRecord1;
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Recruiting Manager'][0].Id;
+        update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_TS_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
+        User userRecord1 = userRecord1List[0];
+        userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Technology Sales'][0].Id;
+        update userRecord1;
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'BPS Sales Manager'][0].Id;
+        update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_AS_Test(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
+        update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
         }
         test.stopTest();
 }
