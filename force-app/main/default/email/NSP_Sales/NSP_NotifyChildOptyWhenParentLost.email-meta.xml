@@ -5,7 +5,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Notify Child Opty When Parent Lost</name>
     <style>none</style>
-    <subject>The parent opportunity for {!Opportunity.Name} has been closed</subject>
+    <subject>The parent opportunity {!Opportunity.NSP_Parent_Opportunity__c} for {!Opportunity.Name} has been closed lost</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

@@ -82,9 +82,9 @@ public class NSP_OpportunityTriggerHelper {
         validateClosedDate(closedOppList);
         }
         
-		NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
-		//Setting direct assignments to opportunity records
-		oppHelperFuncObj.setDirectOpptyFieldsAssignments(newList);
+        NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
+        //Setting direct assignments to opportunity records
+        oppHelperFuncObj.setDirectOpptyFieldsAssignments(newList);
         
         if(!opportunityWoWxList.isEmpty()){
             //Calling method to stamp WO/WX emails on oprty record
@@ -276,9 +276,9 @@ public class NSP_OpportunityTriggerHelper {
                     validateClosedDate(closedOppList);
                 }
         
-		NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
-		oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
-		
+        NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
+        oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
+        
         // Account list is empty or not
         oppHelperFuncObj.getAccountOwnerEmail(opportunityNewAccountList,accountIdSet);
         NSP_UserAndOwnerFunctions uofobj = new NSP_UserAndOwnerFunctions();
@@ -330,6 +330,7 @@ public class NSP_OpportunityTriggerHelper {
     
     public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){        
         List<String> closedOpportunityIdList = new List<String>();
+        List<String> closedWonOpportunityIdList = new List<String>();
         Set<String> accountIdSet = new Set<String>();
         List<Opportunity> closedWonOpptyList = new List<Opportunity>();
         List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
@@ -374,6 +375,10 @@ public class NSP_OpportunityTriggerHelper {
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
                 closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
                }
+            //569718- if parent opportunity - send notification to open child opportunities 
+            if(String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null){
+                 closedWonOpportunityIdList.add(opportunityId);
+               }  
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
             // Added as part of DF-01869 handled primary product for WO/WS or WA/WX
             if((opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
@@ -414,7 +419,12 @@ public class NSP_OpportunityTriggerHelper {
         //List is empty or not
         if(!closedOpportunityIdList.isEmpty()){
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
-			childHlprObj.updatesOnChildOpportunity(closedOpportunityIdList);
+            childHlprObj.updatesOnChildOpportunity(closedOpportunityIdList);
+        }
+        //569718-to send notification to open child opportunities - upsell opportunities enhancement
+        if(!closedWonOpportunityIdList.isEmpty()){
+            NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
+          childHlprObj.updatesOnOpenChildOpportunity(closedWonOpportunityIdList);
         }
         //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
         NSP_GenerateOrderFromOpportunity.updateQuotetoOrderWhenOppWON(Trigger.new,opportunityOldMap);
@@ -639,8 +649,8 @@ public class NSP_OpportunityTriggerHelper {
             accountIds.add(oppItem.Opportunity.accountId);        
         }
         List<Asset> upsertList=new List<Asset>();
-        New NSP_SrcToTargetObjectDataMover(null,'OppAsset')	;//initialize the class
-        List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);	    
+        New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;//initialize the class
+        List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);      
         Map<Id, Asset> assetMap = new Map<Id, asset>();
         for(Asset assetItem: assetfromCopier){
             assetMap.put(assetItem.accountId,assetItem);
@@ -648,7 +658,7 @@ public class NSP_OpportunityTriggerHelper {
         List<Asset> existingAssets = [SELECT Id, Name,AccountId, Product2Id FROM Asset WHERE   AccountId in :accountIds AND RecordTypeId =:ASSET_RECORDTYPE_ID];
         Boolean isAssetFound=FALSE;
         for(Id draftAsset:assetMap.keySet()){
-            for(Asset existingAsset: existingAssets ){	
+            for(Asset existingAsset: existingAssets ){  
                 if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
                     isAssetFound=TRUE;
                     Break;
@@ -723,7 +733,7 @@ public class NSP_OpportunityTriggerHelper {
         /***********************************************************************************************
 * MethodName: validateClosedDate
 * Description : This method will throw error when Opportunity close date is less than today for all users except for the users
-				in NCS Public group
+                in NCS Public group
 * Params:       List<Opportunity>OpportunityList
 * Defect:       DF-01716
 * ********************************************************************************************/ 
