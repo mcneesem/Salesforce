@@ -76,16 +76,68 @@
         <template>NSP_Sales/NSP_Engage_Service_TeamVF</template>
     </alerts>
     <alerts>
-        <fullName>NSP_Interest_in_Retirement_Services_Email_Alert</fullName>
+        <fullName>NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</fullName>
         <ccEmails>results@insperity.com.invalid</ccEmails>
+        <description>Interest in BPS Email Alert for Non WX/WA</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_BPS_Email_Alert_for_WX_WA</fullName>
+        <ccEmails>WXresults@insperity.com.invalid</ccEmails>
+        <description>Interest in BPS Email Alert for WX/WA</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Certify_Email_Alert</fullName>
+        <ccEmails>certify@insperity.com.invalid</ccEmails>
+        <description>Interest in Certify Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Employment_Screening_Email_Alert</fullName>
+        <ccEmails>ies.accounts@insperity.com.invalid</ccEmails>
+        <description>Interest in Employment Screening Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Insurance_Services_Email_Alert</fullName>
+        <ccEmails>ins@insperity.com.invalid</ccEmails>
+        <description>Interest in Insurance Services Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Integra_Email_Alert</fullName>
+        <ccEmails>IntegraOperations@insperity.com.invalid</ccEmails>
+        <description>Interest in Integra Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Recruiting_Email_Alert</fullName>
+        <ccEmails>myhires@insperity.com.invalid</ccEmails>
+        <description>Interest in Recruiting Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Interest_in_Retirement_Services_Email_Alert</fullName>
+        <ccEmails>401k_Sales@insperity.com.invalid</ccEmails>
         <description>Interest in Retirement Services Email Alert</description>
         <protected>false</protected>
-        <recipients>
-            <field>NSP_WO_WX_Results__c</field>
-            <type>email</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
-        <template>NSP_Sales/NSP_InterestinRetirementServices</template>
+        <template>NSP_Sales/NSP_Interest_in_Upsell_product_Add_On</template>
     </alerts>
     <alerts>
         <fullName>NSP_Notice_of_Termination_for_Account_Owner</fullName>
@@ -116,6 +168,16 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>NSP_Sales/NSP_NotifyAccountOwneronCreationofRenewalOpportunity</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</fullName>
+        <description>Notify Child Opportunity Owner of Closed Won</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/NSP_NotifyChildOptyWhenParentWon</template>
     </alerts>
     <alerts>
         <fullName>NSP_Notify_Opportunity_Owner_of_Closed_Won</fullName>

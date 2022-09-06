@@ -33,6 +33,26 @@
                 <label>Insurance Services (Property &amp; Casualty)</label>
             </value>
             <value>
+                <fullName>Recruiting</fullName>
+                <default>false</default>
+                <label>Recruiting</label>
+            </value>
+            <value>
+                <fullName>Employment Screening</fullName>
+                <default>false</default>
+                <label>Employment Screening</label>
+            </value>
+            <value>
+                <fullName>Integra</fullName>
+                <default>false</default>
+                <label>Integra</label>
+            </value>
+            <value>
+                <fullName>Certify</fullName>
+                <default>false</default>
+                <label>Certify</label>
+            </value>
+            <value>
                 <fullName>Insurance Services</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
