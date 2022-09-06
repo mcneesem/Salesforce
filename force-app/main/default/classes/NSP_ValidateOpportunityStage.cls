@@ -320,6 +320,10 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
     }else if(TeamMemberList.contains(userInfo.getUserId())){
         canCloseLost++;
     }
+    //Added for ticket - 578774
+    else if(opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }
     if(canCloseLost == 0){
         opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
     }

@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
+    <constants>
+        <name>NumberOfEmployee</name>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>150.0</numberValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>hasPrimary_Opportunity</name>
+        <label>hasPrimary_Opportunity</label>
+        <locationX>522</locationX>
+        <locationY>136</locationY>
+        <defaultConnector>
+            <targetReference>isMid_Market</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Parent_Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Details</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isMid_Market</name>
+        <label>isMid_Market</label>
+        <locationX>560</locationX>
+        <locationY>320</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>NumberOfEmployee</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_IsMidMarket</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>True</label>
+        </rules>
+        <rules>
+            <name>False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>NumberOfEmployee</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BlankOut_IsMidMarket</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>False</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>IsNew()</expression>
+    </formulas>
     <interviewLabel>Update Account on Child Opportunities {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Account on Child Opportunities</label>
     <processMetadataValues>
@@ -23,10 +104,34 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <name>BlankOut_IsMidMarket</name>
+        <label>BlankOut IsMidMarket</label>
+        <locationX>340</locationX>
+        <locationY>314</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Is_MidMarket__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Is_MidMarket__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Account_Details</name>
         <label>Update Account Details</label>
-        <locationX>564</locationX>
-        <locationY>385</locationY>
+        <locationX>811</locationX>
+        <locationY>139</locationY>
+        <connector>
+            <targetReference>isMid_Market</targetReference>
+        </connector>
         <inputAssignments>
             <field>AccountId</field>
             <value>
@@ -35,22 +140,35 @@
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
-    <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
-        <connector>
-            <targetReference>Update_Account_Details</targetReference>
-        </connector>
+    <recordUpdates>
+        <name>Update_IsMidMarket</name>
+        <label>Update IsMidMarket</label>
+        <locationX>863</locationX>
+        <locationY>309</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_Parent_Opportunity__c</field>
-            <operator>NotEqualTo</operator>
+            <field>Is_MidMarket__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue></stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Is_MidMarket__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>145</locationX>
+        <locationY>43</locationY>
+        <connector>
+            <targetReference>hasPrimary_Opportunity</targetReference>
+        </connector>
         <object>Opportunity</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Active</status>
