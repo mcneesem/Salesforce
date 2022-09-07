@@ -374,11 +374,12 @@ public class NSP_OpportunityTriggerHelper {
             if(opportunityNewMap.get(opportunityId).stagename != opportunityOldMap.get(opportunityId).stagename
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
                 closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
-               }
-            //569718- if parent opportunity - send notification to open child opportunities 
-            if(String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null){
+               //569718- if parent opportunity - send notification to open child opportunities 
+            	if(String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null){
                  closedWonOpportunityIdList.add(opportunityId);
-               }  
+               } 
+              }
+             
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
             // Added as part of DF-01869 handled primary product for WO/WS or WA/WX
             if((opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
