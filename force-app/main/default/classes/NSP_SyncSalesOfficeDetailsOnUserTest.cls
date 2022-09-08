@@ -16,7 +16,7 @@ public class NSP_SyncSalesOfficeDetailsOnUserTest {
         officeMapping.NSP_End_Date__c = system.today()+100;
         insert officeMapping;
             NSP_SyncSalesOfficeDetailsOnUserBatch sch = new NSP_SyncSalesOfficeDetailsOnUserBatch();
-            String schstr = '0 0 0 3 9 ? 2022';
+            String schstr = '0 0 0 3 9 ? 2050';
 			String jobID = system.schedule('Merge user sync Job', schstr, sch);
         Test.stopTest();
     }
