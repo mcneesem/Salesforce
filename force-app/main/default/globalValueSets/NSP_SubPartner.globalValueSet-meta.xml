@@ -901,11 +901,6 @@
         <label>Fiedler Insurance, LLC</label>
     </customValue>
     <customValue>
-        <fullName>Financial Services Institute, Inc (FSI)</fullName>
-        <default>false</default>
-        <label>Financial Services Institute, Inc (FSI)</label>
-    </customValue>
-    <customValue>
         <fullName>FIRE Drill</fullName>
         <default>false</default>
         <label>FIRE Drill</label>
