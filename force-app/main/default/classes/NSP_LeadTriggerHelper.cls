@@ -84,7 +84,7 @@ public class NSP_LeadTriggerHelper {
               /*Added to Map Sales Office on insert if Zipcode is populated */
           if(String.isNotBlank(leadObject.PostalCode)){
             zipCodeLeadList.add(leadObject);
-            zipCodeList.add(leadObject.PostalCode);
+            zipCodeList.add(leadObject.PostalCode.substring(0,5));
         }
         /* Added to Map Sales Office on insert if Zipcode is populated */
             
@@ -195,7 +195,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                      && (leadNewMap.get(leadId).NumberOfEmployees == null || Integer.valueof(leadNewMap.get(leadId).NumberOfEmployees) < Integer.valueOf(System.Label.NSP_EMP_THRESH_150))) {
                                                       /* If Postal Code is not blank, Number of Employees is null or < 150 and Product of interest is WO/WX assign to Sales office */
                                                       leadsForRoundRobin.add(leadNewMap.get(leadId));
-                                                      zipCodeList.add(leadNewMap.get(leadId).PostalCode);
+                                                      zipCodeList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
                                                       isZipCodeUpdate = true;
                                                   } 
                                                   else {
@@ -214,7 +214,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
           if( leadNewMap.get(leadId).PostalCode != leadOldMap.get(leadId).PostalCode &&
           String.isNotBlank(leadNewMap.get(leadId).PostalCode) && isZipCodeUpdate == false){
               zipCodeLeadList.add(leadNewMap.get(leadId));
-              zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode);
+              zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
           }
        /* Added as part of DF-01846*/
         }
@@ -591,9 +591,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         for (Lead leadObj: leadsForRoundRobin) {
             //Checking if zip is present on lead or not
-            if (zipMap.containsKey(leadObj.PostalCode)) {
-                leadObj.NSP_Zip_Based_Location__c = zipMap.get(leadObj.PostalCode).NSP_Location_Name__c;
-                zipBasedLocationList.add(zipMap.get(leadObj.PostalCode).NSP_Location_Name__c);
+            if (zipMap.containsKey(leadObj.PostalCode.substring(0,5))) {
+                leadObj.NSP_Zip_Based_Location__c = zipMap.get(leadObj.PostalCode.substring(0,5)).NSP_Location_Name__c;
+                zipBasedLocationList.add(zipMap.get(leadObj.PostalCode.substring(0,5)).NSP_Location_Name__c);
                 finalRoundRobinList.add(leadObj);
             }
         }
