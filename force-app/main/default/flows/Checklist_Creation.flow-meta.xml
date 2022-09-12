@@ -3404,9 +3404,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NSP_Initial_Covered_Pay_Period_End__c</field>
+            <value>
+                <elementReference>Initial_Covered_Pay_Period_End</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>NSP_Initial_Covered_Pay_Period__c</field>
             <value>
-                <elementReference>Initial_Covered_Pay_Period</elementReference>
+                <elementReference>Initial_Covered_Pay_Period_Start</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3488,9 +3494,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NSP_Second_Covered_Pay_Period_End__c</field>
+            <value>
+                <elementReference>Second_Covered_Pay_Period_End</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>NSP_Second_Covered_Pay_Period__c</field>
             <value>
-                <elementReference>Second_Covered_Pay_Period</elementReference>
+                <elementReference>Second_Covered_Pay_Period_Start</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6199,11 +6211,22 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Initial_Covered_Pay_Period</name>
+                    <name>Initial_Covered_Pay_Period_Start</name>
                     <dataType>Date</dataType>
-                    <fieldText>Initial Covered Pay Period</fieldText>
+                    <fieldText>Initial Covered Pay Period Start</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Initial_Covered_Pay_Period_End</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Initial Covered Pay Period End</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Pay Period End Date must be greater than Start Date&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Initial_Covered_Pay_Period_End} &gt; {!Initial_Covered_Pay_Period_Start}</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Termination_Date_of_Client_s_Current_Medical_Plan</name>
@@ -6313,11 +6336,22 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Second_Covered_Pay_Period</name>
+                    <name>Second_Covered_Pay_Period_Start</name>
                     <dataType>Date</dataType>
-                    <fieldText>Second Covered Pay Period</fieldText>
+                    <fieldText>Second Covered Pay Period Start</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Second_Covered_Pay_Period_End</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Second Covered Pay Period End</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Pay Period End Date must be greater than Start Date&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Second_Covered_Pay_Period_End} &gt; {!Second_Covered_Pay_Period_Start}</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Will_the_EEs_be_bulk_primed</name>

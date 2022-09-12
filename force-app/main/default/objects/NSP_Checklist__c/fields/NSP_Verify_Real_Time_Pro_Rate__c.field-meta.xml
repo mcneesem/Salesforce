@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <label>Verify Real Time / Pro Rate</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

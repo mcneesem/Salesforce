@@ -53,6 +53,16 @@
         <senderType>CurrentUser</senderType>
         <template>NSP_Sales/NSP_Notify_Lead_Owner_for_Lead_from_Website</template>
     </alerts>
+    <alerts>
+        <fullName>Task_Queue_Assignment_Notification</fullName>
+        <description>Task Queue Assignment Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Task_Queue_Assignment_Notification</template>
+    </alerts>
     <rules>
         <fullName>NSP Demo Activity assignment has exceeded SLA</fullName>
         <active>true</active>

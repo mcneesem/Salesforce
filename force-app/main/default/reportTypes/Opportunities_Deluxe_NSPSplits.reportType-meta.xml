@@ -1304,4 +1304,12 @@ Each record in this Report represents an Opportunity;</description>
         </columns>
         <masterLabel>Oppt Splits</masterLabel>
     </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Sales_Office__c</field>
+            <table>Opportunity.Employee_Splits__r</table>
+        </columns>
+        <masterLabel>Opportunity Credits</masterLabel>
+    </sections>
 </ReportType>

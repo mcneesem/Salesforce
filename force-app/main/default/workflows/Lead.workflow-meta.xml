@@ -21,6 +21,16 @@
         <template>NSP_Sales/NSP_NotificationforLeadOwner</template>
     </alerts>
     <alerts>
+        <fullName>NSP_Notify_Referral_Lead_Owner_Email_Alert</fullName>
+        <description>Email alert to lead record owners when a referral record is assigned to them</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Notification_for_Lead_Owner_for_Referral_Leads</template>
+    </alerts>
+    <alerts>
         <fullName>NSP_notify_to_lead_Loyalty</fullName>
         <description>Send notification to lead Loyalty</description>
         <protected>false</protected>

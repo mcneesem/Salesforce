@@ -65,7 +65,7 @@
         <field>Lead$NSP_Lead_Stage__c</field>
     </columns>
     <columns>
-        <field>Lead$NSP_PrimaryProduct__c</field>
+        <field>Lead$NSP_Product_Interest__c</field>
     </columns>
     <currency>USD</currency>
     <description>How many WO/WX leads are assigned to my office DA but need to be assigned to a BPA?</description>
@@ -78,21 +78,26 @@
             <value>,Unqualified,New</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Lead$NSP_PrimaryProduct__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>,WX,WO</value>
-        </criteriaItems>
-        <criteriaItems>
             <column>Lead$Owner.UserRole</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>District Administrator,Regional Administrator</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Lead$NSP_Product_Interest__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Payroll &amp; Human Capital Management(Workforce Acceleration),Full Service HR (Workforce Optimization)</value>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead$NSP_Sales_Office__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>Lead$Status</field>
@@ -108,8 +113,6 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>Lead$NSP_PrimaryProduct__c</sortColumn>
-    <sortOrder>Desc</sortOrder>
     <timeFrameFilter>
         <dateColumn>Lead$CreatedDate</dateColumn>
         <interval>INTERVAL_CURRENT</interval>

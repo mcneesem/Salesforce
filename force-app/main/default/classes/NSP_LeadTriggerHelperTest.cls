@@ -48,6 +48,22 @@ public class NSP_LeadTriggerHelperTest {
         //Inserting users that can be used in the test class data setup
         insert userRecord;
         
+        User userRecord1 = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
+            LastName = 'TestClassUser1',
+            Email = 'testuser1@test.com',
+            Username = 'testuser1@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+        //Inserting users that can be used in the test class data setup
+        insert userRecord1;
+        
         //Create office assignment record
         NSP_Office_Assignment__c officeAssignmentObj =  new NSP_Office_Assignment__c();
         officeAssignmentObj.NSP_District_Administrator__c= userRecord.id;
@@ -389,4 +405,78 @@ public class NSP_LeadTriggerHelperTest {
         system.assertEquals(nLead.NumberOfEmployees, 160);
     } 
     
+    @isTest
+    public static void salesOfficetest()
+    {
+        User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
+         currentUser.NSP_Sales_Office__c = '301';
+         currentUser.NSP_SalesRegion__c = 'Central 1';
+         currentUser.NSP_SalesDivision__c = 'Central';
+         update currentUser;
+
+         NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
+        officeMapping.NSP_Sales_Office__c = '1081';
+        officeMapping.NSP_Sales_Division__c = 'Central';
+        officeMapping.NSP_Sales_Region__c = 'Central 1';
+        officeMapping.NSP_Start_Date__c = system.today()-1;
+        officeMapping.NSP_End_Date__c = system.today()+100;
+        insert officeMapping; 
+        
+        Test.startTest();
+        Lead nLead = new Lead();
+        nLead.firstname='HelloTest123';
+        nLead.lastname='Employee123';
+        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.Company = 'tmp123';
+        nLead.Email = 'tmp@tmp123.com';
+        nLead.PostalCode = '10001';
+        nLead.NumberOfEmployees  =160;  
+        nLead.NSP_Lead_Routing__c = true;
+        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+       
+        insert nLead;
+        
+        nLead.NSP_Sales_Office__c = '1081';
+        update nLead;
+        Test.stopTest();
+    }
+    
+
+/* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Harsha Khiroya      08/08/2022           Created this method - test method for admin user
+*/    
+    @isTest
+    static void testLeadDeleteByAdmin() {
+      User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
+        // Start Test
+        Test.startTest();
+        	delete leadList[0];   
+        Test.stopTest();
+        system.assertNotEquals(null,leadList);
+ 	}
+
+/* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Harsha Khiroya      08/08/2022           Created this method - test method for non admin user(sales manager here)
+*/
+    @isTest
+    static void testLeadDeleteByNonAdmin() {
+      User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
+        // Start Test
+        Test.startTest();
+        system.runAs(userRecord1){
+            try{
+        		delete leadList; 
+            }catch(Exception ex){
+                system.assertNotEquals(null, ex);
+            }
+        }
+        Test.stopTest();
+        
+ 	}
 }

@@ -657,6 +657,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4101</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4301</fullName>
             <default>false</default>
         </values>
@@ -2200,6 +2204,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4101</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4301</fullName>
             <default>false</default>
         </values>
@@ -2875,10 +2883,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Acisure</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Acrisure %E2%80%93 VCG</fullName>
             <default>false</default>
         </values>
@@ -3120,6 +3124,10 @@
         </values>
         <values>
             <fullName>Digital Insurance-fka Kistler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Access</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3942,6 +3950,10 @@
         <picklist>NSP_Template_Selection__c</picklist>
         <values>
             <fullName>MarketingReferalAllianceAgreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NDAChannelPartner</fullName>
             <default>false</default>
         </values>
         <values>

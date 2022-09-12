@@ -2,6 +2,8 @@
 * Represents the User trigger helper which handles all the logic.
 */
 public class NSP_UserTriggerHelper {
+   public static boolean syncAccountQueueExecuted = false;
+    
     /**
 * Iterates throught the list of new User and passes the required attributes to other methods.
 * @param newList List of New Contact.
@@ -10,6 +12,7 @@ public class NSP_UserTriggerHelper {
 */
     public void beforeInsertUser(List < User > newList) {
           updatePhoneNumber(newList);
+        setSalesOfficeDetails(newList, null);   
      }
     
     /**
@@ -21,6 +24,19 @@ public class NSP_UserTriggerHelper {
 */
     public void beforeUpdateUser(Map < Id, User > newMap, Map < Id, User > oldMap) {
         updatePhoneNum(newMap.Values(), oldMap);
+        setSalesOfficeDetails(newMap.Values(), oldMap); 
+    }
+    
+    /**
+* Iterates throught the list of new User and passes the required attributes to other methods.
+* @param newMap List of New User.
+* @param oldMap List of the User record before update.
+* @return void
+*                
+*/
+    public void afterUpdateUser(Map < Id, User > newMap, Map < Id, User > oldMap) {
+        
+        syncToAccount(newMap.Values(), oldMap); 
     }
     
     /**
@@ -136,5 +152,87 @@ public class NSP_UserTriggerHelper {
         String substring = input.length() > 10 ? input.substring(input.length() - 10) : input;
         String codeNumber = substring.replaceFirst('(\\d{3})(\\d{3})(\\d+)', '+1 ($1) $2-$3');
         return codeNumber;
+    }
+
+     /**
+* Method Name : setSalesOfficeDetails 
+* Description : Method to set the sales office details from sales office mapping
+* @param currentRecordsList List of New User.  
+* @return void  
+*/
+	public  void setSalesOfficeDetails(List < User > newUserList, Map < Id, User > userOldMap)
+    {
+        set<String> salesOfficeSet = new set<String>();
+
+        for(User newUser : newUserList)
+        {
+            User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null; 
+
+            if( !system.isBatch() && String.isNotBlank(newUser.NSP_Sales_Office__c) && (Trigger.isInsert || (newUser.NSP_Sales_Office__c != oldUser.NSP_Sales_Office__c || newUser.NSP_SalesRegion__c != oldUser.NSP_SalesRegion__c || newUser.NSP_SalesDivision__c != oldUser.NSP_SalesDivision__c )))
+            {
+                
+                salesOfficeSet.add(newUser.NSP_Sales_Office__c);
+            }
+        }
+
+        if(salesOfficeSet.Size() > 0)
+        {   
+            map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
+                                                            FROM NSP_Sales_Office_Mapping__c 
+                                                            WHERE NSP_Sales_Office__c In : salesOfficeSet AND isActive__c = true])
+            {
+                salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
+            }
+            
+            
+
+            for(User newUser : newUserList)
+            {
+                User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null; 
+
+                if(!system.isBatch() && String.isNotBlank(newUser.NSP_Sales_Office__c) && (Trigger.isInsert || (newUser.NSP_Sales_Office__c != oldUser.NSP_Sales_Office__c || newUser.NSP_SalesRegion__c != oldUser.NSP_SalesRegion__c || newUser.NSP_SalesDivision__c != oldUser.NSP_SalesDivision__c )))
+                {
+                    if(salesOfficeToMappingMap.containsKey(newUser.NSP_Sales_Office__c))
+                        {
+                            NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newUser.NSP_Sales_Office__c);
+                            newUser.NSP_SalesDivision__c = officeMapping.NSP_Sales_Division__c; 
+                            newUser.NSP_SalesRegion__c = officeMapping.NSP_Sales_Region__c; 
+                        }
+                    else{
+                            newUser.NSP_SalesDivision__c = null; 
+                            newUser.NSP_SalesRegion__c = null; 
+                    }
+                }
+            }
+            
+        }
+    }
+    
+/**
+* Method Name : syncToAccount 
+* Description : Method to sync the sales office details from User to Account
+* @param currentRecordsList List of New User.  
+* @return void  
+*/    
+    public void syncToAccount(List < User > newUserList, Map < Id, User > userOldMap)
+    {
+        set<Id> userIdSet = new set<Id>();
+
+        for(User newUser : newUserList)
+        {
+            User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null; 
+
+            if(String.isNotBlank(newUser.NSP_Sales_Office__c)  && (Trigger.isInsert || (newUser.NSP_Sales_Office__c != oldUser.NSP_Sales_Office__c || newUser.NSP_SalesRegion__c != oldUser.NSP_SalesRegion__c || newUser.NSP_SalesDivision__c != oldUser.NSP_SalesDivision__c )))
+            {
+                userIdSet.add(newUser.Id);
+            }
+        }
+        
+        if(userIdSet.Size() > 0 && !syncAccountQueueExecuted)
+        {
+            syncAccountQueueExecuted = true;
+            system.enqueueJob(new NSP_SyncAccountSalesOfficeQueueable(userIdSet));
+        }
     }
 }

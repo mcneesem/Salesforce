@@ -25,6 +25,7 @@ public class NSP_ContactTriggerHelper {
         }
         //Format Phone number
         updatePhoneNumber(newList);
+        setSalesOfficeDetails(newList,null);
     }        
         
     /**
@@ -86,7 +87,7 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
             
         }
         
-        
+        setSalesOfficeDetails(newMap.values(),oldMap);
     }
     
     /**
@@ -278,4 +279,47 @@ public String formatCommonPattern(String input) {
     String codeNumber = substring.replaceFirst('(\\d{3})(\\d{3})(\\d+)', '+1 ($1) $2-$3');
     return codeNumber;
 }   
+
+/* Description: This method sets sales office details from user 
+     * 
+     * @param: contactList
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     *  Date              | Description
+     * -------------------------------------------------------------------------------------
+     *  08/05/2022          created this new method
+     * 
+     * 
+    */
+    
+    public void setSalesOfficeDetails(List<Contact> newList,Map<Id, Contact> contactOldMap)
+    {
+        set<Id> ownerIdSet = new set<Id>();
+        for(Contact newContact: newList)
+        {
+            Contact oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id):null;
+            if((Trigger.isInsert || newContact.OwnerId != oldContact.OwnerId) && newContact.OwnerId != null)
+            {
+                ownerIdSet.add(newContact.OwnerId);
+            }
+            
+        }
+        
+        if(ownerIdSet.Size() > 0)
+        {
+            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+            for(Contact newContact: newList)
+            {
+                Contact oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id):null;
+                if((Trigger.isInsert || newContact.OwnerId != oldContact.OwnerId) && newContact.OwnerId != null && userIdMap.containsKey(newContact.OwnerId))
+                {
+                    user eachUser = userIdMap.get(newContact.OwnerId);
+                    newContact.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                    newContact.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newContact.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                }
+            }
+        }
+    } 
 }

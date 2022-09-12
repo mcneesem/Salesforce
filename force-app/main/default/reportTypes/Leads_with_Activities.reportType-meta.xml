@@ -670,6 +670,11 @@
             <field>NSP_Lead_Owner_Role__c</field>
             <table>Lead</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Other_Lead_Source__c</field>
+            <table>Lead</table>
+        </columns>
         <masterLabel>Leads</masterLabel>
     </sections>
     <sections>
@@ -1021,6 +1026,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Account_Owner_Email__c</field>
+            <table>Lead.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Upsell_Product_of_Interest__c</field>
             <table>Lead.Activities</table>
         </columns>
         <masterLabel>Activities</masterLabel>

@@ -82,6 +82,7 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_w_or_wo_Activities_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

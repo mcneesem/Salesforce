@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission set group is created as part of STY-02427.</description>
+    <label>Business Development</label>
+    <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>Xactly_Permission_Set</permissionSets>
+    <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+    <permissionSets>force__HighVelocitySalesUser</permissionSets>
+    <permissionSets>force__VoiceOutbound</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission set group is created as part of STY-02427.</description>
+    <label>Service</label>
+    <permissionSets>Checklist_View_All</permissionSets>
+    <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_NCS_can_Edit_Forecast_Category</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISCHANGED( NSP_Forecast_Status__c ) &amp;&amp; ((AND( NOT( $UserRole.Name = &apos;New Client Sales&apos;) , OR( ISPICKVAL(NSP_Forecast_Status__c, &apos;Pending-Docs Submitted to NCS&apos;) , ISPICKVAL(NSP_Forecast_Status__c, &apos;Sold-Booked&apos;)))) || (AND( NOT( $UserRole.Name = &apos;HCM Sales Consultant&apos; || $Profile.Name = &apos;Sales Manager&apos; || $UserRole.Name = &apos;New Client Sales&apos;) , ISPICKVAL(NSP_Forecast_Status__c, &apos;Verbal-Appt Set to Pickup Docs&apos;))))</errorConditionFormula>
+    <errorDisplayField>NSP_Forecast_Status__c</errorDisplayField>
+    <errorMessage>Only New Client Sales can set to &quot;Pending-Docs Submitted to NCS&quot; or &quot;Sold-Booked&quot;</errorMessage>
+</ValidationRule>

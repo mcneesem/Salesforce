@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <label>Run Section 125</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

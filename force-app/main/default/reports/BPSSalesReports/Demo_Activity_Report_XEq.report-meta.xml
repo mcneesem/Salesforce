@@ -51,14 +51,14 @@
         <criteriaItems>
             <column>Activity.NSP_Activity_Type_Reporting__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Demo</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity.NSP_Assign_Sales_Engineer__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
@@ -88,14 +88,13 @@
         <value>1</value>
     </params>
     <reportType>OpportunityActivity</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>false</showGrandTotal>
     <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>DUE_DATE</dateColumn>
-        <endDate>2022-03-28</endDate>
-        <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2021-11-01</startDate>
+        <interval>INTERVAL_CURRENT</interval>
     </timeFrameFilter>
 </Report>

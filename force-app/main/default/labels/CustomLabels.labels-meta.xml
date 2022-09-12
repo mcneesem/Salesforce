@@ -164,7 +164,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Channel Program DL</shortDescription>
-        <value>raj.raghavan@insperity.com</value>
+        <value>raj.raghavan@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_Client_For_Life_to_Create_Quote</fullName>
@@ -306,7 +306,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_FTA_Base_URL</shortDescription>
-        <value>https://portalapps.insperity.com/financialcomparison/financialanalysis/</value>
+        <value>https://testportalapps.insperity.com/financialcomparison/financialanalysis/</value>
     </labels>
     <labels>
         <fullName>NSP_FTA_OppId</fullName>
@@ -462,7 +462,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Mid Market Sales Email</shortDescription>
-        <value>midmarketleads@insperity.com</value>
+        <value>midmarketleads@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_MoveOpportunityToAnalysisiStage</fullName>
@@ -483,7 +483,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>New Client Sales Email</shortDescription>
-        <value>newclientsales@insperity.com</value>
+        <value>newclientsales@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_NoQuoteForWOProducts</fullName>
@@ -669,7 +669,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Quote Approval Bypass Profile</shortDescription>
-        <value>CPQ Admi,System Administrat</value>
+        <value>CPQ Admin,System Administrator</value>
     </labels>
     <labels>
         <fullName>NSP_Quote_Owner_Mismatch_Message</fullName>
@@ -757,7 +757,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WO Email DL</shortDescription>
-        <value>results@insperity.com</value>
+        <value>results@insperity.com.invalid</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Email_DL</fullName>
@@ -902,11 +902,11 @@
     </labels>
     <labels>
         <fullName>NSP_ExitCriteriaProductException</fullName>
-        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services</categories>
+        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services, Expense Management</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_ExitCriteriaProductException</shortDescription>
-        <value>Employment Screening,Insurance Services,Retirement Services,Learning &amp; Development,HR Consulting Services</value>
+        <value>Employment Screening,Insurance Services,Retirement Services,Learning &amp; Development,HR Consulting Services,Expense Management</value>
     </labels>
     <labels>
         <fullName>NSP_NonOwnerBasedCriteriaProducts</fullName>
@@ -921,7 +921,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-        <value>Organizational Planning,Time &amp; Attendance,WA,WX,Retirement Services,Applicant Tracking</value>
+        <value>Organizational Planning,Time &amp; Attendance,WA,WX,Retirement Services</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
@@ -974,7 +974,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Opportunity Close Date Validation</shortDescription>
-        <value>Close cannot be in the past.</value>
+        <value>Close Date cannot be in the past.</value>
     </labels>
     <labels>
         <fullName>NSP_Profile_To_Skip_OLI_Validation</fullName>
@@ -1004,7 +1004,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Close Lost Criteria Roles</shortDescription>
-        <value>District Administrator,Regional Administrator,Business Performance Advisor</value>
+        <value>District Administrator,Regional Administrator,Business Performance Advisor,Retirement Sales Consultant,BPS Administrator,Technology Sales,Customer Success Team,Insurance Sales Manager,Insurance Sales</value>
     </labels>
     <labels>
         <fullName>NSP_AuthorizedPurchaseBilling</fullName>
@@ -1215,7 +1215,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Docusign Base URL</shortDescription>
-        <value>https://na11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
+        <value>https://DSinstance.springcm.com/atlas/doclauncher/OneClickDocGen</value>
     </labels>
     <labels>
         <fullName>NSP_DO_Gen_Err</fullName>
@@ -1231,5 +1231,137 @@
         <protected>false</protected>
         <shortDescription>Account Envelop Configuration</shortDescription>
         <value>a8N4x0000000kgpEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CPM_USER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stamping CPM User, if partner Account is created by BPC</shortDescription>
+        <value>0054x0000057OUa</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Core_And_MidMarket_Hierarchy_Role</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Core And MidMarket Hierarchy Role</shortDescription>
+        <value>Business Performance Advisor,District Administrator,Regional Manager,Regional VP,District Manager,Core Sales,Associate Business Performance Advisors,MidMarket Sales Leader,MidMarket Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustomerSuccessTeam_And_BPSAdministrator_Role</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP CustomerSuccessTeam And BPSAdministrator Role</shortDescription>
+        <value>Customer Success Team,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Other_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Other Primary Product</shortDescription>
+        <value>Employment Screening,Expense Management,Insurance Services,Learning &amp; Development,Recruiting Services,HR Consulting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OtherthanWorkforce_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP OtherthanWorkforce Primary Product</shortDescription>
+        <value>Applicant Tracking, Organizational Planning, Performance Management, Retirement Services, Time &amp; Attendance</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Salepprwk_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Salepprwk_Email</shortDescription>
+        <value>qa_pwc@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Workforce_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Workforce Primary Product</shortDescription>
+        <value>WX,WA,WO,WS</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AccountTriggerError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_AccountTriggerError</shortDescription>
+        <value>You do not have permission to take that action on this record.</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Role in Opportunity Team</shortDescription>
+        <value>Business Performance Advisor,District Administrator,District Manager,New Client Sales,Opportunity Owner</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Business_Performance_Consultant</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Business Performance Consultant</shortDescription>
+        <value>MidMarket Sales Leader,MidMarket Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Insurance_Sales</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Insurance Sales</shortDescription>
+        <value>BPS Sales Manager,Insurance Sales Manager,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Recruiting_Sales</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Recruiting Sales</shortDescription>
+        <value>Recruiting Manager</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Retirement_Sales_Consultant</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Retirement Sales Consultant</shortDescription>
+        <value>BPS Sales Manager,Retirement Sales Manager,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Technology_Sales</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Technology Sales</shortDescription>
+        <value>BPS Administrator,BPS Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Sales_Office_Mapping_Overlap_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Office Mapping Overlap Error</shortDescription>
+        <value>Start Date and End Date overlap&apos;s with this record</value>
+    </labels>
+    <labels>
+        <fullName>CANNOT_DELETE_ACCOUNT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CANNOT_DELETE_ACCOUNT</shortDescription>
+        <value>You do not have permission to delete Accounts</value>
+    </labels>
+    <labels>
+        <fullName>CANNOT_DELETE_LEAD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CANNOT_DELETE_LEAD</shortDescription>
+        <value>You do not have permission to delete Leads.</value>
+    </labels>
+    <labels>
+        <fullName>CanDeleteAccountLead</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CanDeleteAccountLead</shortDescription>
+        <value>System Administrator,Sales Administrator</value>
     </labels>
 </CustomLabels>

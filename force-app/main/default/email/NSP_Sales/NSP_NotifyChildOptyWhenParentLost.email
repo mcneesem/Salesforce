@@ -1,2 +1,1 @@
-The parent opportunity for {!Opportunity.Name} has been closed. Please visit the child opportunity associated with this record and disposition accordingly.
-<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
+The parent opportunity related to {!Opportunity.Name} has been moved into a Closed Lost status. Please review and update your opportunity as appropriate. The record can be reviewed below. <a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

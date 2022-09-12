@@ -36,10 +36,8 @@ public class NSP_LeadTriggerHandler implements NSP_ITriggerHandler{
 *                
 */
     public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
-     // Share Lead with owner Sales office Public groups --STY-01786   
-     NSP_recordSharing.nonBPALeadSharing(newList);
-     //DF-01461
-     NSP_recordSharing.queuedLeadRecordSharing(newList); 
+    // Added as a part of STY-02768
+    NSP_salesOfficeRecordSharing.leadRecordSharing((Map < Id, Lead > ) newMap);
     }
     
     /**
@@ -69,8 +67,22 @@ public class NSP_LeadTriggerHandler implements NSP_ITriggerHandler{
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
          NSP_LeadTriggerHelper  LeadTriggerHelperObject =  new NSP_LeadTriggerHelper();
         LeadTriggerHelperObject.afterUpdateDirector((Map<Id, Lead>) newMap,(Map<Id, Lead>) oldMap);
-        // Share Lead with owner Sales office Public groups --STY-01786  
-        NSP_recordSharing.shareLeadsonUpdate((Map<Id, Lead>) newMap,(Map<Id, Lead>) oldMap);
+        // Share Lead with owner Sales office Public groups --STY-02768
+        NSP_salesOfficeRecordSharing.shareLeadsonUpdate((Map<Id, Lead>) newMap,(Map<Id, Lead>) oldMap);
+    }
+    
+    /**
+     * Handles before delete for Lead.
+     * @param oldList List, OldMap Lead.
+     * @return void
+     ** Ticket 582491
+	 * author           | Date              | Description
+ 	 * -------------------------------------------------------------------------------------
+	 * Ruchi Roy         08/08/2022           Created this method
+     */
+    public void beforeDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {
+        NSP_LeadTriggerHelper LeadTriggerHelperObject = new NSP_LeadTriggerHelper();
+        LeadTriggerHelperObject.restrictDelete((List < Lead >) oldList, (Map < Id, Lead > ) oldMap);
     }
 
     /**

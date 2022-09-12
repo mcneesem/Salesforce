@@ -59,28 +59,28 @@
         <criteriaItems>
             <column>Opportunity$NSP_Forecast__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Yes</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$NSP_Forecast_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Pending-Docs Submitted to NCS,Sold-Booked,Verbal-Appt Set to Pickup Docs</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$NSP_BackOutDate__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$NSP_PrimaryProduct__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>WX,WO</value>
         </criteriaItems>
@@ -107,6 +107,7 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_Deluxe_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

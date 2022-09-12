@@ -757,6 +757,14 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
         if(newQuote.OwnerId!=null){
             ownerIds.add(newQuote.OwnerId);
         }
+        //Added as part of DF-01372 to nullify the approval related fields on clone.
+        if (newQuote.isClone()) {
+            newQuote.NSP_Submitter_Comment__c = null;
+            newQuote.ApprovalStatus__c = null;
+            newQuote.SubmittedUser__c = null;
+            newQuote.SubmittedDate__c = null;
+            newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_RECALLED;
+        }
     }
 
 

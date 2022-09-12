@@ -41,7 +41,8 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
         if (!this.hasRun()) {
             this.markRun();
             accountTriggerHelperObject.afterInsertDirector((List < Account > ) newList, (Map < Id, Account > ) newMap);
-            NSP_recordSharing.nonBPAAccountSharing((Map < Id, Account > ) newMap);
+             // Added as a part of STY-02768
+             NSP_salesOfficeRecordSharing.accountRecordSharing((Map < Id, Account > ) newMap);
         }
     }
 
@@ -72,10 +73,26 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
         if (!this.hasRun()) {
             this.markRun();
             accountTriggerHelperObject.afterUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
-            NSP_recordSharing.shareAccountonUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
+            // Added as a part of STY-02768
+            NSP_salesOfficeRecordSharing.shareAccountonUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
 
         }
 
     }
+    
+/**
+* Handles before delete for Account.
+* @param oldList List, oldMap of New Account.
+* @return void
+* Ticket 582488
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         08/08/2022           Created this method
+     */
+    public void beforeDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+        accountTriggerHelperObject.restrictDelete((List < Account >) oldList, (Map < Id, Account > ) oldMap);
+    }
+    
     public void afterDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {}
 }

@@ -35,6 +35,48 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>NCS_Sales_Compensation_Opportunity_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>NCS Sales Compensation Opportunity Access</label>
+        <sharedTo>
+            <group>NSP_Sales_Compensation</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>StageName</field>
+            <operation>equals</operation>
+            <value>Closing,Closed Lost,Closed Won</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Read_Edit_Access_on_MidMarket_Opportunities</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Edit Access on MidMarket Opportunities</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Is_MidMarket__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Read_Edit_Access_on_MidMarket_Opportunities_to_MidMarket_Sales_Leader</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Edit Access on MidMarket Opportunities to MidMarket Sales Leader</label>
+        <sharedTo>
+            <role>MidMarket_Sales_Leader</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Is_MidMarket__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Sales_Operation_Manager_Opportunity_Share_Access</fullName>
         <accessLevel>Edit</accessLevel>
         <description>This is required for SEM to assign SE (Sales Engineer) as part of Opportunity team.</description>

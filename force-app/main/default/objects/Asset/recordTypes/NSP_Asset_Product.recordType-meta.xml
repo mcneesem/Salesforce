@@ -408,6 +408,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4101</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4301</fullName>
             <default>false</default>
         </values>
@@ -628,115 +632,29 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SBQQ__BillingFrequency__c</picklist>
-        <values>
-            <fullName>Annual</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Monthly</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Quarterly</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__BillingType__c</picklist>
-        <values>
-            <fullName>Advance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Arrears</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__ChargeType__c</picklist>
-        <values>
-            <fullName>One-Time</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recurring</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Usage</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__DiscountScheduleType__c</picklist>
-        <values>
-            <fullName>Range</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Slab</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__OptionType__c</picklist>
-        <values>
-            <fullName>Accessory</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Component</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Related Product</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__PricingMethod__c</picklist>
-        <values>
-            <fullName>Block</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cost</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Custom</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>List</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Percent Of Total</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Status</picklist>
         <values>
-            <fullName>Installed</fullName>
+            <fullName>Active</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Obsolete</fullName>
+            <fullName>On Demand</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Purchased</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Registered</fullName>
+            <fullName>Returned</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Shipped</fullName>
+            <fullName>Terminated</fullName>
             <default>false</default>
         </values>
     </picklistValues>

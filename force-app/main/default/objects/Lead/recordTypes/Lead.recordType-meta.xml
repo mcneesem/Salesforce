@@ -360,6 +360,10 @@
             <fullName>Website</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>TAM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Account_Segment__c</picklist>
@@ -1522,6 +1526,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4101</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4301</fullName>
             <default>false</default>
         </values>
@@ -1929,10 +1937,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Acisure</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Acrisure %E2%80%93 VCG</fullName>
             <default>false</default>
         </values>
@@ -1974,6 +1978,10 @@
         </values>
         <values>
             <fullName>Acrisure%2C John James Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acrisure%2C LBL Group</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2174,6 +2182,10 @@
         </values>
         <values>
             <fullName>Digital Insurance-fka Kistler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Access</fullName>
             <default>false</default>
         </values>
         <values>

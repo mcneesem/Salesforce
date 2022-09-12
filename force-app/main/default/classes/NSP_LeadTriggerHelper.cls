@@ -22,6 +22,8 @@ public class NSP_LeadTriggerHelper {
     private static final Id NEW_LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(NEW_LEAD_RT).getRecordTypeId();
     private static final Id LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(LEAD_RT).getRecordTypeId();
     private static final string SYS_ADMIN = 'System Administrator';
+    private static final string INTEGRATION_PROFILE = 'Integration User';
+    public static List<string> CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
     // Added as part of DF-01009
     private static final string REFERRAL_RECORDTYPE = 'Referral';
     private static final Id REFERRAL_RECORDTYPE_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(REFERRAL_RECORDTYPE).getRecordTypeId();
@@ -92,6 +94,12 @@ public class NSP_LeadTriggerHelper {
         isOwnerAssignment = false;
         setLeadRegion(zipCodeList, zipCodeLeadList, isOwnerAssignment);
     }
+    /* Added as part of DF-01943*/
+        for(Lead zipLead : zipCodeLeadList){
+      if(String.isNotBlank(zipLead.NSP_Sales_Office__c)){
+        zipLead.NSP_Is_Sales_Office_Assigned__c = true;
+         }
+        }
     /* Added to Map Sales Office on insert if Zipcode is populated*/
         //calling method to stmap primary contact's email from partner account to lead
         if (!accountIdSet.isEmpty()) {
@@ -102,6 +110,8 @@ public class NSP_LeadTriggerHelper {
         if(!inboundSolutionsList.isEmpty()){
             assignLeadToInboundSolutions(inboundSolutionsList);
         }
+        
+        setSalesOfficeDetails(newList,null); // added for STY-03154
     }
     
     /**
@@ -213,6 +223,13 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         isOwnerAssignment = false;
         setLeadRegion(zipCodeUpdateList, zipCodeLeadList, isOwnerAssignment);
     }
+      /* Added as part of DF-01943*/
+   for(Lead zipLead : zipCodeLeadList){
+    if(String.isNotBlank(zipLead.NSP_Sales_Office__c)){
+        zipLead.NSP_Is_Sales_Office_Assigned__c = true;
+    }
+}
+  /* Added as part of DF-01943*/
       if(parentLead != null){
           updateChildOwner(parentLead);
       }
@@ -238,6 +255,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
         createContact(leadNewMap.Values());        
+        setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
     }
   
   public void updateChildOwner(Lead leadObj) {
@@ -269,7 +287,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         for (Id leadId: leadNewMap.keySet()) {
             if (trigger.isupdate && trigger.isbefore) {
                 //Current logged in user not equal to Owner and logged in user profile not sys admin 
-                if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN) {
+                if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
                     //Check logged in user role not in Mid Market/BPS 
                     if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
                         //Lead owner not a queue check
@@ -282,11 +300,11 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         //Collect User salesoffice details
         if (ownerIdset != null) {
-            List < User > ownerIdList = [Select Id, ToLabel(NSP_Sales_Office__c) from User WHERE ID IN: ownerIdset];
+            List < User > ownerIdList = [Select Id, ToLabel(NSP_Sales_Office_Membership__c) from User WHERE ID IN: ownerIdset];
             if (!ownerIdList.isEmpty()) {
                 for (User userList: ownerIdList) {
-                    if (userList.NSP_Sales_Office__c != Null) {
-                        salesOfficeSet.add(userList.NSP_Sales_Office__c);
+                    if (userList.NSP_Sales_Office_Membership__c != Null) {
+                        salesOfficeSet.addAll(new List<String>(userList.NSP_Sales_Office_Membership__c.Split(';')));
                     }
                 }
             }
@@ -296,7 +314,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             //restrict lead edit access/change owner if logged in user not part of lead owner salesoffice group
             for (Id leadId: leadNewMap.keySet()) {
                 if (trigger.isupdate && trigger.isbefore) {
-                    if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN) {
+                    if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
                         if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
                             if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
                                 if (groupMemberList.isEmpty()) {
@@ -729,6 +747,33 @@ insert tasksList;
                        leadObject.NSP_Account_Segment__c = null;
                    }
     }
+ 
+
+/**
+* Restricts non-Admins from deleting Leads.
+* @param oldList List of New Lead.
+* @param oldMap List of New Lead.
+* @return void
+* Ticket 582491
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         08/08/2022           Created this method
+*                
+*/     
+    Public void restrictDelete(List<Lead> leadList, Map < Id, Lead > leadMap) {
+		Id profileId = UserInfo.getProfileId();
+        List<Profile> profileName = New List<Profile>();
+        profileName= [SELECT Id, Name from Profile WHERE Id = :profileId];
+		for(Lead leadObject: leadList ){
+			if(!CanDeleteAccountLead.contains(profileName[0].Name)){
+				leadObject.addError(System.Label.CANNOT_DELETE_LEAD);
+			}
+		}
+	}
+    
+    
+    
+    
     
     /**
 * Method added for CR-027 
@@ -962,6 +1007,94 @@ public void createContact(List < Lead > newLeadList) {
             }
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateNonProfitOrgFields', ex.getMessage());
+        }
+    }
+   
+    /* Description: This method sets sales office details from user 
+     * 
+     * @param: leadList, leadMap
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     *  Date              | Description
+     * -------------------------------------------------------------------------------------
+     *  08/05/2022          created this new method added for STY-03154
+     * 
+     * 
+    */
+    
+    public void setSalesOfficeDetails(List<Lead> newList,Map<Id, Lead> leadOldMap)
+    {
+        set<Id> ownerIdSet = new set<Id>();
+        set<string> officeSet = new set<string>(); // sales office set
+        set<Id> recordToOwnerProcess = new set<Id>();  // record to be process set
+        set<Id> recordToOfficeProcess = new set<Id>();  // record to be process set
+        map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
+        Map<Id,User> userIdMap;
+        
+        for(Lead newLead: newList)
+        {
+            Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
+            if(Trigger.isInsert)
+            {
+                if(String.isNotBlank(newLead.NSP_Sales_Office__c))
+                {
+                    officeSet.add(newLead.NSP_Sales_Office__c);
+                }
+                else if(newLead.OwnerId != null)
+                {
+                    ownerIdSet.add(newLead.OwnerId);
+                }
+            }
+            else if(Trigger.isUpdate && newLead.OwnerId != oldLead.OwnerId && newLead.OwnerId != null)
+            {
+                recordToOwnerProcess.add(newLead.Id);
+                ownerIdSet.add(newLead.OwnerId);
+            }
+            else if(Trigger.isUpdate && newLead.NSP_Sales_Office__c != oldLead.NSP_Sales_Office__c && String.isNotBlank(newLead.NSP_Sales_Office__c))
+            {
+                recordToOfficeProcess.add(newLead.Id);
+                officeSet.add(newLead.NSP_Sales_Office__c);
+            }
+            
+        }
+        
+        if(ownerIdSet.Size() > 0)
+        {
+            userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+            
+        }
+        
+        // values assigned from sales office mapping
+        if(officeSet.Size() > 0)
+        {
+            
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
+                                                            FROM NSP_Sales_Office_Mapping__c 
+                                                            WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true])
+            {
+                salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
+            }
+            
+            
+        }
+        
+        
+        for(Lead newLead: newList)
+        {
+            if( (Trigger.isInsert || recordToOfficeProcess.contains(newLead.Id)) &&  String.isNotBlank(newLead.NSP_Sales_Office__c) && salesOfficeToMappingMap.containsKey(newLead.NSP_Sales_Office__c))
+            {
+                NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newLead.NSP_Sales_Office__c);
+                newLead.NSP_Sales_Region__c = officeMapping.NSP_Sales_Region__c; // sales region
+                newLead.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; // sales division
+            }
+            else if((Trigger.isInsert || recordToOwnerProcess.contains(newLead.Id)) && newLead.OwnerId != null && userIdMap!= null && userIdMap.containsKey(newLead.OwnerId))
+            {
+                user eachUser = userIdMap.get(newLead.OwnerId);
+                newLead.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                newLead.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                newLead.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+            }
         }
     }
    

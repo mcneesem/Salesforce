@@ -12,7 +12,7 @@
     </alerts>
     <alerts>
         <fullName>NSP_Email_Alert_for_Verified_Partner</fullName>
-        <ccEmails>channel.programs@insperity.com</ccEmails>
+        <ccEmails>channel.programs@insperity.com.invalid</ccEmails>
         <description>Email Alert for Verified Partner</description>
         <protected>false</protected>
         <recipients>

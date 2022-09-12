@@ -89,7 +89,7 @@ public class NSP_SalesConstants {
     
     public static final String CALL_BACK_TASK = 'Call Back';
     public static final String LeadQualifier = 'Lead Qualifier';
-	public static final String LEAD_STATUS_QUALIFIED = 'Qualified';
+    public static final String LEAD_STATUS_QUALIFIED = 'Qualified';
     public static final String Account = 'Account';
     public static final String successResponse = 'success';
     public static final String existsResponse = 'exists';
@@ -104,6 +104,11 @@ public class NSP_SalesConstants {
     //Added for manual Sharing 
     public static final String bPARole = 'Business Performance Advisor';
     public static final String aBPARole = 'Associate Business Performance Advisors';
+    //Added user roles
+    public static final String BUSINESS_PERFORMANCE_CONSULTANT = 'Business Performance Consultant';
+    public static final String RETIREMENT_SALES_CONSULTANT = 'Retirement Sales Consultant';
+    public static final String INSURANCE_SALES = 'Insurance Sales';
+    public static final String RECRUITING_SALES = 'Recruiting Sales';
     public static final String channelOperation = 'Channel Operations';
     public static final String manualRowCause = 'Manual';
     public static final String editSharingAccess = 'Edit';
@@ -120,5 +125,6 @@ public class NSP_SalesConstants {
     public static final String EloquaTaskRecordType  = 'Eloqua Task RT';
     public static final String OpportunityTeamMemberRole  = 'Other';
     public static final String TECHNOLOGY_SALES = 'Technology Sales';
-
+    public static final String officeProcessing = 'Processing Complete';
+    public static final String userId = '005';
 }

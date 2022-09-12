@@ -41,9 +41,18 @@ public interface NSP_ITriggerHandler {
    *                
    */
      void afterDelete(List<sObject> oldList , Map<Id, sObject> oldMap);
-          
-   /* void beforeDelete(List<sObject> oldList , Map<Id, sObject> oldMap);     
-   void afterUnDelete(List<sObject> newList, Map<Id, sObject> newMap);*/
+   
+   /**
+   * Represents after delete operation
+   * @param oldList List of old values of  Sobject   
+   * @param oldMap Map of Sobject id and Sobject         
+   * Uncommeted for ticket 582488
+   * * author           | Date              | Description
+	* -------------------------------------------------------------------------------------
+	* Ruchi Roy         08/08/2022           Created this method               
+   */  
+   void beforeDelete(List<sObject> oldList, Map<Id, sObject> oldMap);     
+   /*void afterUnDelete(List<sObject> newList, Map<Id, sObject> newMap);*/
 
   // This method needs to be implemented to check whether or not trigger logic should run. You can remove this if this is not a requirement.
   Boolean isDisabled();

@@ -1,7 +1,8 @@
 ({
     doInit : function(component, event, helper) {
      /* Added as part of DF-01282 */
-      // helper.getCaptcha(component,event); // Commenting as part of DF-01852
+       // Uncommenting as part of service request - 563746
+       helper.getCaptcha(component,event); // Commenting as part of DF-01852
        helper.getPicklistValues(component, event);
        helper.getStatePicklistValues(component, event);
        component.set("v.LeadObj.NSP_Referralbenefitsanonprofitorg__c","Does not apply");

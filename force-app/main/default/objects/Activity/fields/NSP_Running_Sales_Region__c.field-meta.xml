@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Running_Sales_Region__c</fullName>
     <externalId>false</externalId>
-    <formula>$User.NSP_Sales_Region__c = Owner:User.NSP_Sales_Region__c</formula>
+    <formula>TEXT($User.NSP_SalesRegion__c) = TEXT(NSP_Sales_Region__c)</formula>
     <label>Running Sales Region</label>
     <type>Checkbox</type>
 </CustomField>

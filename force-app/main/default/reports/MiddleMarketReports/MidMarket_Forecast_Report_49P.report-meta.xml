@@ -50,21 +50,21 @@
         <criteriaItems>
             <column>Opportunity$Owner.NSP_Sales_Office__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>4499</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$NSP_Forecast__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Yes</value>
         </criteriaItems>
         <criteriaItems>
             <column>Opportunity$NSP_Forecast_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Pending-Docs Submitted to NCS,Sold-Booked,Verbal-Appt Set to Pickup Docs</value>
         </criteriaItems>
@@ -81,12 +81,13 @@
         <value>1</value>
     </params>
     <reportType>Opportunities_Deluxe_NSP__c</reportType>
+    <roleHierarchyFilter>Sales_Leader</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Opportunity$NSP_1stPayInvoiceDate__c</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURPREV1</interval>
     </timeFrameFilter>
 </Report>

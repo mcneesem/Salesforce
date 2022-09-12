@@ -456,4 +456,12 @@
         </columns>
         <masterLabel>Opportunity Splits</masterLabel>
     </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Sales_Office__c</field>
+            <table>NSP_Employee_Split__c</table>
+        </columns>
+        <masterLabel>Opportunity Credits</masterLabel>
+    </sections>
 </ReportType>

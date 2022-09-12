@@ -62,6 +62,11 @@
                 <default>false</default>
                 <label>NSP_Quoted_Quantity__c</label>
             </value>
+            <value>
+                <fullName>SBQQ__TotalDiscountRate__c</fullName>
+                <default>false</default>
+                <label>SBQQ__TotalDiscountRate__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

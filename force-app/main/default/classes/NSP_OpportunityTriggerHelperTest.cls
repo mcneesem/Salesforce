@@ -312,10 +312,10 @@ public class NSP_OpportunityTriggerHelperTest {
         List<Opportunity> opportunityList = [SELECT ID,
                                                    NSP_PrimaryProduct__c,
                                                    stagename,
-                                             	   NSP_Signed_CSA__c,
-                                             	   NSP_Signed_Delivery_Order__c, 
+                                                   NSP_Signed_CSA__c,
+                                                   NSP_Signed_Delivery_Order__c, 
                                                    CloseDate,
-                                             	   NSP_Closing_Appointment__c,
+                                                   NSP_Closing_Appointment__c,
                                                    OwnerId FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null ];
                
         Test.startTest();
@@ -344,7 +344,7 @@ public class NSP_OpportunityTriggerHelperTest {
         Set<Id> pOppIdSet = new Set<Id>();
         List<Opportunity> cOppList = new List<Opportunity>();
     List<Opportunity> opportunityList = [SELECT Id, stagename, NSP_PrimaryProduct__c, NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c FROM Opportunity 
-                                             	WHERE NSP_Parent_Opportunity__c != null LIMIT 1]; 
+                                                WHERE NSP_Parent_Opportunity__c != null LIMIT 1]; 
         pOppIdSet.add(opportunityList[0].NSP_Parent_Opportunity__c);
         cOppList.add(opportunityList[0]);
         Test.startTest();
@@ -418,10 +418,12 @@ public class NSP_OpportunityTriggerHelperTest {
     * @Description: This test method is used to cover createClosedLostRegenTasks method of NSP_OpportunityTriggerHelper
     * @Created date: 13/04/2022.
     * @return void             
-    * @author : Nischay Jindal               
+    * @author : Nischay Jindal
+    * Commented this menthod as this is no longer needed
+    * @Commented By: Ruchi Roy               
     */
         
-    @isTest
+    /**@isTest
         static void createClosedLostRegenTasks(){
            List<Opportunity> opportunityList = [SELECT Id,AccountId,NSP_Regen_Date__c,NSP_Lost_Reason__c,StageName, OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 Limit 1];
            try {
@@ -440,7 +442,7 @@ public class NSP_OpportunityTriggerHelperTest {
              e.getMessage();
                  }
         } 
-        
+        **/
    /**
    * @Description: This test method is used to cover validateClosedDate method
    * @Created date: 04/20/2022.
@@ -454,5 +456,41 @@ public class NSP_OpportunityTriggerHelperTest {
       Test.stopTest();
       System.assertEquals(opportunityList[0].CloseDate, date.today()); 
   }
+  
+   @isTest
+   static void salesOfficeTest()
+   {
+       User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
+         currentUser.NSP_Sales_Office__c = '301';
+         currentUser.NSP_SalesRegion__c = 'Central 1';
+         currentUser.NSP_SalesDivision__c = 'Central';
+         update currentUser;
+       NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
+        officeMapping.NSP_Sales_Office__c = '1081';
+        officeMapping.NSP_Sales_Division__c = 'Central';
+        officeMapping.NSP_Sales_Region__c = 'Central 1';
+        officeMapping.NSP_Start_Date__c = system.today()-1;
+        officeMapping.NSP_End_Date__c = system.today()+100;
+        insert officeMapping;
+       
+       NSP_Sales_Office_Mapping__c office1Mapping = new NSP_Sales_Office_Mapping__c();
+        office1Mapping.NSP_Sales_Office__c = '301';
+        office1Mapping.NSP_Sales_Division__c = 'Central';
+        office1Mapping.NSP_Sales_Region__c = 'Central 1';
+        office1Mapping.NSP_Start_Date__c = system.today()-1;
+        office1Mapping.NSP_End_Date__c = system.today()+200;
+        insert office1Mapping;
+       
+       Test.startTest();
+        List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null ];
+               for(Opportunity eachOppty : opportunityList)
+               {
+                   eachOppty.NSP_Sales_Office__c = '1081';
+               }
+       update opportunityList;
+       Test.stopTest();
+       
+       
+   }
   
 }

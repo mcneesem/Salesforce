@@ -9,6 +9,7 @@ Modification Log     :
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
 * Rakesh                   07/02/2021            First Iteration
+* Harsha                    17/08/2022          569718-Upsell enhancement
 */
 public class NSP_ChildOpportunitiesHelperFunctions {
 
@@ -27,23 +28,31 @@ public class NSP_ChildOpportunitiesHelperFunctions {
     public void updatesOnChildOpportunity(List < String > opportunityList) {
 
         List < Opportunity > opportunityToUpdateList = new List < Opportunity > ();
-        //Querying the child oppotunities that has product type as Retirement Services
-        //and is not closed lost and is not parent
+        
+        //Querying the child oppotunities that is not closed lost and is not parent
         for (Opportunity opportunityObject: [SELECT Id, stagename, NSP_PrimaryProduct__c, NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c
                 FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c IN: opportunityList AND stagename !=: NSP_SalesConstants.CLOSED_LOST]) {
-            if (opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.RETIREMENT_SERVICE) {
-                //Update the stage to closed lost on child optys
-                opportunityObject.stagename = NSP_SalesConstants.CLOSED_LOST;
-                //Entering the lost reason as well
-                opportunityObject.NSP_Lost_Reason__c = 'Other';
-                opportunityToUpdateList.add(opportunityObject);
-            }
+                    //Querying the child oppotunities that has product type as Retirement Services
+                    if (opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.RETIREMENT_SERVICE) {
+                        //Update the stage to closed lost on child optys
+                        opportunityObject.stagename = NSP_SalesConstants.CLOSED_LOST;
+                        //Entering the lost reason as well
+                        opportunityObject.NSP_Lost_Reason__c = 'Other';
+                        opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
+                        opportunityToUpdateList.add(opportunityObject);
+                    }
+                    //569718-Querying the child oppotunities that has product type as Non- Retirement Services
+                    if (opportunityObject.NSP_PrimaryProduct__c != null && opportunityObject.NSP_PrimaryProduct__c != NSP_SalesConstants.RETIREMENT_SERVICE) {
+                        opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
+                        opportunityToUpdateList.add(opportunityObject);
+                    }
 
-            if (opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.INSURANCE_SERVICE && opportunityObject.NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c == NSP_SalesConstants.WO) {
-                //Update the is parent closed check box on child records
-                opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
-                opportunityToUpdateList.add(opportunityObject);
-            }
+                    /*if (opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.INSURANCE_SERVICE && opportunityObject.NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c == NSP_SalesConstants.WO) {
+                        //Update the is parent closed check box on child records
+                        opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
+                        opportunityToUpdateList.add(opportunityObject);
+                    }*/
+                    
         }
 
         // updating the child opportunity records
@@ -103,5 +112,27 @@ public class NSP_ChildOpportunitiesHelperFunctions {
         }
     }
 
+    /**
+     * 569718-Updates the NSP_Is_Parent_Opportunity_Closed_Won__c on open child opportunity to true.
+     * @param opportunityList list of New Opportunity.    
+     * @return void             
+     *                
+     */
+
+    public void updatesOnOpenChildOpportunity(List < String > opportunityList) {
+
+        List < Opportunity > opportunityToUpdateList = new List < Opportunity > ();
+        
+        for (Opportunity opportunityObject: [SELECT Id, stagename, NSP_PrimaryProduct__c, NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c
+                FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c IN: opportunityList AND stagename !=: NSP_SalesConstants.CLOSED_LOST AND stagename !=: NSP_SalesConstants.CLOSED_WON]) {
+                  opportunityObject.NSP_Is_Parent_Opportunity_Closed_Won__c = true;
+                  opportunityToUpdateList.add(opportunityObject);
+        }
+
+        // updating the child opportunity records
+        if (!opportunityToUpdateList.isEmpty()) {
+            update opportunityToUpdateList;
+        }
+    }
 
 }
