@@ -3,7 +3,7 @@
     <fullName>NSP_Nonprofit__c</fullName>
     <description>Field used to track nonprofit donation, match details</description>
     <externalId>false</externalId>
-    <label>Nonprofit</label>
+    <label>Referral benefits a nonprofit org?</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
@@ -21,6 +21,11 @@
                 <fullName>Match</fullName>
                 <default>false</default>
                 <label>Match</label>
+            </value>
+            <value>
+                <fullName>Does Not Apply</fullName>
+                <default>false</default>
+                <label>Does Not Apply</label>
             </value>
         </valueSetDefinition>
     </valueSet>
