@@ -802,6 +802,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Nonprofit_Organization_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Number_of_EEs__c</field>
             </layoutItems>
             <layoutItems>

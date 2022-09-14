@@ -464,6 +464,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>NSP_Nonprofit_Organization_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_Sold_Rewards_Amount__c</field>
             </layoutItems>
             <layoutItems>
