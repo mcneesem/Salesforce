@@ -27,6 +27,11 @@
                 <default>false</default>
                 <label>Does Not Apply</label>
             </value>
+            <value>
+                <fullName>Donation</fullName>
+                <default>false</default>
+                <label>Donation</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

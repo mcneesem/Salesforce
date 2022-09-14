@@ -909,6 +909,10 @@
             <fullName>Does Not Apply</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Donation</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Overall_Status__c</picklist>
