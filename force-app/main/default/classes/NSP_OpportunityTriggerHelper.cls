@@ -21,6 +21,7 @@ public class NSP_OpportunityTriggerHelper {
     private static final string ASSET_RECORDTYPE = System.Label.NSP_Asset_Product;
     public static final Id ASSET_RECORDTYPE_ID = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(ASSET_RECORDTYPE).getRecordTypeId();
     public static boolean valueAssignedFromUser = false;
+    public static boolean createRewardsOnce = false;
     
 /**
 * Iterates throught the list of new Opportunity and passes the required attributes to other methods.
@@ -830,4 +831,84 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         }
     }
 
+
+/* Description: This method used to create rewards record for Contact role 
+     * 
+     * @param: opportunityList, opportunityMap
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     *  Date              | Description
+     * -------------------------------------------------------------------------------------
+     *  14/09/2022          created this new method added for STY-03287
+     * 
+     * 
+    */  
+    public void creteRewardForContactRole(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap)
+    {
+        set<String> primaryProductSet = new set<String>{'WX','WA','WO'}; 
+        map<Id,String> opportunityIdToRewardTypeMap = new map<Id,String>();
+        for(Opportunity newOpportunity: opportunityNewMap.Values())
+        {
+            Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
+            if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+            {
+                opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Discovery');
+            }
+            else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+            { 
+                opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Sold');
+            }
+            
+        }
+        
+        if(opportunityIdToRewardTypeMap.Size() > 0)
+        {
+                list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
+                
+                for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c 
+                                                        from OpportunityContactRole 
+                                                        WHERE opportunityId in : opportunityIdToRewardTypeMap.keySet() 
+                                                        AND NSP_isReferral__c = true])
+                {
+                    string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
+                    opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
+                    if(rewardType == 'Discovery')
+                    {
+                        NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
+                        newReward.NSP_Reward_Amount__c = 200;
+                        newReward.NSP_Nonprofit_Amount__c = (String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && (eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match' || eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')) ? 200 : null ;
+                        newReward.NSP_Reward_Type__c = 'Discovery';
+                        rewardsInsertList.add(newReward);
+                    }
+                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_EEs__c >= 5) )
+                    {
+                        NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
+                        newReward.NSP_Reward_Amount__c = 1000;
+                        newReward.NSP_Nonprofit_Amount__c = (String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && (eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match' || eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')) ? 1000 : null ;
+                        newReward.NSP_Reward_Type__c = 'Sold';
+                        rewardsInsertList.add(newReward);
+                    }
+                }
+                
+                if(rewardsInsertList.Size() > 0 && !createRewardsOnce )
+                {
+                    createRewardsOnce  = true;
+                    insert rewardsInsertList;
+                }
+        }
+    }
+    
+    public NSP_Reward__c createRewards(OpportunityContactRole objOCR, opportunity objOpportunity)
+    {
+        NSP_Reward__c newReward = new NSP_Reward__c();
+        newReward.NSP_Account__c = objOCR.Opportunity.AccountId;
+        newReward.NSP_Benefits_Non_Profit__c = objOpportunity.NSP_Nonprofit__c;
+        newReward.NSP_Contact__c = objOCR.ContactId;
+        newReward.Opportunity__c = objOpportunity.Id;
+        newReward.NSP_Account__c = objOpportunity.AccountId;
+        newReward.NSP_Contact_Role__c = objOCR.Role;
+        return newReward;
+    }
+    
 }
