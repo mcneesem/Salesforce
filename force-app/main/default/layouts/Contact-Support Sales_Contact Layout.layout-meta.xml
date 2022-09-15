@@ -971,11 +971,14 @@
         <relatedList>RelatedContactAccountRelationList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>CURRENCY_ISO_CODE</fields>
-        <fields>NSP_Account__c</fields>
-        <fields>NSP_Sold_Reward__c</fields>
-        <fields>NSP_Discovery_Call_Reward__c</fields>
+        <fields>Opportunity.NAME</fields>
+        <fields>NSP_Reward_Type__c</fields>
+        <fields>NSP_Benefits_Non_Profit__c</fields>
+        <fields>NSP_Nonprofit_Amount__c</fields>
+        <fields>NSP_Reward_Paid_Date__c</fields>
         <relatedList>NSP_Reward__c.NSP_Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
