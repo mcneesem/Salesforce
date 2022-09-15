@@ -3,7 +3,7 @@
     <fullName>NSP_Nonprofit_Paid_Date__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Non-Profit Paid Date</label>
+    <label>Non-Profit Request Date</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Date</type>
