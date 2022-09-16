@@ -1,0 +1,2 @@
+{!User.Name} Updated an Opportunity to Product type {!Opportunity.NSP_PrimaryProduct__c} . Please take the next action as necessary.
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
