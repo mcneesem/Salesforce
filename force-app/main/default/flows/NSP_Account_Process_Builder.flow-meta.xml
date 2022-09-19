@@ -19,12 +19,36 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
+                <stringValue>NSP_Email_Alert_when_number_of_employee_is_changed</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_3_A2</name>
+        <label>Number of employee changed on account page</label>
+        <locationX>300</locationX>
+        <locationY>300</locationY>
+        <actionName>Account.NSP_Email_Alert_when_number_of_employee_is_changed</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision5</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
                 <stringValue>NSP_Email_Alert_for_Verified_Partner</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_3_A1</name>
+        <name>myRule_6_A1</name>
         <label>Email notification for verified Partner</label>
-        <locationX>300</locationX>
+        <locationX>600</locationX>
         <locationY>200</locationY>
         <actionName>Account.NSP_Email_Alert_for_Verified_Partner</actionName>
         <actionType>emailAlert</actionType>
@@ -43,9 +67,9 @@
                 <stringValue>Email_Alert_to_Account_Owner</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_5_A1</name>
+        <name>myRule_8_A1</name>
         <label>Send email to account owner</label>
-        <locationX>500</locationX>
+        <locationX>800</locationX>
         <locationY>200</locationY>
         <actionName>Account.Email_Alert_to_Account_Owner</actionName>
         <actionType>emailAlert</actionType>
@@ -59,16 +83,112 @@
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <decisions>
-        <name>isChangedDecision10_myRule_5_NSP_Account_At_Risk_Level_Image_c</name>
-        <label>isChangedDecision10_myRule_5_NSP_Account_At_Risk_Level_Image_c</label>
+        <name>isChangedDecision10_myRule_8_NSP_Account_At_Risk_Actual_c</name>
+        <label>isChangedDecision10_myRule_8_NSP_Account_At_Risk_Actual_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</targetReference>
+            <targetReference>isChangedDecision11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_10_myRule_5_NSP_Account_At_Risk_Level_Image_c</name>
+            <name>isChangedRule_10_myRule_8_NSP_Account_At_Risk_Actual_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.NSP_Account_At_Risk_Actual__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.NSP_Account_At_Risk_Actual__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
+            </connector>
+            <label>isChangedRule_10_myRule_8_NSP_Account_At_Risk_Actual_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</name>
+        <label>isChangedDecision11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.NSP_Account_At_Risk_Level_Calc_Text__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.NSP_Account_At_Risk_Level_Calc_Text__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
+            </connector>
+            <label>isChangedRule_11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</name>
+        <label>isChangedDecision12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision13_myRule_8_NSP_Account_At_Risk_Level_Image_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.NSP_Account_At_Risk_Level_Calc_Text__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.NSP_Account_At_Risk_Level_Calc_Text__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision13_myRule_8_NSP_Account_At_Risk_Level_Image_c</targetReference>
+            </connector>
+            <label>isChangedRule_12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision13_myRule_8_NSP_Account_At_Risk_Level_Image_c</name>
+        <label>isChangedDecision13_myRule_8_NSP_Account_At_Risk_Level_Image_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_13_myRule_8_NSP_Account_At_Risk_Level_Image_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -85,22 +205,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</targetReference>
+                <targetReference>isChangedDecision14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</targetReference>
             </connector>
-            <label>isChangedRule_10_myRule_5_NSP_Account_At_Risk_Level_Image_c</label>
+            <label>isChangedRule_13_myRule_8_NSP_Account_At_Risk_Level_Image_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</name>
-        <label>isChangedDecision11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</label>
+        <name>isChangedDecision14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</name>
+        <label>isChangedDecision14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</targetReference>
+            <targetReference>isChangedDecision15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</name>
+            <name>isChangedRule_14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -117,22 +237,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</targetReference>
+                <targetReference>isChangedDecision15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</targetReference>
             </connector>
-            <label>isChangedRule_11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</label>
+            <label>isChangedRule_14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</name>
-        <label>isChangedDecision12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</label>
+        <name>isChangedDecision15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</name>
+        <label>isChangedDecision15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision13_myRule_5_NSP_Account_Risk_Level_c</targetReference>
+            <targetReference>isChangedDecision16_myRule_8_NSP_Account_Risk_Level_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</name>
+            <name>isChangedRule_15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -149,22 +269,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision13_myRule_5_NSP_Account_Risk_Level_c</targetReference>
+                <targetReference>isChangedDecision16_myRule_8_NSP_Account_Risk_Level_c</targetReference>
             </connector>
-            <label>isChangedRule_12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</label>
+            <label>isChangedRule_15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision13_myRule_5_NSP_Account_Risk_Level_c</name>
-        <label>isChangedDecision13_myRule_5_NSP_Account_Risk_Level_c</label>
+        <name>isChangedDecision16_myRule_8_NSP_Account_Risk_Level_c</name>
+        <label>isChangedDecision16_myRule_8_NSP_Account_Risk_Level_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision14_myRule_5_NSP_Risk_Assessment_Level_c</targetReference>
+            <targetReference>isChangedDecision17_myRule_8_NSP_Risk_Assessment_Level_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_13_myRule_5_NSP_Account_Risk_Level_c</name>
+            <name>isChangedRule_16_myRule_8_NSP_Account_Risk_Level_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -181,14 +301,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision14_myRule_5_NSP_Risk_Assessment_Level_c</targetReference>
+                <targetReference>isChangedDecision17_myRule_8_NSP_Risk_Assessment_Level_c</targetReference>
             </connector>
-            <label>isChangedRule_13_myRule_5_NSP_Account_Risk_Level_c</label>
+            <label>isChangedRule_16_myRule_8_NSP_Account_Risk_Level_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision14_myRule_5_NSP_Risk_Assessment_Level_c</name>
-        <label>isChangedDecision14_myRule_5_NSP_Risk_Assessment_Level_c</label>
+        <name>isChangedDecision17_myRule_8_NSP_Risk_Assessment_Level_c</name>
+        <label>isChangedDecision17_myRule_8_NSP_Risk_Assessment_Level_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -196,7 +316,7 @@
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_14_myRule_5_NSP_Risk_Assessment_Level_c</name>
+            <name>isChangedRule_17_myRule_8_NSP_Risk_Assessment_Level_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -215,20 +335,52 @@
             <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
-            <label>isChangedRule_14_myRule_5_NSP_Risk_Assessment_Level_c</label>
+            <label>isChangedRule_17_myRule_8_NSP_Risk_Assessment_Level_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision6_myRule_5_NSP_Anticipated_Date_of_Termination_c</name>
-        <label>isChangedDecision6_myRule_5_NSP_Anticipated_Date_of_Termination_c</label>
+        <name>isChangedDecision4_myRule_3_NumberOfEmployees</name>
+        <label>isChangedDecision4_myRule_3_NumberOfEmployees</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision7_myRule_5_NSP_Account_At_Risk_Actual_c</targetReference>
+            <targetReference>isChangedDecision9_myRule_8_NSP_Anticipated_Date_of_Termination_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_6_myRule_5_NSP_Anticipated_Date_of_Termination_c</name>
+            <name>isChangedRule_4_myRule_3_NumberOfEmployees</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.NumberOfEmployees</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.NumberOfEmployees</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision9_myRule_8_NSP_Anticipated_Date_of_Termination_c</targetReference>
+            </connector>
+            <label>isChangedRule_4_myRule_3_NumberOfEmployees</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision9_myRule_8_NSP_Anticipated_Date_of_Termination_c</name>
+        <label>isChangedDecision9_myRule_8_NSP_Anticipated_Date_of_Termination_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision10_myRule_8_NSP_Account_At_Risk_Actual_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_9_myRule_8_NSP_Anticipated_Date_of_Termination_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -245,105 +397,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision7_myRule_5_NSP_Account_At_Risk_Actual_c</targetReference>
+                <targetReference>isChangedDecision10_myRule_8_NSP_Account_At_Risk_Actual_c</targetReference>
             </connector>
-            <label>isChangedRule_6_myRule_5_NSP_Anticipated_Date_of_Termination_c</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isChangedDecision7_myRule_5_NSP_Account_At_Risk_Actual_c</name>
-        <label>isChangedDecision7_myRule_5_NSP_Account_At_Risk_Actual_c</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>isChangedDecision8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>isChangedRule_7_myRule_5_NSP_Account_At_Risk_Actual_c</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>myVariable_old.NSP_Account_At_Risk_Actual__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>myVariable_current.NSP_Account_At_Risk_Actual__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>isChangedDecision8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
-            </connector>
-            <label>isChangedRule_7_myRule_5_NSP_Account_At_Risk_Actual_c</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isChangedDecision8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</name>
-        <label>isChangedDecision8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>isChangedDecision9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>isChangedRule_8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>myVariable_old.NSP_Account_At_Risk_Level_Calc_Text__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>myVariable_current.NSP_Account_At_Risk_Level_Calc_Text__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>isChangedDecision9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</targetReference>
-            </connector>
-            <label>isChangedRule_8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isChangedDecision9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</name>
-        <label>isChangedDecision9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>isChangedDecision10_myRule_5_NSP_Account_At_Risk_Level_Image_c</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>isChangedRule_9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>myVariable_old.NSP_Account_At_Risk_Level_Calc_Text__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>myVariable_current.NSP_Account_At_Risk_Level_Calc_Text__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>isChangedDecision10_myRule_5_NSP_Account_At_Risk_Level_Image_c</targetReference>
-            </connector>
-            <label>isChangedRule_9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</label>
+            <label>isChangedRule_9_myRule_8_NSP_Anticipated_Date_of_Termination_c</label>
         </rules>
     </decisions>
     <decisions>
@@ -389,23 +445,78 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision4</targetReference>
+            <targetReference>myDecision5</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_3</leftValueReference>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_4_myRule_3_NumberOfEmployees</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NumberOfEmployees</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>150.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_3_A1</targetReference>
             </connector>
-            <label>Partner is verified</label>
+            <label>Update Number Of EE On Acc field when number of ee changed and the opportunity stage is not closed</label>
         </rules>
     </decisions>
     <decisions>
@@ -415,13 +526,44 @@
                 <numberValue>2.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision4</name>
-        <label>myDecision4</label>
+        <name>myDecision5</name>
+        <label>myDecision5</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision7</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_6</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_6</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_6_A1</targetReference>
+            </connector>
+            <label>Partner is verified</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>3.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision7</name>
+        <label>myDecision7</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_5</name>
+            <name>myRule_8</name>
             <conditionLogic>10 AND (1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 )</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -448,7 +590,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_6_myRule_5_NSP_Anticipated_Date_of_Termination_c</leftValueReference>
+                <leftValueReference>isChangedRule_9_myRule_8_NSP_Anticipated_Date_of_Termination_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -479,7 +621,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_7_myRule_5_NSP_Account_At_Risk_Actual_c</leftValueReference>
+                <leftValueReference>isChangedRule_10_myRule_8_NSP_Account_At_Risk_Actual_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -510,7 +652,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_8_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</leftValueReference>
+                <leftValueReference>isChangedRule_11_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -541,7 +683,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_9_myRule_5_NSP_Account_At_Risk_Level_Calc_Text_c</leftValueReference>
+                <leftValueReference>isChangedRule_12_myRule_8_NSP_Account_At_Risk_Level_Calc_Text_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -572,7 +714,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_10_myRule_5_NSP_Account_At_Risk_Level_Image_c</leftValueReference>
+                <leftValueReference>isChangedRule_13_myRule_8_NSP_Account_At_Risk_Level_Image_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -603,7 +745,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_11_myRule_5_NSP_AccountRiskAssessmentLevel_Calc_Text_c</leftValueReference>
+                <leftValueReference>isChangedRule_14_myRule_8_NSP_AccountRiskAssessmentLevel_Calc_Text_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -634,7 +776,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_12_myRule_5_NSP_Account_Risk_Assessment_Level_Image_c</leftValueReference>
+                <leftValueReference>isChangedRule_15_myRule_8_NSP_Account_Risk_Assessment_Level_Image_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -665,7 +807,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_13_myRule_5_NSP_Account_Risk_Level_c</leftValueReference>
+                <leftValueReference>isChangedRule_16_myRule_8_NSP_Account_Risk_Level_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -696,7 +838,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_14_myRule_5_NSP_Risk_Assessment_Level_c</leftValueReference>
+                <leftValueReference>isChangedRule_17_myRule_8_NSP_Risk_Assessment_Level_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -734,7 +876,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_5_A1</targetReference>
+                <targetReference>myRule_8_A1</targetReference>
             </connector>
             <label>Notify Account Owner on Risk field update</label>
         </rules>
@@ -763,7 +905,7 @@ ISPICKVAL([Account].Type,&apos;Partner&apos;),
 NOT(ISBLANK([Account].NSP_Channel_Partner_Manager__c)) )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_3</name>
+        <name>formula_myRule_6</name>
         <dataType>Boolean</dataType>
         <expression>AND(OR({!myVariable_current.CreatedBy.UserRole.DeveloperName} = &apos;Business_Performance_Consultant&apos;,
 {!myVariable_current.CreatedBy.UserRole.DeveloperName} = &apos;Business_Performance_Advisor&apos;),
@@ -772,7 +914,7 @@ ISPICKVAL({!myVariable_current.NSP_Account_Status__c},&apos;Active&apos;),
 ISPICKVAL({!myVariable_current.Type},&apos;Partner&apos;),
 NOT(ISBLANK({!myVariable_current.NSP_Channel_Partner_Manager__c})) )</expression>
     </formulas>
-    <interviewLabel>NSP_Account_Process_Builder-4_InterviewLabel</interviewLabel>
+    <interviewLabel>NSP_Account_Process_Builder-3_InterviewLabel</interviewLabel>
     <label>Account Process Builder</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -799,7 +941,140 @@ NOT(ISBLANK({!myVariable_current.NSP_Channel_Partner_Manager__c})) )</expression
         </value>
     </processMetadataValues>
     <processType>Workflow</processType>
-    <startElementReference>isChangedDecision6_myRule_5_NSP_Anticipated_Date_of_Termination_c</startElementReference>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>criteria</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Account].Opportunities</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_3_A1</name>
+        <label>Update Number Of EE On Acc on opportunity object</label>
+        <locationX>300</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myRule_3_A2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>inputDataType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Closed</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>operatorDataType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Number</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Number Of EE On Acc</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Number_Of_EE_On_Acc__c</field>
+            <value>
+                <elementReference>myVariable_current.NumberOfEmployees</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <startElementReference>isChangedDecision4_myRule_3_NumberOfEmployees</startElementReference>
     <status>Active</status>
     <variables>
         <name>myVariable_current</name>

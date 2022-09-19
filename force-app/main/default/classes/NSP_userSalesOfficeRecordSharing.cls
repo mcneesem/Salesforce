@@ -5,7 +5,8 @@
 * Name : NSP_userSalesOfficeRecordSharing
 */
 public class NSP_userSalesOfficeRecordSharing {
-    
+     //Added for 579280
+     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');    
     /***********************************************************************************************
     * MethodName: ownerSalesofficeSharing
     * Description : Method to share records with related Objects on User sales Office Update
@@ -20,7 +21,7 @@ public class NSP_userSalesOfficeRecordSharing {
         List<User> updateUserList = new  List<User>();
         try{
             Map<Id,User> newUserMap =new Map<Id,User>([SELECT Id,NSP_Office_Processing__c, UserRole.Name,UserRoleId, ToLabel(NSP_Sales_Office_Membership__c)  FROM User 
-                                                       WHERE Id IN:userNewMap.Keyset()  AND IsActive = True AND UserRole.Name =: NSP_SalesConstants.BPARole 
+                                                       WHERE Id IN:userNewMap.Keyset()  AND IsActive = True AND UserRole.Name IN:BusinessPerformanceRoles 
                                                       AND (NSP_Office_Processing__c=null OR NSP_Office_Processing__c=:NSP_SalesConstants.officeProcessing)]);
             
             for(User usr: newUserMap.Values() ){

@@ -184,7 +184,7 @@
             <outputField>NSP_MidMarketNationalAccount__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>NSP_Nonprofit__c</inputField>
+            <inputField>NSP_Referralbenefitsanonprofitorg__c</inputField>
             <outputField>NSP_Nonprofit__c</outputField>
         </mappingFields>
         <mappingFields>
@@ -202,6 +202,14 @@
         <mappingFields>
             <inputField>NSP_Partner__c</inputField>
             <outputField>NSP_Partner__c</outputField>
+        </mappingFields>
+		<mappingFields>
+            <inputField>NSP_Nonprofit_Organization_Name__c</inputField>
+            <outputField>NSP_Nonprofit_Organization_Name__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Nonprofit_Organization_Tax_Id__c</inputField>
+            <outputField>NSP_TaxID__c</outputField>
         </mappingFields>
         <outputObject>Opportunity</outputObject>
     </objectMapping>

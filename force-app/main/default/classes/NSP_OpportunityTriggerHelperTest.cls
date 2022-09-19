@@ -493,4 +493,35 @@ public class NSP_OpportunityTriggerHelperTest {
        
    }
   
+   @isTest
+   static void rewardCreationTest()
+   {
+       List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename,Discovery_Completed__c,Nsp_1st_Pay_Invoice_Date_Reporting__c FROM OPPORTUNITY WHERE Name != null limit 1 ];
+       List<Account> accountList = [SELECT ID FROM ACCOUNT WHERE NAME = 'Test Account' ];
+       list<Contact> cntInsertlist = new list<Contact>();
+       for(Account objAccount: accountList)
+       {
+           Contact objContact = new Contact();
+           objContact.firstName = 'Test';
+           objContact.LastName = 'Contact NSP';
+           objContact.Email = 'testcnt@nsp.com';
+           objContact.AccountId = objAccount.Id;
+           cntInsertlist.add(objContact);
+       }
+       insert cntInsertlist;
+       
+       OpportunityContactRole objOCR = new OpportunityContactRole();
+       objOCR.OpportunityId = opportunityList[0].id;
+       objOCR.ContactId = cntInsertlist[0].Id;
+       objOCR.NSP_isReferral__c = true;
+       objOCR.Role = 'Agency';
+       insert objOCR;
+       Test.startTest();
+       opportunityList[0].Discovery_Completed__c = true;
+       update opportunityList;
+       opportunityList[0].Nsp_1st_Pay_Invoice_Date_Reporting__c = system.today()+2;
+       update opportunityList;
+       Test.stopTest();
+   }
+  
 }

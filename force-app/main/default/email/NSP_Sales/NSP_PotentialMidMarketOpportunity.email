@@ -1,2 +1,2 @@
-{!User.Name} created an Opportunity with more than 150 employees. Please take the next action as necessary.
+{!User.Name} created an Opportunity with more than 150 employees and Product type {!Opportunity.NSP_PrimaryProduct__c}. Please take the next action as necessary.
 <a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
