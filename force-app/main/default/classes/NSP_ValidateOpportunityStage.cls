@@ -286,7 +286,8 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
     Set < String > salesOfficeSet = new Set < String > ();
     Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
     Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
-    
+    List<String> salesOfficeMembership = new List<String>();
+    salesOfficeMembership.addAll(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c.split(';'));
     /*if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
         //show error if role not equal to DA,RA or BPA
         opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
@@ -326,7 +327,7 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
         canCloseLost++;
     }
      //Added for 579280
-    else if(getSalesOfficeGroup(userInfo.getUserId(),OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c) != '' && closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+    else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeMembership) != '' && closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
         canCloseLost++;
     }
     if(canCloseLost == 0){
@@ -343,8 +344,8 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
 * @return void             
 * @DF-01769 
 */
-public static String getSalesOfficeGroup(Id userId, String SalesOffice){
-    List <GroupMember> groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userId and Group.Name =:SalesOffice];  
+public static String getSalesOfficeGroup(Id userId, List<String> SalesOffice){
+    List <GroupMember> groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userId and Group.Name IN:SalesOffice]; 
     if(!groupMemberList.isEmpty()){
         return groupMemberList[0].Group.Name;
     }
