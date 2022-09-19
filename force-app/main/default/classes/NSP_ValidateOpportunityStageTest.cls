@@ -137,7 +137,7 @@ public class NSP_ValidateOpportunityStageTest {
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US'
-        );
+            );
         insert userRecord1; 
         
         Opportunity opp3=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
@@ -147,6 +147,7 @@ public class NSP_ValidateOpportunityStageTest {
         opp3.NSP_PrimaryProduct__c = 'WO';
         opp3.NSP_Partner__c=acnt.Id;
         opp3.ownerid= userRecord1.id;
+        opp3.NSP_Sales_Office__c = '302';
         insert opp3; 
         OpportunityTeamMember oppMember = new OpportunityTeamMember();
         oppMember.OpportunityId = opp3.id;
@@ -168,6 +169,16 @@ public class NSP_ValidateOpportunityStageTest {
             LocaleSidKey = 'en_US'
         );
         insert userRecord2;
+        
+        // Creating Groups 
+        Group gp1= new Group();
+        gp1.Name='0302 Phoenix 2';
+        Group gp2= new Group();
+        gp2.Name='0601 Denver 1';
+        // Inserting groups
+        List<Group> groups= new List<Group>{gp1, gp2};
+        Insert groups;
+        
         
     }
     // Test for validations when Opportunity stage is set to Closing
@@ -539,6 +550,70 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
         update userRecord2;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_PublicGroup(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'District Administrator'][0].Id;
+        update userRecord2;
+        // adding Users to groups 
+        List<Group> GroupList =[Select id from Group where Name='0302 Phoenix 2'];
+        Group gp1 = GroupList[0];
+        GroupMember bpagm = new GroupMember (UserOrGroupId = userRecord2.Id, GroupId = gp1.Id);
+        List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
+        // Inserting Group Members
+        Insert groupMemberList;
+        test.startTest();
+        System.runAs(userRecord2){
+        if(oppty!=null){
+            try{            
+            oppty.StageName='Closed Lost';
+            //oppty.Loss_Reason__c='';
+                Update oppty;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+          
+        }
+        }
+        test.stopTest();
+}
+@isTest
+    public static void evaluateClosedLost_PublicGroup2(){
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
+        Opportunity oppty = oppList[0];
+        List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
+        User userRecord1 = userRecord1List[0];
+        userRecord1.NSP_Sales_Office_Membership__c = '302';
+        update userRecord1;
+        List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
+        User userRecord2 = userRecord2List[0];
+        userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'District Administrator'][0].Id;
+        update userRecord2;
+        // adding Users to groups 
+        List<Group> GroupList =[Select id from Group where Name='0302 Phoenix 2'];
+        Group gp1 = GroupList[0];
+        GroupMember bpagm = new GroupMember (UserOrGroupId = userRecord2.Id, GroupId = gp1.Id);
+        List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
+        // Inserting Group Members
+        Insert groupMemberList;
         test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
