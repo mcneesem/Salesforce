@@ -876,16 +876,56 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                     if(rewardType == 'Discovery')
                     {
                         NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        newReward.NSP_Reward_Amount__c = 200;
-                        newReward.NSP_Nonprofit_Amount__c = (String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && (eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match' || eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')) ? 200 : null ;
+                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match')
+                        {
+                            newReward.NSP_Reward_Amount__c = 100;
+                            newReward.NSP_Nonprofit_Amount__c = 100;
+                            newReward.NSP_Payment_Type_Reward__c = 'Check';
+                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                            
+                        }
+                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')
+                        {
+                            newReward.NSP_Reward_Amount__c = 0;
+                            newReward.NSP_Nonprofit_Amount__c = 200;
+                            newReward.NSP_Payment_Type_Reward__c = null;
+                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                        }
+                        else{
+                            newReward.NSP_Reward_Amount__c = 200;
+                            newReward.NSP_Nonprofit_Amount__c = 0;
+                            newReward.NSP_Payment_Type_Reward__c = 'Check';
+                            newReward.NSP_Payment_Type_Non_Profit__c = null;
+                            
+                        }
                         newReward.NSP_Reward_Type__c = 'Discovery';
                         rewardsInsertList.add(newReward);
                     }
                     else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_EEs__c >= 5) )
                     {
                         NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        newReward.NSP_Reward_Amount__c = 1000;
-                        newReward.NSP_Nonprofit_Amount__c = (String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && (eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match' || eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')) ? 1000 : null ;
+                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match')
+                        {
+                            newReward.NSP_Reward_Amount__c = 500;
+                            newReward.NSP_Nonprofit_Amount__c = 500;
+                            newReward.NSP_Payment_Type_Reward__c = 'Check';
+                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                            
+                        }
+                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')
+                        {
+                            newReward.NSP_Reward_Amount__c = 0;
+                            newReward.NSP_Nonprofit_Amount__c = 1000;
+                            newReward.NSP_Payment_Type_Reward__c = null;
+                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                        }
+                        else{
+                            newReward.NSP_Reward_Amount__c = 100;
+                            newReward.NSP_Nonprofit_Amount__c = 0;
+                            newReward.NSP_Payment_Type_Reward__c = 'Check';
+                            newReward.NSP_Payment_Type_Non_Profit__c = null;
+                            
+                        }
                         newReward.NSP_Reward_Type__c = 'Sold';
                         rewardsInsertList.add(newReward);
                     }
@@ -906,8 +946,8 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         newReward.NSP_Benefits_Non_Profit__c = objOpportunity.NSP_Nonprofit__c;
         newReward.NSP_Contact__c = objOCR.ContactId;
         newReward.Opportunity__c = objOpportunity.Id;
-        newReward.NSP_Account__c = objOpportunity.AccountId;
         newReward.NSP_Contact_Role__c = objOCR.Role;
+        newReward.NSP_Non_Profit_Address__c = objOpportunity.NSP_NonprofitNameAddress__c;
         return newReward;
     }
     

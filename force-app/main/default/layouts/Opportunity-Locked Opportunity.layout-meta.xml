@@ -790,18 +790,6 @@
         <fields>PRODUCT2.NAME</fields>
         <relatedList>Asset.Opportunity__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Contact.CNTC_FIRST_NAME</fields>
-        <fields>Contact.NAME</fields>
-        <fields>NSP_Reward_Type__c</fields>
-        <fields>NSP_Benefits_Non_Profit__c</fields>
-        <fields>NSP_Nonprofit_Amount__c</fields>
-        <fields>NSP_Reward_Paid_Date__c</fields>
-        <relatedList>NSP_Reward__c.Opportunity__c</relatedList>
-    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
