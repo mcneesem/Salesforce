@@ -136,6 +136,7 @@ public class NSP_ValidateOpportunityStageTest {
             TimeZoneSidKey = 'America/Los_Angeles',
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
+            NSP_Sales_Office_Membership__c = '301',
             LocaleSidKey = 'en_US'
             );
         insert userRecord1; 
@@ -148,6 +149,7 @@ public class NSP_ValidateOpportunityStageTest {
         opp3.NSP_Partner__c=acnt.Id;
         opp3.ownerid= userRecord1.id;
         opp3.NSP_Sales_Office__c = '302';
+        opp3.NSP_Mid_Market_Sales_Email__c='test@test.com';
         insert opp3; 
         OpportunityTeamMember oppMember = new OpportunityTeamMember();
         oppMember.OpportunityId = opp3.id;
@@ -166,6 +168,7 @@ public class NSP_ValidateOpportunityStageTest {
             TimeZoneSidKey = 'America/Los_Angeles',
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
+            NSP_Sales_Office_Membership__c = '301',
             LocaleSidKey = 'en_US'
         );
         insert userRecord2;
@@ -251,7 +254,7 @@ public class NSP_ValidateOpportunityStageTest {
     @isTest
     public static void checkProposalStage(){
         List<Opportunity> oppList = [SELECT Id,OwnerId,NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
-        NSP_ValidateOpportunityStage.getSalesOfficeGroup(oppList[0].OwnerId,oppList[0].NSP_Sales_Office__c);
+        //NSP_ValidateOpportunityStage.getSalesOfficeGroup(oppList[0].OwnerId,oppList[0].NSP_Sales_Office__c);
         Opportunity oppty = oppList[0];
         test.startTest();
         if(oppty!=null){
