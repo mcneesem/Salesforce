@@ -1,39 +1,39 @@
 /**
  * Author: Sales Team
 * Represents test class for lead opportunity helper
-* Test Class to cover Opportunity Trigger Handler and Helper classes 
+* Test Class to cover Opportunity Trigger Handler and Helper classes
 * Modified Date: 19 Aug 2021
 */
 
 @isTest(SeeAllData=false)
 public class NSP_OpportunityTriggerHelperTest {
-    
+   
     public static final String OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES = 'Retirement Services'; // Added as part of Code Fix
     public static final String OPP_STAGENAME_CLOSED_WON = 'Closed Won'; // Added as part of Code Fix
     public static final String CONTRACT_PRODUCT_TYPE = 'Organizational Planning;Performance Management'; // Added as part of test class coverage
     public static final String CONTRACT_STATUS = 'Draft'; // Added as part of test class coverage
     public static final String CURRENCY_USD = 'USD'; // Added as part of test class coverage
-    
+   
     /**
 * Does test data setup
-* @param N/A. 
+* @param N/A.
 * @return void                          
 */
-    
+   
     @testSetup
     static void testData() {
-        
+       
         //Account creation
         Account accoutObject = new Account();
         accoutObject.Name = 'Test Account';
         //inserting account object
         insert accoutObject;
-        
+       
         Account accoutObject1 = new Account();
         accoutObject1.Name = 'Test Account1';
         //inserting account object
         insert accoutObject1;
-        
+       
         // Inserting Contract
         Contract ct = new Contract();
         ct.AccountId = accoutObject1.Id;
@@ -42,7 +42,7 @@ public class NSP_OpportunityTriggerHelperTest {
         ct.StartDate = Date.today();
         ct.Status = CONTRACT_STATUS;
         database.insert(ct);
-        
+       
         //Create Opportunity
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Name = 'Test Oppty';
@@ -61,7 +61,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         //Inserting Opportunity Object
         insert opportuniytObject;
-        
+       
         Opportunity opportuniytObject2 = new Opportunity();
         opportuniytObject2.Name = 'Test Oppty Email';
         opportuniytObject2.AccountId = accoutObject1.id;
@@ -74,9 +74,10 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject2.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject2.NSP_WS_Number_Of_Employees__c = 123;
         opportuniytObject2.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
+        opportuniytObject2.NSP_Mid_Market_Sales_Email__c='test@insperity.com';
         //Inserting Opportunity Object
         insert opportuniytObject2;
-        
+       
         List<Task> taskList = new List<Task>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
         Task taskRec = new Task(
@@ -88,7 +89,7 @@ public class NSP_OpportunityTriggerHelperTest {
             NSP_Status__c='Completed'
         );
         taskList.add(taskRec);
-        
+       
         Opportunity opportuniytObject3 = new Opportunity();
         opportuniytObject3.Name = 'Test Oppty Email';
         opportuniytObject3.AccountId = accoutObject1.id;
@@ -100,6 +101,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject3.NSP_Number_of_Employees__c = 151; //!do not change. Test might fail
         opportuniytObject3.Type ='CAMS';
         opportuniytObject3.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
+        opportuniytObject3.NSP_Mid_Market_Sales_Email__c='test2@insperity.com';
         //Inserting Opportunity Object
         insert opportuniytObject3;
 
@@ -114,20 +116,21 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject4.NSP_Number_of_Employees__c = 151; //!do not change. Test might fail
         opportuniytObject4.Type ='CAMS';
         opportuniytObject4.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
+        opportuniytObject4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
         //Inserting Opportunity Object
         insert opportuniytObject4;
-        
+       
         SBQQ__Quote__c quoteRec = new SBQQ__Quote__c();
         quoteRec.SBQQ__Opportunity2__c = opportuniytObject3.Id;
         quoteRec.SBQQ__Account__c = opportuniytObject3.AccountId;
         quoteRec.SBQQ__Primary__c = true;
         quoteRec.SBQQ__Type__c = 'New Product';
         quoteRec.SBQQ__Status__c = 'Approved';
-        
+       
         insert quoteRec;
-        
+       
         insert taskList;
-        
+       
         //Create child opportunity for Retirement Service
         Opportunity childopportuniytObject = new Opportunity();
         childopportuniytObject.Name = 'Child Oppty Retirement Service';
@@ -140,7 +143,7 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject.NSP_Parent_Opportunity__c = opportuniytObject.id;
         //Inserting Child Opportunity
         insert childopportuniytObject;
-        
+       
         //Create child opportuniy for Insurance Service
         Opportunity childopportuniytObject1 = new Opportunity();
         childopportuniytObject1.Name = 'Child Oppty Insurance Service';
@@ -152,26 +155,26 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject1.NSP_PrimaryProduct__c = 'Insurance Services';
         childopportuniytObject1.NSP_Parent_Opportunity__c = opportuniytObject.id;
         insert childopportuniytObject1;
-        
+       
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
         insert pricebook;
-        
+       
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject.Id,true);
 
-        
+       
     }
-    
+   
         /**
 * @Description: This test method is used to cover updatesOnChildOpportunity
-* @Created date: 04/29/2022. 
-* @return void             
+* @Created date: 04/29/2022.
+* @return void            
 *                
 */
         @isTest
         static void updatesOnChildOpportunityTest(){
             UserRole ur = new UserRole(Name = 'Regional Administrator');
             insert ur;
-            
+           
             User userRecord = new User(
                 ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
                 UserRoleId =ur.Id,
@@ -185,7 +188,8 @@ public class NSP_OpportunityTriggerHelperTest {
                 TimeZoneSidKey = 'America/Los_Angeles',
                 EmailEncodingKey = 'UTF-8',
                 LanguageLocaleKey = 'en_US',
-                LocaleSidKey = 'en_US'
+                LocaleSidKey = 'en_US',
+                NSP_Sales_Office_Membership__c = '301'
             );
             insert userRecord;
             user getUser = [SELECT Id,UserRole.Name FROM User WHERE Id =:userRecord.Id ];
@@ -201,7 +205,7 @@ public class NSP_OpportunityTriggerHelperTest {
         }
     /**
 * Checks the update protion of the trigger
-* @param N/A. 
+* @param N/A.
 * @return void                          
 */
     @isTest
@@ -227,7 +231,7 @@ public class NSP_OpportunityTriggerHelperTest {
     }
     /**
 * Checks the update protion of the trigger
-* @param N/A. 
+* @param N/A.
 * @return void                          
 */
     @isTest
@@ -237,7 +241,7 @@ public class NSP_OpportunityTriggerHelperTest {
         Test.startTest();
         opportunityList[0].NSP_PrimaryProduct__c = 'WX';  
         opportunityList[0].NSP_Reason_for_Product_Change__c='Test';
-        update opportunityList[0];         
+        update opportunityList[0];        
         Test.stopTest();
         System.assertEquals('WX', opportunityList[0].NSP_PrimaryProduct__c);
     }
@@ -252,7 +256,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportunityList[0].NSP_Contribution_Level__c = 'Level 1';  
         opportunityList[0].NSP_Frequency_of_Distribution__c = 'Lump sum';  
         opportunityList[0].NSP_Reason_for_Product_Change__c='Test';
-        update opportunityList[0];         
+        update opportunityList[0];        
         Test.stopTest();
         System.assertEquals('WO', opportunityList[0].NSP_PrimaryProduct__c);
     }    
@@ -262,30 +266,30 @@ public class NSP_OpportunityTriggerHelperTest {
     @isTest
     static void checkClosedWonWOOpportunity(){
         List<Opportunity> opportunityList = [SELECT Id, Name,NSP_Number_of_Employees__c,Type, NSP_PrimaryProduct__c,
-                                             NSP_DM_User__c,NSP_DA_User__c,NSP_BPA__c,OwnerId,StageName,NSP_Merge_On_Demand_Template_Selection__c FROM Opportunity 
+                                             NSP_DM_User__c,NSP_DA_User__c,NSP_BPA__c,OwnerId,StageName,NSP_Merge_On_Demand_Template_Selection__c FROM Opportunity
                                              WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WO'];
         Test.startTest();
         opportunity oppty = opportunityList[0];
-        
+       
         oppty.NSP_DM_User__c = oppty.OwnerId;
         oppty.NSP_DA_User__c = oppty.OwnerId;
-      
-        
+     
+       
         oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
         update oppty;
         Test.stopTest();
         System.assertEquals(oppty.StageName, NSP_SalesConstants.ANALYSIS_STAGE); // Added as part of Code fix
     }
-    
+   
     /*
      * checks Email services for WO Closed Won Opportunties
 */
     @isTest
     static void checkClosedWonWXOpportunity(){
         List<Opportunity> opportunityList = [SELECT Id,AccountId, Name,NSP_Number_of_Employees__c,Type, NSP_PrimaryProduct__c,
-                                             NSP_DM_User__c,NSP_DA_User__c,NSP_Merge_On_Demand_Template_Selection__c,SBQQ__PrimaryQuote__c,NSP_BPA__c,OwnerId FROM Opportunity 
+                                             NSP_DM_User__c,NSP_DA_User__c,NSP_Merge_On_Demand_Template_Selection__c,SBQQ__PrimaryQuote__c,NSP_BPA__c,OwnerId FROM Opportunity
                                              WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
-        
+       
          Test.startTest();      
         opportunity oppty = opportunityList[0];
         SBQQ__Quote__c quote = [SELECT Id, SBQQ__Opportunity2__c FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c = :oppty.Id];
@@ -295,16 +299,16 @@ public class NSP_OpportunityTriggerHelperTest {
         oppty.NSP_BPA__c = oppty.OwnerId;
         oppty.StageName = 'Closed Won';
         oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
-        
-        update oppty;   
+       
+        update oppty;  
        Test.stopTest();
         System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
     }
-    
+   
            /**
-* @Description: This test method is used to cover moveOpportunityToClosingStage method 
+* @Description: This test method is used to cover moveOpportunityToClosingStage method
 * @Created date: 03/03/2022.
-* @return void             
+* @return void            
 *                
 */
     @isTest
@@ -313,7 +317,7 @@ public class NSP_OpportunityTriggerHelperTest {
                                                    NSP_PrimaryProduct__c,
                                                    stagename,
                                                    NSP_Signed_CSA__c,
-                                                   NSP_Signed_Delivery_Order__c, 
+                                                   NSP_Signed_Delivery_Order__c,
                                                    CloseDate,
                                                    NSP_Closing_Appointment__c,
                                                    OwnerId FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null ];
@@ -322,7 +326,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportunityList[0].NSP_PrimaryProduct__c = NSP_SalesConstants.WX;  
         opportunityList[0].NSP_Signed_Delivery_Order__c = true;
          /* Added as part of test class coverage */
-        opportunityList[0].NSP_Signed_CSA__c = true; 
+        opportunityList[0].NSP_Signed_CSA__c = true;
         opportunityList[0].NSP_Closing_Appointment__c = true;
          /* Added as part of test class coverage */
         update opportunityList[0];      
@@ -331,11 +335,11 @@ public class NSP_OpportunityTriggerHelperTest {
         Test.stopTest();
         System.assertEquals(NSP_SalesConstants.WX, opportunityList[0].NSP_PrimaryProduct__c);
     }
-    
+   
        /**
-* @Description: This test method is used to cover updatesOnChildOpportunity method 
+* @Description: This test method is used to cover updatesOnChildOpportunity method
 * @Created date: 03/03/2022.
-* @return void             
+* @return void            
 *                
 */
 
@@ -343,8 +347,8 @@ public class NSP_OpportunityTriggerHelperTest {
     static void defaultFieldsOnChildOpportunityTest(){
         Set<Id> pOppIdSet = new Set<Id>();
         List<Opportunity> cOppList = new List<Opportunity>();
-    List<Opportunity> opportunityList = [SELECT Id, stagename, NSP_PrimaryProduct__c, NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c FROM Opportunity 
-                                                WHERE NSP_Parent_Opportunity__c != null LIMIT 1]; 
+    List<Opportunity> opportunityList = [SELECT Id, stagename, NSP_PrimaryProduct__c, NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c FROM Opportunity
+                                                WHERE NSP_Parent_Opportunity__c != null LIMIT 1];
         pOppIdSet.add(opportunityList[0].NSP_Parent_Opportunity__c);
         cOppList.add(opportunityList[0]);
         Test.startTest();
@@ -355,16 +359,16 @@ public class NSP_OpportunityTriggerHelperTest {
     /**
     * @Description: This test method is used to cover sendClosedWonEmailNotifications for WX method of NSP_EmailWithAttachment
     * @Created date: 22/03/2022.
-    * @return void             
-    * @author : Nischay Jindal               
+    * @return void            
+    * @author : Nischay Jindal              
     */
-        
+       
     @isTest
         static void sendClosedWonEmailNotificationWX(){
            List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
-           ContentVersion cvlist = new Contentversion(); 
-            cvlist.Title = 'WX_0_Delivery Order__completed'; 
-            cvlist.PathOnClient = 'test'; 
+           ContentVersion cvlist = new Contentversion();
+            cvlist.Title = 'WX_0_Delivery Order__completed';
+            cvlist.PathOnClient = 'test';
             cvlist.VersionData = EncodingUtil.base64Decode('Unit Test Attachment Body');
             cvlist.FirstPublishLocationId=opportunityList[0].Id;
            insert cvlist;
@@ -374,28 +378,28 @@ public class NSP_OpportunityTriggerHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = 'Closed Won';
-            update oppty; 
+            update oppty;
             List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
             Map<Id,Opportunity> oppMap = new Map<Id,Opportunity>();
             oppMap.put(oppty.Id,oppty);
             NSP_EmailServicesUtility.sendEmailsTOService(oppMap.Values(),oppMap,workforceProductsList);
            Test.stopTest();
             System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
-        } 
+        }
 
     /**
     * @Description: This test method is used to cover sendClosedWonEmailNotifications for WA method of NSP_EmailWithAttachment
     * @Created date: 22/03/2022.
-    * @return void             
-    * @author : Nischay Jindal               
+    * @return void            
+    * @author : Nischay Jindal              
     */
-        
+       
     @isTest
         static void sendClosedWonEmailNotificationWA(){
            List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WA'];
-           ContentVersion cvlist = new Contentversion(); 
-            cvlist.Title = 'WA_0_Delivery Order__completed'; 
-            cvlist.PathOnClient = 'test'; 
+           ContentVersion cvlist = new Contentversion();
+            cvlist.Title = 'WA_0_Delivery Order__completed';
+            cvlist.PathOnClient = 'test';
             cvlist.VersionData = EncodingUtil.base64Decode('Unit Test Attachment Body');
             cvlist.FirstPublishLocationId=opportunityList[0].Id;
            insert cvlist;
@@ -405,24 +409,24 @@ public class NSP_OpportunityTriggerHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = 'Closed Won';
-            update oppty; 
+            update oppty;
             List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
             Map<Id,Opportunity> oppMap = new Map<Id,Opportunity>();
             oppMap.put(oppty.Id,oppty);
             NSP_EmailServicesUtility.sendEmailsTOService(oppMap.Values(),oppMap,workforceProductsList);
            Test.stopTest();
             System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
-        } 
+        }
 
    /**
     * @Description: This test method is used to cover createClosedLostRegenTasks method of NSP_OpportunityTriggerHelper
     * @Created date: 13/04/2022.
-    * @return void             
+    * @return void            
     * @author : Nischay Jindal
     * Commented this menthod as this is no longer needed
-    * @Commented By: Ruchi Roy               
+    * @Commented By: Ruchi Roy              
     */
-        
+       
     /**@isTest
         static void createClosedLostRegenTasks(){
            List<Opportunity> opportunityList = [SELECT Id,AccountId,NSP_Regen_Date__c,NSP_Lost_Reason__c,StageName, OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 Limit 1];
@@ -441,22 +445,22 @@ public class NSP_OpportunityTriggerHelperTest {
            }catch (DMLException e) {
              e.getMessage();
                  }
-        } 
+        }
         **/
    /**
    * @Description: This test method is used to cover validateClosedDate method
    * @Created date: 04/20/2022.
-   * @return void                           
-   */ 
+   * @return void                          
+   */
   @isTest
   static void validateClosedDateTest(){
   List<Opportunity> opportunityList = [SELECT Id,AccountId,OwnerId,StageName,CloseDate FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
       Test.startTest();
       NSP_OpportunityTriggerHelper.validateClosedDate(opportunityList);
       Test.stopTest();
-      System.assertEquals(opportunityList[0].CloseDate, date.today()); 
+      System.assertEquals(opportunityList[0].CloseDate, date.today());
   }
-  
+ 
    @isTest
    static void salesOfficeTest()
    {
@@ -492,7 +496,7 @@ public class NSP_OpportunityTriggerHelperTest {
        
        
    }
-  
+ 
    @isTest
    static void rewardCreationTest()
    {
@@ -523,5 +527,5 @@ public class NSP_OpportunityTriggerHelperTest {
        update opportunityList;
        Test.stopTest();
    }
-  
+ 
 }
