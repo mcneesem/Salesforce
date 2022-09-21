@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Mid-Market Opportunity Related Account Number Of EE Updated</name>
     <style>none</style>
-    <subject>Number of Employee on opportunity changed to more than 150</subject>
+    <subject>Number of employee changed for Account</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
