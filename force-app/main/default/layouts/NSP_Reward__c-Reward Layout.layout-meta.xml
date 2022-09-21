@@ -60,7 +60,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NSP_Non_Profit_Name__c</field>
+                <field>NSP_Non_ProfitName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -74,7 +74,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NSP_Non_Profit_Tax_ID__c</field>
+                <field>NSP_Non_Profit_TaxID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
