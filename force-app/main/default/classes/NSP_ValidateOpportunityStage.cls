@@ -287,8 +287,9 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
     Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
     Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
     List<String> salesOfficeMembership = new List<String>();
+    if(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c != null){
     salesOfficeMembership.addAll(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c.split(';'));
-    /*if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+    }    /*if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
         //show error if role not equal to DA,RA or BPA
         opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
     }else if(closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name) && !currentUserRoleMap.containsKey(opp.OwnerId)){

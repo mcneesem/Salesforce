@@ -866,8 +866,8 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         {
                 list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
                 
-                for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c 
-                                                        from OpportunityContactRole 
+                for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c, 
+                                                        NSP_Nonprofit_Organization_Name__c,NSP_Nonprofit_Organization_Tax_Id__c from OpportunityContactRole 
                                                         WHERE opportunityId in : opportunityIdToRewardTypeMap.keySet() 
                                                         AND NSP_isReferral__c = true])
                 {
@@ -920,7 +920,7 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                             newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
                         }
                         else{
-                            newReward.NSP_Reward_Amount__c = 100;
+                            newReward.NSP_Reward_Amount__c = 1000;
                             newReward.NSP_Nonprofit_Amount__c = 0;
                             newReward.NSP_Payment_Type_Reward__c = 'Check';
                             newReward.NSP_Payment_Type_Non_Profit__c = null;
@@ -943,10 +943,12 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
     {
         NSP_Reward__c newReward = new NSP_Reward__c();
         newReward.NSP_Account__c = objOCR.Opportunity.AccountId;
-        newReward.NSP_Benefits_Non_Profit__c = objOpportunity.NSP_Nonprofit__c;
+        newReward.NSP_Benefits_Non_Profit__c = objOCR.NSP_Referralbenefitsanonprofitorg__c;
         newReward.NSP_Contact__c = objOCR.ContactId;
         newReward.Opportunity__c = objOpportunity.Id;
         newReward.NSP_Contact_Role__c = objOCR.Role;
+		newReward.NSP_Non_ProfitName__c = objOCR.NSP_Nonprofit_Organization_Name__c;
+		newReward.NSP_Non_Profit_TaxID__c = objOCR.NSP_Nonprofit_Organization_Tax_Id__c;
         newReward.NSP_Non_Profit_Address__c = objOpportunity.NSP_NonprofitNameAddress__c;
         return newReward;
     }
