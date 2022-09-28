@@ -6,6 +6,11 @@
         <field>Asset.NSP_Pending_Report_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.NSP_Projected_First_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Asset -Pending Comment Access</label>
     <objectPermissions>
@@ -26,4 +31,12 @@
         <object>Asset</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Asset.NSP_Asset_Product</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Asset.WO</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
