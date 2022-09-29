@@ -851,14 +851,17 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         for(Opportunity newOpportunity: opportunityNewMap.Values())
         {
             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-            if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+            if(newOpportunity.Type != 'Client Growth Credit') // added for DF-02233
             {
-                opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Discovery');
-            }
-            else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
-            { 
-                opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Sold');
-            }
+                if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+                {
+                    opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Discovery');
+                }
+                else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+                { 
+                    opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Sold');
+                }
+            }   
             
         }
         
