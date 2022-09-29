@@ -51,10 +51,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Projected_First_Pay_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_First_Pay_Date__c</field>
             </layoutItems>
             <layoutItems>
