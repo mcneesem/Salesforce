@@ -851,20 +851,29 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         for(Opportunity newOpportunity: opportunityNewMap.Values())
         {
             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-            if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+            if(newOpportunity.Type != 'Client Growth Credit') // added for DF-02233
             {
-                opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Discovery');
-            }
-            else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
-            { 
-                opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Sold');
-            }
+                if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+                {
+                    opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Discovery');
+                }
+                else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
+                { 
+                    opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Sold');
+                }
+            }   
             
         }
         
         if(opportunityIdToRewardTypeMap.Size() > 0)
         {
                 list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
+                map<id,Event> oppottunityToEventMap = new map<id,Event>();
+                
+                for(Event eachEvent : [SELECT Id,NSP_Completed_Date__c,WhatId from Event Where WhatId in :opportunityIdToRewardTypeMap.KeySet() AND NSP_Event_Subtype__c = 'Discovery Call' AND NSP_Status__c = 'Completed' ])
+                {
+                    oppottunityToEventMap.put(eachEvent.WhatId,eachEvent);
+                }
                 
                 for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c, 
                                                         NSP_Nonprofit_Organization_Name__c,NSP_Nonprofit_Organization_Tax_Id__c from OpportunityContactRole 
@@ -899,9 +908,10 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                             
                         }
                         newReward.NSP_Reward_Type__c = 'Discovery';
+                        newReward.NSP_Discovery_Call_Completed_Date__c = oppottunityToEventMap.containsKey(eachOCR.opportunityId) ? oppottunityToEventMap.get(eachOCR.opportunityId).NSP_Completed_Date__c: null;
                         rewardsInsertList.add(newReward);
                     }
-                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_EEs__c >= 5) )
+                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5) )
                     {
                         NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
                         if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match')

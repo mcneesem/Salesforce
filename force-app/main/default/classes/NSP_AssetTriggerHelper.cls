@@ -36,6 +36,7 @@ public class NSP_AssetTriggerHelper {
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
+		updatePayDateonAsset(newList,null); // added for STY-03387
     }
     
     /**
@@ -83,6 +84,7 @@ public class NSP_AssetTriggerHelper {
         catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
+		updatePayDateonAsset(newMap.values(),oldMap); // added for STY-03387
     }
    
   
@@ -286,5 +288,55 @@ public class NSP_AssetTriggerHelper {
     }
 
 
+/**
+* Iterates throught the list of new Assets and passes the required attributes to other methods.
+* @param newList, oldMap List of Assets.  
+* @return void   
+* description: logic to copy to Asset Projected First Pay Date with opportunity with primary product  WS/WO  
+* from check list Requested First Pay Date from check list.          
+* Date :9/27/2022 for STY-03387
+*/
+	public void updatePayDateonAsset(List<Asset> newList,Map<Id, Asset> oldMap){
+		
+		Id  soldToCheckListRecordTypeId = Schema.SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
+		
+		set<id> opportunityIdSet = new set<id>(); 
+		map<id,NSP_Checklist__c> opportunityIdToChecklistMap = new map<id,NSP_Checklist__c>();
+		for(Asset newAsset : newList)
+		{
+			Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
+			
+			if(newAsset.Opportunity__c != null && newAsset.RecordTypeId == new_Asset_RT_ID && (Trigger.isInsert || newAsset.Opportunity__c != oldAsset.Opportunity__c) ) // check opportunity is updated
+			{
+				opportunityIdSet.add(newAsset.Opportunity__c); // get opportunity id
+			}
+		}
+		
+		if(opportunityIdSet.Size() > 0)
+		{
+			// create opportunity to checklist map
+			for(NSP_Checklist__c eachChecklist : [SELECT Id,NSP_Requested_First_Pay_Date__c,NSP_Opportunity__c from NSP_Checklist__c 
+											where NSP_Opportunity__c IN :opportunityIdSet AND
+											NSP_Opportunity__r.NSP_PrimaryProduct__c IN ('WS','WO') AND 
+											recordtypeId =: soldToCheckListRecordTypeId AND
+											NSP_Requested_First_Pay_Date__c != null
+											])
+			{
+				opportunityIdToChecklistMap.put(eachChecklist.NSP_Opportunity__c,eachChecklist);
+			}
+			
+			for(Asset newAsset : newList)
+			{
+				Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
+				
+				if(newAsset.Opportunity__c != null && newAsset.RecordTypeId == new_Asset_RT_ID && (Trigger.isInsert || newAsset.Opportunity__c != oldAsset.Opportunity__c) 
+					&& opportunityIdToChecklistMap.containsKey(newAsset.Opportunity__c))
+				{
+					NSP_Checklist__c objChecklist = opportunityIdToChecklistMap.get(newAsset.Opportunity__c);
+					newAsset.NSP_Projected_First_Pay_Date__c = objChecklist.NSP_Requested_First_Pay_Date__c; // assign value
+				}
+			}
+		}
+	}
     
 }
