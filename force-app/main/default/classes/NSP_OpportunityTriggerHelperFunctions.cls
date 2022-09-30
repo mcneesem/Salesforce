@@ -211,5 +211,72 @@ public static void getAccountOwnerEmail(Set<Id> accountId) {
          Database.update(UpdateOpplist,false);  
         }
     }
+    
+    /***********************************************************************************************
+    * MethodName: updateOppOwnerPremier
+    * Description : This method will update publish event for premier pathway opportunity owner update
+    * Params:       newMap, oldMap
+    * Author : Rahul Singh
+    * Created Date : 9/29/22
+    * Added as part of 569324 charwell request.
+    * ********************************************************************************************/  
+    
+    public static void updateOppOwnerPremier(Map<Id, Account> newMap, Map<Id, Account> oldMap) {
+
+        set<Id> accountIdSet = new set<Id>();
+        for(Account newAccount: newMap.values()){
+        Account oldAccount = oldMap != null ? oldMap.get(newAccount.Id):null;
+            if(newAccount.OwnerId != oldAccount.OwnerId && newAccount.OwnerId != null)
+            {
+                              accountIdSet.add(newAccount.Id);                              
+            }
+        
+        }
+        
+        if(accountIdSet.Size() > 0){
+            
+             List<Opportunity>opportunityList =[Select Id , Name,OwnerId,AccountId from Opportunity WHERE AccountId  IN:accountIdSet];
+           
+             List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
+        for(Opportunity opportunityObject: opportunityList){
+            opportunityEventList.add(New Integration_Opportunity_Event__e(Id__c = opportunityObject.Id));
+             
+        }
+            Id profileId=userinfo.getProfileId();
+        String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+        /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
+        if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+            publishEventBus(opportunityEventList, opportunityList); 
+        
+        }
+        }
+        
+  
+    }
+    public static void publishEventBus(List<Integration_Opportunity_Event__e> eventList, List<Opportunity> objectList) {
+        List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
+        if(!eventList.isEmpty()) {
+            // Publishing records Event 
+            List<Database.SaveResult> results = EventBus.publish(eventList);
+            System.debug('result'+eventList);
+            // Inspect publishing result for each event
+            List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
+            for (Database.SaveResult sr : results) {
+                NSP_Error_Log__c log = new NSP_Error_Log__c();
+                log.NSP_Class__c = 'NSP_OpportunityTriggerHelperFunction';
+                log.NSP_Method__c = 'publishEventBus';                
+                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  '+String.valueOf(sr.getErrors()[0].getStatusCode());
+                log.NSP_Record_Id__c = sr.getId();
+                logList.add(log);  
+            }
+            
+            if(logList.size() > 0){
+                insert logList;
+            }
+            
+            
+           
+        }
+    }
 
 }

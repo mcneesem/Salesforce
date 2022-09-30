@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission set provides system level API Enabled access - which will ensure salesforce and external app/salesforce mobile app connectivity</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Allow Mobile for Minimum Access User</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
+    </userPermissions>
+</PermissionSet>
