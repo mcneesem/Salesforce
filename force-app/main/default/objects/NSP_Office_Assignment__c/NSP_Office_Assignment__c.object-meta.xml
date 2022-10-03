@@ -156,7 +156,7 @@
     <label>Office Assignment</label>
     <nameField>
         <encryptionScheme>None</encryptionScheme>
-        <label>Sales Office Key</label>
+        <label>Sales Office</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
