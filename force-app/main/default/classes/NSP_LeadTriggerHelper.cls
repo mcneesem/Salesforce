@@ -212,7 +212,8 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             }
              /* Added as part of DF-01846*/
           if( leadNewMap.get(leadId).PostalCode != leadOldMap.get(leadId).PostalCode &&
-          String.isNotBlank(leadNewMap.get(leadId).PostalCode) && isZipCodeUpdate == false){
+          String.isNotBlank(leadNewMap.get(leadId).PostalCode) && isZipCodeUpdate == false &&
+          leadNewMap.get(leadId).NSP_Lead_Routing__c == true){
               zipCodeLeadList.add(leadNewMap.get(leadId));
               zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
           }
