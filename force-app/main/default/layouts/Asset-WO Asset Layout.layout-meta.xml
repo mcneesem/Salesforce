@@ -92,6 +92,14 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Pending_Report_Comments__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Projected_First_Pay_Date__c</field>
+            </layoutItems>            
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_AIMS_First_Pay_Date__c</field>
             </layoutItems>
@@ -194,12 +202,6 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Description Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Pending_Report_Comments__c</field>
-            </layoutItems>
-        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>

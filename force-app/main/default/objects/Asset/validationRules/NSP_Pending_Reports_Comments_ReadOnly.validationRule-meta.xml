@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Pending_Reports_Comments_ReadOnly</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISCHANGED(NSP_Pending_Report_Comments__c) &amp;&amp; 
+ AND(
+$UserRole.DeveloperName  &lt;&gt; &apos;New_Client_Sales&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;District_Administrator&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;District_Manager&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;Sales_Operations_Manager&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;Sales_Support_Specialist&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;Regional_Administrator&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;Regional_Manager&apos;,
+$UserRole.DeveloperName  &lt;&gt; &apos;MidMarket_Administrator&apos;
+)
+&amp;&amp;  $Profile.Name &lt;&gt; &apos;System Administrator&apos;</errorConditionFormula>
+    <errorDisplayField>NSP_Pending_Report_Comments__c</errorDisplayField>
+    <errorMessage>Field is not Editable.</errorMessage>
+</ValidationRule>

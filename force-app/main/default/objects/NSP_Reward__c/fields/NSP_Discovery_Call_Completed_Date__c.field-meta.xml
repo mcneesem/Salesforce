@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NSP_Sold_Reward__c</fullName>
+    <fullName>NSP_Discovery_Call_Completed_Date__c</fullName>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Sold Reward</label>
-    <precision>18</precision>
+    <label>Discovery Call Completed Date</label>
     <required>false</required>
-    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Date</type>
 </CustomField>

@@ -12,6 +12,44 @@
         <template>NSP_Sales/NSP_PotentialMidMarketOpportunity</template>
     </alerts>
     <alerts>
+        <fullName>NSP_Alert_Mid_when_opportunity_primary_product_is_updated</fullName>
+        <description>Alert Mid when opportunity primary product is updated</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Mid_Market_Sales_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSPMidMarketOpportunityPrimaryProductUpdate</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updated</fullName>
+        <description>Alert Mid when opportunity related account number of ee is updated</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSPMid_Market_Opportunity_Related_Account_Number_Of_EE_Updated</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</fullName>
+        <description>Alert Mid when opportunity updated with more then 150 employee</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Mid_Market_Sales_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/NSPMidMarketOpportunityUpdate</template>
+    </alerts>
+    <alerts>
         <fullName>NSP_Alert_when_Order_is_Generated_for_an_Opportunity</fullName>
         <description>Alert when Order is Generated for an Opportunity</description>
         <protected>false</protected>

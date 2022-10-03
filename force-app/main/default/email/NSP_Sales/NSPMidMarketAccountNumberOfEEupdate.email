@@ -1,0 +1,2 @@
+{!User.Name} changed the number of employees on Account to {!Account.NumberOfEmployees} employees. Please take the next action as necessary.
+<a href="{!Account.Link}">{!Account.Name}</a>

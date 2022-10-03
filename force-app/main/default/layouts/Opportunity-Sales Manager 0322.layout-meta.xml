@@ -749,6 +749,18 @@
         <relatedList>dfsle__EnvelopeStatus__c.DS_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Contact.CNTC_FIRST_NAME</fields>
+        <fields>Contact.NAME</fields>
+        <fields>NSP_Reward_Type__c</fields>
+        <fields>NSP_Benefits_Non_Profit__c</fields>
+        <fields>NSP_Non_ProfitName__c</fields>
+        <fields>NSP_Reward_Paid_Date__c</fields>
+        <relatedList>NSP_Reward__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>NSP_SObject_History_Tracking__c.NSP_Opportunity__c</relatedList>
     </relatedLists>

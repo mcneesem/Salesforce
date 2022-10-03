@@ -17,14 +17,69 @@
                 <label>MidMarket</label>
             </value>
             <value>
+                <fullName>AAA - The Auto Group</fullName>
+                <default>false</default>
+                <label>AAA - The Auto Group</label>
+            </value>
+            <value>
                 <fullName>Allstate</fullName>
                 <default>false</default>
                 <label>Allstate</label>
             </value>
             <value>
+                <fullName>Ameriprise</fullName>
+                <default>false</default>
+                <label>Ameriprise</label>
+            </value>
+            <value>
+                <fullName>AtWork Group LLC</fullName>
+                <default>false</default>
+                <label>AtWork Group LLC</label>
+            </value>
+            <value>
+                <fullName>Best Western Hotels &amp; Resorts</fullName>
+                <default>false</default>
+                <label>Best Western Hotels &amp; Resorts</label>
+            </value>
+            <value>
+                <fullName>Charles Schwab</fullName>
+                <default>false</default>
+                <label>Charles Schwab</label>
+            </value>
+            <value>
+                <fullName>Commonwealth</fullName>
+                <default>false</default>
+                <label>Commonwealth</label>
+            </value>
+            <value>
+                <fullName>Financial Services Institute (FSI)</fullName>
+                <default>false</default>
+                <label>Financial Services Institute (FSI)</label>
+            </value>
+            <value>
+                <fullName>Freedom Boat Club</fullName>
+                <default>false</default>
+                <label>Freedom Boat Club</label>
+            </value>
+            <value>
+                <fullName>Gradient Financial Group, LLC</fullName>
+                <default>false</default>
+                <label>Gradient Financial Group, LLC</label>
+            </value>
+            <value>
                 <fullName>Independent Agency/ Allstate</fullName>
                 <default>false</default>
                 <label>Independent Agency/ Allstate</label>
+            </value>
+            <value>
+                <fullName>PREVEER (UFG franchise)</fullName>
+                <default>false</default>
+                <label>PREVEER (UFG franchise)</label>
+            </value>
+            <value>
+                <fullName>Quantum Assurance</fullName>
+                <default>false</default>
+                <label>Quantum Assurance</label>
             </value>
             <value>
                 <fullName>Raymond James Advisors</fullName>
@@ -47,64 +102,9 @@
                 <label>Venture X Members (tenants)</label>
             </value>
             <value>
-                <fullName>PREVEER (UFG franchise)</fullName>
-                <default>false</default>
-                <label>PREVEER (UFG franchise)</label>
-            </value>
-            <value>
                 <fullName>Worldcom PR</fullName>
                 <default>false</default>
                 <label>Worldcom PR</label>
-            </value>
-            <value>
-                <fullName>Freedom Boat Club</fullName>
-                <default>false</default>
-                <label>Freedom Boat Club</label>
-            </value>
-            <value>
-                <fullName>Best Western Hotels &amp; Resorts</fullName>
-                <default>false</default>
-                <label>Best Western Hotels &amp; Resorts</label>
-            </value>
-            <value>
-                <fullName>Quantum Assurance</fullName>
-                <default>false</default>
-                <label>Quantum Assurance</label>
-            </value>
-            <value>
-                <fullName>Commonwealth</fullName>
-                <default>false</default>
-                <label>Commonwealth</label>
-            </value>
-            <value>
-                <fullName>Gradient Financial Group, LLC</fullName>
-                <default>false</default>
-                <label>Gradient Financial Group, LLC</label>
-            </value>
-            <value>
-                <fullName>Charles Schwab</fullName>
-                <default>false</default>
-                <label>Charles Schwab</label>
-            </value>
-            <value>
-                <fullName>AAA - The Auto Group</fullName>
-                <default>false</default>
-                <label>AAA - The Auto Group</label>
-            </value>
-            <value>
-                <fullName>Financial Services Institute (FSI)</fullName>
-                <default>false</default>
-                <label>Financial Services Institute (FSI)</label>
-            </value>
-            <value>
-                <fullName>Ameriprise</fullName>
-                <default>false</default>
-                <label>Ameriprise</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
             </value>
             <value>
                 <fullName>Allstate Agency</fullName>
@@ -129,6 +129,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Healthy Eyes Advantage</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Raymond James Advisor</fullName>

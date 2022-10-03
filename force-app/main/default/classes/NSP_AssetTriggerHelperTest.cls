@@ -65,6 +65,15 @@ public class NSP_AssetTriggerHelperTest {
         assetObj2.name = 'asset3';
         insert assetObj2;
         
+        //Create Asset
+        Asset assetObj4 = new Asset();
+        assetObj4.accountId = accoutObject2.Id;
+        assetObj4.RecordTypeId= Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
+        assetObj4.NSP_Client__c = 'asset4';
+        assetObj4.opportunity__c = opportuniytObject.Id;
+        assetObj4.name = 'asset4';
+        insert assetObj4;
+        
         List<NSP_Sub_Client__c> subClientList = new List<NSP_Sub_Client__c>();
         for(integer icount = 0 ; icount< 5 ;icount++){
             NSP_Sub_Client__c subClientObj = new NSP_Sub_Client__c();
@@ -169,6 +178,49 @@ public class NSP_AssetTriggerHelperTest {
         update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,Name,NSP_AIMS_First_Pay_Date__c FROM Asset WHERE Name = 'asset3'];
+		System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
+        
+    }
+    
+    @isTest
+    static void afterPayDateWOTest() {
+        
+        Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WX_WA').getRecordTypeId();
+        Id  soldToCheckListRecordTypeId = Schema.SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
+        List<Asset> assetList = [SELECT ID,Name,recordtypeid,NSP_AIMS_First_Pay_Date__c,Opportunity__c FROM Asset WHERE Name = 'asset4'];
+        Opportunity eachOppty = [SELECT id,NSP_PrimaryProduct__c,StageName,OwnerId from opportunity  limit 1];
+        
+         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
+        Task taskRec = new Task(
+            Subject = 'Discovery Call',
+            WhatId = eachOppty.Id,
+            NSP_Task_Type__c = 'BPS',
+            RecordTypeId = taskRecTypeId,
+            NSP_Task_Subtype__c = 'Client Meeting',
+            NSP_Status__c='Completed'
+        );
+        insert taskRec;
+        
+        eachOppty.NSP_BPA__c = eachOppty.OwnerId;
+        //eachOppty.StageName = 'Closed Won';
+        eachOppty.NSP_PrimaryProduct__c = 'WO';
+        eachOppty.StageName = 'Closing';
+        update eachOppty;
+            NSP_Checklist__c eachCheckList = new NSP_Checklist__c();
+            eachCheckList.RecordTypeId = soldToCheckListRecordTypeId;
+            eachCheckList.NSP_Opportunity__c = eachOppty.Id;
+            eachCheckList.NSP_Requested_First_Pay_Date__c = system.today();
+          insert eachCheckList;
+        
+        Test.startTest();
+        Asset assetObj = new Asset();
+        assetObj.Id = assetList[0].ID;
+        assetObj.recordtypeid = new_Asset_RT_ID;
+        assetObj.NSP_AIMS_First_Pay_Date__c = date.today();
+        assetObj.Opportunity__c = eachOppty.ID;
+        update assetObj;
+        Test.stopTest();
+        List<Asset> assetList1 = [SELECT ID,Name,NSP_AIMS_First_Pay_Date__c FROM Asset WHERE Name = 'asset4'];
 		System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
         
     }

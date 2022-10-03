@@ -4,7 +4,7 @@
     <description>Field to store TaxId information</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Tax ID</label>
+    <label>Nonprofit Organization Tax Id</label>
     <length>80</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

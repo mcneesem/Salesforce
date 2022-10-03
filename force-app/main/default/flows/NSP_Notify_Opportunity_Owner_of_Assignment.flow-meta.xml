@@ -4,38 +4,14 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>NSP_Notice_of_Termination_for_Account_Owner</stringValue>
+                <stringValue>NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updated</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_11_A1</name>
-        <label>Notify Termination of Closed Won Opportunity</label>
-        <locationX>1100</locationX>
+        <name>myRule_12_A1</name>
+        <label>Notify when account number of ee is changed</label>
+        <locationX>1200</locationX>
         <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Notice_of_Termination_for_Account_Owner</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision12</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_13_A1</name>
-        <label>Interest in BPS Email Alert for Non WX/WA</label>
-        <locationX>1300</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</actionName>
+        <actionName>Opportunity.NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updated</actionName>
         <actionType>emailAlert</actionType>
         <connector>
             <targetReference>myDecision14</targetReference>
@@ -52,248 +28,17 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>NSP_Interest_in_BPS_Email_Alert_for_WX_WA</stringValue>
+                <stringValue>NSP_Alert_Mid_when_opportunity_primary_product_is_updated</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_15_A1</name>
-        <label>Interest in BPS Email Alert for WX/WA</label>
+        <label>Notify after primary product changed when number of ee is greater than 150</label>
         <locationX>1500</locationX>
         <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_WX_WA</actionName>
+        <actionName>Opportunity.NSP_Alert_Mid_when_opportunity_primary_product_is_updated</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision16</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_Retirement_Services_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_17_A1</name>
-        <label>Interest in Retirement Service</label>
-        <locationX>1700</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_Retirement_Services_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision18</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_Insurance_Services_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_19_A1</name>
-        <label>Interest in Insurance Services Email Alert</label>
-        <locationX>1900</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_Insurance_Services_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision20</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>apexSelection</name>
-            <value>
-                <stringValue>NSP_DO_NOTHING</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_1_A1</name>
-        <label>Do_Nothing</label>
-        <locationX>100</locationX>
-        <locationY>200</locationY>
-        <actionName>NSP_DO_NOTHING</actionName>
-        <actionType>apex</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_Recruiting_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_21_A1</name>
-        <label>Interest in Recruiting Email Alert</label>
-        <locationX>2100</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_Recruiting_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision22</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_Employment_Screening_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_23_A1</name>
-        <label>Interest in Employment Screening Email Alert</label>
-        <locationX>2300</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_Employment_Screening_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision24</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_Certify_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_25_A1</name>
-        <label>Interest in Certify Email Alert</label>
-        <locationX>2500</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_Certify_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision26</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Interest_in_Integra_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_27_A1</name>
-        <label>Interest in Integra Email Alert</label>
-        <locationX>2700</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Interest_in_Integra_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision28</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Child_Opportunity_Closed_Lost_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_29_A1</name>
-        <label>Notify child opportunities that they are closed lost</label>
-        <locationX>2900</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision30</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Parent_opportunity_Closed_Lost_Email_Alert</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_31_A1</name>
-        <label>Notify child opty that parent opty is closed</label>
-        <locationX>3100</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Parent_opportunity_Closed_Lost_Email_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myDecision32</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Notify_Opportunity_Owner_of_Closed_Won</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_33_A1</name>
-        <label>Notify Opportunity Owner of Closed Won</label>
-        <locationX>3300</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Notify_Opportunity_Owner_of_Closed_Won</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myAssignment_myRule_33_A2</targetReference>
+            <targetReference>myDecision17</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -322,14 +67,14 @@
                 <stringValue>reference</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_33_A2</name>
-        <label>Notify Opportunity Owner of Closed won</label>
-        <locationX>3300</locationX>
-        <locationY>300</locationY>
+        <name>myRule_18_A1</name>
+        <label>Notify BPA/Oppty Owner when Stage is Proposal</label>
+        <locationX>1800</locationX>
+        <locationY>200</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <connector>
-            <targetReference>myAssignment_myRule_33_A3</targetReference>
+            <targetReference>myDecision19</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -347,14 +92,13 @@
         <inputParameters>
             <name>title</name>
             <value>
-                <stringValue>{!myVariable_current.Name} has been moved to Closed Won</stringValue>
+                <stringValue>{!myVariable_current.Name} has been updated from Analysis to Proposal stage.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>body</name>
             <value>
-                <stringValue>Please be aware that {!myVariable_current.Name} has been updated to Closed Won. Click to view the opportunity.
-</stringValue>
+                <stringValue>Please review and proceed with the next steps</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -402,127 +146,40 @@
             </processMetadataValues>
             <name>recipientIds</name>
             <value>
-                <elementReference>myCollection_myRule_33_A2recipientIds</elementReference>
+                <elementReference>myCollection_myRule_18_A1recipientIds</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>customNotifTypeName</name>
+            <name>apexSelection</name>
             <value>
-                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
+                <stringValue>NSP_DO_NOTHING</stringValue>
             </value>
         </processMetadataValues>
-        <processMetadataValues>
-            <name>recipientCategory</name>
-            <value>
-                <stringValue>opportunityTeam</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>recipientType</name>
-            <value>
-                <stringValue>reference</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_33_A3</name>
-        <label>Bell Notification to Opportunity Team members</label>
-        <locationX>3300</locationX>
-        <locationY>400</locationY>
-        <actionName>customNotificationAction</actionName>
-        <actionType>customNotificationAction</actionType>
-        <connector>
-            <targetReference>myDecision34</targetReference>
-        </connector>
+        <name>myRule_1_A1</name>
+        <label>Do_Nothing</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>NSP_DO_NOTHING</actionName>
+        <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>customNotifTypeId</name>
-            <value>
-                <stringValue>000000000000000</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>customNotifTypeName</name>
-            <value>
-                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>{!myVariable_current.Name} has been moved to Closed Won</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
-            <value>
-                <stringValue>Please be aware that {!myVariable_current.Name} has been updated to Closed Won. Click here to view the opportunity.</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>targetId</name>
-            <value>
-                <stringValue>{!myVariable_current.Id}</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>recipientIds</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>500.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>recipientIds</name>
-            <value>
-                <elementReference>myCollection_myRule_33_A3recipientIds</elementReference>
-            </value>
-        </inputParameters>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</stringValue>
+                <stringValue>NSP_Notice_of_Termination_for_Account_Owner</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_35_A1</name>
-        <label>Notify Child Opportunity Owner of Closed Won</label>
-        <locationX>3500</locationX>
+        <name>myRule_20_A1</name>
+        <label>Notify Termination of Closed Won Opportunity</label>
+        <locationX>2000</locationX>
         <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</actionName>
+        <actionName>Opportunity.NSP_Notice_of_Termination_for_Account_Owner</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision36</targetReference>
+            <targetReference>myDecision21</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -536,17 +193,17 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</stringValue>
+                <stringValue>NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_37_A1</name>
-        <label>Notify Retirement Service Oppty</label>
-        <locationX>3700</locationX>
+        <name>myRule_22_A1</name>
+        <label>Interest in BPS Email Alert for Non WX/WA</label>
+        <locationX>2200</locationX>
         <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</actionName>
+        <actionName>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myRule_37_A2</targetReference>
+            <targetReference>myDecision23</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -560,17 +217,185 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>NSP_Engage_Service_Team_Email</stringValue>
+                <stringValue>NSP_Interest_in_BPS_Email_Alert_for_WX_WA</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_39_A1</name>
-        <label>eaEngage Service Team</label>
-        <locationX>3900</locationX>
+        <name>myRule_24_A1</name>
+        <label>Interest in BPS Email Alert for WX/WA</label>
+        <locationX>2400</locationX>
         <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Engage_Service_Team_Email</actionName>
+        <actionName>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_WX_WA</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision41</targetReference>
+            <targetReference>myDecision25</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Interest_in_Retirement_Services_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_26_A1</name>
+        <label>Interest in Retirement Service</label>
+        <locationX>2600</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Interest_in_Retirement_Services_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision27</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Interest_in_Insurance_Services_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_28_A1</name>
+        <label>Interest in Insurance Services Email Alert</label>
+        <locationX>2800</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Interest_in_Insurance_Services_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision29</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Interest_in_Recruiting_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_30_A1</name>
+        <label>Interest in Recruiting Email Alert</label>
+        <locationX>3000</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Interest_in_Recruiting_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision31</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Interest_in_Employment_Screening_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_32_A1</name>
+        <label>Interest in Employment Screening Email Alert</label>
+        <locationX>3200</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Interest_in_Employment_Screening_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision33</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Interest_in_Certify_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_34_A1</name>
+        <label>Interest in Certify Email Alert</label>
+        <locationX>3400</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Interest_in_Certify_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision35</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Interest_in_Integra_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_36_A1</name>
+        <label>Interest in Integra Email Alert</label>
+        <locationX>3600</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Interest_in_Integra_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision37</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Child_Opportunity_Closed_Lost_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_38_A1</name>
+        <label>Notify child opportunities that they are closed lost</label>
+        <locationX>3800</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision39</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -710,17 +535,342 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</stringValue>
+                <stringValue>NSP_Parent_opportunity_Closed_Lost_Email_Alert</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_40_A1</name>
+        <label>Notify child opty that parent opty is closed</label>
+        <locationX>4000</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Parent_opportunity_Closed_Lost_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision41</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Notify_Opportunity_Owner_of_Closed_Won</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_42_A1</name>
+        <label>Notify Opportunity Owner of Closed Won</label>
+        <locationX>4200</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Notify_Opportunity_Owner_of_Closed_Won</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myAssignment_myRule_42_A2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>customNotifTypeName</name>
+            <value>
+                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>recipientCategory</name>
+            <value>
+                <stringValue>owner</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>recipientType</name>
+            <value>
+                <stringValue>reference</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_42_A2</name>
+        <label>Notify Opportunity Owner of Closed won</label>
+        <locationX>4200</locationX>
+        <locationY>300</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>myAssignment_myRule_42_A3</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <stringValue>000000000000000</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>customNotifTypeName</name>
+            <value>
+                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>{!myVariable_current.Name} has been moved to Closed Won</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>Please be aware that {!myVariable_current.Name} has been updated to Closed Won. Click to view the opportunity.
+</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <stringValue>{!myVariable_current.Id}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>recipientIds</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>500.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>myCollection_myRule_42_A2recipientIds</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>customNotifTypeName</name>
+            <value>
+                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>recipientCategory</name>
+            <value>
+                <stringValue>opportunityTeam</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>recipientType</name>
+            <value>
+                <stringValue>reference</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_42_A3</name>
+        <label>Bell Notification to Opportunity Team members</label>
+        <locationX>4200</locationX>
+        <locationY>400</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>myDecision43</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <stringValue>000000000000000</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>customNotifTypeName</name>
+            <value>
+                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>{!myVariable_current.Name} has been moved to Closed Won</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>Please be aware that {!myVariable_current.Name} has been updated to Closed Won. Click here to view the opportunity.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <stringValue>{!myVariable_current.Id}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>recipientIds</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>500.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>myCollection_myRule_42_A3recipientIds</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_44_A1</name>
+        <label>Notify Child Opportunity Owner of Closed Won</label>
+        <locationX>4400</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision45</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_46_A1</name>
-        <label>Signed CSA Email to Opportunity Owner Manager&apos;s Manager</label>
+        <label>Notify Retirement Service Oppty</label>
         <locationX>4600</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myRule_46_A2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>NSP_Engage_Service_Team_Email</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_48_A1</name>
+        <label>eaEngage Service Team</label>
+        <locationX>4800</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Engage_Service_Team_Email</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myDecision50</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_55_A1</name>
+        <label>Signed CSA Email to Opportunity Owner Manager&apos;s Manager</label>
+        <locationX>5500</locationX>
         <locationY>200</locationY>
         <actionName>Opportunity.Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision48</targetReference>
+            <targetReference>myDecision57</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -737,32 +887,11 @@
                 <stringValue>NSP_Alert_when_Order_is_Generated_for_an_Opportunity</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_49_A1</name>
+        <name>myRule_58_A1</name>
         <label>Notify Oppty Owner when Order Generated</label>
-        <locationX>4900</locationX>
+        <locationX>5800</locationX>
         <locationY>200</locationY>
         <actionName>Opportunity.NSP_Alert_when_Order_is_Generated_for_an_Opportunity</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Engage_Service_Team_Email_for_WX_Opportunities</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_52_A1</name>
-        <label>Engage Service Team alert for WX opportunities</label>
-        <locationX>5200</locationX>
-        <locationY>200</locationY>
-        <actionName>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -902,6 +1031,27 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
+                <stringValue>NSP_Engage_Service_Team_Email_for_WX_Opportunities</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_61_A1</name>
+        <label>Engage Service Team alert for WX opportunities</label>
+        <locationX>6100</locationX>
+        <locationY>200</locationY>
+        <actionName>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
                 <stringValue>NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account_with_more_than_1</stringValue>
             </value>
         </processMetadataValues>
@@ -924,137 +1074,43 @@
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>customNotifTypeName</name>
+            <name>emailAlertSelection</name>
             <value>
-                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>recipientCategory</name>
-            <value>
-                <stringValue>owner</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>recipientType</name>
-            <value>
-                <stringValue>reference</stringValue>
+                <stringValue>NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_9_A1</name>
-        <label>Notify BPA/Oppty Owner when Stage is Proposal</label>
+        <label>Notify after number of ee changed more then 150</label>
         <locationX>900</locationX>
         <locationY>200</locationY>
-        <actionName>customNotificationAction</actionName>
-        <actionType>customNotificationAction</actionType>
+        <actionName>Opportunity.NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</actionName>
+        <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision10</targetReference>
+            <targetReference>myDecision11</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>customNotifTypeId</name>
+            <name>SObjectRowId</name>
             <value>
-                <stringValue>000000000000000</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>customNotifTypeName</name>
-            <value>
-                <stringValue>NSP_Notify_Opportunity_Owner_of_record_Assignment</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>{!myVariable_current.Name} has been updated from Analysis to Proposal stage.</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
-            <value>
-                <stringValue>Please review and proceed with the next steps</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>targetId</name>
-            <value>
-                <stringValue>{!myVariable_current.Id}</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>recipientIds</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>500.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>recipientIds</name>
-            <value>
-                <elementReference>myCollection_myRule_9_A1recipientIds</elementReference>
+                <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>myAssignment_myRule_33_A2</name>
-        <label>myAssignment_myRule_33_A2</label>
+        <name>myAssignment_myRule_18_A1</name>
+        <label>myAssignment_myRule_18_A1</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>myCollection_myRule_33_A2recipientIds</assignToReference>
+            <assignToReference>myCollection_myRule_18_A1recipientIds</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>myVariable_current.OwnerId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>myRule_33_A2</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>myAssignment_myRule_33_A3</name>
-        <label>myAssignment_myRule_33_A3</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myCollection_myRule_33_A3recipientIds</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>myRule_33_A3</targetReference>
+            <targetReference>myRule_18_A1</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1074,6 +1130,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>myAssignment_myRule_42_A2</name>
+        <label>myAssignment_myRule_42_A2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myCollection_myRule_42_A2recipientIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>myVariable_current.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myRule_42_A2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>myAssignment_myRule_42_A3</name>
+        <label>myAssignment_myRule_42_A3</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myCollection_myRule_42_A3recipientIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myRule_42_A3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>myAssignment_myRule_5_A2</name>
         <label>myAssignment_myRule_5_A2</label>
         <locationX>0</locationX>
@@ -1089,33 +1177,113 @@
             <targetReference>myRule_5_A2</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>myAssignment_myRule_9_A1</name>
-        <label>myAssignment_myRule_9_A1</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myCollection_myRule_9_A1recipientIds</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>myVariable_current.OwnerId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>myRule_9_A1</targetReference>
-        </connector>
-    </assignments>
     <decisions>
-        <name>isChangedDecision40_myRule_39_NSP_EngageServiceTeam_c</name>
-        <label>isChangedDecision40_myRule_39_NSP_EngageServiceTeam_c</label>
+        <name>isChangedDecision10_myRule_9_NSP_Number_of_Employees_c</name>
+        <label>isChangedDecision10_myRule_9_NSP_Number_of_Employees_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision43_myRule_42_NSP_Signed_CSA_c</targetReference>
+            <targetReference>isChangedDecision13_myRule_12_Number_Of_EE_On_Acc_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_40_myRule_39_NSP_EngageServiceTeam_c</name>
+            <name>isChangedRule_10_myRule_9_NSP_Number_of_Employees_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.NSP_Number_of_Employees__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision13_myRule_12_Number_Of_EE_On_Acc_c</targetReference>
+            </connector>
+            <label>isChangedRule_10_myRule_9_NSP_Number_of_Employees_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision13_myRule_12_Number_Of_EE_On_Acc_c</name>
+        <label>isChangedDecision13_myRule_12_Number_Of_EE_On_Acc_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision16_myRule_15_NSP_PrimaryProduct_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_13_myRule_12_Number_Of_EE_On_Acc_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.Number_Of_EE_On_Acc__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.Number_Of_EE_On_Acc__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision16_myRule_15_NSP_PrimaryProduct_c</targetReference>
+            </connector>
+            <label>isChangedRule_13_myRule_12_Number_Of_EE_On_Acc_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision16_myRule_15_NSP_PrimaryProduct_c</name>
+        <label>isChangedDecision16_myRule_15_NSP_PrimaryProduct_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_16_myRule_15_NSP_PrimaryProduct_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.NSP_PrimaryProduct__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</targetReference>
+            </connector>
+            <label>isChangedRule_16_myRule_15_NSP_PrimaryProduct_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</name>
+        <label>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_49_myRule_48_NSP_EngageServiceTeam_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1132,22 +1300,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision43_myRule_42_NSP_Signed_CSA_c</targetReference>
+                <targetReference>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</targetReference>
             </connector>
-            <label>isChangedRule_40_myRule_39_NSP_EngageServiceTeam_c</label>
+            <label>isChangedRule_49_myRule_48_NSP_EngageServiceTeam_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision43_myRule_42_NSP_Signed_CSA_c</name>
-        <label>isChangedDecision43_myRule_42_NSP_Signed_CSA_c</label>
+        <name>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</name>
+        <label>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision47_myRule_46_NSP_Signed_CSA_c</targetReference>
+            <targetReference>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_43_myRule_42_NSP_Signed_CSA_c</name>
+            <name>isChangedRule_52_myRule_51_NSP_Signed_CSA_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1164,22 +1332,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision47_myRule_46_NSP_Signed_CSA_c</targetReference>
+                <targetReference>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</targetReference>
             </connector>
-            <label>isChangedRule_43_myRule_42_NSP_Signed_CSA_c</label>
+            <label>isChangedRule_52_myRule_51_NSP_Signed_CSA_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision47_myRule_46_NSP_Signed_CSA_c</name>
-        <label>isChangedDecision47_myRule_46_NSP_Signed_CSA_c</label>
+        <name>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</name>
+        <label>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision50_myRule_49_NSP_OrderForm_Generation_Counter_c</targetReference>
+            <targetReference>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_47_myRule_46_NSP_Signed_CSA_c</name>
+            <name>isChangedRule_56_myRule_55_NSP_Signed_CSA_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1196,22 +1364,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision50_myRule_49_NSP_OrderForm_Generation_Counter_c</targetReference>
+                <targetReference>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</targetReference>
             </connector>
-            <label>isChangedRule_47_myRule_46_NSP_Signed_CSA_c</label>
+            <label>isChangedRule_56_myRule_55_NSP_Signed_CSA_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision50_myRule_49_NSP_OrderForm_Generation_Counter_c</name>
-        <label>isChangedDecision50_myRule_49_NSP_OrderForm_Generation_Counter_c</label>
+        <name>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</name>
+        <label>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision53_myRule_52_NSP_EngageServiceTeam_c</targetReference>
+            <targetReference>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_50_myRule_49_NSP_OrderForm_Generation_Counter_c</name>
+            <name>isChangedRule_59_myRule_58_NSP_OrderForm_Generation_Counter_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1228,14 +1396,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision53_myRule_52_NSP_EngageServiceTeam_c</targetReference>
+                <targetReference>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</targetReference>
             </connector>
-            <label>isChangedRule_50_myRule_49_NSP_OrderForm_Generation_Counter_c</label>
+            <label>isChangedRule_59_myRule_58_NSP_OrderForm_Generation_Counter_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision53_myRule_52_NSP_EngageServiceTeam_c</name>
-        <label>isChangedDecision53_myRule_52_NSP_EngageServiceTeam_c</label>
+        <name>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</name>
+        <label>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -1243,7 +1411,7 @@
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_53_myRule_52_NSP_EngageServiceTeam_c</name>
+            <name>isChangedRule_62_myRule_61_NSP_EngageServiceTeam_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1262,7 +1430,7 @@
             <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
-            <label>isChangedRule_53_myRule_52_NSP_EngageServiceTeam_c</label>
+            <label>isChangedRule_62_myRule_61_NSP_EngageServiceTeam_c</label>
         </rules>
     </decisions>
     <decisions>
@@ -1303,28 +1471,52 @@
                 <numberValue>5.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision10</name>
-        <label>myDecision10</label>
+        <name>myDecision11</name>
+        <label>myDecision11</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision12</targetReference>
+            <targetReference>myDecision14</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_11</name>
+            <name>myRule_12</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_11</leftValueReference>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_13_myRule_12_Number_Of_EE_On_Acc_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_11_A1</targetReference>
+                <targetReference>myRule_12_A1</targetReference>
             </connector>
-            <label>Closed Won Opportunity is Terminated</label>
+            <label>Number of EE changed on account</label>
         </rules>
     </decisions>
     <decisions>
@@ -1334,28 +1526,207 @@
                 <numberValue>6.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision12</name>
-        <label>myDecision12</label>
+        <name>myDecision14</name>
+        <label>myDecision14</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision14</targetReference>
+            <targetReference>myDecision17</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_13</name>
-            <conditionLogic>and</conditionLogic>
+            <name>myRule_15</name>
+            <conditionLogic>1 AND 2 AND(3 OR 4 OR 5 OR 6)</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_13</leftValueReference>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_16_myRule_15_NSP_PrimaryProduct_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>150.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WS</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>myRule_13_A1</targetReference>
+                <targetReference>myRule_15_A1</targetReference>
             </connector>
-            <label>BPS Notification(Non WX/WA)</label>
+            <label>Opportunity Primary Product is changed when number of ee is greater than 150</label>
         </rules>
     </decisions>
     <decisions>
@@ -1365,28 +1736,28 @@
                 <numberValue>7.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision14</name>
-        <label>myDecision14</label>
+        <name>myDecision17</name>
+        <label>myDecision17</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision16</targetReference>
+            <targetReference>myDecision19</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_15</name>
+            <name>myRule_18</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_15</leftValueReference>
+                <leftValueReference>formula_myRule_18</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_15_A1</targetReference>
+                <targetReference>myAssignment_myRule_18_A1</targetReference>
             </connector>
-            <label>BPS Notification(WX/WA)</label>
+            <label>Stage Changed to Proposal</label>
         </rules>
     </decisions>
     <decisions>
@@ -1396,59 +1767,28 @@
                 <numberValue>8.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision16</name>
-        <label>myDecision16</label>
+        <name>myDecision19</name>
+        <label>myDecision19</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision18</targetReference>
+            <targetReference>myDecision21</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_17</name>
+            <name>myRule_20</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_17</leftValueReference>
+                <leftValueReference>formula_myRule_20</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_17_A1</targetReference>
+                <targetReference>myRule_20_A1</targetReference>
             </connector>
-            <label>Retirement Service Notification</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>9.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision18</name>
-        <label>myDecision18</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision20</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_19</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_19</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_19_A1</targetReference>
-            </connector>
-            <label>Insurance Service Notification</label>
+            <label>Closed Won Opportunity is Terminated</label>
         </rules>
     </decisions>
     <decisions>
@@ -1486,31 +1826,62 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>10.0</numberValue>
+                <numberValue>9.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision20</name>
-        <label>myDecision20</label>
+        <name>myDecision21</name>
+        <label>myDecision21</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision22</targetReference>
+            <targetReference>myDecision23</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_21</name>
+            <name>myRule_22</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_21</leftValueReference>
+                <leftValueReference>formula_myRule_22</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_21_A1</targetReference>
+                <targetReference>myRule_22_A1</targetReference>
             </connector>
-            <label>Recruiting Notification</label>
+            <label>BPS Notification(Non WX/WA)</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>10.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision23</name>
+        <label>myDecision23</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision25</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_24</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_24</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_24_A1</targetReference>
+            </connector>
+            <label>BPS Notification(WX/WA)</label>
         </rules>
     </decisions>
     <decisions>
@@ -1520,28 +1891,28 @@
                 <numberValue>11.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision22</name>
-        <label>myDecision22</label>
+        <name>myDecision25</name>
+        <label>myDecision25</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision24</targetReference>
+            <targetReference>myDecision27</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_23</name>
+            <name>myRule_26</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_23</leftValueReference>
+                <leftValueReference>formula_myRule_26</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_23_A1</targetReference>
+                <targetReference>myRule_26_A1</targetReference>
             </connector>
-            <label>Employment Screening Notifications</label>
+            <label>Retirement Service Notification</label>
         </rules>
     </decisions>
     <decisions>
@@ -1551,28 +1922,28 @@
                 <numberValue>12.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision24</name>
-        <label>myDecision24</label>
+        <name>myDecision27</name>
+        <label>myDecision27</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision26</targetReference>
+            <targetReference>myDecision29</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_25</name>
+            <name>myRule_28</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_25</leftValueReference>
+                <leftValueReference>formula_myRule_28</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_25_A1</targetReference>
+                <targetReference>myRule_28_A1</targetReference>
             </connector>
-            <label>Certify Notifications</label>
+            <label>Insurance Service Notification</label>
         </rules>
     </decisions>
     <decisions>
@@ -1582,28 +1953,28 @@
                 <numberValue>13.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision26</name>
-        <label>myDecision26</label>
+        <name>myDecision29</name>
+        <label>myDecision29</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision28</targetReference>
+            <targetReference>myDecision31</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_27</name>
+            <name>myRule_30</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_27</leftValueReference>
+                <leftValueReference>formula_myRule_30</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_27_A1</targetReference>
+                <targetReference>myRule_30_A1</targetReference>
             </connector>
-            <label>Integra Notifications</label>
+            <label>Recruiting Notification</label>
         </rules>
     </decisions>
     <decisions>
@@ -1613,28 +1984,28 @@
                 <numberValue>14.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision28</name>
-        <label>myDecision28</label>
+        <name>myDecision31</name>
+        <label>myDecision31</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision30</targetReference>
+            <targetReference>myDecision33</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_29</name>
+            <name>myRule_32</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_29</leftValueReference>
+                <leftValueReference>formula_myRule_32</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_29_A1</targetReference>
+                <targetReference>myRule_32_A1</targetReference>
             </connector>
-            <label>Child Opty With Retirement Service Product Closed Lost</label>
+            <label>Employment Screening Notifications</label>
         </rules>
     </decisions>
     <decisions>
@@ -1644,28 +2015,28 @@
                 <numberValue>15.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision30</name>
-        <label>myDecision30</label>
+        <name>myDecision33</name>
+        <label>myDecision33</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision32</targetReference>
+            <targetReference>myDecision35</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_31</name>
+            <name>myRule_34</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_31</leftValueReference>
+                <leftValueReference>formula_myRule_34</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_31_A1</targetReference>
+                <targetReference>myRule_34_A1</targetReference>
             </connector>
-            <label>Child Opty With Non Retirement Service Product Closed Lost</label>
+            <label>Certify Notifications</label>
         </rules>
     </decisions>
     <decisions>
@@ -1675,28 +2046,28 @@
                 <numberValue>16.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision32</name>
-        <label>myDecision32</label>
+        <name>myDecision35</name>
+        <label>myDecision35</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision34</targetReference>
+            <targetReference>myDecision37</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_33</name>
+            <name>myRule_36</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_33</leftValueReference>
+                <leftValueReference>formula_myRule_36</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_33_A1</targetReference>
+                <targetReference>myRule_36_A1</targetReference>
             </connector>
-            <label>Opportunity Moved to Closed Won</label>
+            <label>Integra Notifications</label>
         </rules>
     </decisions>
     <decisions>
@@ -1706,28 +2077,28 @@
                 <numberValue>17.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision34</name>
-        <label>myDecision34</label>
+        <name>myDecision37</name>
+        <label>myDecision37</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision36</targetReference>
+            <targetReference>myDecision39</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_35</name>
+            <name>myRule_38</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_35</leftValueReference>
+                <leftValueReference>formula_myRule_38</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_35_A1</targetReference>
+                <targetReference>myRule_38_A1</targetReference>
             </connector>
-            <label>Child Opty With Parent Opty as Closed Won</label>
+            <label>Child Opty With Retirement Service Product Closed Lost</label>
         </rules>
     </decisions>
     <decisions>
@@ -1737,28 +2108,59 @@
                 <numberValue>18.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision36</name>
-        <label>myDecision36</label>
+        <name>myDecision39</name>
+        <label>myDecision39</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision38</targetReference>
+            <targetReference>myDecision41</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_37</name>
+            <name>myRule_40</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_37</leftValueReference>
+                <leftValueReference>formula_myRule_40</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_37_A1</targetReference>
+                <targetReference>myRule_40_A1</targetReference>
             </connector>
-            <label>Notify Retirement Service Opty on Primary Product Change on Parent Opty</label>
+            <label>Child Opty With Non Retirement Service Product Closed Lost</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>2.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision4</name>
+        <label>myDecision4</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision6</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_5</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_5_A1</targetReference>
+            </connector>
+            <label>New Opportunity Created</label>
         </rules>
     </decisions>
     <decisions>
@@ -1768,16 +2170,109 @@
                 <numberValue>19.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision38</name>
-        <label>myDecision38</label>
+        <name>myDecision41</name>
+        <label>myDecision41</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision41</targetReference>
+            <targetReference>myDecision43</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_39</name>
+            <name>myRule_42</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_42</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_42_A1</targetReference>
+            </connector>
+            <label>Opportunity Moved to Closed Won</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>20.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision43</name>
+        <label>myDecision43</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision45</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_44</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_44</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_44_A1</targetReference>
+            </connector>
+            <label>Child Opty With Parent Opty as Closed Won</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>21.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision45</name>
+        <label>myDecision45</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision47</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_46</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_46</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_46_A1</targetReference>
+            </connector>
+            <label>Notify Retirement Service Opty on Primary Product Change on Parent Opty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>22.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision47</name>
+        <label>myDecision47</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision50</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_48</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -1835,7 +2330,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_40_myRule_39_NSP_EngageServiceTeam_c</leftValueReference>
+                <leftValueReference>isChangedRule_49_myRule_48_NSP_EngageServiceTeam_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1873,7 +2368,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_39_A1</targetReference>
+                <targetReference>myRule_48_A1</targetReference>
             </connector>
             <label>Engage Service Team Checked</label>
         </rules>
@@ -1882,50 +2377,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>2.0</numberValue>
+                <numberValue>23.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision4</name>
-        <label>myDecision4</label>
+        <name>myDecision50</name>
+        <label>myDecision50</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision6</targetReference>
+            <targetReference>myDecision54</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_5</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_5</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_5_A1</targetReference>
-            </connector>
-            <label>New Opportunity Created</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>20.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision41</name>
-        <label>myDecision41</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision45</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_42</name>
+            <name>myRule_51</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -1952,7 +2416,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_43_myRule_42_NSP_Signed_CSA_c</leftValueReference>
+                <leftValueReference>isChangedRule_52_myRule_51_NSP_Signed_CSA_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2095,7 +2559,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_42_A1</targetReference>
+                <targetReference>myRule_51_A1</targetReference>
             </connector>
             <label>Email to Manager for Signed CSA</label>
         </rules>
@@ -2104,19 +2568,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>21.0</numberValue>
+                <numberValue>24.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision45</name>
-        <label>myDecision45</label>
+        <name>myDecision54</name>
+        <label>myDecision54</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision48</targetReference>
+            <targetReference>myDecision57</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_46</name>
+            <name>myRule_55</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2143,7 +2607,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_47_myRule_46_NSP_Signed_CSA_c</leftValueReference>
+                <leftValueReference>isChangedRule_56_myRule_55_NSP_Signed_CSA_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2286,7 +2750,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_46_A1</targetReference>
+                <targetReference>myRule_55_A1</targetReference>
             </connector>
             <label>Email to Manager for Signed CSA</label>
         </rules>
@@ -2295,19 +2759,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>22.0</numberValue>
+                <numberValue>25.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision48</name>
-        <label>myDecision48</label>
+        <name>myDecision57</name>
+        <label>myDecision57</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision51</targetReference>
+            <targetReference>myDecision60</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_49</name>
+            <name>myRule_58</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2334,7 +2798,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_50_myRule_49_NSP_OrderForm_Generation_Counter_c</leftValueReference>
+                <leftValueReference>isChangedRule_59_myRule_58_NSP_OrderForm_Generation_Counter_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2403,7 +2867,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_49_A1</targetReference>
+                <targetReference>myRule_58_A1</targetReference>
             </connector>
             <label>Order Generated for Opportunity</label>
         </rules>
@@ -2412,16 +2876,47 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>23.0</numberValue>
+                <numberValue>3.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision51</name>
-        <label>myDecision51</label>
+        <name>myDecision6</name>
+        <label>myDecision6</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision8</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_7</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_7</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_7_A1</targetReference>
+            </connector>
+            <label>Opportunity Created by Mid-Market sales for Acc with more than 150 emps</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>26.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision60</name>
+        <label>myDecision60</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_52</name>
+            <name>myRule_61</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2448,7 +2943,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_53_myRule_52_NSP_EngageServiceTeam_c</leftValueReference>
+                <leftValueReference>isChangedRule_62_myRule_61_NSP_EngageServiceTeam_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2517,40 +3012,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_52_A1</targetReference>
+                <targetReference>myRule_61_A1</targetReference>
             </connector>
             <label>Engage Service Team Checked for WX Opp</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>3.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision6</name>
-        <label>myDecision6</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision8</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_7</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_7</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_7_A1</targetReference>
-            </connector>
-            <label>Opportunity Created by Mid-Market sales for Acc with more than 150 emps</label>
         </rules>
     </decisions>
     <decisions>
@@ -2565,23 +3029,202 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision10</targetReference>
+            <targetReference>myDecision11</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_9</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 6 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_9</leftValueReference>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_10_myRule_9_NSP_Number_of_Employees_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Number</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>150.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>myAssignment_myRule_9_A1</targetReference>
+                <targetReference>myRule_9_A1</targetReference>
             </connector>
-            <label>Stage Changed to Proposal</label>
+            <label>Opportunity Changed by Mid-Market sales for Acc with more than 150 emps</label>
         </rules>
     </decisions>
     <description>The PB notifies the opty record owner whenever a record is assigned to them. Notifies Opportunity&apos;s Account owner for renewal opportunities, Notify Mid-Market when oppty is created for Account with More than 150emps</description>
@@ -2592,7 +3235,7 @@
                 <stringValue>[Opportunity].Owner.Manager.Manager.Email </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_44_myRule_42_A1_7937342271</name>
+        <name>formula_53_myRule_51_A1_7919036794</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Owner.Manager.Manager.Email}</expression>
     </formulas>
@@ -2611,12 +3254,23 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
+                <stringValue>AND(NOT(ISNEW()), ISPICKVAL([Opportunity].StageName , &quot;Proposal&quot;), ISCHANGED([Opportunity].StageName), PRIORVALUE([Opportunity].StageName) = &quot;Analysis&quot;)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_18</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(NOT(ISNEW()), ISPICKVAL({!myVariable_current.StageName} , &quot;Proposal&quot;), ISCHANGED({!myVariable_current.StageName}), PRIORVALUE({!myVariable_current.StageName}) = &quot;Analysis&quot;)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
                 <stringValue>NOT(ISNEW()) &amp;&amp; 
 ( (ISPICKVAL([Opportunity].StageName, &quot;Closed Won&quot; ) &amp;&amp; ISPICKVAL([Opportunity].Type, &quot;Termination&quot; ) &amp;&amp; ISCHANGED([Opportunity].Type )) 
 || (ISPICKVAL([Opportunity].Type, &quot;Termination&quot; ) &amp;&amp; ISPICKVAL([Opportunity].StageName, &quot;Closed Won&quot; ) &amp;&amp; ISCHANGED([Opportunity].StageName )))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_11</name>
+        <name>formula_myRule_20</name>
         <dataType>Boolean</dataType>
         <expression>NOT(ISNEW()) &amp;&amp; 
 ( (ISPICKVAL({!myVariable_current.StageName}, &quot;Closed Won&quot; ) &amp;&amp; ISPICKVAL({!myVariable_current.Type}, &quot;Termination&quot; ) &amp;&amp; ISCHANGED({!myVariable_current.Type} )) 
@@ -2633,7 +3287,7 @@ ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;BPS&apos;),
 ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_13</name>
+        <name>formula_myRule_22</name>
         <dataType>Boolean</dataType>
         <expression>AND(OR(ISNEW(),ISCHANGED({!myVariable_current.NSP_PrimaryProduct__c}) ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
 NOT(ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;WX&apos;)),
@@ -2651,7 +3305,7 @@ ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;BPS&apos;),
 ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_15</name>
+        <name>formula_myRule_24</name>
         <dataType>Boolean</dataType>
         <expression>AND(OR(ISNEW(),ISCHANGED({!myVariable_current.NSP_PrimaryProduct__c}) ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
 OR(ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;WX&apos;),ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;WA&apos;)),
@@ -2667,7 +3321,7 @@ ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Retirement Services&
 ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_17</name>
+        <name>formula_myRule_26</name>
         <dataType>Boolean</dataType>
         <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
 ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Retirement Services&apos;),
@@ -2682,90 +3336,11 @@ OR(ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Insurance Service
 ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_19</name>
+        <name>formula_myRule_28</name>
         <dataType>Boolean</dataType>
         <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
 OR(ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Insurance Services (Health &amp; Wellness)&apos;),ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Insurance Services (Property &amp; Casualty)&apos;)),
 ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
-ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Recruiting&apos;),
-ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_21</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
-ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Recruiting&apos;),
-ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
-ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Employment Screening&apos;),
-ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_23</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
-ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Employment Screening&apos;),
-ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
-ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Certify&apos;),
-ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_25</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
-ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Certify&apos;),
-ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
-ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Integra&apos;),
-ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_27</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
-ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Integra&apos;),
-ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(ISCHANGED([Opportunity].StageName),
-ISPICKVAL([Opportunity].StageName,&apos;Closed Lost&apos;),
-NOT(ISBLANK([Opportunity].NSP_Parent_Opportunity__c )),
-ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;Retirement Services&apos;),
-ISPICKVAL([Opportunity].NSP_Parent_Opportunity__r.StageName,&apos;Closed Lost&apos; ))</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_29</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(ISCHANGED({!myVariable_current.StageName}),
-ISPICKVAL({!myVariable_current.StageName},&apos;Closed Lost&apos;),
-NOT(ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} )),
-ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&apos;),
-ISPICKVAL({!myVariable_current.NSP_Parent_Opportunity__r.StageName},&apos;Closed Lost&apos; ))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -2782,6 +3357,85 @@ ISPICKVAL({!myVariable_current.NSP_Parent_Opportunity__r.StageName},&apos;Closed
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
+                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
+ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Recruiting&apos;),
+ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_30</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
+ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Recruiting&apos;),
+ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
+ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Employment Screening&apos;),
+ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_32</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
+ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Employment Screening&apos;),
+ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
+ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Certify&apos;),
+ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_34</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
+ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Certify&apos;),
+ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(OR(ISNEW() ,ISCHANGED([Opportunity].NSP_Upsell_Product_add_ons__c)),
+ISPICKVAL([Opportunity].NSP_Upsell_Product_add_ons__c,&apos;Integra&apos;),
+ISBLANK([Opportunity].NSP_Parent_Opportunity__c ))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_36</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(OR(ISNEW() ,ISCHANGED({!myVariable_current.NSP_Upsell_Product_add_ons__c})),
+ISPICKVAL({!myVariable_current.NSP_Upsell_Product_add_ons__c},&apos;Integra&apos;),
+ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} ))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(ISCHANGED([Opportunity].StageName),
+ISPICKVAL([Opportunity].StageName,&apos;Closed Lost&apos;),
+NOT(ISBLANK([Opportunity].NSP_Parent_Opportunity__c )),
+ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;Retirement Services&apos;),
+ISPICKVAL([Opportunity].NSP_Parent_Opportunity__r.StageName,&apos;Closed Lost&apos; ))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_38</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(ISCHANGED({!myVariable_current.StageName}),
+ISPICKVAL({!myVariable_current.StageName},&apos;Closed Lost&apos;),
+NOT(ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} )),
+ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&apos;),
+ISPICKVAL({!myVariable_current.NSP_Parent_Opportunity__r.StageName},&apos;Closed Lost&apos; ))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
                 <stringValue>AND(ISCHANGED([Opportunity].NSP_Is_Parent_Opportunity_Closed_Lost__c), 
 [Opportunity].NSP_Is_Parent_Opportunity_Closed_Lost__c = true,
 NOT(ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;Retirement Services&apos;)),
@@ -2789,7 +3443,7 @@ NOT(ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;&apos;)),
 [Opportunity].Owner.IsActive )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_31</name>
+        <name>formula_myRule_40</name>
         <dataType>Boolean</dataType>
         <expression>AND(ISCHANGED({!myVariable_current.NSP_Is_Parent_Opportunity_Closed_Lost__c}), 
 {!myVariable_current.NSP_Is_Parent_Opportunity_Closed_Lost__c} = true,
@@ -2804,7 +3458,7 @@ NOT(ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;&apos;)),
                 <stringValue>AND(NOT(ISNEW()), ISPICKVAL([Opportunity].StageName , &quot;Closed Won&quot;), ISCHANGED([Opportunity].StageName), [Opportunity].Owner.IsActive    )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_33</name>
+        <name>formula_myRule_42</name>
         <dataType>Boolean</dataType>
         <expression>AND(NOT(ISNEW()), ISPICKVAL({!myVariable_current.StageName} , &quot;Closed Won&quot;), ISCHANGED({!myVariable_current.StageName}), {!myVariable_current.Owner.IsActive}    )</expression>
     </formulas>
@@ -2820,7 +3474,7 @@ ISCHANGED([Opportunity].NSP_Is_Parent_Opportunity_Closed_Won__c),
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_35</name>
+        <name>formula_myRule_44</name>
         <dataType>Boolean</dataType>
         <expression>AND(
 NOT(ISBLANK({!myVariable_current.NSP_Parent_Opportunity__c} )),
@@ -2838,7 +3492,7 @@ NOT(ISBLANK([Opportunity].NSP_Parent_Opportunity__c )),
 ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;Retirement Services&apos;))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_37</name>
+        <name>formula_myRule_46</name>
         <dataType>Boolean</dataType>
         <expression>AND(ISCHANGED({!myVariable_current.NSP_Parent_Primary_Product_Changed__c}),
 {!myVariable_current.NSP_Parent_Primary_Product_Changed__c} = true,
@@ -2860,25 +3514,14 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>ISNEW() &amp;&amp; NOT($User.NSP_Mid_Market_Sales_Allowed__c) &amp;&amp; [Opportunity].Account.NumberOfEmployees &gt; 150</stringValue>
+                <stringValue>ISNEW() &amp;&amp; NOT($User.NSP_Mid_Market_Sales_Allowed__c) &amp;&amp; ([Opportunity].Account.NumberOfEmployees &gt; 150 || [Opportunity].NSP_Number_of_Employees__c &gt;150)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_7</name>
         <dataType>Boolean</dataType>
-        <expression>ISNEW() &amp;&amp; NOT({!$User.NSP_Mid_Market_Sales_Allowed__c}) &amp;&amp; {!myVariable_current.Account.NumberOfEmployees} &gt; 150</expression>
+        <expression>ISNEW() &amp;&amp; NOT({!$User.NSP_Mid_Market_Sales_Allowed__c}) &amp;&amp; ({!myVariable_current.Account.NumberOfEmployees} &gt; 150 || {!myVariable_current.NSP_Number_of_Employees__c} &gt;150)</expression>
     </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(NOT(ISNEW()), ISPICKVAL([Opportunity].StageName , &quot;Proposal&quot;), ISCHANGED([Opportunity].StageName), PRIORVALUE([Opportunity].StageName) = &quot;Analysis&quot;)</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_9</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(NOT(ISNEW()), ISPICKVAL({!myVariable_current.StageName} , &quot;Proposal&quot;), ISCHANGED({!myVariable_current.StageName}), PRIORVALUE({!myVariable_current.StageName}) = &quot;Analysis&quot;)</expression>
-    </formulas>
-    <interviewLabel>NSP_Notify_Opportunity_Owner_of_Assignment-14_InterviewLabel</interviewLabel>
+    <interviewLabel>NSP_Notify_Opportunity_Owner_of_Assignment-5_InterviewLabel</interviewLabel>
     <label>Notify Opportunity and Account Owner of Assignment</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -2930,12 +3573,12 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_37_A2</name>
+        <name>myRule_46_A2</name>
         <label>Set is product change field to false</label>
-        <locationX>3700</locationX>
+        <locationX>4600</locationX>
         <locationY>300</locationY>
         <connector>
-            <targetReference>myDecision38</targetReference>
+            <targetReference>myDecision47</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3063,12 +3706,12 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_42_A1</name>
+        <name>myRule_51_A1</name>
         <label>Update Opp Manager&apos;s Manager mail</label>
-        <locationX>4200</locationX>
+        <locationX>5100</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myDecision45</targetReference>
+            <targetReference>myDecision54</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3117,22 +3760,15 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
             </processMetadataValues>
             <field>NSP_Owner_Manager_s_Manager__c</field>
             <value>
-                <elementReference>formula_44_myRule_42_A1_7937342271</elementReference>
+                <elementReference>formula_53_myRule_51_A1_7919036794</elementReference>
             </value>
         </inputAssignments>
         <object>Opportunity</object>
     </recordUpdates>
-    <startElementReference>isChangedDecision40_myRule_39_NSP_EngageServiceTeam_c</startElementReference>
+    <startElementReference>isChangedDecision10_myRule_9_NSP_Number_of_Employees_c</startElementReference>
     <status>Active</status>
     <variables>
-        <name>myCollection_myRule_33_A2recipientIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>myCollection_myRule_33_A3recipientIds</name>
+        <name>myCollection_myRule_18_A1recipientIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -3146,14 +3782,21 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>myCollection_myRule_5_A2recipientIds</name>
+        <name>myCollection_myRule_42_A2recipientIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>myCollection_myRule_9_A1recipientIds</name>
+        <name>myCollection_myRule_42_A3recipientIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>myCollection_myRule_5_A2recipientIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>

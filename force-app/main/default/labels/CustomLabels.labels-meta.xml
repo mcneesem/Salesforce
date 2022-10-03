@@ -1364,4 +1364,19 @@
         <shortDescription>CanDeleteAccountLead</shortDescription>
         <value>System Administrator,Sales Administrator</value>
     </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_same_sales_office_on_Opp_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close_Lost_Roles_for_same_sales_office_on_Opp_Owner</shortDescription>
+        <value>MidMarket Sales Leader,MidMarket Administrator,District Administrator,District Manager,Regional Administrator,Regional Manager</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Business_Performance_Roles</fullName>
+        <categories>BPA, BPC, ABPA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Business Performance Roles</shortDescription>
+        <value>Business Performance Advisor,Business Performance Consultant,Associate Business Performance Advisors</value>
+    </labels>
 </CustomLabels>

@@ -1,0 +1,2 @@
+{!User.Name} Changed number of employee on {!Opportunity.NSP_PrimaryProduct__c} opportunity to {!Opportunity.NSP_Number_of_Employees__c} employees. Please take the next action as necessary.
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

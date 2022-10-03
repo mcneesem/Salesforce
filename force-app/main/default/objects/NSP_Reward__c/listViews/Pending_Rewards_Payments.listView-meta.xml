@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Rewards_Payments</fullName>
+    <columns>NSP_Account__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>NSP_Contact__c</columns>
+    <columns>NAME</columns>
+    <columns>NSP_Reward_Type__c</columns>
+    <columns>NSP_Benefits_Non_Profit__c</columns>
+    <columns>NSP_Non_ProfitName__c</columns>
+    <columns>NSP_Reward_Amount__c</columns>
+    <columns>NSP_Reward_Paid_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NSP_Reward_Paid_Date__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Pending Rewards Payments</label>
+</ListView>

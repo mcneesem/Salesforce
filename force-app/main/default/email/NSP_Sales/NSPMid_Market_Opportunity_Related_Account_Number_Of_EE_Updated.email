@@ -1,0 +1,2 @@
+{!User.Name} changed account related to {!Opportunity.NSP_PrimaryProduct__c} Opportunity to {!Opportunity.Number_Of_EE_On_Acc__c} number of employee  . Please take the next action as necessary. 
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>

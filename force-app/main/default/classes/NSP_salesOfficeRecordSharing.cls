@@ -5,6 +5,8 @@
 * Name : NSP_salesOfficeRecordSharing
 */
 public class NSP_salesOfficeRecordSharing {
+    //constants - custom labels
+    public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
     
     /***********************************************************************************************
     * MethodName: accountRecordSharing 
@@ -55,7 +57,7 @@ public class NSP_salesOfficeRecordSharing {
     * Description : update Sharing access for Non-BPA members of Account on Account Owner Change
     * Params:       Map<Id,Account> newAccountMap, Map<Id,Account>oldAccountMap
     * ********************************************************************************************/
-  	public static void shareAccountonUpdate(Map < Id, Account > newAccountMap, Map < Id,Account > oldAccountMap) {
+    public static void shareAccountonUpdate(Map < Id, Account > newAccountMap, Map < Id,Account > oldAccountMap) {
         Map<String,Set<String>> mapAccountIdSetOldSalesOffice = new  Map<String,Set<String>>();
         Map<String,Set<String>> mapSalesOfficeSetAccountId = new  Map<String,Set<String>>();
         List<AccountShare> newAccountShareList = new List<AccountShare>();
@@ -281,8 +283,8 @@ public class NSP_salesOfficeRecordSharing {
                 //Give read access to logged in user as after insert lead will be assigned to queue
                 if (lead.OwnerId.getSobjectType() == Group.SObjectType || lead.OwnerId.getSobjectType() == User.SObjectType) {
                     if (!Auth.CommunitiesUtil.isGuestUser()) {
-                    	LeadShare ldShare =createLeadShare(lead.CreatedById,lead.Id,NSP_SalesConstants.readSharingAccess); 
-                    	leadShareList.add(ldShare);
+                        LeadShare ldShare =createLeadShare(lead.CreatedById,lead.Id,NSP_SalesConstants.readSharingAccess); 
+                        leadShareList.add(ldShare);
                     }
                 }
                 if(String.valueOf(lead.OwnerId).startsWith(NSP_SalesConstants.userId)){
@@ -448,14 +450,14 @@ public class NSP_salesOfficeRecordSharing {
                 }
             }
             Map<Id,User> OldOppOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldOpportunityIdSet AND
-                                                            UserRole.Name =:NSP_SalesConstants.BPARole]);
+                                                            UserRole.Name in:BusinessPerformanceRoles]);
             Map<Id,Opportunity> newOppMap = new Map<Id,Opportunity>([SELECT Id,Owner.UserRole.Name,TOLabel(Owner.NSP_Sales_Office_Membership__c),OwnerId FROM Opportunity WHERE Id IN:newOpportunityMap.keySet()  ]);
             
             for(Opportunity opp : newOppMap.values()){
                 Set<String> oldOppSalesOfficeList = new Set<String>();
                 Set<String> newOppSalesOfficeList = new Set<String>();
                 // Store new Opp Owner Sales Office in the List
-                if(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c!=null && newOppMap.get(opp.Id).Owner.UserRole.Name ==NSP_SalesConstants.BPARole ){
+                if(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c!=null && BusinessPerformanceRoles.contains(newOppMap.get(opp.Id).Owner.UserRole.Name)){
                     newOppSalesOfficeList.addAll(new List<String>(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c.Split(';')));
                 }
                 // Store old Opp Owner Sales Office in the List 
@@ -529,7 +531,7 @@ public class NSP_salesOfficeRecordSharing {
         List<OpportunityShare> channelOperationsGroupShareList = new List<OpportunityShare>();
         try{
             Map<Id,Opportunity> opportunityMap = new Map<Id,Opportunity>([SELECT Id,ToLabel(Owner.NSP_Sales_Office_Membership__c) FROM Opportunity WHERE Id IN:newopportunityMap.keySet() AND
-                                                                          Owner.UserRole.Name =:NSP_SalesConstants.BPARole  AND (StageName !=: NSP_SalesConstants.CLOSED_WON OR StageName !=: NSP_SalesConstants.CLOSED_LOST)]);
+                                                                          Owner.UserRole.Name in:BusinessPerformanceRoles AND (StageName !=: NSP_SalesConstants.CLOSED_WON OR StageName !=: NSP_SalesConstants.CLOSED_LOST)]);
             
             // Share Opportunities with Channel Operation Role Users and NCS , Data Science Public Groups 
             Set<Id> channelOperationsGroupShareIdSet = rolesPublicGroupShare();
@@ -570,7 +572,8 @@ public class NSP_salesOfficeRecordSharing {
             NSP_ErrorLogHandler.logSaveException('NSP_salesOfficerecordSharing', 'opportunityRecordSharing', ex.getMessage());
         }
     }  
-        
+      
+    
     /***********************************************************************************************
     * MethodName: rolesPublicGroupShare 
     * Description : Share Opportunity with Channel Operation role and NCS,Data public group Users
@@ -675,5 +678,5 @@ public class NSP_salesOfficeRecordSharing {
         return salesOfficeGroupMap;
         
     }
-    
+
 }

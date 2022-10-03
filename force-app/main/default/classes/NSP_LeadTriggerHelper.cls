@@ -84,7 +84,7 @@ public class NSP_LeadTriggerHelper {
               /*Added to Map Sales Office on insert if Zipcode is populated */
           if(String.isNotBlank(leadObject.PostalCode)){
             zipCodeLeadList.add(leadObject);
-            zipCodeList.add(leadObject.PostalCode);
+            zipCodeList.add(leadObject.PostalCode.substring(0,5));
         }
         /* Added to Map Sales Office on insert if Zipcode is populated */
             
@@ -195,7 +195,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                      && (leadNewMap.get(leadId).NumberOfEmployees == null || Integer.valueof(leadNewMap.get(leadId).NumberOfEmployees) < Integer.valueOf(System.Label.NSP_EMP_THRESH_150))) {
                                                       /* If Postal Code is not blank, Number of Employees is null or < 150 and Product of interest is WO/WX assign to Sales office */
                                                       leadsForRoundRobin.add(leadNewMap.get(leadId));
-                                                      zipCodeList.add(leadNewMap.get(leadId).PostalCode);
+                                                      zipCodeList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
                                                       isZipCodeUpdate = true;
                                                   } 
                                                   else {
@@ -214,7 +214,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
           if( leadNewMap.get(leadId).PostalCode != leadOldMap.get(leadId).PostalCode &&
           String.isNotBlank(leadNewMap.get(leadId).PostalCode) && isZipCodeUpdate == false){
               zipCodeLeadList.add(leadNewMap.get(leadId));
-              zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode);
+              zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
           }
        /* Added as part of DF-01846*/
         }
@@ -371,7 +371,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         // Added as part of DF-01654
         if(!opportunityLeadMap.isEmpty()){
-            updateNonProfitOrgFields(opportunityLeadMap);
+           // updateNonProfitOrgFields(opportunityLeadMap); removed for STY-03346
         }
         
         setContactasCOI(accountLeadMap, opportunityLeadMap);
@@ -591,9 +591,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
         for (Lead leadObj: leadsForRoundRobin) {
             //Checking if zip is present on lead or not
-            if (zipMap.containsKey(leadObj.PostalCode)) {
-                leadObj.NSP_Zip_Based_Location__c = zipMap.get(leadObj.PostalCode).NSP_Location_Name__c;
-                zipBasedLocationList.add(zipMap.get(leadObj.PostalCode).NSP_Location_Name__c);
+            if (zipMap.containsKey(leadObj.PostalCode.substring(0,5))) {
+                leadObj.NSP_Zip_Based_Location__c = zipMap.get(leadObj.PostalCode.substring(0,5)).NSP_Location_Name__c;
+                zipBasedLocationList.add(zipMap.get(leadObj.PostalCode.substring(0,5)).NSP_Location_Name__c);
                 finalRoundRobinList.add(leadObj);
             }
         }
@@ -620,6 +620,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             acrObject.Roles = leadObject.NSP_Referral_Source__c;
             acrObject.NSP_isReferral__c = true;
+			acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+            acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
             acrList.add(acrObject);
         }
         for (String opportunityId: opportunityLeadMap.keySet()) {
@@ -629,6 +632,10 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             ocrObject.Role = leadObject.NSP_Referral_Source__c;
             ocrObject.NSP_isReferral__c = true;
+			ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+            ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
+                                                          
             ocrList.add(ocrObject);
         }
         try {
@@ -958,10 +965,10 @@ public void createContact(List < Lead > newLeadList) {
                         acRecord.NSP_Is_Primary__c = true;
                         // Added as part of DF-01654
                         if(!accountLeadMap.isEmpty()){
-                        Lead leadObject = accountLeadMap.get(Acr.AccountId);
+                        /*Lead leadObject = accountLeadMap.get(Acr.AccountId); removed based on STY-03346
                         acRecord.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
                         acRecord.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-                        acRecord.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c; 
+                        acRecord.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c; */
                     }
                         UpdatedacrList.add(acRecord);  
                     }
@@ -980,10 +987,10 @@ public void createContact(List < Lead > newLeadList) {
 * @MethodName: updateNonProfitOrgFields
 * @Description: When Referral Lead is converted update Non Profit Organisation fields
 * @param Map<Id,Id> opportunityLeadMap. 
-* @Defect : DF-01654
+* @Defect : DF-01654 removed for STY-03346
 * @return void                          
 */
-    public void updateNonProfitOrgFields(Map < String, Lead > opportunityLeadMap) {
+    /*public void updateNonProfitOrgFields(Map < String, Lead > opportunityLeadMap) {
         List<OpportunityContactRole> oppConRoleList = new List<OpportunityContactRole>();
         try{
             for (OpportunityContactRole oppConRole : [SELECT Id, 
@@ -1008,7 +1015,7 @@ public void createContact(List < Lead > newLeadList) {
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateNonProfitOrgFields', ex.getMessage());
         }
-    }
+    }*/
    
     /* Description: This method sets sales office details from user 
      * 

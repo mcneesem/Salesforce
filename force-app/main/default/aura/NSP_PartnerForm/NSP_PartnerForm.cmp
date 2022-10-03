@@ -100,7 +100,7 @@
         <div class="slds-col slds-size_1-of-2">
             
             <lightning:input type="text" name="NSP_Expected_Annual_Business_Growth__c" value="{!v.AccountObj.NSP_Expected_Annual_Business_Growth__c}" label="Partner's expected annual business growth"
-                                class="slds-medium-size_2-of-3"/>
+                                class="slds-medium-size_2-of-3" maxlength="10"/>
             
             <lightning:input type="text" name="NSP_Partners_Chief_Decision_Maker__c" value="{!v.AccountObj.NSP_Partners_Chief_Decision_Maker__c}" label="Who is the chief decision maker on the partner's side?"
                                 class="slds-medium-size_2-of-3"/>
