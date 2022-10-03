@@ -2,6 +2,9 @@
  * Represents test class for 
  * Account trigger helper
  * Author: Sales Team
+ *  -------------------------------------------------------------------------------------------------
+ * Modification History
+ *  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
  */
 
 @isTest(SeeAllData=false)
@@ -404,4 +407,75 @@ public class NSP_AccountTriggerHelperTest {
        
        
     }
+    
+      /***********************************************************************************************
+    * MethodName: testAccountPremierUpdate
+    * Description : This method will test publish event for premier pathway opportunity owner update
+    * Author : Rahul Singh
+    * Created Date : 9/29/22
+    * Added as part of 569324 charwell request.
+    * ********************************************************************************************/  
+    
+    @isTest
+    static void testAccountPremierUpdate() {
+    
+        
+         List<Account>  accountList = New List<Account>();
+         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmith@acmetestusr.com' Limit 1];
+        for(integer count = 0; count < 1; count++) {
+            accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
+                                        NSP_Delete_Account_Teams__c = system.now()));
+        }
+        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].ownerId = salesManagerUser.Id;
+        insert accountList;
+        system.debug('accountlist'+accountList);
+        Account accoutObject1 = [Select Id, Name from Account where Name = 'AccountTestData0'];
+        system.debug('accoutObject1'+accoutObject1);
+        Opportunity opportuniytObject = new Opportunity();
+        opportuniytObject.Name = 'Test Oppty';
+        opportuniytObject.AccountId = accoutObject1.id;
+        opportuniytObject.stagename = NSP_SalesConstants.ANALYSIS_STAGE;
+        opportuniytObject.CloseDate = date.today();        
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
+        opportuniytObject.NSP_Number_of_Employees__c = 100;
+        opportuniytObject.NSP_WS_Number_Of_Employees__c = 123;
+        opportuniytObject.NSP_WO_Number_Of_Employees__c = 123;
+        opportuniytObject.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
+        opportuniytObject.Type ='CAMS';
+        //Inserting Opportunity Object
+        insert opportuniytObject;
+        
+       Set<Id> accIdSet = new Set<Id>(); // Added as part of Test class fix
+       Map<Id, Account> accountMapOld = new Map<Id, Account>();
+        Map<Id, Account> accountMapNew = new Map<Id, Account>();
+        for(Account account : accountList) {
+            accIdSet.add(account.Id);
+            account.NSP_Ready_for_Integration_Sync__c = TRUE;
+            account.NSP_Account_Status__c = ACTIVE;
+            account.NSP_Template_Selection__c = 'referralProgramAF-I';
+            accountMapOld.put(account.Id, account);
+        }
+       
+        User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        // Start Test
+            List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c From Account WHERE Id =: accountMapOld.keySet()];
+            for(Account accountRecord : accountUpdateList) {
+                accountRecord.NSP_Delete_Account_Teams__c = system.now(); // Added as part of Test class fix
+                accountRecord.NSP_Ready_for_Integration_Sync__c = TRUE;
+                accountRecord.ownerId = userRecord1.Id;
+                accountRecord.NSP_Stage__c = 'Available';
+                 accountMapNew.put(accountRecord.Id, accountRecord);
+            }
+         Update accountUpdateList;
+        Test.startTest();
+           
+        NSP_AccountTriggerHelper helper = new NSP_AccountTriggerHelper();
+         helper.afterUpdateDirector(accountMapNew, accountMapOld);
+         system.assertEquals(salesManagerUser.Id, accountList[0].ownerId);
+        Test.stopTest();
+ 
+ 
+    }
+
 }

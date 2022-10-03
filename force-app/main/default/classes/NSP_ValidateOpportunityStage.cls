@@ -27,6 +27,7 @@ public class NSP_ValidateOpportunityStage {
     public static List<string> closeLostRolesforRecruitingSales = System.Label.Close_Lost_Roles_for_Recruiting_Sales.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     public static List<string> closeLostRolesforsamesalesofficeonOppOwner = System.Label.Close_Lost_Roles_for_same_sales_office_on_Opp_Owner.split(',');
+    public static List<string> closeLostRolesforsamesalesofficeonOpp = System.Label.Close_Lost_Roles_for_same_sales_office_on_Opp.split(',');
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_WO_TASK = ' has WO Task ';
@@ -269,7 +270,7 @@ public class NSP_ValidateOpportunityStage {
             return userMap;
     }  
     
-    /**
+/**
 * Checks if current user can modify opportunity stage to closed lost
 * @param Opportunity opp
 *  
@@ -280,12 +281,22 @@ public class NSP_ValidateOpportunityStage {
  * Date- 8/4/2022
  * Developer- Ruchi
  * Ticket-10350
+ * Modification Date- 9/30/2022
  */     
 public static void evaluateClosedLostStageCriteria(Opportunity opp) {
     Integer canCloseLost =0;
     Set < String > salesOfficeSet = new Set < String > ();
     Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
     Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
+    
+    //Added for 579279
+    Map<Id,Opportunity> oppSalesOfficeMap = new Map<Id,Opportunity>([Select ID, ToLabel(NSP_Sales_Office__c) FROM Opportunity WHERE Id =:opp.Id]);
+    List<String> salesOfficeList = new List<String>();
+    if(oppSalesOfficeMap.get(opp.Id).NSP_Sales_Office__c != null) {
+            salesOfficeList.add(oppSalesOfficeMap.get(opp.Id).NSP_Sales_Office__c);
+    }
+
+    //Added for 579280
     List<String> salesOfficeMembership = new List<String>();
     if(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c != null){
     salesOfficeMembership.addAll(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c.split(';'));
@@ -329,6 +340,10 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
     }
      //Added for 579280
     else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeMembership) != '' && closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+        canCloseLost++;
+    }
+    //Added for 579279
+    else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeList) != '' && closeLostRolesforsamesalesofficeonOpp.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
         canCloseLost++;
     }
     if(canCloseLost == 0){

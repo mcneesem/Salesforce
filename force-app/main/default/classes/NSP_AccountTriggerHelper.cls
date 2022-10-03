@@ -3,6 +3,7 @@
 * -------------------------------------------------------------------------------------------------
 * Modification History
 *  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
+*  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
 private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
@@ -199,6 +200,7 @@ If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
 System.enqueueJob(objectFieldHistoryHelper);
 }
 }
+    
 // Send the list to publish event bus
 if(updateAccountList.size() > 0){
 /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
@@ -206,8 +208,11 @@ Id profileId = userinfo.getProfileId();
 String profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
 if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
 publishEventBus(accountEvent, updateAccountList);
+         
 }
 }
+  NSP_OpportunityTriggerHelperFunctions.updateOppOwnerPremier(newMap, oldMap); //Added as part of 569324 charwell request.
+
 if(accountList.size() > 0) {
 handleTaskForPartnerContracts(accountList);
 }
@@ -221,6 +226,8 @@ deleteAccountTeam(accountTeamMDeleteMap, accountTeamMDelete);
 }catch(Exception ex){
 NSP_CustomException.LogException(ex);
 }
+  
+    
 }
 public void setAccountStage (List<Account> accountList){
 for(Account accountObj : accountList){
@@ -581,6 +588,6 @@ NSP_CustomException.LogException(ex);
                 }
             }
             
-		    }
-	  }
+            }
+      }
 }
