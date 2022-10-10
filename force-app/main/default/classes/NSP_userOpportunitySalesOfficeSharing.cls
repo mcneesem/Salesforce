@@ -26,15 +26,17 @@ public class NSP_userOpportunitySalesOfficeSharing implements Queueable {
     /***********************************************************************************************
     * MethodName: Queueable Execute Method
     * Description : Execute method that will allow the Account record Sharing 
-    * 
+    * Modified By- Ruchi
+    * Date- 9/28/2022
+    * Ticket- 579279
     * ********************************************************************************************/     
     public void execute(QueueableContext qc) {
         List<OpportunityShare> newSalesOpportunityShareList = new  List<OpportunityShare>();
         List<OpportunityShare> deleteOldOpportunityShareList = new  List<OpportunityShare>();
         Map<String,String> mapSalesOfficePublicGroupId = new Map<String,String> (); 
         try{
-            List<OpportunityShare> oldOpportunityShareList =[Select Id, OpportunityId ,Opportunity.OwnerId, UserorGroup.Name , UserorGroupId from OpportunityShare WHERE 
-                                                             Opportunity.OwnerId IN: this.mapUserIdSetOldSalesOffice.KeySet() AND Rowcause =:NSP_SalesConstants.manualRowCause];
+            List<OpportunityShare> oldOpportunityShareList =[Select Id, OpportunityId ,Opportunity.OwnerId, UserorGroup.Name , UserorGroupId, ToLabel(Opportunity.NSP_Sales_Office__c)  from OpportunityShare WHERE 
+                                                             Opportunity.OwnerId  IN: this.mapUserIdSetOldSalesOffice.KeySet() AND Rowcause =:NSP_SalesConstants.manualRowCause ];
             if(mapnewSalesofficeSetUserId != null){
                 mapSalesOfficePublicGroupId = NSP_salesOfficeRecordSharing.mapSalesOfficePublicGroup(mapnewSalesofficeSetUserId.KeySet());
             }
@@ -59,9 +61,12 @@ public class NSP_userOpportunitySalesOfficeSharing implements Queueable {
             if(!newSalesOpportunityShareList.isEmpty()){
                 Database.Insert(newSalesOpportunityShareList,False);
             }
+            
             for(OpportunityShare oldOpportunityShare : oldOpportunityShareList){
                 if(mapUserIdSetOldSalesOffice.containsKey(oldOpportunityShare.Opportunity.OwnerId) && 
-                   mapUserIdSetOldSalesOffice.get(oldOpportunityShare.Opportunity.OwnerId).Contains(oldOpportunityShare.UserorGroup.Name) ){
+                   mapUserIdSetOldSalesOffice.get(oldOpportunityShare.Opportunity.OwnerId).Contains(oldOpportunityShare.UserorGroup.Name) &&
+                   oldOpportunityShare.opportunity.NSP_Sales_Office__c != oldOpportunityShare.UserorGroup.Name)     //Added for 579279
+                   {
                        deleteOldOpportunityShareList.add(oldOpportunityShare);
                    }
             }

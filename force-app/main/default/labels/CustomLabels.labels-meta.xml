@@ -1379,4 +1379,12 @@
         <shortDescription>Business Performance Roles</shortDescription>
         <value>Business Performance Advisor,Business Performance Consultant,Associate Business Performance Advisors</value>
     </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_same_sales_office_on_Opp</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for same sales office on Opp</shortDescription>
+        <value>District Administrator,District Manager,Regional Administrator,Regional Manager</value>
+    </labels>
 </CustomLabels>

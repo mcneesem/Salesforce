@@ -10,34 +10,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Client Liaison</fullName>
-                <default>false</default>
-                <label>Client Liaison</label>
-            </value>
-            <value>
-                <fullName>Payroll Specialist</fullName>
-                <default>false</default>
-                <label>Payroll Specialist</label>
-            </value>
-            <value>
-                <fullName>HR Specialist</fullName>
-                <default>false</default>
-                <label>HR Specialist</label>
-            </value>
-            <value>
                 <fullName>Benefits Specialist</fullName>
                 <default>false</default>
                 <label>Benefits Specialist</label>
             </value>
             <value>
-                <fullName>Safety Consultant</fullName>
+                <fullName>BPS Administrator</fullName>
                 <default>false</default>
-                <label>Safety Consultant</label>
+                <label>BPS Administrator</label>
             </value>
             <value>
-                <fullName>MidMarket Account Exec</fullName>
+                <fullName>BPS Sales Manager</fullName>
                 <default>false</default>
-                <label>MidMarket Account Exec</label>
+                <label>BPS Sales Manager</label>
             </value>
             <value>
                 <fullName>Bus. Team-HRSp/CL</fullName>
@@ -45,19 +30,84 @@
                 <label>Bus. Team-HRSp/CL</label>
             </value>
             <value>
-                <fullName>National Account Exec</fullName>
+                <fullName>Business Development Rep</fullName>
                 <default>false</default>
-                <label>National Account Exec</label>
+                <label>Business Development Rep</label>
             </value>
             <value>
-                <fullName>Recruiting</fullName>
+                <fullName>Business Performance Advisor</fullName>
                 <default>false</default>
-                <label>Recruiting</label>
+                <label>Business Performance Advisor</label>
             </value>
             <value>
-                <fullName>Performance Specialist</fullName>
+                <fullName>Business Performance Consultant</fullName>
                 <default>false</default>
-                <label>Performance Specialist</label>
+                <label>Business Performance Consultant</label>
+            </value>
+            <value>
+                <fullName>Channel Manager</fullName>
+                <default>false</default>
+                <label>Channel Manager</label>
+            </value>
+            <value>
+                <fullName>Channel Program Manager</fullName>
+                <default>false</default>
+                <label>Channel Program Manager</label>
+            </value>
+            <value>
+                <fullName>Client Liaison</fullName>
+                <default>false</default>
+                <label>Client Liaison</label>
+            </value>
+            <value>
+                <fullName>Deal Team Manager</fullName>
+                <default>false</default>
+                <label>Deal Team Manager</label>
+            </value>
+            <value>
+                <fullName>Deal Team Member</fullName>
+                <default>false</default>
+                <label>Deal Team Member</label>
+            </value>
+            <value>
+                <fullName>District Administration</fullName>
+                <default>false</default>
+                <label>District Administration</label>
+            </value>
+            <value>
+                <fullName>District Manager</fullName>
+                <default>false</default>
+                <label>District Manager</label>
+            </value>
+            <value>
+                <fullName>Division Vice President</fullName>
+                <default>false</default>
+                <label>Division Vice President</label>
+            </value>
+            <value>
+                <fullName>Executive</fullName>
+                <default>false</default>
+                <label>Executive</label>
+            </value>
+            <value>
+                <fullName>HCM Sales Consultant</fullName>
+                <default>false</default>
+                <label>HCM Sales Consultant</label>
+            </value>
+            <value>
+                <fullName>HCM Sales Manager</fullName>
+                <default>false</default>
+                <label>HCM Sales Manager</label>
+            </value>
+            <value>
+                <fullName>HR Specialist</fullName>
+                <default>false</default>
+                <label>HR Specialist</label>
+            </value>
+            <value>
+                <fullName>Lead Qualifier</fullName>
+                <default>false</default>
+                <label>Lead Qualifier</label>
             </value>
             <value>
                 <fullName>Manager, HR Services</fullName>
@@ -65,9 +115,69 @@
                 <label>Manager, HR Services</label>
             </value>
             <value>
+                <fullName>MidMarket Account Exec</fullName>
+                <default>false</default>
+                <label>MidMarket Account Exec</label>
+            </value>
+            <value>
+                <fullName>MidMarket Administrator</fullName>
+                <default>false</default>
+                <label>MidMarket Administrator</label>
+            </value>
+            <value>
+                <fullName>National Account Exec</fullName>
+                <default>false</default>
+                <label>National Account Exec</label>
+            </value>
+            <value>
+                <fullName>New Client Sales</fullName>
+                <default>false</default>
+                <label>New Client Sales</label>
+            </value>
+            <value>
+                <fullName>Opportunity Owner</fullName>
+                <default>false</default>
+                <label>Opportunity Owner</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Payroll Specialist</fullName>
+                <default>false</default>
+                <label>Payroll Specialist</label>
+            </value>
+            <value>
                 <fullName>Payroll Supervisor</fullName>
                 <default>false</default>
                 <label>Payroll Supervisor</label>
+            </value>
+            <value>
+                <fullName>Performance Specialist</fullName>
+                <default>false</default>
+                <label>Performance Specialist</label>
+            </value>
+            <value>
+                <fullName>Pre-Sales Consultant</fullName>
+                <default>false</default>
+                <label>Pre-Sales Consultant</label>
+            </value>
+            <value>
+                <fullName>Recruiting</fullName>
+                <default>false</default>
+                <label>Recruiting</label>
+            </value>
+            <value>
+                <fullName>Regional Administrator</fullName>
+                <default>false</default>
+                <label>Regional Administrator</label>
+            </value>
+            <value>
+                <fullName>Regional Manager</fullName>
+                <default>false</default>
+                <label>Regional Manager</label>
             </value>
             <value>
                 <fullName>Renewal Coordinator</fullName>
@@ -75,9 +185,34 @@
                 <label>Renewal Coordinator</label>
             </value>
             <value>
-                <fullName>BPA</fullName>
+                <fullName>Safety Consultant</fullName>
                 <default>false</default>
-                <label>BPA</label>
+                <label>Safety Consultant</label>
+            </value>
+            <value>
+                <fullName>Sales Development Rep</fullName>
+                <default>false</default>
+                <label>Sales Development Rep</label>
+            </value>
+            <value>
+                <fullName>Sales Engineer</fullName>
+                <default>false</default>
+                <label>Sales Engineer</label>
+            </value>
+            <value>
+                <fullName>Sales Engineer Manager</fullName>
+                <default>false</default>
+                <label>Sales Engineer Manager</label>
+            </value>
+            <value>
+                <fullName>Sales Operations Manager</fullName>
+                <default>false</default>
+                <label>Sales Operations Manager</label>
+            </value>
+            <value>
+                <fullName>Sales Support Specialist</fullName>
+                <default>false</default>
+                <label>Sales Support Specialist</label>
             </value>
         </valueSetDefinition>
     </valueSet>

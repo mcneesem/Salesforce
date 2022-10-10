@@ -1,5 +1,7 @@
 /**
 * Represents the Asset trigger helper which handles all the logic.
+* Modification History
+* Rahul Singh        Sept  30 2022    
 */
 
 public class NSP_AssetTriggerHelper {
@@ -244,17 +246,20 @@ public class NSP_AssetTriggerHelper {
         List <opportunity> oppList = new List<opportunity> (); 
         if(newList.size() > 0){
             for(Asset newAsset :newList){
+                if(newAsset.opportunity__c!=null){
           		Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
 				if((Trigger.isInsert && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL)
-                  ||(newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL) ){
+                  ||(newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL) 
+                  ||(newAsset.opportunity__c != oldAsset.opportunity__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL) ){
 					idSet.add(newAsset.opportunity__c);
 				}
 				else if((Trigger.isInsert && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)
-                       ||(newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)){
+                       ||(newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)
+                       ||(newAsset.opportunity__c != oldAsset.opportunity__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)){
 					idwxset.add(newAsset.opportunity__c);
                    
 				}
-		
+                }
 		}
 
 	if(idSet.Size() > 0){
