@@ -80,7 +80,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Bid_Download_Date_and_Time__c</field>
+                <field>NSP_Bid_Download_Date_and_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
