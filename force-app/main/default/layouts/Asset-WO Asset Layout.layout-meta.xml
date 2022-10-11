@@ -64,6 +64,10 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_Reconciliation__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Seasonal_Indicator__c</field>
             </layoutItems>
