@@ -7,5 +7,5 @@
     <label>Business Inception Date</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Deat</type>
+    <type>Date</type>
 </CustomField>
