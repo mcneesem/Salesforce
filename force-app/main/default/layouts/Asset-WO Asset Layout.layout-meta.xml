@@ -55,7 +55,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_Inception_Date__c</field>
+                <field>NSP_Business_Inception_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -65,7 +65,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Invoice_Reconciliation__c</field>
+                <field>NSP_Invoice_Reconciliation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -131,11 +131,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>National_Account__c</field>
+                <field>NSP_National_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>National_Account_Group__c</field>
+                <field>NSP_National_Account_Group__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -154,7 +154,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Government_Contractor__c</field>
+                <field>NSP_Government_Contractor__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
