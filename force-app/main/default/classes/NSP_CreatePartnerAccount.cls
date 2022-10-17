@@ -7,7 +7,10 @@ public without sharing class  NSP_CreatePartnerAccount {
 * Creates partner account from the information that is provided on the site by the user
 * @param accountObject String json holds the values in the account object.  
 * @param contactId String holds the contact for which the account is to be created
-* @return String             
+* @return String     
+* Modified By           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         	10/13/2022           Modified for 128063
 *                
 */
 @AuraEnabled
@@ -20,6 +23,8 @@ public static String createAccount(String accountObject, String contactObject){
         Account accountRecord =(Account)JSON.deserialize(accountObject,Account.class);
         accountRecord.Type ='Partner';
             accountRecord.BillingCountry='United States';
+            //Added for 128063
+            accountRecord.WebForm__c=True;
             //set the account reocord type as Partner 
         accountRecord.Recordtypeid = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         //By passing the duplicate rules

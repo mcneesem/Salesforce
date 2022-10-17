@@ -1,0 +1,6 @@
+A new Partner Referral has been received for <a href="{!Account.Link}">{!Account.Name}</a> <br>
+Insperity Employee Referring: {!Account.CreatedBy} <br>
+Please begin the evaluation process.<br><br>
+
+Thank you,<br>
+The Insperity Team
