@@ -711,7 +711,8 @@
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
-        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>NSP_PrimaryProduct__c</fields>
+        <fields>OPPORTUNITY.TYPE</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
