@@ -5,10 +5,12 @@
     <values>
         <field>NSP_Sales_Offices__c</field>
         <value xsi:type="xsd:string">4402 Austin 1
-4403 San Antonio 1</value>
+4414 Austin 2
+4403 San Antonio 1
+1901 Louisiana 1</value>
     </values>
     <values>
         <field>NSP_Service_Team_Email__c</field>
-        <value xsi:type="xsd:string">houstonsaaustinservicenotifications@insperity.com</value>
+        <value xsi:type="xsd:string">houstonsaaustinservicenotifications@insperity.com.invalid</value>
     </values>
 </CustomMetadata>
