@@ -684,8 +684,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>NSP_Sold_Reward__c</fields>
-        <fields>NSP_Discovery_Call_Reward__c</fields>
         <fields>NSP_Contact__c</fields>
         <relatedList>NSP_Reward__c.NSP_Account__c</relatedList>
     </relatedLists>
@@ -711,7 +709,8 @@
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
-        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>NSP_PrimaryProduct__c</fields>
+        <fields>OPPORTUNITY.TYPE</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>

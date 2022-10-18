@@ -162,8 +162,8 @@ public class NSP_OpportunityTriggerHelperFunctions {
         List < NSP_Service_Team_Office_Mapping__mdt > officeEmailsMappingList = [SELECT Id, NSP_Sales_Offices__c, NSP_Service_Team_Email__c
             FROM NSP_Service_Team_Office_Mapping__mdt WHERE NSP_Service_Team_Email__c != NULL
         ];
-
-        Map < Id, User > usersMap = new Map < Id, User > ([SELECT Id, NSP_Sales_Office__c FROM User WHERE Id IN: userIdSet]);
+        //592123 - adde ToLabel in Query - Harsha
+        Map < Id, User > usersMap = new Map < Id, User > ([SELECT Id, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id IN: userIdSet]);
 
         for (Opportunity opportunityRecord: newOpportunityList) {
             for (NSP_Service_Team_Office_Mapping__mdt officeMapppingRecord: officeEmailsMappingList) {
