@@ -38,6 +38,8 @@ public class NSP_OpportunityTriggerHelper {
         
         //set to store opportunity owner Ids when opportunity owner is changed/or when opportunity is created
         Set<Id> ownerIdsSet = new Set<Id>();
+        //118442- Opp list which is Closed on insert
+        List<Opportunity> closedStageList =  new List<Opportunity>();
         List<Opportunity> closedOppList =  new List<Opportunity>();
         //Iterating over the opportunity new list 
         for(Opportunity opportunityObject : newList){
@@ -68,6 +70,14 @@ public class NSP_OpportunityTriggerHelper {
             //If type is CAMS updating the stage to Analysis
             if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.OPPORTUNITY_TYPE_CAMS)) {
                 opportunityObject.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
+            }
+            
+            //118442- If type is Client Growth Credit and stage is Closed Won updating the recordtype to Locked
+            if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.CLIENT_GROWTH_CREDIT)
+                && opportunityObject.StageName.equals(NSP_SalesConstants.CLOSED_WON_STAGE))
+                {
+                closedStageList.add(opportunityObject);
+                changeOpportunityRecordType(closedStageList);
             }
 
               // checking for closeddate is lessthan today or Not
