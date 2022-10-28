@@ -3,6 +3,11 @@
 * Represents test class for lead opportunity helper
 * Test Class to cover Opportunity Trigger Handler and Helper classes
 * Modified Date: 19 Aug 2021
+Modification Log     :                                                                              
+*--------------------------------------------------------------------------------------------------  
+* Developer                   Date                   Description                                    
+* -------------------------------------------------------------------------------------------------  
+* Rahul Singh      		26/10/2022			         Create OCR as part of user story - 128223
 */
 
 @isTest(SeeAllData=false)
@@ -28,6 +33,13 @@ public class NSP_OpportunityTriggerHelperTest {
         accoutObject.Name = 'Test Account';
         //inserting account object
         insert accoutObject;
+        
+        Contact conObj = new Contact();
+        conObj.FirstName = 'FName';
+        conObj.LastName = 'LName';
+        conObj.AccountId = accoutObject.Id;
+        conObj.phone = '8987678652';
+        insert conObj;
        
         Account accoutObject1 = new Account();
         accoutObject1.Name = 'Test Account1';
@@ -527,5 +539,41 @@ public class NSP_OpportunityTriggerHelperTest {
        update opportunityList;
        Test.stopTest();
    }
+    
+       /** 
+    * Test for before and after insert of ACR trigger
+    * Method Name : testAccountContactInsert
+    * created as part of user story - 128223
+    */
+    @isTest
+    static void testAccountContactInsert() {
+        
+       
+        Account accObj = [Select Id,Name from Account WHERE Name = 'Test Account'];
+        ID accountId = accObj.Id;
+         //Create Opportunity
+       
+        
+        AccountContactRelation acrObj  = [Select Id from AccountContactRelation WHERE AccountId =: accountId];
+        acrObj.Roles = 'Agency';
+        acrObj.NSP_Is_Primary__c = true;
+        acrObj.IsActive =true;
+        update acrObj; 
+        // Start Test
+        Test.startTest();
+        Opportunity opportuniytObject = new Opportunity();
+        opportuniytObject.Name = 'Test Oppty';
+        opportuniytObject.AccountId = accountId;
+        opportuniytObject.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject.CloseDate = date.today();
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
+        opportuniytObject.NSP_Number_of_Employees__c = 100;
+        opportuniytObject.NSP_WS_Number_Of_Employees__c = 123;
+        opportuniytObject.NSP_WO_Number_Of_Employees__c = 123;
+        //Inserting Opportunity Object
+        insert opportuniytObject;
+        Test.stopTest();
+    }
+    
  
 }
