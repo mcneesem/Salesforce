@@ -1392,6 +1392,6 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
-        <value>District Manager,District Administrator,Business Performance Advisor,Business Performance Advisor</value>
+        <value>District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
     </labels>
 </CustomLabels>
