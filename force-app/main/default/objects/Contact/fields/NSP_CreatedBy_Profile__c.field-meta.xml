@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CreatedBy_Profile__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(TRIM(CreatedBy.Profile.Name), &quot;PT1&quot;,&quot;System Administrator&quot;, &quot;PT2&quot;,&quot;Standard User&quot;, &quot;PT3&quot;,&quot;Ready Only&quot;, &quot;PT4&quot;,&quot;Solution Manager&quot;, &quot;PT5&quot;,&quot;Marketing User&quot;, &quot;PT6&quot;,&quot;Contract Manager&quot;, &quot;PT7&quot;,&quot;Partner User&quot;, &quot;PT8&quot;,&quot;Standard Platform User&quot;, &quot;PT9&quot;,&quot;Standard Platform One App User&quot;, &quot;PT13&quot;,&quot;Customer Portal User&quot;, &quot;PT14&quot;,&quot;Customer Portal Manager&quot;, CreatedBy.Profile.Name)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>CreatedBy Profile</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
