@@ -846,7 +846,7 @@
         <actionName>Opportunity.NSP_Engage_Service_Team_Email</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision50</targetReference>
+            <targetReference>myDecision49</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -863,14 +863,14 @@
                 <stringValue>Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_55_A1</name>
+        <name>myRule_54_A1</name>
         <label>Signed CSA Email to Opportunity Owner Manager&apos;s Manager</label>
-        <locationX>5500</locationX>
+        <locationX>5400</locationX>
         <locationY>200</locationY>
         <actionName>Opportunity.Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myDecision57</targetReference>
+            <targetReference>myDecision56</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -887,9 +887,9 @@
                 <stringValue>NSP_Alert_when_Order_is_Generated_for_an_Opportunity</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_58_A1</name>
+        <name>myRule_57_A1</name>
         <label>Notify Oppty Owner when Order Generated</label>
-        <locationX>5800</locationX>
+        <locationX>5700</locationX>
         <locationY>200</locationY>
         <actionName>Opportunity.NSP_Alert_when_Order_is_Generated_for_an_Opportunity</actionName>
         <actionType>emailAlert</actionType>
@@ -1034,9 +1034,9 @@
                 <stringValue>NSP_Engage_Service_Team_Email_for_WX_Opportunities</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_61_A1</name>
+        <name>myRule_60_A1</name>
         <label>Engage Service Team alert for WX opportunities</label>
-        <locationX>6100</locationX>
+        <locationX>6000</locationX>
         <locationY>200</locationY>
         <actionName>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</actionName>
         <actionType>emailAlert</actionType>
@@ -1247,7 +1247,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</targetReference>
+            <targetReference>isChangedDecision51_myRule_50_NSP_Signed_CSA_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
@@ -1268,54 +1268,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</targetReference>
+                <targetReference>isChangedDecision51_myRule_50_NSP_Signed_CSA_c</targetReference>
             </connector>
             <label>isChangedRule_16_myRule_15_NSP_PrimaryProduct_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</name>
-        <label>isChangedDecision49_myRule_48_NSP_EngageServiceTeam_c</label>
+        <name>isChangedDecision51_myRule_50_NSP_Signed_CSA_c</name>
+        <label>isChangedDecision51_myRule_50_NSP_Signed_CSA_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</targetReference>
+            <targetReference>isChangedDecision55_myRule_54_NSP_Signed_CSA_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_49_myRule_48_NSP_EngageServiceTeam_c</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>myVariable_old.NSP_EngageServiceTeam__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>myVariable_current.NSP_EngageServiceTeam__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</targetReference>
-            </connector>
-            <label>isChangedRule_49_myRule_48_NSP_EngageServiceTeam_c</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</name>
-        <label>isChangedDecision52_myRule_51_NSP_Signed_CSA_c</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>isChangedRule_52_myRule_51_NSP_Signed_CSA_c</name>
+            <name>isChangedRule_51_myRule_50_NSP_Signed_CSA_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1332,22 +1300,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</targetReference>
+                <targetReference>isChangedDecision55_myRule_54_NSP_Signed_CSA_c</targetReference>
             </connector>
-            <label>isChangedRule_52_myRule_51_NSP_Signed_CSA_c</label>
+            <label>isChangedRule_51_myRule_50_NSP_Signed_CSA_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</name>
-        <label>isChangedDecision56_myRule_55_NSP_Signed_CSA_c</label>
+        <name>isChangedDecision55_myRule_54_NSP_Signed_CSA_c</name>
+        <label>isChangedDecision55_myRule_54_NSP_Signed_CSA_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</targetReference>
+            <targetReference>isChangedDecision58_myRule_57_NSP_OrderForm_Generation_Counter_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_56_myRule_55_NSP_Signed_CSA_c</name>
+            <name>isChangedRule_55_myRule_54_NSP_Signed_CSA_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1364,22 +1332,22 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</targetReference>
+                <targetReference>isChangedDecision58_myRule_57_NSP_OrderForm_Generation_Counter_c</targetReference>
             </connector>
-            <label>isChangedRule_56_myRule_55_NSP_Signed_CSA_c</label>
+            <label>isChangedRule_55_myRule_54_NSP_Signed_CSA_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</name>
-        <label>isChangedDecision59_myRule_58_NSP_OrderForm_Generation_Counter_c</label>
+        <name>isChangedDecision58_myRule_57_NSP_OrderForm_Generation_Counter_c</name>
+        <label>isChangedDecision58_myRule_57_NSP_OrderForm_Generation_Counter_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</targetReference>
+            <targetReference>isChangedDecision61_myRule_60_NSP_EngageServiceTeam_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_59_myRule_58_NSP_OrderForm_Generation_Counter_c</name>
+            <name>isChangedRule_58_myRule_57_NSP_OrderForm_Generation_Counter_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1396,14 +1364,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</targetReference>
+                <targetReference>isChangedDecision61_myRule_60_NSP_EngageServiceTeam_c</targetReference>
             </connector>
-            <label>isChangedRule_59_myRule_58_NSP_OrderForm_Generation_Counter_c</label>
+            <label>isChangedRule_58_myRule_57_NSP_OrderForm_Generation_Counter_c</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</name>
-        <label>isChangedDecision62_myRule_61_NSP_EngageServiceTeam_c</label>
+        <name>isChangedDecision61_myRule_60_NSP_EngageServiceTeam_c</name>
+        <label>isChangedDecision61_myRule_60_NSP_EngageServiceTeam_c</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -1411,7 +1379,7 @@
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_62_myRule_61_NSP_EngageServiceTeam_c</name>
+            <name>isChangedRule_61_myRule_60_NSP_EngageServiceTeam_c</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -1430,7 +1398,7 @@
             <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
-            <label>isChangedRule_62_myRule_61_NSP_EngageServiceTeam_c</label>
+            <label>isChangedRule_61_myRule_60_NSP_EngageServiceTeam_c</label>
         </rules>
     </decisions>
     <decisions>
@@ -2268,103 +2236,17 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision50</targetReference>
+            <targetReference>myDecision49</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_48</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.NSP_EngageServiceTeam__c</leftValueReference>
+                <leftValueReference>formula_myRule_48</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>isChangedRule_49_myRule_48_NSP_EngageServiceTeam_c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>WO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2380,16 +2262,16 @@
                 <numberValue>23.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision50</name>
-        <label>myDecision50</label>
+        <name>myDecision49</name>
+        <label>myDecision49</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision54</targetReference>
+            <targetReference>myDecision53</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_51</name>
+            <name>myRule_50</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2416,7 +2298,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_52_myRule_51_NSP_Signed_CSA_c</leftValueReference>
+                <leftValueReference>isChangedRule_51_myRule_50_NSP_Signed_CSA_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2559,7 +2441,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_51_A1</targetReference>
+                <targetReference>myRule_50_A1</targetReference>
             </connector>
             <label>Email to Manager for Signed CSA</label>
         </rules>
@@ -2571,16 +2453,16 @@
                 <numberValue>24.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision54</name>
-        <label>myDecision54</label>
+        <name>myDecision53</name>
+        <label>myDecision53</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision57</targetReference>
+            <targetReference>myDecision56</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_55</name>
+            <name>myRule_54</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2607,7 +2489,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_56_myRule_55_NSP_Signed_CSA_c</leftValueReference>
+                <leftValueReference>isChangedRule_55_myRule_54_NSP_Signed_CSA_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2750,7 +2632,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_55_A1</targetReference>
+                <targetReference>myRule_54_A1</targetReference>
             </connector>
             <label>Email to Manager for Signed CSA</label>
         </rules>
@@ -2762,16 +2644,16 @@
                 <numberValue>25.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision57</name>
-        <label>myDecision57</label>
+        <name>myDecision56</name>
+        <label>myDecision56</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision60</targetReference>
+            <targetReference>myDecision59</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_58</name>
+            <name>myRule_57</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2798,7 +2680,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_59_myRule_58_NSP_OrderForm_Generation_Counter_c</leftValueReference>
+                <leftValueReference>isChangedRule_58_myRule_57_NSP_OrderForm_Generation_Counter_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2867,40 +2749,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_58_A1</targetReference>
+                <targetReference>myRule_57_A1</targetReference>
             </connector>
             <label>Order Generated for Opportunity</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>3.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision6</name>
-        <label>myDecision6</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision8</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_7</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_7</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_7_A1</targetReference>
-            </connector>
-            <label>Opportunity Created by Mid-Market sales for Acc with more than 150 emps</label>
         </rules>
     </decisions>
     <decisions>
@@ -2910,13 +2761,13 @@
                 <numberValue>26.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision60</name>
-        <label>myDecision60</label>
+        <name>myDecision59</name>
+        <label>myDecision59</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_61</name>
+            <name>myRule_60</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -2943,7 +2794,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_62_myRule_61_NSP_EngageServiceTeam_c</leftValueReference>
+                <leftValueReference>isChangedRule_61_myRule_60_NSP_EngageServiceTeam_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -3012,9 +2863,40 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_61_A1</targetReference>
+                <targetReference>myRule_60_A1</targetReference>
             </connector>
             <label>Engage Service Team Checked for WX Opp</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>3.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision6</name>
+        <label>myDecision6</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision8</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_7</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_7</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_7_A1</targetReference>
+            </connector>
+            <label>Opportunity Created by Mid-Market sales for Acc with more than 150 emps</label>
         </rules>
     </decisions>
     <decisions>
@@ -3235,7 +3117,7 @@
                 <stringValue>[Opportunity].Owner.Manager.Manager.Email </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_53_myRule_51_A1_7919036794</name>
+        <name>formula_52_myRule_50_A1_1040745950</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Owner.Manager.Manager.Email}</expression>
     </formulas>
@@ -3503,6 +3385,19 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
+                <stringValue>OR(AND(ISNEW(), [Opportunity].NSP_EngageServiceTeam__c = true,ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;WO&apos;),NOT(ISBLANK([Opportunity].NSP_Service_Team_Email__c))), 
+AND(ISCHANGED([Opportunity].NSP_EngageServiceTeam__c),[Opportunity].NSP_EngageServiceTeam__c = true,ISPICKVAL([Opportunity].NSP_PrimaryProduct__c,&apos;WO&apos;),NOT(ISBLANK([Opportunity].NSP_Service_Team_Email__c))))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_48</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(AND(ISNEW(), {!myVariable_current.NSP_EngageServiceTeam__c} = true,ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;WO&apos;),NOT(ISBLANK({!myVariable_current.NSP_Service_Team_Email__c}))), 
+AND(ISCHANGED({!myVariable_current.NSP_EngageServiceTeam__c}),{!myVariable_current.NSP_EngageServiceTeam__c} = true,ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;WO&apos;),NOT(ISBLANK({!myVariable_current.NSP_Service_Team_Email__c}))))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
                 <stringValue>ISNEW() &amp;&amp;   [Opportunity].AccountId != &quot;&quot; &amp;&amp; [Opportunity].Account.Owner.IsActive  &amp;&amp; [Opportunity].Account.OwnerId  != [Opportunity].OwnerId </stringValue>
             </value>
         </processMetadataValues>
@@ -3521,7 +3416,7 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <dataType>Boolean</dataType>
         <expression>ISNEW() &amp;&amp; NOT({!$User.NSP_Mid_Market_Sales_Allowed__c}) &amp;&amp; ({!myVariable_current.Account.NumberOfEmployees} &gt; 150 || {!myVariable_current.NSP_Number_of_Employees__c} &gt;150)</expression>
     </formulas>
-    <interviewLabel>NSP_Notify_Opportunity_Owner_of_Assignment-5_InterviewLabel</interviewLabel>
+    <interviewLabel>NSP_Notify_Opportunity_Owner_of_Assignment-6_InterviewLabel</interviewLabel>
     <label>Notify Opportunity and Account Owner of Assignment</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -3706,12 +3601,12 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_51_A1</name>
+        <name>myRule_50_A1</name>
         <label>Update Opp Manager&apos;s Manager mail</label>
-        <locationX>5100</locationX>
+        <locationX>5000</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myDecision54</targetReference>
+            <targetReference>myDecision53</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3760,7 +3655,7 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
             </processMetadataValues>
             <field>NSP_Owner_Manager_s_Manager__c</field>
             <value>
-                <elementReference>formula_53_myRule_51_A1_7919036794</elementReference>
+                <elementReference>formula_52_myRule_50_A1_1040745950</elementReference>
             </value>
         </inputAssignments>
         <object>Opportunity</object>
