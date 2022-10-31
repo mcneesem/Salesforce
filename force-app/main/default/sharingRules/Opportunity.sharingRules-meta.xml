@@ -11,7 +11,7 @@
         <criteriaItems>
             <field>StageName</field>
             <operation>equals</operation>
-            <value>Proposal,Closed Lost,Closing,Closed Won</value>
+            <value>Proposal,Closed Lost,Analysis,Closing,Closed Won</value>
         </criteriaItems>
         <criteriaItems>
             <field>NSP_PrimaryProduct__c</field>
