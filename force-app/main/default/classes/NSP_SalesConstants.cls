@@ -38,6 +38,8 @@ public class NSP_SalesConstants {
     // To set opportunity type as Needs Analysis
     public static final String OPPORTUNITY_STAGENAME_ANALYSIS ='Needs Analysis';
     public static final String STR_NEW ='New';
+    // 118442- To set opportunity type as Client Growth Credit
+    public static final String CLIENT_GROWTH_CREDIT ='Client Growth Credit';
     // To set opportunity type as New Product
     public static final String NEW_BUSINESS_OPPORTUNITY ='New Product';
     // To set opportunity type as Discovery
@@ -126,5 +128,8 @@ public class NSP_SalesConstants {
     public static final String OpportunityTeamMemberRole  = 'Other';
     public static final String TECHNOLOGY_SALES = 'Technology Sales';
     public static final String officeProcessing = 'Processing Complete';
+    //Added as part of 128176
+    public static final String SalesManager = 'Sales Manager';
+    public static final String Account_View_All_Modify_All ='Account_View_All_Modify_All';
     public static final String userId = '005';
 }

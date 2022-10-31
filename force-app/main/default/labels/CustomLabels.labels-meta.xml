@@ -1387,4 +1387,11 @@
         <shortDescription>Close Lost Roles for same sales office on Opp</shortDescription>
         <value>District Administrator,District Manager,Regional Administrator,Regional Manager</value>
     </labels>
+    <labels>
+        <fullName>Sales_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Roles</shortDescription>
+        <value>District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
 </CustomLabels>

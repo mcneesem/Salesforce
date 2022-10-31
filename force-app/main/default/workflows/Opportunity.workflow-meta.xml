@@ -393,7 +393,9 @@
         </actions>
         <active>true</active>
         <description>Opportunity record is locked once the status is changed to Closed Won</description>
-        <formula>AND( ISPICKVAL(StageName , &quot;Closed Won&quot;), ISCHANGED(StageName)   )</formula>
+        <formula>OR(AND(ISNEW(),ISPICKVAL(StageName , &quot;Closed Won&quot;)),
+AND( ISPICKVAL(StageName , &quot;Closed Won&quot;), ISCHANGED(StageName))
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
