@@ -252,6 +252,10 @@
             <outputField>NSP_DC_SetDate__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>NSP_Is_Lead__c</inputField>
+            <outputField>NSP_Is_Originated_From_Lead_Conversion__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_LoyaltyProgram__c</inputField>
             <outputField>NSP_LoyaltyProgram__c</outputField>
         </mappingFields>
