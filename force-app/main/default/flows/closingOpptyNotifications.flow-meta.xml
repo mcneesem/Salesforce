@@ -3,10 +3,13 @@
     <actionCalls>
         <name>NCS_Notify</name>
         <label>NCS Notify</label>
-        <locationX>230</locationX>
+        <locationX>355</locationX>
         <locationY>835</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>isMid_Market</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -18,10 +21,13 @@
     <actionCalls>
         <name>NCS_Notify_0</name>
         <label>NCS Notify</label>
-        <locationX>781</locationX>
-        <locationY>785</locationY>
+        <locationX>442</locationX>
+        <locationY>835</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>isMid_Market</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -108,11 +114,18 @@
             <stringValue>Regional VP</stringValue>
         </value>
     </constants>
+    <constants>
+        <name>NumberOfEmployees</name>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>150.0</numberValue>
+        </value>
+    </constants>
     <decisions>
         <name>Check_Owner_Role</name>
         <label>Check Owner Role</label>
-        <locationX>805</locationX>
-        <locationY>371</locationY>
+        <locationX>876</locationX>
+        <locationY>364</locationY>
         <defaultConnectorLabel>Blank</defaultConnectorLabel>
         <rules>
             <name>Workforce_Product</name>
@@ -357,10 +370,50 @@
         </rules>
     </decisions>
     <decisions>
+        <name>isMid_Market</name>
+        <label>isMid_Market</label>
+        <locationX>260</locationX>
+        <locationY>273</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>NumberOfEmployees</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_IsMidMarket</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+        <rules>
+            <name>False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>NumberOfEmployees</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BlankOut_IsMidMarket</targetReference>
+            </connector>
+            <label>False</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>OwnerIDNullCheck</name>
         <label>OwnerIDNullCheck</label>
-        <locationX>363</locationX>
+        <locationX>488</locationX>
         <locationY>268</locationY>
+        <defaultConnector>
+            <targetReference>isMid_Market</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Notnull</name>
@@ -379,12 +432,34 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Check_Owner_Role</targetReference>
             </connector>
             <label>Notnull</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>closingOpptyNotifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ClosingOpportunityNotifications</label>
     <processMetadataValues>
@@ -407,9 +482,51 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <name>BlankOut_IsMidMarket</name>
+        <label>BlankOut IsMidMarket</label>
+        <locationX>52</locationX>
+        <locationY>400</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Is_MidMarket__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NSP_Is_MidMarket__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Enrollment_Fee_Payments__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_IsMidMarket</name>
+        <label>Update IsMidMarket</label>
+        <locationX>50</locationX>
+        <locationY>137</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Is_MidMarket__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NSP_Is_MidMarket__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Enrollment_Fee_Payments__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_New_Client_Sales_Email2</name>
         <label>Update New Client Sales Email2</label>
-        <locationX>762</locationX>
+        <locationX>887</locationX>
         <locationY>617</locationY>
         <connector>
             <targetReference>NCS_Notify_0</targetReference>
@@ -425,8 +542,8 @@
     <recordUpdates>
         <name>Update_Oppty_New_Client_Sales_Email</name>
         <label>Update Oppty New Client Sales Email</label>
-        <locationX>271</locationX>
-        <locationY>611</locationY>
+        <locationX>699</locationX>
+        <locationY>525</locationY>
         <connector>
             <targetReference>NCS_Notify</targetReference>
         </connector>
@@ -439,33 +556,11 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>672</locationX>
+        <locationX>797</locationX>
         <locationY>10</locationY>
         <connector>
             <targetReference>OwnerIDNullCheck</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>StageName</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_PrimaryProduct__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <object>Opportunity</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
