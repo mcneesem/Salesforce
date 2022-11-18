@@ -93,6 +93,7 @@ public class NSP_AccountTriggerHelperTest {
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = EN_US,
             LocaleSidKey = EN_US,
+            userroleid = BPArole.Id,
             NSP_Sales_Office__c = '1401'
         );
         users.add(userRecord1);
@@ -409,11 +410,10 @@ public class NSP_AccountTriggerHelperTest {
     }
     
       /***********************************************************************************************
-    * MethodName: restrictAccountChangeTest
-    * Description : This method will test publish event for premier pathway opportunity owner update
-    * Author : Ruchi
-    * Created Date : 10/28/22
-    * Added as part of 128176
+    * MethodName: testAccountPremierUpdate
+    * Description : This method will test restrictAccountChange
+    * Author : Ruchi Roy
+    * Updated Date : 11/17/22
     * **************************************************************************************/
 
     @isTest
@@ -421,14 +421,19 @@ public class NSP_AccountTriggerHelperTest {
     User userRecord1=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@test1.com' Limit 1];
     userRecord1.NSP_Sales_Office__c = '302';
     update userRecord1;
+    List<User> userRecordList = [SELECT Id FROM User WHERE Profile.Name = 'Sales Manager' and Email = 'testuser@test1.com' Limit 1];
+    User DAUser = userRecordList[0];
     Account accountObject3 = new Account();
         //Create Account
         accountObject3.Name = 'ACCOUNTTEST3';
         accountObject3.ownerId = userRecord1.Id;
         insert accountObject3;
+        //Insert AccountTeam
+        NSP_Account_Team__c accMember = new NSP_Account_Team__c();
+        accMember.NSP_Account__c = accountObject3.id;
+        accMember.NSP_User__c = DAUser.id;
+        insert accMember;
     
-    List<User> userRecordList = [SELECT Id FROM User WHERE Profile.Name = 'Sales Manager' and Email = 'testuser@test1.com' Limit 1];
-    User DAUser = userRecordList[0];
     test.startTest();
     System.runAs(DAUser){
             try{            

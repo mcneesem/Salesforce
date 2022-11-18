@@ -530,6 +530,7 @@ NSP_CustomException.LogException(ex);
 * author           | Date              | Description
 * -------------------------------------------------------------------------------------
 * Ruchi Roy         10/21/2022           Created this method
+* Ruchi Roy         11/17/2022           Modified this method for 190991
 *                
 */ 
 public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
@@ -547,10 +548,9 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
     try{
         
         for(Account acc : accountNewMap.values()){
-            if(!accOwnerSalesOfficeMap.isEmpty() && !loggedInUserGrpName.isEmpty()){
                 if(!accOwnerSalesOfficeMap.isEmpty()){
                     Integer isallowUpdate = 0;
-                        if(!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))){
+                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '')){
                             isallowUpdate = isallowUpdate + 1;
                         
                     }
@@ -558,13 +558,32 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
                         acc.addError(system.label.NSP_AccountTriggerError);
                     }
                 }
-            }
         }
     }
     catch(Exception ex){
         NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'restrictAccountChange',ex.getMessage());
     }
 }
+
+/**
+* Description: This method returns AccountTeamMember.
+* @param userId.
+* @param accountId.
+* @return AccountTeamMember.
+* Ticket 190991
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         11/17/2022           Created this method
+*                
+*/
+public static String getTeamMember(Id userId, Id accountId){
+    List<NSP_Account_Team__c> accountTeamList=  [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c where NSP_User__c =: userId AND NSP_Account__c =:accountId];
+    if(!accountTeamList.isEmpty()){
+        return accountTeamList[0].NSP_User__c;
+    }
+    return '';
+}
+
 
 /* Description: This method sets sales office details from user 
      * 
