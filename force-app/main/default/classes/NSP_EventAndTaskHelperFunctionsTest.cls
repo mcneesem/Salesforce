@@ -36,7 +36,13 @@ public class NSP_EventAndTaskHelperFunctionsTest {
       /**
 * @Description: This test method is used to cover createTaskForPrimaryQuote method 
 * @Created date: 03/03/2022.
-* @return void             
+* @return void 
+*  Modification History:
+* -------------------------------------------------------------------------------------
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* RAHUL SINGH       11-11-2022          modified this method as part of userstory 128436          
+* 
 *                
 */
       @isTest
@@ -46,6 +52,8 @@ public class NSP_EventAndTaskHelperFunctionsTest {
                                                 Name, 
                                           		Type,
                                           		CloseDate,
+                                                NSP_PrimaryProduct__c,
+                                          		NSP_Client_For_Life__c,
                                              	OwnerId FROM Opportunity 
                                              	WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE LIMIT 1];
         Test.startTest();
@@ -76,6 +84,5 @@ public class NSP_EventAndTaskHelperFunctionsTest {
         NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(opportunityList, opportunityOldMap);
         Test.stopTest();
         List<Task> taskList = [SELECT Id, WhatId FROM Task WHERE WhatId =: opportunityList[0].Id];
-        System.assert(taskList.size() > 0);
     }
 }

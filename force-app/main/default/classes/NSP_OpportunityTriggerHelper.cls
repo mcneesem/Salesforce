@@ -10,6 +10,7 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 * Tejas                 07/02/2021            First Iteration
 * Rahul Singh      		26/10/2022			  Create OCR
+* Rahul Singh           11/17/2022			  User STory 128436
 */
 
 public class NSP_OpportunityTriggerHelper {
@@ -167,6 +168,7 @@ public class NSP_OpportunityTriggerHelper {
         if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
             publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);       
         }
+        
     }
     
 /**
@@ -350,7 +352,7 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         
         //opportunity list to store oppty records where Primary Quote is newly created
-        List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();
+        //List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();// commeted as part of user story 128436
         
         //Opportunity list to capture opportunities created with HSA contribution data
         List<Opportunity> newTaskOpportunityList = new List<Opportunity>();
@@ -372,11 +374,11 @@ public class NSP_OpportunityTriggerHelper {
                                                                                                                       partnerAccountIdSet.add(newOpportunity.AccountId);
                                                                                                                   }
             
-            //check if Primary Quote is created for Opportunity record
-            if(String.isNotBlank(opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c)
-               && String.isBlank(opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c)){
-                   opportunitiesWithPrimaryQuote.add(opportunityNewMap.get(opportunityId));
-               }
+            //check if Primary Quote is created for Opportunity record// commented as part of user story 128436
+            //if(String.isNotBlank(opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c)
+            //   && String.isBlank(opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c)){
+            //       opportunitiesWithPrimaryQuote.add(opportunityNewMap.get(opportunityId));
+             //  }
             
             // if the parent opty is closed lost then adding it to the list
             if((String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null)
@@ -458,7 +460,7 @@ public class NSP_OpportunityTriggerHelper {
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
         
-        NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);
+       // NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);// commented as part of user story 128436
         setPartnerAccount(partnerOpportunityList,partnerAccountIdSet);
         
     }       

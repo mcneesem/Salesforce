@@ -1,5 +1,11 @@
 /**
 * Represents the Quote trigger helper which handles all the logic.
+*Modification History
+* -------------------------------------------------------------------------------------
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Rahul         11-17-2022          	Modified this class for user story 128436
+* 
 */
 public class NSP_QuoteTriggerHelper {
     public static boolean STOP_ACCOUNT_QUERY  = false;
@@ -44,7 +50,26 @@ static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_A
         updateBillingAndShippringAddressOnQuote(quoteNewMap.Values(),quoteOldMap);
         updateScholarshipEligibility(quoteNewMap.Values());
         
-    }    
+    }   
+    
+  
+    /**
+* Iterates throught the Quote map and identifies the records that needs to worked based on various criterias.
+* @param newList of New Quote. 
+* @param newMap Map of Old Quote. 
+* @return void
+* Modification History
+* -------------------------------------------------------------------------------------
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Rahul            15-11-2022          	created this method for user story 128436
+* 
+*                
+*/  
+    
+    public void afterInsertDirector(List<SBQQ__Quote__c> newList, Map<Id, SBQQ__Quote__c> newMap){ 
+         updatePrimaryQuote(newList,newMap);
+    }
     
     /**
 * Iterates throught the list of new leads and passes the required attributes to other methods.
@@ -56,7 +81,8 @@ static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_A
     
     public void afterUpdateDirector(Map<Id,SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap){        
         
-        populateInsperitySigner(quoteNewMap,quoteOldMap);       
+        populateInsperitySigner(quoteNewMap,quoteOldMap);  
+        updatePrimaryQuote(quoteNewMap.values(),quoteOldMap);
     }      
     
     
@@ -1184,5 +1210,40 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
             newQuote.NSP_Ship_To_Country__c    = objAddress.NSP_Country__c;
             newQuote.NSP_Ship_To_Name__c       = objAddress.Name;            
         }
+    }
+
+  /*
+     * Description: This method accepts various parameters from which it 
+     * Passes the opportunity list to createTaskForPrimaryQuote
+     * @params: LIST newList , Map quoteOldMap
+     * Created as part of 128436
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * RAHUL SINGH       11-17-2022          created this new method
+     * 
+     * 
+     */    
+    public void updatePrimaryQuote(List<SBQQ__Quote__c> newList, Map<Id, SBQQ__Quote__c> quoteOldMap){
+        
+        List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();
+         set<Id> oppIdSet = new set<Id>();
+         for(SBQQ__Quote__c newQuote : newList){
+             SBQQ__Quote__c oldQuote = quoteOldMap != null ? quoteOldMap.get(newQuote.Id):null;
+             
+             if((newQuote.SBQQ__Primary__c == True && Trigger.isInsert) ||(Trigger.isUpdate && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c == True) ){
+                oppIdSet.add(newQuote.SBQQ__Opportunity2__c);       
+         }
+         
+        if (oppIdSet.size() > 0) {    
+        		opportunitiesWithPrimaryQuote = [Select Id ,OwnerId ,NSP_PrimaryProduct__c, NSP_Client_For_Life__c FROM Opportunity WHERE Id IN :oppIdSet];
+        
+        }    
+           if (opportunitiesWithPrimaryQuote.size() > 0) {
+                 NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);
+            }
+    }
+        
     }
 }
