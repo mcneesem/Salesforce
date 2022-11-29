@@ -5,7 +5,8 @@
 *  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
 *  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
 *  Ruchi              Oct   21 2022        Added as part of 128176.
-*  Rahul Singh        Nov   22 2022        Modified as part of user story 191911
+*  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
+
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
 private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
@@ -536,7 +537,7 @@ NSP_CustomException.LogException(ex);
 * -------------------------------------------------------------------------------------
 * Ruchi Roy         10/21/2022           Created this method
 * Ruchi Roy         11/17/2022           Modified this method for 190991
-*                
+* Rahul Singh       11/29/2022       	 Modified for user story 191911
 */ 
 
 public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
@@ -556,7 +557,7 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
         for(Account acc : accountNewMap.values()){
                 if(!accOwnerSalesOfficeMap.isEmpty()){
                     Integer isallowUpdate = 0;
-                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '')){
+                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '') || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
                             isallowUpdate = isallowUpdate + 1;
                         
                     }
