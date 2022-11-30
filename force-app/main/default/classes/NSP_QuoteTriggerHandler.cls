@@ -33,10 +33,20 @@ public class NSP_QuoteTriggerHandler implements NSP_ITriggerHandler{
  * Handles after insert for Quote
  * @param newList List of New Quote.
  * @param newMap Map of New Quote. 
- * @return void             
+ * @return void 
+ * * Modification History
+ * -------------------------------------------------------------------------------------
+ * author           | Date              | Description
+ * -------------------------------------------------------------------------------------
+ * Rahul            15-11-2022          	created this method for user story 128436
+ * 
+ *                            
  *                
  */
   public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
+      
+      NSP_QuoteTriggerHelper  QuoteTriggerHelperObject =  new NSP_QuoteTriggerHelper();        
+      QuoteTriggerHelperObject.afterInsertDirector((List<SBQQ__Quote__c>)newList,(Map<Id, SBQQ__Quote__c>) newMap);
     
   }
   
