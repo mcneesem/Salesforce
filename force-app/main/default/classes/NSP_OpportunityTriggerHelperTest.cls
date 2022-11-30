@@ -205,6 +205,7 @@ public class NSP_OpportunityTriggerHelperTest {
             );
             insert userRecord;
             user getUser = [SELECT Id,UserRole.Name FROM User WHERE Id =:userRecord.Id ];
+            Test.startTest();
             System.runAs(userRecord) {
                 Opportunity opp = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null LIMIT 1];
                 opp.ownerId = userRecord.Id;
@@ -212,6 +213,7 @@ public class NSP_OpportunityTriggerHelperTest {
                 opp.NSP_Lost_Reason__c = 'Backout';
                 opp.stagename = NSP_SalesConstants.CLOSED_LOST;
                 database.update(opp);
+                Test.stopTest();
                 System.assertEquals(NSP_SalesConstants.CLOSED_LOST, opp.stagename);
             }
         }
