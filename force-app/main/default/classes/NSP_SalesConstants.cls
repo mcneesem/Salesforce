@@ -132,4 +132,7 @@ public class NSP_SalesConstants {
     public static final String SalesManager = 'Sales Manager';
     public static final String Account_View_All_Modify_All ='Account_View_All_Modify_All';
     public static final String userId = '005';
+    //Added as part of user story 128436
+    public static final String Task_Type ='Core Sales';
+    public static final String Task_SubType = 'WX Quote';
 }

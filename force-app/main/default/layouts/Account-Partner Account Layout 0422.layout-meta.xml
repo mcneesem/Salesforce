@@ -659,8 +659,8 @@
         <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.ACCOUNT_NAME</fields>
         <fields>ACCCONRELATION.ROLES</fields>
-        <fields>NSP_isReferral__c</fields>
         <fields>NSP_Is_Primary__c</fields>
+        <fields>NSP_isReferral__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
     <relatedLists>

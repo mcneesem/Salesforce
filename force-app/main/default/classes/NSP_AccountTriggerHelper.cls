@@ -5,6 +5,8 @@
 *  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
 *  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
 *  Ruchi              Oct   21 2022        Added as part of 128176.
+*  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
+
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
 private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
@@ -29,6 +31,7 @@ Set<Id> userIdsSet = new Set<Id>();
 List<Account> bpaAccountList = new List<Account>();
 Set<string> salesOfficeSet = new Set<String>();
 User userDetails =[SELECT Id, Name, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+
 /* Added as part of DF-01906 */
 List<Account> acctListToStampDocusignTemplateId = new List<Account>();
 for(Account accountObj : newList) {
@@ -86,6 +89,17 @@ Set<Id> userIdsSet = new Set<Id>();
 List<Account> acctListToStampDocusignTemplateId = new List<Account>();
 //DA ISSUE
 User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+//modified for user story 191911    
+List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
+  	if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
+                        getPermSet = [SELECT Id, 
+                                      PermissionSetId, 
+                                      PermissionSet.Name,
+                                      AssigneeId FROM PermissionSetAssignment 
+                                      WHERE AssigneeId =: userDetails.Id AND 
+                                      PermissionSet.Name =: NSP_SalesConstants.Account_View_All_Modify_All];
+                    
+  }
 //Iterating over the new Account map
 for(Id accountId : accountNewMap.keySet()){
 Account newAccount =  accountNewMap.get(accountId);
@@ -109,16 +123,8 @@ acctListToStampDocusignTemplateId.add(newAccount);
 }
 
 //Added as part of 128176
+
 if(accountNewMap.get(accountId) != accountOldMap.get(accountId) && userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
-                    PermissionSetAssignment getPermSet;
-                    if(!test.isRunningTest()){
-                        getPermSet = [SELECT Id, 
-                                      PermissionSetId, 
-                                      PermissionSet.Name,
-                                      AssigneeId FROM PermissionSetAssignment 
-                                      WHERE AssigneeId =: userDetails.Id AND 
-                                      PermissionSet.Name =: NSP_SalesConstants.Account_View_All_Modify_All];
-                    }
                     if(getPermSet != null || Test.isRunningTest()){
                         restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                     }
@@ -531,8 +537,9 @@ NSP_CustomException.LogException(ex);
 * -------------------------------------------------------------------------------------
 * Ruchi Roy         10/21/2022           Created this method
 * Ruchi Roy         11/17/2022           Modified this method for 190991
-*                
+* Rahul Singh       11/29/2022       	 Modified for user story 191911
 */ 
+
 public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
     Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
     Set<Id> accOwnerIdSet = new Set<Id>();
@@ -550,7 +557,7 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
         for(Account acc : accountNewMap.values()){
                 if(!accOwnerSalesOfficeMap.isEmpty()){
                     Integer isallowUpdate = 0;
-                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '')){
+                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '') || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
                             isallowUpdate = isallowUpdate + 1;
                         
                     }
@@ -576,6 +583,7 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
 * Ruchi Roy         11/17/2022           Created this method
 *                
 */
+    
 public static String getTeamMember(Id userId, Id accountId){
     List<NSP_Account_Team__c> accountTeamList=  [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c where NSP_User__c =: userId AND NSP_Account__c =:accountId];
     if(!accountTeamList.isEmpty()){
