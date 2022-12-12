@@ -58,5 +58,21 @@
             <controllingFieldValue>Western</controllingFieldValue>
             <valueName>Western 3</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Western</controllingFieldValue>
+            <valueName>Western 4</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MidMarket</controllingFieldValue>
+            <valueName>HCM Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MidMarket</controllingFieldValue>
+            <valueName>National Accounts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MidMarket</controllingFieldValue>
+            <valueName>MM Sales</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

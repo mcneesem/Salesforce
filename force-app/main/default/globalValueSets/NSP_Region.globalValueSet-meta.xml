@@ -20,6 +20,11 @@
         <default>false</default>
         <label>Western</label>
     </customValue>
+    <customValue>
+        <fullName>MidMarket</fullName>
+        <default>false</default>
+        <label>MidMarket</label>
+    </customValue>
     <masterLabel>Division</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
