@@ -1305,6 +1305,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Sales_Division__c</picklist>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
         <values>
             <fullName>1001</fullName>
@@ -1595,6 +1618,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4491</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4492</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4493</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4499</fullName>
             <default>false</default>
         </values>
@@ -1704,6 +1739,73 @@
         </values>
         <values>
             <fullName>903</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Sales_Region__c</picklist>
+        <values>
+            <fullName>Central 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MM Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 4</fullName>
             <default>false</default>
         </values>
     </picklistValues>
