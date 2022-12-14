@@ -3,12 +3,13 @@
     <actionCalls>
         <name>NCS_Notify</name>
         <label>NCS Notify</label>
-        <locationX>355</locationX>
-        <locationY>835</locationY>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>isMid_Market</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>GetEFP</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -21,12 +22,12 @@
     <actionCalls>
         <name>NCS_Notify_0</name>
         <label>NCS Notify</label>
-        <locationX>442</locationX>
-        <locationY>835</locationY>
+        <locationX>358</locationX>
+        <locationY>1091</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>isMid_Market</targetReference>
+            <targetReference>GetEFP</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -37,6 +38,70 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>AddToUpdateList</name>
+        <label>AddToUpdateList</label>
+        <locationX>424</locationX>
+        <locationY>1787</locationY>
+        <assignmentItems>
+            <assignToReference>EPFUpdateList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop1</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AddToUpdateList1</name>
+        <label>AddToUpdateList</label>
+        <locationX>776</locationX>
+        <locationY>1787</locationY>
+        <assignmentItems>
+            <assignToReference>EPFUpdateList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop2</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetCheckbox</name>
+        <label>SetCheckbox</label>
+        <locationX>424</locationX>
+        <locationY>1667</locationY>
+        <assignmentItems>
+            <assignToReference>Loop1.NSP_Is_MidMarket__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddToUpdateList</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetCheckbox1</name>
+        <label>SetCheckbox</label>
+        <locationX>776</locationX>
+        <locationY>1667</locationY>
+        <assignmentItems>
+            <assignToReference>Loop2.NSP_Is_MidMarket__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddToUpdateList1</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>conABPA</name>
         <dataType>String</dataType>
@@ -124,8 +189,8 @@
     <decisions>
         <name>Check_Owner_Role</name>
         <label>Check Owner Role</label>
-        <locationX>876</locationX>
-        <locationY>364</locationY>
+        <locationX>358</locationX>
+        <locationY>455</locationY>
         <defaultConnectorLabel>Blank</defaultConnectorLabel>
         <rules>
             <name>Workforce_Product</name>
@@ -372,8 +437,8 @@
     <decisions>
         <name>isMid_Market</name>
         <label>isMid_Market</label>
-        <locationX>260</locationX>
-        <locationY>273</locationY>
+        <locationX>644</locationX>
+        <locationY>1427</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>True</name>
@@ -385,10 +450,17 @@
                     <elementReference>NumberOfEmployees</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Update_IsMidMarket</targetReference>
+                <targetReference>Loop1</targetReference>
             </connector>
-            <label>True</label>
+            <label>Greater than 150</label>
         </rules>
         <rules>
             <name>False</name>
@@ -400,19 +472,26 @@
                     <elementReference>NumberOfEmployees</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>BlankOut_IsMidMarket</targetReference>
+                <targetReference>Loop2</targetReference>
             </connector>
-            <label>False</label>
+            <label>Less than 150</label>
         </rules>
     </decisions>
     <decisions>
         <name>OwnerIDNullCheck</name>
         <label>OwnerIDNullCheck</label>
-        <locationX>488</locationX>
-        <locationY>268</locationY>
+        <locationX>644</locationX>
+        <locationY>335</locationY>
         <defaultConnector>
-            <targetReference>isMid_Market</targetReference>
+            <targetReference>GetEFP</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -462,6 +541,34 @@
     <environments>Default</environments>
     <interviewLabel>closingOpptyNotifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ClosingOpportunityNotifications</label>
+    <loops>
+        <name>Loop1</name>
+        <label>Loop1</label>
+        <locationX>336</locationX>
+        <locationY>1547</locationY>
+        <collectionReference>GetEFP</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetCheckbox</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_EPFUpdateList</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop2</name>
+        <label>Loop2</label>
+        <locationX>688</locationX>
+        <locationY>1547</locationY>
+        <collectionReference>GetEFP</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetCheckbox1</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_EPFUpdateList1</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -471,7 +578,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -481,53 +588,48 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>BlankOut_IsMidMarket</name>
-        <label>BlankOut IsMidMarket</label>
-        <locationX>52</locationX>
-        <locationY>400</locationY>
+    <recordLookups>
+        <name>GetEFP</name>
+        <label>GetEFP</label>
+        <locationX>644</locationX>
+        <locationY>1307</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>isMid_Market</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_Is_MidMarket__c</field>
+            <field>NSP_Opportunity__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>NSP_Is_MidMarket__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record.Enrollment_Fee_Payments__r</inputReference>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>NSP_Enrollment_Fee_Payment__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Is_MidMarket__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_EPFUpdateList</name>
+        <label>Update EPFUpdateList</label>
+        <locationX>336</locationX>
+        <locationY>2003</locationY>
+        <inputReference>EPFUpdateList</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_IsMidMarket</name>
-        <label>Update IsMidMarket</label>
-        <locationX>50</locationX>
-        <locationY>137</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Is_MidMarket__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NSP_Is_MidMarket__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record.Enrollment_Fee_Payments__r</inputReference>
+        <name>Update_EPFUpdateList1</name>
+        <label>Update EPFUpdateList</label>
+        <locationX>688</locationX>
+        <locationY>2003</locationY>
+        <inputReference>EPFUpdateList</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_New_Client_Sales_Email2</name>
         <label>Update New Client Sales Email2</label>
-        <locationX>887</locationX>
-        <locationY>617</locationY>
+        <locationX>358</locationX>
+        <locationY>971</locationY>
         <connector>
             <targetReference>NCS_Notify_0</targetReference>
         </connector>
@@ -542,8 +644,8 @@
     <recordUpdates>
         <name>Update_Oppty_New_Client_Sales_Email</name>
         <label>Update Oppty New Client Sales Email</label>
-        <locationX>699</locationX>
-        <locationY>525</locationY>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
         <connector>
             <targetReference>NCS_Notify</targetReference>
         </connector>
@@ -556,8 +658,8 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>797</locationX>
-        <locationY>10</locationY>
+        <locationX>518</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>OwnerIDNullCheck</targetReference>
         </connector>
@@ -565,5 +667,20 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <variables>
+        <name>EPFUpdateList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>NSP_Enrollment_Fee_Payment__c</objectType>
+    </variables>
+    <variables>
+        <name>test</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
 </Flow>
