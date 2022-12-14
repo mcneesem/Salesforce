@@ -51,6 +51,11 @@
         <label>0508 Los Angeles 8</label>
     </customValue>
     <customValue>
+        <fullName>509</fullName>
+        <default>false</default>
+        <label>0509 Los Angeles 9</label>
+    </customValue>
+    <customValue>
         <fullName>520</fullName>
         <default>false</default>
         <label>0520 San Francisco 1</label>
@@ -113,7 +118,7 @@
     <customValue>
         <fullName>901</fullName>
         <default>false</default>
-        <label>901 Washington DC 1</label>
+        <label>0901 Washington DC 1</label>
     </customValue>
     <customValue>
         <fullName>902</fullName>
@@ -491,6 +496,21 @@
         <label>4477 WA Sales</label>
     </customValue>
     <customValue>
+        <fullName>4491</fullName>
+        <default>false</default>
+        <label>4491 MidMarket 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4492</fullName>
+        <default>false</default>
+        <label>4492 MidMarket 2</label>
+    </customValue>
+    <customValue>
+        <fullName>4493</fullName>
+        <default>false</default>
+        <label>4493 MidMarket (National Accounts)</label>
+    </customValue>
+    <customValue>
         <fullName>4499</fullName>
         <default>false</default>
         <label>4499 MidMarket</label>
@@ -509,6 +529,11 @@
         <fullName>4801</fullName>
         <default>false</default>
         <label>4801 Seattle 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4802</fullName>
+        <default>false</default>
+        <label>4802 Seattle 2</label>
     </customValue>
     <customValue>
         <fullName>5001</fullName>
