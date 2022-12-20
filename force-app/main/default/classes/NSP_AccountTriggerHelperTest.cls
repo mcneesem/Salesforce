@@ -93,6 +93,7 @@ public class NSP_AccountTriggerHelperTest {
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = EN_US,
             LocaleSidKey = EN_US,
+            userroleid = BPArole.Id,
             NSP_Sales_Office__c = '1401'
         );
         users.add(userRecord1);
@@ -364,7 +365,7 @@ public class NSP_AccountTriggerHelperTest {
         Test.stopTest();
      
     }
-	
+    
    /**
    Description : Test method for setSalesOfficeDetails  STY-03153
    */
@@ -408,6 +409,42 @@ public class NSP_AccountTriggerHelperTest {
        
     }
     
+      /***********************************************************************************************
+    * MethodName: testAccountPremierUpdate
+    * Description : This method will test restrictAccountChange
+    * Author : Ruchi Roy
+    * Updated Date : 11/17/22
+    * **************************************************************************************/
+
+    @isTest
+    static void restrictAccountChangeTest() {
+    User userRecord1=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@test1.com' Limit 1];
+    userRecord1.NSP_Sales_Office__c = '302';
+    update userRecord1;
+    List<User> userRecordList = [SELECT Id FROM User WHERE Profile.Name = 'Sales Manager' and Email = 'testuser@test1.com' Limit 1];
+    User DAUser = userRecordList[0];
+    Account accountObject3 = new Account();
+        //Create Account
+        accountObject3.Name = 'ACCOUNTTEST3';
+        accountObject3.ownerId = userRecord1.Id;
+        insert accountObject3;
+        //Insert AccountTeam
+        NSP_Account_Team__c accMember = new NSP_Account_Team__c();
+        accMember.NSP_Account__c = accountObject3.id;
+        accMember.NSP_User__c = DAUser.id;
+        insert accMember;
+    
+    test.startTest();
+    System.runAs(DAUser){
+            try{            
+            accountObject3.Industry='Other';
+                Update accountObject3;
+            }catch(Exception ex){
+                ex.getStackTraceString();
+            }
+    }
+    test.stopTest();    
+    }
       /***********************************************************************************************
     * MethodName: testAccountPremierUpdate
     * Description : This method will test publish event for premier pathway opportunity owner update

@@ -125,6 +125,36 @@
                 <label>MidMarket Administrator</label>
             </value>
             <value>
+                <fullName>MM Area Manager</fullName>
+                <default>false</default>
+                <label>MM Area Manager</label>
+            </value>
+            <value>
+                <fullName>MMNA Manager</fullName>
+                <default>false</default>
+                <label>MMNA Manager</label>
+            </value>
+            <value>
+                <fullName>MMNA Sales</fullName>
+                <default>false</default>
+                <label>MMNA Sales</label>
+            </value>
+            <value>
+                <fullName>MMNA Solutions Specialist</fullName>
+                <default>false</default>
+                <label>MMNA Solutions Specialist</label>
+            </value>
+            <value>
+                <fullName>MM National Sales Director</fullName>
+                <default>false</default>
+                <label>MM National Sales Director</label>
+            </value>
+            <value>
+                <fullName>MM VP</fullName>
+                <default>false</default>
+                <label>MM VP</label>
+            </value>
+            <value>
                 <fullName>National Account Exec</fullName>
                 <default>false</default>
                 <label>National Account Exec</label>
@@ -185,6 +215,16 @@
                 <label>Renewal Coordinator</label>
             </value>
             <value>
+                <fullName>Retirement Sales Consultant</fullName>
+                <default>false</default>
+                <label>Retirement Sales Consultant</label>
+            </value>
+            <value>
+                <fullName>Retirement Sales Manager</fullName>
+                <default>false</default>
+                <label>Retirement Sales Manager</label>
+            </value>
+            <value>
                 <fullName>Safety Consultant</fullName>
                 <default>false</default>
                 <label>Safety Consultant</label>
@@ -213,6 +253,11 @@
                 <fullName>Sales Support Specialist</fullName>
                 <default>false</default>
                 <label>Sales Support Specialist</label>
+            </value>
+            <value>
+                <fullName>Technology Solutions Sales Consultant</fullName>
+                <default>false</default>
+                <label>Technology Solutions Sales Consultant</label>
             </value>
         </valueSetDefinition>
     </valueSet>

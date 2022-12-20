@@ -1513,6 +1513,37 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Client Growth Credit</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_12_A1</targetReference>
             </connector>
@@ -1536,7 +1567,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_15</name>
-            <conditionLogic>1 AND 2 AND(3 OR 4 OR 5 OR 6)</conditionLogic>
+            <conditionLogic>1 AND 2 AND 7 AND (3 OR 4 OR 5 OR 6)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -1721,6 +1752,37 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>WS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Client Growth Credit</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3034,7 +3096,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_9</name>
-            <conditionLogic>1 AND 6 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+            <conditionLogic>1 AND 6 AND 7 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -3221,6 +3283,37 @@
                     <numberValue>150.0</numberValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Client Growth Credit</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_9_A1</targetReference>
             </connector>
@@ -3235,7 +3328,7 @@
                 <stringValue>[Opportunity].Owner.Manager.Manager.Email </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_53_myRule_51_A1_7919036794</name>
+        <name>formula_53_myRule_51_A1_4030658776</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Owner.Manager.Manager.Email}</expression>
     </formulas>
@@ -3503,7 +3596,8 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>ISNEW() &amp;&amp;   [Opportunity].AccountId != &quot;&quot; &amp;&amp; [Opportunity].Account.Owner.IsActive  &amp;&amp; [Opportunity].Account.OwnerId  != [Opportunity].OwnerId </stringValue>
+                <stringValue>ISNEW() &amp;&amp;   [Opportunity].AccountId != &quot;&quot; &amp;&amp; [Opportunity].Account.Owner.IsActive  &amp;&amp; [Opportunity].Account.OwnerId  != [Opportunity].OwnerId
+</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5</name>
@@ -3514,14 +3608,14 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>ISNEW() &amp;&amp; NOT($User.NSP_Mid_Market_Sales_Allowed__c) &amp;&amp; ([Opportunity].Account.NumberOfEmployees &gt; 150 || [Opportunity].NSP_Number_of_Employees__c &gt;150)</stringValue>
+                <stringValue>ISNEW() &amp;&amp; NOT($User.NSP_Mid_Market_Sales_Allowed__c) &amp;&amp; ([Opportunity].Account.NumberOfEmployees &gt; 150 || [Opportunity].NSP_Number_of_Employees__c &gt;150) &amp;&amp; NOT(ISPICKVAL([Opportunity].Type , &quot;Client Growth Credit&quot;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_7</name>
         <dataType>Boolean</dataType>
-        <expression>ISNEW() &amp;&amp; NOT({!$User.NSP_Mid_Market_Sales_Allowed__c}) &amp;&amp; ({!myVariable_current.Account.NumberOfEmployees} &gt; 150 || {!myVariable_current.NSP_Number_of_Employees__c} &gt;150)</expression>
+        <expression>ISNEW() &amp;&amp; NOT({!$User.NSP_Mid_Market_Sales_Allowed__c}) &amp;&amp; ({!myVariable_current.Account.NumberOfEmployees} &gt; 150 || {!myVariable_current.NSP_Number_of_Employees__c} &gt;150) &amp;&amp; NOT(ISPICKVAL({!myVariable_current.Type} , &quot;Client Growth Credit&quot;))</expression>
     </formulas>
-    <interviewLabel>NSP_Notify_Opportunity_Owner_of_Assignment-5_InterviewLabel</interviewLabel>
+    <interviewLabel>NSP_Notify_Opportunity_Owner_of_Assignment-6_InterviewLabel</interviewLabel>
     <label>Notify Opportunity and Account Owner of Assignment</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -3760,7 +3854,7 @@ ISPICKVAL({!myVariable_current.NSP_PrimaryProduct__c},&apos;Retirement Services&
             </processMetadataValues>
             <field>NSP_Owner_Manager_s_Manager__c</field>
             <value>
-                <elementReference>formula_53_myRule_51_A1_7919036794</elementReference>
+                <elementReference>formula_53_myRule_51_A1_4030658776</elementReference>
             </value>
         </inputAssignments>
         <object>Opportunity</object>

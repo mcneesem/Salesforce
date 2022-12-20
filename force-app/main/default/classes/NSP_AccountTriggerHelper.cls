@@ -4,6 +4,9 @@
 * Modification History
 *  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
 *  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
+*  Ruchi              Oct   21 2022        Added as part of 128176.
+*  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
+
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
 private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
@@ -11,6 +14,9 @@ private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
 private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
 private static final string DA_ROLE = 'District Administrator';
 public static List<string> CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
+//Added as part of 128176
+public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
+    
 /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
 * @param newList List of New Accounts.
@@ -25,6 +31,7 @@ Set<Id> userIdsSet = new Set<Id>();
 List<Account> bpaAccountList = new List<Account>();
 Set<string> salesOfficeSet = new Set<String>();
 User userDetails =[SELECT Id, Name, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+
 /* Added as part of DF-01906 */
 List<Account> acctListToStampDocusignTemplateId = new List<Account>();
 for(Account accountObj : newList) {
@@ -80,6 +87,19 @@ List<Account> accountownerChangedList = new List<Account>();
 List<Account> partnerAccountList = new List<Account>();
 Set<Id> userIdsSet = new Set<Id>();
 List<Account> acctListToStampDocusignTemplateId = new List<Account>();
+//DA ISSUE
+User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
+//modified for user story 191911    
+List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
+  	if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
+                        getPermSet = [SELECT Id, 
+                                      PermissionSetId, 
+                                      PermissionSet.Name,
+                                      AssigneeId FROM PermissionSetAssignment 
+                                      WHERE AssigneeId =: userDetails.Id AND 
+                                      PermissionSet.Name =: NSP_SalesConstants.Account_View_All_Modify_All];
+                    
+  }
 //Iterating over the new Account map
 for(Id accountId : accountNewMap.keySet()){
 Account newAccount =  accountNewMap.get(accountId);
@@ -101,6 +121,14 @@ if(!String.isBlank(newAccount.NSP_Template_Selection__c) &&
 newAccount.NSP_Template_Selection__c != oldAccount.NSP_Template_Selection__c){
 acctListToStampDocusignTemplateId.add(newAccount);
 }
+
+//Added as part of 128176
+
+if(accountNewMap.get(accountId) != accountOldMap.get(accountId) && userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
+                    if(getPermSet != null || Test.isRunningTest()){
+                        restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    }
+                }
 
 //cherwel ticket 556472
                 if(accountNewMap.get(accountId).NSP_Partner_Lifecycle__c != accountOldMap.get(accountId).NSP_Partner_Lifecycle__c && accountNewMap.get(accountId).NSP_Partner_Lifecycle__c == NSP_SalesConstants.ONBOARDING){
@@ -498,6 +526,72 @@ accountObj.NSP_Channel_Program_Manager__c = dummyUser[0].Id;
 NSP_CustomException.LogException(ex);
 }
 }
+
+/**
+* Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
+* @param accountNewMap Map of New Account.
+* @param accountOldMap Map of Old Account.
+* @return void
+* Ticket 128176
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         10/21/2022           Created this method
+* Ruchi Roy         11/17/2022           Modified this method for 190991
+* Rahul Singh       11/29/2022       	 Modified for user story 191911
+*/ 
+
+public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
+    Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
+    Set<Id> accOwnerIdSet = new Set<Id>();
+    List<String> loggedInUserGrpName = new List<String>();
+    
+    for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
+        loggedInUserGrpName.add(gMem.Group.Name);
+    }
+    for(Account acc : [SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c), ToLabel(owner.NSP_Sales_Office_Membership__c) 
+                       FROM Account WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles]){
+                           accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
+                       }
+    try{
+        
+        for(Account acc : accountNewMap.values()){
+                if(!accOwnerSalesOfficeMap.isEmpty()){
+                    Integer isallowUpdate = 0;
+                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '') || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
+                            isallowUpdate = isallowUpdate + 1;
+                        
+                    }
+                    if(isallowUpdate == 0){
+                        acc.addError(system.label.NSP_AccountTriggerError);
+                    }
+                }
+        }
+    }
+    catch(Exception ex){
+        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'restrictAccountChange',ex.getMessage());
+    }
+}
+
+/**
+* Description: This method returns AccountTeamMember.
+* @param userId.
+* @param accountId.
+* @return AccountTeamMember.
+* Ticket 190991
+* author           | Date              | Description
+* -------------------------------------------------------------------------------------
+* Ruchi Roy         11/17/2022           Created this method
+*                
+*/
+    
+public static String getTeamMember(Id userId, Id accountId){
+    List<NSP_Account_Team__c> accountTeamList=  [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c where NSP_User__c =: userId AND NSP_Account__c =:accountId];
+    if(!accountTeamList.isEmpty()){
+        return accountTeamList[0].NSP_User__c;
+    }
+    return '';
+}
+
 
 /* Description: This method sets sales office details from user 
      * 

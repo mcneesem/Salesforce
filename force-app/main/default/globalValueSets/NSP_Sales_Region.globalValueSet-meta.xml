@@ -60,6 +60,26 @@
         <default>false</default>
         <label>Western 3</label>
     </customValue>
+    <customValue>
+        <fullName>Western 4</fullName>
+        <default>false</default>
+        <label>Western 4</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM Sales</fullName>
+        <default>false</default>
+        <label>HCM Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>National Accounts</fullName>
+        <default>false</default>
+        <label>National Accounts</label>
+    </customValue>
+    <customValue>
+        <fullName>MM Sales</fullName>
+        <default>false</default>
+        <label>MM Sales</label>
+    </customValue>
     <masterLabel>Sales Region</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

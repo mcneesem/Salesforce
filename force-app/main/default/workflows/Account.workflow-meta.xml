@@ -33,4 +33,12 @@
         <senderType>CurrentUser</senderType>
         <template>NSP_Sales/NSPMidMarketAccountNumberOfEEupdate</template>
     </alerts>
+    <alerts>
+        <fullName>Notify_CPM_on_creation_of_Partner_Account</fullName>
+        <ccEmails>Channel.Programs@insperity.com.invalid</ccEmails>
+        <description>Notify CPM on creation of Partner Account</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Notify_CPM_on_creation_of_PartnerAccount</template>
+    </alerts>
 </Workflow>

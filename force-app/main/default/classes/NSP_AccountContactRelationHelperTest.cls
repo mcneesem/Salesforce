@@ -2,6 +2,11 @@
 * Represents test class for 
 * AccountContactRelation trigger helper
 * Created By : Hemali Patel
+* Modification Log     :                                                                              
+* --------------------------------------------------------------------------------------------------  
+* Developer                   Date                   Description                                    
+* -------------------------------------------------------------------------------------------------  
+* Rahul Singh      		26/10/2022			         Create OCR as part of user story - 128223
 */
 
 @isTest(SeeAllData=FALSE)
@@ -19,6 +24,7 @@ public class NSP_AccountContactRelationHelperTest {
         
         Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
         insert account;
+        
      }
     
     /** 
@@ -31,7 +37,21 @@ public class NSP_AccountContactRelationHelperTest {
         
         Account accObj = [Select Id,Name from Account WHERE Name!= null  LIMIT 1];
         ID accountId = accObj.Id;
+         //Create Opportunity
+        Opportunity opportuniytObject = new Opportunity();
+        opportuniytObject.Name = 'Test Oppty';
+        opportuniytObject.AccountId = accountId;
+        opportuniytObject.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject.CloseDate = date.today();
+        opportuniytObject.NSP_PrimaryProduct__c = 'WX';
+        opportuniytObject.NSP_Number_of_Employees__c = 100;
+        opportuniytObject.NSP_WS_Number_Of_Employees__c = 123;
+        opportuniytObject.NSP_WO_Number_Of_Employees__c = 123;
+        //Inserting Opportunity Object
+        insert opportuniytObject;
+        
         AccountContactRelation acrObj  = [Select Id from AccountContactRelation WHERE AccountId =: accountId];
+        
         
         acrObj.Roles = 'Agency';
         acrObj.NSP_Is_Primary__c = true;

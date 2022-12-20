@@ -239,6 +239,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void checkOpenDiscoveryActivities(){
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         if(oppty!=null){
             oppty.StageName='Analysis';
             oppty.Type = '';
@@ -248,6 +249,7 @@ public class NSP_ValidateOpportunityStageTest {
                 ex.getStackTraceString();
             }
         }
+        test.stopTest();
         System.assertEquals('Analysis', oppty.StageName);
     }
     
@@ -414,6 +416,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void evaluateClosedLost_BPC_Test(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Business Performance Consultant'][0].Id;
@@ -422,7 +425,6 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
         update userRecord2;
-        test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -441,6 +443,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void evaluateClosedLost_RSC_Test(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Retirement Sales Consultant'][0].Id;
@@ -449,7 +452,6 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Retirement Sales Manager'][0].Id;
         update userRecord2;
-        test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -468,6 +470,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void evaluateClosedLost_IC_Test(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Insurance Sales'][0].Id;
@@ -476,7 +479,6 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Insurance Sales Manager'][0].Id;
         update userRecord2;
-        test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -495,6 +497,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void evaluateClosedLost_RS_Test(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Recruiting Sales'][0].Id;
@@ -503,7 +506,6 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Recruiting Manager'][0].Id;
         update userRecord2;
-        test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -522,6 +524,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void evaluateClosedLost_TS_Test(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Technology Sales'][0].Id;
@@ -530,7 +533,6 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'BPS Sales Manager'][0].Id;
         update userRecord2;
-        test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -602,6 +604,7 @@ public class NSP_ValidateOpportunityStageTest {
     public static void evaluateClosedLost_PublicGroup2(){
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
+        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.NSP_Sales_Office_Membership__c = '302';
@@ -617,7 +620,6 @@ public class NSP_ValidateOpportunityStageTest {
         List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
         // Inserting Group Members
         Insert groupMemberList;
-        test.startTest();
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            

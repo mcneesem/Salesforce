@@ -9,6 +9,8 @@ Modification Log     :
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
 * Tejas                 07/02/2021            First Iteration
+* Rahul Singh      		26/10/2022			  Create OCR
+* Rahul Singh           11/17/2022			  User STory 128436
 */
 
 public class NSP_OpportunityTriggerHelper {
@@ -38,6 +40,8 @@ public class NSP_OpportunityTriggerHelper {
         
         //set to store opportunity owner Ids when opportunity owner is changed/or when opportunity is created
         Set<Id> ownerIdsSet = new Set<Id>();
+        //118442- Opp list which is Closed on insert
+        List<Opportunity> closedStageList =  new List<Opportunity>();
         List<Opportunity> closedOppList =  new List<Opportunity>();
         //Iterating over the opportunity new list 
         for(Opportunity opportunityObject : newList){
@@ -68,6 +72,14 @@ public class NSP_OpportunityTriggerHelper {
             //If type is CAMS updating the stage to Analysis
             if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.OPPORTUNITY_TYPE_CAMS)) {
                 opportunityObject.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
+            }
+            
+            //118442- If type is Client Growth Credit and stage is Closed Won updating the recordtype to Locked
+            if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.CLIENT_GROWTH_CREDIT)
+                && opportunityObject.StageName.equals(NSP_SalesConstants.CLOSED_WON_STAGE))
+                {
+                closedStageList.add(opportunityObject);
+                changeOpportunityRecordType(closedStageList);
             }
 
               // checking for closeddate is lessthan today or Not
@@ -148,6 +160,7 @@ public class NSP_OpportunityTriggerHelper {
         }
         // added as a part of DF-01497
         getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
+        createContactRole(newList,opportunityNewMap);
         // Send the list to publish event bus
         Id profileId=userinfo.getProfileId();
         String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
@@ -155,6 +168,7 @@ public class NSP_OpportunityTriggerHelper {
         if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
             publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);       
         }
+        
     }
     
 /**
@@ -338,7 +352,7 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         
         //opportunity list to store oppty records where Primary Quote is newly created
-        List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();
+        //List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();// commeted as part of user story 128436
         
         //Opportunity list to capture opportunities created with HSA contribution data
         List<Opportunity> newTaskOpportunityList = new List<Opportunity>();
@@ -360,11 +374,11 @@ public class NSP_OpportunityTriggerHelper {
                                                                                                                       partnerAccountIdSet.add(newOpportunity.AccountId);
                                                                                                                   }
             
-            //check if Primary Quote is created for Opportunity record
-            if(String.isNotBlank(opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c)
-               && String.isBlank(opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c)){
-                   opportunitiesWithPrimaryQuote.add(opportunityNewMap.get(opportunityId));
-               }
+            //check if Primary Quote is created for Opportunity record// commented as part of user story 128436
+            //if(String.isNotBlank(opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c)
+            //   && String.isBlank(opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c)){
+            //       opportunitiesWithPrimaryQuote.add(opportunityNewMap.get(opportunityId));
+             //  }
             
             // if the parent opty is closed lost then adding it to the list
             if((String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null)
@@ -446,7 +460,7 @@ public class NSP_OpportunityTriggerHelper {
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
         
-        NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);
+       // NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);// commented as part of user story 128436
         setPartnerAccount(partnerOpportunityList,partnerAccountIdSet);
         
     }       
@@ -961,6 +975,83 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
 		newReward.NSP_Non_Profit_TaxID__c = objOCR.NSP_Nonprofit_Organization_Tax_Id__c;
         newReward.NSP_Non_Profit_Address__c = objOpportunity.NSP_NonprofitNameAddress__c;
         return newReward;
+    }
+
+    /***********************************************************************************************
+    * MethodName: createContactRole
+    * Description : This method will create OCR
+    * Params:       List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap
+    * Author : Rahul Singh
+	* Created Date:10/26/22
+	* Created as part of User story - 128223
+    * ********************************************************************************************/   
+    
+    public void createContactRole(List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap)
+    {
+        set<Id> oppWithCon = new set<Id>();
+        map<Id,Id> accAndOpp = new map<Id,Id>();
+        map<id,AccountContactRelation> acrMap = new map<id,AccountContactRelation>();
+        list<OpportunityContactRole> ocrInsertList = new list<OpportunityContactRole>();
+   
+        for(Opportunity newOpportunity: newList)
+        {
+            if(Trigger.isInsert && newOpportunity.OwnerId != null && newOpportunity.NSP_Is_Originated_From_Lead_Conversion__c == False)
+            {
+
+                accAndOpp.put(newOpportunity.id, newOpportunity.AccountId);
+            }
+            
+            
+        }
+        
+       
+         if(accAndOpp.Size() > 0)
+        {
+             for(AccountContactRelation eachACR : [SELECT Id, AccountId, ContactId, Roles, IsDirect, IsActive, CurrencyIsoCode, NSP_ACCOUNTCONTACT_MERGE__c, Relationship_Strength__c, 
+                                                   NSP_Is_Primary__c, NSP_Nonprofit_Organization_Name__c, NSP_Nonprofit_Organization_Tax_Id__c, NSP_OneForce_External_ID__c, 
+                                                   NSP_Referralbenefitsanonprofitorg__c, NSP_isReferral__c FROM AccountContactRelation Where AccountId  in :accAndOpp.values() AND NSP_Is_Primary__c = True])
+            
+            {
+                    acrMap.put(eachACR.AccountId,eachACR);                       
+            
+            }
+            
+        }
+        
+        
+         if(accAndOpp.Size() > 0 && acrMap.Size() >0)
+        {   
+            for(id oppOnConv : accAndOpp.keySet() ){
+               
+                AccountContactRelation eachACR = acrMap.get(accAndOpp.get(oppOnConv));
+                 OpportunityContactRole newOcr = new OpportunityContactRole();
+                 newOcr.OpportunityId = oppOnConv;
+                 newOcr.ContactId = eachACR.ContactId;
+                 newOcr.IsPrimary = eachACR.NSP_Is_Primary__c;
+                 newOcr.CurrencyIsoCode = eachACR.CurrencyIsoCode;
+                 newOcr.NSP_Nonprofit_Organization_Name__c = eachACR.NSP_Nonprofit_Organization_Name__c;
+                 newOcr.NSP_Nonprofit_Organization_Tax_Id__c = eachACR.NSP_Nonprofit_Organization_Tax_Id__c;
+                 newOcr.NSP_Referralbenefitsanonprofitorg__c = eachACR.NSP_Referralbenefitsanonprofitorg__c;
+                 newOcr.NSP_isReferral__c = eachACR.NSP_isReferral__c;
+                 ocrInsertList.add(newOcr);   
+                
+            }
+        }
+        
+        try{
+		if(ocrInsertList.Size() > 0)
+                
+        {
+			insert ocrInsertList;
+                
+        }            
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        } 
+            
+            
+          
+    
     }
     
 }
