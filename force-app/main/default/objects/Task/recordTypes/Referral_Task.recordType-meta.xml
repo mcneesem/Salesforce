@@ -1015,7 +1015,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Insurance Services</fullName>
+            <fullName>Insurance Services %28Health %26 Wellness%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Services %28Property %26 Casualty%29</fullName>
             <default>false</default>
         </values>
         <values>
