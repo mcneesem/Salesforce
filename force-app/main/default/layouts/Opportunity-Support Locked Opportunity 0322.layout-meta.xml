@@ -1069,6 +1069,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Team_Member__c</fields>
+        <fields>NSP_Percent_Split__c</fields>
+        <fields>NSP_Number_of_Employees__c</fields>
+        <fields>NSP_Enrollment_Fee__c</fields>
+        <fields>NSP_Office_Assignment__c</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>

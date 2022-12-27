@@ -45,6 +45,14 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Account_DBA_Text__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Count_of_Pending_Oppty__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Count_of_Closed_Won_Oppty__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -316,6 +324,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_BPC_Rep__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Total_Assets__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -26,11 +26,6 @@
         <label>HR Consulting Services</label>
     </customValue>
     <customValue>
-        <fullName>Insurance Services</fullName>
-        <default>false</default>
-        <label>Insurance Services</label>
-    </customValue>
-    <customValue>
         <fullName>Quickbooks Integration(Insperity Integra)</fullName>
         <default>false</default>
         <label>Integra</label>
@@ -61,6 +56,16 @@
         <label>Retirement Services</label>
     </customValue>
     <customValue>
+        <fullName>Insurance Services (Health &amp; Wellness)</fullName>
+        <default>false</default>
+        <label>Insurance Services (Health &amp; Wellness)</label>
+    </customValue>
+    <customValue>
+        <fullName>Insurance Services (Property &amp; Casualty)</fullName>
+        <default>false</default>
+        <label>Insurance Services (Property &amp; Casualty)</label>
+    </customValue>
+    <customValue>
         <fullName>Time and Attendance</fullName>
         <default>false</default>
         <label>Time and Attendance</label>
@@ -82,6 +87,12 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Full Service HR</label>
+    </customValue>
+    <customValue>
+        <fullName>Insurance Services</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Insurance Services</label>
     </customValue>
     <customValue>
         <fullName>Payroll/Human Capital Management</fullName>
