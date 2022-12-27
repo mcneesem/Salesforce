@@ -16,6 +16,11 @@
         <label>Central 3</label>
     </customValue>
     <customValue>
+        <fullName>Central 4</fullName>
+        <default>false</default>
+        <label>Central 4</label>
+    </customValue>
+    <customValue>
         <fullName>Eastern 1</fullName>
         <default>false</default>
         <label>Eastern 1</label>
@@ -31,6 +36,11 @@
         <label>Eastern 3</label>
     </customValue>
     <customValue>
+        <fullName>Eastern 4</fullName>
+        <default>false</default>
+        <label>Eastern 4</label>
+    </customValue>
+    <customValue>
         <fullName>Northeast 1</fullName>
         <default>false</default>
         <label>Northeast 1</label>
@@ -44,6 +54,11 @@
         <fullName>Northeast 3</fullName>
         <default>false</default>
         <label>Northeast 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Northeast 4</fullName>
+        <default>false</default>
+        <label>Northeast 4</label>
     </customValue>
     <customValue>
         <fullName>Western 1</fullName>
