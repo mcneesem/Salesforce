@@ -317,6 +317,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_BPC_Rep__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Total_Assets__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
