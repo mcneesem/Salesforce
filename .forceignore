@@ -3,6 +3,7 @@
 #
 
 package.xml
+.sfdx/tools/apex.db
 
 # LWC configuration files
 **/jsconfig.json
