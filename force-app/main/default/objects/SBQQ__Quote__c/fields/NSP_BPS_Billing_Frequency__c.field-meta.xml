@@ -22,6 +22,16 @@
                 <default>false</default>
                 <label>Monthly</label>
             </value>
+            <value>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+                <label>Quarterly</label>
+            </value>
+            <value>
+                <fullName>Semi-Annual</fullName>
+                <default>false</default>
+                <label>Semi-Annual</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Secondary_NetTotal__c</fullName>
-    <description>field use to keep copy of SBQQ__NetTotal__c to be used in formula NSP_Net_Total__c As formula limit is reached.</description>
+    <description>field use to keep copy of SBQQ__NetTotal__c to be used in formula NSP_Net_Total__c As formula limit is reached. Populated by &quot;Copy Net Total to secondary Net Total&quot; Price Rule.</description>
     <externalId>false</externalId>
     <label>Secondary Net Total</label>
     <precision>18</precision>

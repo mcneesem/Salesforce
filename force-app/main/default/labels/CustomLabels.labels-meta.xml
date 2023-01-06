@@ -29,4 +29,18 @@
         <shortDescription>Bypass Roles from Validation</shortDescription>
         <value>Sales Engineer</value>
     </labels>
+    <labels>
+        <fullName>NSP_Opp_No_Quoting_for_WO_WS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Opp - No Quoting for WO/WS</shortDescription>
+        <value>Quoting is not available for Primary Product Workforce Optimization or Workforce Synchronization.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Opp_Performance_Management_Only_Available_For_Renewal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Opp Performance Management Only Available For Renewal</shortDescription>
+        <value>Primary Product Performance Management is only available for Renewal or Amendment Types.</value>
+    </labels>
 </CustomLabels>
