@@ -14,4 +14,19 @@
         <shortDescription>NSP Talent Connect Wet Envelope</shortDescription>
         <value>a8N8G0000000ANiUAM</value>
     </labels>
+    <labels>
+        <fullName>NSP_Business_Performance_Roles</fullName>
+        <categories>BPA, BPC, ABPA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Business Performance Roles</shortDescription>
+        <value>Business Performance Advisor,Business Performance Consultant,Associate Business Performance Advisors,District Administrator,District Manager</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Bypass_Roles_from_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bypass Roles from Validation</shortDescription>
+        <value>Sales Engineer</value>
+    </labels>
 </CustomLabels>
