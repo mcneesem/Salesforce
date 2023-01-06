@@ -10,6 +10,7 @@ public class NSP_EventAndTaskHelperFunctions {
      * author           | Date              | Description
      * -------------------------------------------------------------------------------------
      * Tejas          10-05-2021          created this new method
+     * Rahul Singh    03-01-2023          Modified this method for user story - 191664 
      * 
      * 
      */
@@ -20,7 +21,7 @@ public class NSP_EventAndTaskHelperFunctions {
 
         taskRecord.Subject = taskSubject;
         taskRecord.WhatId = whatId;
-        taskRecord.Type = taskType;
+        taskRecord.NSP_Task_type__c = taskType;
         taskRecord.Status = taskStatus;
         taskRecord.OwnerId = ownerId;
         taskRecord.NSP_Task_Subtype__c = taskSubType;
