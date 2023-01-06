@@ -1,17 +1,17 @@
 /**
-Apex Class Name :   NSP_OpportunityTriggerHelper for Opportunity Trigger
+Apex Class Name :    NSP_OpportunityTriggerHelper for Opportunity Trigger
 Version:  1.0                                                                          
 Created Date         :  12/24/2021   
 Function             : This class Is used as a helper to Opportunity Trigger Handler. 
 Story:
-        Modification Log     :                                                                               
+        Modification Log     :                                                                                
 *--------------------------------------------------------------------------------------------------  
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
 * Tejas                 07/02/2021            First Iteration
-* Rahul Singh      		26/10/2022			  Create OCR
-* Rahul Singh           11/17/2022			  User STory 128436
-* Rahul Singh           22/12/2022			  User STory 194265
+* Rahul Singh           26/10/2022            Create OCR
+* Rahul Singh           11/17/2022            User STory 128436
+* Rahul Singh           22/12/2022            User STory 194265
 */
 
 Public Class NSP_OpportunityTriggerHelper {
@@ -84,7 +84,7 @@ Public Class NSP_OpportunityTriggerHelper {
             }
 
               // checking for closeddate Is lessthan today Or Not
-            If (opportunityObject.CloseDate!= null && opportunityObject.CloseDate < Date.today()){
+            If (opportunityObject.CloseDate! = null && opportunityObject.CloseDate < Date.today()){
             closedOppList.add(opportunityObject);
             }
         }      
@@ -164,7 +164,7 @@ Public Class NSP_OpportunityTriggerHelper {
         createContactRole(newList,opportunityNewMap);
         // Send the list to publish event bus
         Id profileId = userinfo.getProfileId();
-        String profileName =[SELECT Id, Name from Profile WHERE Id=: profileId].Name;
+        String profileName =[SELECT Id, Name from Profile WHERE Id=:  profileId].Name;
         /* Adding Or Condition as part of DF-01043 so that publishEventBus method will Not trigger for Integration user profile*/
         If (String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
             publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);       
@@ -209,28 +209,28 @@ Public Class NSP_OpportunityTriggerHelper {
             Opportunity newOpportunity = opportunityNewMap.get(opportunityId);
             Opportunity oldOpportunity = opportunityOldMap.get(opportunityId);
             
-            If (newOpportunity.OwnerId!= oldOpportunity.OwnerId){
+            If (newOpportunity.OwnerId! = oldOpportunity.OwnerId){
                 ownerChangedOpptyList.add(newOpportunity);
                 ownerIdSet.add(newOpportunity.OwnerId);
             }
 
             //Checking if the account id updated on the record
-            If (opportunityNewMap.get(opportunityId).Accountid!= opportunityOldMap.get(opportunityId).Accountid){
+            If (opportunityNewMap.get(opportunityId).Accountid! = opportunityOldMap.get(opportunityId).Accountid){
                 accountIdSet.add(opportunityNewMap.get(opportunityId).Accountid);
                 opportunityNewAccountList.add(opportunityNewMap.get(opportunityId));
             }
             //Checking if the primary quote id updated on the record
-            If (opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c!= null){
-                If (opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c!= opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c){
+            If (opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c! = null){
+                If (opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c! = opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c){
                     quoteId = opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c;
                     optyList.add(opportunityNewMap.get(opportunityId));
                 }
             }
-            If (opportunityNewMap.get(opportunityId).StageName!= opportunityOldMap.get(opportunityId).StageName){
+            If (opportunityNewMap.get(opportunityId).StageName! = opportunityOldMap.get(opportunityId).StageName){
                 stageChangedOpportunityList.add(opportunityNewMap.get(opportunityId));  
             }  
             
-            If (opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c && opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c!= opportunityOldMap.get(opportunityId).NSP_Signed_Delivery_Order__c){
+            If (opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c && opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c! = opportunityOldMap.get(opportunityId).NSP_Signed_Delivery_Order__c){
                 opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order_Date__c = system.today();
             }
             
@@ -243,7 +243,7 @@ Public Class NSP_OpportunityTriggerHelper {
                        
                    }
             
-            If (opportunityNewMap.get(opportunityId).StageName!= opportunityOldMap.get(opportunityId).StageName
+            If (opportunityNewMap.get(opportunityId).StageName! = opportunityOldMap.get(opportunityId).StageName
                && (opportunityNewMap.get(opportunityId).StageName.equals(NSP_SalesConstants.CLOSED_WON) 
                    ||opportunityNewMap.get(opportunityId).StageName.equals(NSP_SalesConstants.CLOSED_LOST)) ){
                        lockOpportunitiesList.add(opportunityNewMap.get(opportunityId));
@@ -261,7 +261,7 @@ Public Class NSP_OpportunityTriggerHelper {
                }
             
             If (String.isNotBlank(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c) &&
-               (opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c!= opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c)){
+               (opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c! = opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c)){
                    updatePriceBookList.add(opportunityNewMap.get(opportunityId));
                }
             
@@ -271,7 +271,7 @@ Public Class NSP_OpportunityTriggerHelper {
             
             //create list to populate docusign template id for merge on demand templates
             If (!String.isBlank(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c) &&
-               newOpportunity.NSP_Merge_On_Demand_Template_Selection__c!= oldOpportunity.NSP_Merge_On_Demand_Template_Selection__c){
+               newOpportunity.NSP_Merge_On_Demand_Template_Selection__c! = oldOpportunity.NSP_Merge_On_Demand_Template_Selection__c){
                    opptyListToStampDocusignTemplateId.add(newOpportunity);
                    MODaccountIdSet.add(newOpportunity.Accountid);
                    MODownerIdSet.add(newOpportunity.OwnerId);
@@ -279,7 +279,7 @@ Public Class NSP_OpportunityTriggerHelper {
                }
 
                            // checking for closeddate Is lessthan today Or Not
-            If (newOpportunity.CloseDate!= null && newOpportunity.CloseDate < Date.today() &&
+            If (newOpportunity.CloseDate! = null && newOpportunity.CloseDate < Date.today() &&
                newOpportunity.NSP_Insperity_Signer__c == oldOpportunity.NSP_Insperity_Signer__c){
                 closedOppList.add(newOpportunity);
             }
@@ -391,7 +391,7 @@ Public Class NSP_OpportunityTriggerHelper {
                    closedOpportunityIdList.add(opportunityId);
                }
             //STY-01519 - Asset creation from Opportunity line item
-            If (opportunityNewMap.get(opportunityId).stagename!= opportunityOldMap.get(opportunityId).stagename
+            If (opportunityNewMap.get(opportunityId).stagename! = opportunityOldMap.get(opportunityId).stagename
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
                 closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
                //569718- if parent opportunity - send notification to open child opportunities 
@@ -432,7 +432,7 @@ Public Class NSP_OpportunityTriggerHelper {
         If (updateResyncFlagOpportunityList.size() > 0){
             /* Adding If Condition as part of DF-01043 so that publishEventBus method will Not trigger for Integration user profile*/
             Id profileId = userinfo.getProfileId();
-            String profileName = [SELECT Id, Name from Profile WHERE Id=: profileId].Name;
+            String profileName = [SELECT Id, Name from Profile WHERE Id=:  profileId].Name;
             If (String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
             }
@@ -483,7 +483,7 @@ Public Class NSP_OpportunityTriggerHelper {
     Public void moveOpportunityToClosingStage(List<Opportunity> opportunityList){
         For (Opportunity opportunityRecord : opportunityList){
             
-            If (opportunityRecord.NSP_Closing_Appointment__c!= null
+            If (opportunityRecord.NSP_Closing_Appointment__c! = null
             && (((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
                   opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) && 
                  opportunityRecord.NSP_Signed_CSA__c) 
@@ -567,7 +567,7 @@ Public Class NSP_OpportunityTriggerHelper {
         
         For (Opportunity op : opportunityList){
             
-            If (op.SBQQ__AmendedContract__c!= null){
+            If (op.SBQQ__AmendedContract__c! = null){
                 If (op.NSP_TransactionType__c == NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION){
                     op.Type = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
                     op.StageName = NSP_SalesConstants.PROPOSAL_STAGE;
@@ -579,7 +579,7 @@ Public Class NSP_OpportunityTriggerHelper {
                 }
             }
             
-            If (op.SBQQ__RenewedContract__c!= null) {
+            If (op.SBQQ__RenewedContract__c! = null) {
                 op.Type = NSP_SalesConstants.OPPORTUNITY_TYPE_RENEWAL;
                 contractIdSet.add(op.SBQQ__RenewedContract__c);
             }
@@ -1063,8 +1063,8 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
     * Description : This method will update enrollment fee payment
     * Params:       Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap
     * Author : Rahul Singh
-	* Created Date:22/12/22
-	* Created for enrollment fee payment user story - 194265
+    * Created Date:22/12/22
+    * Created for enrollment fee payment user story - 194265
     * ********************************************************************************************/   
     
     
@@ -1114,10 +1114,10 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
             }
         }
         try{
-		if(enrollmentUpdateList.Size() > 0)
+        if(enrollmentUpdateList.Size() > 0)
                 
         {
-			update enrollmentUpdateList;
+            update enrollmentUpdateList;
                 
         }            
         }catch(Exception ex){
