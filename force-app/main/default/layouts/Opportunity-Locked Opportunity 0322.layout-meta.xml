@@ -353,6 +353,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>STP_Requested_First_Pay_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_PendingStatus__c</field>
             </layoutItems>
             <layoutItems>
