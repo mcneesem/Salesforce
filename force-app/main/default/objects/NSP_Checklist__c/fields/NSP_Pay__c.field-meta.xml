@@ -3,7 +3,7 @@
     <fullName>NSP_Pay__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Pay</label>
+    <label>Pay Current or in Arrears</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
