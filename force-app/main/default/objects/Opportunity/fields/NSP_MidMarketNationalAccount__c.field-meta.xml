@@ -133,7 +133,7 @@
             <value>
                 <fullName>Other</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
+                <isActive>false</isActive>
                 <label>Other</label>
             </value>
             <value>
