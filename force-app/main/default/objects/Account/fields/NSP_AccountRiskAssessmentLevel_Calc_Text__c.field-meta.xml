@@ -4,7 +4,7 @@
     <description>Field to capture Risk Assessment Level</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Account Risk Assessment Level Calc Text</label>
+    <label>DNUAccount Risk Assessment Lvl Calc Txt</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
