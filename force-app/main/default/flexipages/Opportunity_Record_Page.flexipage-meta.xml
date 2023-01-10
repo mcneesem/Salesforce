@@ -179,6 +179,22 @@
                         <valueListItems>
                             <value>Opportunity.NSP_Create_Checklist</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Opportunity.Rewards_Info</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Closed Won</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Closed Lost</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -198,6 +214,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -212,6 +229,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
+                <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -242,6 +260,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -259,6 +278,7 @@
                     <value>Checklist_Creation</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -293,6 +313,7 @@
                     <value>Checklists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-e44d1a96-a166-4900-8509-542f3ec9f775</name>
@@ -306,6 +327,7 @@
                     <value>Facet-e44d1a96-a166-4900-8509-542f3ec9f775</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
@@ -339,6 +361,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -361,6 +384,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -382,56 +406,13 @@
                     <value>NSP_Modified_Date__c</value>
                 </componentInstanceProperties>
                 <componentName>NSP_SingleRelatedList</componentName>
+                <identifier>NSP_SingleRelatedList</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-9bedf21b-e202-4303-b0be-365852b58230</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>displayGetIntroduced</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayHeader</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayHighlight</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayIcebreakers</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayRecentActivity</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayRelatedLeads</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayTopcard</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerText</name>
-                    <value>Member Profile</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>minHeight</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>scrolling</name>
-                    <value>auto</value>
-                </componentInstanceProperties>
-                <componentName>LID:SalesNavigatorMemberProfileComponent</componentName>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -466,9 +447,10 @@
                     <value>auto</value>
                 </componentInstanceProperties>
                 <componentName>LID:SalesNavigatorCompanyProfileComponent</componentName>
+                <identifier>LID_SalesNavigatorCompanyProfileComponent</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-c68a2da4-8ae7-4da9-97be-45a80c8169f1</name>
+        <name>Facet-a3aa5c82-e171-4471-895a-e53c4ba0877c</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -482,6 +464,7 @@
                     <name>tabName</name>
                 </componentInstanceProperties>
                 <componentName>highspot:HighspotContent</componentName>
+                <identifier>highspot_HighspotContent</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-c7586dc6-29d5-486d-b529-39bbb0cc6148</name>
@@ -495,6 +478,7 @@
                     <value>Popup</value>
                 </componentInstanceProperties>
                 <componentName>bloomfirex:search</componentName>
+                <identifier>bloomfirex_search</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-e5da2ebe-a16d-45d1-8d30-427a7521ea8b</name>
@@ -512,6 +496,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -525,19 +510,21 @@
                     <value>Standard.Tab.relatedLists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-c68a2da4-8ae7-4da9-97be-45a80c8169f1</value>
+                    <value>Facet-a3aa5c82-e171-4471-895a-e53c4ba0877c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Sales Navigator</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -551,14 +538,11 @@
                     <value>HighSpot</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-e5da2ebe-a16d-45d1-8d30-427a7521ea8b</value>
@@ -568,6 +552,7 @@
                     <value>Sales Coach</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab4</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -582,6 +567,7 @@
                     <value>tabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -592,6 +578,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
+                <identifier>runtime_sales_activities_activityPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-0431f9c8-8137-4e06-93cb-9bbf611432a0</name>
@@ -601,6 +588,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-62bf8034-18de-48b5-b88f-b4cd18890bfc</name>
@@ -622,6 +610,7 @@
                     <value>Standard.Tab.activity</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>activityTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -635,6 +624,7 @@
                     <value>Standard.Tab.collaborate</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>collaborateTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</name>
@@ -644,6 +634,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>NSP_OpportunityGuidanceForSuccess</componentName>
+                <identifier>NSP_OpportunityGuidanceForSuccess</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -669,6 +660,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -678,11 +670,13 @@
                     <value>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>dfsle:Status</componentName>
+                <identifier>dfsle_Status</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
