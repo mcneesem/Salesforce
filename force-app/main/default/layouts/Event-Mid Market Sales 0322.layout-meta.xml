@@ -12,6 +12,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Location__c</field>
             </layoutItems>
             <layoutItems>
@@ -25,6 +29,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Attendees</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Running_SubRegion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -188,7 +196,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2D000003sQgV</masterLabel>
+        <masterLabel>00h4x000005h6YU</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
