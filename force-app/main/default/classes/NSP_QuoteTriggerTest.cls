@@ -270,7 +270,7 @@ public class NSP_QuoteTriggerTest {
             Test.stopTest();
             
             SBQQ__Quote__c quote2 = [select Id, Name, NSP_Product_Type__c,NSP_Pricing_Model__c from SBQQ__Quote__c WHERE id=:quote1.id ];    
-            System.assertEquals(quote2.NSP_Product_Type__c, 'Organizational Planning;Performance Management');
+            System.assertEquals(quote2.NSP_Product_Type__c, 'Organizational Planning');
         }
     }
     
