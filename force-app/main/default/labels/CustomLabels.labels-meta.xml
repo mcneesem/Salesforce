@@ -27,7 +27,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Bypass Roles from Validation</shortDescription>
-        <value>Sales Engineer</value>
+        <value>Sales Engineer,Channel Program Manager,Loyalty Advisor,Loyalty Manager,Channel Operations</value>
     </labels>
     <labels>
         <fullName>NSP_Opp_No_Quoting_for_WO_WS</fullName>
