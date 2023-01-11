@@ -4,7 +4,7 @@
     <description>Used to track Risk Assessment Level</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Risk Assessment Level</label>
+    <label>DNURisk Assessment Level</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
