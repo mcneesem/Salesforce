@@ -129,7 +129,7 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
         
         if(Trigger.isInsert)
             {
-                 for (Opportunity enrollId :[SELECT ID FROM OPPORTUNITY WHERE ID IN :opportunityIds AND NSP_Number_of_Employees__c >150]){
+                 for (Opportunity enrollId :[SELECT ID FROM OPPORTUNITY WHERE ID IN :opportunityIds AND NSP_Number_of_Employees__c >= 150]){
                    {
                        oppIdEnrollment.add(enrollId.ID);
                       
