@@ -9,6 +9,7 @@ Modification Log     :
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
 * Anil Kumar                 03/07/2022            First Iteration
+* Rahul Singh                22/12/2022            user story - 194265
 */
 
 public class NSP_EnrollmentFeePaymentTriggerClass {
@@ -92,6 +93,8 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
                                                  oppMap.put((Id)aRes5.get('NSP_Opportunity__c'), opp);
                                              }
                                          }
+            
+            
         }
         //Updating Opportunity
         try{
@@ -101,6 +104,50 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
         }catch(DmlException de){
             System.debug(de);
         }
+    }
+    
+    /***********************************************************************************************
+    * MethodName: enrollmentFeeMidMarket
+    * Description : This method will set NSP_Is_MidMarket__c as true upon insert of enrollment fee payment
+    * Params:      List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee
+    * Author : Rahul Singh
+	* Created Date:22/12/22
+	* Created for enrollment fee payment user story - 194265
+    * ********************************************************************************************/   
+    
+    public static void enrollmentFeeMidMarket(List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee){
+        Set<id> opportunityIds=new Set<id>(); //Holds the opportunity id's
+        Map<Id, Id> oppEnrollMap = new Map<Id, Id>();
+        Set<id> oppIdEnrollment=new Set<id>();
+        Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>(); //Holds the opportunity details to update
+        For(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
+            if(feepayment.NSP_Opportunity__c != null){
+                opportunityIds.add(feepayment.NSP_Opportunity__c);
+                oppEnrollMap.put(feepayment.Id,feepayment.NSP_Opportunity__c);
+            }
+        }
+        
+        if(Trigger.isInsert)
+            {
+                 for (Opportunity enrollId :[SELECT ID FROM OPPORTUNITY WHERE ID IN :opportunityIds AND NSP_Number_of_Employees__c >= 150]){
+                   {
+                       oppIdEnrollment.add(enrollId.ID);
+                      
+                    }
+            
+               }
+                if(oppIdEnrollment.Size() > 0)
+       		 	{
+                	for (NSP_Enrollment_Fee_Payment__c enrollId : listOfEnrollmentFee){
+                   	 	if(oppIdEnrollment.contains(oppEnrollMap.get(enrollId.Id)) ){
+                  		enrollId.NSP_Is_MidMarket__c = True; 
+                    }
+            
+               	}
+                }
+            }
+        
+        
     }
     
     

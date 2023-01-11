@@ -14,6 +14,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Duplicate</fullName>
+                <default>false</default>
+                <label>Duplicate</label>
+            </value>
+            <value>
                 <fullName>Inaccurate data, No budget</fullName>
                 <default>false</default>
                 <label>Inaccurate data, No budget</label>
@@ -49,11 +54,6 @@
                 <label>Regen</label>
             </value>
             <value>
-                <fullName>Too early, Regen 6 months</fullName>
-                <default>false</default>
-                <label>Too early, Regen 6 months</label>
-            </value>
-            <value>
                 <fullName>Too early, Regen 12 months</fullName>
                 <default>false</default>
                 <label>Too early, Regen 12 months</label>
@@ -63,7 +63,16 @@
                 <default>false</default>
                 <label>Too early, Regen 18 months</label>
             </value>
+            <value>
+                <fullName>Too early, Regen 6 months</fullName>
+                <default>false</default>
+                <label>Too early, Regen 6 months</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Duplicate</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
@@ -97,17 +106,17 @@
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
-            <valueName>Too early, Regen 6 months</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Unqualified</controllingFieldValue>
-            <controllingFieldValue>Nurturing</controllingFieldValue>
             <valueName>Too early, Regen 12 months</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
             <valueName>Too early, Regen 18 months</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <controllingFieldValue>Nurturing</controllingFieldValue>
+            <valueName>Too early, Regen 6 months</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nurturing</controllingFieldValue>

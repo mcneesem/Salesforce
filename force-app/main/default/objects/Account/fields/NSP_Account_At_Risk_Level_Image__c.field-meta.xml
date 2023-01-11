@@ -4,7 +4,7 @@
     <description>Field to capture Account Risk level Image</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Account At Risk Level Image</label>
+    <label>DNUAccount At Risk Level Image</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

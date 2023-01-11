@@ -276,7 +276,8 @@
                 <field>NSP_Requested_First_Check_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Readonly</behavior>
+                <field>STP_Requested_First_Pay_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -547,6 +548,11 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>New_Core_Sales_Task</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>New_Mid_Market_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
@@ -560,11 +566,6 @@
             <actionName>New_Eloqua_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>New_Correspondence_Task</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>New_Core_Sales_Event</actionName>
@@ -602,6 +603,11 @@
             <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>New_Correspondence_Task</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>19</sortOrder>
@@ -625,11 +631,6 @@
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>23</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>New_Core_Sales_Task</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -691,8 +692,8 @@
         <fields>NSP_Team_Member__c</fields>
         <fields>NSP_Percent_Split__c</fields>
         <fields>NSP_Number_of_Employees__c</fields>
+        <fields>NSP_Enrollment_Fee__c</fields>
         <fields>NSP_Sales_Office__c</fields>
-        <fields>CURRENCY_ISO_CODE</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>

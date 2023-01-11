@@ -13,11 +13,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Nonprofit donation</fullName>
-                <default>false</default>
-                <label>Nonprofit donation</label>
-            </value>
-            <value>
                 <fullName>Match</fullName>
                 <default>false</default>
                 <label>Match</label>
@@ -31,6 +26,12 @@
                 <fullName>Donation</fullName>
                 <default>false</default>
                 <label>Donation</label>
+            </value>
+            <value>
+                <fullName>Nonprofit donation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Nonprofit donation</label>
             </value>
         </valueSetDefinition>
     </valueSet>

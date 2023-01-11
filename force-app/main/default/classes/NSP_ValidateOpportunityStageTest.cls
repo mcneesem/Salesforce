@@ -187,6 +187,7 @@ public class NSP_ValidateOpportunityStageTest {
     // Test for validations when Opportunity stage is set to Closing
     @isTest
     public static void checkOpptyStage(){
+        test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName!=NULL and NSP_PrimaryProduct__c = 'WO' limit 1];     
         List<Task> taskList = [Select Id from Task where Subject = 'WO Business Profile' limit 1];
         Opportunity oppty = oppList[0];
@@ -196,7 +197,7 @@ public class NSP_ValidateOpportunityStageTest {
         oppty.StageName='Analysis';        
         oppty.Type = 'New Product';
         
-        test.startTest();
+       
         try{
             update oppty; 
         }catch(Exception ex){
@@ -237,9 +238,10 @@ public class NSP_ValidateOpportunityStageTest {
     // Test for open discovery activity on Analysis stage
     @isTest
     public static void checkOpenDiscoveryActivities(){
+        test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
+        
         if(oppty!=null){
             oppty.StageName='Analysis';
             oppty.Type = '';
@@ -255,10 +257,11 @@ public class NSP_ValidateOpportunityStageTest {
     
     @isTest
     public static void checkProposalStage(){
+        test.startTest();
         List<Opportunity> oppList = [SELECT Id,OwnerId,NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
         //NSP_ValidateOpportunityStage.getSalesOfficeGroup(oppList[0].OwnerId,oppList[0].NSP_Sales_Office__c);
         Opportunity oppty = oppList[0];
-        test.startTest();
+       
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'WO';
             oppty.StageName='Proposal';
@@ -276,9 +279,10 @@ public class NSP_ValidateOpportunityStageTest {
     
      @isTest
     public static void checkQuoteCriteria(){
+        test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
+        
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'WX';
             oppty.StageName='Proposal';
@@ -303,9 +307,9 @@ public class NSP_ValidateOpportunityStageTest {
     
     @isTest
     public static void checkQuoteCriteria1(){
+        test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'HR Consulting Services';
             oppty.StageName='Proposal';
@@ -324,9 +328,9 @@ public class NSP_ValidateOpportunityStageTest {
     
     @isTest
     public static void checkClosingStage(){
+        test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'HR Consulting Services';
             oppty.StageName='Closing';
@@ -345,11 +349,12 @@ public class NSP_ValidateOpportunityStageTest {
     
     @isTest
     public static void checkclosedWonStage(){
+        test.startTest();
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
                                                        NSP_ProductType__c,NSP_ProductBundle__c,//if its required on Asset then we create a formula for it
                                                        NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c from OpportunityLineItem limit 1];
-        test.startTest();
+        
         
         New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;//initialize the class
         List<SObject> newlist = NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);
@@ -359,11 +364,12 @@ public class NSP_ValidateOpportunityStageTest {
     
     @isTest
     public static void checkclosedWonStage1(){
+        test.startTest();
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
                                                        NSP_ProductType__c,NSP_ProductBundle__c,//if its required on Asset then we create a formula for it
                                                        NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c from OpportunityLineItem limit 1];
-        test.startTest();
+       
         
         List<String> fieldsToQueryList = new List<String>();
         fieldsToQueryList.add('Id');
@@ -380,9 +386,10 @@ public class NSP_ValidateOpportunityStageTest {
     }
     @isTest
     public static void evaluateClosedLostStageCriteria_Test(){
-        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' Limit 1];
-         Opportunity oppty = oppList[0];
         test.startTest();
+        List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' Limit 1];
+        Opportunity oppty = oppList[0];
+       
         if(oppty!=null){
             oppty.StageName='Closed Lost';
             //oppty.Loss_Reason__c='';
@@ -397,9 +404,10 @@ public class NSP_ValidateOpportunityStageTest {
 }
     @isTest
     public static void evaluateClosedLostStageCriteria2_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
          Opportunity oppty = oppList[0];
-        test.startTest();
+       
         if(oppty!=null){
             try{            
             oppty.StageName='Closed Lost';
@@ -414,9 +422,10 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_BPC_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
+       
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Business Performance Consultant'][0].Id;
@@ -441,9 +450,9 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_RSC_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Retirement Sales Consultant'][0].Id;
@@ -468,9 +477,9 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_IC_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Insurance Sales'][0].Id;
@@ -495,9 +504,10 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_RS_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
+        
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Recruiting Sales'][0].Id;
@@ -522,9 +532,10 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_TS_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
+        
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Technology Sales'][0].Id;
@@ -549,13 +560,14 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_AS_Test(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
         List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
         update userRecord2;
-        test.startTest();
+      
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -572,6 +584,7 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_PublicGroup(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
         List<User> userRecord2List = [SELECT Id FROM User WHERE Email = 'testuser2@test.com' Limit 1];
@@ -585,7 +598,7 @@ public class NSP_ValidateOpportunityStageTest {
         List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
         // Inserting Group Members
         Insert groupMemberList;
-        test.startTest();
+       
         System.runAs(userRecord2){
         if(oppty!=null){
             try{            
@@ -602,9 +615,10 @@ public class NSP_ValidateOpportunityStageTest {
 }
 @isTest
     public static void evaluateClosedLost_PublicGroup2(){
+        test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-        test.startTest();
+        
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@test.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.NSP_Sales_Office_Membership__c = '302';

@@ -14,4 +14,33 @@
         <shortDescription>NSP Talent Connect Wet Envelope</shortDescription>
         <value>a8N8G0000000ANiUAM</value>
     </labels>
+    <labels>
+        <fullName>NSP_Business_Performance_Roles</fullName>
+        <categories>BPA, BPC, ABPA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Business Performance Roles</shortDescription>
+        <value>Business Performance Advisor,Business Performance Consultant,Associate Business Performance Advisors,District Administrator,District Manager</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Bypass_Roles_from_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bypass Roles from Validation</shortDescription>
+        <value>Sales Engineer,Channel Program Manager,Loyalty Advisor,Loyalty Manager,Channel Operations</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Opp_No_Quoting_for_WO_WS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Opp - No Quoting for WO/WS</shortDescription>
+        <value>Quoting is not available for Primary Product Workforce Optimization or Workforce Synchronization.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Opp_Performance_Management_Only_Available_For_Renewal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Opp Performance Management Only Available For Renewal</shortDescription>
+        <value>Primary Product Performance Management is only available for Renewal or Amendment Types.</value>
+    </labels>
 </CustomLabels>
