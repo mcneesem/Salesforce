@@ -947,6 +947,10 @@
     <picklistValues>
         <picklist>NSP_Task_type__c</picklist>
         <values>
+            <fullName>Addendum Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BPS</fullName>
             <default>true</default>
         </values>

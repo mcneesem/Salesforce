@@ -95,6 +95,11 @@
                 <label>Required for Booking</label>
             </value>
             <value>
+                <fullName>Addendum Request</fullName>
+                <default>false</default>
+                <label>Addendum Request</label>
+            </value>
+            <value>
                 <fullName>Client Reference</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
