@@ -769,16 +769,16 @@ public static boolean validateByNonProfitAndProfile(Opportunity opp){
   NSP_Sold_Rewards_Send_To__c
   NSP_Rewards_Notes__c
   NSP_Sold_Rewards__c*/
-  
+  //.NSP_Sold_Rewards_Amount__c != oldOpp.NSP_Sold_Rewards_Amount__c ||
+  //opp.NSP_Sold_Rewards_Send_To__c != oldOpp.NSP_Sold_Rewards_Send_To__c ||
+  //opp.NSP_Rewards_Notes__c != oldOpp.NSP_Rewards_Notes__c || 
+  //opp.NSP_Sold_Rewards__c != oldOpp.NSP_Sold_Rewards__c
+
   Opportunity oldOpp = (Opportunity)Trigger.oldMap.get(opp.Id);
 
   if(opp.NSP_Nonprofit__c != oldOpp.NSP_Nonprofit__c ||
   opp.NSP_NonprofitNameAddress__c != oldOpp.NSP_NonprofitNameAddress__c || 
-  opp.NSP_Nonprofit_Organization_Name__c != oldOpp.NSP_Nonprofit_Organization_Name__c ||
-  opp.NSP_Sold_Rewards_Amount__c != oldOpp.NSP_Sold_Rewards_Amount__c ||
-  opp.NSP_Sold_Rewards_Send_To__c != oldOpp.NSP_Sold_Rewards_Send_To__c ||
-  opp.NSP_Rewards_Notes__c != oldOpp.NSP_Rewards_Notes__c || 
-  opp.NSP_Sold_Rewards__c != oldOpp.NSP_Sold_Rewards__c){
+  opp.NSP_Nonprofit_Organization_Name__c != oldOpp.NSP_Nonprofit_Organization_Name__c){
     
     if(byPassValidationOnProfile == null){
         byPassValidationOnProfile = new set<Id>();
