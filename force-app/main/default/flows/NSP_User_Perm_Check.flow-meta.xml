@@ -14,6 +14,22 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>MM_User_Type_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Is_MM_Assignment</name>
+        <label>Is MM Assignment</label>
+        <locationX>957</locationX>
+        <locationY>750</locationY>
+        <assignmentItems>
+            <assignToReference>varIsMM</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>NCS_User_Type_Check</targetReference>
         </connector>
     </assignments>
@@ -21,7 +37,7 @@
         <name>Is_NCS</name>
         <label>Is NCS</label>
         <locationX>935</locationX>
-        <locationY>812</locationY>
+        <locationY>892</locationY>
         <assignmentItems>
             <assignToReference>varIsNCS</assignToReference>
             <operator>Assign</operator>
@@ -181,6 +197,13 @@
         </value>
     </constants>
     <constants>
+        <name>conML</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MidMarket_Sales_Leader</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>conNCS</name>
         <dataType>String</dataType>
         <value>
@@ -236,7 +259,7 @@
         <locationX>707</locationX>
         <locationY>502</locationY>
         <defaultConnector>
-            <targetReference>NCS_User_Type_Check</targetReference>
+            <targetReference>MM_User_Type_Check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not BPA</defaultConnectorLabel>
         <rules>
@@ -333,10 +356,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>MM_User_Type_Check</name>
+        <label>MM-User Type Check</label>
+        <locationX>714</locationX>
+        <locationY>697</locationY>
+        <defaultConnector>
+            <targetReference>NCS_User_Type_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not MM</defaultConnectorLabel>
+        <rules>
+            <name>Is_MM_Decision</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>varUserProfile</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>conSales</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conMA</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conML</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varUserRole</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conBPC</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_MM_Assignment</targetReference>
+            </connector>
+            <label>Is MM Decision</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>NCS_User_Type_Check</name>
         <label>NCS-User Type Check</label>
-        <locationX>706</locationX>
-        <locationY>756</locationY>
+        <locationX>711</locationX>
+        <locationY>898</locationY>
         <defaultConnector>
             <targetReference>SalesAdmin_User_Type_Check</targetReference>
         </defaultConnector>
@@ -360,8 +429,8 @@
     <decisions>
         <name>SalesAdmin_User_Type_Check</name>
         <label>SalesAdmin-User Type Check</label>
-        <locationX>711</locationX>
-        <locationY>954</locationY>
+        <locationX>729</locationX>
+        <locationY>1032</locationY>
         <defaultConnector>
             <targetReference>SEM_User_Type_Check</targetReference>
         </defaultConnector>
@@ -429,6 +498,8 @@
             <label>Is Sales Engineer Manager</label>
         </rules>
     </decisions>
+    <description>Azr story 165244</description>
+    <environments>Default</environments>
     <interviewLabel>User Perm Check {!$Flow.CurrentDateTime}</interviewLabel>
     <label>User Perm Check</label>
     <processMetadataValues>
@@ -539,9 +610,19 @@
             <targetReference>UserInfoAssign</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>varIsBPA</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varIsMM</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
