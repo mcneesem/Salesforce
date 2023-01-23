@@ -60,7 +60,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Location__c</field>
+                <field>Location</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

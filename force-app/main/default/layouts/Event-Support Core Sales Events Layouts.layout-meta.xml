@@ -44,7 +44,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Location__c</field>
+                <field>Location</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -214,6 +214,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_WO_WX_Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
