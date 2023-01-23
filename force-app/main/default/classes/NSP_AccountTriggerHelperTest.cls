@@ -203,6 +203,19 @@ public class NSP_AccountTriggerHelperTest {
         accountList[0].NSP_Template_Selection__c = REFPROG3;
         accountList[0].ownerId = salesManagerUser.Id;
         insert accountList;
+        // Added for STP
+        //Create Opportunity
+        Opportunity opportuniytObject = new Opportunity();
+        opportuniytObject.Name = 'Test Oppty';
+        opportuniytObject.AccountId = accountList[0].id;
+        opportuniytObject.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject.CloseDate = date.today();        
+        opportuniytObject.NSP_PrimaryProduct__c = 'WO';
+        insert opportuniytObject;
+        //Insert Checklist
+        NSP_Checklist__c c = new NSP_Checklist__c();
+        c.NSP_Opportunity__c = opportuniytObject.id;
+        insert c;
         
        Set<Id> accIdSet = new Set<Id>(); // Added as part of Test class fix
        Map<Id, Account> accountMapOld = new Map<Id, Account>();
@@ -212,6 +225,7 @@ public class NSP_AccountTriggerHelperTest {
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
             account.NSP_Account_Status__c = ACTIVE;
             account.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account.BillingCity = 'CITY1';  // Added for STP
             accountMapOld.put(account.Id, account);
         }
        
@@ -223,6 +237,8 @@ public class NSP_AccountTriggerHelperTest {
                 accountRecord.NSP_Ready_for_Integration_Sync__c = TRUE;
                 accountRecord.ownerId = userRecord1.Id;
                 accountRecord.NSP_Stage__c = 'Available';
+                accountRecord.BillingCity = 'CITY2';  // Added for STP
+
                  accountMapNew.put(accountRecord.Id, accountRecord);
             }
          Update accountUpdateList;
@@ -410,7 +426,7 @@ public class NSP_AccountTriggerHelperTest {
     }
     
       /***********************************************************************************************
-    * MethodName: testAccountPremierUpdate
+    * MethodName: restrictAccountChangeTest
     * Description : This method will test restrictAccountChange
     * Author : Ruchi Roy
     * Updated Date : 11/17/22
