@@ -100,6 +100,12 @@ List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
                                       PermissionSet.Name =: NSP_SalesConstants.Account_View_All_Modify_All];
                     
   }
+//Added as part of 128176
+if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
+                    if(getPermSet != null || Test.isRunningTest()){
+                        restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    }
+                }  
 //Iterating over the new Account map
 for(Id accountId : accountNewMap.keySet()){
 Account newAccount =  accountNewMap.get(accountId);
@@ -121,14 +127,6 @@ if(!String.isBlank(newAccount.NSP_Template_Selection__c) &&
 newAccount.NSP_Template_Selection__c != oldAccount.NSP_Template_Selection__c){
 acctListToStampDocusignTemplateId.add(newAccount);
 }
-
-//Added as part of 128176
-
-if(accountNewMap.get(accountId) != accountOldMap.get(accountId) && userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
-                    if(getPermSet != null || Test.isRunningTest()){
-                        restrictAccountChange(accountNewMap, accountOldMap, userDetails);
-                    }
-                }
 
 //cherwel ticket 556472
                 if(accountNewMap.get(accountId).NSP_Partner_Lifecycle__c != accountOldMap.get(accountId).NSP_Partner_Lifecycle__c && accountNewMap.get(accountId).NSP_Partner_Lifecycle__c == NSP_SalesConstants.ONBOARDING){
@@ -206,6 +204,8 @@ Map<Id,DateTime> accountTeamMDeleteMap = new Map<Id,DateTime>();
 Map<Id,String> accountTeamMDelete = new Map<Id,String>();
 List<Integration_Account_Event__e> accountEvent = New List<Integration_Account_Event__e>();
 List<Account> updateAccountList = new List<Account>();
+//Added for User Story - 194644
+List<Account> updateAddressAccountList = new List<Account>();
 for(Account accObj : newMap.values()){
 if(accObj.NSP_Ready_for_Integration_Sync__c) {
 accountEvent.add(New Integration_Account_Event__e(Id__c = accObj.Id));
@@ -219,6 +219,10 @@ if(accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycl
 && accObj.RecordTypeId==PARTNER_RECORDTYPE_ID && (accObj.NSP_Partner_Lifecycle__c == NSP_SalesConstants.ACTIVE
 || accObj.NSP_Partner_Lifecycle__c == NSP_SalesConstants.ONBOARDING)){
 accountList.add(accObj);
+}
+//Added for User Story - 194644
+if(accObj.BillingCity != oldMap.get(accObj.Id).BillingCity || accObj.BillingState != oldMap.get(accObj.Id).BillingState || accObj.BillingCountry != oldMap.get(accObj.Id).BillingCountry || accObj.BillingStreet != oldMap.get(accObj.Id).BillingStreet || accObj.BillingStateCode != oldMap.get(accObj.Id).BillingStateCode || accObj.BillingPostalCode != oldMap.get(accObj.Id).BillingPostalCode) {
+    updateAddressAccountList.add(accObj);
 }
 }
 //for tracking history
@@ -243,6 +247,10 @@ publishEventBus(accountEvent, updateAccountList);
 
 if(accountList.size() > 0) {
 handleTaskForPartnerContracts(accountList);
+}
+//Added for User Story - 194644
+if(updateAddressAccountList.size() > 0) {
+    updateAddressOnCheckList(updateAddressAccountList, newMap);
 }
 //call future method
 if(accountTeamMDeleteMap.size() > 0){
@@ -356,6 +364,39 @@ accountObj.NSP_Ready_for_Integration_Sync__c = FALSE;
 // Account records update.
 Update successAccountList;
 }
+
+/*
+* Description: Method updates Address on CheckList
+* @Param : List of New Accounts: accountsList, newMap
+* @return type: void
+* User Story - 194644
+* Created By- Ruchi   Date- 12/17/2022
+*/
+public static void updateAddressOnCheckList(List<Account> accountList, Map<Id, Account> newMap){
+    List<NSP_Checklist__c> checklistToUpdate = new List<NSP_Checklist__c>();
+    List<NSP_Checklist__c> checklistList = [SELECT Id, NSP_Account_Billling_City__c, NSP_Billing_Postal_Code__c, NSP_Account_Billing_State__c, NSP_Account_Billing_Country__c, NSP_Account_Billing_Street__c, NSP_Account_Billing_State_Code__c, NSP_Opportunity__c, NSP_Opportunity__r.AccountId FROM NSP_Checklist__c where NSP_Opportunity__r.AccountId =: accountList];
+    
+    try{
+        if(checklistList.size() > 0) {
+            // Iterating checklistList
+            for(NSP_Checklist__c updateChecklist : checklistList){
+                Account acc = newMap.get(updateChecklist.NSP_Opportunity__r.AccountId);
+                updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
+                updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
+                updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
+                updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
+                updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
+                updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
+                checklistToUpdate.add(updateChecklist);
+                }
+                }
+                if(checklistToUpdate.size() > 0) {
+                    update checklistToUpdate;
+                    }
+            }catch(Exception ex){
+                NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'updateAddressOnCheckList',ex.getMessage());
+                }
+    }
 /*
 * Description: Method takes all Account records WHERE partner lifecycle is
 * set to Onboarding or Active and creates a new task or marks existing task complete based on
@@ -544,6 +585,7 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
     Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
     Set<Id> accOwnerIdSet = new Set<Id>();
     List<String> loggedInUserGrpName = new List<String>();
+    Set<Id> accountTeamMemeberId = new Set<Id>();
     
     for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
         loggedInUserGrpName.add(gMem.Group.Name);
@@ -552,12 +594,15 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
                        FROM Account WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles]){
                            accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
                        }
+    for(NSP_Account_Team__c accTeam : [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c where NSP_Account__c =:accountNewMap.keySet()] ){
+                    accountTeamMemeberId.add(accTeam.NSP_User__c);
+    }                  
     try{
         
         for(Account acc : accountNewMap.values()){
                 if(!accOwnerSalesOfficeMap.isEmpty()){
                     Integer isallowUpdate = 0;
-                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || (getTeamMember(userInfo.getUserId(),acc.Id) != '') || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
+                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemeberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
                             isallowUpdate = isallowUpdate + 1;
                         
                     }
@@ -581,9 +626,9 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
 * author           | Date              | Description
 * -------------------------------------------------------------------------------------
 * Ruchi Roy         11/17/2022           Created this method
-*                
+* Commented as this is not needed               
 */
-    
+/*    
 public static String getTeamMember(Id userId, Id accountId){
     List<NSP_Account_Team__c> accountTeamList=  [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c where NSP_User__c =: userId AND NSP_Account__c =:accountId];
     if(!accountTeamList.isEmpty()){
@@ -591,7 +636,7 @@ public static String getTeamMember(Id userId, Id accountId){
     }
     return '';
 }
-
+*/
 
 /* Description: This method sets sales office details from user 
      * 
