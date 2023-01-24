@@ -1,18 +1,315 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>NSP_Talent_Connect_Envelope_Configuration</fullName>
+        <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP Talent Connect Envelope Configuration</shortDescription>
-        <value>a8N8G0000000ANYUA2</value>
+        <shortDescription>CANNOT_DELETE_ACCOUNT</shortDescription>
+        <value>You do not have permission to delete Accounts</value>
     </labels>
     <labels>
-        <fullName>NSP_Talent_Connect_Wet_Envelope</fullName>
+        <fullName>CANNOT_DELETE_LEAD</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP Talent Connect Wet Envelope</shortDescription>
-        <value>a8N8G0000000ANiUAM</value>
+        <shortDescription>CANNOT_DELETE_LEAD</shortDescription>
+        <value>You do not have permission to delete Leads.</value>
+    </labels>
+    <labels>
+        <fullName>CanDeleteAccountLead</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CanDeleteAccountLead</shortDescription>
+        <value>System Administrator,Sales Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Role in Opportunity Team</shortDescription>
+        <value>Business Performance Advisor,District Administrator,District Manager,New Client Sales,Opportunity Owner,MidMarket Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Business_Performance_Consultant</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Business Performance Consultant</shortDescription>
+        <value>MidMarket Sales Leader,MidMarket Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Insurance_Sales</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Insurance Sales</shortDescription>
+        <value>BPS Sales Manager,Insurance Sales Manager,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Recruiting_Sales</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Recruiting Sales</shortDescription>
+        <value>Recruiting Manager</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Retirement_Sales_Consultant</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Retirement Sales Consultant</shortDescription>
+        <value>BPS Sales Manager,Retirement Sales Manager,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_Technology_Sales</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for Technology Sales</shortDescription>
+        <value>BPS Administrator,BPS Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_same_sales_office_on_Opp</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Roles for same sales office on Opp</shortDescription>
+        <value>District Administrator,District Manager,Regional Administrator,Regional Manager</value>
+    </labels>
+    <labels>
+        <fullName>Close_Lost_Roles_for_same_sales_office_on_Opp_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close_Lost_Roles_for_same_sales_office_on_Opp_Owner</shortDescription>
+        <value>MidMarket Sales Leader,MidMarket Administrator,District Administrator,District Manager,Regional Administrator,Regional Manager</value>
+    </labels>
+    <labels>
+        <fullName>DA_and_DM_Userrole</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DA and DM Userrole</shortDescription>
+        <value>District Administrator,District Manager</value>
+    </labels>
+    <labels>
+        <fullName>Inbound_and_Outbound_UserRole</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Inbound  and Outbound UserRole</shortDescription>
+        <value>Inbound Rep,Inbound Manager,Sales Development Rep,Sales Development Manager</value>
+    </labels>
+    <labels>
+        <fullName>MM_AND_BPC_USERROLE</fullName>
+        <categories>Used In Lead Trigger</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MM AND BPC USERROLE</shortDescription>
+        <value>MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant</value>
+    </labels>
+    <labels>
+        <fullName>MinimumFeeItalic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MinimumFeeItalic</shortDescription>
+        <value>(&lt;I&gt;Minimum Fee&lt;/I&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>NSP_12_hours_Milliseconds</fullName>
+        <categories>12 hours, Milliseconds</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>12 hours Milliseconds</shortDescription>
+        <value>43200000</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AccountTeamMemberRole</fullName>
+        <categories>Store Account Team Member Role to pass in NSP_recordSharing class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_AccountTeamMemberRole</shortDescription>
+        <value>BPA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AccountTriggerError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_AccountTriggerError</shortDescription>
+        <value>You do not have permission to take that action on this record.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Account_Envelop_Configuration</fullName>
+        <categories>account template,docusign</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Envelop Configuration</shortDescription>
+        <value>a8N4x0000000kgpEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Account_Envelope_Configuration</fullName>
+        <categories>account template,docusign</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Envelop Configuration</shortDescription>
+        <value>a8N4x0000000kgpEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Account_Segment_Core_Sales</fullName>
+        <categories>Account Segment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Segment Core Sales</shortDescription>
+        <value>Core</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Account_Segment_Emerging_Growth</fullName>
+        <categories>Account Segment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Segment Emerging Growth</shortDescription>
+        <value>Emerging Growth</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Account_Segment_MidMarket</fullName>
+        <categories>Account Segment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Segment MidMarket</shortDescription>
+        <value>MidMarket</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddBidNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddBidNumber</shortDescription>
+        <value>Please Enter Bid Number before progressing to Proposal Stage</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddDiscoveryCalls</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCalls</shortDescription>
+        <value>Please Add Discovery Calls before moving stage to Analysis</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddPrimaryProduct</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddPrimaryProduct</shortDescription>
+        <value>Please Select Primary Product before changing stage to Analysis</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddPrimaryQuote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddPrimaryQuote</shortDescription>
+        <value>Please add Primary Quote before moving stage to Proposal</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddWOBusinessProfile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddWOBusinessProfile</shortDescription>
+        <value>Please add atleast one Activity of SubType WO Business Profile</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Altula_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Altula Envelope Configuration</shortDescription>
+        <value>a8N4x0000000kh9EAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AnalysisStageCriteria</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AnalysisStageCriteria</shortDescription>
+        <value>New Product</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ApplicableProductTypesForContract</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ApplicableProductTypesForContract</shortDescription>
+        <value>Organizational Planning,Performance Management</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ApprovalSubmitterGroups</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ApprovalSubmitterGroups</shortDescription>
+        <value>NSP_CSS,NSP_Recruiting_Services,NSP_Retail_Sales,NSP_SE_Group_1,NSP_SE_Group_2,NSP_SE_MidMarket,NSP_Talent_Connect,NSG_Inside_Sales,NSP_SE_Group_3,NSP_CPQ_Admin,NSP_Support_Renewal_Specialists,NSP_Retirement_Services,NSP_HR_Consulting,NSP_WS_Consulting,NSP_Learning_and_Development,NSP_Finance_Users_Edit_Access_Group,NSP_iSolved_Service</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Approve_Primary_Quote</fullName>
+        <categories>primary quote approval, proposal stage</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Approve Primary Quote</shortDescription>
+        <value>Primary Quote status must be Approved or Submitted To Order to move opportunity to Proposal</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Asset_Product</fullName>
+        <categories>Asset recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Asset_Product</shortDescription>
+        <value>NSP_Asset_Product</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseBilling</shortDescription>
+        <value>Authorized Purchaser 1 should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseBilling2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseBilling2</shortDescription>
+        <value>Authorized Purchaser 2 should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseShipping</shortDescription>
+        <value>Authorized Purchaser 1 should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AuthorizedPurchaseShipping2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AuthorizedPurchaseShipping2</shortDescription>
+        <value>Authorized Purchaser 2 should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_BPS_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Envelope Configuration</shortDescription>
+        <value>a8N4x0000000leVEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_BPS_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Wet Envelope</shortDescription>
+        <value>a8N4x0000000kh4EAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Benchmark_Date_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Benchmark Date Validation</shortDescription>
+        <value>Please enter valid Benchmark Job Start Date/End Date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Branding_Target_Date_Validation_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branding Target Date Validation Error</shortDescription>
+        <value>Branding Target Date should be greater than Today&apos;s Date</value>
     </labels>
     <labels>
         <fullName>NSP_Business_Performance_Roles</fullName>
@@ -30,6 +327,604 @@
         <value>Sales Engineer,Channel Program Manager,Loyalty Advisor,Loyalty Manager,Channel Operations</value>
     </labels>
     <labels>
+        <fullName>NSP_Bypass_Signature_Not_Allowed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Bypass_Signature_Not_Allowed</shortDescription>
+        <value>You do not have access to bypass docusign signature.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CANNOT_MOVE_TO_CLOSEDLOST</fullName>
+        <categories>closed lost, roles eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
+        <value>You do not have access to move opportunity to Closed Lost</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CANNOT_MOVE_TO_CLOSEDWON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
+        <value>You do not have access to move opportunity to Closed Won</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CPM_USER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stamping CPM User, if partner Account is created by BPC</shortDescription>
+        <value>0054x0000057OUa</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CPQ_Profiles_Skip_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CPQ_Profiles_Skip_Validation</shortDescription>
+        <value>System Administrator,CPQ Admin,CPQ Tech Support</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cannot_Change_Amendment_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Cannot_Change_Amendment_Error</shortDescription>
+        <value>Quote Type cannot be changed. Please delete existing quote lines and try again.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cannot_Change_Supplemental_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Cannot_Change_Supplemental_Error</shortDescription>
+        <value>Quote Type cannot be changed once set to Supplemental</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cannot_Create_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Cannot_Create_Quote</shortDescription>
+        <value>You don&apos;t have permission to create a quote. Please contact your System Admin.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Channel_Prgram_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Channel Program DL</shortDescription>
+        <value>raj.raghavan@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Client_For_Life_to_Create_Quote</fullName>
+        <categories>Client for Life, Quote</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client For Life to Create Quote</shortDescription>
+        <value>Please select Primary Bundle on Opportunity before creating quote.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Client_Reference_Task_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client Reference Task Subject</shortDescription>
+        <value>Client Reference</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CloseDiscoveryCallEvents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CloseDiscoveryCallEvents</shortDescription>
+        <value>Please complete all open discovery call Events</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CloseDiscoveryCallTasks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CloseDiscoveryCallTasks</shortDescription>
+        <value>Please complete all open discovery call Tasks</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Close_Lost_Criteria_Roles</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Criteria Roles</shortDescription>
+        <value>District Administrator,Regional Administrator,Business Performance Advisor,Retirement Sales Consultant,BPS Administrator,Technology Sales,Customer Success Team,Insurance Sales Manager,Insurance Sales</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Core_And_MidMarket_Hierarchy_Role</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Core And MidMarket Hierarchy Role</shortDescription>
+        <value>Business Performance Advisor,District Administrator,Regional Manager,Regional VP,District Manager,Core Sales,Associate Business Performance Advisors,MidMarket Sales Leader,MidMarket Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Create_Client_Service_Agreement</fullName>
+        <categories>for WO and WS primary product</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Client Service Agreement</shortDescription>
+        <value>Please create Signed Client Service Agreement for Opportunity to move to Closing Stage</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Create_Signed_Delivery_Order</fullName>
+        <categories>WX, Opportunity Entry Exit</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Signed Delivery Order</shortDescription>
+        <value>Please create Signed Delivery Order for Opportunity to move to Closing Stage</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustRoleBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustRoleBilling</shortDescription>
+        <value>Customer Role should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustRoleShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustRoleShipping</shortDescription>
+        <value>Customer Role should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustStakeHolderBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustStakeholderBilling</shortDescription>
+        <value>Customer Stakeholder should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustStakeholderShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CustStakeholderShipping</shortDescription>
+        <value>Customer Stakeholder should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cust_Insperity_Signer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer and Insperity Signer</shortDescription>
+        <value>Please Update Customer Signer and Insperity Signer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Cust_Signer_and_Approved_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cust Signer and Approved Err</shortDescription>
+        <value>Please update Customer Signer and you can generate delivery order documents only for approved quotes</value>
+    </labels>
+    <labels>
+        <fullName>NSP_CustomerSuccessTeam_And_BPSAdministrator_Role</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP CustomerSuccessTeam And BPSAdministrator Role</shortDescription>
+        <value>Customer Success Team,BPS Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Customer_Signed_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signed Status</shortDescription>
+        <value>Customer Signed</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Customer_Signer_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signer Account</shortDescription>
+        <value>Customer Signer must be a related contact of Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Customer_Signer_Billing_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signer Billing Account</shortDescription>
+        <value>Customer Signer must be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Customer_Signer_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Signer Err</shortDescription>
+        <value>Please update Customer Signer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DEVELOPERNAME_INBOUNDSOLUTIONS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Inbound Solutions Queue Name</shortDescription>
+        <value>NSP_Inbound_Solutions</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DEVELOPERNAME_INSIDESALES</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Inside Sales Queue Name</shortDescription>
+        <value>NSP_Inside_Sales</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DEVELOPERNAME_MIDMARKET</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mid Market Queue Name</shortDescription>
+        <value>NSP_Mid_Market</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DEVELOPERNAME_PAYROLLHCM</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payroll HCM Queue Developer Name</shortDescription>
+        <value>NSP_Payroll_HCM</value>
+    </labels>
+    <labels>
+        <fullName>NSP_DO_Gen_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DO Cannot be generated</shortDescription>
+        <value>Document cannot be generated for this Quote</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Data_Migration_Profile_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Data Migration Profile Name</shortDescription>
+        <value>Data Migration</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Description_Of_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DescriptionOfService</shortDescription>
+        <value>Please Enter Description of Services on Quote</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Docusign_Account_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Docusign Account Id</shortDescription>
+        <value>24583</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Docusign_Base_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Docusign Base URL</shortDescription>
+        <value>https://na11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
+    </labels>
+    <labels>
+        <fullName>NSP_EMP_THRESH_150</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EMP_THRESH_150</shortDescription>
+        <value>150</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Emerging_Growth_Threshold_Employees</fullName>
+        <categories>Account Segment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emerging Growth Threshold # Employees</shortDescription>
+        <value>49</value>
+    </labels>
+    <labels>
+        <fullName>NSP_EnterNumberOfEmployees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EnterNumberOfEmployees</shortDescription>
+        <value>Please Enter Number of Employees.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_EnterOpportunityType</fullName>
+        <categories>Opportunity Stage</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_EnterOpportunityType</shortDescription>
+        <value>Please enter Opportunity Type before</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ErrorMessageSumOfEEIsGreaterThanNumberOfEmployeesOnOppty</fullName>
+        <categories>Opportunity Split</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ErrorMessageSumOfEEIsGreaterThanNumberOfEmployeesOnOppty</shortDescription>
+        <value>The sum of employee Credit is exceeding the total number of employees on related opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Error_Message</shortDescription>
+        <value>Error occured:</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ExitCriteriaProductException</fullName>
+        <categories>Employment Screening, Insurance Services, Retirement Services, Learning &amp; Development,HR Consulting Services, Expense Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ExitCriteriaProductException</shortDescription>
+        <value>Employment Screening,Insurance Services,Retirement Services,Learning &amp; Development,HR Consulting Services,Expense Management</value>
+    </labels>
+    <labels>
+        <fullName>NSP_External_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>External Users</shortDescription>
+        <value>Eloqua,Webforms</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FIRE_SCORE_THRESH</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FIRE_SCORE_THRESH</shortDescription>
+        <value>80</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_Base_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_Base_URL</shortDescription>
+        <value>https://portalapps.insperity.com/financialcomparison/financialanalysis/</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_OppId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_OppId</shortDescription>
+        <value>&amp;OppId=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_bidNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_bidNumber</shortDescription>
+        <value>&amp;bidNumber=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_bidVersion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_bidVersion</shortDescription>
+        <value>&amp;bidVersion=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_externalId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_externalId</shortDescription>
+        <value>&amp;externalId=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_prospectName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_prospectName</shortDescription>
+        <value>&amp;prospectName=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_sessionId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_sessionId</shortDescription>
+        <value>login?ssotoken=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_userFullName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_userFullName</shortDescription>
+        <value>&amp;userFullName=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_FTA_userId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_FTA_userId</shortDescription>
+        <value>&amp;userId=</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Financial_Analysis_Tool_Url</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Analysis Worksheet PDF Link</shortDescription>
+        <value>https://service.insperity.com/SalesTech/FinancialAnalysisProspectWorksheet.pdf</value>
+    </labels>
+    <labels>
+        <fullName>NSP_GenerateExecutiveSummary</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GenerateExecutiveSummary</shortDescription>
+        <value>Please get the executive summary generated before moving stage to Closing</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Groups_Can_Bypass_Signature</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Groups_Can_Bypass_Signature</shortDescription>
+        <value>CSS,Retirement Services,Learning and Development,Finance Users Edit Access Group,Admin,Talent Connect</value>
+    </labels>
+    <labels>
+        <fullName>NSP_HR_Services_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Services Envelope Configuration</shortDescription>
+        <value>a8N4x0000000khEEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_HR_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Wet Envelope</shortDescription>
+        <value>a8N4x0000000khFEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Implementation_Start_Date_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Implementation Start Date Error</shortDescription>
+        <value>Implementation Start Date should be greater than Today&apos;s Date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Incorrect_Pricing_Model</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Incorrect Pricing Model</shortDescription>
+        <value>Selected Pricing Model is not applicable for selected pricebook</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Insperity_Signer_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insperity Signer Err</shortDescription>
+        <value>Please Update Insperity Signer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Integration_Profile_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Integration Profile Name</shortDescription>
+        <value>Integration User</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Integration_User_Profile_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Integration User Profile Name</shortDescription>
+        <value>Integration User</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Invalid_Notes_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Invalid_Notes_Error</shortDescription>
+        <value>Please ensure notes are populated only if the applicable product is selected in Quote.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_InvoiceEmailBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InvoiceEmailBilling</shortDescription>
+        <value>Invoice To Email should be a related contact of Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_InvoiceEmailShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InvoiceEmailShipping</shortDescription>
+        <value>Invoice To Email should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_InvoiceToEmailonQuote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InvoiceToEmailonQuote</shortDescription>
+        <value>Please Provide Invoice to Email Contact</value>
+    </labels>
+    <labels>
+        <fullName>NSP_LeadTriggerError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_LeadTriggerError</shortDescription>
+        <value>You dont have permission to take that action on this record.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Lead_at_Nurturing_or_Unqualified</fullName>
+        <categories>Lead, Nurturing, Unqualified</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Lead at Nurturing or Unqualified</shortDescription>
+        <value>Too early, Regen 12 months;Too early, Regen 18 months;Too early, Regen 6 months</value>
+    </labels>
+    <labels>
+        <fullName>NSP_MidMarket_Threshold</fullName>
+        <categories>Account Segment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MidMarket Threshold</shortDescription>
+        <value>149</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Mid_Market_Sales_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mid Market Sales Email</shortDescription>
+        <value>midmarketleads@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_MoveOpportunityToAnalysisiStage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MoveOpportunityToAnalysisiStage</shortDescription>
+        <value>Move Opportunity to Analysis stage and create Quote</value>
+    </labels>
+    <labels>
+        <fullName>NSP_MovePartnerLifecycletoOnboarding</fullName>
+        <categories>send for signature, vf page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MovePartnerLifecycletoOnboarding</shortDescription>
+        <value>Moving Partner LifeCycle to Onboarding</value>
+    </labels>
+    <labels>
+        <fullName>NSP_National_Accounts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>National Accounts</shortDescription>
+        <value>AllState,Raymond James,UFG,VentureX</value>
+    </labels>
+    <labels>
+        <fullName>NSP_New_Client_Sales_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New Client Sales Email</shortDescription>
+        <value>newclientsales@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_NoQuoteForWOProducts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoQuoteForWOProducts</shortDescription>
+        <value>WO products are not allowed for Quote</value>
+    </labels>
+    <labels>
+        <fullName>NSP_No_Products_Added_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_No_Products_Added_Error</shortDescription>
+        <value>Please add products to quote before submitting for approval.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_NonApprovedErr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NonApprovedErr</shortDescription>
+        <value>You can generate delivery order documents only for approved quotes</value>
+    </labels>
+    <labels>
+        <fullName>NSP_NonOwnerBasedCriteriaProducts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_NonOwnerBasedCriteriaProducts</shortDescription>
+        <value>Applicant Tracking,Employment Screening,Expense Management,HR Consulting,Insurance Services,Learning &amp; Development,Performance Management,Recruiting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Non_Technology_Primary_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Non Technology Primary Products</shortDescription>
+        <value>Insurance Services,Retirement Services,Human Capital Management,WO,WX</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Non_WO_Closing_Appointment_Or_Docusign</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Non WO Closing Appointment Or Docusign</shortDescription>
+        <value>For non WO opportunities please have a order generated AND closing appointment event</value>
+    </labels>
+    <labels>
         <fullName>NSP_Opp_No_Quoting_for_WO_WS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -44,11 +939,494 @@
         <value>Primary Product Performance Management is only available for Renewal or Amendment Types.</value>
     </labels>
     <labels>
-        <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
-        <categories>Closed Lost. Roles Eligible</categories>
+        <fullName>NSP_OpportunityAccess</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Close Lost Role in Opportunity Team</shortDescription>
-        <value>Business Performance Advisor,District Administrator,District Manager,New Client Sales,Opportunity Owner,MidMarket Administrator</value>
+        <shortDescription>NSP_OpportunityAccess</shortDescription>
+        <value>None</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OpportunityEmailTemplate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OpportunityEmailTemplate</shortDescription>
+        <value>NSP_Opportunity_Closed_Won</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OpportunityTeamMemberRoles</fullName>
+        <categories>Team Members for sending closed won notifications</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OpportunityTeamMemberRoles</shortDescription>
+        <value>Lead Qualifier,Pre-Sales Consultant,Channel Program Manager,Sales Rep,Opportunity Owner,BPA,Executive,Account Manager,Sales Operations Manager</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OpportunityWAAttachmentName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OpportunityWAAttachmentName</shortDescription>
+        <value>WA_,_completed,Delivery Order</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OpportunityWXAttachmentName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OpportunityWXAttachmentName</shortDescription>
+        <value>WX_,_completed,Delivery Order</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Opportunity_Close_Date_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Close Date Validation</shortDescription>
+        <value>Close Date cannot be in the past.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Opportunity_Closed_Won_AlertAdditionalEmails</fullName>
+        <categories>Add Comma Separated email Ids</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Opportunity_Closed_Won_AlertAdditionalEmails</shortDescription>
+        <value>dummyemail@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Other_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Other Primary Product</shortDescription>
+        <value>Employment Screening,Expense Management,Insurance Services,Learning &amp; Development,Recruiting Services,HR Consulting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OtherthanWorkforce_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP OtherthanWorkforce Primary Product</shortDescription>
+        <value>Applicant Tracking, Organizational Planning, Performance Management, Retirement Services, Time &amp; Attendance</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OwnerBasedCriteriaProducts</fullName>
+        <categories>owner role check, BPA, BPC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
+        <value>Organizational Planning,Time &amp; Attendance,WA,Retirement Services,Recruiting Services,Expense Management</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OwnerBasedCriteriaRoles</fullName>
+        <categories>owner role check, BPA, BPC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OwnerBasedCriteriaRoles</shortDescription>
+        <value>Business Performance Advisor,Business Performance Consultant,Technology Sales,Retirement Sales Manager,Retirement Sales Consultant</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PRODINT_FULL_SERVICE_HR</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PRODINT_FULL_SERVICE_HR</shortDescription>
+        <value>Full Service HR (Workforce Optimization)</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PRODINT_HCM</fullName>
+        <categories>NSP Lead Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PRODINT_HCM</shortDescription>
+        <value>Payroll &amp; Human Capital Management(Workforce Acceleration)</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PartnerAccountRoles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Partner Account Roles</shortDescription>
+        <value>Business Performance Advisor</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Partner_Form_Duplicate_Account_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Partner Form Duplicate Account Message</shortDescription>
+        <value>Partner Account already exists.Please contact your System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Partner_Form_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Partner Form Error Message</shortDescription>
+        <value>Something has gone wrong.Please contact your System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Potential_Referral_Opportunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Potential Referral Opportunity</shortDescription>
+        <value>Potential Referral Opportunity</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryContactBilling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrimaryContactBilling</shortDescription>
+        <value>Primary Contact should be a related contact on Billing Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryContactShipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrimaryContactShipping</shortDescription>
+        <value>Primary Contact should be a related contact on Account</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryContactValidation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_PrimaryContactValidation</shortDescription>
+        <value>This Account already has a Primary Contact identified for it. Accounts cannot have more than one Primary Contact.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_PrimaryProductErr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrimaryProductErr</shortDescription>
+        <value>Delivery Order generation is not applicable for this Primary Product</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Primary_Product_Required_on_Create_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Primary_Product_Required_on_Create_Quote</shortDescription>
+        <value>Please select primary product on Opportunity before creating quote.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Primary_Products_To_Bypass_Signature</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Primary_Products_To_Bypass_Signature</shortDescription>
+        <value>Retirement Services,Learning &amp; Development,HR Consulting Services</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Primary_Workforce_Products</fullName>
+        <categories>Products, Workforce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Primary Workforce Products</shortDescription>
+        <value>WO,WX,WS,WA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ProductNamesForAssetRenewalOpportunities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Names To Auto Create Renewal Opportunities from Asset</shortDescription>
+        <value>Workforce Optimization</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Profile_To_Skip_OLI_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Profile_To_Skip_OLI_Validation</shortDescription>
+        <value>System Administrator,Data Migration,Integration User</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Project_Recruiting_Date_Validation_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Project Recruiting Date Validation Error</shortDescription>
+        <value>Please enter valid  Project Recruiting Start Date  and    Project Recruiting End Date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ProposeStageCriteria</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProposeStageCriteria</shortDescription>
+        <value>New Product,Existing Product</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteApprovalPreValidationMessage</fullName>
+        <categories>NSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_QuoteApprovalPreValidation Message for Missing Notes</shortDescription>
+        <value>Please note: you have added OnDemand product of Recruiting Services and the OnDemand Notes is required to be filled</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteBillingAddressValidationMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteBillingAddressValidationMessage</shortDescription>
+        <value>Please provide billing address in Address Information (Billing) section</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteCreated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteCreated</shortDescription>
+        <value>Quote Created Successfully {1}!</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteCustomerBillingAddressValidationMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteCustomerBillingAddressValidationMessage</shortDescription>
+        <value>Please provide billing address in Customer Address Information section</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteCustomerShippingAddressValidationMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteCustomerShippingAddressValidationMessage</shortDescription>
+        <value>Please provide shipping address in Customer Address Information section</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteExpirationDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteExpirationDate</shortDescription>
+        <value>Please Enter valid Quote Expiration Date. Quote Expiration Date should be greater than current date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_QuoteShippingAddressValidationMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuoteShippingAddressValidationMessage</shortDescription>
+        <value>Please provide shipping address in Address Information (Billing) section</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Quote_Approval_Bypass_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quote Approval Bypass Profile</shortDescription>
+        <value>CPQ Admin,System Administrator</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Quote_Owner_Mismatch_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Quote_Owner_Mismatch_Message</shortDescription>
+        <value>Quote must be submitted by the Quote Owner that is a member of the Submitter Group. Please update the Quote Owner and Submit for Approval again.</value>
+    </labels>
+    <labels>
+        <fullName>NSP_RPO_Date_Validation_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RPO Date Validation Error</shortDescription>
+        <value>Please enter valid  RPO Start Date and  RPO End Date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Recruiting_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recruiting Envelope Configuration</shortDescription>
+        <value>a8N4x0000000khTEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Recruiting_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recruiting Wet Envelope</shortDescription>
+        <value>a8N4x0000000khPEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ReferralLeadErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ReferralLeadErrorMessage</shortDescription>
+        <value>There might be some issue . Please try again after some time</value>
+    </labels>
+    <labels>
+        <fullName>NSP_RequestFirstCheckDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RequestFirstCheckDate</shortDescription>
+        <value>Please Enter a Valid Requested First Check Date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Salepprwk_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_Salepprwk_Email</shortDescription>
+        <value>salepprwk@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Sales_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Envelope Configuration</shortDescription>
+        <value>a8N4x0000000kguEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Sales_NumberOfDaysBeforeRenewalDate</fullName>
+        <categories>Renewal Opportunity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Renewal Opportunity Number of Days Before Asset Renewal Date</shortDescription>
+        <value>120</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Sales_Office_Mapping_Overlap_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Office Mapping Overlap Error</shortDescription>
+        <value>Start Date and End Date overlap&apos;s with this record</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Sales_Profiles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Profiles</shortDescription>
+        <value>Sales Manager,Sales Member,Sales Operations,Sales Support,Sales Data Science,Sales Engineer</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Select_Primary_Contact</fullName>
+        <categories>primary contact, account</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Primary Contact</shortDescription>
+        <value>Please select Primary Contact on Account before proceeding ahead</value>
+    </labels>
+    <labels>
+        <fullName>NSP_SendForSignature</fullName>
+        <categories>send for signature, vf page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SendForSignature</shortDescription>
+        <value>Send For Signature</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Signer_and_Approved_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insperity Signer and Approved Err</shortDescription>
+        <value>Please update Insperity Signer and you can generate delivery order documents only for approved quotes</value>
+    </labels>
+    <labels>
+        <fullName>NSP_SubmitApprovalError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitApprovalError</shortDescription>
+        <value>Quote Can be only submit for Approval in Draft Status</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Sync_Primary_Quote_With_Opportunity</fullName>
+        <categories>primary product, client for life</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sync Primary Quote with Opportunity</shortDescription>
+        <value>Please update the Primary Product and Primary Bundle on the opportunity that matches the quote</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Talent_Connect_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Talent Connect Envelope Configuration</shortDescription>
+        <value>a8N4x00000012vREAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Talent_Connect_Subscription_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Talent Connect Subscription Error</shortDescription>
+        <value>Please enter valid  Talent Connect Subscription Start Date  and   Talent Connect Subscription End Date</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Talent_Connect_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Talent Connect Wet Envelope</shortDescription>
+        <value>a8N8G0000000ANiUAM</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ThankYou_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ThankYou_Page</shortDescription>
+        <value>/Thankyou</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ThankYou_Partner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP ThankYou Partner</shortDescription>
+        <value>/apex/ThankYou</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WO_Applicable_PriceBooks_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_WO_Applicable_PriceBooks_Error</shortDescription>
+        <value>Please update PriceBook selection to WX PriceBook or WA PriceBook</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WO_Closing_Appointment_or_Docusign</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WO Closing Appointment or Docusign</shortDescription>
+        <value>Please create an Event with subtype Closing Appointment</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WO_Email_DL</fullName>
+        <categories>WO</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WO Email DL</shortDescription>
+        <value>results@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WX_Email_DL</fullName>
+        <categories>WX</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Email DL</shortDescription>
+        <value>WXresults@insperity.com.invalid</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WX_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Envelope Configuration</shortDescription>
+        <value>a8N4x0000000lezEAA</value>
+    </labels>
+    <labels>
+        <fullName>NSP_WX_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WX Wet Envelope</shortDescription>
+        <value>a8N4x0000000khOEAQ</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Workforce_Primary_Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP Workforce Primary Product</shortDescription>
+        <value>WX,WA,WO,WS</value>
+    </labels>
+    <labels>
+        <fullName>NSP_opportunityPublicGroup</fullName>
+        <categories>Stores Names of comma separated values of Public Groups used for Opportunity record Sharing in NSP_recordSharing Class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_opportunityPublicGroup</shortDescription>
+        <value>Data Science,NCS</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Product_Update_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity_Product_Update_Error_Message</shortDescription>
+        <value>Opportunity Line Items cannot be modified at this stage.</value>
+    </labels>
+    <labels>
+        <fullName>Retirement_Services_For_Non_WO_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retirement Services For Non WO Products</shortDescription>
+        <value>Retirement Services can only be added when additional WO products are currently owned by the customer.</value>
+    </labels>
+    <labels>
+        <fullName>Sales_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Roles</shortDescription>
+        <value>District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
     </labels>
 </CustomLabels>
