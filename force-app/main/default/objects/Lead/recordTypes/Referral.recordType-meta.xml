@@ -1038,7 +1038,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Currently with a local accounting firm%2C or payroll company%2C but looking for something more robust %E2%80%93 exploring PEO options for the first time</fullName>
+            <fullName>Exploring PEO options</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1046,7 +1046,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Not delivering on what was promised</fullName>
+            <fullName>Looking for something comprehensive</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1054,7 +1054,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Up for renewal and would like to explore options</fullName>
+            <fullName>Underdelivering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Up for renewal</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2284,6 +2288,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CertaPro-Middletown%2FKingston</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Colorado CEO Forum</fullName>
             <default>false</default>
         </values>
@@ -2748,6 +2756,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>OCTANe - Orange County Technology Action Network</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OneDigital FNA %28Warrens Busine</fullName>
             <default>false</default>
         </values>
@@ -2813,6 +2825,66 @@
         </values>
         <values>
             <fullName>Sales Xceleration Chicago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Atlanta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Baltimore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Boston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Charlotte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Chicago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Cleveland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Columbus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Denver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Detroit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Milwaukee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Minneapolis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Nashville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Philadelphia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - Pittsburgh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart Business Dealmakers - St%2E Louis</fullName>
             <default>false</default>
         </values>
         <values>

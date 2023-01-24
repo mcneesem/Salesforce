@@ -6,9 +6,9 @@
         <label>Cost has risen</label>
     </customValue>
     <customValue>
-        <fullName>Currently with a local accounting firm, or payroll company, but looking for something more robust – exploring PEO options for the first time</fullName>
+        <fullName>Exploring PEO options</fullName>
         <default>false</default>
-        <label>Currently with a local accounting firm, or payroll company, but looking for something more robust – exploring PEO options for the first time</label>
+        <label>Exploring PEO options</label>
     </customValue>
     <customValue>
         <fullName>Lack of response time</fullName>
@@ -16,14 +16,14 @@
         <label>Lack of response time</label>
     </customValue>
     <customValue>
-        <fullName>Need something more robust (This is usually for folks who started off with say a more technology ‘PEO’, or a local PEO, but they are now expanding into other states, so they need a PEO that can handle all states, multi-tax compliance, etc)</fullName>
+        <fullName>Looking for something comprehensive</fullName>
         <default>false</default>
-        <label>Need something more robust (This is usually for folks who started off with say a more technology ‘PEO’, or a local PEO, but they are now expanding into other states, so they need a PEO that can handle all states, multi-tax compliance, etc)</label>
+        <label>Looking for something comprehensive</label>
     </customValue>
     <customValue>
-        <fullName>Not delivering on what was promised</fullName>
+        <fullName>Underdelivering</fullName>
         <default>false</default>
-        <label>Not delivering on what was promised</label>
+        <label>Underdelivering</label>
     </customValue>
     <customValue>
         <fullName>Poor Customer Service</fullName>
@@ -31,9 +31,33 @@
         <label>Poor Customer Service</label>
     </customValue>
     <customValue>
+        <fullName>Up for renewal</fullName>
+        <default>false</default>
+        <label>Up for renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>Not delivering on what was promised</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Not delivering on what was promised</label>
+    </customValue>
+    <customValue>
         <fullName>Up for renewal and would like to explore options</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Up for renewal and would like to explore options</label>
+    </customValue>
+    <customValue>
+        <fullName>Currently with a local accounting firm, or payroll company, but looking for something more robust – exploring PEO options for the first time</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Currently with a local accounting firm, or payroll company, but looking for something more robust – exploring PEO options for the first time</label>
+    </customValue>
+    <customValue>
+        <fullName>Need something more robust (This is usually for folks who started off with say a more technology ‘PEO’, or a local PEO, but they are now expanding into other states, so they need a PEO that can handle all states, multi-tax compliance, etc)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Need something more robust (This is usually for folks who started off with say a more technology ‘PEO’, or a local PEO, but they are now expanding into other states, so they need a PEO that can handle all states, multi-tax compliance, etc)</label>
     </customValue>
     <masterLabel>Reason looking to switch</masterLabel>
     <sorted>false</sorted>
