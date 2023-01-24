@@ -51,14 +51,14 @@
                 <label>WO Proposal</label>
             </value>
             <value>
-                <fullName>WX Proposal</fullName>
-                <default>false</default>
-                <label>WX Proposal</label>
-            </value>
-            <value>
                 <fullName>WX Quote</fullName>
                 <default>false</default>
                 <label>WX Quote</label>
+            </value>
+            <value>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+                <label>WX Proposal</label>
             </value>
             <value>
                 <fullName>Phone Call</fullName>
@@ -244,12 +244,12 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WX Proposal</valueName>
+            <valueName>WX Quote</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WX Quote</valueName>
+            <valueName>WX Proposal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
