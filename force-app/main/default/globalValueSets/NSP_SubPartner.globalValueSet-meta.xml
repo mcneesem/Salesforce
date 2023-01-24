@@ -531,6 +531,11 @@
         <label>Campbell Petrie</label>
     </customValue>
     <customValue>
+        <fullName>CertaPro-Middletown/Kingston</fullName>
+        <default>false</default>
+        <label>CertaPro-Middletown/Kingston</label>
+    </customValue>
+    <customValue>
         <fullName>CertaPro – PA</fullName>
         <default>false</default>
         <label>CertaPro – PA</label>
@@ -1131,6 +1136,11 @@
         <label>NVTC-Northern Virginia Technol</label>
     </customValue>
     <customValue>
+        <fullName>OCTANe - Orange County Technology Action Network</fullName>
+        <default>false</default>
+        <label>OCTANe - Orange County Technology Action Network</label>
+    </customValue>
+    <customValue>
         <fullName>OneDigital FNA (Warrens Busine</fullName>
         <default>false</default>
         <label>OneDigital FNA (Warrens Busine</label>
@@ -1214,6 +1224,81 @@
         <fullName>Sales Xceleration Chicago</fullName>
         <default>false</default>
         <label>Sales Xceleration Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Atlanta</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Baltimore</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Baltimore</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Boston</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Boston</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Charlotte</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Charlotte</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Chicago</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Chicago</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Cleveland</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Cleveland</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Columbus</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Columbus</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Denver</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Denver</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Detroit</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Detroit</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Milwaukee</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Milwaukee</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Minneapolis</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Minneapolis</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Nashville</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Nashville</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Philadelphia</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Philadelphia</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - Pittsburgh</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - Pittsburgh</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Business Dealmakers - St. Louis</fullName>
+        <default>false</default>
+        <label>Smart Business Dealmakers - St. Louis</label>
     </customValue>
     <customValue>
         <fullName>Smith McGehee Insurance</fullName>

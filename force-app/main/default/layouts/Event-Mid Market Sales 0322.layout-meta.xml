@@ -16,7 +16,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Location__c</field>
+                <field>Location</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -172,12 +172,6 @@
             <layoutItem>
                 <behavior>Readonly</behavior>
                 <field>WhoId</field>
-            </layoutItem>
-        </relatedContentItems>
-        <relatedContentItems>
-            <layoutItem>
-                <behavior>Readonly</behavior>
-                <field>WhatId</field>
             </layoutItem>
         </relatedContentItems>
     </relatedContent>

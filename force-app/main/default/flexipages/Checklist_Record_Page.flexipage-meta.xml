@@ -3342,11 +3342,16 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection7</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>NSP_Sold_to_Paid_Checklist</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>

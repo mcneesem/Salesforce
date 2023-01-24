@@ -540,6 +540,13 @@
             <stringValue>WO</stringValue>
         </value>
     </constants>
+    <constants>
+        <name>conWS</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WS</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>ApplyAccess_FromScreenRouting_0</name>
         <label>ApplyAccess&amp;FromScreenRouting</label>
@@ -551,7 +558,7 @@
         <defaultConnectorLabel>No Access</defaultConnectorLabel>
         <rules>
             <name>Has_Access_From_Screen_0</name>
-            <conditionLogic>((1 AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
+            <conditionLogic>(((1 OR 9) AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
                 <operator>EqualTo</operator>
@@ -608,6 +615,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varIsMM</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>WelcomeScreen_0</targetReference>
             </connector>
@@ -615,7 +629,7 @@
         </rules>
         <rules>
             <name>Has_Access_Non_Screen_0</name>
-            <conditionLogic>((1 AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
+            <conditionLogic>(((1 OR 9) AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
                 <operator>EqualTo</operator>
@@ -667,6 +681,13 @@
             </conditions>
             <conditions>
                 <leftValueReference>varIsSalesAdmin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varIsMM</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -758,7 +779,7 @@
         </rules>
         <rules>
             <name>STP_WO</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>varChecklisType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -771,6 +792,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>conWO</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varProduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conWS</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1056,7 +1084,7 @@
         <defaultConnectorLabel>Not Supported Product</defaultConnectorLabel>
         <rules>
             <name>Correct_Product</name>
-            <conditionLogic>((1 OR 2 OR 3 OR 4) AND 6) OR ((1 OR 3 OR 4) AND 5)</conditionLogic>
+            <conditionLogic>((1 OR 2 OR 3 OR 4 OR 7) AND 6) OR ((1 OR 3 OR 4) AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>GetOppty.NSP_PrimaryProduct__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1097,6 +1125,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOppty.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WS</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1199,7 +1234,7 @@
         </rules>
         <rules>
             <name>BPA_Routing</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 OR 5) AND 2 AND 3 AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1226,6 +1261,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varIsMM</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1380,7 +1422,7 @@
             <label>STP</label>
         </rules>
     </decisions>
-    <description>AZD story 191620 and 127395</description>
+    <description>AZD story 165244</description>
     <dynamicChoiceSets>
         <name>Addendums_required_before_download1_ChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -7366,6 +7408,10 @@
             <name>varIsBPA</name>
         </outputAssignments>
         <outputAssignments>
+            <assignToReference>varIsMM</assignToReference>
+            <name>varIsMM</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>varIsNCS</assignToReference>
             <name>varIsNCS</name>
         </outputAssignments>
@@ -7488,6 +7534,16 @@
     </variables>
     <variables>
         <name>varIsBPA</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varIsMM</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
