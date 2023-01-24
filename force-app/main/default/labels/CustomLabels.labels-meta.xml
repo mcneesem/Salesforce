@@ -43,4 +43,12 @@
         <shortDescription>NSP Opp Performance Management Only Available For Renewal</shortDescription>
         <value>Primary Product Performance Management is only available for Renewal or Amendment Types.</value>
     </labels>
+    <labels>
+        <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
+        <categories>Closed Lost. Roles Eligible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close Lost Role in Opportunity Team</shortDescription>
+        <value>Business Performance Advisor,District Administrator,District Manager,New Client Sales,Opportunity Owner,MidMarket Administrator</value>
+    </labels>
 </CustomLabels>
