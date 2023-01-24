@@ -26,7 +26,7 @@ public class NSP_OpportunityTriggerHelper {
     public static boolean valueAssignedFromUser = false;
     public static boolean createRewardsOnce = false;
 
-    private static set<Id>  byPassValidationOnProfile = null;
+    private static set<Id>  byPassValidationOnRole = null;
     
 /**
 * Iterates throught the list of new Opportunity and passes the required attributes to other methods.
@@ -759,38 +759,21 @@ public class NSP_OpportunityTriggerHelper {
 * Params:       Opportunity opp
 * User-Story:   US-198540
 * ********************************************************************************************/ 
-public static boolean validateByNonProfitAndProfile(Opportunity opp){
+public static boolean validateByNonProfitAndRole(Opportunity opp){
   
-  /* Non-Profit fields
-  NSP_Nonprofit__c
-  NSP_NonprofitNameAddress__c
-  NSP_Nonprofit_Organization_Name__c
-  NSP_Sold_Rewards_Amount__c
-  NSP_Sold_Rewards_Send_To__c
-  NSP_Rewards_Notes__c
-  NSP_Sold_Rewards__c*/
-  //.NSP_Sold_Rewards_Amount__c != oldOpp.NSP_Sold_Rewards_Amount__c ||
-  //opp.NSP_Sold_Rewards_Send_To__c != oldOpp.NSP_Sold_Rewards_Send_To__c ||
-  //opp.NSP_Rewards_Notes__c != oldOpp.NSP_Rewards_Notes__c || 
-  //opp.NSP_Sold_Rewards__c != oldOpp.NSP_Sold_Rewards__c
-
-  Opportunity oldOpp = (Opportunity)Trigger.oldMap.get(opp.Id);
-
-  if(opp.NSP_Nonprofit__c != oldOpp.NSP_Nonprofit__c ||
-  opp.NSP_NonprofitNameAddress__c != oldOpp.NSP_NonprofitNameAddress__c || 
-  opp.NSP_Nonprofit_Organization_Name__c != oldOpp.NSP_Nonprofit_Organization_Name__c){
-    
-    if(byPassValidationOnProfile == null){
-        byPassValidationOnProfile = new set<Id>();
-        for(Profile profile : [SELECT Id FROM Profile WHERE name IN ('Sales Administrator')]){
-            byPassValidationOnProfile.add(profile.id); 
+    if(byPassValidationOnRole== null){
+        byPassValidationOnRole = new set<Id>();
+        for(UserRole role : [SELECT Id FROM UserRole WHERE DeveloperName IN ('NSP_L1_Support', 'NSP_L2_Support_Admin')]){
+            byPassValidationOnRole.add(role.id); 
         }
     }
 
-    if(byPassValidationOnProfile.contains(UserInfo.getProfileId())){
+    //  Check if User's Profile is in the Profile List
+    if(byPassValidationOnRole.contains(UserInfo.getUserRoleId())){
+        //  Check if stage is closed won OR closed lost
         return opp.StageName.equals('Closed Won') || opp.StageName.equals('Closed Lost');
     }
-  }
+  
 
   return false;
 }
@@ -814,7 +797,7 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
 
         for(Opportunity opp: OpportunityList){
             if(!ncsGrpMemIdSet.contains(loggedInUserId)){
-                if(validateByNonProfitAndProfile(opp) == false){
+                if(validateByNonProfitAndRole(opp) == false){
                     opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
                 }
             } 
