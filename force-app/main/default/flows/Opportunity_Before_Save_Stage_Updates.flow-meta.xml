@@ -2,11 +2,39 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <assignments>
+        <description>Populate the &quot;Current Stage Start Date&quot; field</description>
+        <name>Assign_Current_Stage_Start_Date_for_New_Opty</name>
+        <label>Assign Current Stage Start Date for New Opty</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Stage_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Populate the &quot;Current Stage Start Date&quot; field</description>
+        <name>Assign_Current_Stage_Start_Date_to_Opty</name>
+        <label>Assign Current Stage Start Date to Opty</label>
+        <locationX>1370</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Stage_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <description>Get the number of days in each stage from the record, to be able to add on if stage goes backward</description>
         <name>Assign_prior_days_in_stages_information</name>
         <label>Assign prior &quot;days in stages&quot; information</label>
-        <locationX>578</locationX>
-        <locationY>311</locationY>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>priorDaysInCurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -49,75 +77,116 @@
     <assignments>
         <name>Get_total_Days_in_Analysis</name>
         <label>Get total Days in Analysis</label>
-        <locationX>314</locationX>
-        <locationY>551</locationY>
+        <locationX>578</locationX>
+        <locationY>671</locationY>
         <assignmentItems>
-            <assignToReference>newDaysInAnalysis</assignToReference>
+            <assignToReference>$Record.Number_of_Days_in_Analysis__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>totalDaysInAnalysisFormula</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Days_in_Analysis</targetReference>
-        </connector>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Stage_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Get_total_Days_in_Closing</name>
         <label>Get total Days in Closing</label>
-        <locationX>842</locationX>
-        <locationY>551</locationY>
+        <locationX>1106</locationX>
+        <locationY>671</locationY>
         <assignmentItems>
-            <assignToReference>newDaysInClosing</assignToReference>
+            <assignToReference>$Record.Number_of_Days_in_Closing__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>totalDaysInClosingFormula</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Days_in_Closing</targetReference>
-        </connector>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Stage_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Get_total_Days_in_Discovery</name>
         <label>Get total Days in Discovery</label>
-        <locationX>50</locationX>
-        <locationY>551</locationY>
+        <locationX>314</locationX>
+        <locationY>671</locationY>
         <assignmentItems>
-            <assignToReference>newDaysInDiscovery</assignToReference>
+            <assignToReference>$Record.Number_of_Days_in_Discovery__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>totalDaysInDiscoveryFormula</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Days_in_Discovery</targetReference>
-        </connector>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Stage_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Get_total_Days_in_Proposal</name>
         <label>Get total Days in Proposal</label>
-        <locationX>578</locationX>
-        <locationY>551</locationY>
+        <locationX>842</locationX>
+        <locationY>671</locationY>
         <assignmentItems>
-            <assignToReference>newDaysInProposal</assignToReference>
+            <assignToReference>$Record.Number_of_Days_in_Proposal__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>totalDaysInProposalFormula</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Days_in_Proposal</targetReference>
-        </connector>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Stage_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
+    <decisions>
+        <name>Is_this_a_newly_created_Opportunity</name>
+        <label>Is this a newly created Opportunity?</label>
+        <locationX>446</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>Assign_prior_days_in_stages_information</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not new opportunity</defaultConnectorLabel>
+        <rules>
+            <name>Yes_It_is_a_new_opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Current_Stage_Start_Date_for_New_Opty</targetReference>
+            </connector>
+            <label>Yes - It is a new opportunity</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>What was the stage that the opportunity is moving on from?</description>
         <name>What_was_the_prior_stage</name>
         <label>What was the prior stage?</label>
-        <locationX>578</locationX>
-        <locationY>431</locationY>
+        <locationX>842</locationX>
+        <locationY>551</locationY>
         <defaultConnector>
-            <targetReference>Update_Current_Stage_Start_Date</targetReference>
+            <targetReference>Assign_Current_Stage_Start_Date_to_Opty</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Prior stage not applicable</defaultConnectorLabel>
         <rules>
@@ -184,6 +253,12 @@
     <description>A flow to run before save to make Stage related updates/changes</description>
     <environments>Default</environments>
     <formulas>
+        <description>A formula to check if the opportunity is new</description>
+        <name>isNew</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(ISNEW(), true, false)</expression>
+    </formulas>
+    <formulas>
         <description>Calculate the new total Days in Analysis</description>
         <name>totalDaysInAnalysisFormula</name>
         <dataType>Number</dataType>
@@ -232,110 +307,21 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_Current_Stage_Start_Date</name>
-        <label>Update &quot;Current Stage Start Date&quot;</label>
-        <locationX>1106</locationX>
-        <locationY>551</locationY>
-        <inputAssignments>
-            <field>Current_Stage_Start_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Days_in_Analysis</name>
-        <label>Update Days in Analysis</label>
-        <locationX>314</locationX>
-        <locationY>671</locationY>
-        <inputAssignments>
-            <field>Current_Stage_Start_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Number_of_Days_in_Analysis__c</field>
-            <value>
-                <elementReference>newDaysInAnalysis</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Days_in_Closing</name>
-        <label>Update Days in Closing</label>
-        <locationX>842</locationX>
-        <locationY>671</locationY>
-        <inputAssignments>
-            <field>Current_Stage_Start_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Number_of_Days_in_Closing__c</field>
-            <value>
-                <elementReference>newDaysInClosing</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Days_in_Discovery</name>
-        <label>Update Days in Discovery</label>
-        <locationX>50</locationX>
-        <locationY>671</locationY>
-        <inputAssignments>
-            <field>Current_Stage_Start_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Number_of_Days_in_Discovery__c</field>
-            <value>
-                <elementReference>newDaysInDiscovery</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Days_in_Proposal</name>
-        <label>Update Days in Proposal</label>
-        <locationX>578</locationX>
-        <locationY>671</locationY>
-        <inputAssignments>
-            <field>Current_Stage_Start_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Number_of_Days_in_Proposal__c</field>
-            <value>
-                <elementReference>newDaysInProposal</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
-        <locationX>452</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_prior_days_in_stages_information</targetReference>
+            <targetReference>Is_this_a_newly_created_Opportunity</targetReference>
         </connector>
         <filterFormula>OR( 
 (ISNEW() &amp;&amp; NOT(ISPICKVAL( {!$Record.StageName},&quot;&quot; ))),
-ISCHANGED( {!$Record.StageName} ) 
+(ISCHANGED( {!$Record.StageName} ) &amp;&amp; NOT(ISPICKVAL( {!$Record.StageName},&quot;&quot; )))
 )</filterFormula>
         <object>Opportunity</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>newDaysInAnalysis</name>
         <dataType>Number</dataType>
