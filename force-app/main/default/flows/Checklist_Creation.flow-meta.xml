@@ -16,7 +16,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>56.0</apiVersion>
     <assignments>
         <name>Add_Booking_Count</name>
         <label>Add Booking Count</label>
@@ -264,11 +264,131 @@
         </value>
     </choices>
     <choices>
+        <name>Freedom_Basic</name>
+        <choiceText>Freedom Basic</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Basic</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Choice</name>
+        <choiceText>Freedom Choice</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Choice</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Premier</name>
+        <choiceText>Freedom Premier</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Premier</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Saver</name>
+        <choiceText>Freedom Saver</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Saver</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Select</name>
+        <choiceText>Freedom Select</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Select</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Hours</name>
         <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; color: rgb(119, 119, 119);&quot;&gt;Hours&lt;/span&gt;</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Hours</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Basic</name>
+        <choiceText>Independence Basic</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Basic</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Choice</name>
+        <choiceText>Independence Choice</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Choice</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Premier</name>
+        <choiceText>Independence Premier</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Premier</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Saver</name>
+        <choiceText>Independence Saver</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Saver</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Select</name>
+        <choiceText>Independence Select</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Select</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Basic</name>
+        <choiceText>Liberty Basic</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Basic</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Choice</name>
+        <choiceText>Liberty Choice</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Choice</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Premier</name>
+        <choiceText>Liberty Premier</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Premier</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Saver</name>
+        <choiceText>Liberty Saver</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Saver</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Select</name>
+        <choiceText>Liberty Select</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Select</stringValue>
         </value>
     </choices>
     <choices>
@@ -312,6 +432,14 @@
         </value>
     </choices>
     <choices>
+        <name>Pacific_Northwest</name>
+        <choiceText>Pacific Northwest</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Pacific Northwest</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>PerformSmartNeedsAnalysisForm</name>
         <choiceText>PerformSmart Needs Analysis Form</choiceText>
         <dataType>String</dataType>
@@ -341,6 +469,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Punches</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Revolution</name>
+        <choiceText>Revolution</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Revolution</stringValue>
         </value>
     </choices>
     <choices>
@@ -404,6 +540,13 @@
             <stringValue>WO</stringValue>
         </value>
     </constants>
+    <constants>
+        <name>conWS</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WS</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>ApplyAccess_FromScreenRouting_0</name>
         <label>ApplyAccess&amp;FromScreenRouting</label>
@@ -415,7 +558,7 @@
         <defaultConnectorLabel>No Access</defaultConnectorLabel>
         <rules>
             <name>Has_Access_From_Screen_0</name>
-            <conditionLogic>((1 AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
+            <conditionLogic>(((1 OR 9) AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
                 <operator>EqualTo</operator>
@@ -472,6 +615,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varIsMM</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>WelcomeScreen_0</targetReference>
             </connector>
@@ -479,7 +629,7 @@
         </rules>
         <rules>
             <name>Has_Access_Non_Screen_0</name>
-            <conditionLogic>((1 AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
+            <conditionLogic>(((1 OR 9) AND 2) OR (3 AND 4) OR (5 AND 6) OR 8) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
                 <operator>EqualTo</operator>
@@ -531,6 +681,13 @@
             </conditions>
             <conditions>
                 <leftValueReference>varIsSalesAdmin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varIsMM</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -622,7 +779,7 @@
         </rules>
         <rules>
             <name>STP_WO</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>varChecklisType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -635,6 +792,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>conWO</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varProduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>conWS</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -920,7 +1084,7 @@
         <defaultConnectorLabel>Not Supported Product</defaultConnectorLabel>
         <rules>
             <name>Correct_Product</name>
-            <conditionLogic>((1 OR 2 OR 3 OR 4) AND 6) OR ((1 OR 3 OR 4) AND 5)</conditionLogic>
+            <conditionLogic>((1 OR 2 OR 3 OR 4 OR 7) AND 6) OR ((1 OR 3 OR 4) AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>GetOppty.NSP_PrimaryProduct__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -961,6 +1125,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOppty.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WS</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1063,7 +1234,7 @@
         </rules>
         <rules>
             <name>BPA_Routing</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 OR 5) AND 2 AND 3 AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>varIsBPA</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1090,6 +1261,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varIsMM</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1244,6 +1422,7 @@
             <label>STP</label>
         </rules>
     </decisions>
+    <description>AZD story 165244</description>
     <dynamicChoiceSets>
         <name>Addendums_required_before_download1_ChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -1717,6 +1896,14 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>WX_Modules</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>WX_Modules__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>X401k_ChoiceSet</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -1724,6 +1911,7 @@
         <picklistField>NSP_X401k__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>RunAsUserFORM</name>
         <dataType>String</dataType>
@@ -2438,6 +2626,9 @@
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <inputAssignments>
+            <field>Existing_Payroll_Provider__c</field>
+        </inputAssignments>
+        <inputAssignments>
             <field>NSP_Additional_Notes__c</field>
             <value>
                 <elementReference>NSP_Additional_Notes</elementReference>
@@ -2633,6 +2824,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>varNARecType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WX_Modules__c</field>
+            <value>
+                <elementReference>WX_Modules</elementReference>
             </value>
         </inputAssignments>
         <object>NSP_Checklist__c</object>
@@ -3269,7 +3466,7 @@
         <name>Create_STP_Checklist_0_0</name>
         <label>Create STP Checklist</label>
         <locationX>2164</locationX>
-        <locationY>837</locationY>
+        <locationY>836</locationY>
         <assignRecordIdToReference>varChecklistObj.Id</assignRecordIdToReference>
         <connector>
             <targetReference>CreationSuccess</targetReference>
@@ -3335,6 +3532,12 @@
             <field>NSP_Bid_Number__c</field>
             <value>
                 <elementReference>GetOppty.NSP_BidNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Billing_Postal_Code__c</field>
+            <value>
+                <elementReference>Account_Billing_Postal_Code</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3458,6 +3661,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NSP_Related_Accounts__c</field>
+            <value>
+                <elementReference>Name_of_Related_Company</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>NSP_Requested_First_Pay_Date__c</field>
             <value>
                 <elementReference>Requested_First_Pay_Date</elementReference>
@@ -3529,12 +3738,18 @@
                 <elementReference>varSTPRecType</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>WO_Benefit_Package__c</field>
+            <value>
+                <elementReference>Benefits_Package_WO</elementReference>
+            </value>
+        </inputAssignments>
         <object>NSP_Checklist__c</object>
     </recordCreates>
     <recordCreates>
         <name>Create_STP_Checklist_0_0_0</name>
         <label>Create STP Checklist</label>
-        <locationX>2323</locationX>
+        <locationX>2322</locationX>
         <locationY>842</locationY>
         <assignRecordIdToReference>varChecklistObj.Id</assignRecordIdToReference>
         <connector>
@@ -3543,6 +3758,12 @@
         <faultConnector>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>Existing_Payroll_Provider__c</field>
+            <value>
+                <elementReference>Existing_Payroll_Provider</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>NSP_AIMS_Client__c</field>
             <value>
@@ -3553,12 +3774,6 @@
             <field>NSP_Additional_FEINs__c</field>
             <value>
                 <elementReference>Additional_FEINs</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Additional_Notes__c</field>
-            <value>
-                <elementReference>Additional_Comments</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3642,7 +3857,7 @@
         <inputAssignments>
             <field>NSP_Do_you_pay_current__c</field>
             <value>
-                <elementReference>Currentlpayrollprocessor</elementReference>
+                <elementReference>Do_you_pay_current_ChoiceSet</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3658,7 +3873,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NSP_If_yes_do_you_observe_ACA_mandates__c</field>
+            <field>NSP_If_yesrequiredtoobserveACAmandates__c</field>
             <value>
                 <elementReference>NSP_If_yes_do_you_observe_ACA_mandates</elementReference>
             </value>
@@ -3670,9 +3885,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NSP_Initial_Covered_Pay_Period_End__c</field>
+            <value>
+                <elementReference>Initial_Covered_Pay_Period_End_WX</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>NSP_Initial_Covered_Pay_Period__c</field>
             <value>
-                <elementReference>Initial_Covered_Pay_Period_0</elementReference>
+                <elementReference>Initial_Covered_Pay_Period_Start_WX</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3685,12 +3906,6 @@
             <field>NSP_Monthly_Payroll_Liability_50K__c</field>
             <value>
                 <elementReference>Monthly_Payroll_Liability_50K_1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Multiple_FEINs_If_yes_please_list__c</field>
-            <value>
-                <elementReference>NSP_Multiple_FEINs_If_yes_please_list</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3742,27 +3957,39 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NSP_Requested_1st_Pay_Period_Date__c</field>
+            <field>NSP_Related_Accounts__c</field>
             <value>
-                <elementReference>Requested_1st_Pay_Period_Date1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Requested_First_Check_Date__c</field>
-            <value>
-                <elementReference>GetOppty.NSP_Requested_First_Check_Date__c</elementReference>
+                <elementReference>Name_of_Related_Company_WX</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NSP_Requested_First_Pay_Date__c</field>
             <value>
-                <elementReference>GetOppty.NSP_Requested_First_Check_Date__c</elementReference>
+                <elementReference>Requested_First_Pay_Date_WX</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Requested_Second_Pay_Date__c</field>
+            <value>
+                <elementReference>Requested_Second_Pay_Date_WX</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NSP_Reverse_Wire_Policy_Explained__c</field>
             <value>
                 <elementReference>Reverse_Wire_Policy_Explained</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Second_Covered_Pay_Period_End__c</field>
+            <value>
+                <elementReference>Second_Covered_Pay_Period_End_WX</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Second_Covered_Pay_Period__c</field>
+            <value>
+                <elementReference>Second_Covered_Pay_Period_Start_WX</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3796,15 +4023,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NSP_softwaresyscurrentlyuseforpayroll__c</field>
-            <value>
-                <elementReference>Software_system_used_to_process_payroll</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>RecordTypeId</field>
             <value>
                 <elementReference>varSTPRecType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WX_Modules__c</field>
+            <value>
+                <elementReference>WX_Modules_Requested</elementReference>
             </value>
         </inputAssignments>
         <object>NSP_Checklist__c</object>
@@ -4017,8 +4244,8 @@
     <screens>
         <name>Booking_WO_Checklist_0</name>
         <label>Booking WO Checklist</label>
-        <locationX>2088</locationX>
-        <locationY>639</locationY>
+        <locationX>2095</locationX>
+        <locationY>661</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4207,6 +4434,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Booking_WO_Checklist_0_Section2</name>
@@ -4702,6 +4930,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -4766,6 +4995,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Booking_WX_Checklist_Section2</name>
@@ -4989,6 +5219,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -5132,6 +5363,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>NA_PS_Checklist_0_0_Section2</name>
@@ -5323,6 +5555,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -5387,6 +5620,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>NA_TE_Checklist_0_0_0_Section2</name>
@@ -5918,6 +6152,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -6057,7 +6292,7 @@
     <screens>
         <name>STP_WO_Checklist</name>
         <label>STP WO Checklist</label>
-        <locationX>2225</locationX>
+        <locationX>2224</locationX>
         <locationY>601</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6115,6 +6350,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>STP_WO_Checklist_Section2</name>
@@ -6196,21 +6432,6 @@
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <fields>
-                    <name>Has_this_company_ever_run_payroll_before</name>
-                    <choiceReferences>Has_this_company_ever_run_payroll_before_ChoiceSet</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Company ever run payroll before?</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Requested_Insperity_Effective_Date</name>
-                    <dataType>Date</dataType>
-                    <fieldText>Requested Insperity Effective Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
                     <name>Initial_Covered_Pay_Period_Start</name>
                     <dataType>Date</dataType>
                     <fieldText>Initial Covered Pay Period Start</fieldText>
@@ -6229,9 +6450,39 @@
                     </validationRule>
                 </fields>
                 <fields>
+                    <name>Requested_First_Pay_Date</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Requested First Pay Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Has_this_company_ever_run_payroll_before</name>
+                    <choiceReferences>Has_this_company_ever_run_payroll_before_ChoiceSet</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Company ever run payroll before?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
                     <name>Termination_Date_of_Client_s_Current_Medical_Plan</name>
                     <dataType>Date</dataType>
                     <fieldText>Client Current Medical Plan-Final Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Is_the_Client_Related_to_Another_Insperity_Client_Prospect</name>
+                    <choiceReferences>Is_the_Client_Related_to_Another_Insperity_Client_Prospect_ChoiceSet</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Is this new Client Related to Insperity Client/Prospect?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Name_of_Related_Company</name>
+                    <dataType>String</dataType>
+                    <fieldText>Name of Related Company</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -6329,9 +6580,9 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Requested_Second_Pay_Date</name>
+                    <name>Requested_Insperity_Effective_Date</name>
                     <dataType>Date</dataType>
-                    <fieldText>Requested Second Pay Date</fieldText>
+                    <fieldText>Requested Insperity Effective Date</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -6354,6 +6605,37 @@
                     </validationRule>
                 </fields>
                 <fields>
+                    <name>Requested_Second_Pay_Date</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Requested Second Pay Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Benefits_Package_WO</name>
+                    <choiceReferences>Freedom_Premier</choiceReferences>
+                    <choiceReferences>Freedom_Select</choiceReferences>
+                    <choiceReferences>Freedom_Basic</choiceReferences>
+                    <choiceReferences>Freedom_Saver</choiceReferences>
+                    <choiceReferences>Freedom_Choice</choiceReferences>
+                    <choiceReferences>Independence_Premier</choiceReferences>
+                    <choiceReferences>Independence_Select</choiceReferences>
+                    <choiceReferences>Independence_Basic</choiceReferences>
+                    <choiceReferences>Independence_Saver</choiceReferences>
+                    <choiceReferences>Independence_Choice</choiceReferences>
+                    <choiceReferences>Liberty_Premier</choiceReferences>
+                    <choiceReferences>Liberty_Select</choiceReferences>
+                    <choiceReferences>Liberty_Basic</choiceReferences>
+                    <choiceReferences>Liberty_Saver</choiceReferences>
+                    <choiceReferences>Liberty_Choice</choiceReferences>
+                    <choiceReferences>Revolution</choiceReferences>
+                    <choiceReferences>Pacific_Northwest</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>WO Benefits Package</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
                     <name>Will_the_EEs_be_bulk_primed</name>
                     <choiceReferences>Will_the_EEs_be_bulk_primed_ChoiceSet</choiceReferences>
                     <dataType>String</dataType>
@@ -6367,21 +6649,6 @@
                     <dataType>String</dataType>
                     <fieldText>Benefits Waiting Period</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Is_the_Client_Related_to_Another_Insperity_Client_Prospect</name>
-                    <choiceReferences>Is_the_Client_Related_to_Another_Insperity_Client_Prospect_ChoiceSet</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Related to Insperity Client/Prospect?</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Requested_First_Pay_Date</name>
-                    <dataType>Date</dataType>
-                    <fieldText>Requested First Pay Date</fieldText>
-                    <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -6407,6 +6674,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -6414,8 +6682,8 @@
     <screens>
         <name>STP_WX_Checklist_0</name>
         <label>STP WX Checklist</label>
-        <locationX>2372</locationX>
-        <locationY>545</locationY>
+        <locationX>2352</locationX>
+        <locationY>561</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6471,6 +6739,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>STP_WX_Checklist_0_Section2</name>
@@ -6512,13 +6781,6 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>NSP_Multiple_FEINs_If_yes_please_list</name>
-                    <dataType>String</dataType>
-                    <fieldText>Multiple FEINs? If yes, please list</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
                     <name>Additional_FEINs</name>
                     <dataType>String</dataType>
                     <fieldText>Additional FEINs</fieldText>
@@ -6526,11 +6788,20 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>If_no_reason_not_completed</name>
+                    <name>NSP_ClientRelatedtootherInsperityClient</name>
+                    <choiceReferences>Is_the_Client_Related_to_Another_Insperity_Client_Prospect_ChoiceSet</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>If no, reason not completed</fieldText>
+                    <fieldText>Related to Insperity Client/Prospect?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Full_Time_Employees</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Full Time Employees</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <scale>0</scale>
                 </fields>
                 <fields>
                     <name>Part_Time_Employees</name>
@@ -6557,11 +6828,37 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Initial_Covered_Pay_Period_0</name>
+                    <name>Pay</name>
+                    <choiceReferences>Pay_ChoiceSet</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Pay Current or in Arrears?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Initial_Covered_Pay_Period_Start_WX</name>
                     <dataType>Date</dataType>
-                    <fieldText>Initial Covered Pay Period</fieldText>
+                    <fieldText>Initial Covered Pay Period Start</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Initial_Covered_Pay_Period_End_WX</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Initial Covered Pay Period End</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Pay Period End Date must be greater than Start Date&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Initial_Covered_Pay_Period_End_WX} &gt; {!Initial_Covered_Pay_Period_Start_WX}</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>Requested_First_Pay_Date_WX</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Requested First Pay Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
                 </fields>
                 <fields>
                     <name>What_State_s_to_EEs_work_live_in</name>
@@ -6595,17 +6892,10 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Software_system_used_to_process_payroll</name>
+                    <name>Are_you_a_Government_contractor</name>
+                    <choiceReferences>Are_you_a_Government_contractor_ChoiceSet</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>Software system used to process payroll?</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Currentl_payroll_processor</name>
-                    <choiceReferences>Currentlpayrollprocessor</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Current Payroll Processor?</fieldText>
+                    <fieldText>Are you a Government contractor?</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -6654,19 +6944,17 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Full_Time_Employees</name>
-                    <dataType>Number</dataType>
-                    <fieldText>Full Time Employees</fieldText>
+                    <name>If_no_reason_not_completed</name>
+                    <dataType>String</dataType>
+                    <fieldText>If no, reason not completed</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
                 </fields>
                 <fields>
-                    <name>NSP_ClientRelatedtootherInsperityClient</name>
-                    <choiceReferences>Is_the_Client_Related_to_Another_Insperity_Client_Prospect_ChoiceSet</choiceReferences>
+                    <name>Name_of_Related_Company_WX</name>
                     <dataType>String</dataType>
-                    <fieldText>Related to Insperity Client/Prospect?</fieldText>
-                    <fieldType>DropdownBox</fieldType>
+                    <fieldText>Name of Related Company</fieldText>
+                    <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -6699,9 +6987,34 @@
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <fields>
-                    <name>Requested_1st_Pay_Period_Date1</name>
+                    <name>Existing_Payroll_Provider</name>
+                    <dataType>String</dataType>
+                    <fieldText>Existing Payroll Provider</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Second_Covered_Pay_Period_Start_WX</name>
                     <dataType>Date</dataType>
-                    <fieldText>Requested 1st Pay Period Date</fieldText>
+                    <fieldText>Second Covered Pay Period Start</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Second_Covered_Pay_Period_End_WX</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Second Covered Pay Period End</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Pay Period End Date must be greater than Start Date&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Second_Covered_Pay_Period_End_WX} &gt; {!Second_Covered_Pay_Period_Start_WX}</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>Requested_Second_Pay_Date_WX</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Requested Second Pay Date</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -6714,32 +7027,10 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Additional_Comments</name>
-                    <fieldText>Additional Comments</fieldText>
-                    <fieldType>LargeTextArea</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
                     <name>NSP_Pay_Frequency1</name>
                     <choiceReferences>Pay_Frequency2_ChoiceSet</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Pay Frequency</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Are_you_a_Government_contractor</name>
-                    <choiceReferences>Are_you_a_Government_contractor_ChoiceSet</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Are you a Government contractor?</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Pay</name>
-                    <choiceReferences>Pay_ChoiceSet</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Pay</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -6752,11 +7043,20 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
+                    <name>WX_Modules_Requested</name>
+                    <choiceReferences>WX_Modules</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>WX Modules Requested</fieldText>
+                    <fieldType>MultiSelectPicklist</fieldType>
+                    <helpText>&lt;p&gt;Select All that Apply&lt;/p&gt;</helpText>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
                     <name>Notes_Regarding_Utilization</name>
                     <dataType>String</dataType>
                     <fieldText>Notes Regarding Utilization</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -6767,6 +7067,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -7062,6 +7363,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -7106,6 +7408,10 @@
             <name>varIsBPA</name>
         </outputAssignments>
         <outputAssignments>
+            <assignToReference>varIsMM</assignToReference>
+            <name>varIsMM</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>varIsNCS</assignToReference>
             <name>varIsNCS</name>
         </outputAssignments>
@@ -7118,6 +7424,16 @@
             <name>varIsSE</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>Account_Billing_Postal_Code</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>GetAccount.BillingPostalCode</elementReference>
+        </value>
+    </variables>
     <variables>
         <name>Checklistobj</name>
         <dataType>SObject</dataType>
@@ -7141,6 +7457,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Error_Log__c</objectType>
+    </variables>
+    <variables>
+        <description>Requested First Pay Date</description>
+        <name>First_Pay_Date_WX</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>fromPage</name>
@@ -7210,6 +7534,16 @@
     </variables>
     <variables>
         <name>varIsBPA</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varIsMM</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

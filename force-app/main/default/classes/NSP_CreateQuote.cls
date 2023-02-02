@@ -29,7 +29,7 @@ public class NSP_CreateQuote {
         set<String> partnerNames = new set<String>();
         ResponseWrapper responseWrapper = new ResponseWrapper();
         try {
-            Opportunity opp=[Select Id,NSP_PrimaryProduct__c,NSP_Client_For_Life__c,StageName FROM Opportunity WHERE Id =: opportunityId LIMIT 1];
+            Opportunity opp=[Select Id,NSP_PrimaryProduct__c,NSP_Client_For_Life__c,StageName,Type FROM Opportunity WHERE Id =: opportunityId LIMIT 1];
             if(opp.StageName == NSP_SalesConstants.DISCOVERY_STAGE){
                 responseWrapper.isSuccess = false;
                 responseWrapper.errorMessage=System.Label.NSP_MoveOpportunityToAnalysisiStage;
@@ -50,6 +50,20 @@ public class NSP_CreateQuote {
                 return responseWrapper;
             }
 
+            // 12/28/22 NL Validation on Opportunity Primary Product - Performance Management only available on Type Renewal
+            if(opp.NSP_PrimaryProduct__c == 'Performance Management' && opp.Type == 'New Product' && opp.NSP_Client_For_Life__c != 'WO/WS'){
+                responseWrapper.isSuccess = false;
+                responseWrapper.errorMessage=System.Label.NSP_Opp_Performance_Management_Only_Available_For_Renewal;
+                return responseWrapper;
+            }
+
+            // 12/28/22 NL Validation on Opportunity Primary Product - WO/WS No Quoting Available
+            if(opp.NSP_PrimaryProduct__c == 'WO' || opp.NSP_PrimaryProduct__c == 'WS'){
+                responseWrapper.isSuccess = false;
+                responseWrapper.errorMessage=System.Label.NSP_Opp_No_Quoting_for_WO_WS;
+                return responseWrapper;
+            }
+                     
             // Validation on Opportunity Client for Life
             if(String.isBlank(opp.NSP_Client_For_Life__c)){
                 responseWrapper.isSuccess = false;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WX_Modules__c</fullName>
+    <description>Select all the apply.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Must select at least one.</inlineHelpText>
+    <label>WX Modules Requested</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>WX_Modules</valueSetName>
+    </valueSet>
+    <visibleLines>6</visibleLines>
+</CustomField>

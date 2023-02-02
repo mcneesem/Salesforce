@@ -23,21 +23,6 @@
                 <label>Bookkeeping/Accounting</label>
             </value>
             <value>
-                <fullName>BPA</fullName>
-                <default>false</default>
-                <label>BPA</label>
-            </value>
-            <value>
-                <fullName>BPS</fullName>
-                <default>false</default>
-                <label>BPS</label>
-            </value>
-            <value>
-                <fullName>CSS</fullName>
-                <default>false</default>
-                <label>CSS</label>
-            </value>
-            <value>
                 <fullName>Employment Screening</fullName>
                 <default>false</default>
                 <label>Employment Screening</label>
@@ -96,6 +81,24 @@
                 <fullName>Workforce Optimization</fullName>
                 <default>false</default>
                 <label>Workforce Optimization</label>
+            </value>
+            <value>
+                <fullName>BPA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BPA</label>
+            </value>
+            <value>
+                <fullName>BPS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BPS</label>
+            </value>
+            <value>
+                <fullName>CSS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>CSS</label>
             </value>
         </valueSetDefinition>
     </valueSet>

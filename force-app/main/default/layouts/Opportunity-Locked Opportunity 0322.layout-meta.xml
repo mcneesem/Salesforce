@@ -151,7 +151,7 @@
                 <field>NSP_Upsell_Product_add_ons__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Partner__c</field>
             </layoutItems>
             <layoutItems>
@@ -183,7 +183,7 @@
                 <field>NSP_ReferredByService__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_SubPartner__c</field>
             </layoutItems>
             <layoutItems>
@@ -350,6 +350,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Requested_First_Check_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>STP_Requested_First_Pay_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -628,16 +632,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -677,6 +671,21 @@
             <actionType>CustomButton</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>New_BPS_Task</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>10</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
@@ -702,6 +711,9 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>New_BPS_Task</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <relatedContent>
@@ -812,6 +824,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Team_Member__c</fields>
+        <fields>NSP_Percent_Split__c</fields>
+        <fields>NSP_Number_of_Employees__c</fields>
+        <fields>NSP_Enrollment_Fee__c</fields>
+        <fields>NSP_Office_Assignment__c</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>

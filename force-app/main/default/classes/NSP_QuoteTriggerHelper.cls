@@ -1235,6 +1235,8 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
              if((newQuote.SBQQ__Primary__c == True && Trigger.isInsert) ||(Trigger.isUpdate && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c == True) ){
                 oppIdSet.add(newQuote.SBQQ__Opportunity2__c);       
          }
+         }
+             
          
         if (oppIdSet.size() > 0) {    
         		opportunitiesWithPrimaryQuote = [Select Id ,OwnerId ,NSP_PrimaryProduct__c, NSP_Client_For_Life__c FROM Opportunity WHERE Id IN :oppIdSet];
@@ -1243,7 +1245,7 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
            if (opportunitiesWithPrimaryQuote.size() > 0) {
                  NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);
             }
-    }
+    
         
     }
 }

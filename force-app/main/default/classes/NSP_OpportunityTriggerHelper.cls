@@ -9,8 +9,9 @@ Modification Log     :
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
 * Tejas                 07/02/2021            First Iteration
-* Rahul Singh      		26/10/2022			  Create OCR
-* Rahul Singh           11/17/2022			  User STory 128436
+* Rahul Singh           26/10/2022            Create OCR
+* Rahul Singh           11/17/2022            User STory 128436
+* Rahul Singh           22/12/2022            User STory 194265
 */
 
 public class NSP_OpportunityTriggerHelper {
@@ -287,7 +288,10 @@ public class NSP_OpportunityTriggerHelper {
                  // Added as part of DF-01716
                  User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
                  List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
-                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
+                 // Added as part of 195079
+                 List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
+
+                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
                     validateClosedDate(closedOppList);
                 }
         
@@ -360,7 +364,8 @@ public class NSP_OpportunityTriggerHelper {
         //opportunities with Partner Accounts populated
         List<Opportunity> partnerOpportunityList = new List<Opportunity>();
         Set<Id> partnerAccountIdSet = new Set<Id>();
-        
+        //Sending list to update enrollment fee payment
+        enrollmentFeeCheck(opportunityNewMap,opportunityOldMap);
         //I terating over the opportunity new map
         for(Id opportunityId : opportunityNewMap.keySet()){
             
@@ -390,7 +395,7 @@ public class NSP_OpportunityTriggerHelper {
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
                 closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
                //569718- if parent opportunity - send notification to open child opportunities 
-            	if(String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null){
+                if(String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null){
                  closedWonOpportunityIdList.add(opportunityId);
                } 
               }
@@ -971,8 +976,8 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         newReward.NSP_Contact__c = objOCR.ContactId;
         newReward.Opportunity__c = objOpportunity.Id;
         newReward.NSP_Contact_Role__c = objOCR.Role;
-		newReward.NSP_Non_ProfitName__c = objOCR.NSP_Nonprofit_Organization_Name__c;
-		newReward.NSP_Non_Profit_TaxID__c = objOCR.NSP_Nonprofit_Organization_Tax_Id__c;
+        newReward.NSP_Non_ProfitName__c = objOCR.NSP_Nonprofit_Organization_Name__c;
+        newReward.NSP_Non_Profit_TaxID__c = objOCR.NSP_Nonprofit_Organization_Tax_Id__c;
         newReward.NSP_Non_Profit_Address__c = objOpportunity.NSP_NonprofitNameAddress__c;
         return newReward;
     }
@@ -982,8 +987,8 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
     * Description : This method will create OCR
     * Params:       List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap
     * Author : Rahul Singh
-	* Created Date:10/26/22
-	* Created as part of User story - 128223
+    * Created Date:10/26/22
+    * Created as part of User story - 128223
     * ********************************************************************************************/   
     
     public void createContactRole(List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap)
@@ -1039,10 +1044,10 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         }
         
         try{
-		if(ocrInsertList.Size() > 0)
+        if(ocrInsertList.Size() > 0)
                 
         {
-			insert ocrInsertList;
+            insert ocrInsertList;
                 
         }            
         }catch(Exception ex){
@@ -1053,5 +1058,77 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
           
     
     }
+     /***********************************************************************************************
+    * MethodName: enrollmentFeeCheck
+    * Description : This method will update enrollment fee payment
+    * Params:       Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap
+    * Author : Rahul Singh
+    * Created Date:22/12/22
+    * Created for enrollment fee payment user story - 194265
+    * ********************************************************************************************/   
+    
+    
+     public void enrollmentFeeCheck(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap)
+    {
+         set<Id> oppIdTrue = new set<Id>();
+         set<Id> oppIdFalse = new set<Id>();
+         list<NSP_Enrollment_Fee_Payment__c> enrollmentUpdateList = new list<NSP_Enrollment_Fee_Payment__c>();
+         for(Opportunity newOpportunity: opportunityNewMap.Values())
+        {
+             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
+            
+            if(newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c >= 150)
+                {
+                    oppIdTrue.add(newOpportunity.Id);
+                }
+            else if(newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c < 150)
+                {
+                    oppIdFalse.add(newOpportunity.Id);
+                }
+            
+        }
+        if(oppIdTrue.Size() > 0)
+        { 
+          
+               for(NSP_Enrollment_Fee_Payment__c eachEnrollment : [SELECT Id FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c in :oppIdTrue])
+            
+            {
+                  NSP_Enrollment_Fee_Payment__c newEnrollment = new NSP_Enrollment_Fee_Payment__c();
+                  newEnrollment.Id = eachEnrollment.Id; 
+                  newEnrollment.NSP_Is_MidMarket__c = True; 
+                  enrollmentUpdateList.add(newEnrollment);     
+            
+            }
+        }
+        else if(oppIdFalse.Size() > 0)
+        { 
+          
+               for(NSP_Enrollment_Fee_Payment__c eachEnrollment : [SELECT Id FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c in :oppIdFalse])
+            
+            {
+                  NSP_Enrollment_Fee_Payment__c newEnrollment = new NSP_Enrollment_Fee_Payment__c();
+                  newEnrollment.Id = eachEnrollment.Id; 
+                  newEnrollment.NSP_Is_MidMarket__c = False; 
+                  enrollmentUpdateList.add(newEnrollment);     
+            
+            }
+        }
+        try{
+        if(enrollmentUpdateList.Size() > 0)
+                
+        {
+            update enrollmentUpdateList;
+                
+        }            
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        } 
+            
+            
+            
+        }
+        
+    
+    
     
 }

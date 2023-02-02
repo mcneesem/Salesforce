@@ -4,7 +4,7 @@
     <description>Field to track Account Risk Level</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Account At Risk Level Calc Text</label>
+    <label>DNUAccount At Risk Level Calc Text</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

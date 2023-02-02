@@ -4,7 +4,7 @@
     <description>Field to capture Anticipated Date of Termination</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Anticipated Date of Termination</label>
+    <label>DNUAnticipated Date of Termination</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

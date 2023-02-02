@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_Sort_Activity_Type_Reporting__c</fullName>
+    <description>A custom sort order to be used for reporting on Activity Type (Reporting) field</description>
+    <externalId>false</externalId>
+    <formula>CASE(NSP_Activity_Type_Reporting__c,
+&quot;Discovery Call&quot;,&quot;1 - Discovery Call&quot;,
+&quot;WO Business Profile&quot;,&quot;2 - WO Business Profile&quot;,
+&quot;WO Proposal&quot;,&quot;3 - WO Proposal&quot;,
+&quot;WX Quote&quot;,&quot;4 - WX Quote&quot;,
+&quot;WX Proposal&quot;,&quot;5 - WX Proposal&quot;,
+NULL
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Custom Sort - Activity Type Reporting</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ACA Administration</fullName>
+        <default>false</default>
+        <label>ACA Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Benefits Administration</fullName>
+        <default>false</default>
+        <label>Benefits Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Cobra Administration</fullName>
+        <default>false</default>
+        <label>Cobra Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Fringe Administration</fullName>
+        <default>false</default>
+        <label>Fringe Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Time and Attendance</fullName>
+        <default>false</default>
+        <label>Time and Attendance</label>
+    </customValue>
+    <customValue>
+        <fullName>Leave Administration</fullName>
+        <default>false</default>
+        <label>Leave Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Learning Development</fullName>
+        <default>false</default>
+        <label>Learning Development</label>
+    </customValue>
+    <customValue>
+        <fullName>Applicant Tracking</fullName>
+        <default>false</default>
+        <label>Applicant Tracking</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll Only</fullName>
+        <default>false</default>
+        <label>Payroll Only</label>
+    </customValue>
+    <description>WO product choices</description>
+    <masterLabel>WX Modules Requested</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
