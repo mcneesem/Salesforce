@@ -41,7 +41,7 @@
             <label>Yes - User has permission to enter NonProfit Rewards Info</label>
         </rules>
     </decisions>
-    <description>Updated to be more efficient and contain a fault path on &quot;Update Record&quot; element, changed run mode back to &quot;User Context&quot;</description>
+    <description>Updated to be more efficient and contain a fault path on &quot;Update Record&quot; element, changed run mode back to &quot;Runs as System&quot;</description>
     <dynamicChoiceSets>
         <description>picklist values 	NSP_Nonprofit__c</description>
         <name>referralBenefitsChoices</name>
@@ -110,7 +110,7 @@
         </inputAssignments>
         <object>Opportunity</object>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>errorMessageDisplayScreen</name>
         <label>errorMessageDisplayScreen</label>
