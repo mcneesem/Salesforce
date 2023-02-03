@@ -127,7 +127,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_AccountTeamMemberRole</shortDescription>
-        <value>BPA</value>
+        <value>Business Performance Advisor</value>
     </labels>
     <labels>
         <fullName>NSP_AccountTriggerError</fullName>
