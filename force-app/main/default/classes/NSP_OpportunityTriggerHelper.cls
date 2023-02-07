@@ -12,6 +12,7 @@ Modification Log     :
 * Rahul Singh           26/10/2022            Create OCR
 * Rahul Singh           11/17/2022            User STory 128436
 * Rahul Singh           22/12/2022            User STory 194265
+* Rahul Singh           02/02/2023            user story - 192368
 */
 
 public class NSP_OpportunityTriggerHelper {
@@ -25,7 +26,7 @@ public class NSP_OpportunityTriggerHelper {
     public static final Id ASSET_RECORDTYPE_ID = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(ASSET_RECORDTYPE).getRecordTypeId();
     public static boolean valueAssignedFromUser = false;
     public static boolean createRewardsOnce = false;
-
+    
     private static set<Id>  byPassValidationOnRole = null;
     
 /**
@@ -778,7 +779,7 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
   return false;
 }
 
-/***********************************************************************************************
+        /***********************************************************************************************
 * MethodName: validateClosedDate
 * Description : This method will throw error when Opportunity close date is less than today for all users except for the users
                 in NCS Public group
@@ -787,9 +788,9 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
 * ********************************************************************************************/ 
 public static void validateClosedDate(List<Opportunity> OpportunityList){
 
-    Id loggedInUserId = UserInfo.getUserId();   
+       Id loggedInUserId = UserInfo.getUserId();   
     set<Id> ncsGrpMemIdSet = new set<Id>();
-    List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
+      List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
     List<group> ncsGroup = [SELECT Id,Name FROM group WHERE group.Name IN: groupList];
     for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId IN: ncsGroup]){
         ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId); 
@@ -798,9 +799,9 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         for(Opportunity opp: OpportunityList){
             if(!ncsGrpMemIdSet.contains(loggedInUserId)){
                 if(validateByNonProfitAndRole(opp) == false){
-                    opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
-                }
-            } 
+              opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
+            }  
+        } 
         } 
     
 }
@@ -1107,15 +1108,19 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
          for(Opportunity newOpportunity: opportunityNewMap.Values())
         {
              Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-            
-            if(newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c >= 150)
+            //Modified for user story 192368
+            if((newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c >= 150) || 
+               (oldOpportunity.NSP_MidMarketNationalAccount__c == Null && newOpportunity.NSP_MidMarketNationalAccount__c != Null))
                 {
                     oppIdTrue.add(newOpportunity.Id);
                 }
-            else if(newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c < 150)
+            //Modified for user story 192368
+            else if((newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c < 150) || 
+                    (oldOpportunity.NSP_MidMarketNationalAccount__c != Null && newOpportunity.NSP_MidMarketNationalAccount__c == Null))
                 {
                     oppIdFalse.add(newOpportunity.Id);
                 }
+            
             
         }
         if(oppIdTrue.Size() > 0)

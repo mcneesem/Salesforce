@@ -10,6 +10,7 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 * Anil Kumar                 03/07/2022            First Iteration
 * Rahul Singh                22/12/2022            user story - 194265
+* Rahul Singh                02/02/2023            user story - 192368
 */
 
 public class NSP_EnrollmentFeePaymentTriggerClass {
@@ -129,7 +130,8 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
         
         if(Trigger.isInsert)
             {
-                 for (Opportunity enrollId :[SELECT ID FROM OPPORTUNITY WHERE ID IN :opportunityIds AND NSP_Number_of_Employees__c >= 150]){
+                //Modified for user story 192368
+                 for (Opportunity enrollId :[SELECT ID FROM OPPORTUNITY WHERE ID IN :opportunityIds AND (NSP_Number_of_Employees__c >= 150 OR NSP_MidMarketNationalAccount__c != Null)]){
                    {
                        oppIdEnrollment.add(enrollId.ID);
                       
