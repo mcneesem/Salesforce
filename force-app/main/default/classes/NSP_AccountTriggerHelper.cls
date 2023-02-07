@@ -91,7 +91,7 @@ List<Account> acctListToStampDocusignTemplateId = new List<Account>();
 User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
 //modified for user story 191911    
 List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
-  	if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
+    if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
                         getPermSet = [SELECT Id, 
                                       PermissionSetId, 
                                       PermissionSet.Name,
@@ -102,7 +102,7 @@ List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
   }
 //Added as part of 128176
 if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
-                    if(getPermSet != null || Test.isRunningTest()){
+                    if(!getPermSet.isEmpty() || Test.isRunningTest()){
                         restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                     }
                 }  
