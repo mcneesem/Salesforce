@@ -9,7 +9,7 @@ private class NSP_EnrollmentFeePaymentTriggerClassTest{
     //insert opportunity record
     Opportunity opportunity_Obj = new Opportunity(Name = 'Test Oppty',AccountId = account_Obj.id,stagename = NSP_SalesConstants.ANALYSIS_STAGE,CloseDate = date.today(),CurrencyIsoCode = 'USD',NSP_PrimaryProduct__c = 'WX',NSP_Number_of_Employees__c = 100,NSP_WS_Number_Of_Employees__c = 123,NSP_WO_Number_Of_Employees__c = 123,NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION,Type ='CAMS');
     Insert opportunity_Obj;
-    Opportunity opportunity_Obj1 = new Opportunity(Name = 'Test Oppty Midmarket',AccountId = account_Obj.id,stagename = NSP_SalesConstants.ANALYSIS_STAGE,CloseDate = date.today(),CurrencyIsoCode = 'USD',NSP_PrimaryProduct__c = 'WX',NSP_Number_of_Employees__c = 170,NSP_WS_Number_Of_Employees__c = 123,NSP_WO_Number_Of_Employees__c = 123,NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION,Type ='CAMS', NSP_Mid_Market_Sales_Email__c='testmidm@insperity.com');
+    Opportunity opportunity_Obj1 = new Opportunity(Name = 'Test Oppty Midmarket',AccountId = account_Obj.id,stagename = NSP_SalesConstants.ANALYSIS_STAGE,CloseDate = date.today(),CurrencyIsoCode = 'USD',NSP_PrimaryProduct__c = 'WX',NSP_Number_of_Employees__c = 170,NSP_WS_Number_Of_Employees__c = 123,NSP_WO_Number_Of_Employees__c = 123,NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION,Type ='CAMS', NSP_Mid_Market_Sales_Email__c='testmidm@insperity.com',NSP_MidMarketNationalAccount__c='MidMarket');
     Insert opportunity_Obj1;
     //insert enrollment fee payment  
       NSP_Enrollment_Fee_Payment__c nsp_enrollment_fee_payment_Obj = new NSP_Enrollment_Fee_Payment__c(NSP_Opportunity__c = opportunity_Obj.id, NSP_Payment_Amount__c = 100.00, NSP_Payment_Number__c = '1', NSP_Payment_Status__c = 'Paid');
@@ -62,6 +62,29 @@ private class NSP_EnrollmentFeePaymentTriggerClassTest{
         
         // Start Test
         Test.startTest();
+        
+        NSP_Enrollment_Fee_Payment__c enrollmentfee = new NSP_Enrollment_Fee_Payment__c();
+        enrollmentfee.NSP_Opportunity__c = oppId;
+        enrollmentfee.CurrencyIsoCode = 'USD';
+        insert enrollmentfee;
+        
+        Test.stopTest();
+    }
+    
+    /** 
+    * Test for after update trigger
+    * Method Name : testenrollmentfee
+    * created date : 2/2/23
+    * Created as part of user story 192368
+    */
+    @isTest
+    static void testEnrollmentFeeMidMarket() {
+        
+        
+        // Start Test
+        Test.startTest();
+        Opportunity oppObj = [Select Id,Name,NSP_Number_of_Employees__c from Opportunity WHERE NSP_MidMarketNationalAccount__c != NULL Limit 1];
+        ID oppId = oppObj.Id;
         
         NSP_Enrollment_Fee_Payment__c enrollmentfee = new NSP_Enrollment_Fee_Payment__c();
         enrollmentfee.NSP_Opportunity__c = oppId;

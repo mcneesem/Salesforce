@@ -20,26 +20,6 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>NSP_Share_Segment_Accounts_to_BPC_Role_Users</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>This Rule will Share Segment Accounts to BPC Role Users</description>
-        <label>Share Segment Accounts to BPC Role Users</label>
-        <sharedTo>
-            <role>Business_Performance_Consultant</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>NSP_Account_Segment__c</field>
-            <operation>equals</operation>
-            <value>MidMarket</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>NSP_Share_Segment_Accounts_to_BPC_Support_Group</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -58,6 +38,26 @@
             <value>MidMarket</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Share_Segment_Accounts_to_MM_Role_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Rule will Share Segment Accounts to MM Admin Role Users and subordinates</description>
+        <label>Share Segment Accounts to MM Role Users</label>
+        <sharedTo>
+            <roleAndSubordinates>MidMarket_Administrator</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_Account_Segment__c</field>
+            <operation>equals</operation>
+            <value>MidMarket</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Share_All_Accounts</fullName>

@@ -156,10 +156,13 @@ public class NSP_salesOfficeRecordSharing {
                 List<String> accountSalesOfficeList= acTeam.NSP_Account__r.Owner.NSP_Sales_Office_Membership__c.Split(';');
                 List<String> accountTeamUserSalesOfficeList = acTeam.NSP_User__r.NSP_Sales_Office_Membership__c.Split(';');
                 for(String acTeamSalesOffice:accountTeamUserSalesOfficeList){
-                    if(!accountSalesOfficeList.Contains(acTeamSalesOffice)){
+                 //Added null check as part of 195970
+                    if(!accountSalesOfficeList.isEmpty() && !accountSalesOfficeList.Contains(acTeamSalesOffice)){
                         // Share account Record With ATM BPA User if ATM BPA User Sales Office not equals to Account Owner Sales office 
-                        AccountShare accShare= createAccountSharing(acTeam.NSP_User__c,acTeam.NSP_Account__c);
-                        accountShareList.add(accShare);
+                        /* Commented out as part of 195970
+                            AccountShare accShare= createAccountSharing(acTeam.NSP_User__c,acTeam.NSP_Account__c);
+                            accountShareList.add(accShare);
+                        */
                         // creating a map of ATM user Sales Office and ATM Account Id 
                         if(mapSalesOfficeSetAccountId.get(acTeamSalesOffice)==null){
                             mapSalesOfficeSetAccountId.put(acTeamSalesOffice, new Set<String>());
@@ -250,8 +253,9 @@ public class NSP_salesOfficeRecordSharing {
             
             // deleting Sharing for Account Team Users after removal 
             for(AccountShare acShare :oldAccountTeamShareList){
-                if(mapAccountIdSetAcTeamOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) &&
-                   !mapAccountIdSetAccountOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) ){
+            // Added null checks as part of 195970
+                if(mapAccountIdSetAcTeamOwnerSalesOffice.get(acShare.AccountId)!=null && mapAccountIdSetAcTeamOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) &&
+                   mapAccountIdSetAccountOwnerSalesOffice.get(acShare.AccountId)!=null && !mapAccountIdSetAccountOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) ){
                        deleteOldAccountShareList.add(acShare);
                    }
             }

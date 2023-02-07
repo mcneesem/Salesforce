@@ -16,6 +16,8 @@ private static final string DA_ROLE = 'District Administrator';
 public static List<string> CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
 //Added as part of 128176
 public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
+// Added as part of 194459
+public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
     
 /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -91,7 +93,7 @@ List<Account> acctListToStampDocusignTemplateId = new List<Account>();
 User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
 //modified for user story 191911    
 List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
-  	if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
+    if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
                         getPermSet = [SELECT Id, 
                                       PermissionSetId, 
                                       PermissionSet.Name,
@@ -101,8 +103,9 @@ List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
                     
   }
 //Added as part of 128176
-if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
-                    if(getPermSet != null || Test.isRunningTest()){
+// Modified on 02/2023-part of 194459- Bypass for MM roles
+if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
+                    if(!getPermSet.isEmpty() || Test.isRunningTest()){
                         restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                     }
                 }  
