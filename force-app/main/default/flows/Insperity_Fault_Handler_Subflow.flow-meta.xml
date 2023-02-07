@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Send an email to the WYSIWYG shared mailbox (sfconfig@insperity.com) for triage</description>
+        <name>Send_Fault_Email</name>
+        <label>Send Fault Email</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>faultEmailBodyTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>sfconfig@insperity.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>faultEmailSubjectTemplate</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <description>A flow to handle fault paths from other flows, sends an email to sfconfig@insperity.com
+Updated email to remove Org for now</description>
+    <environments>Default</environments>
+    <interviewLabel>Insperity Fault Handler Subflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Insperity Fault Handler Subflow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Fault_Email</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>The body of the email message to be sent with fault info</description>
+        <name>faultEmailBodyTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;The following flow has hit a fault: {!triggeringFlow}&lt;/p&gt;&lt;p&gt;Running Username: {!$User.Username}&lt;/p&gt;&lt;p&gt;Error date/time: {!$Flow.CurrentDateTime}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The fault message is as follows: {!faultMessage}&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <description>A template for the email subject</description>
+        <name>faultEmailSubjectTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!triggeringFlow} + &quot; faulted in &quot; + {!faultedOrg}</text>
+    </textTemplates>
+    <variables>
+        <name>faultedOrg</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>faultMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>triggeringFlow</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
