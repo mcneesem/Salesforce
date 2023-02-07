@@ -7,11 +7,6 @@
         <label>Agency</label>
     </standardValue>
     <standardValue>
-        <fullName>Budget Approver</fullName>
-        <default>false</default>
-        <label>Budget Approver</label>
-    </standardValue>
-    <standardValue>
         <fullName>Business User</fullName>
         <default>false</default>
         <label>Business User</label>
@@ -57,29 +52,9 @@
         <label>Executive Sponsor</label>
     </standardValue>
     <standardValue>
-        <fullName>Gatekeeper</fullName>
-        <default>false</default>
-        <label>Gatekeeper</label>
-    </standardValue>
-    <standardValue>
         <fullName>Influencer</fullName>
         <default>false</default>
         <label>Influencer</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Loyalty</fullName>
-        <default>false</default>
-        <label>Loyalty</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Other</fullName>
-        <default>false</default>
-        <label>Other</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Referral</fullName>
-        <default>false</default>
-        <label>Referral</label>
     </standardValue>
     <standardValue>
         <fullName>Technical Buyer</fullName>
@@ -87,18 +62,8 @@
         <label>Technical Buyer</label>
     </standardValue>
     <standardValue>
-        <fullName>Key Decision Maker</fullName>
+        <fullName>Other</fullName>
         <default>false</default>
-        <label>Key Decision Maker</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Secondary Decision Maker</fullName>
-        <default>false</default>
-        <label>Secondary Decision Maker</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Supporting Role</fullName>
-        <default>false</default>
-        <label>Supporting Role</label>
+        <label>Other</label>
     </standardValue>
 </StandardValueSet>
