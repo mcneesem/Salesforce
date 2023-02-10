@@ -334,7 +334,7 @@ ISCHANGED( {!$Record.StageName} )
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>newDaysInAnalysis</name>
         <dataType>Number</dataType>
@@ -423,3 +423,4 @@ ISCHANGED( {!$Record.StageName} )
         </value>
     </variables>
 </Flow>
+ 

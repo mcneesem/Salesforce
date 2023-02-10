@@ -127,7 +127,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_AccountTeamMemberRole</shortDescription>
-        <value>BPA</value>
+        <value>Business Performance Advisor</value>
     </labels>
     <labels>
         <fullName>NSP_AccountTriggerError</fullName>
@@ -1428,5 +1428,12 @@
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
+    <labels>
+        <fullName>NSP_MidMarket_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MidMarket Roles</shortDescription>
+        <value>MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant</value>
     </labels>
 </CustomLabels>
