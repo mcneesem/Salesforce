@@ -1009,7 +1009,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaProducts</shortDescription>
-        <value>Organizational Planning,Time &amp; Attendance,WA,Retirement Services,Recruiting Services,Expense Management</value>
+        <value>Organizational Planning,Time &amp; Attendance,WA,Retirement Services,Recruiting Services,Expense Management,WX</value>
     </labels>
     <labels>
         <fullName>NSP_OwnerBasedCriteriaRoles</fullName>

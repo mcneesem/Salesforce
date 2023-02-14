@@ -140,6 +140,11 @@
                 <label>MMNA Sales</label>
             </value>
             <value>
+                <fullName>MMNA Sales Operations</fullName>
+                <default>false</default>
+                <label>MMNA Sales Operations</label>
+            </value>
+            <value>
                 <fullName>MMNA Solutions Specialist</fullName>
                 <default>false</default>
                 <label>MMNA Solutions Specialist</label>
@@ -148,6 +153,11 @@
                 <fullName>MM National Sales Director</fullName>
                 <default>false</default>
                 <label>MM National Sales Director</label>
+            </value>
+            <value>
+                <fullName>MM Sales Operations</fullName>
+                <default>false</default>
+                <label>MM Sales Operations</label>
             </value>
             <value>
                 <fullName>MM VP</fullName>
@@ -168,11 +178,6 @@
                 <fullName>Opportunity Owner</fullName>
                 <default>false</default>
                 <label>Opportunity Owner</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
             </value>
             <value>
                 <fullName>Payroll Specialist</fullName>
@@ -258,6 +263,11 @@
                 <fullName>Technology Solutions Sales Consultant</fullName>
                 <default>false</default>
                 <label>Technology Solutions Sales Consultant</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
     </valueSet>
