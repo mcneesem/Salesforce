@@ -163,10 +163,7 @@ public class NSP_AccountContactRelationTriggerHelper {
         
         if(oppAndAcc.Size() > 0)
         {   
-         for(OpportunityContactRole eachOCR : [SELECT Id, OpportunityId, ContactId, Role, IsPrimary, CreatedDate, CreatedById, 
-                                               LastModifiedDate, LastModifiedById, SystemModstamp, IsDeleted, CurrencyIsoCode, 
-                                               NSP_Nonprofit_Organization_Name__c, NSP_Nonprofit_Organization_Tax_Id__c, 
-                                               NSP_Referralbenefitsanonprofitorg__c, NSP_isReferral__c 
+         for(OpportunityContactRole eachOCR : [SELECT Id, OpportunityId, ContactId
                                                FROM OpportunityContactRole WHERE opportunityId in : oppAndAcc.keySet()])
             {
               
