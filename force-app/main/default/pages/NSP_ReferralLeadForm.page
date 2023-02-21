@@ -53,5 +53,38 @@
             </div>
             
         </body>
+      <script>
+        
+        /* US-199954 US-199957*/
+        window.addEventListener("submitPage", function(){
+
+            //  Query elements with errors
+            let errors = document.querySelectorAll(".slds-has-error");
+            
+            //  If there is at least one element with an error
+            if(errors.length > 0){
+
+                // Scroll to the first element with an error message
+                if(errors[0].scrollIntoView) errors[0].scrollIntoView();
+
+                //  Focus the input element
+               if(errors[0].focus) errors[0].focus();
+            }
+            else{
+
+                let btn = document.querySelector("button");
+                let msg = document.querySelector(".nsp-msg-wrapper");
+                                  
+                //  Disable submit button
+                btn.setAttribute("disabled", true);
+
+                //  Display message and lock UI
+                msg.removeAttribute("visible");
+             }            
+
+        });
+
+        </script> 
+
     </html>
 </apex:page>
