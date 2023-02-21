@@ -15,7 +15,7 @@ public class NSP_AccountContactRelationTriggerHelper {
      * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
      * @param newList List of New AccountContactRelation.
      * @param newMap List of New AccountContactRelation.
-     * @return void
+     * @return  void
      *                
      */
 
@@ -169,7 +169,7 @@ public class NSP_AccountContactRelationTriggerHelper {
               
                 if (eachOCR.ContactId == acrMap.get(oppAndAcc.get(eachOCR.OpportunityId)).ContactId )
                 {
-                  ocrMap.put(eachOCR.OpportunityId,eachOCR);   
+                  ocrMap.put(eachOCR.OpportunityId,eachOCR);
                  
                 }
 
