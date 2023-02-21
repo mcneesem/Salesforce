@@ -15,7 +15,7 @@ public class NSP_AccountContactRelationTriggerHelper {
      * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
      * @param newList List of New AccountContactRelation.
      * @param newMap List of New AccountContactRelation.
-     * @return  void
+     * @return void
      *                
      */
 
