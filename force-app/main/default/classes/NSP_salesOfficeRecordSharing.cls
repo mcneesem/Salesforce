@@ -18,11 +18,10 @@ public class NSP_salesOfficeRecordSharing {
         Map<String,Set<String>> mapSalesOfficeSetAccountId = new  Map<String,Set<String>>();
         List<AccountShare> accountShareList = new List<AccountShare>();
         try{
-            /*Map<Id,Account> accountMap = new Map<Id,Account>([SELECT Id,TOLabel(Owner.NSP_Sales_Office_Membership__c) FROM Account WHERE Id IN:newAccountMap.keySet() AND
-                                                              Owner.UserRole.Name =:NSP_SalesConstants.BPARole AND Owner.NSP_Sales_Office_Membership__c != null]);*/
+            Map<Id,Account> accountMap = new Map<Id,Account>([SELECT Id,TOLabel(Owner.NSP_Sales_Office_Membership__c) FROM Account WHERE Id IN:newAccountMap.keySet() AND
+                                                              Owner.UserRole.Name =:NSP_SalesConstants.BPARole AND Owner.NSP_Sales_Office_Membership__c != null]);
             
-            Map<Id,Account> accountMap = new Map<Id,Account>([SELECT Id,TOLabel(Owner.NSP_Sales_Office_Membership__c) FROM Account WHERE Id IN:newAccountMap.keySet() AND Owner.NSP_Sales_Office_Membership__c != null]);
-			for(Account acc: accountMap.Values()){
+            for(Account acc: accountMap.Values()){
                 List<String> userSalesOfficeList= acc.Owner.NSP_Sales_Office_Membership__c.split(';');
                 for(String userSalesOffice:userSalesOfficeList){
                     // creating map of Sales office and Set of Account Id
@@ -70,19 +69,15 @@ public class NSP_salesOfficeRecordSharing {
                     oldAccountOwnerIdSet.add(oldAccountMap.get(acc.Id).OwnerId);
                 }
             }
-            /*Map<Id,User> oldAccOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldAccountOwnerIdSet AND
-                                                            UserRole.Name =:NSP_SalesConstants.BPARole]);*/
-			Map<Id,User> oldAccOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldAccountOwnerIdSet]);
+            Map<Id,User> oldAccOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldAccountOwnerIdSet AND
+                                                            UserRole.Name =:NSP_SalesConstants.BPARole]);
             Map<Id,Account> newAccMap = new Map<Id,Account>([SELECT Id,Owner.UserRole.Name,TOLabel(Owner.NSP_Sales_Office_Membership__c),OwnerId FROM Account WHERE Id IN:newAccountMap.keySet()  ]);
             
             for(Account acc : newAccMap.values()){
                 Set<String> oldAccSalesOfficeList = new Set<String>();
                 Set<String> newAccSalesOfficeList = new Set<String>();
                 // Store new Acc Owner Sales Office in the List
-                /*if(newAccMap.get(acc.Id).Owner.NSP_Sales_Office_Membership__c!=null && newAccMap.get(acc.Id).Owner.UserRole.Name ==NSP_SalesConstants.BPARole ){
-                    newAccSalesOfficeList.addAll(new List<String>(newAccMap.get(acc.Id).Owner.NSP_Sales_Office_Membership__c.Split(';')));
-                }*/
-				if(newAccMap.get(acc.Id).Owner.NSP_Sales_Office_Membership__c!=null){
+                if(newAccMap.get(acc.Id).Owner.NSP_Sales_Office_Membership__c!=null && newAccMap.get(acc.Id).Owner.UserRole.Name ==NSP_SalesConstants.BPARole ){
                     newAccSalesOfficeList.addAll(new List<String>(newAccMap.get(acc.Id).Owner.NSP_Sales_Office_Membership__c.Split(';')));
                 }
                 // Store old Acc Owner Sales Office in the List
@@ -157,16 +152,17 @@ public class NSP_salesOfficeRecordSharing {
         try{   
             Map<Id,NSP_Account_Team__c> accountTeamMap = new Map<Id,NSP_Account_Team__c>([SELECT Id,NSP_Role__c,NSP_Account__c,NSP_User__c,TOLabel(NSP_Account__r.Owner.NSP_Sales_Office_Membership__c),TOLabel(NSP_User__r.NSP_Sales_Office_Membership__c) FROM NSP_Account_Team__c 
                                                                                           WHERE Id IN:newAccountTeamMap.keySet() AND NSP_User__r.NSP_Sales_Office_Membership__c != null AND NSP_Role__c =:Label.NSP_AccountTeamMemberRole]);
-			/*Map<Id,NSP_Account_Team__c> accountTeamMap = new Map<Id,NSP_Account_Team__c>([SELECT Id,NSP_Role__c,NSP_Account__c,NSP_User__c,TOLabel(NSP_Account__r.Owner.NSP_Sales_Office_Membership__c),TOLabel(NSP_User__r.NSP_Sales_Office_Membership__c) FROM NSP_Account_Team__c 
-                                                                                          WHERE Id IN:newAccountTeamMap.keySet() AND NSP_User__r.NSP_Sales_Office_Membership__c != null ]);*/																		  
             for(NSP_Account_Team__c acTeam:accountTeamMap.values()){
                 List<String> accountSalesOfficeList= acTeam.NSP_Account__r.Owner.NSP_Sales_Office_Membership__c.Split(';');
                 List<String> accountTeamUserSalesOfficeList = acTeam.NSP_User__r.NSP_Sales_Office_Membership__c.Split(';');
                 for(String acTeamSalesOffice:accountTeamUserSalesOfficeList){
-                    if(!accountSalesOfficeList.Contains(acTeamSalesOffice)){
+                 //Added null check as part of 195970
+                    if(!accountSalesOfficeList.isEmpty() && !accountSalesOfficeList.Contains(acTeamSalesOffice)){
                         // Share account Record With ATM BPA User if ATM BPA User Sales Office not equals to Account Owner Sales office 
-                        AccountShare accShare= createAccountSharing(acTeam.NSP_User__c,acTeam.NSP_Account__c);
-                        accountShareList.add(accShare);
+                        /* Commented out as part of 195970
+                            AccountShare accShare= createAccountSharing(acTeam.NSP_User__c,acTeam.NSP_Account__c);
+                            accountShareList.add(accShare);
+                        */
                         // creating a map of ATM user Sales Office and ATM Account Id 
                         if(mapSalesOfficeSetAccountId.get(acTeamSalesOffice)==null){
                             mapSalesOfficeSetAccountId.put(acTeamSalesOffice, new Set<String>());
@@ -232,7 +228,7 @@ public class NSP_salesOfficeRecordSharing {
             }
             
             for(NSP_Account_Team__c acTeam:oldAccountTeamList){
-                //if(acTeam.NSP_Role__c ==Label.NSP_AccountTeamMemberRole ){
+                if(acTeam.NSP_Role__c ==Label.NSP_AccountTeamMemberRole ){
                     // creating a map of Account Id and Set of Account Owner Sales Office
                     if(accountTeamAccountMap.containsKey(acTeam.NSP_Account__c) && accountTeamAccountMap.get(acTeam.NSP_Account__c).Owner.NSP_Sales_Office_Membership__c != null ){
                         if(mapAccountIdSetAccountOwnerSalesOffice.get(acTeam.NSP_Account__c)==null){
@@ -249,7 +245,7 @@ public class NSP_salesOfficeRecordSharing {
                         }
                         mapAccountIdSetAcTeamOwnerSalesOffice.get(acTeam.NSP_Account__c).addAll(new List<String>(accountTeamOwnerMap.get(acTeam.NSP_User__c).NSP_Sales_Office_Membership__c.Split(';')));
                     } 
-                //}
+                }
             }
             // fetching old Sales Office Account Share of ATM Users 
             List<AccountShare> oldAccountTeamShareList = [Select Id , AccountId , UserorGroupId, UserOrGroup.Name from AccountShare WHERE 
@@ -257,8 +253,9 @@ public class NSP_salesOfficeRecordSharing {
             
             // deleting Sharing for Account Team Users after removal 
             for(AccountShare acShare :oldAccountTeamShareList){
-                if(mapAccountIdSetAcTeamOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) &&
-                   !mapAccountIdSetAccountOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) ){
+            // Added null checks as part of 195970
+                if(mapAccountIdSetAcTeamOwnerSalesOffice.get(acShare.AccountId)!=null && mapAccountIdSetAcTeamOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) &&
+                   mapAccountIdSetAccountOwnerSalesOffice.get(acShare.AccountId)!=null && !mapAccountIdSetAccountOwnerSalesOffice.get(acShare.AccountId).Contains(acShare.UserOrGroup.Name) ){
                        deleteOldAccountShareList.add(acShare);
                    }
             }
@@ -301,10 +298,9 @@ public class NSP_salesOfficeRecordSharing {
                     mapOwnerIdSetLeadId.get(lead.OwnerId).add(lead.Id);  
                 }
             }
-           /* Map<Id,User> leadOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapOwnerIdSetLeadId.KeySet() AND
-                                                          UserRole.Name =:NSP_SalesConstants.BPARole AND NSP_Sales_Office_Membership__c != null ]);*/
-            Map<Id,User> leadOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapOwnerIdSetLeadId.KeySet() AND NSP_Sales_Office_Membership__c != null ]);
-			for(User user:leadOwnerMap.Values() ){
+            Map<Id,User> leadOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapOwnerIdSetLeadId.KeySet() AND
+                                                          UserRole.Name =:NSP_SalesConstants.BPARole AND NSP_Sales_Office_Membership__c != null ]);
+            for(User user:leadOwnerMap.Values() ){
                 if(mapOwnerIdSetLeadId.get(user.Id)!=null &&  mapOwnerIdSetLeadId.containsKey(user.Id) 
                    && mapOwnerIdSetLeadId.containsKey(user.Id)==leadOwnerMap.containsKey(user.Id)){
                        List<String> userSalesOfficeList= user.NSP_Sales_Office_Membership__c.split(';');
@@ -366,15 +362,10 @@ public class NSP_salesOfficeRecordSharing {
                     }
                 }      
             }
-            /*Map<Id,User> leadNewOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() AND
-                                                             UserRole.Name =:NSP_SalesConstants.BPARole ]);*/
-			Map<Id,User> leadNewOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() AND
-                                                             UserRole.Name =:NSP_SalesConstants.BPARole ]);												 
-            /*Map<Id,User> leadOldOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
-                                                             AND NSP_Sales_Office_Membership__c != null AND UserRole.Name =:NSP_SalesConstants.BPARole ]);*/
-			
-			Map<Id,User> leadOldOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
-                                                             AND NSP_Sales_Office_Membership__c != null ]);
+            Map<Id,User> leadNewOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() AND
+                                                             UserRole.Name =:NSP_SalesConstants.BPARole ]);
+            Map<Id,User> leadOldOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
+                                                             AND NSP_Sales_Office_Membership__c != null AND UserRole.Name =:NSP_SalesConstants.BPARole ]);
             for(Lead lead :newLeadMap.values()){
                 Set<String> oldLeadSalesOfficeList = new Set<String>();
                 Set<String> newLeadSalesOfficeList = new Set<String>();
@@ -462,19 +453,15 @@ public class NSP_salesOfficeRecordSharing {
                     oldOpportunityIdSet.add(oldOpportunityMap.get(opp.Id).OwnerId);
                 }
             }
-            /*Map<Id,User> OldOppOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldOpportunityIdSet AND
-                                                            UserRole.Name in:BusinessPerformanceRoles]);*/
-			Map<Id,User> OldOppOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldOpportunityIdSet]);												
+            Map<Id,User> OldOppOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,TOLabel(NSP_Sales_Office_Membership__c) FROM USER WHERE Id IN:oldOpportunityIdSet AND
+                                                            UserRole.Name in:BusinessPerformanceRoles]);
             Map<Id,Opportunity> newOppMap = new Map<Id,Opportunity>([SELECT Id,Owner.UserRole.Name,TOLabel(Owner.NSP_Sales_Office_Membership__c),OwnerId FROM Opportunity WHERE Id IN:newOpportunityMap.keySet()  ]);
             
             for(Opportunity opp : newOppMap.values()){
                 Set<String> oldOppSalesOfficeList = new Set<String>();
                 Set<String> newOppSalesOfficeList = new Set<String>();
                 // Store new Opp Owner Sales Office in the List
-                /*if(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c!=null && BusinessPerformanceRoles.contains(newOppMap.get(opp.Id).Owner.UserRole.Name)){
-                    newOppSalesOfficeList.addAll(new List<String>(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c.Split(';')));
-                }*/
-				if(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c!=null){
+                if(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c!=null && BusinessPerformanceRoles.contains(newOppMap.get(opp.Id).Owner.UserRole.Name)){
                     newOppSalesOfficeList.addAll(new List<String>(newOppMap.get(opp.Id).Owner.NSP_Sales_Office_Membership__c.Split(';')));
                 }
                 // Store old Opp Owner Sales Office in the List 
@@ -530,7 +517,7 @@ public class NSP_salesOfficeRecordSharing {
             }
             // Inserting new  Opportunity Shares Records
             if(!newOpportunityShareList.isEmpty()){
-                Database.insert3(newOpportunityShareList,false);   
+                Database.insert(newOpportunityShareList,false);   
             }
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_salesOfficerecordSharing', 'shareOpportunityonUpdate', ex.getMessage());
@@ -547,9 +534,8 @@ public class NSP_salesOfficeRecordSharing {
         List<OpportunityShare> opportunityShareList = new List<OpportunityShare>();
         List<OpportunityShare> channelOperationsGroupShareList = new List<OpportunityShare>();
         try{
-            /*Map<Id,Opportunity> opportunityMap = new Map<Id,Opportunity>([SELECT Id,ToLabel(Owner.NSP_Sales_Office_Membership__c) FROM Opportunity WHERE Id IN:newopportunityMap.keySet() AND
-                                                                          Owner.UserRole.Name in:BusinessPerformanceRoles AND (StageName !=: NSP_SalesConstants.CLOSED_WON OR StageName !=: NSP_SalesConstants.CLOSED_LOST)]);*/
-			Map<Id,Opportunity> opportunityMap = new Map<Id,Opportunity>([SELECT Id,ToLabel(Owner.NSP_Sales_Office_Membership__c) FROM Opportunity WHERE Id IN:newopportunityMap.keySet() AND (StageName !=: NSP_SalesConstants.CLOSED_WON OR StageName !=: NSP_SalesConstants.CLOSED_LOST)]);															  
+            Map<Id,Opportunity> opportunityMap = new Map<Id,Opportunity>([SELECT Id,ToLabel(Owner.NSP_Sales_Office_Membership__c) FROM Opportunity WHERE Id IN:newopportunityMap.keySet() AND
+                                                                          Owner.UserRole.Name in:BusinessPerformanceRoles AND (StageName !=: NSP_SalesConstants.CLOSED_WON OR StageName !=: NSP_SalesConstants.CLOSED_LOST)]);
             
             // Share Opportunities with Channel Operation Role Users and NCS , Data Science Public Groups 
             Set<Id> channelOperationsGroupShareIdSet = rolesPublicGroupShare();
