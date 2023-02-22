@@ -1,7 +1,6 @@
 <apex:page title="Lead Form"  showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
     <apex:includeLightning />     
     <style>
-        
         .slds-scope {
         max-width: 1200px;
         margin: 0 auto;
@@ -11,64 +10,13 @@
         font-family:'BrandoSans-TextFL';
         src:url(/resource/NSP_Form_CSS);
         }
-        
-        /*US-199954*/
-        *{
-            scroll-behavior: smooth;
-        }
-
-        body{
-            position:relative;
-
-        }
-
-        .nsp-msg-wrapper{
-            background-color:rgba(255,255,255,.8);
-            width:100%;
-            height:100%;
-            position:absolute;
-            z-index:1000;
-            top:0;
-            left:0;
-        }
-
-        .nsp-msg-wrapper[visible=false]{
-            display:none;
-        }
-
-        .nsp-msg{
-            padding:20px;
-            background-color:#0072ce;
-            left:0;
-            right:0;
-            margin:0 auto;
-            position: sticky;
-            top:45%;
-            width:40%;
-            left:25%;
-            width:fit-content;
-            display: flex;
-           align-items: center;
-        }
-
-        .nsp-msg svg{
-            width:100px;
-            height:100px;
-            display:inline-block;
-        }
-
-        .nsp-msg h3{
-            color:#fff;
-            display:inline-block;
-        }
-
-
     </style>
-       
+    
+    
     <html  lang="en">
         
         <apex:slds />
-        <body style = "font-family: BrandoSans-TextFL, sans-serif; font-weight: normal; margin: 0;" >
+        <body style = "font-family: BrandoSans-TextFL, sans-serif; font-weight: normal; margin: 0;">
             <!-- REQUIRED SLDS WRAPPER -->
             <apex:image value="{!URLFOR($Resource.NSP_InsperityLogo)}" style="height: 55px; width: 12rem; display: block; padding-top: 0.72rem; padding-bottom: 0.72rem; margin: 0 auto;"/>
             <div class="slds-scope" style="overflow-x: hidden;">
@@ -88,8 +36,6 @@
                                 "myDivId",
                                 function(cmp) {
                                 });
-
-                                  
                         });
                         </script>
                     </ul>
@@ -105,15 +51,7 @@
                 <!-- / FOOTER -->
                 
             </div>
-
-            <!-- US-199954 : NSP Messge -->
-            <div class="nsp-msg-wrapper" visible="false">
-                <div class="nsp-msg">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><style></style><g id="BLUE_CIRCLE"><circle cx="75" cy="75" r="59.4" fill="#63cae7"/><g fill="none" stroke="#004c23" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2.205"><path d="M53.5 102.4c-15.2-11.9-17.8-33.9-5.8-49.1s33.9-17.8 49.1-5.8l1.4 1.1"/><path d="M95.6 40.2l2.7 8.5-8.9-.6"/></g><path fill="none" stroke="#004c23" stroke-dasharray="0,10.7892" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4.316" d="M104.3 56c3.3 5.4 5.2 11.7 5.2 18.5 0 19.4-15.7 35.1-35.1 35.1-5.6 0-10.9-1.3-15.6-3.7"/><path fill="none" stroke="#004c23" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2.205" d="M65 80.1l6.4 9.1 15.9-27.9"/><circle cx="75" cy="75" r="59.4" fill="#63cae7"/><g><g fill="#171a60"><path d="M53.5 103.5c-.2 0-.5-.1-.7-.2-15.6-12.3-18.3-35-6-50.6 12.3-15.6 35-18.3 50.6-6l1.4 1.1c.5.4.6 1.1.2 1.5-.4.5-1.1.6-1.5.2l-1.4-1.1c-14.7-11.6-36-9-47.5 5.6-11.6 14.7-9 36 5.6 47.5.5.4.6 1.1.2 1.5-.2.3-.6.5-.9.5z"/><path d="M98.3 49.8s-.1 0 0 0l-9-.7c-.6 0-1.1-.6-1-1.2 0-.6.6-1.1 1.2-1l7.3.6-2.2-6.9c-.2-.6.1-1.2.7-1.4.6-.2 1.2.1 1.4.7l2.7 8.5c.1.3 0 .7-.2 1-.2.3-.6.4-.9.4z"/></g><path fill="#171a60" d="M73.4 111.7c-1.2 0-2.1-1-2.1-2.2 0-1.2 1-2.1 2.2-2.1 1.2 0 2.1 1 2.1 2.2 0 1.2-1 2.1-2.2 2.1.1 0 0 0 0 0zm8.7-2.9c-.3-1.1.3-2.3 1.5-2.7 1.1-.3 2.3.3 2.7 1.5.3 1.1-.3 2.3-1.5 2.7-.2.1-.4.1-.6.1-1 0-1.9-.7-2.1-1.6zm-19.9.8c-1.1-.4-1.7-1.6-1.3-2.8.4-1.1 1.6-1.7 2.8-1.3 1.1.4 1.7 1.6 1.3 2.8-.3.9-1.1 1.4-2 1.4-.3.1-.6 0-.8-.1zm29.9-4.7c-.7-1-.4-2.3.6-3 1-.7 2.3-.4 3 .6.7 1 .4 2.3-.6 3-.4.2-.8.4-1.2.4-.7-.1-1.4-.4-1.8-1zm8.4-6.8c-.9-.8-1.1-2.1-.3-3 .7-.9 2.1-1.1 3-.3.9.7 1.1 2.1.3 3-.4.5-1.1.8-1.7.8-.5 0-.9-.2-1.3-.5zm5.9-9c-1.1-.4-1.7-1.7-1.2-2.8.4-1.1 1.7-1.7 2.8-1.2 1.1.4 1.7 1.7 1.2 2.8-.3.8-1.1 1.4-2 1.4-.3 0-.5-.1-.8-.2zm2.9-10.3c-1.2-.1-2.1-1.1-2-2.3.1-1.2 1.1-2.1 2.3-2 1.2.1 2.1 1.1 2 2.3-.1 1.2-1 2-2.1 2h-.2zm-2.9-12.3c-.3-1.2.4-2.3 1.6-2.6 1.2-.3 2.3.4 2.6 1.6.3 1.1-.4 2.3-1.6 2.6-.2 0-.4.1-.5.1-1-.1-1.9-.8-2.1-1.7zm-3.9-9.3c-.6-1-.3-2.3.7-3 1-.6 2.3-.3 3 .7.6 1 .3 2.3-.7 3-.4.2-.8.3-1.1.3-.8 0-1.5-.4-1.9-1z"/><g><path fill="#171a60" d="M71.4 90.3c-.4 0-.7-.2-.9-.5l-6.4-9.1c-.3-.5-.2-1.2.3-1.5.5-.3 1.2-.2 1.5.3l5.4 7.7 15.1-26.4c.3-.5 1-.7 1.5-.4.5.3.7 1 .4 1.5L72.4 89.8c-.2.3-.6.5-1 .5z"/></g></g></g></svg>
-                    <h3>Submission in progress, please do not close the browser.</h3>
-                </div>
-            </div>
-
+            
         </body>
       <script>
         
