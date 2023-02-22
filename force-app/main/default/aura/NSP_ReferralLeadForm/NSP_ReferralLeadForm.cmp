@@ -90,6 +90,7 @@
                 <div>
                     <lightning:select name="State" label="State"
                                       class=""  value= "{!v.LeadObj.State}">
+                                      <!-- 199944 -->
                                       <option value="">---None---</option>    
                         <aura:iteration items="{!v.state}" var="itr">
                             <option value="{!itr}">{!itr}</option>
@@ -98,13 +99,15 @@
                 </div>
             </lightning:layoutItem>
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="horizontal-medium" >       
-                <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zipcode" /> 
+                <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zip Code" /> 
             </lightning:layoutItem>
 
 
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="horizontal-medium" >       
                 <div>
                     <lightning:select name="Industry" label="Industry" class=""  value= "{!v.LeadObj.Industry}">
+                        <!--199945-->
+                        <option value="">---None---</option>
                         <aura:iteration items="{!v.industry}" var="itr">
                             <option value="{!itr}">{!itr}</option>
                         </aura:iteration>
