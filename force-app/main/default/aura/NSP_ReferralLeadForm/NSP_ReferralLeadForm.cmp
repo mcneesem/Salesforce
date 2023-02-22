@@ -99,7 +99,7 @@
                 </div>
             </lightning:layoutItem>
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="horizontal-medium" >       
-                <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zipcode" /> 
+                <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zip Code" /> 
             </lightning:layoutItem>
 
 

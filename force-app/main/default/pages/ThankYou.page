@@ -14,7 +14,7 @@
         <body>
             <div class="jumbotron text-center">
                 <h1 align="center">Thank You!</h1>
-                <h6 align="center">Record has been created Successfully!</h6>
+                <h6 align="center">Record has been created successfully!</h6>
                 <hr/>
             </div>
         </body>
