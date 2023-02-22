@@ -28,7 +28,6 @@
        }  else  {
            isNotPcValid = false;
        }
-
        /* Added as part of DF-01739 Ends*/
        if (allValid && !isNotPcValid) {
            helper.saveLead(component, event);
@@ -38,8 +37,6 @@
            // US-199954
            window.dispatchEvent(new Event("error"));
        }	  
-
-       window.dispatchEvent(new Event("submitPage"));
    },
     closeModel: function(component, event, helper) {
        // Set isModalOpen attribute to false  
