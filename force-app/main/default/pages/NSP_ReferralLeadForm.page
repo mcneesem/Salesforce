@@ -56,7 +56,21 @@
       <script>
         
         /* US-199954 US-199957*/
-        window.addEventListener("submitPage", function(){
+        window.addEventListener("submit", function(){
+
+            let btn = document.querySelector("button");
+            let msg = document.querySelector(".nsp-msg-wrapper");
+                                  
+            //  Disable submit button
+            btn.setAttribute("disabled", true);
+
+            //  Display message and lock UI
+            msg.removeAttribute("visible");
+
+        });
+
+        /* US-199954 US-199957*/
+        window.addEventListener("error", function(){
 
             //  Query elements with errors
             let errors = document.querySelectorAll(".slds-has-error");
@@ -70,17 +84,6 @@
                 //  Focus the input element
                if(errors[0].focus) errors[0].focus();
             }
-            else{
-
-                let btn = document.querySelector("button");
-                let msg = document.querySelector(".nsp-msg-wrapper");
-                                  
-                //  Disable submit button
-                btn.setAttribute("disabled", true);
-
-                //  Display message and lock UI
-                msg.removeAttribute("visible");
-             }            
 
         });
 
