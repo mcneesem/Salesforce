@@ -198,17 +198,14 @@ public class NSP_AccountTriggerHelperTest {
             new Account(name='MergeTest Inc.'),
             new Account(name='MergeTest')
         };
-            
+        
+        // Start test
         Test.startTest();                                 
-        try {
-        	insert dupeaccounts;
-        	Account masterAcct = [SELECT Id, Name FROM Account WHERE Name = 'MergeTest Inc.' LIMIT 1];
-        	Account mergeAcct = [SELECT Id, Name FROM Account WHERE Name = 'MergeTest' LIMIT 1];
-        	merge masterAcct mergeAcct;
-        } catch (DmlException e) {
-        	System.debug('An unexpected error has occurred: ' + e.getMessage()); 
-        }
-
+        insert dupeaccounts;
+        Account masterAcct = [SELECT Id, Name FROM Account WHERE Name = 'MergeTest Inc.' LIMIT 1];
+        Account mergeAcct = [SELECT Id, Name FROM Account WHERE Name = 'MergeTest' LIMIT 1];
+        merge masterAcct mergeAcct;
+        
         // Verify that the merge record got deleted
         Account[] result = [SELECT Id, Name FROM Account WHERE Id=:mergeAcct.Id];
         System.assertEquals(0, result.size());
@@ -216,7 +213,6 @@ public class NSP_AccountTriggerHelperTest {
         // Verify that MasterRecordId got updated on deleted record
         mergeAcct = [SELECT Id, MasterRecordId, Name, IsDeleted FROM Account WHERE Name = 'MergeTest' and IsDeleted = true LIMIT 1 ALL ROWS];
         System.assertEquals(mergeAcct.MasterRecordId, masterAcct.Id);
-
         Test.stopTest();
     }
 
