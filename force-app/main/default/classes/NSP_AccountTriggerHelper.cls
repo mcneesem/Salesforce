@@ -299,7 +299,7 @@ public void setAccountStageWhenOwnerChanged (List<Account> accountList){
 * @return void
 *
 */
-public void publishEventBus(List<Integration_Account_Event__e> eventList, List<Account> objectList) {
+public void publishEventBus(List<SObject> eventList, List<Account> objectList) {
     List<Account> updateResyncFlagAccountList = new List<Account>();
     if(!eventList.isEmpty()) {
         // Publishing records Event

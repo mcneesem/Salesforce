@@ -199,7 +199,7 @@ public class NSP_AccountTriggerHelperTest {
             new Account(name='MergeTest')
         };
         
-        // Start test
+        // Start Test
         Test.startTest();                                 
         insert dupeaccounts;
         Account masterAcct = [SELECT Id, Name FROM Account WHERE Name = 'MergeTest Inc.' LIMIT 1];
