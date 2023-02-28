@@ -69,6 +69,10 @@
         if(event.data === component.get("v.unlock")){
             component.set('v.isDisable', false); 
         }
+        else if(event.data == "Lock"){
+            component.set('v.isDisable', true); 
+        } 
+
     }, false);
 } 
 })

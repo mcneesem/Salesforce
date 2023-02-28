@@ -19,10 +19,16 @@ Author : Nischay Jindal
                 var verifyCallback = function(response){
                 parent.postMessage("Unlock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
                     }
+
+               var expCallback = function(response){
+                parent.postMessage("Lock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
+                    }
+
             var onloadCallback = function() {
                 grecaptcha.render('html_element', {
                     'sitekey' : "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteKey__c}", 
                     'callback' : verifyCallback,
+                    'expired-callback': expCallback
                 });
             };
             </script>
