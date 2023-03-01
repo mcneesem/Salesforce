@@ -15,22 +15,26 @@ Author : Nischay Jindal
   		background-color: powderblue !important; 
       }
        </style>
+
            <script type='text/javascript'> 
+                /* Bug 203930 */
                 var verifyCallback = function(response){
-                parent.postMessage("Unlock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
+                       parent.postMessage("Unlock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
                     }
 
                var expCallback = function(response){
-                parent.postMessage("Lock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
-                    }
+                    parent.postMessage("Lock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
+                }
 
-            var onloadCallback = function() {
+                var onloadCallback = function() {
                 grecaptcha.render('html_element', {
                     'sitekey' : "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteKey__c}", 
                     'callback' : verifyCallback,
                     'expired-callback': expCallback
                 });
+
             };
+
             </script>
         </head>
         <body>

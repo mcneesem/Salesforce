@@ -80,6 +80,7 @@
                                 "myDivId",
                                 function(cmp) {
                                 });
+                                init();
                         });
                         </script>
                     </ul>
@@ -106,7 +107,34 @@
 
         </body>
       <script>
-        
+         
+        /* Bug 203931*/
+        function init(){
+
+            //  At this point querySelector can't retrieve any "input" element,
+            //  the input tag is wrapped inside of a lightning-input
+            //  instead we use the attribute "data-data-rendering-service-uid"
+              
+            let zipcode = document.querySelector("*[data-data-rendering-service-uid=\"44\"]");
+            if(zipcode){
+                
+                //  Adding keyboard inpput validation allowing only digits
+                zipcode.onkeydown =  function(e){
+                    return /^\d*$/.test(e.key) || e.key == "ArrowLeft" || e.key == "ArrowRight"
+                    || e.key == "Backspace" || (e.ctrlKey && e.key == "v");
+                };
+
+                zipcode.onpaste = function(e){
+                    let text = (e.clipboardData || window.clipboardData).getData("text");
+                    //  If the text to be pasted doesn't containt digits then reject it
+                    if(!/^\d*$/.test(text)) {
+                        e.preventDefault();
+                    } 
+                };
+
+            }
+        }
+
         /* US-199954 US-199957*/
         window.addEventListener("submit", function(){
 
