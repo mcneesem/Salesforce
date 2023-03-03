@@ -163,7 +163,7 @@
            <!-- Uncommenting as part of service request - 563746 -->
            <lightning:layoutItem flexibility="auto" size="8" smallDeviceSize="8" mediumDeviceSize="8" largeDeviceSize="8" padding="horizontal-medium" >       
                 <div  class="slds-scrollable_none">
-                    <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="yes" frameborder="0" width="60%" allowtransparency="true"></iframe>
+                    <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="auto" title="NSP_GoogleReCaptcha" frameborder="0" height="100%" width="60%" allowtransparency="true"></iframe>
                 </div>
             </lightning:layoutItem>
         </lightning:layout>

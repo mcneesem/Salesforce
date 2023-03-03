@@ -17,6 +17,7 @@ Author : Nischay Jindal
        </style>
 
            <script type='text/javascript'> 
+                
                 /* Bug 203930 */
                 var verifyCallback = function(response){
                        parent.postMessage("Unlock", "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteUrl__c}");
@@ -27,25 +28,83 @@ Author : Nischay Jindal
                 }
 
                 var onloadCallback = function() {
-                grecaptcha.render('html_element', {
-                    'sitekey' : "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteKey__c}", 
-                    'callback' : verifyCallback,
-                    'expired-callback': expCallback
-                });
+                    setTimeout(function(){
+                        grecaptcha.render('html_element', {
+                        'sitekey' : "{!$Setup.NSP_GoogleRecaptchaSettings__c.NSP_SiteKey__c}", 
+                        'callback' : verifyCallback,
+                        'expired-callback': expCallback
+                    });
+                    },1000);
+                };
 
-            };
+            /* When recaptcha displays the challenge images the iframe container displays a scrollbar.
+               We added this code to prevent scrolling and resize the height of the iframe to fit recaptcha.
+            */    
+            function watchBody(){
+                try{
+                    //  Watch body if any node is added
+                    const config = {attributes:false, childList:true };
+                    const observer = new MutationObserver(function (mutations){
+                        for(let mutation of mutations){
+
+                            mutation.addedNodes.forEach(node => {
+
+                                //  Search the recaptcha window, usually is a div tag, hidden and transparent (opacity=0)
+                                if(node.nodeName.toUpperCase() == "DIV" && node.style.visibility == "hidden" && node.style.opacity == "0"){
+                                    watchRecaptcha(node);
+                                }
+                            });
+                            
+                        }
+                    });
+                    observer.observe(document.body, config);
+                }
+                catch(e){
+                    console.log("watchBody error", e);
+                }
+            }
+
+            function watchRecaptcha(challenge){
+                
+                let iframe = parent.document.querySelector("iframe[title=\"NSP_GoogleReCaptcha\"]");
+
+                const mutationCallback = function (mutations){
+                            
+                    let isHeightSet = false
+                    for(let mutation of mutations){
+
+                        //  Set height only one time
+                        if(!isHeightSet){
+
+                            //  Watch if the captcha window is visible, then resize the iframe to fit the images
+
+                            iframe.setAttribute("scrolling", "no");
+                            iframe.height = mutation.target.style.visibility == "visible" ? 520 : 150;
+                            
+                            if(iframe.height == 520){
+                                //  scroll page to bottom
+                                if(iframe.scrollIntoView) iframe.scrollIntoView();
+                            }
+                            isHeightSet = true;
+                         }
+                     }
+                };
+                const config = {attributes:true, attributeFilter: ["style"], attributeOldValue: false};
+                const observer = new window.MutationObserver(mutationCallback);
+                observer.observe(challenge, config);
+            }
 
             </script>
         </head>
-        <body>
+        <body onload="watchBody()">
+            
             <form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
                 <div id="html_element">
                 </div>
                 <br/>
                 <input type="submit" value="Submit" style="display:none"/>
             </form>
-              <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async="" defer="" > </script>
-           
+              <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async="true" defer="true" > </script>
         </body>
     </html>
 </apex:page>
