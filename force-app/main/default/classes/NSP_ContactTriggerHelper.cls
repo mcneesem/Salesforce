@@ -6,7 +6,7 @@
 */
 
 public class NSP_ContactTriggerHelper {
-    
+    private static final string NSP_ContactTriggerHelper = 'NSP_ContactTriggerHelper';
     
     /**
 * Iterates throught the list of new Contact and passes the required attributes to other methods.
@@ -36,30 +36,28 @@ public class NSP_ContactTriggerHelper {
 *                
 */
 
-public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > newMap) {
-    Set < Id > accountIdSet = new Set < Id > ();
-    List < Contact > clientRefernceContactList = new List < Contact > ();
-    for (Contact conObj: newList) {
-        if (conObj.NSP_Client_Reference__c) {
-            clientRefernceContactList.add(conObj);
+    public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > newMap) {
+        Set < Id > accountIdSet = new Set < Id > ();
+        List < Contact > clientRefernceContactList = new List < Contact > ();
+        for (Contact conObj: newList) {
+            if (conObj.NSP_Client_Reference__c) {
+                clientRefernceContactList.add(conObj);
+            }
+        }
+        if (clientRefernceContactList.size() > 0) {
+            createTaskforClientReference(clientRefernceContactList);
         }
     }
-    if (clientRefernceContactList.size() > 0) {
-        createTaskforClientReference(clientRefernceContactList);
-    }
-}
-    
-    
-    /**
+
+/**
 * Iterates throught the list of new Contact and passes the required attributes to other methods.
 * @param newList List of New Contact.
 * @param newMap List of New Contact.
 * @return void
-*                
+* 
 */
-    
+
     public void beforeUpdateDirector(Map<Id,Contact> newMap,Map<Id,Contact> oldMap) {
-        
         for(Contact conObj : newMap.values()){
             if(conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c 
                && conObj.NSP_Client_Reference__c){
@@ -69,23 +67,23 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
         //Format Phone Number
          updatePhoneNum(newMap.Values(),oldMap);
         //for integration
-        Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
+        Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
         NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-        accountIdSetToUpdateResyncFLag = sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_CONTACT, newMap, oldMap);
+        accountIdSetToUpdateResyncFlag = sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_CONTACT, newMap, oldMap);
         
-        if(accountIdSetToUpdateResyncFLag.size() > 0){
-            List<Account> accountList = new List<Account>();
-            for(Id accountId : accountIdSetToUpdateResyncFLag){
-                Account accountObj = new Account();
-                accountObj.Id = accountId;
-                accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                accountList.add(accountObj);
+        if(accountIdSetToUpdateResyncFlag.size() > 0){
+            List<Integration_Account_Event__e> accountEvent = New List<Integration_Account_Event__e>();
+            for(Id accountId : accountIdSetToUpdateResyncFlag){
+                accountEvent.add(New Integration_Account_Event__e(Id__c = accountId));
             }
-            if(accountList.size() > 0){
-                NSP_AccountTriggerHandler.TriggerDisabled = true; // added for 195356
-                update accountList; 
+            // Send the list to publish event bus instead of updating Account sync flag -- 195356
+            if(accountEvent.size() > 0){
+                Id profileId = userinfo.getProfileId();
+                String profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+                if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+                    publishEventBus(accountEvent);
+                }
             }
-            
         }
         
         setSalesOfficeDetails(newMap.values(),oldMap);
@@ -99,18 +97,24 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
 * 
 */
     
-    public void publishEventBus(List<Integration_Account_Event__e> eventList, Set<Id> idSet) {
-        
-        List<Account> accountList = [SELECT Id, Name, NSP_Ready_for_Integration_Sync__c FROM Account WHERE Id =: idSet];
+    public void publishEventBus(List<SObject> eventList) {
         if(!eventList.isEmpty()) {
-            // Publishing records Event 
-            EventBus.publish(eventList);
-            for(Account account : accountList) {
-                account.NSP_Ready_for_Integration_Sync__c = FALSE;
+            // Publishing records Event
+            List<Database.SaveResult> results = EventBus.publish(eventList);
+            // Inspect publishing result for each event
+            List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
+            for (Database.SaveResult sr : results) {
+                NSP_Error_Log__c log = new NSP_Error_Log__c();
+                log.NSP_Class__c = NSP_ContactTriggerHelper;
+                log.NSP_Method__c = 'publishEventBus';
+                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  '+String.valueOf(sr.getErrors()[0].getStatusCode());
+                log.NSP_Record_Id__c = sr.getId();
+                logList.add(log);
+            }
+            if(logList.size() > 0){
+                insert logList;
             }
         }
-        // Account records update.
-        Update accountList;
     }
     
     
