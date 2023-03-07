@@ -121,7 +121,7 @@
                 //  Adding keyboard inpput validation allowing only digits
                 zipcode.onkeydown =  function(e){
                     return /^\d*$/.test(e.key) || e.key == "ArrowLeft" || e.key == "ArrowRight"
-                    || e.key == "Backspace" || (e.ctrlKey && e.key == "v");
+                    || e.key == "Backspace" || e.key == "Tab" ||  (e.ctrlKey && e.key == "v");
                 };
 
                 zipcode.onpaste = function(e){
