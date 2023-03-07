@@ -51,7 +51,7 @@
        }
        else{
            // US-199954
-           window.dispatchEvent(new Event("error"));
+           window.dispatchEvent(new Event("preventSubmit"));
        }	  
    },
     closeModel: function(component, event, helper) {
