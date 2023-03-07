@@ -1156,6 +1156,11 @@
         <label>Palmer &amp; Cay- NY</label>
     </customValue>
     <customValue>
+        <fullName>Paradigm Group/One Digital</fullName>
+        <default>false</default>
+        <label>Paradigm Group/One Digital</label>
+    </customValue>
+    <customValue>
         <fullName>Patriot Growth Insurance – Cap</fullName>
         <default>false</default>
         <label>Patriot Growth Insurance – Capstone</label>
