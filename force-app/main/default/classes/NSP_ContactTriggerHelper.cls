@@ -82,6 +82,7 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
                 accountList.add(accountObj);
             }
             if(accountList.size() > 0){
+                NSP_AccountTriggerHandler.TriggerDisabled = true; // added for 195356
                 update accountList; 
             }
             

@@ -605,8 +605,7 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
     }                  
     try {
         for(Account acc : accountNewMap.values()){
-            // if(!accOwnerSalesOfficeMap.isEmpty()){ // changed for 195356
-            if(!accOwnerSalesOfficeMap.isEmpty() && !acc.NSP_Ready_for_Integration_Sync__c){
+            if(!accOwnerSalesOfficeMap.isEmpty()){
                 Integer isallowUpdate = 0;
                     if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemeberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
                         isallowUpdate = isallowUpdate + 1;
