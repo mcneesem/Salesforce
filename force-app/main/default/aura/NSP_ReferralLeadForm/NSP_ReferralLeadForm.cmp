@@ -78,7 +78,6 @@
                 <lightning:input aura:id="fieldId" type="number" name="NumberOfEmployees" value="{!v.LeadObj.NumberOfEmployees}" label="Number Of Employees" 
                                  required = "true"/> 
             </lightning:layoutItem>
-
            
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="horizontal-medium" >       
                 <lightning:input type="text" name="Street" value="{!v.LeadObj.Street}" label="Street Address" /> 
@@ -99,9 +98,8 @@
                 </div>
             </lightning:layoutItem>
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="horizontal-medium" >       
-                <lightning:input type="text" maxlength="20" name="postalcode" value="{!v.LeadObj.postalcode}" label="Zip Code" /> 
+                <lightning:input aura:id="postalcode" type="text" maxlength="5" name="postalcode" pattern="\d{5}" messageWhenPatternMismatch="Zip code must contain 5 digits" value="{!v.LeadObj.postalcode}" label="Zip Code" /> 
             </lightning:layoutItem>
-
 
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="horizontal-medium" >       
                 <div>
@@ -165,7 +163,7 @@
            <!-- Uncommenting as part of service request - 563746 -->
            <lightning:layoutItem flexibility="auto" size="8" smallDeviceSize="8" mediumDeviceSize="8" largeDeviceSize="8" padding="horizontal-medium" >       
                 <div  class="slds-scrollable_none">
-                    <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="yes" frameborder="0" width="60%" height="100%" allowtransparency="true"></iframe>
+                    <iframe src="/apex/NSP_GoogleReCaptcha" scrolling="auto" title="NSP_GoogleReCaptcha" frameborder="0" height="100%" width="60%" allowtransparency="true"></iframe>
                 </div>
             </lightning:layoutItem>
         </lightning:layout>

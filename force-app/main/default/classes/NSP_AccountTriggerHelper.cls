@@ -605,15 +605,15 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
     }                  
     try {
         for(Account acc : accountNewMap.values()){
-                if(!accOwnerSalesOfficeMap.isEmpty()){
-                    Integer isallowUpdate = 0;
-                        if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemeberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
-                            isallowUpdate = isallowUpdate + 1;
-                    }
-                    if(isallowUpdate == 0){
-                        acc.addError(system.label.NSP_AccountTriggerError);
-                    }
+            if(!accOwnerSalesOfficeMap.isEmpty()){
+                Integer isallowUpdate = 0;
+                    if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemeberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
+                        isallowUpdate = isallowUpdate + 1;
                 }
+                if(isallowUpdate == 0){
+                    acc.addError(system.label.NSP_AccountTriggerError);
+                }
+            }
         }
     } catch(Exception ex) {
         NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'restrictAccountChange',ex.getMessage());
