@@ -1,52 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>Activity.Custom_Sort_Activity_Type_Reporting__c</members>
-		<name>CustomField</name>
-	</types>
-	<types>
-		<members>Admin</members>
-		<members>Analytics Cloud Integration User</members>
-		<members>Analytics Cloud Security User</members>
-		<members>CPQ Admin</members>
-		<members>CPQ Integration User</members>
-		<members>CPQ Sales User</members>
-		<members>CPQ Tech Support</members>
-		<members>Channel Program Manager</members>
-		<members>ContractManager</members>
-		<members>Custom %3A Netskope Profile</members>
-		<members>Data Migration</members>
-		<members>Developer</members>
-		<members>End User</members>
-		<members>Executive Sponsor</members>
-		<members>Finance Order Processing</members>
-		<members>Finance Service</members>
-		<members>Identity User</members>
-		<members>Inside Sales</members>
-		<members>Integration User</members>
-		<members>Marketing</members>
-		<members>Marketing Channel</members>
-		<members>Marketing Leads</members>
-		<members>MarketingProfile</members>
-		<members>Minimum Access - Salesforce</members>
-		<members>Read Only</members>
-		<members>Retail Sales</members>
-		<members>Sales Administrator</members>
-		<members>Sales Compensation</members>
-		<members>Sales Data Science</members>
-		<members>Sales Engineer</members>
-		<members>Sales Insights Integration User</members>
-		<members>Sales Manager</members>
-		<members>Sales Member</members>
-		<members>Sales Operations</members>
-		<members>Sales Profile</members>
-		<members>Sales Support</members>
-		<members>SalesforceIQ Integration User</members>
-		<members>SolutionManager</members>
-		<members>Standard</members>
-		<name>Profile</name>
-	</types>
-	<version>55.0</version>
         <members>*</members>
         <name>AccountForecastSettings</name>
     </types>
