@@ -88,11 +88,14 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
 * author           | Date              | Description
 * -------------------------------------------------------------------------------------
 * Ruchi Roy         08/08/2022           Created this method
-     */
+*/
     public void beforeDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {
         NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
         accountTriggerHelperObject.restrictDelete((List < Account >) oldList, (Map < Id, Account > ) oldMap);
     }
     
-    public void afterDelete(List < sObject > oldList, Map < Id, sObject > oldMap) {}
+    public void afterDelete(List < sObject > oldList, Map < Id, sObject > oldMap) { // story 199298
+        NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
+        accountTriggerHelperObject.afterDeleteDirector((List < Account >) oldList, (Map < Id, Account > ) oldMap);
+    }
 }

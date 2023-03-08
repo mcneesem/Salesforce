@@ -32,7 +32,6 @@
            if (state == "SUCCESS") {
                var picklistvalues = response.getReturnValue();
                component.set("v.state",picklistvalues['United States']);
-               component.set("v.LeadObj.State",picklistvalues['United States'][0]);
            } else if (state =="ERROR") {
                 this.showErrorModal(component, event,$A.get("$Label.c.NSP_ReferralLeadErrorMessage"));
            }
@@ -70,6 +69,10 @@
         if(event.data === component.get("v.unlock")){
             component.set('v.isDisable', false); 
         }
+        else if(event.data == "Lock"){
+            component.set('v.isDisable', true); 
+        } 
+
     }, false);
 } 
 })

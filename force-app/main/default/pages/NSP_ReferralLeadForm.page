@@ -1,6 +1,7 @@
 <apex:page title="Lead Form"  showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
     <apex:includeLightning />     
     <style>
+        
         .slds-scope {
         max-width: 1200px;
         margin: 0 auto;
@@ -10,13 +11,56 @@
         font-family:'BrandoSans-TextFL';
         src:url(/resource/NSP_Form_CSS);
         }
+        
+        /*US-199954 */
+        /*US-199954 testing*/
+        *{
+            scroll-behavior: smooth;
+        }
+
+        body{
+            position:relative;
+        }
+        .nsp-msg-wrapper{
+            background-color:rgba(255,255,255,.8);
+            width:100%;
+            height:100%;
+            position:absolute;
+            z-index:1000;
+            top:0;
+            left:0;
+        }
+        .nsp-msg-wrapper[visible=false]{
+            display:none;
+        }
+        .nsp-msg{
+            padding:20px;
+            background-color:#0072ce;
+            left:0;
+            right:0;
+            margin:0 auto;
+            position: sticky;
+            top:45%;
+            left:25%;
+            width:fit-content;
+            display: flex;
+           align-items: center;
+           box-shadow: 0px 0px 15px rgba(0,0,0,.75);
+        }
+        .nsp-msg svg{
+            width:100px;
+            height:100px;
+        }       
+        .nsp-msg h3{
+            color:#fff;
+            display:inline-block;
+        }
     </style>
-    
-    
+       
     <html  lang="en">
         
         <apex:slds />
-        <body style = "font-family: BrandoSans-TextFL, sans-serif; font-weight: normal; margin: 0;">
+        <body style = "font-family: BrandoSans-TextFL, sans-serif; font-weight: normal; margin: 0;" >
             <!-- REQUIRED SLDS WRAPPER -->
             <apex:image value="{!URLFOR($Resource.NSP_InsperityLogo)}" style="height: 55px; width: 12rem; display: block; padding-top: 0.72rem; padding-bottom: 0.72rem; margin: 0 auto;"/>
             <div class="slds-scope" style="overflow-x: hidden;">
@@ -36,6 +80,7 @@
                                 "myDivId",
                                 function(cmp) {
                                 });
+                                init();
                         });
                         </script>
                     </ul>
@@ -51,7 +96,79 @@
                 <!-- / FOOTER -->
                 
             </div>
-            
+
+            <!-- US-199954 : NSP Messge -->
+            <div class="nsp-msg-wrapper" visible="false">
+                <div class="nsp-msg">
+                    <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 150 150"><circle cx="74.13" cy="77.26" r="59.4" fill="#63cae7"/><path fill="none" stroke="#171a60" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M53.93 101.7A32.39 32.39 0 0 1 94 50.83l1.31 1"/><path fill="none" stroke="#171a60" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M92.91 44.12l2.54 7.89-8.26-.63"/><circle cx="74.25" cy="76.76" r="6.23" fill="#82bc41"/><path fill="none" stroke="#171a60" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M73.91 70.33l-.42-18.23M78.64 76.46l14.67-.12"/><circle cx="74.25" cy="76.76" r="6.23" fill="#63cae7" stroke="#171a60" stroke-miterlimit="10" stroke-width="2.2"/><path fill="none" stroke="#171a60" stroke-dasharray="0 10" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4" d="M101 58.76A32.51 32.51 0 0 1 58.89 105"/></svg>
+                    <h3>Submission in progress, please do not close the browser.</h3>
+                </div>
+            </div>
+
         </body>
+      <script>
+         
+        /* Bug 203931*/
+        function init(){
+
+            //  At this point querySelector can't retrieve any "input" element,
+            //  the input tag is wrapped inside of a lightning-input
+            //  instead we use the attribute "data-data-rendering-service-uid"
+              
+            let zipcode = document.querySelector("*[data-data-rendering-service-uid=\"44\"]");
+            if(zipcode){
+                
+                //  Adding keyboard inpput validation allowing only digits
+                zipcode.onkeydown =  function(e){
+                    return /^\d*$/.test(e.key) || e.key == "ArrowLeft" || e.key == "ArrowRight" ||
+                    e.key == "Backspace" || e.key == "Tab" || e.key == "Delete" || e.key == "Home" || 
+                    e.key == "End" || (e.ctrlKey && e.key == "v");
+                };
+
+                zipcode.onpaste = function(e){
+                    let text = (e.clipboardData || window.clipboardData).getData("text");
+                    //  If the text to be pasted doesn't containt digits then reject it
+                    if(!/^\d*$/.test(text)) {
+                        e.preventDefault();
+                    } 
+                };
+
+            }
+        }
+
+        /* US-199954 US-199957*/
+        window.addEventListener("submit", function(){
+
+            let btn = document.querySelector("button");
+            let msg = document.querySelector(".nsp-msg-wrapper");
+                                  
+            //  Disable submit button
+            btn.setAttribute("disabled", true);
+
+            //  Display message and lock UI
+            msg.removeAttribute("visible");
+
+        });
+
+        /* US-199954 US-199957*/
+        window.addEventListener("preventSubmit", function(){
+
+            //  Query elements with errors
+            let errors = document.querySelectorAll(".slds-has-error");
+            
+            //  If there is at least one element with an error
+            if(errors.length > 0){
+
+                // Scroll to the first element with an error message
+                if(errors[0].scrollIntoView) errors[0].scrollIntoView();
+
+                //  Focus the input element
+               if(errors[0].focus) errors[0].focus();
+            }
+
+        });
+
+        </script> 
+
     </html>
 </apex:page>

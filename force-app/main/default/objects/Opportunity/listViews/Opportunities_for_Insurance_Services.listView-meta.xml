@@ -8,6 +8,7 @@
     <columns>OPPORTUNITY.CREATED_DATE</columns>
     <columns>NSP_PrimaryProduct__c</columns>
     <columns>NSP_Parent_Opportunity__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>NSP_PrimaryProduct__c</field>

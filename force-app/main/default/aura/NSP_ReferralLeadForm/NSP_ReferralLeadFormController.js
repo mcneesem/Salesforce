@@ -16,10 +16,11 @@
    }, 
    handleSubmit : function(component, event, helper) {
        var allValid = [].concat(component.find('fieldId')).reduce(function (validSoFar, inputCmp) {
-           inputCmp.showHelpMessageIfInvalid();
-           return validSoFar && !inputCmp.get('v.validity').valueMissing;
+            inputCmp.showHelpMessageIfInvalid();
+            return validSoFar && !inputCmp.get('v.validity').valueMissing;
        }, true);
-       /* Added as part of DF-01739*/
+
+       /* Added as part of DF-01739  - Potential customer*/
        var isNotPcValid = false;
        var select = component.find('pCOptions');
        if (!select.checkValidity()) {
@@ -28,9 +29,29 @@
        }  else  {
            isNotPcValid = false;
        }
+
+       /* Validate the Zip Code - this field is not required
+           Aura doesn't validate the pattern only displays an error message 
+       */ 
+       var isZipCodeValid = true;
+       var zipCode = component.find('postalcode').get('v.value');
+       if(zipCode != undefined){
+            //  If zip code is not empty
+            if(zipCode.trim().length > 0){
+                // zip code must contain 5 digits
+                let e = new RegExp("^\\d{5}$");
+                isZipCodeValid = e.test(zipCode);
+           }
+       }
+
        /* Added as part of DF-01739 Ends*/
-       if (allValid && !isNotPcValid) {
-              helper.saveLead(component, event);
+       if (allValid && !isNotPcValid && isZipCodeValid) {
+           helper.saveLead(component, event);
+           window.dispatchEvent(new Event("submit"));
+       }
+       else{
+           // US-199954
+           window.dispatchEvent(new Event("preventSubmit"));
        }	  
    },
     closeModel: function(component, event, helper) {
