@@ -540,7 +540,7 @@
 			<layoutItems>
 				<behavior>Readonly</behavior>
 				<field>NSP_WetSignature__c</field>
-			</layoutItesm>
+			</layoutItems>
 		</layoutColumns>	
         <layoutColumns>
             <layoutItems>
