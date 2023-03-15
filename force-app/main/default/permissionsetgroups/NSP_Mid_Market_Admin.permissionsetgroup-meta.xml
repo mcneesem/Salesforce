@@ -21,5 +21,6 @@
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
     <permissionSets>force__SalesCloudEinsteinAll</permissionSets>
     <permissionSets>force__VoiceOutbound</permissionSets>
+    <permissionSets>NSP_Template_Field_permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
