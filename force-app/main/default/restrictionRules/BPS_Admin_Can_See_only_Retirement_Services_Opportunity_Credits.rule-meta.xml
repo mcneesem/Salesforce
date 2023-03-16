@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RestrictionRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <description></description>
+    <enforcementType>Restrict</enforcementType>
+    <masterLabel>BPS Admin Can See only Retirement Services Opportunity Credits</masterLabel>
+    <recordFilter>Primary_Product_from_Opportunity__c=&apos;Retirement Services&apos;</recordFilter>
+    <targetEntity>NSP_Employee_Split__c</targetEntity>
+    <userCriteria>$User.BPS_Admin_Ret_Svc_Oppty_Credit_Access__c=true</userCriteria>
+    <version>1</version>
+    <!-- Fixing deployment -->
+</RestrictionRule>
