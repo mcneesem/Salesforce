@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>This permission set group is created as part of STY-02427.</description>
+    <hasActivationRequired>false</hasActivationRequired>
     <label>Marketing</label>
+    <permissionSets>Bloomfire_Custom_User</permissionSets>
+    <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>

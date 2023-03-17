@@ -8,7 +8,7 @@
     <permissionSets>Opportunity_Credit_Read_Access</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
-    <permissionSets>force__HighVelocitySalesUser</permissionSets>
+    <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__VoiceOutbound</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
