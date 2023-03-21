@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>DA, RA, and SSS</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>DA RA and SSS</label>
+    <permissionSets>Checklist_Read_Create</permissionSets>
+    <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

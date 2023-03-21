@@ -8,15 +8,18 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Correspondence</permissionSets>
-    <permissionSets>Eloqua</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
-    <permissionSets>NSP_CPQ_Tech_Permission</permissionSets>
     <permissionSets>New_Client_Sales</permissionSets>
+    <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
+    <permissionSets>Program_Agreement_Functionality</permissionSets>
+    <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Rewards_Elevated</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
-    <permissionSets>force__HighVelocitySalesUser</permissionSets>
-    <permissionSets>force__SalesCloudEinsteinAll</permissionSets>
+    <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
+    <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
+    <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <status>Updated</status>
+    
 </PermissionSetGroup>
