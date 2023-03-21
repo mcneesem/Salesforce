@@ -8,17 +8,14 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Delegated_Admin_User_Provisioning</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
+    <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
-    <permissionSets>SBQQ__SalesforceCPQAdminAccess</permissionSets>
-    <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
-    <permissionSets>SBQQ__SteelBrickCPQAdmin</permissionSets>
-    <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
+    <permissionSets>Program_Agreement_Functionality</permissionSets>
+    <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_Admin</permissionSets>
-    <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
-    <permissionSets>force__HighVelocitySalesCadenceCreator</permissionSets>
-    <permissionSets>force__SalesCloudEinsteinAll</permissionSets>
-    <permissionSets>sbaa__AdvancedApprovalsAdmin</permissionSets>
-    <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
+    <permissionSets>force__HighVelocitySalesCadenceCreatorIncluded</permissionSets>
+    <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
+    <permissionSets>force__SalesCloudUnlimitedIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
