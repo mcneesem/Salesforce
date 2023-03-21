@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fee_Inclusive__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Manually checked to bypass Sales Stage requirements. When the checkbox is selected this should bypass the Entry/Exit Criteria related to DocuSign and CPQ on an Opportunity when moving between stages Analysis to Proposal to Closing and Closing to Closed.</description>
+    <externalId>false</externalId>
+    <label>Fee Inclusive</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
