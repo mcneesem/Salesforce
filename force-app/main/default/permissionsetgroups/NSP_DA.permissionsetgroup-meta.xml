@@ -24,5 +24,6 @@
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
+    <permissionSets>NSP_Template_Field_permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

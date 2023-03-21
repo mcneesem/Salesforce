@@ -18,5 +18,6 @@
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
+    <permissionSets>NSP_Template_Field_permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

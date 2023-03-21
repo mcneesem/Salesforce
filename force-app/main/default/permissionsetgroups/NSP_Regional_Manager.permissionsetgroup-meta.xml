@@ -16,5 +16,6 @@
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
     <permissionSets>force__SalesCloudEinsteinAll</permissionSets>
+    <permissionSets>NSP_Template_Field_permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
