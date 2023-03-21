@@ -27,7 +27,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Close Lost Role in Opportunity Team</shortDescription>
-        <value>Business Performance Advisor,District Administrator,District Manager,New Client Sales,Opportunity Owner,MidMarket Administrator</value>
+        <value>Business Performance Advisor,District Administrator,District Manager,New Client Sales,Opportunity Owner,MidMarket Administrator,Sales Support Specialist</value>
     </labels>
     <labels>
         <fullName>Close_Lost_Roles_for_Business_Performance_Consultant</fullName>
@@ -839,6 +839,13 @@
         <value>Too early, Regen 12 months;Too early, Regen 18 months;Too early, Regen 6 months</value>
     </labels>
     <labels>
+        <fullName>NSP_MidMarket_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MidMarket Roles</shortDescription>
+        <value>MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant</value>
+    </labels>
+    <labels>
         <fullName>NSP_MidMarket_Threshold</fullName>
         <categories>Account Segment</categories>
         <language>en_US</language>
@@ -1428,12 +1435,5 @@
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
-    </labels>
-    <labels>
-        <fullName>NSP_MidMarket_Roles</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>MidMarket Roles</shortDescription>
-        <value>MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant</value>
     </labels>
 </CustomLabels>
