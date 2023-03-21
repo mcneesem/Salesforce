@@ -536,6 +536,12 @@
                 <field>NSP_AssignedToCoreDealTeam__c</field>
             </layoutItems>
         </layoutColumns>
+		<layoutColumns>
+			<layoutItems>
+				<behavior>Readonly</behavior>
+				<field>NSP_WetSignature__c</field>
+			</layoutItesm>
+		</layoutColumns>	
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
