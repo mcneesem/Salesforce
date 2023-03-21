@@ -9,11 +9,14 @@
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
+    <permissionSets>Grant_Modify_All_on_Lead_Object_for_DA</permissionSets>
+    <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+    <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
+    <permissionSets>force__InboxIncluded</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
-    <permissionSets>force__SalesCloudEinsteinAll</permissionSets>
-    <permissionSets>NSP_Template_Field_permission</permissionSets>
+    <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

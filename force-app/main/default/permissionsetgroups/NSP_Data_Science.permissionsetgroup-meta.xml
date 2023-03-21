@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>This permission set group is created as part of STY-02427.</description>
+    <hasActivationRequired>false</hasActivationRequired>
     <label>Data Science</label>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
+    <permissionSets>Report_export_and_print_access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
