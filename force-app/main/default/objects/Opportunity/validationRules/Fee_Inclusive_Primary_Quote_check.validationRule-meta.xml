@@ -3,14 +3,34 @@
     <fullName>Fee_Inclusive_Primary_Quote_check</fullName>
     <active>true</active>
     <description>Check to make sure that &quot;Primary Quote&quot; is blank before &quot;Fee Inclusive&quot; box can be checked</description>
-    <errorConditionFormula>AND(
-NSP_Has_Primary_Quote__c = TRUE,
+    <errorConditionFormula>OR(
+AND(
 ISCHANGED( Fee_Inclusive__c ),
-Fee_Inclusive__c = TRUE,
+Fee_Inclusive__c = true,
 NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;WO&quot;)),
 NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;WS&quot;)),
 NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;Performance Management&quot;)),
-NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;Time &amp; Attendance&quot;))
+NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;Time &amp; Attendance&quot;))),
+
+AND(
+Fee_Inclusive__c = true,
+ISCHANGED(  NSP_PrimaryProduct__c  ),
+NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;WO&quot;)),
+NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;WS&quot;)),
+NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;Performance Management&quot;)),
+NOT(ISPICKVAL( NSP_PrimaryProduct__c, &quot;Time &amp; Attendance&quot;))),
+
+
+AND(
+NOT(ISBLANK( SBQQ__PrimaryQuote__c)),
+ISCHANGED( Fee_Inclusive__c ),
+Fee_Inclusive__c = true
+),
+
+AND(Fee_Inclusive__c = true,
+NOT(ISBLANK( SBQQ__PrimaryQuote__c)),
+ISCHANGED(StageName),
+ISPICKVAL( StageName, &quot;Closed Won&quot;))
 )</errorConditionFormula>
     <errorDisplayField>SBQQ__PrimaryQuote__c</errorDisplayField>
     <errorMessage>A Fee Inclusive Opportunity can not have an assigned Primary Quote, and must have a Primary Product of: WO, WS, Performance Management, or Time &amp; Attendance</errorMessage>
