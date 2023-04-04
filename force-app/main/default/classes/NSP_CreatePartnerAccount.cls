@@ -160,8 +160,11 @@ public static String createAccount(String accountObject, String contactObject){
                 if(findContact.size() > 0){
 
                     Contact oldContact = findContact[0];
+
+                    if(!String.isBlank(nContact.Title)){
+                        oldContact.Title = nContact.Title;
+                    }
                     
-                    oldContact.Title = nContact.Title;
                     oldContact.Phone = nContact.Phone;
 
                     Database.update(oldContact, dbDML); 
