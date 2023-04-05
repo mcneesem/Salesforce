@@ -141,9 +141,9 @@
                 <label>Client Meeting</label>
             </value>
             <value>
-                <fullName>Suitability Call</fullName>
+                <fullName>Discovery Call</fullName>
                 <default>false</default>
-                <label>Suitability Call</label>
+                <label>Discovery Call</label>
             </value>
             <value>
                 <fullName>Transition Meeting</fullName>
@@ -151,34 +151,9 @@
                 <label>Transition Meeting</label>
             </value>
             <value>
-                <fullName>Contracting</fullName>
+                <fullName>Proposal</fullName>
                 <default>false</default>
-                <label>Contracting</label>
-            </value>
-            <value>
-                <fullName>SE Prospect Initial Meeting</fullName>
-                <default>false</default>
-                <label>SE Prospect Initial Meeting</label>
-            </value>
-            <value>
-                <fullName>SE Internal Meeting</fullName>
-                <default>false</default>
-                <label>SE Internal Meeting</label>
-            </value>
-            <value>
-                <fullName>SE Client Meeting</fullName>
-                <default>false</default>
-                <label>SE Client Meeting</label>
-            </value>
-            <value>
-                <fullName>SE Transition Meeting</fullName>
-                <default>false</default>
-                <label>SE Transition Meeting</label>
-            </value>
-            <value>
-                <fullName>SE Prospect Follow Up Meeting</fullName>
-                <default>false</default>
-                <label>SE Prospect Follow Up Meeting</label>
+                <label>Proposal</label>
             </value>
             <value>
                 <fullName>Technical Demo</fullName>
@@ -273,7 +248,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Suitability Call</valueName>
+            <valueName>Discovery Call</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
@@ -281,27 +256,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Contracting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>SE Prospect Initial Meeting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>SE Internal Meeting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>SE Client Meeting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>SE Transition Meeting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>SE Prospect Follow Up Meeting</valueName>
+            <valueName>Proposal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
