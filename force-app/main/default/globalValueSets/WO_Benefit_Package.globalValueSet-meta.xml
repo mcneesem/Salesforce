@@ -16,9 +16,9 @@
         <label>Freedom Basic</label>
     </customValue>
     <customValue>
-        <fullName>Freedom Savor</fullName>
+        <fullName>Freedom Saver</fullName>
         <default>false</default>
-        <label>Freedom Savor</label>
+        <label>Freedom Saver</label>
     </customValue>
     <customValue>
         <fullName>Freedom Choice</fullName>
@@ -88,3 +88,4 @@
     <masterLabel>WO Benefit Package</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
+ 

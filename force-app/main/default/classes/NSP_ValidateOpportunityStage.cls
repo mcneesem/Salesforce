@@ -133,7 +133,9 @@ public class NSP_ValidateOpportunityStage {
             //closed-won criteria CR-031
             if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                 //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
-                evaluateQuoteCriteria(opp,quoteMap);
+                if(!opp.Fee_Inclusive__c){ // 208335 - bypass QuoteCriteria is Fee Inclusive is checked
+                    evaluateQuoteCriteria(opp,quoteMap);
+                }
                 evaluateClosedWonStageCriteria(opp);
             }
             
@@ -232,13 +234,13 @@ public class NSP_ValidateOpportunityStage {
         }   
     }
     
-    /**
+/**
 * Evaluate entry criteria for Closed Won stage
 * @param opportunityList list of New Opportunity.  
 * 
-* @return void             
+* @return void
 *  * 
-*             
+*
 */ 
     public static void evaluateClosedWonStageCriteria(Opportunity opp){
         Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
@@ -255,8 +257,8 @@ public class NSP_ValidateOpportunityStage {
                 opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
         else if(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name !=null && currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name != NSP_SalesConstants.NEW_CLIENT_SALES && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
-                    opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        } 
+                opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
+        }
     }
     
    /***********************************************************************************************

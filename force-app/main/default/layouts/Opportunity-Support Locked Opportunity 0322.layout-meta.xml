@@ -665,12 +665,16 @@
                 <field>NSP_Exception_Credit_Amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Frequency_of_Distribution__c</field>
+                <behavior>Readonly</behavior>
+                <field>Fee_Inclusive__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Financial_Analysis_Tool__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Frequency_of_Distribution__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

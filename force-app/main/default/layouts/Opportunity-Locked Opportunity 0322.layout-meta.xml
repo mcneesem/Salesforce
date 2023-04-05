@@ -535,12 +535,16 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_AssignedToCoreDealTeam__c</field>
             </layoutItems>
-			<layoutItems>
-				<behavior>Readonly</behavior>
-				<field>NSP_WetSignature__c</field>
-			</layoutItems>
-		</layoutColumns>	
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_WetSignature__c</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Fee_Inclusive__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SBQQ__PrimaryQuote__c</field>

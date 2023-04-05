@@ -5,8 +5,9 @@
     <label>BPS Manager</label>
     <permissionSets>BPS</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
-    <permissionSets>Mid_Market</permissionSets>
+
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
+    <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
