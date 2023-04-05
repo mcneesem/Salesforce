@@ -808,7 +808,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contracting</fullName>
+            <fullName>Proposal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -880,31 +880,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SE Client Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SE Internal Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SE Prospect Follow Up Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SE Prospect Initial Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SE Transition Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Social Media</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Suitability Call</fullName>
+            <fullName>Discovery Call</fullName>
             <default>false</default>
         </values>
         <values>
