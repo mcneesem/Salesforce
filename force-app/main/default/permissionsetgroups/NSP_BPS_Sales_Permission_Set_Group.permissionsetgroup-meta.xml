@@ -6,7 +6,7 @@
     <permissionSets>BPS</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
-    <permissionSets>Mid_Market</permissionSets>
+
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
