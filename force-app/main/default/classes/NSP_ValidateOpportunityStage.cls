@@ -114,7 +114,8 @@ public class NSP_ValidateOpportunityStage {
                 evaluateQuoteCriteria(opp,quoteMap);
             }
             //CR-031 removed Executive summary check and have added BPS Products condition
-            if(opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
+			// 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
+            if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
                 if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
                     if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                         opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
@@ -133,9 +134,7 @@ public class NSP_ValidateOpportunityStage {
             //closed-won criteria CR-031
             if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                 //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
-                if(!opp.Fee_Inclusive__c){ // 208335 - bypass QuoteCriteria is Fee Inclusive is checked
-                    evaluateQuoteCriteria(opp,quoteMap);
-                }
+                evaluateQuoteCriteria(opp,quoteMap);
                 evaluateClosedWonStageCriteria(opp);
             }
             
@@ -196,8 +195,8 @@ public class NSP_ValidateOpportunityStage {
 */ 
      public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
         try{
-          
-            if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
+			// 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
+            if(!opp.Fee_Inclusive__c && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
                    if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                        if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                            if(opp.SBQQ__PrimaryQuote__c != null){
@@ -219,28 +218,27 @@ public class NSP_ValidateOpportunityStage {
                            }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
                                    opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
                            }
-                       }else{
-                           if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || 
+                    }else{
+                    	if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || 
                                                                     (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT 
                                                                      && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){//DF-01080 subtype Amendment check added
                                                                          opp.addError(System.Label.NSP_AddPrimaryQuote);
-                                                                     }
-                       } 
-                   }
-               }
-            
-        }catch(Exception ex){
+						}
+					} 
+				}
+			}
+        } catch(Exception ex) {
             NSP_CustomException.LogException(ex);
         }   
     }
     
-/**
+    /**
 * Evaluate entry criteria for Closed Won stage
 * @param opportunityList list of New Opportunity.  
 * 
-* @return void
+* @return void             
 *  * 
-*
+*             
 */ 
     public static void evaluateClosedWonStageCriteria(Opportunity opp){
         Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
@@ -257,7 +255,7 @@ public class NSP_ValidateOpportunityStage {
                 opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
         else if(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name !=null && currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name != NSP_SalesConstants.NEW_CLIENT_SALES && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
-                opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
+                    opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
     }
     
@@ -362,11 +360,11 @@ public static void evaluateClosedLostStageCriteria(Opportunity opp) {
 * @return void             
 * @DF-01769 
 */
-public static String getSalesOfficeGroup(Id userId, List<String> SalesOffice){
-    List <GroupMember> groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userId and Group.Name IN:SalesOffice]; 
-    if(!groupMemberList.isEmpty()){
-        return groupMemberList[0].Group.Name;
+    public static String getSalesOfficeGroup(Id userId, List<String> SalesOffice){
+        List <GroupMember> groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userId and Group.Name IN:SalesOffice]; 
+        if(!groupMemberList.isEmpty()){
+            return groupMemberList[0].Group.Name;
+        }
+        return '';
     }
-    return '';
-}
 }
