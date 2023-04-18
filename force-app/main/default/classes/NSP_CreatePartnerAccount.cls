@@ -241,7 +241,6 @@ public static List<String> getPiklistValues(string objectAPIName, string fieldAP
 public static picklistValueClass returnAllPickListValues (){
     
     String coverageArea = 'NSP_Coverage_Area__c';
-    String   businessVertical ='NSP_Business_Vertical__c';
     String   oneToTen = 'NSP_HowFamiliar_is_the_company_with_PEOs__c';
     String   insperityHistory='NSP_Insperitys_History_with_This_Partner__c';
     
@@ -249,9 +248,12 @@ public static picklistValueClass returnAllPickListValues (){
     try{
         String objectName = NSP_SalesConstants.Account;
         picklistValueClassObject.coverageArea = getPiklistValues(objectName,coverageArea);
-        picklistValueClassObject.businessVertical = getPiklistValues(objectName,businessVertical);
         picklistValueClassObject.oneToTen = getPiklistValues(objectName,oneToTen);
         picklistValueClassObject.insperityHistory = getPiklistValues(objectName,insperityHistory);
+        
+        //  Bug-211075
+        picklistValueClassObject.businessVertical = NSP_Lib.getPickListValuesByRecordType(objectName,'NSP_Partner_Client','NSP_Business_Vertical__c');
+        
     }Catch(Exception Ex){
         throw new AuraHandledException(ex.getMessage());
     }
