@@ -33,5 +33,5 @@ ISCHANGED(StageName),
 ISPICKVAL( StageName, &quot;Closed Won&quot;))
 )</errorConditionFormula>
     <errorDisplayField>SBQQ__PrimaryQuote__c</errorDisplayField>
-    <errorMessage>A Fee Inclusive Opportunity can not have an assigned Primary Quote, and must have a Primary Product of: WO, WS, Performance Management, or Time &amp; Attendance</errorMessage>
+    <errorMessage>&quot;Fee Inclusive&quot; is not a valid option for Opportunities which have a Primary Quote selected, or for Opportunities that do not have one of the following Primary Products: WO, WS, Performance Management, or Time &amp; Attendance</errorMessage>
 </ValidationRule>

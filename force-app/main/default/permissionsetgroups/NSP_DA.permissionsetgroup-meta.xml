@@ -6,6 +6,7 @@
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
+    <permissionSets>Campaign_Create_And_Edit</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
