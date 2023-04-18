@@ -84,6 +84,7 @@
             
             <lightning:select name="NSP_Business_Vertical__c" label="Business Vertical"
                                 class="slds-medium-size_2-of-3"    value= "{!v.AccountObj.NSP_Business_Vertical__c}">
+                    <option value="">---None---</option>
                 <aura:iteration items="{!v.businessVertical}" var="itr">
                     <option value="{!itr}">{!itr}</option>
                 </aura:iteration>

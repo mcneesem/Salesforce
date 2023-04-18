@@ -8,9 +8,11 @@
     <permissionSets>Grant_login_access</permissionSets>
     <permissionSets>Minimum_Access_Elevated_Read</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
+    <permissionSets>User_Compliance_and_Audit_permissions</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_Admin</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
+    <permissionSets>force__HighVelocitySalesCadenceCreatorIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
     <status>Updated</status>

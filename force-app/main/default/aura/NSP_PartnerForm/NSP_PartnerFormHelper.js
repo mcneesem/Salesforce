@@ -45,7 +45,7 @@
                 component.set("v.AccountObj.NSP_How_FamiliarIsCompany_with_Insperity__c",picklistvalues.oneToTen[0]);
                 component.set("v.AccountObj.NSP_HowFamiliar_is_the_company_with_PEOs__c",picklistvalues.oneToTen[0]);
                 component.set("v.AccountObj.NSP_Coverage_Area__c",picklistvalues.coverageArea[0]);
-                component.set("v.AccountObj.NSP_Business_Vertical__c",picklistvalues.businessVertical[0]);
+                ///component.set("v.AccountObj.NSP_Business_Vertical__c",picklistvalues.businessVertical[0]);
                 
             } else if (state =="ERROR") {
                 
