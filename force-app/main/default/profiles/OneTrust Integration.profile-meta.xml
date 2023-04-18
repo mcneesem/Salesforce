@@ -31,12 +31,7 @@
         <editable>true</editable>
         <field>Contact.OneTrust_Opt_Out__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Name</field>
-        <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.NSP_Do_Not_Contact__c</field>
