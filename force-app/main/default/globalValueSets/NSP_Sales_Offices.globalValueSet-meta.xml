@@ -61,14 +61,14 @@
         <label>0520 San Francisco 1</label>
     </customValue>
     <customValue>
-        <fullName>522</fullName>
-        <default>false</default>
-        <label>0522 San Francisco 3</label>
-    </customValue>
-    <customValue>
         <fullName>521</fullName>
         <default>false</default>
         <label>0521 San Francisco 2</label>
+    </customValue>
+    <customValue>
+        <fullName>522</fullName>
+        <default>false</default>
+        <label>0522 San Francisco 3</label>
     </customValue>
     <customValue>
         <fullName>523</fullName>
@@ -547,4 +547,5 @@
     </customValue>
     <masterLabel>Sales Offices</masterLabel>
     <sorted>false</sorted>
+    
 </GlobalValueSet>

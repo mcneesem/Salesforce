@@ -28,7 +28,9 @@ public class NSP_OpportunityTriggerHelper {
     public static boolean createRewardsOnce = false;
     
     private static set<Id>  byPassValidationOnRole = null;
-    
+    private List<UserRole> notAllowedCloseWonRoles = null;
+    private String userRole = UserInfo.getUserRoleId();
+
 /**
 * Iterates throught the list of new Opportunity and passes the required attributes to other methods.
 * @param newList List of New Opportunity.  
@@ -51,6 +53,12 @@ public class NSP_OpportunityTriggerHelper {
         for(Opportunity opportunityObject : newList){
             ownerIdsSet.add(opportunityObject.OwnerId);
             
+            //  Check opportunity stage
+            if(opportunityObject.StageName == 'Closed Won'){
+                verifyCloseWonNotAllowedRoles(opportunityObject);
+            }
+    
+
             // Checking if account id is not blank
             if(String.isNotBlank(opportunityObject.Accountid)){
                 // Adding account to the set
@@ -206,12 +214,18 @@ public class NSP_OpportunityTriggerHelper {
         Set<String> docuSignTemplateName = new Set<String>();
         List<Opportunity> opptyListToStampDocusignTemplateId = new List<Opportunity>();
         List<Opportunity> closedOppList =  new List<Opportunity>();
+
         //Iterating over the new opportunity map
         for(Id opportunityId : opportunityNewMap.keySet()){
             
             Opportunity newOpportunity =  opportunityNewMap.get(opportunityId);
             Opportunity oldOpportunity =  opportunityOldMap.get(opportunityId);
             
+            //  Check opportunity stage
+            if(newOpportunity.StageName == 'Closed Won'){
+                verifyCloseWonNotAllowedRoles(newOpportunity);
+            }
+
             if(newOpportunity.OwnerId != oldOpportunity.OwnerId){
                 ownerChangedOpptyList.add(newOpportunity);
                 ownerIdSet.add(newOpportunity.OwnerId);
@@ -267,10 +281,6 @@ public class NSP_OpportunityTriggerHelper {
                (opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c != opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c)){
                    updatePriceBookList.add(opportunityNewMap.get(opportunityId));
                }
-            
-            
-            
-           
             
             //create list to populate docusign template id for merge on demand templates
             if(!String.isBlank(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c) && 
@@ -1160,11 +1170,27 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
             NSP_CustomException.LogException(ex);
         } 
             
-            
-            
         }
         
-    
-    
+        private void verifyCloseWonNotAllowedRoles(Opportunity opp){
+
+            //  Bug-205788
+            //  Regardless of product, BPA, BPC, and ABPA should not be allowed to close/won ANY opportunity
+
+            if(notAllowedCloseWonRoles == null){
+                List<String> rolesApiNames = new List<String>();
+                rolesApiNames.add('Business_Performance_Advisor');
+                rolesApiNames.add('Business_Performance_Consultant');
+                rolesApiNames.add('Associate_Business_Performance_Advisors');
+                notAllowedCloseWonRoles = NSP_Lib.getRolesIdByApiName(rolesApiNames);
+            }
+
+            for(UserRole role : notAllowedCloseWonRoles){
+                if(userRole.equals(role.Id)){
+                    opp.addError(Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
+                    break;
+                }
+            }
+        }
     
 }

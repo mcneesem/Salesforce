@@ -12,11 +12,11 @@
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
+    <permissionSets>User_Compliance_and_Audit_permissions</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_Admin</permissionSets>
     <permissionSets>force__HighVelocitySalesCadenceCreatorIncluded</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__SalesCloudUnlimitedIncluded</permissionSets>
     <status>Updated</status>
-    
 </PermissionSetGroup>

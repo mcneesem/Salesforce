@@ -651,4 +651,114 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>WO_Benefit_Package__c</picklist>
+        <values>
+            <fullName>Freedom Basic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Saver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Basic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Saver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Basic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Saver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pacific Northwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>WX_Modules__c</picklist>
+        <values>
+            <fullName>ACA Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobra Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fringe Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leave Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
