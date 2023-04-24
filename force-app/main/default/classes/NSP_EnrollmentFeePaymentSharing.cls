@@ -185,7 +185,7 @@ public class NSP_EnrollmentFeePaymentSharing
     public static Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> efpSharedRecordsToProcess(Set<Id> opportunityIds)
     {
         List<NSP_Enrollment_Fee_Payment__c> efpRecordsByOppIds = [SELECT Id, NSP_Opportunity__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c IN:opportunityIds];
-        List<NSP_Enrollment_Fee_Payment__Share> efpShareRecordsByEfpIds = [SELECT Id, ParentId, UserOrGroupId FROM NSP_Enrollment_Fee_Payment__Share WHERE ParentId IN:efpRecordsByOppIds];
+        List<NSP_Enrollment_Fee_Payment__Share> efpShareRecordsByEfpIds = [SELECT Id, ParentId, UserOrGroupId, RowCause FROM NSP_Enrollment_Fee_Payment__Share WHERE ParentId IN:efpRecordsByOppIds];
         
         Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = new Map<Id, List<NSP_Enrollment_Fee_Payment__Share>>();
         Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> recordIdShareRecordsMap = new Map<Id, List<NSP_Enrollment_Fee_Payment__Share>>();
