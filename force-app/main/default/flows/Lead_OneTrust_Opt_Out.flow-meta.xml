@@ -141,16 +141,23 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Has_the_Lead_opted_out_via_OneTrust</name>
-        <label>Has the Lead opted out via OneTrust?</label>
+        <name>Has_OneTrust_Opt_Out_or_Do_Not_Contact_changed</name>
+        <label>Has OneTrust Opt Out or Do Not Contact changed?</label>
         <locationX>1238</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>n/a</defaultConnectorLabel>
         <rules>
-            <name>Yes_Opted_out</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Yes_Opted_out_or_Do_Not_Contact</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.OneTrust_Opt_Out__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Do_Not_Contact__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -159,7 +166,8 @@
             <connector>
                 <targetReference>Update_Lead_Record_to_Opted_Out</targetReference>
             </connector>
-            <label>Yes - Opted out</label>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Yes - Opted out or Do Not Contact</label>
         </rules>
         <rules>
             <name>No_Removed_Opt_out</name>
@@ -228,7 +236,7 @@
             <label>It is NOT a Cadence Task</label>
         </rules>
     </decisions>
-    <description>Sets open Tasks and Events to a status of &quot;Cancelled&quot;</description>
+    <description>Sets open Tasks and Events to a status of &quot;Cancelled&quot; added Do Not Contact logic</description>
     <environments>Default</environments>
     <formulas>
         <name>isCadenceEventFormula</name>
@@ -416,6 +424,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Do_Not_Contact__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>HasOptedOutOfEmail</field>
             <value>
                 <booleanValue>true</booleanValue>
@@ -507,16 +521,12 @@
         <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Has_the_Lead_opted_out_via_OneTrust</targetReference>
+            <targetReference>Has_OneTrust_Opt_Out_or_Do_Not_Contact_changed</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>OneTrust_Opt_Out__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
+        <filterFormula>OR(
+ISCHANGED( {!$Record.OneTrust_Opt_Out__c} ),
+OR( ISCHANGED( {!$Record.Do_Not_Contact__c} ) &amp;&amp; {!$Record.Do_Not_Contact__c} )
+)</filterFormula>
         <object>Lead</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
