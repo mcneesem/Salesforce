@@ -44,6 +44,11 @@
                 <label>Not a fit</label>
             </value>
             <value>
+                <fullName>OneTrust Opt Out</fullName>
+                <default>false</default>
+                <label>OneTrust Opt Out</label>
+            </value>
+            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
@@ -97,6 +102,10 @@
             <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
             <valueName>Not a fit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>OneTrust Opt Out</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
