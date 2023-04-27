@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cancelled_Status_perm_check</fullName>
+    <active>true</active>
+    <description>Cancelled Status can only be used by Sys Admin and OneTrust Integration profiles as of now</description>
+    <errorConditionFormula>AND(
+AND
+($Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;OneTrust Integration&quot;),
+OR(
+AND( ISCHANGED( Status ), ISPICKVAL( Status, &quot;Cancelled&quot;) ),
+AND( ISCHANGED( NSP_Status__c ), ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;) )
+)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>You do not have permission to set the status to &quot;Cancelled&quot; at this time.</errorMessage>
+</ValidationRule>
