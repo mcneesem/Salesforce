@@ -82,7 +82,7 @@ public class NSP_LeadTriggerHelper {
                 leadObject.NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
              }
               /*Added to Map Sales Office on insert if Zipcode is populated */
-          if(String.isNotBlank(leadObject.PostalCode)){
+          if(String.isNotBlank(leadObject.PostalCode) && leadObject.NSP_Lead_Routing__c == true){
             zipCodeLeadList.add(leadObject);
             zipCodeList.add(leadObject.PostalCode.substring(0,5));
         }
