@@ -141,8 +141,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Has_OneTrust_Opt_Out_or_Do_Not_Contact_been_checked</name>
-        <label>Has OneTrust Opt Out or Do Not Contact been checked?</label>
+        <name>Has_OneTrust_Opt_Out_been_checked</name>
+        <label>Has OneTrust Opt Out been checked?</label>
         <locationX>1238</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>n/a</defaultConnectorLabel>
@@ -151,13 +151,6 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.OneTrust_Opt_Out__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Do_Not_Contact__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -236,7 +229,7 @@
             <label>It is NOT a Cadence Task</label>
         </rules>
     </decisions>
-    <description>Removes Tasks and Events when OneTrust Opt Out equals True, also fires if &quot;Do Not Contact&quot; is checked</description>
+    <description>Removes Tasks and Events when OneTrust Opt Out equals True</description>
     <environments>Default</environments>
     <formulas>
         <name>isCadenceEventFormula</name>
@@ -509,15 +502,11 @@
         <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Has_OneTrust_Opt_Out_or_Do_Not_Contact_been_checked</targetReference>
+            <targetReference>Has_OneTrust_Opt_Out_been_checked</targetReference>
         </connector>
-        <filterFormula>OR
-(OR( 
-( ISNEW() &amp;&amp; ( {!$Record.OneTrust_Opt_Out__c} ) ), 
-ISCHANGED({!$Record.OneTrust_Opt_Out__c}) ),
-OR( 
-( ISNEW() &amp;&amp; ( {!$Record.NSP_Do_Not_Contact__c} ) ), 
-ISCHANGED( {!$Record.NSP_Do_Not_Contact__c} ) &amp;&amp;  {!$Record.NSP_Do_Not_Contact__c}  )
+        <filterFormula>OR( 
+(ISNEW() &amp;&amp; ( {!$Record.OneTrust_Opt_Out__c} ) ), 
+ISCHANGED( {!$Record.OneTrust_Opt_Out__c} )
 )</filterFormula>
         <object>Contact</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
