@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Mid Market Sales Leader</label>
     <permissionSets>MidMarket_Fields_Read_Access</permissionSets>
+    <permissionSets>MidMarket_National_Account_edit_permissions</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
