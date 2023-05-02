@@ -294,8 +294,8 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_MidMarketNationalAccount__c</field>
+                <behavior>Readonly</behavior>
+                <field>MidMarket_National_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -539,16 +539,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>NSP_Generate_Merge_On_Demand_Document</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.NSP_GenerateDoc</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>NSP_Merge_on_Demand_Send_for_Signature</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>2</sortOrder>
@@ -582,6 +572,16 @@
             <actionName>New_Mid_Market_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NSP_Generate_Merge_On_Demand_Document</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Opportunity.NSP_GenerateDoc</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>New_Client_Sales_Task</actionName>
@@ -639,6 +639,11 @@
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Opportunity.Financial_Analysis_Tool</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
@@ -652,11 +657,6 @@
             <actionName>Opportunity.NSP_CreateQuote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>22</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>23</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
