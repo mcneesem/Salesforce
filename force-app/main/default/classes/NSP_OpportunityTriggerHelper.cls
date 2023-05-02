@@ -100,11 +100,11 @@ public class NSP_OpportunityTriggerHelper {
             }
         }      
         
-               // Added as part of DF-01716
-               User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
-               List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
-               if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
-        validateClosedDate(closedOppList);
+        // Added as part of DF-01716
+        User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+        List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
+        if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
+            validateClosedDate(closedOppList);
         }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -126,8 +126,6 @@ public class NSP_OpportunityTriggerHelper {
         
         NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(newList,ownerIdsSet);
         setSalesOfficeDetails(newList,null); // added for STY-03154
-        
-            
     }
     
 /**
@@ -298,15 +296,14 @@ public class NSP_OpportunityTriggerHelper {
             }
         }
 
-                 // Added as part of DF-01716
-                 User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
-                 List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
-                 // Added as part of 195079
-                 List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
-
-                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
-                    validateClosedDate(closedOppList);
-                }
+        // Added as part of DF-01716
+        User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+        List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
+        // Added as part of 195079
+        List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
+        if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
+            validateClosedDate(closedOppList);
+        }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
@@ -798,22 +795,22 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
 * ********************************************************************************************/ 
 public static void validateClosedDate(List<Opportunity> OpportunityList){
 
-       Id loggedInUserId = UserInfo.getUserId();   
+    Id loggedInUserId = UserInfo.getUserId();
     set<Id> ncsGrpMemIdSet = new set<Id>();
-      List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
+    List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
     List<group> ncsGroup = [SELECT Id,Name FROM group WHERE group.Name IN: groupList];
     for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId IN: ncsGroup]){
-        ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId); 
+        ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId);
     }
 
-        for(Opportunity opp: OpportunityList){
-            if(!ncsGrpMemIdSet.contains(loggedInUserId)){
-                if(validateByNonProfitAndRole(opp) == false){
-              opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
-            }  
-        } 
-        } 
-    
+    for(Opportunity opp: OpportunityList){
+        if(!ncsGrpMemIdSet.contains(loggedInUserId)){
+            if(validateByNonProfitAndRole(opp) == false 
+            && true == false){ // always skip per story 211853
+                opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
+            }
+        }
+    }
 }
 
 /* Description: This method sets sales office details from user 
