@@ -1,25 +1,38 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
 
+    public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
         System.debug('Org ID: ' + context.organizationId());
         System.debug('Sandbox ID: ' + context.sandboxId());
         System.debug('Sandbox Name: ' + context.sandboxName());
-
-        // Insert logic here to prepare the sandbox for use.
         doQueues();
         doCSettings(context.sandboxName());
-        doUserImport(context.sandboxName());
     }
 
     public static void runManualSteps(){
         String sandbox = OrgSettings__c.getOrgDefaults().SandboxName__c;
         System.debug('Manual Step Sandbox Name: ' + sandbox);
-
-        //doUserImport(sandbox);
+        doUserImport(sandbox);
         doCMetadata(sandbox);
         doCLabels();
         doEmailCLabels();
         doEmailAlerts();
+        setPostRefreshRunFlag();
+    }
+
+    public pagereference runningManualSteps(){
+        runManualResult = 'Running...';
+        return null;
+    }
+
+    public pagereference runManualStepsButton(){
+        try{
+            runManualSteps();
+            runManualResult = 'Success!';
+        } catch(Exception e) {
+            runManualResult = 'An exception occurred in runManualSteps: ' + e.getMessage();
+        }
+        return null;
     }
 
     public static void doUserImport(String sandboxName){
@@ -27,20 +40,24 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             StaticResource userStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'Users_csv' WITH SECURITY_ENFORCED];
             String userCsv = userStaticResource.Body.toString();
             User[] userList = new User[] {};
+            integer rowCount = 0;
             for(String row : userCsv.split('\n')) {
+                rowCount++;
                 String[] column = row.split(',');
                 User[] userCheck = [SELECT Id FROM User WHERE FederationIdentifier = :column[1].trim() WITH SECURITY_ENFORCED];
-                System.debug('userCheck size: ' + userCheck.size());
-                if (column[1] != 'Email' && (userCheck.size() < 1 || Test.isRunningTest())){ // skip header row
+                if (rowCount > 1 && (userCheck.size() < 1 || Test.isRunningTest())){ // skip header row
+                    Profile[] userProf = [SELECT Id FROM Profile WHERE Name = :column[4].trim() WITH SECURITY_ENFORCED LIMIT 1];
+                    UserRole[] userRole = [SELECT Id FROM UserRole WHERE Name = :column[6].trim() WITH SECURITY_ENFORCED LIMIT 1];
                     userList.add(new User(
                         IsActive = true,
                         Email = column[1].trim(),
                         FirstName = column[2],
                         LastName = column[3],
                         Username = column[1].trim() + '.' + sandboxName,
-                        ProfileId = column[4],
+                        ProfileId = (userProf.size() > 0) ? userProf[0].Id : '00e4x0000012F54',
                         FederationIdentifier = column[1].trim(),
                         Alias = column[5],
+                        UserRoleId = (userRole.size() > 0) ? userRole[0].Id : null,
                         TimeZoneSidKey = 'America/Chicago',
                         LocaleSidKey = 'en_US',
                         EmailEncodingKey = 'ISO-8859-1',
@@ -291,6 +308,18 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doQueues: ' + e.getMessage());
+        }
+    }
+    
+    public static void setPostRefreshRunFlag(){
+        try {
+            System.debug('starting setPostRefreshRunFlag');
+            OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
+            cS.PostRefreshRun__c = true;
+            upsert cS;
+            System.debug('OrgSettings__c.PostRefreshRun__c : ' + cS.PostRefreshRun__c);
+        } catch(Exception e) {
+            System.debug('An exception occurred in setPostRefreshRunFlag: ' + e.getMessage());
         }
     }
     
