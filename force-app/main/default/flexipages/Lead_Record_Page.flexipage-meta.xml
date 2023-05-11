@@ -323,6 +323,23 @@
                 <identifier>RecordDo_Not_Contact_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OneTrust_Opt_Out__c</fieldItem>
+                <identifier>RecordOneTrust_Opt_Out_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>System Administrator</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5c3809bd-5ff1-476f-80e5-feb400a0f3d9</name>
         <type>Facet</type>
     </flexiPageRegions>
