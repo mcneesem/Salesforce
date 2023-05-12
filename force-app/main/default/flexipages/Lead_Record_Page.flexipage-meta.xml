@@ -3473,6 +3473,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>sixsense:x6sense_Sales_Intelligence</componentName>
+                <identifier>sixsense_x6sense_Sales_Intelligence</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f67bb6eb-3552-48c4-8ac4-ac37bfa352cd</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -3529,6 +3539,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f67bb6eb-3552-48c4-8ac4-ac37bfa352cd</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>6sense</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
