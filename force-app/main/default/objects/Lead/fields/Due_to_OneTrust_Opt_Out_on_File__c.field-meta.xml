@@ -4,7 +4,7 @@
     <description>A formula field to display red bold letters reading &quot;DO NOT CONTACT&quot; if the OneTrust Opt Out field is set to &quot;true&quot;</description>
     <externalId>false</externalId>
     <formula>IF(  OneTrust_Opt_Out__c ,  
-IMAGE($Setup.OneTrust_Settings__c.DoNotContactImageURL__c, &quot;DO NOT CONTACT&quot;), 
+IMAGE(&quot;/resource/DoNotContactImage&quot;, &quot;DO NOT CONTACT&quot;), 
 null)</formula>
     <label>Due to OneTrust Opt Out on File</label>
     <required>false</required>
