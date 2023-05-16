@@ -287,6 +287,23 @@
                 <identifier>RecordNSP_Do_Not_Contact_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OneTrust_Opt_Out__c</fieldItem>
+                <identifier>RecordOneTrust_Opt_Out_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>System Administrator</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-acc313e7-18a9-42e0-b6d8-9bae3f98e1f0</name>
         <type>Facet</type>
     </flexiPageRegions>
