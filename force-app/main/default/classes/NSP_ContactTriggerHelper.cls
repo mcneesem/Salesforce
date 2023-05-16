@@ -122,7 +122,7 @@ public class NSP_ContactTriggerHelper {
     // * Prevents Contact duplicate based on email address and OneTrust Opt-out
     // * Matt McNeese      04/28/2023           AZD Story 212804
     public void preventOneTrustDupe(Contact contactObject) {
-        List <Contact> leadOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Contact WHERE OneTrust_Opt_Out__c = true
+        List <Contact> contactOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Contact WHERE OneTrust_Opt_Out__c = true
                                            AND Email = :contactObject.Email LIMIT 1];
         if(contactOneTrustDupe.size() > 0) contactObject.addError(System.Label.NSP_OneTrustDupeError);
     }

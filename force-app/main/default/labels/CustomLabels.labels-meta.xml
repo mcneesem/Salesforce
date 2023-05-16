@@ -824,11 +824,11 @@
         <value>Please Provide Invoice to Email Contact</value>
     </labels>
     <labels>
-        <fullName>NSP_LeadOTDupeError</fullName>
+        <fullName>NSP_OneTrustDupeError</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OneTrustDupeError</shortDescription>
-        <value>A duplicate record with OneTrust Opt-out already exists.</value>
+        <value>A duplicate record exists with OneTrust Opt-out selected.</value>
     </labels>
     <labels>
         <fullName>NSP_LeadTriggerError</fullName>
