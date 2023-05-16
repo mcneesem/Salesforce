@@ -68,9 +68,6 @@
         <label>Is Event Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
         <locationX>1898</locationX>
         <locationY>695</locationY>
-        <defaultConnector>
-            <targetReference>Update_Event_Record</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
             <name>Yes_Event_is_Completed_and_Lead_should_move_to_Working</name>
@@ -147,7 +144,7 @@
             <label>Related to Lead</label>
         </rules>
     </decisions>
-    <description>Updated to include Lead updates</description>
+    <description>Removed &quot;Update Event Record&quot; connection to Lead part of flow</description>
     <environments>Default</environments>
     <interviewLabel>Event - Created {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Created</label>
@@ -277,7 +274,7 @@
         <name>Update_Event_Record</name>
         <label>Update Event Record</label>
         <locationX>1326</locationX>
-        <locationY>1163</locationY>
+        <locationY>1283</locationY>
         <faultConnector>
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
@@ -300,9 +297,6 @@
         <label>Update Lead Record</label>
         <locationX>1634</locationX>
         <locationY>815</locationY>
-        <connector>
-            <targetReference>Update_Event_Record</targetReference>
-        </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_subflow</targetReference>
@@ -369,7 +363,7 @@ NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
         <locationX>2866</locationX>
-        <locationY>1283</locationY>
+        <locationY>1403</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
