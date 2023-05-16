@@ -11026,7 +11026,7 @@ public class MetadataService {
               'readMetadata',
               SOAP_M_URI,
               'readMetadataResponse',
-              'MetadataService.read' + type_x + 'Response_element'}
+              'MetadataServiceReadClasses.read' + type_x + 'Response_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.getResult();

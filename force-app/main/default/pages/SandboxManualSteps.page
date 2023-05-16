@@ -1,0 +1,10 @@
+<apex:page controller="NSP_PrepSandbox">
+ <apex:form >
+    <apex:outputPanel id="postRefreshRun" style="font-size:16px"> 
+        <apex:commandButton style="font-size:16px" value="Run Post-Refresh Steps" action="{!runningManualSteps}" rerender="postRefreshRun" oncomplete="callMethod2();"/> {!runManualResult} 
+        <apex:actionFunction name="callMethod2" action="{!runManualStepsButton}" rerender="postRefreshRun"/>
+        </apex:outputPanel>
+    <br/><br/>
+    <apex:outputPanel id="postRefreshAlreadyRun" style="font-size:16px;color:red" rendered="{!$Setup.OrgSettings__c.PostRefreshRun__c}"> This has been run since last org refresh.</apex:outputPanel>
+ </apex:form>
+</apex:page>
