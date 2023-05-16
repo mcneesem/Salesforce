@@ -74,7 +74,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             String[] rows = userCsv.split('\n');
             for(integer i=1; i < rows.size() ; i++){ // skip header row
                 String[] column = rows[i].split(',');
-                String aliasEnd = (column[4].length() < 5) ? column[4].trim(), : column[4].substring(0,5);
+                String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
                 if (column[1].indexOf(sandboxName) > -1 && column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0){
                     userList.add(new User(
                         IsActive = true,
