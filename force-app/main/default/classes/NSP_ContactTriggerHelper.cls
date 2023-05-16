@@ -19,6 +19,7 @@ public class NSP_ContactTriggerHelper {
     public void beforeInsertDirector(List<Contact> newList) {
         
         for(Contact conObj : newList){
+            preventOneTrustDupe(conObj);
             if(conObj.NSP_Client_Reference__c){
                 conObj.NSP_Client_Reference_Task_Date__c = system.today();
             }
@@ -116,16 +117,24 @@ public class NSP_ContactTriggerHelper {
             }
         }
     }
+ 
+
+    // * Prevents Contact duplicate based on email address and OneTrust Opt-out
+    // * Matt McNeese      04/28/2023           AZD Story 212804
+    public void preventOneTrustDupe(Contact contactObject) {
+        List <Contact> leadOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Contact WHERE OneTrust_Opt_Out__c = true
+                                           AND Email = :contactObject.Email LIMIT 1];
+        if(contactOneTrustDupe.size() > 0) contactObject.addError(System.Label.NSP_OneTrustDupeError);
+    }
     
     
     /**
-* Iterates throught the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
-    
+    * Iterates throught the list of new Contact and passes the required attributes to other methods.
+    * @param newList List of New Contact.
+    * @param newMap List of New Contact.
+    * @return void
+    *                
+    */    
     public void afterUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
         try{
             List<Contact> clientRefernceContactList = new List<Contact>();
@@ -152,12 +161,12 @@ public class NSP_ContactTriggerHelper {
     }
     
     /**
-* Iterates throught the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
+    * Iterates throught the list of new Contact and passes the required attributes to other methods.
+    * @param newList List of New Contact.
+    * @param newMap List of New Contact.
+    * @return void
+    *                
+    */
     public void createTaskforClientReference(List<Contact> clientReferenceContactList){
         List<Task> taskList = new List<Task>();
         for(Contact conObj : clientReferenceContactList){
@@ -202,6 +211,7 @@ public void updatePhoneNumber(List<Contact> currentRecordsList) {
         } 
     }
 }
+
 /**
 * Method Name : updatePhoneNum 
 * Description : Method to format Phone number on update
@@ -244,6 +254,7 @@ public void updatePhoneNum(List<Contact> newContactList,Map<Id,Contact> contactO
         }
     }
 }
+
 /**
 * Method Name : formatPhoneNumbers 
 * Description : Method to format Phone number
@@ -268,6 +279,7 @@ public String formatPhoneNumbers(String input) {
     }
     return requiredOutput;
 }
+
 /**
 * Method Name : formatCommonPattern 
 * Description : Method to construct common pattern and format Phone number
@@ -285,7 +297,7 @@ public String formatCommonPattern(String input) {
     return codeNumber;
 }   
 
-/* Description: This method sets sales office details from user 
+    /* Description: This method sets sales office details from user 
      * 
      * @param: contactList
      * @return: void
