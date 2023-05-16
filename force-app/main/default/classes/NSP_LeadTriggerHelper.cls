@@ -45,31 +45,33 @@ public class NSP_LeadTriggerHelper {
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
-          if(leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c != null){
-            dunsCheck(leadObject);
-          }
-            
+            preventOneTrustDupe(leadObject);
+            if(leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c != null){
+                dunsCheck(leadObject);
+            }
+
             //switch record type to Lead or Referral record type
             if (leadObject.RecordTypeId == NEW_LEAD_RT_ID) {
                 leadObject.RecordTypeId = LEAD_RT_ID;
             }
-            
+
             // When a new lead is created set the status as New.
             leadObject.Status = NSP_SalesConstants.STR_NEW;
             //if the partner field is not blank on the lead adding the partner value in account set
             if (String.isnotBlank(leadObject.NSP_Partner__c)) {
                 accountIdSet.add(leadObject.NSP_Partner__c);
             }
+
             //if lead stage is blank setting it to Suspect
             if (String.isBlank(leadObject.NSP_Lead_Stage__c)) {
                 leadObject.NSP_Lead_Stage__c = NSP_SalesConstants.LEAD_STAGE_SUSPECT;
             }
-            
-            //If FireScore is greater than FIRE_SCORE_THRESH setting lead stage to MPL
+
+            //if FireScore is greater than FIRE_SCORE_THRESH setting lead stage to MPL
             if (null != leadObject.nsp_fire_score__c && leadObject.nsp_fire_score__c > Integer.valueOf(System.label.NSP_FIRE_SCORE_THRESH)) {
                 leadObject.NSP_Lead_Stage__c = NSP_SalesConstants.LEAD_STAGE_MPL;
             }
-            
+
             /* As part of DF-00998 comments, While Creating Lead From ELoqua Integration user or From Referral Form, Lead should get assigned to Inbound solutions Queue */
             List < String > externalUsers = Label.NSP_External_Users.split(',');
             //Added as part of DF-00998
@@ -77,30 +79,31 @@ public class NSP_LeadTriggerHelper {
             if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
                 inboundSolutionsList.add(leadObject);
             }
+
             //if value Discovery call time is 12 AM , set it to 12 PMto 12 PM.
             if (leadObject.NSP_DC_SetTime__c !=null && leadObject.NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
                 leadObject.NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
-             }
-              /*Added to Map Sales Office on insert if Zipcode is populated */
-          if(String.isNotBlank(leadObject.PostalCode) && leadObject.NSP_Lead_Routing__c == true){
-            zipCodeLeadList.add(leadObject);
-            zipCodeList.add(leadObject.PostalCode.substring(0,5));
+            }
+
+            /*Added to Map Sales Office on insert if Zipcode is populated */
+            if(String.isNotBlank(leadObject.PostalCode) && leadObject.NSP_Lead_Routing__c == true){
+                zipCodeLeadList.add(leadObject);
+                zipCodeList.add(leadObject.PostalCode.substring(0,5));
+            }
         }
-        /* Added to Map Sales Office on insert if Zipcode is populated */
-            
+        /* Added to Map Sales Office on insert if Zipcode is populated*/
+        if(!zipCodeLeadList.isEmpty() && !zipCodeList.isEmpty()){
+            isOwnerAssignment = false;
+            setLeadRegion(zipCodeList, zipCodeLeadList, isOwnerAssignment);
         }
-         /* Added to Map Sales Office on insert if Zipcode is populated*/
-      if(!zipCodeLeadList.isEmpty() && !zipCodeList.isEmpty()){
-        isOwnerAssignment = false;
-        setLeadRegion(zipCodeList, zipCodeLeadList, isOwnerAssignment);
-    }
-    /* Added as part of DF-01943*/
+        /* Added as part of DF-01943*/
         for(Lead zipLead : zipCodeLeadList){
-      if(String.isNotBlank(zipLead.NSP_Sales_Office__c)){
-        zipLead.NSP_Is_Sales_Office_Assigned__c = true;
-         }
+            if(String.isNotBlank(zipLead.NSP_Sales_Office__c)){
+                zipLead.NSP_Is_Sales_Office_Assigned__c = true;
+            }
         }
-    /* Added to Map Sales Office on insert if Zipcode is populated*/
+
+        /* Added to Map Sales Office on insert if Zipcode is populated*/
         //calling method to stmap primary contact's email from partner account to lead
         if (!accountIdSet.isEmpty()) {
             putPartnerEmailOnLead(newList, accountIdSet);
@@ -757,18 +760,18 @@ insert tasksList;
     }
  
 
-/**
-* Restricts non-Admins from deleting Leads.
-* @param oldList List of New Lead.
-* @param oldMap List of New Lead.
-* @return void
-* Ticket 582491
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Ruchi Roy         08/08/2022           Created this method
-*                
-*/     
-    Public void restrictDelete(List<Lead> leadList, Map < Id, Lead > leadMap) {
+    // /**
+    // * Restricts non-Admins from deleting Leads.
+    // * @param oldList List of New Lead.
+    // * @param oldMap List of New Lead.
+    // * @return void
+    // * Ticket 582491
+    // * author           | Date              | Description
+    // * -------------------------------------------------------------------------------------
+    // * Ruchi Roy         08/08/2022           Created this method
+    // *                
+    // */     
+    public void restrictDelete(List<Lead> leadList, Map < Id, Lead > leadMap) {
 		Id profileId = UserInfo.getProfileId();
         List<Profile> profileName = New List<Profile>();
         profileName= [SELECT Id, Name from Profile WHERE Id = :profileId];
@@ -778,12 +781,18 @@ insert tasksList;
 			}
 		}
 	}
+ 
+
+    // * Prevents Lead duplicate based on email address and OneTrust Opt-out
+    // * Matt McNeese      04/28/2023           AZD Story 212804
+    public void preventOneTrustDupe(Lead leadObject) {
+        List <Lead> leadOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Lead WHERE OneTrust_Opt_Out__c = true
+                                        AND Email != null AND Email = :leadObject.Email LIMIT 1];
+        if(leadOneTrustDupe.size() > 0) leadObject.addError(System.Label.NSP_OneTrustDupeError);
+    }
     
     
-    
-    
-    
-    /**
+/**
 * Method added for CR-027 
 * @param leadObject Current Lead Object Data. 
 * @return void  
@@ -891,7 +900,7 @@ public void createContact(List < Lead > newLeadList) {
             Database.LeadConvert lc = new Database.LeadConvert();
             if (childLead.IsConverted == false) {
                 taskIdSet.add(childLead.Id);
-          if (convertedOpty != null) mapLead.put(childLead.Id, convertedOpty);
+                if (convertedOpty != null) mapLead.put(childLead.Id, convertedOpty);
                 lc.setLeadId(childLead.id);
                 lc.setAccountId(accountId);
                 lc.setOwnerId(userinfo.getUserId());
@@ -935,7 +944,7 @@ public void createContact(List < Lead > newLeadList) {
 }
 
     
-    /**
+/**
 * @MethodName: setContactAsPrimary
 * @Description: Marks the converted contact as Primary Contact  ,added as a part of story STY-02090 
 * @param Map<Id,Id> AccountContactMap. 
@@ -1031,8 +1040,8 @@ public void createContact(List < Lead > newLeadList) {
      * 
     */
     
-    public void setSalesOfficeDetails(List<Lead> newList,Map<Id, Lead> leadOldMap)
-    {
+    public void setSalesOfficeDetails(List<Lead> newList,Map<Id, Lead> leadOldMap) {
+
         set<Id> ownerIdSet = new set<Id>();
         set<string> officeSet = new set<string>(); // sales office set
         set<Id> recordToOwnerProcess = new set<Id>();  // record to be process set
@@ -1040,8 +1049,7 @@ public void createContact(List < Lead > newLeadList) {
         map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
         Map<Id,User> userIdMap;
         
-        for(Lead newLead: newList)
-        {
+        for(Lead newLead: newList) {
             Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
             if(Trigger.isInsert)
             {
@@ -1064,27 +1072,21 @@ public void createContact(List < Lead > newLeadList) {
                 recordToOfficeProcess.add(newLead.Id);
                 officeSet.add(newLead.NSP_Sales_Office__c);
             }
-            
         }
         
-        if(ownerIdSet.Size() > 0)
-        {
+        if(ownerIdSet.Size() > 0) {
             userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
             
         }
         
         // values assigned from sales office mapping
-        if(officeSet.Size() > 0)
-        {
-            
+        if(officeSet.Size() > 0) {
             for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
                                                             FROM NSP_Sales_Office_Mapping__c 
                                                             WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true])
             {
                 salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
             }
-            
-            
         }
         
         

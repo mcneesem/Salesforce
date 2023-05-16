@@ -4,7 +4,7 @@
     <description>Field populated from Referral Form from force.com site. Used to store referrals phone</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Phone</label>
+    <label>Referral Phone</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

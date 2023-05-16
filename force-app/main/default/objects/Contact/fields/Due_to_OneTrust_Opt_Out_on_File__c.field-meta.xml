@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Due_to_OneTrust_Opt_Out_on_File__c</fullName>
+    <description>A formula field to display the &quot;Do Not Contact&quot; image if OneTrust Opt Out equals True</description>
+    <externalId>false</externalId>
+    <formula>IF(  OneTrust_Opt_Out__c ,  
+IMAGE(&quot;/resource/DoNotContactImage&quot;, &quot;DO NOT CONTACT&quot;), 
+null)</formula>
+    <label>Due to OneTrust Opt Out on File</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -763,6 +763,10 @@
     <picklistValues>
         <picklist>NSP_Status__c</picklist>
         <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
@@ -812,7 +816,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Proposal</fullName>
+            <fullName>Discovery Call</fullName>
             <default>false</default>
         </values>
         <values>
@@ -872,6 +876,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prospect Follow Up Meeting</fullName>
             <default>false</default>
         </values>
@@ -885,10 +893,6 @@
         </values>
         <values>
             <fullName>Social Media</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Discovery Call</fullName>
             <default>false</default>
         </values>
         <values>
