@@ -482,6 +482,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Do_Not_Contact__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>HasOptedOutOfEmail</field>
             <value>
                 <booleanValue>false</booleanValue>
