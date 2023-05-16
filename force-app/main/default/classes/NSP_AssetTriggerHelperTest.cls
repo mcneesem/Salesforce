@@ -205,6 +205,7 @@ public class NSP_AssetTriggerHelperTest {
         //eachOppty.StageName = 'Closed Won';
         eachOppty.NSP_PrimaryProduct__c = 'WO';
         eachOppty.StageName = 'Closing';
+        Test.startTest();
         update eachOppty;
             NSP_Checklist__c eachCheckList = new NSP_Checklist__c();
             eachCheckList.RecordTypeId = soldToCheckListRecordTypeId;
@@ -212,7 +213,6 @@ public class NSP_AssetTriggerHelperTest {
             eachCheckList.NSP_Requested_First_Pay_Date__c = system.today();
           insert eachCheckList;
         
-        Test.startTest();
         Asset assetObj = new Asset();
         assetObj.Id = assetList[0].ID;
         assetObj.recordtypeid = new_Asset_RT_ID;
