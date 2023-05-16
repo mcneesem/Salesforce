@@ -141,9 +141,19 @@ public class NSP_EnrollmentFeePaymentSharing
         }
     }
 
-    public static void onOppClose(Set<Id> opportunities)
+    public static void onOppClose(Map<Id, Opportunity> opportunities)
     {
-        Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = efpSharedRecordsToProcess(opportunities);
+        Set<Id> closedOpps = new Set<Id>();
+
+        for(Opportunity opp : opportunities.values())
+        {
+            if(opp.StageName == 'Closed Won' || opp.StageName == 'Closed Lost')
+            {
+                closedOpps.add(opp.Id);
+            }
+        }
+
+        Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = efpSharedRecordsToProcess(closedOpps);
 
         List<NSP_Enrollment_Fee_Payment__Share> efpUpdateList = new List<NSP_Enrollment_Fee_Payment__Share>();
         

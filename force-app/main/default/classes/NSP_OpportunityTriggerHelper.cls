@@ -478,7 +478,7 @@ public class NSP_OpportunityTriggerHelper {
        // NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);// commented as part of user story 128436
         setPartnerAccount(partnerOpportunityList,partnerAccountIdSet);
         
-        NSP_EnrollmentFeePaymentSharing.onOppClose(opportunityNewMap.keySet());
+        NSP_EnrollmentFeePaymentSharing.onOppClose(opportunityNewMap);
     }       
     
     
@@ -1183,10 +1183,13 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                 notAllowedCloseWonRoles = NSP_Lib.getRolesIdByApiName(rolesApiNames);
             }
 
-            for(UserRole role : notAllowedCloseWonRoles){
-                if(userRole.equals(role.Id)){
-                    opp.addError(Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-                    break;
+            if(userRole != null)
+            {
+                for(UserRole role : notAllowedCloseWonRoles){
+                    if(userRole.equals(role.Id)){
+                        opp.addError(Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
+                        break;
+                    }
                 }
             }
         }
