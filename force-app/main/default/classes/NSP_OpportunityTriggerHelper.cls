@@ -478,6 +478,7 @@ public class NSP_OpportunityTriggerHelper {
        // NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);// commented as part of user story 128436
         setPartnerAccount(partnerOpportunityList,partnerAccountIdSet);
         
+        NSP_EnrollmentFeePaymentSharing.onOppClose(opportunityNewMap.keySet());
     }       
     
     
