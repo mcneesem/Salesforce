@@ -6,6 +6,7 @@
     <errorConditionFormula>AND(
 NOT(ISBLANK( OneTrust_Opt_Out_Date__c ) ),
 OR(
+( ISCHANGED( Do_Not_Contact__c ) &amp;&amp; Do_Not_Contact__c = false ),
 ( ISCHANGED( DoNotCall ) &amp;&amp; DoNotCall = false ),
 ( ISCHANGED( NSP_Do_Not_Postal_Mail__c ) &amp;&amp; NSP_Do_Not_Postal_Mail__c = false ),
 ( ISCHANGED( HasOptedOutOfEmail ) &amp;&amp; HasOptedOutOfEmail = false ),
