@@ -12,7 +12,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static void runManualSteps(){
         String sandbox = OrgSettings__c.getOrgDefaults().SandboxName__c;
         System.debug('Manual Step Sandbox Name: ' + sandbox);
-        doUserImport(sandbox);
+        doUserImport(sandbox);      
         doCMetadata(sandbox);
         doCLabels();
         doEmailCLabels();
@@ -20,44 +20,72 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         setPostRefreshRunFlag();
     }
 
-    public pagereference runningManualSteps(){
-        runManualResult = 'Running...';
+    public pagereference runManualStepsButton(){
+        try{
+            doCMetadata(OrgSettings__c.getOrgDefaults().SandboxName__c);
+            doCLabels();
+            doEmailCLabels();
+            doEmailAlerts();
+            setPostRefreshRunFlag();
+        } catch(Exception e) {
+            runManualResult = 'An exception occurred Updating Metadata: ' + e.getMessage();
+        }
         return null;
     }
 
-    public pagereference runManualStepsButton(){
+    public pagereference doUserImportPage(){
         try{
-            runManualSteps();
-            runManualResult = 'Success!';
+            doUserImport(OrgSettings__c.getOrgDefaults().SandboxName__c);
+            runManualResult = 'Post-Refresh Steps complete!';
         } catch(Exception e) {
-            runManualResult = 'An exception occurred in runManualSteps: ' + e.getMessage();
+            runManualResult = 'An exception occurred Importing Users: ' + e.getMessage();
         }
         return null;
     }
 
     public static void doUserImport(String sandboxName){
         try{
-            StaticResource userStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'Users_csv' WITH SECURITY_ENFORCED];
+            System.debug('Starting doUserImport');
+            StaticResource userStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'PreProd_Users' WITH SECURITY_ENFORCED];
             String userCsv = userStaticResource.Body.toString();
-            User[] userList = new User[] {};
-            integer rowCount = 0;
-            for(String row : userCsv.split('\n')) {
-                rowCount++;
-                String[] column = row.split(',');
-                User[] userCheck = [SELECT Id FROM User WHERE FederationIdentifier = :column[1].trim() WITH SECURITY_ENFORCED];
-                if (rowCount > 1 && (userCheck.size() < 1 || Test.isRunningTest())){ // skip header row
-                    Profile[] userProf = [SELECT Id FROM Profile WHERE Name = :column[4].trim() WITH SECURITY_ENFORCED LIMIT 1];
-                    UserRole[] userRole = [SELECT Id FROM UserRole WHERE Name = :column[6].trim() WITH SECURITY_ENFORCED LIMIT 1];
+            /* columns: 0 - ID
+            // 			1 - Username
+            // 			2 - Email
+            // 			3 - FirstName
+            // 			4 - LastName
+            // 			5 - Profile
+            // 			6 - Role            
+            */
+            Map<String, List<Profile>> profileNameMap = new map<String, List<Profile>>();
+            Map<String, List<UserRole>> userRoleNameMap = new map<String, List<UserRole>>();
+            for (String row : userCsv.split('\n')) { // build Profile and Role ID Maps
+                String[] col = row.split(',');
+              	if(col[5].length() > 0 && !profileNameMap.containsKey(col[5])){
+                    Profile[] userProf = [SELECT Id FROM Profile WHERE Name = :col[5].trim() WITH SECURITY_ENFORCED LIMIT 1];
+                	if(!userProf.isEmpty()) profileNameMap.put(col[5], userProf);
+              	}
+                if(col[6].length() > 0 && !userRoleNameMap.containsKey(col[6])){
+                    UserRole[] userRole = [SELECT Id FROM UserRole WHERE Name = :col[6].trim() WITH SECURITY_ENFORCED LIMIT 1];
+                    if(!userRole.isEmpty()) userRoleNameMap.put(col[6], userRole);
+                }
+            }
+            
+            List<User> userList = new List<User>(); // list of User records to upsert
+            String[] rows = userCsv.split('\n');
+            for(integer i=1; i < rows.size() ; i++){ // skip header row
+                String[] column = rows[i].split(',');
+                String aliasEnd = (column[4].length() < 5) ? column[4] : column[4].substring(0,5);
+                if (column[1].indexOf(sandboxName) > -1 && column[2].indexOf('noreply') < 0){
                     userList.add(new User(
                         IsActive = true,
-                        Email = column[1].trim(),
-                        FirstName = column[2],
-                        LastName = column[3],
-                        Username = column[1].trim() + '.' + sandboxName,
-                        ProfileId = (userProf.size() > 0) ? userProf[0].Id : '00e4x0000012F54',
-                        FederationIdentifier = column[1].trim(),
-                        Alias = column[5],
-                        UserRoleId = (userRole.size() > 0) ? userRole[0].Id : null,
+                        Email = column[2].trim(),
+                        FirstName = column[3],
+                        LastName = column[4],
+                        Username = column[1],
+                        ProfileId = (profileNameMap.containsKey(column[5])) ? profileNameMap.get(column[5])[0].Id : '00e4x0000012F54',
+                        FederationIdentifier = column[2].substringBefore('.invalid').trim(),
+                        Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
+                        UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
                         TimeZoneSidKey = 'America/Chicago',
                         LocaleSidKey = 'en_US',
                         EmailEncodingKey = 'ISO-8859-1',
@@ -67,7 +95,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
             System.debug('userList size: ' + userList.size());
             if(!Test.isRunningTest()){
-                insert userList;
+                Database.upsert(userList, User.Username, true);
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doUserImport: ' + e.getMessage());
