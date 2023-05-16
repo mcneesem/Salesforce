@@ -33,8 +33,8 @@ public class NSP_OpportunityTeamMemberTriggerHelper {
                 if(oppList.size() > 0){
                     update oppList;
                 }
-                NSP_EnrollmentFeePaymentSharing.onOppTeamMemberInsert(newList);
             }
+            NSP_EnrollmentFeePaymentSharing.onOppTeamMemberInsert(newList);
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }

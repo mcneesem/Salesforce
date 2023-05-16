@@ -7,10 +7,7 @@ trigger EnrollmentFeePaymentTrigger on NSP_Enrollment_Fee_Payment__c (before ins
     }
     else if(trigger.isAfter && (trigger.isInsert || trigger.isUpdate || trigger.isUndelete)){
         NSP_EnrollmentFeePaymentTriggerClass.sumofEnrollmentFee(trigger.new);
-        if(trigger.isInsert || trigger.isUndelete)
-        {
-            NSP_EnrollmentFeePaymentSharing.onEfpRecordInsert(trigger.new);
-        }
+        NSP_EnrollmentFeePaymentSharing.onEfpRecordInsert(trigger.new);
     }  else if(trigger.isAfter && trigger.isDelete){
         NSP_EnrollmentFeePaymentTriggerClass.sumofEnrollmentFee(trigger.old);
     }
