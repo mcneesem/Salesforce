@@ -289,7 +289,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             System.debug('starting doCSettings');
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
-            cS1.NSP_SiteKey__c = '6Lc9ZIAeAAAAAHl4KudsEIeOVfmKRqyCo1Wq7gD5';
+            cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
             cS1.NSP_SiteUrl__c = 'https://webforms.secure.force.com/';
             upsert cS1;
             System.debug('NSP_GoogleRecaptchaSettings.NSP_SiteKey : ' + cS1.NSP_SiteKey__c);
