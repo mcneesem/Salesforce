@@ -124,7 +124,9 @@ public class NSP_ContactTriggerHelper {
     public void preventOneTrustDupe(Contact contactObject) {
         List <Contact> contactOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Contact WHERE OneTrust_Opt_Out__c = true
                                               AND Email != null AND Email = :contactObject.Email LIMIT 1];
-        if(contactOneTrustDupe.size() > 0) contactObject.addError(System.Label.NSP_OneTrustDupeError);
+        List <Lead> leadOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Lead WHERE OneTrust_Opt_Out__c = true
+                                        AND Email != null AND Email = :contactObject.Email LIMIT 1];
+        if(contactOneTrustDupe.size() > 0 || leadOneTrustDupe.size() > 0) contactObject.addError(System.Label.NSP_OneTrustDupeError);
     }
     
     
