@@ -786,9 +786,11 @@ insert tasksList;
     // * Prevents Lead duplicate based on email address and OneTrust Opt-out
     // * Matt McNeese      04/28/2023           AZD Story 212804
     public void preventOneTrustDupe(Lead leadObject) {
+        List <Contact> contactOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Contact WHERE OneTrust_Opt_Out__c = true
+                                              AND Email != null AND Email = :leadObject.Email LIMIT 1];
         List <Lead> leadOneTrustDupe = [SELECT Id, OneTrust_Opt_Out__c, Email FROM Lead WHERE OneTrust_Opt_Out__c = true
                                         AND Email != null AND Email = :leadObject.Email LIMIT 1];
-        if(leadOneTrustDupe.size() > 0) leadObject.addError(System.Label.NSP_OneTrustDupeError);
+        if(contactOneTrustDupe.size() > 0 || leadOneTrustDupe.size() > 0) leadObject.addError(System.Label.NSP_OneTrustDupeError);
     }
     
     
