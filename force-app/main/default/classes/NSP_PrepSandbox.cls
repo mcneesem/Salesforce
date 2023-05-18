@@ -290,7 +290,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             System.debug('starting doCSettings');
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
-            cS1.NSP_SiteUrl__c = 'https://webforms.secure.force.com/';
+            cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
             upsert cS1;
             System.debug('NSP_GoogleRecaptchaSettings.NSP_SiteKey : ' + cS1.NSP_SiteKey__c);
             System.debug('NSP_GoogleRecaptchaSettings.NSP_SiteUrl : ' + cS1.NSP_SiteUrl__c);
