@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cancelled_Status_Validation</fullName>
+    <active>true</active>
+    <description>Prevents editing of Events with a status of &quot;Cancelled&quot;</description>
+    <errorConditionFormula>AND(
+NOT( ISNEW()),
+ISPICKVAL(PRIORVALUE( NSP_Status__c ),&quot;Cancelled&quot;),
+NOT ($Setup.NSP_Trigger_Switch__c.EventValidations__c)
+)</errorConditionFormula>
+    <errorMessage>Once the event is Cancelled, it cannot be modified.</errorMessage>
+</ValidationRule>

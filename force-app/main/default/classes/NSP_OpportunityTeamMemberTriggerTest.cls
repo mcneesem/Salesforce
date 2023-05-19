@@ -75,7 +75,7 @@ public without sharing class NSP_OpportunityTeamMemberTriggerTest {
         List<OpportunityTeamMember> opportunityteammember_Obj  =  [SELECT OpportunityId,UserId from OpportunityTeamMember];
         System.assertEquals(true,opportunityteammember_Obj.size()>0);
         NSP_OpportunityTeamMemberTriggerHandler obj01 = new NSP_OpportunityTeamMemberTriggerHandler();
-        obj01.afterDelete(new List<sObject>(),new Map<Id,sObject>());
+        obj01.afterDelete(new List<OpportunityTeamMember>(),new Map<Id,OpportunityTeamMember>());
     }  
     
     

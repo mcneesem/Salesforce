@@ -33,8 +33,8 @@ public class NSP_OpportunityTeamMemberTriggerHelper {
                 if(oppList.size() > 0){
                     update oppList;
                 }
-                
             }
+            NSP_EnrollmentFeePaymentSharing.onOppTeamMemberInsert(newList);
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
@@ -77,6 +77,14 @@ public class NSP_OpportunityTeamMemberTriggerHelper {
                     update updateOppList;
                 }
             }
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        }
+    }
+    
+    public void afterDeleteDirector(List<OpportunityTeamMember> oldList,Map<Id, OpportunityTeamMember> oldMap) {
+        try{
+            NSP_EnrollmentFeePaymentSharing.onOppTeamMemberDelete(oldList);
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }

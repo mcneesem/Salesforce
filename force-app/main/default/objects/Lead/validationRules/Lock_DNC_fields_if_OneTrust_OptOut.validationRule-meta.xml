@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_DNC_fields_if_OneTrust_OptOut</fullName>
+    <active>true</active>
+    <description>Locks all Do Not Contact fields from edit (except for Sys Admin) if OneTrust Opt Out Date is populated</description>
+    <errorConditionFormula>AND(
+NOT(ISBLANK( OneTrust_Opt_Out_Date__c ) ),
+OR(
+( ISCHANGED( Do_Not_Contact__c ) &amp;&amp; Do_Not_Contact__c = false ),
+( ISCHANGED( DoNotCall ) &amp;&amp; DoNotCall = false ),
+( ISCHANGED( NSP_Do_Not_Postal_Mail__c ) &amp;&amp; NSP_Do_Not_Postal_Mail__c = false ),
+( ISCHANGED( HasOptedOutOfEmail ) &amp;&amp; HasOptedOutOfEmail = false ),
+( ISCHANGED( HasOptedOutOfFax ) &amp;&amp; HasOptedOutOfFax = false )
+))</errorConditionFormula>
+    <errorDisplayField>OneTrust_Opt_Out__c</errorDisplayField>
+    <errorMessage>You cannot change Do Not Contact fields while OneTrust Opt Out is checked. If OneTrust Opt Out was erroneously checked, please reach out to your System Administrator.</errorMessage>
+</ValidationRule>

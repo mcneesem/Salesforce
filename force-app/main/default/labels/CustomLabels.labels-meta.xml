@@ -932,6 +932,13 @@
         <value>For non WO opportunities please have a order generated AND closing appointment event</value>
     </labels>
     <labels>
+        <fullName>NSP_OneTrustDupeError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OneTrustDupeError</shortDescription>
+        <value>A duplicate record exists with OneTrust Opt-out selected.</value>
+    </labels>
+    <labels>
         <fullName>NSP_Opp_No_Quoting_for_WO_WS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1340,7 +1347,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP Talent Connect Wet Envelope</shortDescription>
-        <value>a8N8G0000000ANiUAM</value>
+        <value>a8N4x00000012vbEAA</value>
     </labels>
     <labels>
         <fullName>NSP_ThankYou_Page</fullName>
@@ -1384,7 +1391,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX Email DL</shortDescription>
-        <value>WXresults@insperity.com.invalid</value>
+        <value>WXresults@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Envelope_Configuration</fullName>
@@ -1428,6 +1435,13 @@
         <protected>false</protected>
         <shortDescription>Retirement Services For Non WO Products</shortDescription>
         <value>Retirement Services can only be added when additional WO products are currently owned by the customer.</value>
+    </labels>
+    <labels>
+        <fullName>SFDC_Blog_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>My test label from metadata api</shortDescription>
+        <value>https://www.sfdcstuff.com/search/label/Lightning</value>
     </labels>
     <labels>
         <fullName>Sales_Roles</fullName>
