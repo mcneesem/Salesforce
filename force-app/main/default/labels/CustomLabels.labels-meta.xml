@@ -142,7 +142,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Account Envelop Configuration</shortDescription>
-        <value>a8N7h000000LS21</value>
+        <value>a8N4x0000000kgpEAA</value>
     </labels>
     <labels>
         <fullName>NSP_Account_Envelope_Configuration</fullName>
@@ -150,7 +150,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Account Envelop Configuration</shortDescription>
-        <value>a8N7h000000LS21</value>
+        <value>a8N4x0000000kgpEAA</value>
     </labels>
     <labels>
         <fullName>NSP_Account_Segment_Core_Sales</fullName>
@@ -216,7 +216,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Altula Envelope Configuration</shortDescription>
-        <value>a8N7h000000LS24</value>
+        <value>a8N4x0000000kh9EAA</value>
     </labels>
     <labels>
         <fullName>NSP_AnalysisStageCriteria</fullName>
@@ -288,14 +288,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Envelope Configuration</shortDescription>
-        <value>a8N7h000000LS2A</value>
+        <value>a8N4x0000000leVEAQ</value>
     </labels>
     <labels>
         <fullName>NSP_BPS_Wet_Envelope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Wet Envelope</shortDescription>
-        <value>a8N7h000000LS2A</value>
+        <value>a8N4x0000000kh4EAA</value>
     </labels>
     <labels>
         <fullName>NSP_Benchmark_Date_Validation</fullName>
@@ -388,7 +388,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Channel Program DL</shortDescription>
-        <value>raj.raghavan@insperity.com.invalid</value>
+        <value>raj.raghavan@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_Client_For_Life_to_Create_Quote</fullName>
@@ -584,14 +584,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Docusign Account Id</shortDescription>
-        <value>65500</value>
+        <value>24583</value>
     </labels>
     <labels>
         <fullName>NSP_Docusign_Base_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Docusign Base URL</shortDescription>
-        <value>https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
+        <value>https://na11.springcm.com/atlas/doclauncher/OneClickDocGen</value>
     </labels>
     <labels>
         <fullName>NSP_EMP_THRESH_150</fullName>
@@ -667,7 +667,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_FTA_Base_URL</shortDescription>
-        <value>https://testportalapps.insperity.com/financialcomparison/financialanalysis/</value>
+        <value>https://portalapps.insperity.com/financialcomparison/financialanalysis/</value>
     </labels>
     <labels>
         <fullName>NSP_FTA_OppId</fullName>
@@ -751,14 +751,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>HR Services Envelope Configuration</shortDescription>
-        <value>a8N7h000000LS25</value>
+        <value>a8N4x0000000khEEAQ</value>
     </labels>
     <labels>
         <fullName>NSP_HR_Wet_Envelope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>HR Wet Envelope</shortDescription>
-        <value>a8N7h000000LS26</value>
+        <value>a8N4x0000000khFEAQ</value>
     </labels>
     <labels>
         <fullName>NSP_Implementation_Start_Date_Error</fullName>
@@ -824,13 +824,6 @@
         <value>Please Provide Invoice to Email Contact</value>
     </labels>
     <labels>
-        <fullName>NSP_OneTrustDupeError</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP_OneTrustDupeError</shortDescription>
-        <value>A duplicate record exists with OneTrust Opt-out selected.</value>
-    </labels>
-    <labels>
         <fullName>NSP_LeadTriggerError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -865,7 +858,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Mid Market Sales Email</shortDescription>
-        <value>midmarketleads@insperity.com.invalid</value>
+        <value>midmarketleads@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_MoveOpportunityToAnalysisiStage</fullName>
@@ -894,7 +887,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>New Client Sales Email</shortDescription>
-        <value>newclientsales@insperity.com.invalid</value>
+        <value>newclientsales@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_NoQuoteForWOProducts</fullName>
@@ -937,6 +930,13 @@
         <protected>false</protected>
         <shortDescription>Non WO Closing Appointment Or Docusign</shortDescription>
         <value>For non WO opportunities please have a order generated AND closing appointment event</value>
+    </labels>
+    <labels>
+        <fullName>NSP_OneTrustDupeError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_OneTrustDupeError</shortDescription>
+        <value>A duplicate record exists with OneTrust Opt-out selected.</value>
     </labels>
     <labels>
         <fullName>NSP_Opp_No_Quoting_for_WO_WS</fullName>
@@ -1001,7 +1001,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_Opportunity_Closed_Won_AlertAdditionalEmails</shortDescription>
-        <value>dummyemail@insperity.com.invalid</value>
+        <value>dummyemail@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_Other_Primary_Product</fullName>
@@ -1231,14 +1231,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Recruiting Envelope Configuration</shortDescription>
-        <value>a8N7h000000LS29</value>
+        <value>a8N4x0000000khTEAQ</value>
     </labels>
     <labels>
         <fullName>NSP_Recruiting_Wet_Envelope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Recruiting Wet Envelope</shortDescription>
-        <value>a8N7h000000LS28</value>
+        <value>a8N4x0000000khPEAQ</value>
     </labels>
     <labels>
         <fullName>NSP_ReferralLeadErrorMessage</fullName>
@@ -1266,7 +1266,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sales Envelope Configuration</shortDescription>
-        <value>a8N7h000000LS22</value>
+        <value>a8N4x0000000kguEAA</value>
     </labels>
     <labels>
         <fullName>NSP_Sales_NumberOfDaysBeforeRenewalDate</fullName>
@@ -1347,7 +1347,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP Talent Connect Wet Envelope</shortDescription>
-        <value>a8N8G0000000ANiUAM</value>
+        <value>a8N4x00000012vbEAA</value>
     </labels>
     <labels>
         <fullName>NSP_ThankYou_Page</fullName>
@@ -1383,7 +1383,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WO Email DL</shortDescription>
-        <value>results@insperity.com.invalid</value>
+        <value>results@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Email_DL</fullName>
@@ -1391,21 +1391,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX Email DL</shortDescription>
-        <value>WXresults@insperity.com.invalid</value>
+        <value>WXresults@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Envelope_Configuration</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX Envelope Configuration</shortDescription>
-        <value>a8N7h000000LS2B</value>
+        <value>a8N4x0000000lezEAA</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Wet_Envelope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX Wet Envelope</shortDescription>
-        <value>a8N7h000000LS27</value>
+        <value>a8N4x0000000khOEAQ</value>
     </labels>
     <labels>
         <fullName>NSP_Workforce_Primary_Product</fullName>
