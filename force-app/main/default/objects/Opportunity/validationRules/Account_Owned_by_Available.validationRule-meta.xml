@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Owned_by_Available</fullName>
+    <active>true</active>
+    <description>215092 No New Opty if Account Owner = Available</description>
+    <errorConditionFormula>AND(Account.Owner.LastName = &apos;Available&apos;,  ISNEW() )</errorConditionFormula>
+    <errorMessage>New opportunities cannot be created on accounts owned by &quot;Available&quot;. Please contact your District Administrator to request this account.</errorMessage>
+</ValidationRule>
