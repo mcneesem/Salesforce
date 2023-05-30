@@ -95,6 +95,11 @@
         <default>false</default>
         <label>MM Sales</label>
     </customValue>
+    <customValue>
+        <fullName>Corporate</fullName>
+        <default>false</default>
+        <label>Corporate</label>
+    </customValue>
     <masterLabel>Sales Region</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

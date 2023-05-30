@@ -25,6 +25,11 @@
         <default>false</default>
         <label>MidMarket</label>
     </customValue>
+    <customValue>
+        <fullName>Corporate</fullName>
+        <default>false</default>
+        <label>Corporate</label>
+    </customValue>
     <masterLabel>Division</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

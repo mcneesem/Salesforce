@@ -14,7 +14,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         System.debug('Manual Step Sandbox Name: ' + sandbox);
         doUserImport(sandbox);      
         doCMetadata(sandbox);
-        doCLabels();
+        doCLabels(sandbox);
         doEmailCLabels();
         doEmailAlerts();
         setPostRefreshRunFlag();
@@ -23,7 +23,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public pagereference runManualStepsButton(){
         try{
             doCMetadata(OrgSettings__c.getOrgDefaults().SandboxName__c);
-            doCLabels();
+            doCLabels(OrgSettings__c.getOrgDefaults().SandboxName__c);
             doEmailCLabels();
             doEmailAlerts();
             setPostRefreshRunFlag();
@@ -135,7 +135,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
     
-    public static void doCLabels(){
+    public static void doCLabels(String sandboxName){
         try {
             System.debug('starting doCLabels');
             MetadataService.MetadataPort service = createService();
@@ -155,8 +155,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
                     switch on cL.fullName {
-                        when 'NSP_FTA_Base_URL' {
-                           cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
+                        when 'NSP_FTA_Base_URL' {                           
+                           switch on sandboxName {
+                                when 'sfuat' {
+                                    cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
+                                }
+                                when else {
+                                    cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
+                                }
+                            }
                         }
                         when 'NSP_Docusign_Account_Id' {
                            cLUpd.value = '65500';
@@ -290,7 +297,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             System.debug('starting doCSettings');
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
-            cS1.NSP_SiteUrl__c = 'https://webforms.secure.force.com/';
+            cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
             upsert cS1;
             System.debug('NSP_GoogleRecaptchaSettings.NSP_SiteKey : ' + cS1.NSP_SiteKey__c);
             System.debug('NSP_GoogleRecaptchaSettings.NSP_SiteUrl : ' + cS1.NSP_SiteUrl__c);

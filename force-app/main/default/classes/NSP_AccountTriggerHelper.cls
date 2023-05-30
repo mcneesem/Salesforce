@@ -9,16 +9,19 @@
 
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
-private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
-private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
-private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
-private static final string DA_ROLE = 'District Administrator';
-public static List<string> CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
-//Added as part of 128176
-public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
-// Added as part of 194459
-public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
-    
+
+    private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
+    private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
+    private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
+    private static final string DA_ROLE = 'District Administrator';
+    public static List<string> CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
+    //Added as part of 128176
+    public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
+    // Added as part of 194459
+    public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
+    // Added as part of 215091
+    public static List<string> allowedAssignAvailableRoles = System.Label.NSP_Assign_Avail_Roles.split(',');
+
 /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
 * @param newList List of New Accounts.
@@ -93,7 +96,7 @@ public void beforeUpdateDirector(Map<Id, Account> accountNewMap,Map<Id, Account>
         User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
         //modified for user story 191911    
         List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
-        if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
+        if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
             getPermSet = [SELECT Id, 
                         PermissionSetId, 
                         PermissionSet.Name,
@@ -102,12 +105,11 @@ public void beforeUpdateDirector(Map<Id, Account> accountNewMap,Map<Id, Account>
                         PermissionSet.Name =: NSP_SalesConstants.Account_View_All_Modify_All];
         }
         //Added as part of 128176
-        // Modified on 02/2023-part of 194459- Bypass for MM roles
-        if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
+        if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
             if(!getPermSet.isEmpty() || Test.isRunningTest()){
                 restrictAccountChange(accountNewMap, accountOldMap, userDetails);
             }
-        }  
+        }
         //Iterating over the new Account map
         for(Id accountId : accountNewMap.keySet()){
             Account newAccount =  accountNewMap.get(accountId);
@@ -574,24 +576,26 @@ public void setDummyUsers(List<Account> accountList){
   }
 }
 
-/**
-* Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
-* @param accountNewMap Map of New Account.
-* @param accountOldMap Map of Old Account.
-* @return void
-* Ticket 128176
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Ruchi Roy         10/21/2022           Created this method
-* Ruchi Roy         11/17/2022           Modified this method for 190991
-* Rahul Singh       11/29/2022       	 Modified for user story 191911
-*/ 
-
+// /**
+// * Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
+// * @param accountNewMap Map of New Account.
+// * @param accountOldMap Map of Old Account.
+// * @return void
+// * Ticket 128176
+// * author           | Date              | Description
+// * -------------------------------------------------------------------------------------
+// * Ruchi Roy         10/21/2022           Created this method
+// * Ruchi Roy         11/17/2022           Modified this method for 190991
+// * Rahul Singh       11/29/2022       	 Modified for user story 191911
+// * Modified on 02/2023-part of 194459- Bypass for MM roles
+// * Matt McNeese      05/26/2023       	 Modified for user story 215091
+// */
 public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
     Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
     Set<Id> accOwnerIdSet = new Set<Id>();
     List<String> loggedInUserGrpName = new List<String>();
-    Set<Id> accountTeamMemeberId = new Set<Id>();
+    Set<Id> accountTeamMemberId = new Set<Id>();
+    List<User> userAvailable =[SELECT Id, Name FROM User where Name = 'Available'];
     
     for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
         loggedInUserGrpName.add(gMem.Group.Name);
@@ -601,18 +605,23 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
                            accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
                        }
     for(NSP_Account_Team__c accTeam : [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c where NSP_Account__c =:accountNewMap.keySet()] ){
-                    accountTeamMemeberId.add(accTeam.NSP_User__c);
-    }                  
+                    accountTeamMemberId.add(accTeam.NSP_User__c);
+    }
     try {
         for(Account acc : accountNewMap.values()){
-            if(!accOwnerSalesOfficeMap.isEmpty()){
-                Integer isallowUpdate = 0;
-                    if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemeberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
-                        isallowUpdate = isallowUpdate + 1;
+            Integer isallowUpdate = 0;
+            if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
+                if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
+                    isallowUpdate++;
                 }
-                if(isallowUpdate == 0){
-                    acc.addError(system.label.NSP_AccountTriggerError);
+            }
+            else if(!accOwnerSalesOfficeMap.isEmpty()){
+                if((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId()))){
+                    isallowUpdate++;
                 }
+            }
+            if(isallowUpdate == 0 && !MMRoles.contains(loggedinUser.UserRole.Name)){
+                acc.addError(system.label.NSP_AccountTriggerError);
             }
         }
     } catch(Exception ex) {
