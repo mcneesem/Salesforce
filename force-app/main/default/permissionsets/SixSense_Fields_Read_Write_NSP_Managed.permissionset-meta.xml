@@ -202,5 +202,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>6Sense Fields Elebvated Read Write - NSP Managed</label>
+    <label>6Sense Fields Elevated Read Write - NSP Managed</label>
 </PermissionSet>
