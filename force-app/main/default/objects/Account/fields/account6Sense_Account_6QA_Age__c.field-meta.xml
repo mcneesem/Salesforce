@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>account6Sense_Account_6QA_Age__c</fullName>
+    <description>Custom formula field to calculate the 6Sense age</description>
+    <externalId>false</externalId>
+    <formula>IF( account6QA6sense__c , TODAY()-  account6QAStartDate6sense__c , NULL)</formula>
+    <label>6Sense Account 6QA Age</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
