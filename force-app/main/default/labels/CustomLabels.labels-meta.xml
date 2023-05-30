@@ -846,6 +846,13 @@
         <value>MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant</value>
     </labels>
     <labels>
+        <fullName>NSP_Assign_Avail_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Assign Available Roles</shortDescription>
+        <value>Regional Administrator,Regional Manager,MidMarket Administrator,Regional VP,District Administrator,District Manager</value>
+    </labels>
+    <labels>
         <fullName>NSP_MidMarket_Threshold</fullName>
         <categories>Account Segment</categories>
         <language>en_US</language>
