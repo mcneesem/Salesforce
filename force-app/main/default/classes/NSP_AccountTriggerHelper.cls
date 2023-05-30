@@ -94,12 +94,9 @@ public void beforeUpdateDirector(Map<Id, Account> accountNewMap,Map<Id, Account>
         //modified for user story 191911    
         List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
         if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){                 
-            getPermSet = [SELECT Id, 
-                        PermissionSetId, 
-                        PermissionSet.Name,
-                        AssigneeId FROM PermissionSetAssignment 
-                        WHERE AssigneeId =: userDetails.Id AND 
-                        PermissionSet.Name =: NSP_SalesConstants.Account_View_All_Modify_All];
+            getPermSet = [SELECT Id, PermissionSetId, PermissionSet.Name, AssigneeId  // AZD-207829 modified to include perm set group and profile
+                FROM PermissionSetAssignment WHERE Assignee.IsActive = true AND AssigneeId =: userDetails.Id AND PermissionSetId IN 
+                    (SELECT ParentId FROM ObjectPermissions WHERE SobjectType = 'Account' AND PermissionsModifyAllRecords = true )];
         }
         //Added as part of 128176
         // Modified on 02/2023-part of 194459- Bypass for MM roles
