@@ -258,6 +258,10 @@
             <fullName>Western</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values> 
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
@@ -776,6 +780,10 @@
             <fullName>Western 4</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values> 
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Status__c</picklist>
