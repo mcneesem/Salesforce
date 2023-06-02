@@ -86,5 +86,9 @@
             <controllingFieldValue>MidMarket</controllingFieldValue>
             <valueName>MM Sales</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Corporate</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

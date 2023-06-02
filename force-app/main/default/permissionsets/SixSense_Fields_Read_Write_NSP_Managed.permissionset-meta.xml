@@ -22,6 +22,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.account6Sense_Account_6QA_Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.accountBuyingStage6sense__c</field>
         <readable>true</readable>
@@ -142,6 +147,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.account6Sense_Account_6QA_Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.accountBuyingStage6sense__c</field>
         <readable>true</readable>
@@ -192,5 +202,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>6Sense Fields Elebvated Read Write - NSP Managed</label>
+    <label>6Sense Fields Elevated Read Write - NSP Managed</label>
 </PermissionSet>

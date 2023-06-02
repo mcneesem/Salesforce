@@ -23,6 +23,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.account6Sense_Account_6QA_Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.accountBuyingStage6sense__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -139,6 +144,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.account6QAStartDate6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.account6Sense_Account_6QA_Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
