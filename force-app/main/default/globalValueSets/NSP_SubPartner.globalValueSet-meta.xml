@@ -1246,11 +1246,6 @@
         <label>FSI- NOT CURRENTLY REGISTERED</label>
     </customValue>
     <customValue>
-        <fullName>FSI-  NOT CURRENTLY REGISTERED</fullName>
-        <default>false</default>
-        <label>FSI-  NOT CURRENTLY REGISTERED</label>
-    </customValue>
-    <customValue>
         <fullName>FSI- Not Registered with FSI</fullName>
         <default>false</default>
         <label>FSI- Not Registered with FSI</label>
