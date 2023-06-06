@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MidMarket_CSA_only_for_MM_Segment</fullName>
+    <active>true</active>
+    <description>Prevents the Mid-MarketClientServiceAgreement document selection if the NSP_Number_of_Employees &lt;= the NSP_MidMarket_Threshold custom label</description>
+    <errorConditionFormula>NSP_Number_of_Employees__c &lt;= VALUE($Label.NSP_MidMarket_Threshold) &amp;&amp; ISPICKVAL( NSP_Merge_On_Demand_Template_Selection__c, &quot;Mid-MarketClientServiceAgreement&quot;)</errorConditionFormula>
+    <errorDisplayField>NSP_Merge_On_Demand_Template_Selection__c</errorDisplayField>
+    <errorMessage>The Mid-MarketClientServiceAgreement can only be chosen when the Account Segment = MidMarket</errorMessage>
+</ValidationRule>
