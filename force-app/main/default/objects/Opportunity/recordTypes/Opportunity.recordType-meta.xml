@@ -878,6 +878,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Trane U%2ES%2E Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>United Franchise Group %28UFG%29</fullName>
             <default>false</default>
         </values>
@@ -887,6 +891,10 @@
         </values>
         <values>
             <fullName>VentureX Locations %28UFG franchise%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Veterinary Study Group</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1266,6 +1274,10 @@
         </values>
         <values>
             <fullName>Questco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rippling</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2901,6 +2913,418 @@
         </values>
         <values>
             <fullName>FIRE Drill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  Elevation Financial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  FHN Financial Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  JW Cole</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  LASALLE ST SECURITIES%2C L%2EL%2EC%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  McCarley and Cook Financial Planners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  NOT CURRENTLY REGISTERED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  Optivise Advisory Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  Our House Wealth Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  Secured Retirement Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  The Knox Group Wealth Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI-  The Strategic Financial Alliance Inc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- AE Financial Services%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- AE Wealth Management%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Advisor Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Advisory Services Network</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Aegis Capital Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- American Portfolios Financial Services%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Atlas Brown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Auctus Advisors LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Avantax Wealth Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Bellpointe Asset Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Berthel Fisher %26 Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- CADARET%2C GRANT %26 CO%2E%2C INC%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- CUSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- CWM%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cadaret%2C Grant %26 Co%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Camarda Wealth Advisory Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cambridge Investment Research</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Capital Investment Group%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Centaurus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cetera Advisor Networks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cetera Financial Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cetera Financial Specialists</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cetera Investors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Coastal Equities%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Commonwealth Financial Network</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Concord Wealth partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Concourse Financial Group Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Crown Capital Securities%2C LP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Cutter and Company%2C Inc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Equitable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- FSC Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Financial Plan%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- First Command Financial Services%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- GA Repple and Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Geneos Wealth Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Independence Square Holdings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Independent Financial Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Independent Wealth Network Inc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Invenio Wealth Partners%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Islamorada Investment Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- J%2EW%2E Cole Financial Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Kestra Financial%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Kommons Financial LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Kovack Securities%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- LPL Financial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Lincoln Investment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Lion Street Financial%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- MML Investors Services%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Madison Avenue Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Madison Paige</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Mutual Securities Inc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- NEXT Financial Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- NOT CURRENTLY REGISTERED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Not Registered with FSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- PKS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Paladin Wealth Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Park Avenue Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- PlanMember Securities Corp%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Portland Private Wealth Management%2C Inc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Primoris Wealth Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Principal Securities%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Private Client Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Prospera Financial Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Pruco Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- RBC CAPITAL MARKETS%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- RIA %28NO BD Affiliation%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Raymond James Financial Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Rittman Capital Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Royal Alliance Associates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- SCF Securities%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- SagePoint Financial Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Securian Financial Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Securities America%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Sound Income Strategies%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Spire Investment Partners%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Stifel Independent Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- The WealthPlan LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Totus WM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Townsend Wealth Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Transamerica Financial Advisors%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Triad Advisors%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- VISIONARY WEALTH ADVISORS%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Valic Financial Advisors%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Voya Financial Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Wealthcare Financial Group%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Wealthnet Investments%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Wells Fargo Advisors Financial Network</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Western International Securities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Wisdom Index Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Woodbury Financial Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Yarger Wealth Strategies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- cfd Investments%2C Inc%2E</fullName>
             <default>false</default>
         </values>
         <values>
