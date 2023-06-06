@@ -2456,6 +2456,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_ICP__c</fieldItem>
+                <identifier>RecordNSP_ICP_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Is_Sales_Office_Assigned__c</fieldItem>
                 <identifier>RecordNSP_Is_Sales_Office_Assigned_cField</identifier>
             </fieldInstance>

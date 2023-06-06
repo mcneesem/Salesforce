@@ -3,6 +3,11 @@
     <description>Read/Write on 6Sense Custom fields in Accounts, Contacts, Leads</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.NSP_ICP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.account6QA6sense__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -124,6 +129,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.contactUpdateDate6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.NSP_ICP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
