@@ -3,5 +3,5 @@
     <fullName>Account_Owned_by_Available</fullName>
     <active>true</active>
     <errorConditionFormula>AND(Account.Owner.LastName = &apos;Available&apos;, ISNEW() )</errorConditionFormula>
-    <errorMessage>New contacts cannot be created on accounts owned by &quot;Available&quot;. Please contact your District Administrator to request this account.</errorMessage>
+    <errorMessage>New contacts cannot be created on accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</errorMessage>
 </ValidationRule>
