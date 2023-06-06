@@ -3,7 +3,7 @@
     <fullName>NSP_ICP__c</fullName>
     <externalId>false</externalId>
     <label>ICP</label>
-    <precision>9</precision>
+    <precision>5</precision>
     <required>false</required>
     <scale>4</scale>
     <trackFeedHistory>false</trackFeedHistory>
