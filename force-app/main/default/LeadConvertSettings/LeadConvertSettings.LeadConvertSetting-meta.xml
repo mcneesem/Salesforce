@@ -4,54 +4,6 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
-            <inputField>NSP_Have_You_Worked_With_Them_Before_Now__c</inputField>
-            <outputField>NSP_Have_You_Worked_With_Them_Before_Now__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_How_did_you_hear_about_Insperity__c</inputField>
-            <outputField>NSP_How_did_you_hear_about_Insperity__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_HowFamiliar_is_the_company_with_PEOs__c</inputField>
-            <outputField>NSP_HowFamiliar_is_the_company_with_PEOs__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_If_other_please_indicate_how__c</inputField>
-            <outputField>NSP_If_other_please_indicate_how__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_If_yes_how_many__c</inputField>
-            <outputField>NSP_If_yes_how_many__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_MedicalRenewal__c</inputField>
-            <outputField>NSP_MedicalRenewal__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_NAICS__c</inputField>
-            <outputField>NSP_NAICS__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_NaicsDesc__c</inputField>
-            <outputField>NSP_NaicsDesc__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Other_Current_Provider__c</inputField>
-            <outputField>NSP_Other_Current_Provider__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Partner__c</inputField>
-            <outputField>NSP_Partner__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Previous_Company__c</inputField>
-            <outputField>NSP_Previous_Company__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Reason_looking_to_switch__c</inputField>
-            <outputField>NSP_Reason_looking_to_switch__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>NSP_Sales_Office__c</inputField>
             <outputField>NSP_Sales_Office__c</outputField>
         </mappingFields>
@@ -183,6 +135,58 @@
             <inputField>NSP_Friend__c</inputField>
             <outputField>NSP_Friend__c</outputField>
         </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Have_You_Worked_With_Them_Before_Now__c</inputField>
+            <outputField>NSP_Have_You_Worked_With_Them_Before_Now__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_How_did_you_hear_about_Insperity__c</inputField>
+            <outputField>NSP_How_did_you_hear_about_Insperity__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_HowFamiliar_is_the_company_with_PEOs__c</inputField>
+            <outputField>NSP_HowFamiliar_is_the_company_with_PEOs__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_If_other_please_indicate_how__c</inputField>
+            <outputField>NSP_If_other_please_indicate_how__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_If_yes_how_many__c</inputField>
+            <outputField>NSP_If_yes_how_many__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_ICP__c</inputField>
+            <outputField>NSP_ICP__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_MedicalRenewal__c</inputField>
+            <outputField>NSP_MedicalRenewal__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_NAICS__c</inputField>
+            <outputField>NSP_NAICS__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_NaicsDesc__c</inputField>
+            <outputField>NSP_NaicsDesc__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Other_Current_Provider__c</inputField>
+            <outputField>NSP_Other_Current_Provider__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Partner__c</inputField>
+            <outputField>NSP_Partner__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Previous_Company__c</inputField>
+            <outputField>NSP_Previous_Company__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Reason_looking_to_switch__c</inputField>
+            <outputField>NSP_Reason_looking_to_switch__c</outputField>
+        </mappingFields>
         <outputObject>Account</outputObject>
     </objectMapping>
     <objectMapping>
@@ -244,6 +248,10 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
+            <inputField>NSP_Nonprofit_Organization_Name__c</inputField>
+            <outputField>NSP_Nonprofit_Organization_Name__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_Current_Provider__c</inputField>
             <outputField>NSP_Current_Provider__c</outputField>
         </mappingFields>
@@ -276,12 +284,20 @@
             <outputField>NSP_NonprofitNameAddress__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>NSP_Nonprofit_Organization_Name__c</inputField>
-            <outputField>NSP_Nonprofit_Organization_Name__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>NSP_Nonprofit_Organization_Tax_Id__c</inputField>
             <outputField>NSP_TaxID__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_SubPartner__c</inputField>
+            <outputField>NSP_SubPartner__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_DC_SetTime__c</inputField>
+            <outputField>NSP_DC_SetTime__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Workers_Comp_Renewal__c</inputField>
+            <outputField>NSP_Workers_Comp_Renewal__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>NSP_Number_of_Employees__c</inputField>
@@ -318,18 +334,6 @@
         <mappingFields>
             <inputField>NSP_SIC__c</inputField>
             <outputField>NSP_SIC__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_SubPartner__c</inputField>
-            <outputField>NSP_SubPartner__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_DC_SetTime__c</inputField>
-            <outputField>NSP_DC_SetTime__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Workers_Comp_Renewal__c</inputField>
-            <outputField>NSP_Workers_Comp_Renewal__c</outputField>
         </mappingFields>
         <outputObject>Opportunity</outputObject>
     </objectMapping>

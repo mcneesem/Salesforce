@@ -951,6 +951,516 @@
         <label>Fredericks Benefits</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Advisor Group</fullName>
+        <default>false</default>
+        <label>FSI- Advisor Group</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Advisory Services Network</fullName>
+        <default>false</default>
+        <label>FSI- Advisory Services Network</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- AE Financial Services, LLC</fullName>
+        <default>false</default>
+        <label>FSI- AE Financial Services, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Aegis Capital Corp</fullName>
+        <default>false</default>
+        <label>FSI- Aegis Capital Corp</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- AE Wealth Management, LLC</fullName>
+        <default>false</default>
+        <label>FSI- AE Wealth Management, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- American Portfolios Financial Services, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- American Portfolios Financial Services, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Atlas Brown</fullName>
+        <default>false</default>
+        <label>FSI- Atlas Brown</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Auctus Advisors LLC</fullName>
+        <default>false</default>
+        <label>FSI- Auctus Advisors LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Avantax Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI- Avantax Wealth Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Bellpointe Asset Management</fullName>
+        <default>false</default>
+        <label>FSI- Bellpointe Asset Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Berthel Fisher &amp; Company</fullName>
+        <default>false</default>
+        <label>FSI- Berthel Fisher &amp; Company</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cadaret, Grant &amp; Co.</fullName>
+        <default>false</default>
+        <label>FSI- Cadaret, Grant &amp; Co.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <default>false</default>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Camarda Wealth Advisory Group</fullName>
+        <default>false</default>
+        <label>FSI- Camarda Wealth Advisory Group</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cambridge Investment Research</fullName>
+        <default>false</default>
+        <label>FSI- Cambridge Investment Research</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Capital Investment Group, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Capital Investment Group, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Centaurus</fullName>
+        <default>false</default>
+        <label>FSI- Centaurus</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cetera Advisor Networks</fullName>
+        <default>false</default>
+        <label>FSI- Cetera Advisor Networks</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cetera Financial Group</fullName>
+        <default>false</default>
+        <label>FSI- Cetera Financial Group</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cetera Financial Specialists</fullName>
+        <default>false</default>
+        <label>FSI- Cetera Financial Specialists</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cetera Investors</fullName>
+        <default>false</default>
+        <label>FSI- Cetera Investors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- cfd Investments, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- cfd Investments, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Coastal Equities, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Coastal Equities, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Commonwealth Financial Network</fullName>
+        <default>false</default>
+        <label>FSI- Commonwealth Financial Network</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Concord Wealth partners</fullName>
+        <default>false</default>
+        <label>FSI- Concord Wealth partners</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Concourse Financial Group Securities</fullName>
+        <default>false</default>
+        <label>FSI- Concourse Financial Group Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Crown Capital Securities, LP</fullName>
+        <default>false</default>
+        <label>FSI- Crown Capital Securities, LP</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- CUSO</fullName>
+        <default>false</default>
+        <label>FSI- CUSO</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cutter and Company, Inc</fullName>
+        <default>false</default>
+        <label>FSI- Cutter and Company, Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- CWM, LLC</fullName>
+        <default>false</default>
+        <label>FSI- CWM, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  Elevation Financial</fullName>
+        <default>false</default>
+        <label>FSI-  Elevation Financial</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Equitable</fullName>
+        <default>false</default>
+        <label>FSI- Equitable</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  FHN Financial Securities</fullName>
+        <default>false</default>
+        <label>FSI-  FHN Financial Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Financial Plan, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Financial Plan, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- First Command Financial Services, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- First Command Financial Services, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- FSC Securities</fullName>
+        <default>false</default>
+        <label>FSI- FSC Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- GA Repple and Company</fullName>
+        <default>false</default>
+        <label>FSI- GA Repple and Company</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Geneos Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI- Geneos Wealth Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Independence Square Holdings</fullName>
+        <default>false</default>
+        <label>FSI- Independence Square Holdings</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Independent Financial Group</fullName>
+        <default>false</default>
+        <label>FSI- Independent Financial Group</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Independent Wealth Network Inc</fullName>
+        <default>false</default>
+        <label>FSI- Independent Wealth Network Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Invenio Wealth Partners, LLC</fullName>
+        <default>false</default>
+        <label>FSI- Invenio Wealth Partners, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Islamorada Investment Management</fullName>
+        <default>false</default>
+        <label>FSI- Islamorada Investment Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- J.W. Cole Financial Inc.</fullName>
+        <default>false</default>
+        <label>FSI- J.W. Cole Financial Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  JW Cole</fullName>
+        <default>false</default>
+        <label>FSI-  JW Cole</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Kestra Financial, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Kestra Financial, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Kommons Financial LLC</fullName>
+        <default>false</default>
+        <label>FSI- Kommons Financial LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Kovack Securities, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Kovack Securities, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  LASALLE ST SECURITIES, L.L.C.</fullName>
+        <default>false</default>
+        <label>FSI-  LASALLE ST SECURITIES, L.L.C.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Lincoln Investment</fullName>
+        <default>false</default>
+        <label>FSI- Lincoln Investment</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Lion Street Financial, LLC</fullName>
+        <default>false</default>
+        <label>FSI- Lion Street Financial, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- LPL Financial</fullName>
+        <default>false</default>
+        <label>FSI- LPL Financial</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Madison Avenue Securities</fullName>
+        <default>false</default>
+        <label>FSI- Madison Avenue Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Madison Paige</fullName>
+        <default>false</default>
+        <label>FSI- Madison Paige</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  McCarley and Cook Financial Planners</fullName>
+        <default>false</default>
+        <label>FSI-  McCarley and Cook Financial Planners</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- MML Investors Services, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- MML Investors Services, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Mutual Securities Inc</fullName>
+        <default>false</default>
+        <label>FSI- Mutual Securities Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- NEXT Financial Group</fullName>
+        <default>false</default>
+        <label>FSI- NEXT Financial Group</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- NOT CURRENTLY REGISTERED</fullName>
+        <default>false</default>
+        <label>FSI- NOT CURRENTLY REGISTERED</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Not Registered with FSI</fullName>
+        <default>false</default>
+        <label>FSI- Not Registered with FSI</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  Optivise Advisory Services</fullName>
+        <default>false</default>
+        <label>FSI-  Optivise Advisory Services</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  Our House Wealth Advisors</fullName>
+        <default>false</default>
+        <label>FSI-  Our House Wealth Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Paladin Wealth Partners</fullName>
+        <default>false</default>
+        <label>FSI- Paladin Wealth Partners</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Park Avenue Securities</fullName>
+        <default>false</default>
+        <label>FSI- Park Avenue Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- PKS</fullName>
+        <default>false</default>
+        <label>FSI- PKS</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- PlanMember Securities Corp.</fullName>
+        <default>false</default>
+        <label>FSI- PlanMember Securities Corp.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Portland Private Wealth Management, Inc</fullName>
+        <default>false</default>
+        <label>FSI- Portland Private Wealth Management, Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Primoris Wealth Advisors</fullName>
+        <default>false</default>
+        <label>FSI- Primoris Wealth Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Principal Securities, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Principal Securities, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Private Client Services</fullName>
+        <default>false</default>
+        <label>FSI- Private Client Services</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Prospera Financial Services</fullName>
+        <default>false</default>
+        <label>FSI- Prospera Financial Services</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Pruco Securities</fullName>
+        <default>false</default>
+        <label>FSI- Pruco Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Raymond James Financial Services</fullName>
+        <default>false</default>
+        <label>FSI- Raymond James Financial Services</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- RBC CAPITAL MARKETS, LLC</fullName>
+        <default>false</default>
+        <label>FSI- RBC CAPITAL MARKETS, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- RIA (NO BD Affiliation)</fullName>
+        <default>false</default>
+        <label>FSI- RIA (NO BD Affiliation)</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Rittman Capital Management</fullName>
+        <default>false</default>
+        <label>FSI- Rittman Capital Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Royal Alliance Associates</fullName>
+        <default>false</default>
+        <label>FSI- Royal Alliance Associates</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- SagePoint Financial Inc.</fullName>
+        <default>false</default>
+        <label>FSI- SagePoint Financial Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- SCF Securities, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- SCF Securities, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  Secured Retirement Advisors</fullName>
+        <default>false</default>
+        <label>FSI-  Secured Retirement Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Securian Financial Services</fullName>
+        <default>false</default>
+        <label>FSI- Securian Financial Services</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Securities America, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Securities America, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Sound Income Strategies, LLC</fullName>
+        <default>false</default>
+        <label>FSI- Sound Income Strategies, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Spire Investment Partners, LLC</fullName>
+        <default>false</default>
+        <label>FSI- Spire Investment Partners, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Stifel Independent Advisors</fullName>
+        <default>false</default>
+        <label>FSI- Stifel Independent Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  The Knox Group Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI-  The Knox Group Wealth Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  The Strategic Financial Alliance Inc</fullName>
+        <default>false</default>
+        <label>FSI-  The Strategic Financial Alliance Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- The WealthPlan LLC</fullName>
+        <default>false</default>
+        <label>FSI- The WealthPlan LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Totus WM</fullName>
+        <default>false</default>
+        <label>FSI- Totus WM</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Townsend Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI- Townsend Wealth Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Transamerica Financial Advisors, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Transamerica Financial Advisors, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Triad Advisors, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Triad Advisors, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Valic Financial Advisors, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Valic Financial Advisors, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- VISIONARY WEALTH ADVISORS, LLC</fullName>
+        <default>false</default>
+        <label>FSI- VISIONARY WEALTH ADVISORS, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Voya Financial Advisors</fullName>
+        <default>false</default>
+        <label>FSI- Voya Financial Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Wealthcare Financial Group, Inc.</fullName>
+        <default>false</default>
+        <label>FSI- Wealthcare Financial Group, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Wealthnet Investments, LLC</fullName>
+        <default>false</default>
+        <label>FSI- Wealthnet Investments, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Wells Fargo Advisors Financial Network</fullName>
+        <default>false</default>
+        <label>FSI- Wells Fargo Advisors Financial Network</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Western International Securities</fullName>
+        <default>false</default>
+        <label>FSI- Western International Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Wisdom Index Advisors</fullName>
+        <default>false</default>
+        <label>FSI- Wisdom Index Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Woodbury Financial Services</fullName>
+        <default>false</default>
+        <label>FSI- Woodbury Financial Services</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Yarger Wealth Strategies</fullName>
+        <default>false</default>
+        <label>FSI- Yarger Wealth Strategies</label>
+    </customValue>
+    <customValue>
         <fullName>Gallagher Benefit Service</fullName>
         <default>false</default>
         <label>Gallagher Benefit Service</label>
@@ -1595,6 +2105,18 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Acisure</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group – TRISURE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Alera Group – TRISURE</label>
+    </customValue>
+    <customValue>
+        <fullName>Alera Group – Forum</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Alera Group – Forum</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>

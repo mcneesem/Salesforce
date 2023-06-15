@@ -3,7 +3,7 @@
     <fullName>NSP_Account_Segment__c</fullName>
     <description>Formula field decides if the Account segment is Midmarket, Emerging Growth or Core sales based on the number of employees</description>
     <externalId>false</externalId>
-    <formula>IF(NSP_Number_of_Employees__c &gt;= 150, &quot;MidMarket&quot;, IF(NSP_Number_of_Employees__c &gt; 50 &amp;&amp; NSP_Number_of_Employees__c &lt; 150, &quot;Emerging Growth&quot;, &quot;Core Sales&quot;))</formula>
+    <formula>IF(NSP_Number_of_Employees__c &gt; VALUE($Label.NSP_MidMarket_Threshold) , &quot;MidMarket&quot;, IF(NSP_Number_of_Employees__c &gt;  VALUE($Label.NSP_Emerging_Growth_Threshold_Employees) &amp;&amp; NSP_Number_of_Employees__c &lt;= VALUE($Label.NSP_MidMarket_Threshold), &quot;Emerging Growth&quot;, &quot;Core Sales&quot;))</formula>
     <label>Account Segment</label>
     <required>false</required>
     <trackTrending>false</trackTrending>

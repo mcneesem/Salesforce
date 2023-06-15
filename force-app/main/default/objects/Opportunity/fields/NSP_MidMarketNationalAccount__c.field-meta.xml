@@ -87,6 +87,11 @@
                 <label>Raymond James Advisors</label>
             </value>
             <value>
+                <fullName>Trane U.S. Inc.</fullName>
+                <default>false</default>
+                <label>Trane U.S. Inc.</label>
+            </value>
+            <value>
                 <fullName>United Franchise Group (UFG)</fullName>
                 <default>false</default>
                 <label>United Franchise Group (UFG)</label>
@@ -100,6 +105,11 @@
                 <fullName>Venture X Members (tenants)</fullName>
                 <default>false</default>
                 <label>Venture X Members (tenants)</label>
+            </value>
+            <value>
+                <fullName>Veterinary Study Group</fullName>
+                <default>false</default>
+                <label>Veterinary Study Group</label>
             </value>
             <value>
                 <fullName>Worldcom PR</fullName>

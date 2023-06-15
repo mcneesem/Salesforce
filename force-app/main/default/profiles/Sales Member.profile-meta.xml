@@ -4,6 +4,21 @@
     <description>Renamed to Sales Member form Traditional Sales</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>User.NSP_Running_Sales_Division__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NSP_Running_Sales_Office__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>User.NSP_Running_Sales_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.account6Sense_Account_6QA_Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
