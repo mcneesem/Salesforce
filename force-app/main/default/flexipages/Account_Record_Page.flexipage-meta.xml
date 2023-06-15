@@ -170,6 +170,32 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>displayConnections</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayNews</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayRecommendedLeads</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayTopCard</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_linkedin:companyMatchContainer</componentName>
+                <identifier>runtime_sales_linkedin_companyMatchContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-797b92f7-becb-4a11-bce8-67e26ce5dd8e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentName>sixsense:x6sense_Sales_Intelligence</componentName>
                 <identifier>sixsense_x6sense_Sales_Intelligence</identifier>
             </componentInstance>
