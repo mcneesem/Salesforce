@@ -55,10 +55,10 @@ public class NSP_MultipleContractFutureClassTest {
         List<Order> allorders = new List<Order>{ord1,ord2};
             insert allorders;
         
-        OrderItem ordpr1 = new OrderItem (OrderId = ord1.Id, Product2Id=product1.Id, UnitPrice=10.0,Quantity=5,PricebookEntryId=pe1std.Id);
-        OrderItem ordpr2 = new OrderItem (OrderId = ord1.Id, Product2Id=product2.Id, UnitPrice=20.0,Quantity=10,PricebookEntryId=pe2std.Id);
-        OrderItem ordpr3 = new OrderItem (OrderId = ord2.Id, Product2Id=product3.Id, UnitPrice=30.0,Quantity=15,PricebookEntryId=pe3std.Id);
-        OrderItem ordpr4 = new OrderItem (OrderId = ord2.Id, Product2Id=product4.Id, UnitPrice=40.0,Quantity=15,PricebookEntryId=pe4std.Id);
+        OrderItem ordpr1 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(), OrderId = ord1.Id, Product2Id=product1.Id, UnitPrice=10.0,Quantity=5,PricebookEntryId=pe1std.Id);
+        OrderItem ordpr2 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(),OrderId = ord1.Id, Product2Id=product2.Id, UnitPrice=20.0, Quantity=10,PricebookEntryId=pe2std.Id);
+        OrderItem ordpr3 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(),OrderId = ord2.Id, Product2Id=product3.Id, UnitPrice=30.0,Quantity=15,PricebookEntryId=pe3std.Id);
+        OrderItem ordpr4 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(),OrderId = ord2.Id, Product2Id=product4.Id, UnitPrice=40.0,Quantity=15,PricebookEntryId=pe4std.Id);
         List<OrderItem> allorderprods = new List<OrderItem>{ordpr1,ordpr2,ordpr3,ordpr4};
             insert allorderprods;
         

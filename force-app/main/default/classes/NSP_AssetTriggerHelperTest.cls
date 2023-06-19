@@ -17,22 +17,27 @@ public class NSP_AssetTriggerHelperTest {
     @testSetup
     static void testData() {
         
+        List<Account> accList = new List<Account>();
         //Account creation
         Account accoutObject = new Account();
         accoutObject.Name = 'Test Account';
-        insert accoutObject;
+        accList.add(accoutObject);
         
         Account accoutObject1 = new Account();
         accoutObject1.Name = 'Test Account1';
-        insert accoutObject1;
+        accList.add(accoutObject1);
         
         Account accoutObject2 = new Account();
         accoutObject2.Name = 'Test Account2';
-        insert accoutObject2;
+        accList.add(accoutObject2);
         
         Account accoutObject3 = new Account();
         accoutObject3.Name = 'Test Account3';
-        insert accoutObject3;
+        accList.add(accoutObject3);
+
+        insert accList;
+
+        Test.startTest();
          
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Name = 'Test Oppty';
@@ -41,12 +46,14 @@ public class NSP_AssetTriggerHelperTest {
         opportuniytObject.CloseDate = date.today();
         //Inserting Opportunity Object
         insert opportuniytObject;
+
+        List<Asset> assetList = new List<Asset>();
         //Create Asset
         Asset assetObj = new Asset();
         assetObj.accountId = accoutObject.Id;
         assetObj.NSP_Client__c = 'asset1';
         assetObj.name = 'asset1';
-        insert assetObj;
+        assetList.add(assetObj);
         
         
         //Create Asset
@@ -55,7 +62,7 @@ public class NSP_AssetTriggerHelperTest {
         assetObj1.NSP_Client__c = 'asset2';
         assetObj1.name = 'asset2';
         assetObj1.NSP_Need_Rollup_Recalculation__c = true;
-        insert assetObj1;
+        assetList.add(assetObj1);
 		 
 		//Create Asset
         Asset assetObj2 = new Asset();
@@ -63,7 +70,7 @@ public class NSP_AssetTriggerHelperTest {
         assetObj2.NSP_Client__c = 'asset3';
         assetObj2.opportunity__c = opportuniytObject.Id;
         assetObj2.name = 'asset3';
-        insert assetObj2;
+        assetList.add(assetObj2);
         
         //Create Asset
         Asset assetObj4 = new Asset();
@@ -72,7 +79,9 @@ public class NSP_AssetTriggerHelperTest {
         assetObj4.NSP_Client__c = 'asset4';
         assetObj4.opportunity__c = opportuniytObject.Id;
         assetObj4.name = 'asset4';
-        insert assetObj4;
+        assetList.add(assetObj4);
+
+        insert assetList;
         
         List<NSP_Sub_Client__c> subClientList = new List<NSP_Sub_Client__c>();
         for(integer icount = 0 ; icount< 5 ;icount++){
@@ -109,7 +118,8 @@ public class NSP_AssetTriggerHelperTest {
             insert subClientList;
         }
         
-        
+        Test.stopTest();
+
     }
     
     /**
