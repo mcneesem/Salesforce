@@ -31,16 +31,14 @@ public class NSP_MultipleContractFutureClassTest {
         product3.NSP_Product_Category__c = ORGANIZATIONAL_PLANNING;
         Product2 product4 = NSP_TestHelper.createProduct('Test Product4',false);
         product4.NSP_Product_Category__c = 'Performance Management';
+        blng__BillingRule__c brObj = new blng__BillingRule__c();
         List<Product2> allproducts = new List<Product2>{product1,product2,product3,product4};
 
-        List<Product2> allproducts = new List<Product2>{product1,product2,product3,product4};
         for ( Product2 prd : allproducts) {
                 prd.SBQQ__ChargeType__c = 'Recurring';
                 prd.SBQQ__BillingType__c = 'Arrears';
                 prd.SBQQ__BillingFrequency__c = 'Monthly';
                 prd.blng__BillingRule__c = brObj.Id;
-                prd.blng__RevenueRecognitionRule__c = rrObj.Id;
-                prd.blng__TaxRule__c = taxRuleObj.Id;
         }
 
         insert allproducts;
