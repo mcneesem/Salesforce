@@ -98,7 +98,11 @@ public class NSP_ValidateOpportunityStageTest {
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
         objOpprtunity.NSP_BidNumber__c='unique12345';
         update objOpprtunity;
+
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
+        objproduct.blng__BillingRule__c = objBillingRule.id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';

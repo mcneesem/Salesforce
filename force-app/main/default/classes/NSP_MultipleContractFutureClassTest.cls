@@ -32,7 +32,18 @@ public class NSP_MultipleContractFutureClassTest {
         Product2 product4 = NSP_TestHelper.createProduct('Test Product4',false);
         product4.NSP_Product_Category__c = 'Performance Management';
         List<Product2> allproducts = new List<Product2>{product1,product2,product3,product4};
-            insert allproducts;
+
+        List<Product2> allproducts = new List<Product2>{product1,product2,product3,product4};
+        for ( Product2 prd : allproducts) {
+                prd.SBQQ__ChargeType__c = 'Recurring';
+                prd.SBQQ__BillingType__c = 'Arrears';
+                prd.SBQQ__BillingFrequency__c = 'Monthly';
+                prd.blng__BillingRule__c = brObj.Id;
+                prd.blng__RevenueRecognitionRule__c = rrObj.Id;
+                prd.blng__TaxRule__c = taxRuleObj.Id;
+        }
+
+        insert allproducts;
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',false);
         opp1.NSP_Client_For_Life__c = 'Stand Alone';
         opp1.NSP_PrimaryProduct__c = ORGANIZATIONAL_PLANNING;
@@ -55,10 +66,12 @@ public class NSP_MultipleContractFutureClassTest {
         List<Order> allorders = new List<Order>{ord1,ord2};
             insert allorders;
         
-        OrderItem ordpr1 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(), OrderId = ord1.Id, Product2Id=product1.Id, UnitPrice=10.0,Quantity=5,PricebookEntryId=pe1std.Id);
-        OrderItem ordpr2 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(),OrderId = ord1.Id, Product2Id=product2.Id, UnitPrice=20.0, Quantity=10,PricebookEntryId=pe2std.Id);
-        OrderItem ordpr3 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(),OrderId = ord2.Id, Product2Id=product3.Id, UnitPrice=30.0,Quantity=15,PricebookEntryId=pe3std.Id);
-        OrderItem ordpr4 = new OrderItem (blng__BillingRule__c = NSP_TestHelper.createBillingRule(),OrderId = ord2.Id, Product2Id=product4.Id, UnitPrice=40.0,Quantity=15,PricebookEntryId=pe4std.Id);
+        OrderItem ordpr1 = new OrderItem (OrderId = ord1.Id, Product2Id=product1.Id, UnitPrice=10.0,Quantity=5,PricebookEntryId=pe1std.Id);
+        OrderItem ordpr2 = new OrderItem (OrderId = ord1.Id, Product2Id=product2.Id, UnitPrice=20.0, Quantity=10,PricebookEntryId=pe2std.Id);
+        OrderItem ordpr3 = new OrderItem (OrderId = ord2.Id, Product2Id=product3.Id, UnitPrice=30.0,Quantity=15,PricebookEntryId=pe3std.Id);
+        OrderItem ordpr4 = new OrderItem (OrderId = ord2.Id, Product2Id=product4.Id, UnitPrice=40.0,Quantity=15,PricebookEntryId=pe4std.Id);
+        
+        
         List<OrderItem> allorderprods = new List<OrderItem>{ordpr1,ordpr2,ordpr3,ordpr4};
             insert allorderprods;
         

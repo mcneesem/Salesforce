@@ -10,10 +10,11 @@ public class NSP_OrderItemTriggerHelperTest{
     
     @testSetup
     static void setupTestData(){
-       
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
         Account objaccount = NSP_TestHelper.createAccount(true);
         Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
+        objproduct.blng__BillingRule__c = objBillingRule.Id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
@@ -29,6 +30,7 @@ public class NSP_OrderItemTriggerHelperTest{
         // Query account and product
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
+
         // create consumption schedule
         ConsumptionSchedule csch =  NSP_TestHelper.createConsumptionSchedule('IWX Consumption');
         insert csch;
