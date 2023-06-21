@@ -139,7 +139,6 @@ public static NSP_Employee_Split__c createOpportunityCredit(
 
         Product2 product = new Product2(
             Name = productName
-            
         );
 
         if (insertRecord) {
@@ -402,4 +401,34 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         Contact con= createContact(acc.Id, true);
         System.assertEquals(con.AccountId, acc.Id);
     }
+    
+    public static blng__BillingRule__c createBillingRule(){
+        blng__BillingRule__c bRule= new blng__BillingRule__c();
+        bRule.Name='Test Billing Rule';
+        bRule.blng__Active__c=true;
+        bRule.blng__GenerateInvoices__c='No';
+        bRule.blng__InitialBillingTrigger__c='Order Product Activation Date';
+        insert bRule;
+        return bRule;
+}
+
+    public static blng__RevenueRecognitionRule__c createRevrecRule(String revmodel){
+        blng__RevenueRecognitionRule__c rRule= new blng__RevenueRecognitionRule__c();
+        rRule.Name='Test RevRec Rule '+revmodel;
+        rRule.blng__Active__c=true;
+        rRule.blng__CreateRevenueSchedule__c='Yes';
+       // rRule.NSP_Rev_Rec_Model__c=revmodel;
+        insert rRule;
+        return rRule;
+    }
+    public static blng__TaxRule__c createRevTaxRule(){
+        blng__TaxRule__c tRule= new blng__TaxRule__c();
+        tRule.Name='Test Tax Rule';
+        tRule.blng__Active__c=true;
+        tRule.blng__TaxableYesNo__c='No';
+        insert tRule;
+        return tRule;
+    }
+
+
 }

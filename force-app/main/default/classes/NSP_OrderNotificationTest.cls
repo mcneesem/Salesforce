@@ -10,10 +10,20 @@ public class NSP_OrderNotificationTest {
     */
     @testSetup
     static void setupTestData(){
-       
+
+        
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
+        blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
+
         Account objaccount = NSP_TestHelper.createAccount(true);
         Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
+        objproduct.blng__BillingRule__c = objBillingRule.id;
+        objproduct.SBQQ__ChargeType__c = 'One-Time';
+        objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
+        objproduct.blng__TaxRule__c = objTaxRule.Id;
+
         insert objproduct;
        
     }

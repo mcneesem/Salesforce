@@ -95,10 +95,20 @@ public class NSP_ValidateOpportunityStageTest {
         insert taskList;
         insert eventList;
         
+        Test.startTest();
+
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
         objOpprtunity.NSP_BidNumber__c='unique12345';
         update objOpprtunity;
+
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
+        blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
+       
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
+        objproduct.blng__BillingRule__c = objBillingRule.id;
+        objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
+        objproduct.blng__TaxRule__c = objTaxRule.Id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
@@ -157,6 +167,8 @@ public class NSP_ValidateOpportunityStageTest {
         oppMember.TeamMemberRole = 'Business Performance Advisor';
         insert oppMember;   
         
+        Test.stopTest();
+
         User userRecord2 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',

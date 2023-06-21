@@ -57,6 +57,7 @@ public class NSP_OpportunityTriggerHelperTest {
         database.insert(ct);
        
         //Create Opportunity
+        List<Opportunity> oppList1 = new List<Opportunity>();
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Name = 'Test Oppty';
         opportuniytObject.AccountId = accoutObject1.id;
@@ -72,8 +73,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
         opportuniytObject.Type ='CAMS';
         opportuniytObject.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
-        //Inserting Opportunity Object
-        insert opportuniytObject;
+        oppList1.add(opportuniytObject);
         
        
         Opportunity opportuniytObject2 = new Opportunity();
@@ -89,8 +89,10 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject2.NSP_WS_Number_Of_Employees__c = 123;
         opportuniytObject2.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
         opportuniytObject2.NSP_Mid_Market_Sales_Email__c='test@insperity.com';
-        //Inserting Opportunity Object
-        insert opportuniytObject2;
+        oppList1.add(opportuniytObject2);
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert oppList1;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
        
         List<Task> taskList = new List<Task>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
@@ -103,7 +105,9 @@ public class NSP_OpportunityTriggerHelperTest {
             NSP_Status__c='Completed'
         );
         taskList.add(taskRec);
-       
+
+        Test.startTest();
+        List<Opportunity> oppList2 = new List<Opportunity>();       
         Opportunity opportuniytObject3 = new Opportunity();
         opportuniytObject3.Name = 'Test Oppty Email';
         opportuniytObject3.AccountId = accoutObject1.id;
@@ -116,8 +120,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject3.Type ='CAMS';
         opportuniytObject3.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject3.NSP_Mid_Market_Sales_Email__c='test2@insperity.com';
-        //Inserting Opportunity Object
-        insert opportuniytObject3;
+        oppList2.add(opportuniytObject3);
 
         Opportunity opportuniytObject4 = new Opportunity();
         opportuniytObject4.Name = 'Test Oppty Email';
@@ -131,8 +134,9 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject4.Type ='CAMS';
         opportuniytObject4.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-        //Inserting Opportunity Object
-        insert opportuniytObject4;
+        oppList2.add(opportuniytObject4);
+        
+        insert oppList2;
        
         SBQQ__Quote__c quoteRec = new SBQQ__Quote__c();
         quoteRec.SBQQ__Opportunity2__c = opportuniytObject3.Id;
@@ -144,7 +148,7 @@ public class NSP_OpportunityTriggerHelperTest {
         insert quoteRec;
        
         insert taskList;
-       
+        List<Opportunity> childOppList = new List<Opportunity>();
         //Create child opportunity for Retirement Service
         Opportunity childopportuniytObject = new Opportunity();
         childopportuniytObject.Name = 'Child Oppty Retirement Service';
@@ -155,8 +159,7 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject.NSP_Number_of_Employees__c = 100;
         childopportuniytObject.NSP_PrimaryProduct__c = 'Retirement Services';
         childopportuniytObject.NSP_Parent_Opportunity__c = opportuniytObject.id;
-        //Inserting Child Opportunity
-        insert childopportuniytObject;
+        childOppList.add(childopportuniytObject);
        
         //Create child opportuniy for Insurance Service
         Opportunity childopportuniytObject1 = new Opportunity();
@@ -168,15 +171,16 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject1.NSP_Number_of_Employees__c = 100;
         childopportuniytObject1.NSP_PrimaryProduct__c = 'Insurance Services';
         childopportuniytObject1.NSP_Parent_Opportunity__c = opportuniytObject.id;
-        insert childopportuniytObject1;
+        childOppList.add(childopportuniytObject1);
+        
+        insert childOppList;
  
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
         insert pricebook;
         
-       
+        Test.stopTest();
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject.Id,true);
 
-       
     }
    
         /**
