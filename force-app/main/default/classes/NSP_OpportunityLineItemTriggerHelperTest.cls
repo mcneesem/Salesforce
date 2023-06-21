@@ -10,12 +10,12 @@ public class NSP_OpportunityLineItemTriggerHelperTest {
      public static final String PRODUCTNAME ='Test Product'; // Added as part of code scan fix
   @testSetup
     static void setupTestData(){
-        blng__BillingRule__c brObj = new blng__BillingRule__c();
-        brObj.blng__Active__c = true;
-        brObj.Name = 'Test BR';
-        brObj.blng__GenerateInvoices__c = 'No';
-        brObj.blng__InitialBillingTrigger__c = 'Order Product Activation Date';
-        insert brObj;
+        blng__BillingRule__c objBillingRule = new blng__BillingRule__c();
+        objBillingRule.blng__Active__c = true;
+        objBillingRule.Name = 'Test BR';
+        objBillingRule.blng__GenerateInvoices__c = 'No';
+        objBillingRule.blng__InitialBillingTrigger__c = 'Order Product Activation Date';
+        insert objBillingRule;
        
         Account objaccount = NSP_TestHelper.createAccount(true);
         NSP_Address__c addressBillToRecord = NSP_TestHelper.createCustomAddress();
