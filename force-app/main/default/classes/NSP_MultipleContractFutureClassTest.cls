@@ -23,6 +23,15 @@ public class NSP_MultipleContractFutureClassTest {
         // NSP_TestHelper th = new NSP_TestHelper();
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
+        
+        blng__BillingRule__c brObj = new blng__BillingRule__c();
+        brObj.blng__Active__c = true;
+        brObj.Name = 'Test BR';
+        brObj.blng__GenerateInvoices__c = 'Yes';
+        brObj.blng__InitialBillingTrigger__c = 'Order Product Activation Date';
+        brObj.blng__PartialPeriodTreatment__c = 'Combine';
+        insert brObj;
+        
         Product2 product1 = NSP_TestHelper.createProduct('Test Product1',false);
         product1.NSP_Product_Category__c =  ORGANIZATIONAL_PLANNING;
         Product2 product2 = NSP_TestHelper.createProduct('Test Product2',false);
@@ -31,7 +40,6 @@ public class NSP_MultipleContractFutureClassTest {
         product3.NSP_Product_Category__c = ORGANIZATIONAL_PLANNING;
         Product2 product4 = NSP_TestHelper.createProduct('Test Product4',false);
         product4.NSP_Product_Category__c = 'Performance Management';
-        blng__BillingRule__c brObj = new blng__BillingRule__c();
         List<Product2> allproducts = new List<Product2>{product1,product2,product3,product4};
 
         for ( Product2 prd : allproducts) {
