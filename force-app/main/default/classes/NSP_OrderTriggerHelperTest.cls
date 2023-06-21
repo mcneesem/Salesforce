@@ -10,7 +10,8 @@ public class NSP_OrderTriggerHelperTest{
     
     @testSetup
     static void setupTestData(){
-       
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+
         Account objaccount = NSP_TestHelper.createAccount(true);
 		NSP_Address__c addressBillToRecord = NSP_TestHelper.createCustomAddress();
         addressBillToRecord.NSP_Related_Site__c = objaccount.Id;
@@ -22,6 +23,7 @@ public class NSP_OrderTriggerHelperTest{
 		insert addressShipToRecord;
          NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
+        objproduct.blng__BillingRule__c = objBillingRule.id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';

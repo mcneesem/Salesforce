@@ -138,8 +138,7 @@ public static NSP_Employee_Split__c createOpportunityCredit(
       
 
         Product2 product = new Product2(
-            Name = productName,
-            blng__BillingRule__c = createBillingRule()
+            Name = productName
         );
 
         if (insertRecord) {
@@ -260,7 +259,6 @@ public static NSP_Employee_Split__c createOpportunityCredit(
             quoteLine.SBQQ__PricebookEntryId__c = priceBook[count].Id;
             quoteLine.SBQQ__NetPrice__c = 10;
             quoteLine.SBQQ__Quantity__c = 1;
-            quoteLine.blng__BillingRule__c = createBillingRule();
             quotelineList.add(quoteline);
         }
         if (insertRecord) {
@@ -403,7 +401,6 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         Contact con= createContact(acc.Id, true);
         System.assertEquals(con.AccountId, acc.Id);
     }
-
     
     public static blng__BillingRule__c createBillingRule(){
         blng__BillingRule__c bRule= new blng__BillingRule__c();
@@ -412,7 +409,7 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         bRule.blng__GenerateInvoices__c='No';
         bRule.blng__InitialBillingTrigger__c='Order Product Activation Date';
         insert bRule;
-    return bRule;
+        return bRule;
 }
 
 }
