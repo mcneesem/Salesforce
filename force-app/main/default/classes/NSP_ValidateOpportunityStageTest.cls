@@ -95,6 +95,8 @@ public class NSP_ValidateOpportunityStageTest {
         insert taskList;
         insert eventList;
         
+        Test.startTest();
+
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
         objOpprtunity.NSP_BidNumber__c='unique12345';
         update objOpprtunity;
@@ -165,6 +167,8 @@ public class NSP_ValidateOpportunityStageTest {
         oppMember.TeamMemberRole = 'Business Performance Advisor';
         insert oppMember;   
         
+        Test.stopTest();
+
         User userRecord2 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',
