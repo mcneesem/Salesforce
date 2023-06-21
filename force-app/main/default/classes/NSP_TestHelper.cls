@@ -417,7 +417,7 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         rRule.Name='Test RevRec Rule '+revmodel;
         rRule.blng__Active__c=true;
         rRule.blng__CreateRevenueSchedule__c='Yes';
-        rRule.NSP_Rev_Rec_Model__c=revmodel;
+       // rRule.NSP_Rev_Rec_Model__c=revmodel;
         insert rRule;
         return rRule;
     }
