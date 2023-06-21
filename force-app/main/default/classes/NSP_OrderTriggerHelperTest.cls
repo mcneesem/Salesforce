@@ -12,6 +12,16 @@ public class NSP_OrderTriggerHelperTest{
     static void setupTestData(){
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
 
+        blng__RevenueRecognitionRule__c rrObj = new blng__RevenueRecognitionRule__c();
+        rrObj.blng__Active__c = true;
+        rrObj.blng__CreateRevenueSchedule__c = 'No';
+        insert rrObj;
+
+        blng__TaxRule__c taxRuleObj = new blng__TaxRule__c();
+        taxRuleObj.blng__Active__c = true;
+        taxRuleObj.blng__TaxableYesNo__c = 'No';
+        insert taxRuleObj;
+
         Account objaccount = NSP_TestHelper.createAccount(true);
 		NSP_Address__c addressBillToRecord = NSP_TestHelper.createCustomAddress();
         addressBillToRecord.NSP_Related_Site__c = objaccount.Id;
@@ -28,6 +38,8 @@ public class NSP_OrderTriggerHelperTest{
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
         objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
+        objproduct.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objproduct.blng__TaxRule__c = taxRuleObj.Id;
         insert objproduct;
        
     }

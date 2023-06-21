@@ -10,15 +10,36 @@ public class NSP_OrderItemTriggerHelperTest{
     
     @testSetup
     static void setupTestData(){
-        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+
+        blng__BillingRule__c brObj = new blng__BillingRule__c();
+        brObj.blng__Active__c = true;
+        brObj.Name = 'Test InsBR';
+        brObj.blng__GenerateInvoices__c = 'Yes';
+        brObj.blng__InitialBillingTrigger__c = 'Order Product Activation Date';
+        brObj.blng__PartialPeriodTreatment__c = 'Combine';
+        insert brObj;
+
+        blng__RevenueRecognitionRule__c rrObj = new blng__RevenueRecognitionRule__c();
+        rrObj.blng__Active__c = true;
+        rrObj.blng__CreateRevenueSchedule__c = 'No';
+        insert rrObj;
+
+        blng__TaxRule__c taxRuleObj = new blng__TaxRule__c();
+        taxRuleObj.blng__Active__c = true;
+        taxRuleObj.blng__TaxableYesNo__c = 'No';
+        insert taxRuleObj;
+
         Account objaccount = NSP_TestHelper.createAccount(true);
         Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
-        objproduct.blng__BillingRule__c = objBillingRule.Id;
+        objproduct.blng__BillingRule__c = brObj.Id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
         objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
+        objproduct.blng__BillingRule__c = brObj.Id;
+        objproduct.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objproduct.blng__TaxRule__c = taxRuleObj.Id;
         insert objproduct;
        
     }

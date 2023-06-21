@@ -32,6 +32,16 @@ public class NSP_MultipleContractFutureClassTest {
         brObj.blng__PartialPeriodTreatment__c = 'Combine';
         insert brObj;
         
+        blng__RevenueRecognitionRule__c rrObj = new blng__RevenueRecognitionRule__c();
+        rrObj.blng__Active__c = true;
+        rrObj.blng__CreateRevenueSchedule__c = 'No';
+        insert rrObj;
+        
+        blng__TaxRule__c taxRuleObj = new blng__TaxRule__c();
+        taxRuleObj.blng__Active__c = true;
+        taxRuleObj.blng__TaxableYesNo__c = 'No';
+        insert taxRuleObj;
+
         Product2 product1 = NSP_TestHelper.createProduct('Test Product1',false);
         product1.NSP_Product_Category__c =  ORGANIZATIONAL_PLANNING;
         Product2 product2 = NSP_TestHelper.createProduct('Test Product2',false);
@@ -47,6 +57,8 @@ public class NSP_MultipleContractFutureClassTest {
                 prd.SBQQ__BillingType__c = 'Arrears';
                 prd.SBQQ__BillingFrequency__c = 'Monthly';
                 prd.blng__BillingRule__c = brObj.Id;
+                prd.blng__RevenueRecognitionRule__c = rrObj.Id;
+                prd.blng__TaxRule__c = taxRuleObj.Id;
         }
 
         insert allproducts;
