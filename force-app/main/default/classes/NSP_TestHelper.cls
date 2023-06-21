@@ -412,4 +412,23 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         return bRule;
 }
 
+    public static blng__RevenueRecognitionRule__c createRevrecRule(String revmodel){
+        blng__RevenueRecognitionRule__c rRule= new blng__RevenueRecognitionRule__c();
+        rRule.Name='Test RevRec Rule '+revmodel;
+        rRule.blng__Active__c=true;
+        rRule.blng__CreateRevenueSchedule__c='Yes';
+        rRule.NSP_Rev_Rec_Model__c=revmodel;
+        insert rRule;
+        return rRule;
+    }
+    public static blng__TaxRule__c createRevTaxRule(){
+        blng__TaxRule__c tRule= new blng__TaxRule__c();
+        tRule.Name='Test Tax Rule';
+        tRule.blng__Active__c=true;
+        tRule.blng__TaxableYesNo__c='No';
+        insert tRule;
+        return tRule;
+    }
+
+
 }
