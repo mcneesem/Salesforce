@@ -18,7 +18,7 @@
                         <valueListItems>
                             <value>Case.NSP_TimeEntry</value>
                             <visibilityRule>
-                                <booleanFilter>NOT( 4 OR 5 OR 6) OR (1 AND ( 2 OR 3 ))</booleanFilter>
+                                <booleanFilter>NOT( 4 OR 5 OR 6 OR 7 OR 8) OR (1 AND ( 2 OR 3 ))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NSP_Category__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -35,9 +35,9 @@
                                     <rightValue>Wage Claim</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>PEO</rightValue>
+                                    <rightValue>BPS Service</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -48,6 +48,16 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>NSP_WageClaims</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Contact Center</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Retirement Services</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1258,7 +1268,7 @@
                 <identifier>force_relatedListSingleContainer7</identifier>
             </componentInstance>
         </itemInstances>
-         <itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentName>nsp_showConfidentialPopUp</componentName>
                 <identifier>c_nsp_showConfidentialPopUp</identifier>
