@@ -98,17 +98,23 @@ public class NSP_MultipleContractFutureClass {
                             //setting values for cloned contracts
                             clonedContract.NSP_Created_From_Contract_Id__c = (String)con.Id;
                             clonedContract.SBQQ__Order__c = conOrders[co];
+                            clonedContract.Status = 'Draft';
                             newClonedContracts.add(clonedContract);
                             
                         }
                         
                     }
                     //updating the product type on original contract
+                    if(con.NSP_Product_Type__c != null) {
+                        Set<String> origConProductTypeSet = new Set<String>(con.NSP_Product_Type__c.split(';'));
+                        if(origConProductTypeSet.size() > 1 ) {
                     if(subsPTypeByOrderIdMap.containsKey(con.SBQQ__Order__c)) {
                         Set<String> orderSubsPType = subsPTypeByOrderIdMap.get(con.SBQQ__Order__c);
                         List<String> orderProductTypeList = new List<String>(orderSubsPType);
                         con.NSP_Product_Type__c = String.join(orderProductTypeList,';');
                         contractsToUpdate.add(con);
+                    }
+                    }
                     }
                 }
             }
@@ -136,9 +142,10 @@ public class NSP_MultipleContractFutureClass {
             }
 
             try {
-            // do original contract update here   
+            // do original contract update here
+            if(contractsToUpdate.size()>0) {   
             update contractsToUpdate;
-                    
+            }     
             // do subscription update here 
                 if(substoUpdate.size()>0) {
                     //perform update

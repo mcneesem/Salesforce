@@ -7,6 +7,10 @@
         <label>Calendar Event Details</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FSL__Event_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Subject</field>
             </layoutItems>

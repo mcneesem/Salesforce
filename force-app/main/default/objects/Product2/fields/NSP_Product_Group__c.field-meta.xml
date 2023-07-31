@@ -356,6 +356,21 @@
                 <default>false</default>
                 <label>Travel</label>
             </value>
+            <value>
+                <fullName>Standard iSolved Clocks - G7</fullName>
+                <default>false</default>
+                <label>Standard iSolved Clocks - G7</label>
+            </value>
+            <value>
+                <fullName>Biometric iSolved Clocks - G7</fullName>
+                <default>false</default>
+                <label>Biometric iSolved Clocks - G7</label>
+            </value>
+            <value>
+                <fullName>Standard iSolved Clocks - G7+ Support</fullName>
+                <default>false</default>
+                <label>Standard iSolved Clocks - G7+ Support</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

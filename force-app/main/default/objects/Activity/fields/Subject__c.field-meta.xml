@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Subject</inlineHelpText>
     <label>Subject</label>
-    <length>18</length>
+    <length>100</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

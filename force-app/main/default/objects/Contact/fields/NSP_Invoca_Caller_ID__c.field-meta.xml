@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Invoca_Caller_ID__c</fullName>
     <description>Used to store Invoca caller Id for this contact</description>
-    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Invoca Caller ID</label>
     <required>false</required>

@@ -3,6 +3,7 @@
     <fullName>Restrict_to_edit_subclient</fullName>
     <active>true</active>
     <errorConditionFormula>AND(!ISNEW(),
+ $Setup.NSP_Trigger_Switch__c.SubClientTrigger__c = false,
 NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
 $Profile.Name = &quot;Data Migration&quot;,
 $Profile.Name = &quot;Sales Administrator&quot;,

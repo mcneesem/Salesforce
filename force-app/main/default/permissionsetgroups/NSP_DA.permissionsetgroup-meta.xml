@@ -4,7 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>DA</label>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
-    <permissionSets>Bloomfire_Custom_User</permissionSets>
+    <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Campaign_Create_And_Edit</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>

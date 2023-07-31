@@ -3,15 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>ies.accounts@insperity.com.invalid</email>
     <name>Employment Screening</name>
-    <queueMembers>
-        <users>
-            <user>kim.miles@insperity.com</user>
-        </users>
-    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>Task</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>pse__Proj__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>pse__Project_Task__c</sobjectType>
     </queueSobject>
 </Queue>

@@ -1922,11 +1922,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.NSP_Has_Union_Employees__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Asset.NSP_ITSTimeSimplicity_Quantity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4478,11 +4473,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Sales_Division__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Sales_Office_Old1__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11558,11 +11548,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Sales_Division__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Sales_Office_Old1__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

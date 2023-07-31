@@ -7,6 +7,16 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Account.One_Time_Sync_Single_Record</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.One_Time_Sync_Single_Record}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Generate_Document</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
@@ -39,6 +49,16 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Account.Send_For_Signature</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.NSP_Detailed_Data</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Add_team_member</value>
@@ -79,6 +99,21 @@
                         <valueListItems>
                             <value>ChangeRecordType</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.blng__PaymentVirtualTerminal</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.DunningManual</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.blng__CreditCenter</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Request_a_Discover_SKO_Meeting</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Request_an_Employee_Orientation_Meeting</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -95,7 +130,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -117,6 +152,12 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_mainServiceContacts</componentName>
+                <identifier>c_nsp_mainServiceContacts</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -165,32 +206,6 @@
         </itemInstances>
         <mode>Replace</mode>
         <name>relatedTabContent</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>displayConnections</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayNews</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayRecommendedLeads</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayTopCard</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_linkedin:companyMatchContainer</componentName>
-                <identifier>runtime_sales_linkedin_companyMatchContainer</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-797b92f7-becb-4a11-bce8-67e26ce5dd8e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -345,6 +360,12 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
                 <identifier>runtime_sales_merge_mergeCandidatesPreviewCard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_visualIndicator</componentName>
+                <identifier>c_nsp_visualIndicator</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

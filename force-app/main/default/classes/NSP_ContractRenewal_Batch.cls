@@ -10,7 +10,35 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
    public String query;
    public Map<String,NSP_Contract_Renewal_Configurations__mdt> productTypeToConfigMap = new Map<String,NSP_Contract_Renewal_Configurations__mdt>();
    public Map<String,String> userNameToIdMap = new Map<String,String>();
-   //Constructor declaration
+   public String contractId;
+	// Code for QA testing only. Not added to GIT. Must be deleted in higher sandboxes
+	 public NSP_ContractRenewal_Batch(String contractIdinput){
+  		contractId = contractIdinput;
+      List<String> ownerUsernames = new List<String>();
+      Map<String, NSP_Contract_Renewal_Configurations__mdt> renewalConfigs = NSP_Contract_Renewal_Configurations__mdt.getAll();
+      if(renewalConfigs.size()>0) {
+         //looping through renewal configuration map to put in respective lists by date range 
+         for(NSP_Contract_Renewal_Configurations__mdt configrec : renewalConfigs.values()){
+            productTypeToConfigMap.put(configrec.NSP_Linked_ProductType__c, configrec);
+            ownerUsernames.add(configrec.NSP_Default_Opportunity_Owner__c);
+         }
+      }
+      //querying user object to get renewal owner user ids
+      if(ownerUsernames.size()>0){
+         for(User usr : [Select Id, Username from User WHERE Username IN:ownerUsernames]) {
+            userNameToIdMap.put(usr.Username,usr.Id);
+         }
+      }
+
+      //query formation
+      query='SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c FROM Contract WHERE SBQQ__RenewalForecast__c = FALSE AND SBQQ__RenewalQuoted__c = FALSE AND ContractTerm>=1 AND SBQQ__ActiveContract__c=1 AND';
+      query+=' Id =:contractId';
+	
+         }
+        
+    // Code for QA testing only. Not added to GIT. Must be deleted in higher sandboxes
+    
+    //Constructor declaration
    public NSP_ContractRenewal_Batch(){
       //List to store products with renewal date ranges
       List<String> ProductsWith30DaysList = new List<String>();
@@ -52,7 +80,7 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
       String Days60ListasString = '(\'' + String.join(ProductsWith60DaysList, '\', \'') + '\')';
       //query formation
       query='SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c FROM Contract WHERE SBQQ__RenewalForecast__c = FALSE AND SBQQ__RenewalQuoted__c = FALSE AND ContractTerm>=1 AND SBQQ__ActiveContract__c=1 AND';
-      query+=' ((NSP_Product_Type__c INCLUDES'+ Days30ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:30 AND ContractTerm=1) OR (NSP_Product_Type__c INCLUDES '+ Days60ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:60))';
+      query+=' ((NSP_Product_Type__c INCLUDES'+ Days30ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:30 AND ContractTerm=1) OR (NSP_Product_Type__c INCLUDES '+ Days60ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:62))';
 		
    }
 
@@ -66,6 +94,7 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
 	public void execute(Database.BatchableContext bc, List<Contract> scope){
 		for(Contract contract:scope){
          NSP_Contract_Renewal_Configurations__mdt contractRenewConfig = productTypeToConfigMap.get(contract.NSP_Product_Type__c);
+            if(contractRenewConfig!=null) {
 			contract.SBQQ__RenewalForecast__c = TRUE;
          contract.SBQQ__RenewalQuoted__c = TRUE;
          contract.NSP_Customer_Signature_Required__c = contractRenewConfig.NSP_Renewal_Signature_Required__c;
@@ -74,6 +103,7 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
          }
 			recordsProcessed = recordsProcessed + 1;
 		}
+        }
 		//update scope;
       try{
          database.update(scope);
@@ -84,24 +114,24 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
 	public void finish(Database.BatchableContext bc){
       //THIS COMMENT IS INTENTIONAL. DO NOT DELETE.
       // This sends an email to Operations team DL. Will be used in Phase 2 when contracts are loaded into system.
-      /* // Get the ID of the AsyncApexJob representing this batch job
+       // Get the ID of the AsyncApexJob representing this batch job
        // from Database.BatchableContext.
        // Query the AsyncApexJob object to retrieve the current job's information.
-       AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed,
+       AsyncApexJob apexJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed,
           TotalJobItems, CreatedBy.Email
           FROM AsyncApexJob WHERE Id =
           :BC.getJobId()];
        // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-       String opsEmail = Label.NSP_Operations_Team_DL;
-       String[] toAddresses = new String[] {opsEmail};
+       //String opsEmail = Label.NSP_Operations_Team_DL;
+       String[] toAddresses = new String[] {apexJob.CreatedBy.Email};
        mail.setToAddresses(toAddresses);
-       mail.setSubject('Contract Renewal Batch ' + a.Status);
+       mail.setSubject('Contract Renewal Batch ' + apexJob.Status);
        mail.setPlainTextBody
-       ('The batch Apex job processed ' + a.TotalJobItems +
-       ' batches with '+ a.NumberOfErrors + ' failures.' +
+       ('The batch Apex job processed ' + apexJob.TotalJobItems +
+       ' batches with '+ apexJob.NumberOfErrors + ' failures.' +
        'Total Records :'+recordsProcessed);
        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-       */
+       
 	}
 }

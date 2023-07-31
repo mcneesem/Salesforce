@@ -35,7 +35,7 @@ public class NSP_LeadTriggerHelperTest {
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',
-            Email = 'testuser@test.com',
+            Email = 'testuser@insperity.com',
             Username = 'testuser@test.com' + System.currentTimeMillis(),
             CompanyName = 'TEST',
             Title = 'title',
@@ -51,7 +51,7 @@ public class NSP_LeadTriggerHelperTest {
         User userRecord1 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
             LastName = 'TestClassUser1',
-            Email = 'testuser1@test.com',
+            Email = 'testuser1@insperity.com',
             Username = 'testuser1@test.com' + System.currentTimeMillis(),
             CompanyName = 'TEST',
             Title = 'title',
@@ -248,7 +248,7 @@ public class NSP_LeadTriggerHelperTest {
     
     @isTest
     public static void convertLeadTest(){
-        
+        NSP_AccountTriggerHandler.TriggerDisabled = true;
         Lead leadRecord = [SELECT Id, FirstName,OwnerId,NSP_Reason__c,Status, LastName, Email FROM Lead WHERE Email=:LEADCONVERTRECORD_EMAIL LIMIT 1];
         leadRecord.OwnerId=UserInfo.getUserId();
         update leadRecord;
@@ -479,4 +479,27 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
         
  	}
+
+        /**
+* @Description: This test method describes about when Service Referral Lead is created it should get assigned to Inbound Solutions Queue
+* @Created date: 11/08/2022. 
+* @Story : STY-03751
+* @return void             
+*     */  
+@isTest
+static void serviceReferralLeadCreationTest() {
+    List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
+    Lead nLead = new Lead();
+    nLead.firstname='HelloTest123';
+    nLead.lastname='Employee123';
+    nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+    nLead.Company = 'tmp123';
+    nLead.Email = 'tmp@tmp123.com';
+    nLead.recordTypeId = NSP_LeadTriggerHelper.SERVICE_REFERRAL_RECORDTYPE_ID;
+    Test.startTest();
+    insert nLead;
+    Test.stopTest();
+    Lead assertLead = [SELECT Id, OwnerId From Lead WHERE Id =: nLead.Id];
+    system.assertEquals(assertLead.Ownerid, inBoundSolutionsQueue[0].id); // Checking whether Created lead is assigned to Inbound Solutions Queue
+}
 }

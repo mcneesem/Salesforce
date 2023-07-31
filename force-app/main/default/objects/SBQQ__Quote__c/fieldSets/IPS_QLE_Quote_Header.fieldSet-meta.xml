@@ -3,12 +3,12 @@
     <fullName>IPS_QLE_Quote_Header</fullName>
     <description>This fieldset is used to define header attributes on QLE for IPS / Lasso</description>
     <displayedFields>
-        <field>NSP_Requested_First_Check_Date__c</field>
+        <field>SBQQ__StartDate__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>SBQQ__StartDate__c</field>
+        <field>NSP_Requested_First_Check_Date__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>

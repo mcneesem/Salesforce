@@ -214,6 +214,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Biometric_Group_Info__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Netsuite_Hardware_Item__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -353,7 +357,10 @@
         <relatedList>SBQQ__SubscribedAsset__c.SBQQ__Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
+        <fields>NAME</fields>
+        <fields>Note_Type__c</fields>
+        <fields>Note__c</fields>
+        <relatedList>NSP_Note__c.NSP_Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>

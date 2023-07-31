@@ -4,6 +4,7 @@
     <active>false</active>
     <description>Not allow Comments field to be updated if logged in user is not DA</description>
     <errorConditionFormula>AND(
+    $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True,
     ISCHANGED(NSP_Pending_Report_Comments__c),
     $UserRole.DeveloperName !=&apos;District_Administrator&apos;,
     NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,

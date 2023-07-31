@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Role__c</fullName>
+    <description>.</description>
     <externalId>false</externalId>
     <label>Role</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -180,6 +183,11 @@
                 <label>Opportunity Owner</label>
             </value>
             <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
                 <fullName>Payroll Specialist</fullName>
                 <default>false</default>
                 <label>Payroll Specialist</label>
@@ -265,9 +273,24 @@
                 <label>Technology Solutions Sales Consultant</label>
             </value>
             <value>
-                <fullName>Other</fullName>
+                <fullName>WX/WA Benefits Specialist</fullName>
                 <default>false</default>
-                <label>Other</label>
+                <label>WX/WA Benefits Specialist</label>
+            </value>
+            <value>
+                <fullName>WA/WX Payroll Specialist</fullName>
+                <default>false</default>
+                <label>WA/WX Payroll Specialist</label>
+            </value>
+            <value>
+                <fullName>Customer Success Specialist</fullName>
+                <default>false</default>
+                <label>Customer Success Specialist</label>
+            </value>
+            <value>
+                <fullName>401k Plan Consultant</fullName>
+                <default>false</default>
+                <label>401k Plan Consultant</label>
             </value>
         </valueSetDefinition>
     </valueSet>

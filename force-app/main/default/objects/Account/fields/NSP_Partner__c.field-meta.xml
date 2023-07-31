@@ -5,6 +5,15 @@
     <description>In scope for Data Migration. OneForce.Account.OrganizationDEO_Partner_Id_c</description>
     <externalId>false</externalId>
     <label>Partner</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Partner/Client</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Referred Accounts</relationshipLabel>
     <relationshipName>Client_Accounts</relationshipName>

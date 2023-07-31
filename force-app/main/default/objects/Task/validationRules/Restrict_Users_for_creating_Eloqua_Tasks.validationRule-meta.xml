@@ -4,6 +4,7 @@
     <active>true</active>
     <description>This Validation rule will restrict the users other than Eloqua user to create a task with Eloqua task record Type</description>
     <errorConditionFormula>AND(
+NOT ($Setup.NSP_Trigger_Switch__c.TaskValidations__c),
 $User.FirstName &lt;&gt; &apos;Eloqua&apos;, 
 $User.LastName &lt;&gt; &apos;Integration User&apos; ,
 ISNEW(), 

@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Finance Users</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>Finance_Manager</parentRole>
+    <parentRole>NSP_Finance_Supervisor</parentRole>
 </Role>

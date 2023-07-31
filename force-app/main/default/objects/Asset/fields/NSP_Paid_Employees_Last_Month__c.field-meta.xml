@@ -3,7 +3,7 @@
     <fullName>NSP_Paid_Employees_Last_Month__c</fullName>
     <description>This field is used for integration</description>
     <externalId>false</externalId>
-    <label>Paid Employees - Last Month</label>
+    <label>Total Paid Employees - Last Month</label>
     <summarizedField>NSP_Sub_Client__c.NSP_Paid_Employees_Last_Month__c</summarizedField>
     <summaryForeignKey>NSP_Sub_Client__c.NSP_Asset__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>

@@ -18,7 +18,7 @@ public class NSP_OrderManagement {
 @AuraEnabled
 	public static List<Contract> getContractRecord(Id recordId){
         try{
-           List<Contract> contractList= [SELECT Id,Status,ContractNumber,StartDate,EndDate,Account.Name FROM Contract WHERE AccountId=:recordId LIMIT 50000]; //AND Status='Activated // Added Limit condition as part of code fix
+           List<Contract> contractList= [SELECT Id,Status,ContractNumber,NSP_Product_Type__c, SBQQ__Evergreen__c,StartDate,EndDate,Account.Name FROM Contract WHERE AccountId=:recordId AND Status='Activated' LIMIT 50000]; //AND Status='Activated // Added Limit condition as part of code fix
            return contractList;
         }catch (Exception ex) {
             throw new AuraHandledException(ex.getMessage());
@@ -42,6 +42,7 @@ public class NSP_OrderManagement {
              //update contract record as per renewals and amendments
             Contract contract= new Contract (Id = contractId);
             contract.NSP_TransactionType__c=transactionType;
+            contract.SBQQ__PreserveBundleStructureUponRenewals__c = true;
             //DML on Contract
             update contract;
             isContractUpdated = true;

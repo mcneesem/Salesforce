@@ -11,7 +11,7 @@
         <inputParameters>
             <name>contractIds</name>
             <value>
-                <elementReference>$Record.SBQQ__Contract__c</elementReference>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -32,6 +32,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Quote__r.SBQQ__Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Product</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Call_Apex_Action</targetReference>
             </connector>
@@ -39,6 +46,7 @@
         </rules>
     </decisions>
     <description>Contract By Product Type For Subscriptions</description>
+    <environments>Default</environments>
     <formulas>
         <name>Bypass</name>
         <dataType>Boolean</dataType>
@@ -66,18 +74,33 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>587</locationX>
-        <locationY>143</locationY>
+        <locationX>662</locationX>
+        <locationY>150</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>SBQQ__Contract__c</field>
-            <operator>IsNull</operator>
+            <field>Status</field>
+            <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue>Activated</stringValue>
             </value>
         </filters>
-        <object>SBQQ__Subscription__c</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <filters>
+            <field>NSP_Product_Type__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Learning and Development</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Created_From_Contract_Id__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <name>Call_Apex_After_1_Min</name>
             <connector>
@@ -91,7 +114,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>ContractIdsFromSubs</name>
         <dataType>String</dataType>

@@ -11,6 +11,7 @@
     <columns>PRIORITY</columns>
     <columns>STATUS</columns>
     <columns>UPDATEDBY_USER.ALIAS</columns>
+    <columns>NSP_Owner__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>

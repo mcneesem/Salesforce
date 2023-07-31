@@ -3,12 +3,7 @@
     <fullName>NSP_ActionType__c</fullName>
     <description>Field Indicate the Current transaction of quote line</description>
     <externalId>false</externalId>
-    <formula>IF(SBQQ__RenewedSubscription__c != null || SBQQ__RenewedAsset__c != null ,&apos;Renewal&apos;,
-	IF(SBQQ__UpgradedSubscription__c != null || SBQQ__UpgradedAsset__c != null,
-		IF(SBQQ__Quantity__c = 0, &apos;Termination&apos;,&apos;Amendment&apos;),
-	&apos;Add Product&apos;)
-)</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <formula>IF(SBQQ__UpgradedSubscription__c != null || SBQQ__UpgradedAsset__c != null, IF(AND(!NSP_Original_Line__c, SBQQ__Quantity__c == NSP_Previous_Quantity__c),null, IF(NSP_Original_Line__c, &apos;Amend&apos;, IF(SBQQ__Quote__r.NSP_Has_Renewable_Products__c == 0 , IF( SBQQ__Quantity__c &gt; SBQQ__PriorQuantity__c, &apos;Amend/Upsell&apos;, IF(SBQQ__Quantity__c &lt; SBQQ__PriorQuantity__c, &apos;Amend/Downgrade&apos;, &apos;&apos;) ) , &apos;&apos;) ) ) , IF(SBQQ__Source__c != null, IF(NSP_Previous_Quantity__c &lt; NSP_Quoted_Quantity__c, &apos;Upsell&apos;, IF(NSP_Previous_Quantity__c &gt; NSP_Quoted_Quantity__c, &apos;Downgrade&apos;, &apos;&apos;) ) , &apos;Add Product&apos;) )</formula>
     <label>Action Type</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -27,6 +27,7 @@ public class NSP_LeadTriggerHelper {
     // Added as part of DF-01009
     private static final string REFERRAL_RECORDTYPE = 'Referral';
     private static final Id REFERRAL_RECORDTYPE_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(REFERRAL_RECORDTYPE).getRecordTypeId();
+    public static final Id SERVICE_REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId('Lead',NSP_ServiceConstants.SERVICE_REFERRAL_RT );
     /**
 * Iterates throught the list of new leads and passes the required attributes to other methods.
 * @param newList List of New leads.  
@@ -66,8 +67,11 @@ public class NSP_LeadTriggerHelper {
             if (String.isBlank(leadObject.NSP_Lead_Stage__c)) {
                 leadObject.NSP_Lead_Stage__c = NSP_SalesConstants.LEAD_STAGE_SUSPECT;
             }
-
-            //if FireScore is greater than FIRE_SCORE_THRESH setting lead stage to MPL
+            //STY-03447 When A service referral lead record is saved --> assigning referral user to be loggedin user
+            if (leadObject.RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID){
+                leadObject.NSP_Referral_User__c = UserInfo.getUserId();
+            }
+            //If FireScore is greater than FIRE_SCORE_THRESH setting lead stage to MPL
             if (null != leadObject.nsp_fire_score__c && leadObject.nsp_fire_score__c > Integer.valueOf(System.label.NSP_FIRE_SCORE_THRESH)) {
                 leadObject.NSP_Lead_Stage__c = NSP_SalesConstants.LEAD_STAGE_MPL;
             }
@@ -76,7 +80,9 @@ public class NSP_LeadTriggerHelper {
             List < String > externalUsers = Label.NSP_External_Users.split(',');
             //Added as part of DF-00998
             String createdUserName = UserInfo.getFirstName();
-            if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
+            if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || 
+            leadObject.RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID || 
+            (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
                 inboundSolutionsList.add(leadObject);
             }
 
@@ -158,13 +164,17 @@ public class NSP_LeadTriggerHelper {
                     fireScoreLeadList.add(leadNewMap.get(leadId));
                 }
             /* Added as part of CR-027 */
-          if (leadNewMap.get(leadId).NSP_Parent_Lead__c != null && (leadNewMap.get(leadId).NSP_Parent_Lead__c != leadOldMap.get(leadId).NSP_Parent_Lead__c)) {
+            if (leadNewMap.get(leadId).NSP_Parent_Lead__c != null && (leadNewMap.get(leadId).NSP_Parent_Lead__c != leadOldMap.get(leadId).NSP_Parent_Lead__c)) {
             parentLead = leadNewMap.get(leadId);
                         isOwnerUpdated = true;
-                    }
-               if(leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && leadNewMap.get(leadId).NSP_Lead_Routing__c == true && isOwnerUpdated == false) {
-                   isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
-               }
+            }
+            //STY-03447  whenuser change the referral user on detail page, field should not be empty 
+            if(leadNewMap.get(leadId).RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID && leadNewMap.get(leadId).NSP_Referral_User__c == NULL){
+                leadNewMap.get(leadId).NSP_Referral_User__c = UserInfo.getUserId();
+            }
+            if(leadNewMap.get(leadId).DNBoptimizer__DNB_D_U_N_S_Number__c != null && leadNewMap.get(leadId).NSP_Lead_Routing__c == true && isOwnerUpdated == false) {
+                isOwnerUpdated = dunsCheck(leadNewMap.get(leadId));
+            }
             // add 12 hours to time value if value is 12 AM- DF-01502
             if (leadNewMap.get(leadId).NSP_DC_SetTime__c != leadOldMap.get(leadId).NSP_DC_SetTime__c && leadNewMap.get(leadId).NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
                 leadNewMap.get(leadId).NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
@@ -374,13 +384,13 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             }
         }
         // Added as part of DF-01654
-        if(!opportunityLeadMap.isEmpty()){
+        /*if(!opportunityLeadMap.isEmpty()){
            // updateNonProfitOrgFields(opportunityLeadMap); removed for STY-03346
-        }
+        }*/
         
         setContactasCOI(accountLeadMap, opportunityLeadMap);
         // added as a part of story STY-02090
-        setContactAsPrimary(accountId, accountLeadMap);
+        setContactAsPrimary(accountId);
         if (convertedOpportunityIdsSet.size() > 0) {
             defaultOpportunityFields(convertedOpportunityIdsSet);
         }
@@ -951,10 +961,15 @@ public void createContact(List < Lead > newLeadList) {
 * @Description: Marks the converted contact as Primary Contact  ,added as a part of story STY-02090 
 * @param Map<Id,Id> AccountContactMap. 
 * @return void             
-* @author : Nischay Jindal    
+* @author : Nischay Jindal  
+*-----------------------------------------------------------------------------------
+Modified History: Name : Description : date
+				 Mani Teja : Commented the If condition as we do not require it anymore and moved to future to avoid soql 101. : 3/31/2023
+------------------------------------------------------------------------------------  
 *           
 */
-    public void setContactAsPrimary( Set<Id> AccountIds, Map < String, Lead > accountLeadMap) {
+    @future
+    public static void setContactAsPrimary( Set<Id> AccountIds) {
         try{
             Set < Id > AccountId = new Set < Id > ();
             List<AccountContactRelation >acrList = new List<AccountContactRelation >();
@@ -976,12 +991,12 @@ public void createContact(List < Lead > newLeadList) {
                         acRecord.Id= Acr.Id;
                         acRecord.NSP_Is_Primary__c = true;
                         // Added as part of DF-01654
-                        if(!accountLeadMap.isEmpty()){
-                        /*Lead leadObject = accountLeadMap.get(Acr.AccountId); removed based on STY-03346
+                        /*if(!accountLeadMap.isEmpty()){
+                        Lead leadObject = accountLeadMap.get(Acr.AccountId); removed based on STY-03346
                         acRecord.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
                         acRecord.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-                        acRecord.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c; */
-                    }
+                        acRecord.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c; 
+                    }*/
                         UpdatedacrList.add(acRecord);  
                     }
                 }

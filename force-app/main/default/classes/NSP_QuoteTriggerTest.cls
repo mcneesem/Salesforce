@@ -45,7 +45,7 @@ public class NSP_QuoteTriggerTest {
         
         Test.startTest();
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
-        opp1.NSP_Client_For_Life__c = 'WO/WS';
+        opp1.NSP_Client_For_Life__c = NSP_CPQConstants.CLIENT_WOWS;
         opp1.NSP_PrimaryProduct__c = 'Recruiting Services';
         insert opp1;
         NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
@@ -54,7 +54,7 @@ public class NSP_QuoteTriggerTest {
         NSP_TestHelper.createCustomPriceBookEntry(product1.Id,200.0,recpb.Id,true);
         SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
         quote1.NSP_Opportunity_Primary_Product__c = 'Recruiting Services';
-        quote1.NSP_Client_For_Life__c = 'WO/WS';
+        quote1.NSP_Client_For_Life__c = NSP_CPQConstants.CLIENT_WOWS;
         insert quote1;
         // List<SBQQ__Quoteline__c> qlines = NSP_TestHelper.createCPQQuotelines(quote1,new List<Product2>{product1},new List<PriceBookEntry> {pe1}, true);
         
@@ -97,8 +97,8 @@ public class NSP_QuoteTriggerTest {
         quote1.ApprovalStatus__c = 'Pending';
         quote1.SBQQ__Primary__c = false;
         update quote1;
-        quote1.ApprovalStatus__c = 'Approved';
-        quote1.SBQQ__Status__c = 'Approved';
+        quote1.ApprovalStatus__c = NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED;
+        quote1.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_APPROVED;
         quote1.SBQQ__Primary__c = true;
         quote1.NSP_Select_Payroll_Frequency__c = 'Weekly;Monthly';
         update quote1;
@@ -231,7 +231,7 @@ public class NSP_QuoteTriggerTest {
        // User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         UserRole role = [SELECT Id FROM UserRole WHERE Name='CEO'];
-        User userobj = new User(alias = 'jsmith', email='jsmith@acme.com', 
+        User userobj = new User(alias = 'jsmith', email='jsmith@insperity.com', 
                           emailencodingkey='UTF-8', lastname='Smith', 
                           languagelocalekey='en_US', 
                           localesidkey='en_US', profileid = profileobj.Id, userroleid = role.Id,
@@ -279,10 +279,13 @@ public class NSP_QuoteTriggerTest {
         Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objAccount.Id, NSP_QuoteTriggerTest.NEW_PRODUCT ,true);
         NSP_Address__c objBillingAddress = NSP_TestHelper.createCustomAddress();
         objBillingAddress.NSP_Related_Site__c = objAccount.id;
+        objBillingAddress.NSP_Address_Type__c = 'Bill To';
+        objBillingAddress.NSP_Source__c = 'AIMS';
         insert objBillingAddress;
         
         NSP_Address__c objshippingAddress = NSP_TestHelper.createCustomAddress();
-        objshippingAddress.NSP_Address_Type__c = null;
+        objshippingAddress.NSP_Address_Type__c = 'Ship To';
+        objshippingAddress.NSP_Source__c = 'AIMS';
         objshippingAddress.NSP_Related_Site__c = objAccount.id;
         insert objshippingAddress;
         
@@ -308,7 +311,7 @@ public class NSP_QuoteTriggerTest {
         Account acc1 = [Select Id, Name from Account WHERE Name != null LIMIT 1];
         Product2 product1 = [Select Id, Name from Product2 WHERE NAME != Null LIMIT 1];
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
-        opp1.NSP_Client_For_Life__c = 'WO/WS';
+        opp1.NSP_Client_For_Life__c = NSP_CPQConstants.CLIENT_WOWS;
         opp1.NSP_PrimaryProduct__c = 'WO';
         insert opp1;
         NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
@@ -318,21 +321,21 @@ public class NSP_QuoteTriggerTest {
         Test.startTest();
         SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
         quote1.NSP_Opportunity_Primary_Product__c = 'WO';
-        quote1.NSP_Client_For_Life__c = 'WO/WS';
+        quote1.NSP_Client_For_Life__c = NSP_CPQConstants.CLIENT_WOWS;
         quote1.SBQQ__PriceBook__c = recpb.id;
         quote1.SBQQ__PricebookId__c = recpb.id;
         insert quote1;
         quote1.SBQQ__Primary__c = true;
         update quote1;
         Test.stopTest();
-        System.assertEquals(quote1.NSP_Client_For_Life__c, 'WO/WS');
+        System.assertEquals(quote1.NSP_Client_For_Life__c, NSP_CPQConstants.CLIENT_WOWS);
     }
     
     static testMethod void woToWAQuoteTest(){
         Account acc1 = [Select Id, Name from Account WHERE Name != null LIMIT 1];
         Product2 product1 = [Select Id, Name from Product2 WHERE NAME != Null LIMIT 1];
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
-        opp1.NSP_Client_For_Life__c = 'WO/WS';
+        opp1.NSP_Client_For_Life__c = NSP_CPQConstants.CLIENT_WOWS;
         opp1.NSP_PrimaryProduct__c = 'WO';
         insert opp1;
         NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
@@ -342,15 +345,78 @@ public class NSP_QuoteTriggerTest {
         Test.startTest();
         SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
         quote1.NSP_Opportunity_Primary_Product__c = 'WO';
-        quote1.NSP_Client_For_Life__c = 'WO/WS';
+        quote1.NSP_Client_For_Life__c = NSP_CPQConstants.CLIENT_WOWS;
         quote1.SBQQ__PriceBook__c = recpb.id;
         quote1.SBQQ__PricebookId__c = recpb.id;
         insert quote1;
         quote1.SBQQ__Primary__c = true;
         update quote1;
         Test.stopTest();
-        System.assertEquals(quote1.NSP_Client_For_Life__c, 'WO/WS');
+        System.assertEquals(quote1.NSP_Client_For_Life__c, NSP_CPQConstants.CLIENT_WOWS);
         
+    }
+    static testMethod void enrollmentTest(){
+        Account acc1 = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
+        Product2 product1 = [SELECT  Id, Name FROM Product2 WHERE NAME != Null LIMIT 1];
+        Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
+        opp1.NSP_Client_For_Life__c = 'WX';
+        opp1.NSP_PrimaryProduct__c = 'WX';
+        //Inserting Opportunity
+        insert opp1;
+        NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
+        PriceBook2 recpb = NSP_TestHelper.createPriceBook2('WX Pricebook');
+        insert recpb;
+        Test.startTest();
+        SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
+        quote1.NSP_Opportunity_Primary_Product__c = 'WX';
+        quote1.NSP_Client_For_Life__c = 'WX';
+        quote1.SBQQ__PriceBook__c = recpb.id;
+        quote1.SBQQ__PricebookId__c = recpb.id;
+        quote1.SBQQ__Primary__c = true;
+        quote1.SBQQ__Type__c=NSP_QuoteTriggerTest.NEW_PRODUCT;
+        //Inserting Quote
+        insert quote1;
+        //Updating Quote
+        quote1.ApprovalStatus__c = NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED;
+        quote1.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_APPROVED;
+        update quote1;
+        List<NSP_Enrollment_Fee_Payment__c> createdList= [Select Id,NSP_Opportunity__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c=:opp1.Id];
+        system.Assert(createdList.size()==1);
+        Test.stopTest();
+    }
+    @isTest
+    private static void existingEnrollmentTest(){
+         Account acc1 = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
+        Product2 product1 = [SELECT  Id, Name FROM Product2 WHERE NAME != Null LIMIT 1];
+        Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
+        opp1.NSP_Client_For_Life__c = 'WX';
+        opp1.NSP_PrimaryProduct__c = 'WX';
+        //Inserting Opportunity
+        insert opp1;
+        NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
+        PriceBook2 recpb = NSP_TestHelper.createPriceBook2('WX Pricebook');
+        insert recpb;
+        NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
+        enrollmentFee.NSP_Opportunity__c=opp1.Id;
+        insert enrollmentFee;
+        Test.startTest();
+        SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
+        quote1.NSP_Opportunity_Primary_Product__c = 'WX';
+        quote1.NSP_Client_For_Life__c = 'WX';
+        quote1.SBQQ__PriceBook__c = recpb.id;
+        quote1.SBQQ__PricebookId__c = recpb.id;
+        quote1.SBQQ__Primary__c = true;
+        quote1.SBQQ__Type__c=NSP_QuoteTriggerTest.NEW_PRODUCT;
+        //Inserting Quote
+        insert quote1;
+        //Updating Quote
+        quote1.ApprovalStatus__c = NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED;
+        quote1.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_APPROVED;
+        quote1.NSP_WX_WA_Enrollment_Fee__c=0;
+        update quote1;
+        List<NSP_Enrollment_Fee_Payment__c> createdList= [Select Id,NSP_Opportunity__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c=:opp1.Id];
+        system.Assert(createdList.size()==1);
+        Test.stopTest();
     }
     
 }

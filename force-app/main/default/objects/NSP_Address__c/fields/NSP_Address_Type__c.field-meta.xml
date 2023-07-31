@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Address_Type__c</fullName>
     <externalId>false</externalId>
@@ -8,6 +8,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>NSP_Source__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -41,6 +42,42 @@
                 <default>false</default>
                 <label>Reporting</label>
             </value>
+            <value>
+                <fullName>Account Address</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Account Address</label>
+            </value>
+            <value>
+                <fullName>Billing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Billing</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>AIMS</controllingFieldValue>
+            <valueName>Bill To</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AIMS</controllingFieldValue>
+            <valueName>Ship To</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AIMS</controllingFieldValue>
+            <valueName>Delivery</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AIMS</controllingFieldValue>
+            <valueName>U.S. Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AIMS</controllingFieldValue>
+            <valueName>Worksite</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AIMS</controllingFieldValue>
+            <valueName>Reporting</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

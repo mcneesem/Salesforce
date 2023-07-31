@@ -3,7 +3,6 @@
     <fullName>appirio_core__Last_Access_Date__c</fullName>
     <deprecated>false</deprecated>
     <description>Contains a timestamp for the most recent &quot;login&quot; of this feature user, to be used for PIN expiration.</description>
-    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Deprecated:Last Access Date</label>
     <required>false</required>

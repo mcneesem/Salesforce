@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Birthdate</fullName>
+    <description>Field cannot be encrypted by Shield. Use custom Date of Birth (NSP_Date_of_Birth__c) field instead.</description>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
 </CustomField>

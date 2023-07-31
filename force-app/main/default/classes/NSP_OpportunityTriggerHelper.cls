@@ -26,11 +26,11 @@ public class NSP_OpportunityTriggerHelper {
     public static final Id ASSET_RECORDTYPE_ID = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(ASSET_RECORDTYPE).getRecordTypeId();
     public static boolean valueAssignedFromUser = false;
     public static boolean createRewardsOnce = false;
-    
-    private static set<Id>  byPassValidationOnRole = null;
+    private static final string ClosedWonErrorMessage = System.Label.NSP_ClosedWonChecklistValidation;
+	private static set<Id>  byPassValidationOnRole = null;
     private List<UserRole> notAllowedCloseWonRoles = null;
     private String userRole = UserInfo.getUserRoleId();
-
+    
 /**
 * Iterates throught the list of new Opportunity and passes the required attributes to other methods.
 * @param newList List of New Opportunity.  
@@ -85,11 +85,10 @@ public class NSP_OpportunityTriggerHelper {
             if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.OPPORTUNITY_TYPE_CAMS)) {
                 opportunityObject.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
             }
-            
+
             //118442- If type is Client Growth Credit and stage is Closed Won updating the recordtype to Locked
             if (String.isNotBlank(opportunityObject.Type) && opportunityObject.Type.equals(NSP_SalesConstants.CLIENT_GROWTH_CREDIT)
-                && opportunityObject.StageName.equals(NSP_SalesConstants.CLOSED_WON_STAGE))
-                {
+                && opportunityObject.StageName.equals(NSP_SalesConstants.CLOSED_WON_STAGE)){
                 closedStageList.add(opportunityObject);
                 changeOpportunityRecordType(closedStageList);
             }
@@ -100,11 +99,11 @@ public class NSP_OpportunityTriggerHelper {
             }
         }      
         
-        // Added as part of DF-01716
-        User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
-        List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
-        if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
-            validateClosedDate(closedOppList);
+               // Added as part of DF-01716
+               User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+               List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
+               if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
+        validateClosedDate(closedOppList);
         }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -126,6 +125,8 @@ public class NSP_OpportunityTriggerHelper {
         
         NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(newList,ownerIdsSet);
         setSalesOfficeDetails(newList,null); // added for STY-03154
+        
+            
     }
     
 /**
@@ -165,6 +166,9 @@ public class NSP_OpportunityTriggerHelper {
         /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
         NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet);
 
+        /*Update Account status to 'Prospecting' once opportunity is added and there are no assets*/
+        NSP_UpdateRelatedAccounts.updateAccountStatus(accountIdSet);
+        
         if(! newTaskOpportunityList.isEmpty()){
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
@@ -280,6 +284,10 @@ public class NSP_OpportunityTriggerHelper {
                    updatePriceBookList.add(opportunityNewMap.get(opportunityId));
                }
             
+            
+            
+           
+            
             //create list to populate docusign template id for merge on demand templates
             if(!String.isBlank(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c) && 
                newOpportunity.NSP_Merge_On_Demand_Template_Selection__c != oldOpportunity.NSP_Merge_On_Demand_Template_Selection__c){
@@ -294,16 +302,18 @@ public class NSP_OpportunityTriggerHelper {
                newOpportunity.NSP_Insperity_Signer__c == oldOpportunity.NSP_Insperity_Signer__c){
                 closedOppList.add(newOpportunity);
             }
+
         }
 
-        // Added as part of DF-01716
-        User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
-        List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
-        // Added as part of 195079
-        List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
-        if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
-            validateClosedDate(closedOppList);
-        }
+                 // Added as part of DF-01716
+                 User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+                 List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
+                 // Added as part of 195079
+                 List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
+
+                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
+                    validateClosedDate(closedOppList);
+                }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
@@ -361,10 +371,14 @@ public class NSP_OpportunityTriggerHelper {
         List<String> closedOpportunityIdList = new List<String>();
         List<String> closedWonOpportunityIdList = new List<String>();
         Set<String> accountIdSet = new Set<String>();
+        Set<String> recordTypeSet = new Set<String>();
+        Set<String> backoutOptySet = new Set<String>();
         List<Opportunity> closedWonOpptyList = new List<Opportunity>();
         List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
-        
+        List<Opportunity> closedOpptyList = new List<Opportunity>();
+        List<String> productCodeList = new List<String>{'Employment Screening','Expense Management','Insurance Services'};
+        String rectype = null;
         //opportunity list to store oppty records where Primary Quote is newly created
         //List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();// commeted as part of user story 128436
         
@@ -376,6 +390,10 @@ public class NSP_OpportunityTriggerHelper {
         Set<Id> partnerAccountIdSet = new Set<Id>();
         //Sending list to update enrollment fee payment
         enrollmentFeeCheck(opportunityNewMap,opportunityOldMap);
+        
+        //List of string to store opportunity id fro changed sales tax records
+        List<String> salesTaxChanged = new List<String>();
+        
         //I terating over the opportunity new map
         for(Id opportunityId : opportunityNewMap.keySet()){
             
@@ -403,7 +421,21 @@ public class NSP_OpportunityTriggerHelper {
             //STY-01519 - Asset creation from Opportunity line item
             if(opportunityNewMap.get(opportunityId).stagename != opportunityOldMap.get(opportunityId).stagename
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
-                closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
+                if(!productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c)){
+                    closedWonOpptyList.add(opportunityNewMap.get(opportunityId));
+                } else if(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c!= null && productCodeList.contains(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c)){
+                    accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
+                    if(newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE){
+                        rectype =  Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_INSURANCE).getRecordTypeId();
+                    }
+                    else if(newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT){
+                         rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_CERTIFY).getRecordTypeId();
+                   } else {
+                    rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c).getRecordTypeId();
+                    }
+                    recordTypeSet.add(rectype);
+                    closedOpptyList.add(newOpportunity);
+                }
                //569718- if parent opportunity - send notification to open child opportunities 
                 if(String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null){
                  closedWonOpportunityIdList.add(opportunityId);
@@ -425,6 +457,13 @@ public class NSP_OpportunityTriggerHelper {
             if(opportunityNewMap.get(opportunityId).NSP_Ready_for_Integration_Sync__c) {
                 opportunityEventList.add(New Integration_Opportunity_Event__e(Id__c = opportunityId));
                 updateResyncFlagOpportunityList.add(opportunityNewMap.get(opportunityId));
+            }
+            if(newOpportunity.AVA_SFCLOUD__Sales_Tax__c!=oldOpportunity.AVA_SFCLOUD__Sales_Tax__c) {
+                salesTaxChanged.add(newOpportunity.Id);
+            }
+            //Update the asset status to backout when opportunity backout flag is checked
+            if(newOpportunity.NSP_Back_Out__c != oldOpportunity.NSP_Back_Out__c && newOpportunity.NSP_Back_Out__c == true) {
+                backoutOptySet.add(newOpportunity.Id);
             }
         }
         
@@ -457,8 +496,6 @@ public class NSP_OpportunityTriggerHelper {
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
           childHlprObj.updatesOnOpenChildOpportunity(closedWonOpportunityIdList);
         }
-        //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
-        NSP_GenerateOrderFromOpportunity.updateQuotetoOrderWhenOppWON(Trigger.new,opportunityOldMap);
         /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
         NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet); 
         
@@ -470,7 +507,13 @@ public class NSP_OpportunityTriggerHelper {
             // commented as a part of Defect-DF-01797
             //NSP_EmailServicesUtility.sendEmailsTOService(closedWonOpptyList, opportunityNewMap, workforceProductsList);
         }
-        
+        if(closedOpptyList!= null && closedOpptyList.size() > 0){
+            createAsset(closedOpptyList,accountIdSet,recordTypeSet);
+        }
+        //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
+        /*NSP_GenerateOrderFromOpportunity.updateQuotetoOrderWhenOppWON(Trigger.new,opportunityOldMap);*/
+        /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
+        NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet); 
         if(newTaskOpportunityList.size() > 0){
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
@@ -479,6 +522,14 @@ public class NSP_OpportunityTriggerHelper {
         setPartnerAccount(partnerOpportunityList,partnerAccountIdSet);
         
         NSP_EnrollmentFeePaymentSharing.onOppClose(opportunityNewMap);
+
+        if(salesTaxChanged.size()>0) {
+            NSP_BudgetaryQuoteTaxController.stampTaxFieldsToQuote(salesTaxChanged);
+        }
+
+        if(backoutOptySet.size() > 0) {
+            NSP_AssetUpdate.assetBackoutUpdate(backoutOptySet,NSP_SalesConstants.BACKOUT_STATUS);
+        }
     }       
     
     
@@ -598,19 +649,25 @@ public class NSP_OpportunityTriggerHelper {
         
         if(contractIdSet.Size() > 0){
             Map<Id,Contract> comtractMap = new Map<Id,Contract>([SELECT Id,SBQQ__Opportunity__c,
-                                                                 SBQQ__Opportunity__r.NSP_PrimaryProduct__c,
-                                                                 SBQQ__Opportunity__r.NSP_Client_For_Life__c,
-                                                                 SBQQ__Opportunity__r.NSP_Partner__c
-                                                                 FROM Contract WHERE Id IN : contractIdSet AND SBQQ__Opportunity__c != null  ]);
+                                                                 SBQQ__Opportunity__r.NSP_PrimaryProduct__c,NSP_PrimaryProduct__c,
+                                                                 SBQQ__Opportunity__r.NSP_Client_For_Life__c,NSP_Client_For_Life__c,
+                                                                 SBQQ__Opportunity__r.NSP_Partner__c, NSP_Partner__c
+                                                                 FROM Contract WHERE Id IN : contractIdSet ]);
             if(comtractMap.Size() > 0){
                 for(Opportunity newOpportunty : opportunityList){
                     Id contractIdstr = newOpportunty.SBQQ__RenewedContract__c != null ? newOpportunty.SBQQ__RenewedContract__c :newOpportunty.SBQQ__AmendedContract__c != null ? newOpportunty.SBQQ__AmendedContract__c : null; 
                     if(contractIdstr != null && comtractMap.containskey(contractIdstr)){
                         Contract objContract = comtractMap.get(contractIdstr);
+                        if(objContract.SBQQ__Opportunity__c !=null) {
                         newOpportunty.NSP_PrimaryProduct__c = objContract.SBQQ__Opportunity__r.NSP_PrimaryProduct__c;
                         newOpportunty.NSP_Client_For_Life__c = objContract.SBQQ__Opportunity__r.NSP_Client_For_Life__c;
-                        newOpportunty.NSP_Partner__c = objContract.SBQQ__Opportunity__r.NSP_Partner__c;
-                        
+                        newOpportunty.NSP_Partner__c = objContract.SBQQ__Opportunity__r.NSP_Partner__c;                     
+                    }
+                        else {
+                        newOpportunty.NSP_PrimaryProduct__c = objContract.NSP_PrimaryProduct__c;
+                        newOpportunty.NSP_Client_For_Life__c = objContract.NSP_Client_For_Life__c;
+                        newOpportunty.NSP_Partner__c = objContract.NSP_Partner__c; 
+                        }
                     }
                 }
             }           
@@ -665,47 +722,86 @@ public class NSP_OpportunityTriggerHelper {
 * @return void             
 * 
 */
-    public void createAssetForCloseWonOpportunity(List<Opportunity> closedWonOpptyList){
+     public void createAssetForCloseWonOpportunity(List<Opportunity> closedWonOpptyList){
+        createHardwareAssets(closedWonOpptyList);
         Set<Id> productIds = new Set<Id>();
         Set<Id> accountIds = new Set<Id>();
+        Map<Id,String> recordTypeMap = new Map<Id,String>(); 
+        Set<String> recordIdSet = new Set<String>();
+        String optyType = null;
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
-                                                       NSP_ProductType__c,NSP_ProductBundle__c,//if its required on Asset then we create a formula for it
-                                                       NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c FROM OpportunityLineItem WHERE
-                                                       Product2.NSP_Convert_to_Asset__c = TRUE AND
-                                                       Opportunity.NSP_PrimaryProduct__c IN ('WX','WA') AND
+                                                       NSP_ProductType__c,NSP_ProductBundle__c,NSP_EmployeesAtSignature__c,Opportunity.Type,//if its required on Asset then we create a formula for it
+                                                       NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c,Product2.NSP_ServiceAssetCategory__c,NSP_AssetProductLine__c,NSP_AccountName__c,NSP_Pricing_Model__c,NSP_TransitionType__c FROM OpportunityLineItem WHERE
+                                                       Product2.NSP_Convert_to_Asset__c = TRUE AND  Product2.NSP_ServiceAssetCategory__c != 'Hardware Asset' AND 
                                                        OpportunityId IN: closedWonOpptyList];
         
         for(OpportunityLineItem oppItem : opptyLineItemList){
             productIds.add(oppItem.Product2Id);
-            accountIds.add(oppItem.Opportunity.accountId);        
+            accountIds.add(oppItem.Opportunity.accountId);  
+            if(oppItem.Product2.NSP_ServiceAssetCategory__c != null){
+                String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(oppItem.Product2.NSP_ServiceAssetCategory__c).getRecordTypeId();
+                recordTypeMap.put(oppItem.Product2Id,rectype); 
+                recordIdSet.add(rectype);     
+                optyType = oppItem.Opportunity.Type;
+            }
         }
         List<Asset> upsertList=new List<Asset>();
         New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;//initialize the class
         List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);      
         Map<Id, Asset> assetMap = new Map<Id, asset>();
         for(Asset assetItem: assetfromCopier){
-            assetMap.put(assetItem.accountId,assetItem);
+            assetMap.put(assetItem.Product2Id,assetItem);
         }
-        List<Asset> existingAssets = [SELECT Id, Name,AccountId, Product2Id FROM Asset WHERE   AccountId in :accountIds AND RecordTypeId =:ASSET_RECORDTYPE_ID];
+        List<Asset> existingAssets = [SELECT Id,Name,AccountId,Product2Id,NSP_ProductBundle__c FROM Asset WHERE  AccountId IN :accountIds AND RecordTypeId IN :recordIdSet AND  Status != :NSP_SalesConstants.TERMINATED_STATUS AND Status != :NSP_SalesConstants.BACKOUT_STATUS];
         Boolean isAssetFound=FALSE;
         for(Id draftAsset:assetMap.keySet()){
             for(Asset existingAsset: existingAssets ){  
                 if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
-                    isAssetFound=TRUE;
-                    Break;
+                    if(existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WOSS && (assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX || assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WA) && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY){
+                        isAssetFound=FALSE;
+                    } else if(existingAsset.NSP_ProductBundle__c != NSP_SalesConstants.WOSS && assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WO_WS && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY){
+                        isAssetFound=FALSE;
+                    } 
+                    else{
+                        isAssetFound=TRUE;
+                        Break;
+                    }
                 }
             }
-            assetMap.get(draftAsset).RecordTypeId = ASSET_RECORDTYPE_ID;
-            assetMap.get(draftAsset).Status = NSP_SalesConstants.ONBOARDING;
+            assetMap.get(draftAsset).RecordTypeId = recordTypeMap.get(assetMap.get(draftAsset).Product2Id);
+            String prodLine = assetMap.get(draftAsset).NSP_Product_Line__c;
+            if( prodLine== NSP_SalesConstants.PROD_RECRUITING || prodLine == NSP_SalesConstants.PROD_EMPSCREENING || prodLine == NSP_SalesConstants.PROD_INSURANCE){
+                assetMap.get(draftAsset).Status = NSP_SalesConstants.ONDEMAND_STATUS;
+            } else{
+                assetMap.get(draftAsset).Status = NSP_SalesConstants.ONBOARDING;
+            }
+            if(prodLine== NSP_SalesConstants.PROD_WX || prodLine== NSP_SalesConstants.PROD_WA){
+                assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +assetMap.get(draftAsset).NSP_ProductBundle__c;
+            } 
+            if(prodLine ==  NSP_SalesConstants.RETIREMENT_SERVICE){
+                assetMap.get(draftAsset).NSP_Client_is_Lead_Parent__c = true;
+            }
+            assetMap.get(draftAsset).NSP_Signature_Date__c = System.today();
+            if(assetMap.get(draftAsset).NSP_TransitionType__c != null && assetMap.get(draftAsset).NSP_TransitionType__c == NSP_SalesConstants.PEOTOWX){
+                if(prodLine == NSP_SalesConstants.PROD_WX){
+                    assetMap.get(draftAsset).NSP_ProductBundle__c = NSP_SalesConstants.WOTOWX;
+                } else if(prodLine== NSP_SalesConstants.PROD_WA){
+                    assetMap.get(draftAsset).NSP_ProductBundle__c = NSP_SalesConstants.WOTOWA;
+                }
+            }
             if(!isAssetFound){
                 upsertList.add(assetMap.get(draftAsset)); 
             }
             isAssetFound=FALSE;
-            
-            
         }
-        upsert upsertList;
+        try{
+            if(upsertList != null && upsertList.size() > 0){
+                upsert upsertList;
+            }
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        }
         
     }
 
@@ -780,14 +876,14 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
     //  Check if User's Profile is in the Profile List
     if(byPassValidationOnRole.contains(UserInfo.getUserRoleId())){
         //  Check if stage is closed won OR closed lost
-        return opp.StageName.equals('Closed Won') || opp.StageName.equals('Closed Lost');
+        return 'Closed Won'.equals(opp.StageName) || 'Closed Lost'.equals(opp.StageName);
     }
   
 
   return false;
 }
 
-        /***********************************************************************************************
+/***********************************************************************************************
 * MethodName: validateClosedDate
 * Description : This method will throw error when Opportunity close date is less than today for all users except for the users
                 in NCS Public group
@@ -796,22 +892,23 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
 * ********************************************************************************************/ 
 public static void validateClosedDate(List<Opportunity> OpportunityList){
 
-    Id loggedInUserId = UserInfo.getUserId();
+    Id loggedInUserId = UserInfo.getUserId();   
     set<Id> ncsGrpMemIdSet = new set<Id>();
     List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
     List<group> ncsGroup = [SELECT Id,Name FROM group WHERE group.Name IN: groupList];
-    for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId IN: ncsGroup]){
-        ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId);
-    }
-
-    for(Opportunity opp: OpportunityList){
-        if(!ncsGrpMemIdSet.contains(loggedInUserId)){
-            if(validateByNonProfitAndRole(opp) == false 
-            && true == false){ // always skip per story 211853
-                opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
-            }
+        for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId IN: ncsGroup]){
+            ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId); 
         }
+
+        for(Opportunity opp: OpportunityList){
+            if(!ncsGrpMemIdSet.contains(loggedInUserId)){
+                if(validateByNonProfitAndRole(opp) == false
+                && true == false){ // always skip per story 211853
+              opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
+            }  
+        } 
     }
+    
 }
 
 /* Description: This method sets sales office details from user 
@@ -827,37 +924,32 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
      * 
     */
     
-    public void setSalesOfficeDetails(List<Opportunity> newList,Map<Id, Opportunity> opportunityOldMap)
-    {
+    public void setSalesOfficeDetails(List<Opportunity> newList,Map<Id, Opportunity> opportunityOldMap){
         set<Id> ownerIdSet = new set<Id>(); // owner id set
         set<string> officeSet = new set<string>(); // sales office set
         set<Id> recordToProcess = new set<Id>();  // record to be process set
         set<string> opportunityStageSet = new set<string>{'Discovery','Analysis','Proposal','Closing'};
-        for(Opportunity newOpportunity: newList)
-        {
+        for(Opportunity newOpportunity: newList){
             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
             if((Trigger.isInsert || newOpportunity.OwnerId != oldOpportunity.OwnerId) 
-               && newOpportunity.OwnerId != null && opportunityStageSet.contains(newOpportunity.StageName)) // value assigned when owner is changed
-            {
+               && newOpportunity.OwnerId != null && opportunityStageSet.contains(newOpportunity.StageName)){ // value assigned when owner is changed
+            
                 ownerIdSet.add(newOpportunity.OwnerId);
             }
-            else if(Trigger.isUpdate && newOpportunity.NSP_Sales_Office__c != oldOpportunity.NSP_Sales_Office__c && String.isNotBlank(newOpportunity.NSP_Sales_Office__c) && !valueAssignedFromUser ) // value assigned when sales office is changed.
-            {
+            else if(Trigger.isUpdate && newOpportunity.NSP_Sales_Office__c != oldOpportunity.NSP_Sales_Office__c && String.isNotBlank(newOpportunity.NSP_Sales_Office__c) && !valueAssignedFromUser ){ // value assigned when sales office is changed.
+            
                 recordToProcess.add(newOpportunity.Id);
                 officeSet.add(newOpportunity.NSP_Sales_Office__c);
             }
             
         }
         
-        if(ownerIdSet.Size() > 0)
-        {
+        if(ownerIdSet.Size() > 0){
             // values assigned from users
-            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-            for(Opportunity newOpportunity: newList)
-            {
+            Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+            for(Opportunity newOpportunity: newList){
                 Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-                if((Trigger.isInsert || newOpportunity.OwnerId != oldOpportunity.OwnerId) && newOpportunity.OwnerId != null && userIdMap.containsKey(newOpportunity.OwnerId))
-                {
+                if((Trigger.isInsert || newOpportunity.OwnerId != oldOpportunity.OwnerId) && newOpportunity.OwnerId != null && userIdMap.containsKey(newOpportunity.OwnerId)){
                     user eachUser = userIdMap.get(newOpportunity.OwnerId);
                     newOpportunity.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
                     newOpportunity.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
@@ -867,21 +959,17 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
             }
         }
         // values assigned from sales office mapping
-        if(officeSet.Size() > 0)
-        {
+        if(officeSet.Size() > 0){
             map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
             for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
                                                             FROM NSP_Sales_Office_Mapping__c 
-                                                            WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true])
-            {
+                                                            WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true]){
                 salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
             }
             
             
-            for(Opportunity newOpportunity: newList)
-            {
-                if(Trigger.isUpdate && recordToProcess.contains(newOpportunity.Id) && salesOfficeToMappingMap.containsKey(newOpportunity.NSP_Sales_Office__c))
-                {
+            for(Opportunity newOpportunity: newList){
+                if(Trigger.isUpdate && recordToProcess.contains(newOpportunity.Id) && salesOfficeToMappingMap.containsKey(newOpportunity.NSP_Sales_Office__c)){
                     NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newOpportunity.NSP_Sales_Office__c);
                     newOpportunity.NSP_Sales_Region__c = officeMapping.NSP_Sales_Region__c; // sales region
                     newOpportunity.NSP_Sales_Division__c = officeMapping.NSP_Sales_Division__c; // sales division
@@ -903,57 +991,46 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
      * 
      * 
     */  
-    public void creteRewardForContactRole(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap)
-    {
+    public void creteRewardForContactRole(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
         set<String> primaryProductSet = new set<String>{'WX','WA','WO'}; 
         map<Id,String> opportunityIdToRewardTypeMap = new map<Id,String>();
-        for(Opportunity newOpportunity: opportunityNewMap.Values())
-        {
+        for(Opportunity newOpportunity: opportunityNewMap.Values()){
             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
-            if(newOpportunity.Type != 'Client Growth Credit') // added for DF-02233
-            {
-                if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
-                {
+            if(newOpportunity.Type != 'Client Growth Credit'){ // added for DF-02233
+            
+                if(opportunityOldMap != null && newOpportunity.Discovery_Completed__c && !oldOpportunity.Discovery_Completed__c && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c)){
                     opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Discovery');
                 }
-                else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c))
-                { 
+                else if(opportunityOldMap != null && newOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c != null && oldOpportunity.Nsp_1st_Pay_Invoice_Date_Reporting__c == null && String.isNotBlank(newOpportunity.NSP_PrimaryProduct__c) && primaryProductSet.contains(newOpportunity.NSP_PrimaryProduct__c)){ 
                     opportunityIdToRewardTypeMap.put(newOpportunity.Id,'Sold');
                 }
             }   
             
         }
         
-        if(opportunityIdToRewardTypeMap.Size() > 0)
-        {
+        if(opportunityIdToRewardTypeMap.Size() > 0){
                 list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
                 map<id,Event> oppottunityToEventMap = new map<id,Event>();
                 
-                for(Event eachEvent : [SELECT Id,NSP_Completed_Date__c,WhatId from Event Where WhatId in :opportunityIdToRewardTypeMap.KeySet() AND NSP_Event_Subtype__c = 'Discovery Call' AND NSP_Status__c = 'Completed' ])
-                {
+                for(Event eachEvent : [SELECT Id,NSP_Completed_Date__c,WhatId from Event Where WhatId in :opportunityIdToRewardTypeMap.KeySet() AND NSP_Event_Subtype__c = 'Discovery Call' AND NSP_Status__c = 'Completed' ]){
                     oppottunityToEventMap.put(eachEvent.WhatId,eachEvent);
                 }
                 
                 for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c, 
                                                         NSP_Nonprofit_Organization_Name__c,NSP_Nonprofit_Organization_Tax_Id__c from OpportunityContactRole 
                                                         WHERE opportunityId in : opportunityIdToRewardTypeMap.keySet() 
-                                                        AND NSP_isReferral__c = true])
-                {
+                                                        AND NSP_isReferral__c = true]){
                     string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
                     opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
-                    if(rewardType == 'Discovery')
-                    {
+                    if(rewardType == 'Discovery'){
                         NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match')
-                        {
+                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
                             newReward.NSP_Reward_Amount__c = 100;
                             newReward.NSP_Nonprofit_Amount__c = 100;
                             newReward.NSP_Payment_Type_Reward__c = 'Check';
                             newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                            
                         }
-                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')
-                        {
+                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'){
                             newReward.NSP_Reward_Amount__c = 0;
                             newReward.NSP_Nonprofit_Amount__c = 200;
                             newReward.NSP_Payment_Type_Reward__c = null;
@@ -970,19 +1047,16 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                         newReward.NSP_Discovery_Call_Completed_Date__c = oppottunityToEventMap.containsKey(eachOCR.opportunityId) ? oppottunityToEventMap.get(eachOCR.opportunityId).NSP_Completed_Date__c: null;
                         rewardsInsertList.add(newReward);
                     }
-                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5) )
-                    {
+                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5) ){
                         NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match')
-                        {
+                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
                             newReward.NSP_Reward_Amount__c = 500;
                             newReward.NSP_Nonprofit_Amount__c = 500;
                             newReward.NSP_Payment_Type_Reward__c = 'Check';
                             newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
                             
                         }
-                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation')
-                        {
+                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'){
                             newReward.NSP_Reward_Amount__c = 0;
                             newReward.NSP_Nonprofit_Amount__c = 1000;
                             newReward.NSP_Payment_Type_Reward__c = null;
@@ -1000,16 +1074,14 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                     }
                 }
                 
-                if(rewardsInsertList.Size() > 0 && !createRewardsOnce )
-                {
+                if(rewardsInsertList.Size() > 0 && !createRewardsOnce ){
                     createRewardsOnce  = true;
                     insert rewardsInsertList;
                 }
         }
     }
     
-    public NSP_Reward__c createRewards(OpportunityContactRole objOCR, opportunity objOpportunity)
-    {
+    public NSP_Reward__c createRewards(OpportunityContactRole objOCR, opportunity objOpportunity){
         NSP_Reward__c newReward = new NSP_Reward__c();
         newReward.NSP_Account__c = objOCR.Opportunity.AccountId;
         newReward.NSP_Benefits_Non_Profit__c = objOCR.NSP_Referralbenefitsanonprofitorg__c;
@@ -1021,14 +1093,79 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         newReward.NSP_Non_Profit_Address__c = objOpportunity.NSP_NonprofitNameAddress__c;
         return newReward;
     }
-
-    /***********************************************************************************************
+    
+  /**
+* Iterates tthrough closed won oportunity and looks for product where asset should be created
+* @param closedWonOpptyList of closed won Opportunity.
+* @return void             
+* 
+*/
+    public void createAsset(List<Opportunity> closedWonOpptyList,Set<String> accountIdSet,Set<String> recordTypeSet){
+        Set<Id> productIds = new Set<Id>();
+        Set<Id> accountIds = new Set<Id>();
+        Map<Id,String> recordTypeMap = new Map<Id,String>(); 
+        Set<String> recordIdSet = new Set<String>();
+        String optyType = null;
+    
+        List<Asset> upsertList=new List<Asset>();
+        New NSP_SrcToTargetObjectDataMover(null,'OpportunityAsset') ;//initialize the class
+        List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget(closedWonOpptyList);      
+        Map<Id, Asset> assetMap = new Map<Id, asset>();
+        for(Asset assetItem: assetfromCopier){
+            assetMap.put(assetItem.AccountId,assetItem);
+        }
+        List<Asset> existingAssets = [SELECT Id,Name,AccountId,Product2Id,NSP_ProductBundle__c FROM Asset WHERE  AccountId IN :accountIdSet AND RecordTypeId IN :recordTypeSet AND  Status != :NSP_SalesConstants.TERMINATED_STATUS AND Status != :NSP_SalesConstants.BACKOUT_STATUS];
+        Boolean isAssetFound=FALSE;
+        for(Id draftAsset:assetMap.keySet()){
+            for(Asset existingAsset: existingAssets ){  
+                if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
+                    isAssetFound=TRUE;
+                    break;
+                }
+            }
+            if(assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_INSURANCE){
+                assetMap.get(draftAsset).RecordTypeId = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_INSURANCE).getRecordTypeId();
+            }
+            else if(assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT){
+                String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_CERTIFY).getRecordTypeId();
+                assetMap.get(draftAsset).RecordTypeId = rectype;
+            } else {
+                assetMap.get(draftAsset).RecordTypeId = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(assetMap.get(draftAsset).NSP_Product_Line__c).getRecordTypeId();
+            }
+            String prodLine = assetMap.get(draftAsset).NSP_Product_Line__c;
+            if( prodLine== NSP_SalesConstants.PROD_RECRUITING || prodLine == NSP_SalesConstants.PROD_EMPSCREENING || prodLine == NSP_SalesConstants.PROD_INSURANCE){
+                assetMap.get(draftAsset).Status = NSP_SalesConstants.ONDEMAND_STATUS;
+            } else{
+                assetMap.get(draftAsset).Status = NSP_SalesConstants.ONBOARDING;
+            }
+            if(prodLine== NSP_SalesConstants.PROD_WX || prodLine== NSP_SalesConstants.PROD_WA){
+                assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +assetMap.get(draftAsset).NSP_ProductBundle__c;
+            } else {
+                assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +prodLine;
+            }
+            assetMap.get(draftAsset).NSP_Signature_Date__c = System.today();
+            if(!isAssetFound){
+                upsertList.add(assetMap.get(draftAsset)); 
+            }
+            isAssetFound=FALSE;
+        }
+        try{
+            if(upsertList != null && upsertList.size() > 0){
+                upsert upsertList;
+            }
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        }
+        
+    }
+    
+        /***********************************************************************************************
     * MethodName: createContactRole
     * Description : This method will create OCR
     * Params:       List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap
     * Author : Rahul Singh
-    * Created Date:10/26/22
-    * Created as part of User story - 128223
+	* Created Date:10/26/22
+	* Created as part of User story - 128223
     * ********************************************************************************************/   
     
     public void createContactRole(List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap)
@@ -1044,28 +1181,24 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
             {
 
                 accAndOpp.put(newOpportunity.id, newOpportunity.AccountId);
+                }
+            
+            
             }
             
-            
-        }
-        
        
-         if(accAndOpp.Size() > 0)
-        {
+         if(accAndOpp.Size() > 0){
              for(AccountContactRelation eachACR : [SELECT Id, AccountId, ContactId, Roles, IsDirect, IsActive, CurrencyIsoCode, NSP_ACCOUNTCONTACT_MERGE__c, Relationship_Strength__c, 
                                                    NSP_Is_Primary__c, NSP_Nonprofit_Organization_Name__c, NSP_Nonprofit_Organization_Tax_Id__c, NSP_OneForce_External_ID__c, 
-                                                   NSP_Referralbenefitsanonprofitorg__c, NSP_isReferral__c FROM AccountContactRelation Where AccountId  in :accAndOpp.values() AND NSP_Is_Primary__c = True])
-            
-            {
+                                                   NSP_Referralbenefitsanonprofitorg__c, NSP_isReferral__c FROM AccountContactRelation WHERE AccountId  in :accAndOpp.values() AND NSP_Is_Primary__c = True]){
                     acrMap.put(eachACR.AccountId,eachACR);                       
             
-            }
+        }
             
         }
         
         
-         if(accAndOpp.Size() > 0 && acrMap.Size() >0)
-        {   
+         if(accAndOpp.Size() > 0 && acrMap.Size() >0){   
             for(id oppOnConv : accAndOpp.keySet() ){
                
                 AccountContactRelation eachACR = acrMap.get(accAndOpp.get(oppOnConv));
@@ -1084,12 +1217,10 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         }
         
         try{
-        if(ocrInsertList.Size() > 0)
-                
-        {
-            insert ocrInsertList;
-                
-        }            
+            if(ocrInsertList.Size() > 0){
+                insert ocrInsertList;
+                    
+            }            
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         } 
@@ -1098,7 +1229,8 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
           
     
     }
-     /***********************************************************************************************
+    
+         /***********************************************************************************************
     * MethodName: enrollmentFeeCheck
     * Description : This method will update enrollment fee payment
     * Params:       Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap
@@ -1108,48 +1240,38 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
     * ********************************************************************************************/   
     
     
-     public void enrollmentFeeCheck(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap)
-    {
+     public void enrollmentFeeCheck(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
          set<Id> oppIdTrue = new set<Id>();
          set<Id> oppIdFalse = new set<Id>();
          list<NSP_Enrollment_Fee_Payment__c> enrollmentUpdateList = new list<NSP_Enrollment_Fee_Payment__c>();
-         for(Opportunity newOpportunity: opportunityNewMap.Values())
-        {
+         for(Opportunity newOpportunity: opportunityNewMap.Values()){
              Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
             //Modified for user story 192368
             if((newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c >= 150) || 
-               (oldOpportunity.NSP_MidMarketNationalAccount__c == Null && newOpportunity.NSP_MidMarketNationalAccount__c != Null))
-                {
+               (oldOpportunity.NSP_MidMarketNationalAccount__c == Null && newOpportunity.NSP_MidMarketNationalAccount__c != Null)){
                     oppIdTrue.add(newOpportunity.Id);
                 }
             //Modified for user story 192368
             else if((newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c && newOpportunity.NSP_Number_of_Employees__c < 150) || 
-                    (oldOpportunity.NSP_MidMarketNationalAccount__c != Null && newOpportunity.NSP_MidMarketNationalAccount__c == Null))
-                {
+                    (oldOpportunity.NSP_MidMarketNationalAccount__c != Null && newOpportunity.NSP_MidMarketNationalAccount__c == Null)){
                     oppIdFalse.add(newOpportunity.Id);
                 }
             
             
         }
-        if(oppIdTrue.Size() > 0)
-        { 
+        if(oppIdTrue.Size() > 0){ 
           
-               for(NSP_Enrollment_Fee_Payment__c eachEnrollment : [SELECT Id FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c in :oppIdTrue])
-            
-            {
+               for(NSP_Enrollment_Fee_Payment__c eachEnrollment : [SELECT Id FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c in :oppIdTrue]){
                   NSP_Enrollment_Fee_Payment__c newEnrollment = new NSP_Enrollment_Fee_Payment__c();
                   newEnrollment.Id = eachEnrollment.Id; 
                   newEnrollment.NSP_Is_MidMarket__c = True; 
                   enrollmentUpdateList.add(newEnrollment);     
             
-            }
+                }
         }
-        else if(oppIdFalse.Size() > 0)
-        { 
+        else if(oppIdFalse.Size() > 0){ 
           
-               for(NSP_Enrollment_Fee_Payment__c eachEnrollment : [SELECT Id FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c in :oppIdFalse])
-            
-            {
+               for(NSP_Enrollment_Fee_Payment__c eachEnrollment : [SELECT Id FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c in :oppIdFalse]){
                   NSP_Enrollment_Fee_Payment__c newEnrollment = new NSP_Enrollment_Fee_Payment__c();
                   newEnrollment.Id = eachEnrollment.Id; 
                   newEnrollment.NSP_Is_MidMarket__c = False; 
@@ -1158,18 +1280,113 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
             }
         }
         try{
-        if(enrollmentUpdateList.Size() > 0)
-                
-        {
+        if(enrollmentUpdateList.Size() > 0){
             update enrollmentUpdateList;
                 
-        }            
+    }
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         } 
             
+            
+            
         }
         
+    
+              /*
+*Description: This Method will aggregate Sales Tax from Opty Products to Opportunity based on some conditions
+Created By: CPQ Team
+Created Date:12/05/2022
+*/
+    public void calculateSetUpAndDocupayTax(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
+        Set<Id>optyWithSalesTax= new Set<Id>();// store all the Opty Ids where Sales Tax is Stamped
+        Map<Id,Opportunity> optysToUpdate= new Map<Id,Opportunity>(); //Map, Key as Oppty Id and Value as Oppty
+        try{
+            for(Opportunity opty:opportunityNewMap.values()){
+                if(opty.AVA_SFCLOUD__Sales_Tax__c!=null && opty.AVA_SFCLOUD__Sales_Tax__c!=opportunityOldMap.get(opty.Id).AVA_SFCLOUD__Sales_Tax__c && opty.Type==NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY && (opty.NSP_PrimaryProduct__c==NSP_SalesConstants.WX||opty.NSP_PrimaryProduct__c==NSP_SalesConstants.WA)){
+                    optyWithSalesTax.add(opty.Id);
+                }
+            }
+            if(optyWithSalesTax.size()>0){
+                List<OpportunityLineItem> optyLines=[SELECT Id,AVA_SFCLOUD__SalesTax_Line__c,ProductCode,Product2.NSP_Default_Invoice_Plan__c,Product2.SBQQ__BillingFrequency__c,OpportunityId FROM OpportunityLineItem WHERE OpportunityId IN:optyWithSalesTax];
+                for(OpportunityLineItem line:optyLines){
+                    if(line.ProductCode==NSP_CPQConstants.IWXSU ||line.ProductCode==NSP_CPQConstants.IWASU){
+                        if(!optysToUpdate.containsKey(line.OpportunityId)){
+                            Opportunity opty =new Opportunity(Id=line.OpportunityId,NSP_Enrollment_Fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c,NSP_Docupay_Upfront_fee_Tax__c=0);
+                            optysToUpdate.put(line.OpportunityId,opty);
+                        }
+                        else{
+                            Opportunity tempOpty=optysToUpdate.get(line.OpportunityId);
+                            tempOpty.NSP_Enrollment_Fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c;
+                            optysToUpdate.put(line.OpportunityId,tempOpty);
+                        }
+                    }
+                    if(line.Product2.SBQQ__BillingFrequency__c==NSP_CPQConstants.ANNUAL||(line.Product2.SBQQ__BillingFrequency__c==NSP_CPQConstants.INVOICE_PLAN && line.Product2.NSP_Default_Invoice_Plan__c==NSP_CPQConstants.INVOICE_UP_FRONT_PLAN)){
+                        if(!optysToUpdate.containsKey(line.OpportunityId)){
+                            Opportunity opty =new Opportunity(Id=line.OpportunityId,NSP_Enrollment_Fee_Tax__c=0,NSP_Docupay_Upfront_fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c);
+                            optysToUpdate.put(line.OpportunityId,opty);
+                        }
+                        else{
+                            Opportunity tempOpty=optysToUpdate.get(line.OpportunityId);
+                            tempOpty.NSP_Docupay_Upfront_fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c+optysToUpdate.get(line.OpportunityId).NSP_Docupay_Upfront_fee_Tax__c;
+                            optysToUpdate.put(line.OpportunityId,tempOpty);
+                        }
+                    }
+                }
+            }
+            if(optysToUpdate.values().size()>0){
+                update optysToUpdate.values();
+            }
+        }Catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerHelper','calculateDocupayTax',ex.getMessage());
+        }
+    }
+                /**
+     * Method Name : createHardwareAssets
+     * Description : Method to create hardware assets
+     * Author : CPQ Team     Date : 01/23/2023
+     * @param List of closed won opportunities
+     * @return void
+     */
+    private void createHardwareAssets(List<Opportunity> closedWonOpptyList){
+        List<Asset> assetsToCreate= new List<Asset>();
+        String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_CPQConstants.HARDWARE_ASSET).getRecordTypeId();
+        List<OpportunityLineItem> opptyLineItemList=[SELECT Name,Opportunity.accountId,OpportunityId,SBQQ__QuoteLine__r.SBQQ__EndDate__c,Product2Id,Quantity,Product2.NSP_ServiceAssetCategory__c,NSP_AccountName__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Billing_Account__c,SBQQ__QuoteLine__r.NSP_Support_ProductCode__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c,SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.NSP_Product_Type__c
+                                                     FROM OpportunityLineItem 
+                                                     WHERE Product2.NSP_Convert_to_Asset__c = TRUE 
+                                                     AND OpportunityId IN: closedWonOpptyList AND Product2.NSP_ServiceAssetCategory__c=:NSP_CPQConstants.HARDWARE_ASSET];
+        for(OpportunityLineItem oppItem : opptyLineItemList){
+            if(oppItem.SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_NEW ||oppItem.SBQQ__QuoteLine__r.NSP_ActionType__c==NSP_CPQConstants.ACTION_NEW){
+                for(Integer ints=0;ints<oppItem.Quantity;ints++){
+                    Asset hardwareAsset= new Asset();
+                    hardwareAsset.Name=oppItem.NSP_AccountName__c+' -'+NSP_CPQConstants.HARDWARE;
+                    hardwareAsset.Product2Id=oppItem.Product2Id;
+                    hardwareAsset.NSP_Support__c=true;
+                    hardwareAsset.Status=NSP_CPQConstants.PURCHASED;
+                    if(oppItem.SBQQ__QuoteLine__r.NSP_Product_Type__c==NSP_CPQConstants.TIME_AND_ATTENDANCE){
+                        hardwareAsset.NSP_Contract_Length__c='365';
+                    }
+                    hardwareAsset.NSP_Termination_Date__c=oppItem.SBQQ__QuoteLine__r.SBQQ__EndDate__c;
+                    hardwareAsset.NSP_Billing_Account__c=oppItem.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Billing_Account__c;
+                    hardwareAsset.NSP_Date_Purchased__c=system.today();
+                    hardwareAsset.NSP_Licenses__c=1;
+                    hardwareAsset.AccountId=oppItem.Opportunity.accountId;
+                    hardwareAsset.Opportunity__c=oppItem.OpportunityId;
+                    hardwareAsset.NSP_Support_ProductCode__c=oppItem.SBQQ__QuoteLine__r.NSP_Support_ProductCode__c;
+                    hardwareAsset.RecordTypeId=rectype;
+                    assetsToCreate.add(hardwareAsset);
+                }
+            }
+    
+        }
+        if(assetsToCreate.size()>0){
+            NSP_AssetTriggerHandler.TriggerDisabled=true;
+            List<Database.SaveResult> results = Database.insert(assetsToCreate,false);
+            NSP_AssetTriggerHandler.TriggerDisabled=false;
+            NSP_ErrorLogHandler.logSaveResultsException('NSP_OpportunityTriggerHelper','createHardwareAssets', results); 
+        }
+    }     
+
         private void verifyCloseWonNotAllowedRoles(Opportunity opp){
 
             //  Bug-205788
@@ -1183,7 +1400,7 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
                 notAllowedCloseWonRoles = NSP_Lib.getRolesIdByApiName(rolesApiNames);
             }
 
-            if(userRole != null)
+            if(userRole != null && notAllowedCloseWonRoles!= null && opp!= null )  //updated as part of DF-04392
             {
                 for(UserRole role : notAllowedCloseWonRoles){
                     if(userRole.equals(role.Id)){
@@ -1195,3 +1412,4 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         }
     
 }
+

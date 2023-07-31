@@ -1,11 +1,14 @@
 ({
     doInit : function(component, event, helper) {
          component.set('v.columns', [
-            {label: 'STATUS', fieldName: 'Status', type: 'text'},
-            {label: 'CONTRACT NUMBER', fieldName: 'ContractNumber', type: 'text'},
+            //{label: 'STATUS', fieldName: 'Status', type: 'text'},
+            //{label: 'CONTRACT NUMBER', fieldName: 'ContractNumber', type: 'text'},
+             {label: 'CONTRACT TYPE', fieldName: 'NSP_Product_Type__c', type: 'text', wrapText: false, initialWidth: 250},
+            {label: 'EVERGREEN?', fieldName: 'SBQQ__Evergreen__c', type: 'boolean'},
            // {label: 'Platform', fieldName: 'SYNT_LegacyPlatform__c', type: 'text'},
             {label: 'START DATE', fieldName: 'StartDate', type: 'date-local'},
-            {label: 'END DATE', fieldName: 'EndDate', type: 'date-local'},]);
+            {label: 'END DATE', fieldName: 'EndDate', type: 'date-local'}
+         	]);
         
         var action=component.get('c.getContractRecord');
         action.setParams({

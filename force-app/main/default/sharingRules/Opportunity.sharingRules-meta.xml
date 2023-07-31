@@ -107,7 +107,7 @@
     </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>All_Opportunities_Edit_access_to_Finance_Users</fullName>
-        <accessLevel>Edit</accessLevel>
+        <accessLevel>Read</accessLevel>
         <description>Sharing rule to give edit access of opportunities to Finance Users</description>
         <label>All Opportunities Edit access to Finance Users</label>
         <sharedTo>

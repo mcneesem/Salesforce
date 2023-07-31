@@ -1,7 +1,7 @@
 /***Test Class for NSP_OrderItemTriggerHelpe Class***
 /**
 * @description  : Test Class for NSP_OrderItemTriggerHelpe Class
-* @author sumit singh
+* @author sumit singh Last - Modified: Manikantan Mohan
 * @date 09/06/2021
 * Name : NSP_OrderItemTriggerHelperTest
 */
@@ -10,16 +10,274 @@ public class NSP_OrderItemTriggerHelperTest{
     
     @testSetup
     static void setupTestData(){
-       
-        Account objaccount = NSP_TestHelper.createAccount(true);
-        Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
-        Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
-        objproduct.SBQQ__ChargeType__c = 'Recurring';
+        NSP_QuoteTriggerHandler.TriggerDisabled = true;
+        NSP_AccountTriggerHandler.TriggerDisabled = true;
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+         Profile admProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User u2 = new User(Alias = 'newUser', Email='newuser@testorg.insperity.com',
+         EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+         LocaleSidKey='en_US', ProfileId = admProfile.Id,
+         TimeZoneSidKey='America/Los_Angeles', UserName='newuser@testorg.com.insperity.sforg');
+         System.runAs(u2) {
+        
+         AVA_MAPPER__Entity_Use_code__c entityObj = new AVA_MAPPER__Entity_Use_code__c();
+         entityObj.Name = 'ABC';
+         entityObj.AVA_MAPPER__Description__c = 'FEDERAL GOV';
+         insert entityObj;
+
+        Pricebook2 priceBookRec = NSP_TestHelper.getStandardPriceBook2();
+        
+        Id stdPriceBookId = Test.getStandardPricebookId();
+        //   NSP_ProjectTasksTrigger.TriggerDisabled = true;
+        Account objaccount = NSP_TestHelper.createAccount(false);
+        objaccount.Name = NSP_TestHelper.DEFAULT_COMPANY_NAME;
+        objaccount.AVA_MAPPER__Entity_Use_code__c = entityObj.Id;
+        objaccount.AVA_MAPPER__Is_Seller_Importer_Of_Record__c = false;
+        insert objaccount;
+
+        Contact objCon = NSP_TestHelper.createContact(objaccount.id, false);
+         objCon.NSP_Sales_Tax_Contact_Key__c = '123';
+         objCon.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Sales Tax').getRecordTypeId();
+         objCon.NSP_Sales_Tax_Contact_Counter__c = 2;
+         insert objCon;
+
+        pse__Proj__c hcmProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
+        hcmProject.Name = NSP_ServiceConstants.HCM_PROJECT_NAME;
+        hcmProject.pse__Start_Date__c = Date.Today();
+        hcmProject.pse__Account__c = objaccount.Id;
+        hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
+        hcmProject.Project_Implementer__c = UserInfo.getUserId();
+        insert hcmProject;
+             
+        
+        Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id, 'New Product', false);
+        objOpportunity.NSP_Signed_CSA__c = true;
+        objOpportunity.NSP_Signed_Delivery_Order__c = true;
+        insert objOpportunity;
+             
+
+        blng__BillingRule__c brObj = new blng__BillingRule__c();
+        brObj.blng__Active__c = true;
+        brObj.Name = 'Test InsBR';
+        brObj.blng__GenerateInvoices__c = 'Yes';
+        brObj.blng__InitialBillingTrigger__c = 'Order Product Activation Date';
+        brObj.blng__PartialPeriodTreatment__c = 'Combine';
+        insert brObj;
+
+        blng__FinanceBook__c blngFinanceRec = new blng__FinanceBook__c();
+        blngFinanceRec.blng__Active__c = true;
+        blngFinanceRec.blng__FinancePeriodDuration__c = 'Monthly';
+        blngFinanceRec.Name = 'Insperity Salesforce Finance Book';
+        blngFinanceRec.blng__PeriodType__c = 'Accounting';
+        insert blngFinanceRec;
+        blng__InvoicePlan__c invPlanRecord = new blng__InvoicePlan__c();
+        invPlanRecord.blng__Active__c = true;
+        invPlanRecord.blng__BillingScheduleCreation__c = 'Order Product Activation';
+        invPlanRecord.Name = 'Invoice Plan';
+        insert invPlanRecord;
+
+        blng__RevenueRecognitionRule__c rrObj = new blng__RevenueRecognitionRule__c();
+        rrObj.blng__Active__c = true;
+        rrObj.blng__CreateRevenueSchedule__c = 'No';
+        insert rrObj;
+
+        blng__TaxRule__c taxRuleObj = new blng__TaxRule__c();
+        taxRuleObj.blng__Active__c = true;
+        taxRuleObj.blng__TaxableYesNo__c = 'No';
+        insert taxRuleObj;
+
+        blng__GLRule__c taxTreatmentRec = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Sales Tax Allocation', Name = 'Test GLRule');
+        insert taxTreatmentRec;
+
+        blng__TaxIntegration__c taxIntegrationRec = new blng__TaxIntegration__c(AVA_BLNG__AvaTaxAccountNumber__c = '1100126607', AVA_BLNG__AvaTaxLicenseKey__c = '0FE211624F764D08', AVA_BLNG__DocCode__c = 'Id', AVA_BLNG__CustomerCode__c = 'Id', blng__Active__c = true, AVA_BLNG__Validate_Address__c = true, AVA_BLNG__TestMode__c = true, AVA_BLNG__Save_transactions_to_AvaTax__c = true, Name = 'Test TaxIntegration', blng__TaxEngine__c = 'Standard');
+        insert taxIntegrationRec;
+
+        blng__LegalEntity__c legalEntityRec = new blng__LegalEntity__c(blng__Active__c = true, NSP_Company_Name__c = 'Insperity Business Services', blng__City__c = 'KINGWOOD', blng__State__c = 'TX', blng__County__c = 'US', blng__Street1__c = '19001 CRESCENT SPRINGS DR', blng__ZipPostalCode__c = '77339-3802', Name = 'Test Legal Entity');
+        insert legalEntityRec;
+
+        blng__TaxTreatment__c texRuleRec = new blng__TaxTreatment__c(blng__TaxCode__c = 'SW052011', blng__TaxGLRule__c = taxTreatmentRec.Id, blng__TaxIntegration__c = taxIntegrationRec.Id, blng__TaxLegalEntity__c = legalEntityRec.Id, Name = 'TestTaxTreatment', blng__TaxRule__c = taxRuleObj.Id);
+        insert texRuleRec;
+        
+        blng__BillingTreatment__c blngTreatmentRecord = new blng__BillingTreatment__c();
+        blngTreatmentRecord.blng__Active__c = true;
+        blngTreatmentRecord.blng__BillingRule__c = brObj.Id;
+        blngTreatmentRecord.blng__BillingFinanceBook__c = blngFinanceRec.Id;
+        blngTreatmentRecord.blng__InvoicePlan__c = invPlanRecord.Id;
+        blngTreatmentRecord.blng__BillingLegalEntity__c = legalEntityRec.Id;
+        blngTreatmentRecord.blng__CancellationRule__c = 'LIFO by Order Product Creation Date';
+        insert blngTreatmentRecord;
+
+        ConsumptionSchedule csch =  NSP_TestHelper.createConsumptionSchedule('IWX Consumption');
+        insert csch;
+        // create consumtpion rate
+        ConsumptionRate  crate =  NSP_TestHelper.createConsumptionRate(csch);
+        insert crate;
+        // activate consumption schedule
+        csch.isActive = true;
+        update csch;
+
+
+        List<Product2> productList = new List<Product2>();
+        Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
+        objproduct.ProductCode = 'IWXBundleW2'; 
+        objproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;  
         objproduct.SBQQ__BillingType__c = 'Arrears';
+        objproduct.NSP_Priority_Amendment__c = 11.0;
+        objproduct.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
-        objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
-        insert objproduct;
-       
+        objproduct.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.IMMEDIATE;
+        objproduct.NSP_IsScholarshipPrice_Applicable__c = 'YES';
+        objproduct.blng__BillingRule__c = brObj.Id;
+        objproduct.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objproduct.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
+        objproduct.blng__TaxRule__c = taxRuleObj.Id;
+        productList.add(objproduct);
+
+        Product2 objInvproduct = NSP_TestHelper.createProduct('Test Product1', false);
+        objInvproduct.ProductCode = 'IWXBundle';
+        objInvproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
+        objInvproduct.SBQQ__BillingType__c = 'Advance';
+        objInvproduct.NSP_Priority_Amendment__c = 12.0;
+        objInvproduct.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.PROJGOLIVEDATE;
+        objInvproduct.SBQQ__BillingFrequency__c = 'Monthly';
+        objInvproduct.NSP_IsScholarshipPrice_Applicable__c = 'No';
+        objInvproduct.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
+        objInvproduct.blng__BillingRule__c = brObj.Id;
+        objInvproduct.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objInvproduct.blng__TaxRule__c = taxRuleObj.Id;
+        objproduct.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
+        productList.add(objInvproduct);
+
+        Product2 objproduct2 = NSP_TestHelper.createProduct('Test Product2', false);
+        objproduct2.ProductCode = 'IWXBundle';
+        objproduct2.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
+        objproduct2.SBQQ__BillingType__c = 'Advance';
+        objproduct2.NSP_Priority_Amendment__c = 12.0;
+        objproduct2.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.PROJGOLIVEDATE;
+        objproduct2.SBQQ__BillingFrequency__c = 'Quarterly';
+        objproduct2.NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+        objproduct2.NSP_IsScholarshipPrice_Applicable__c = 'No';
+        objproduct2.blng__BillingRule__c = brObj.Id;
+        objproduct2.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
+        objproduct2.SBQQ__SubscriptionPricing__c = 'Fixed Price';
+        objproduct2.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objproduct2.blng__TaxRule__c = taxRuleObj.Id;
+        objproduct2.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
+        productList.add(objproduct2);
+
+        Product2 objproduct3 = NSP_TestHelper.createProduct('Test Product3', false);
+        objproduct3.ProductCode = 'IWXBundle';
+        objproduct3.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
+        objproduct3.SBQQ__BillingType__c = 'Advance';
+        objproduct3.NSP_Priority_Amendment__c = 12.0;
+        objproduct3.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.PROJGOLIVEDATE;
+        objproduct3.SBQQ__BillingFrequency__c = 'Quarterly';
+        objproduct3.NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+        objproduct3.NSP_IsScholarshipPrice_Applicable__c = 'No';
+        objproduct3.blng__BillingRule__c = brObj.Id;
+        objproduct3.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
+        objproduct3.SBQQ__HasConsumptionSchedule__c = true;
+        objproduct3.SBQQ__SubscriptionPricing__c = 'Fixed Price';
+        objproduct3.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objproduct3.blng__TaxRule__c = taxRuleObj.Id;
+        objproduct3.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
+        productList.add(objproduct3);
+        
+        SBQQ.TriggerControl.disable();
+        insert productList;
+        SBQQ.TriggerControl.enable();
+
+        ProductConsumptionSchedule psch = NSP_TestHelper.linkProductToCs(objproduct3.id,csch.id );
+        insert psch;
+
+        List<PriceBookEntry> priceBookEntList = new List<PriceBookEntry>();
+        PriceBookEntry objPriceBookEntry = NSP_TestHelper.createPriceBookEntry(objproduct.Id, 100, false);
+        PriceBookEntry objPriceBookEntry1 = NSP_TestHelper.createPriceBookEntry(objInvproduct.Id, 100, false);
+        PriceBookEntry objPriceBookEntry2 = NSP_TestHelper.createPriceBookEntry(objproduct2.Id, 100, false);
+        PriceBookEntry objPriceBookEntry3 = NSP_TestHelper.createPriceBookEntry(objproduct3.Id, 100, false);
+        priceBookEntList.add(objPriceBookEntry);
+        priceBookEntList.add(objPriceBookEntry1);
+        priceBookEntList.add(objPriceBookEntry2);
+        priceBookEntList.add(objPriceBookEntry3);
+        insert priceBookEntList;
+
+        NSP_Address__c nspAddress = NSP_TestHelper.createCustomAddress();
+        nspAddress.NSP_Source__c = 'AIMS';
+        nspAddress.NSP_Related_Site__c = objaccount.Id;
+        insert nspAddress;     
+
+        SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(objaccount.Id, objOpportunity.Id, false);
+        objQuote.SBQQ__primary__c = true;
+        objQuote.NSP_Billing_Address__c = nspAddress.Id;
+        objQuote.SBQQ__ShippingStreet__c = 'Alondra Boulevard';
+        objQuote.SBQQ__ShippingCity__c = 'San Francisco';   
+        objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);    
+        objQuote.SBQQ__ShippingState__c = 'California';
+        objQuote.SBQQ__ShippingCountry__c = 'United States';
+        objQuote.SBQQ__ShippingPostalCode__c = '94103';
+        objQuote.NSP_Shipping_Address__c = nspAddress.Id;
+        objQuote.SBQQ__Type__c = NSP_CPQConstants.QUOTE_TYPE_AMENDMENT;
+        objQuote.SBQQ__PrimaryContact__c = objCon.Id;
+        objQuote.NSP_Billing_Account__c = objaccount.Id;
+        objQuote.SBQQ__Account__c = objaccount.Id;
+        objQuote.SBQQ__PriceBook__c = priceBookRec.Id;
+        objQuote.NSP_Change_Order_Process_Quote__c = true;
+        insert objQuote;
+        
+        objOpportunity.StageName = 'Closed Won';
+        update objOpportunity;
+
+        List<SBQQ__QuoteLine__c> objQuoteLine = NSP_TestHelper.createCPQQuotelines(objQuote, productList, priceBookEntList, true);
+        objQuoteLine[0].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
+      //  objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
+        objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
+        objQuoteLine[3].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
+        objQuoteLine[0].NSP_Previous_Quantity__c = 500;
+        objQuoteLine[2].NSP_Previous_Quantity__c = 500;
+        objQuoteLine[0].NSP_Quoted_Quantity__c = 5;
+        objQuoteLine[1].NSP_Quoted_Quantity__c = 5;
+        objQuoteLine[2].NSP_Quoted_Quantity__c = 5;     
+        objQuoteLine[0].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;  
+        objQuoteLine[1].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;    
+        objQuoteLine[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;  
+        objQuoteLine[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;  
+        objQuoteLine[2].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;  
+        objQuoteLine[3].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;  
+        objQuoteLine[2].SBQQ__SubscriptionPricing__c = 'Fixed Price';
+        objQuoteLine[0].NSP_Total_Free_Periods__c = 1 ;
+        objQuoteLine[1].NSP_Total_Free_Periods__c = 1 ;
+        objQuoteLine[2].NSP_Total_Free_Periods__c = 1 ;
+        objQuoteLine[0].NSP_Scholarship_Price__c = true ;
+        objQuoteLine[1].NSP_Quoted_Quantity__c = 25;  
+        objQuoteLine[1].NSP_Previous_Quantity__c = 22; 
+        objQuoteLine[1].NSP_Scholarship_Price__c = true ;
+        objQuoteLine[1].SBQQ__Source__c  = objQuoteLine[0].Id ;
+        objQuoteLine[2].SBQQ__Source__c  = objQuoteLine[1].Id ;
+        objQuoteLine[0].SBQQ__Source__c  = objQuoteLine[2].Id ;
+        objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;   
+        objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_DOWNGRADE;
+        objQuoteLine[2].NSP_Scholarship_Price__c = true ;
+        objQuoteLine[3].SBQQ__HasConsumptionSchedule__c = true;
+        update objQuoteLine;
+
+        objQuote.SBQQ__Ordered__c = true;
+             test.startTest();
+        update objQuote;
+
+        blng__PaymentMethod__c objPaymntMethod = new blng__PaymentMethod__c();
+        objPaymntMethod.blng__Account__c = objaccount.Id;
+        objPaymntMethod.blng__Active__c = true;
+        objPaymntMethod.blng__BankAccountName__c = 'saving';
+        objPaymntMethod.blng__BankAccountNumber__c = '1238388';
+        objPaymntMethod.blng__BankAccountType__c = 'Savings';
+        objPaymntMethod.blng__BankName__c = 'CITI';
+        objPaymntMethod.blng__BankRoutingCode__c = '9874';
+        objPaymntMethod.NSP_Active_Custom__c = true;
+        objPaymntMethod.NSP_ACH_method__c = 'BoFA';
+        objPaymntMethod.blng__PaymentType__c = 'ACH';
+        insert objPaymntMethod;
+             test.stopTest();
+         }
     }
     /**
      * Description : Test method to test the consumption schedule on order item
@@ -29,6 +287,7 @@ public class NSP_OrderItemTriggerHelperTest{
         // Query account and product
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
+
         // create consumption schedule
         ConsumptionSchedule csch =  NSP_TestHelper.createConsumptionSchedule('IWX Consumption');
         insert csch;
@@ -42,27 +301,163 @@ public class NSP_OrderItemTriggerHelperTest{
         ProductConsumptionSchedule psch = NSP_TestHelper.linkProductToCs(objproduct.id,csch.id );
         insert psch;
 
-        Test.startTest();
-        // create opportunity
-        Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Product',true);
-        PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
-        //create quote
-        SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
-        // create quote lines
-        NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
-        // create order from quote
-        objQuote.SBQQ__Primary__c = true;
-        objQuote.SBQQ__Ordered__c = true;
-        update objQuote;
-        system.assert(true, objQuote.SBQQ__Primary__c );
-        Test.stopTest();
-        
-        list<OrderItem> orderItemList = new list<OrderItem>([select id from OrderItem where Order.SBQQ__Quote__c =:objQuote.Id]);
+        Test.startTest();                     		
+        list<OrderItem> orderItemList = new list<OrderItem>([select id from OrderItem WHERE Id!=null LIMIT 10]);
         update orderItemList;
         
         delete orderItemList;
-        
+        Test.stopTest();
+        System.assert(objaccount.Name==NSP_TestHelper.DEFAULT_COMPANY_NAME,true);
+  
     }
+
+@isTest
+public static void afterUpdateDirectorMethod(){
+    NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+    List<Order> orderList = [Select Id, SBQQ__Quote__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
+                            From Order WHERE Id!=null LIMIT 10];
+
+    List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
+            FROM OrderItem
+            WHERE OrderId IN:orderList];
+    Test.startTest();
+    orderList[0].NSP_Project_Complete_Date__c = System.today();
+    orderList[0].Status = 'Reviewed';
     
+    update orderList;
+    Test.stopTest();
+    System.assert(orderList.size()==1,true);
     
+}
+
+    @isTest
+    public static void beforeUpdateDirectorMethod(){
+    NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+    NSP_ProjectTriggerHandler.TriggerDisabled = true;
+    List<Account> objAccount = [SELECT Id,Name FROM Account WHERE Id!=null LIMIT 1];
+    List<blng__LegalEntity__c> objLegalEntity = [Select Id, blng__Active__c, NSP_Company_Name__c From blng__LegalEntity__c WHERE Id!=null LIMIT 10];
+    List<blng__PaymentMethod__c> paymentMethod = [Select Id FROM blng__PaymentMethod__c WHERE Id!=null LIMIT 10];
+    
+    List<Product2> objProduct = [SELECT Id,SBQQ__ChargeType__c, SBQQ__BillingType__c, SBQQ__BillingFrequency__c FROM Product2 WHERE Id!=null LIMIT 4];
+ 
+    Test.startTest();
+    pse__Proj__c bpsProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        bpsProject.Templates_Used__c = NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        bpsProject.pse__Project_Status__c = 'Active';
+        bpsProject.Project_Complete_Date__c = System.Today().addMonths(1);
+        bpsProject.pse__Is_Active__c = true;
+        bpsProject.pse__Account__c = objAccount[0].Id;
+        insert bpsProject;
+
+    List<Order> orderList = [SELECT Id, SBQQ__Quote__c, Status, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
+                             FROM Order WHERE Id!=null LIMIT 10];
+
+    List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, NSP_Scholarship_Price__c, SBQQ__BillingFrequency__c, EndDate, SBQQ__Status__c, blng__LegalEntity__c, blng__BillingTreatment__c, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
+                                     FROM OrderItem
+                                     WHERE OrderId IN:orderList LIMIT 4];
+
+    List<OrderItem> orderItemListUsage = [SELECT Id, OrderItemNumber, NSP_Scholarship_Price__c, SBQQ__BillingFrequency__c, EndDate, SBQQ__Status__c, blng__LegalEntity__c, blng__BillingTreatment__c, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
+                                     FROM OrderItem
+                                     WHERE Product2.Name = 'Test Product3' LIMIT 1];
+   
+    List<blng__UsageSummary__c> usageSumRecs = new List<blng__UsageSummary__c>();
+    blng__UsageSummary__c usageSumRecs1 = new blng__UsageSummary__c();
+    usageSumRecs1.blng__Account__c = objAccount[0].Id;
+    usageSumRecs1.blng__OrderProduct__c = orderItemListUsage[0].Id;
+    usageSumRecs1.blng__MatchingId__c = '123';
+    usageSumRecs1.blng__MatchingAttribute__c = 'Each';
+    usageSumRecs1.blng__UnitOfMeasure__c = 'None';
+    usageSumRecs1.blng__Status__c = 'New';
+    usageSumRecs1.blng__Source__c = 'External';
+    usageSumRecs1.blng__SummaryStartDate__c = Date.today().addDays(-15);
+    usageSumRecs1.blng__SummaryEndDate__c = Date.today().addDays(15);
+    usageSumRecs1.blng__Order__c = orderList[0].Id;
+    usageSumRecs.add(usageSumRecs1);
+    insert usageSumRecs;
+
+    
+    orderItemList[0].NSP_Project_Completion_Date__c = System.today();
+    orderItemList[1].NSP_Project_Completion_Date__c = System.today();
+    orderItemList[2].NSP_Project_Completion_Date__c = System.today();
+    orderItemList[0].blng__LegalEntity__c = objLegalEntity[0].Id ;
+    orderItemList[1].blng__LegalEntity__c = objLegalEntity[0].Id ;
+    orderItemList[2].blng__LegalEntity__c = objLegalEntity[0].Id ;
+    orderItemList[0].NSP_Scholarship_Price__c = true ;
+    orderItemList[1].NSP_Scholarship_Price__c = true ;
+    orderItemList[2].NSP_Scholarship_Price__c = true ;
+    orderItemList[0].NSP_Total_Free_Periods__c = 1;
+    orderItemList[1].NSP_Total_Free_Periods__c = 1;
+    orderItemList[2].NSP_Total_Free_Periods__c = 1;
+    orderItemList[0].NSP_Payment_Method__c = paymentMethod[0].Id;
+    orderItemList[1].NSP_Payment_Method__c = paymentMethod[0].Id;
+    orderItemList[2].NSP_Payment_Method__c = paymentMethod[0].Id;
+    orderItemList[0].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+    orderItemList[1].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+    orderItemList[2].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+    orderItemList[3].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;    
+    update orderItemList;
+
+    orderList[0].Status = 'Reviewed';
+    update orderList;
+
+
+    orderItemList[0].SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+    orderItemList[1].SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+    orderItemList[2].SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+    orderItemList[3].SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+    update orderItemList;
+
+    Test.stopTest();
+    system.assert(usageSumRecs.size()==1,true);
+    }
+
+    /*
+    @isTest
+    public static void autoActivateOrderLinesMethod(){
+        NSP_AssetTriggerHandler.TriggerDisabled = true;
+        Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
+        Opportunity objOpp = [SELECT Id,Name FROM Opportunity LIMIT 1];
+        Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
+        
+        Asset objAsset = new Asset();
+        objAsset.Name = 'OrderHelper Test';
+        objAsset.AccountId = objaccount.Id;
+        objAsset.Status = 'Onboarding';
+        objAsset.Product2Id = objproduct.Id;
+        objAsset.Opportunity__c = objOpp.Id;
+        objAsset.RecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING).getRecordTypeId();
+        //SBQQ.TriggerControl.disable();
+        insert objAsset;
+        //SBQQ.TriggerControl.enable();
+
+        List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
+                                         FROM OrderItem LIMIT 10];
+      
+        orderItemList[0].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+        orderItemList[1].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+        orderItemList[0].NSP_ServiceAssetCategory__c = 'XML';
+        orderItemList[1].NSP_ServiceAssetCategory__c = 'XML';
+        orderItemList[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+        orderItemList[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+        orderItemList[0].SBQQ__Asset__c = objAsset.Id;
+        orderItemList[1].SBQQ__Asset__c = objAsset.Id;
+        orderItemList[2].SBQQ__Asset__c = objAsset.Id;
+        orderItemList[3].SBQQ__Asset__c = objAsset.Id;
+        update orderItemList;
+        
+        Map<Id, OrderItem> orderItemNewMap = new Map<Id, OrderItem>();
+        Map<Id, String> orderItemNewStringMap = new Map<Id, String>();
+        
+        for(OrderItem oi : orderItemList){
+            OrderItemNewMap.put(oi.Id,oi);
+            orderItemNewStringMap.put(oi.Id,String.valueOf(oi));
+        }
+        Test.startTest();
+        NSP_OrderItemTriggerHelper activateOrder = new NSP_OrderItemTriggerHelper(); 
+        activateOrder.autoActivateOrderLines(OrderItemNewMap);
+        NSP_OrderItemTriggerHelper.updateAsset(orderItemNewStringMap);
+        Test.stopTest();
+    }
+    */
+
 }

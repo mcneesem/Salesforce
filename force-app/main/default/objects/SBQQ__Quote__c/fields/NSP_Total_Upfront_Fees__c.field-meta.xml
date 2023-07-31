@@ -3,7 +3,7 @@
     <fullName>NSP_Total_Upfront_Fees__c</fullName>
     <description>This field provide the total Upfront value for the DO Generation</description>
     <externalId>false</externalId>
-    <formula>NSP_Total_Annual_Freq_Fees__c +  NSP_Total_Final_One_Time_Fees__c</formula>
+    <formula>NSP_Total_Annual_Freq_Fees__c +  NSP_Total_OneTime_Freq_Fees__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Total Upfront Fees</label>
     <precision>18</precision>

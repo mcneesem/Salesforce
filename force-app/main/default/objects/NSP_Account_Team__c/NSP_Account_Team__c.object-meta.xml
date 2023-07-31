@@ -146,7 +146,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -156,7 +156,7 @@
     <label>Account Team</label>
     <nameField>
         <displayFormat>AT-{0000000000}</displayFormat>
-        <label>Account Team Name</label>
+        <label>Record ID</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Teams</pluralLabel>

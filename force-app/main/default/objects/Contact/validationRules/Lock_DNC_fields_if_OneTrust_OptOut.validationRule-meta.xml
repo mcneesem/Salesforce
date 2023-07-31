@@ -8,10 +8,10 @@ NOT(ISBLANK( OneTrust_Opt_Out_Date__c ) ),
 OR(
 ( ISCHANGED( DoNotCall ) &amp;&amp; DoNotCall = false ),
 ( ISCHANGED( NSP_Do_Not_Postal_Mail__c ) &amp;&amp; NSP_Do_Not_Postal_Mail__c = false ),
-( ISCHANGED( HasOptedOutOfEmail ) &amp;&amp; HasOptedOutOfEmail = false ), 
+( ISCHANGED( HasOptedOutOfEmail ) &amp;&amp; HasOptedOutOfEmail = false ),
 ( ISCHANGED( NSP_Do_Not_Contact__c ) &amp;&amp; NSP_Do_Not_Contact__c = false ),
 ( ISCHANGED( HasOptedOutOfFax ) &amp;&amp; HasOptedOutOfFax = false )
-))</errorConditionFormula>
+), NOT( $Setup.NSP_Trigger_Switch__c.ContactValidations__c))</errorConditionFormula>
     <errorDisplayField>OneTrust_Opt_Out__c</errorDisplayField>
     <errorMessage>You cannot change Do Not Contact fields while OneTrust Opt Out is checked. If OneTrust Opt Out was erroneously checked, please reach out to your System Administrator.</errorMessage>
 </ValidationRule>

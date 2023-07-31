@@ -32,6 +32,34 @@ public without sharing class NSP_UpdateRelatedAccounts {
                 NSP_CustomException.LogException(ex);
             }
         }
-                
+        
+    }
+
+/**
+* Update Account status to 'Prospecting' once opportunity is added and there are no assets
+* @param accountIdSet Set of account ids related to opportunity.    
+* @return void             
+*                
+*/  
+    public static void updateAccountStatus(Set<String> accountIdSet){
+        List<Account> accountTobeUpdatedList = new List<Account>();
+        //Iterating over the account set to get the account records
+        for(Account accountObj : [SELECT Id , NSP_Sales_Service_Account_Status__c, (SELECT Id FROM Assets),
+        (SELECT ID, StageName FROM Opportunities where StageName NOT IN('Closed Won', 'Closed Lost'))
+        FROM Account WHERE Id IN :accountIdSet]){
+            if(accountObj.Assets.size()== 0){
+                accountObj.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
+                accountTobeUpdatedList.add(accountObj);
+            }
+        }
+        //Updating the accounts
+        if(!accountTobeUpdatedList.isEmpty()){
+            try{
+             update accountTobeUpdatedList; 
+            }catch(exception ex){
+                NSP_CustomException.LogException(ex);
+            }
+        }
+
     }
 }

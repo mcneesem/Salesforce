@@ -770,6 +770,65 @@
         </values> 
     </picklistValues>
     <picklistValues>
+        <picklist>Upsell_Product_of_Interest__c</picklist>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Service HR %28Workforce Optimization%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Consulting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Services (Health &amp; Wellness)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Services (Property &amp; Casualty)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Status__c</picklist>
         <values>
             <fullName>Cancelled</fullName>
@@ -875,10 +934,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Task_type__c</picklist>
-        <values>
-            <fullName>Addendum Request</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>BPS</fullName>
             <default>false</default>
@@ -1017,65 +1072,6 @@
         </values>
         <values>
             <fullName>Website visit</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Upsell_Product_of_Interest__c</picklist>
-        <values>
-            <fullName>Applicant Tracking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employment Screening</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Expense Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Full Service HR %28Workforce Optimization%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HR Consulting Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Insurance Services %28Health %26 Wellness%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Insurance Services %28Property %26 Casualty%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Organizational Planning</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Performance Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Quickbooks Integration%28Insperity Integra%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recruiting Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retirement Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Time and Attendance</fullName>
             <default>false</default>
         </values>
     </picklistValues>

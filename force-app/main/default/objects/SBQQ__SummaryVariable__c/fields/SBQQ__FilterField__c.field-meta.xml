@@ -52,6 +52,11 @@
                 <default>false</default>
                 <label>SBQQ__ChargeType__c</label>
             </value>
+			<value>
+                <fullName>NSP_RollupWXCondition__c</fullName>
+                <default>false</default>
+                <label>NSP_RollupWXCondition__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

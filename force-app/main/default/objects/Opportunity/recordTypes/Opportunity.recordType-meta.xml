@@ -698,6 +698,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Stayed with Current Insperity Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Timing</fullName>
             <default>false</default>
         </values>
@@ -4081,6 +4085,17 @@
         </values>
         <values>
             <fullName>Termination</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_TransitionType__c</picklist>
+        <values>
+            <fullName>PEO to WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX to PEO</fullName>
             <default>false</default>
         </values>
     </picklistValues>

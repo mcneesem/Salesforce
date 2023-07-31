@@ -44,7 +44,7 @@ public class NSP_RoundRobinAssignerTest {
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',
-            Email = 'testuser@test.com',
+            Email = 'testuser@insperity.com',
             Username = 'testuser@test.com' + System.currentTimeMillis(),
             CompanyName = 'TEST',
             Title = 'title',

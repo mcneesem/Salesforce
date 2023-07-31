@@ -9,6 +9,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -160,6 +161,11 @@
                 <fullName>Regen</fullName>
                 <default>false</default>
                 <label>Regen</label>
+            </value>
+            <value>
+                <fullName>Stayed with Current Insperity Solution</fullName>
+                <default>false</default>
+                <label>Stayed with Current Insperity Solution</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -303,31 +303,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NSP_AccountRiskAssessmentLevel_Calc_Text__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Account_At_Risk_Actual__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Account_At_Risk_Level_Calc_Text__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Account_At_Risk_Level_Calc__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Account_At_Risk_Level_Image__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.NSP_Account_DBA_Text__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -354,16 +329,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Account_Owners_Profile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Account_Risk_Assessment_Level_Image__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Account_Risk_Level__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -984,11 +949,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Request_Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.NSP_Risk_Assessment_Level__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1728,11 +1688,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.NSP_Has_Union_Employees__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Asset.NSP_ITSTimeSimplicity_Quantity__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1824,11 +1779,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_ProductBundle__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.NSP_Product_Bundle__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1932,9 +1882,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Asset.Opportunity__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -4138,11 +4088,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Address__c.NSP_AIMS_Account_Address_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Address__c.NSP_Active__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4169,11 +4114,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Address__c.NSP_City__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Address__c.NSP_Contact_Address_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4219,11 +4159,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Address__c.NSP_Postal_Code__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Address__c.NSP_Primed_Employees_Address_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6011,16 +5946,8 @@
         <field>NSP_Reward__c.NSP_Benefits_Non_Profit__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Reward__c.NSP_Discovery_Call_Reward__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Reward__c.NSP_Sold_Reward__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
+    
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_SObject_History_Tracking__c.NSP_Account__c</field>
@@ -6128,11 +6055,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Sub_Client__c.NSP_Actual_Seasonal_EE_Count__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Sub_Client__c.NSP_Actual_Seasonal_Time_EE_Count__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6198,11 +6120,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Sub_Client__c.NSP_Contractual_Seasonal_EE_Count__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Sub_Client__c.NSP_Contractual_Seasonal_Time_EE_Count__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6224,11 +6141,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client__c.NSP_Full_Time_EE_Count__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Sub_Client__c.NSP_Has_Union_Employees__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

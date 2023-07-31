@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Used to check if the client is referenceable</description>
     <externalId>false</externalId>
-    <label>Reference Able</label>
+    <label>Referenceable</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
