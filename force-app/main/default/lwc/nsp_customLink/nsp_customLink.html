@@ -1,0 +1,11 @@
+<template>
+    <template if:false={subClient}>
+        <a data-id={recordId} onclick={handleClick}>{recordName}</a>
+    </template>
+    <template if:true={subClient}>
+        <a data-id={recordId} onclick={handleClick}>{recordName}</a>
+        <template if:true={getCount}>
+            ;&nbsp;
+        </template>
+    </template>
+</template>

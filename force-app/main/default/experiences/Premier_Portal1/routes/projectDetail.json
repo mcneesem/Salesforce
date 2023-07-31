@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "e181333c-a3dd-437a-a80b-1b95ad82292a",
+  "appPageId" : "4329045a-0ee7-4781-a21f-030a49949741",
+  "configurationTags" : [ ],
+  "id" : "59d428be-5a0d-4f93-94af-a06537744f87",
+  "label" : "Project Detail",
+  "objectApiName" : "pse__Proj__c",
+  "routeType" : "detail-a2o",
+  "type" : "route",
+  "urlPrefix" : "proj"
+}

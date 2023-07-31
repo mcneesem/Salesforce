@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>WX TAX - Agency Confirmed Unemployment Rate</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>WX TAX - Agency Confirmed Unemployment Rate</name>
+    <style>freeForm</style>
+    <subject>WX TAX - Agency Confirmed Unemployment Rate</subject>
+    <textOnly>Hello {!Contact.FirstName} {!Contact.LastName},  
+
+ 
+I contacted and confirmed that SUI rate we had for was incorrect for . We paid at a rate of X.XX% and the rate is Y.YY% for . The outstanding balance with updated interest is $XXXXX. 
+ 
+Please authorize Insperity to debit your account in the amount of $XXXXX. Once authorized, Insperity will then remit payment to 3-5 business days after the debit has been processed to bring your account balance to zero. 
+ 
+If you have any questions or concerns, please contact us. 
+ 
+Thank you, 
+ 
+{!User.FirstName} {!User.LastName}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

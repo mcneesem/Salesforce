@@ -1,0 +1,8 @@
+The following task has been completed
+
+Information regarding the task has been posted below. To view the task record, log in to NetSuite then navigate to:  {!pse__Project_Task__c.Link}
+
+Task: New Client Tax Audit Completed
+Priority: Medium
+Status: Completed
+Date Task Completed: {!pse__Project_Task__c.pse__Actual_End_Date__c}

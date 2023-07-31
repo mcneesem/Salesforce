@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_HR_System__c</fullName>
+    <externalId>false</externalId>
+    <label>HR System</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ABRA</fullName>
+                <default>false</default>
+                <label>ABRA</label>
+            </value>
+            <value>
+                <fullName>ADP Enterprise</fullName>
+                <default>false</default>
+                <label>ADP Enterprise</label>
+            </value>
+            <value>
+                <fullName>ADP HR/Perspective</fullName>
+                <default>false</default>
+                <label>ADP HR/Perspective</label>
+            </value>
+            <value>
+                <fullName>ADP Other</fullName>
+                <default>false</default>
+                <label>ADP Other</label>
+            </value>
+            <value>
+                <fullName>Afas</fullName>
+                <default>false</default>
+                <label>Afas</label>
+            </value>
+            <value>
+                <fullName>Agresso</fullName>
+                <default>false</default>
+                <label>Agresso</label>
+            </value>
+            <value>
+                <fullName>ASR</fullName>
+                <default>false</default>
+                <label>ASR</label>
+            </value>
+            <value>
+                <fullName>Axapta</fullName>
+                <default>false</default>
+                <label>Axapta</label>
+            </value>
+            <value>
+                <fullName>BRZ</fullName>
+                <default>false</default>
+                <label>BRZ</label>
+            </value>
+            <value>
+                <fullName>Cedar HR</fullName>
+                <default>false</default>
+                <label>Cedar HR</label>
+            </value>
+            <value>
+                <fullName>Centurian</fullName>
+                <default>false</default>
+                <label>Centurian</label>
+            </value>
+            <value>
+                <fullName>Ceridian</fullName>
+                <default>false</default>
+                <label>Ceridian</label>
+            </value>
+            <value>
+                <fullName>COA Solutions Ltd: HR Pro</fullName>
+                <default>false</default>
+                <label>COA Solutions Ltd: HR Pro</label>
+            </value>
+            <value>
+                <fullName>Compel</fullName>
+                <default>false</default>
+                <label>Compel</label>
+            </value>
+            <value>
+                <fullName>Computers in Personnel</fullName>
+                <default>false</default>
+                <label>Computers in Personnel</label>
+            </value>
+            <value>
+                <fullName>CORE HR</fullName>
+                <default>false</default>
+                <label>CORE HR</label>
+            </value>
+            <value>
+                <fullName>CTB</fullName>
+                <default>false</default>
+                <label>CTB</label>
+            </value>
+            <value>
+                <fullName>Cyborg</fullName>
+                <default>false</default>
+                <label>Cyborg</label>
+            </value>
+            <value>
+                <fullName>DATEV</fullName>
+                <default>false</default>
+                <label>DATEV</label>
+            </value>
+            <value>
+                <fullName>DBS</fullName>
+                <default>false</default>
+                <label>DBS</label>
+            </value>
+            <value>
+                <fullName>Dillstone/Filefinder</fullName>
+                <default>false</default>
+                <label>Dillstone/Filefinder</label>
+            </value>
+            <value>
+                <fullName>DLGL</fullName>
+                <default>false</default>
+                <label>DLGL</label>
+            </value>
+            <value>
+                <fullName>Frontier Software</fullName>
+                <default>false</default>
+                <label>Frontier Software</label>
+            </value>
+            <value>
+                <fullName>GEAC E/M Series</fullName>
+                <default>false</default>
+                <label>GEAC E/M Series</label>
+            </value>
+            <value>
+                <fullName>GEAC SmartStream</fullName>
+                <default>false</default>
+                <label>GEAC SmartStream</label>
+            </value>
+            <value>
+                <fullName>GEAC TotalHR</fullName>
+                <default>false</default>
+                <label>GEAC TotalHR</label>
+            </value>
+            <value>
+                <fullName>Genesys</fullName>
+                <default>false</default>
+                <label>Genesys</label>
+            </value>
+            <value>
+                <fullName>Great Plains HR</fullName>
+                <default>false</default>
+                <label>Great Plains HR</label>
+            </value>
+            <value>
+                <fullName>High Line</fullName>
+                <default>false</default>
+                <label>High Line</label>
+            </value>
+            <value>
+                <fullName>HR Access</fullName>
+                <default>false</default>
+                <label>HR Access</label>
+            </value>
+            <value>
+                <fullName>HR Stream</fullName>
+                <default>false</default>
+                <label>HR Stream</label>
+            </value>
+            <value>
+                <fullName>Hrtrac</fullName>
+                <default>false</default>
+                <label>Hrtrac</label>
+            </value>
+            <value>
+                <fullName>Human Resource Microsystems</fullName>
+                <default>false</default>
+                <label>Human Resource Microsystems</label>
+            </value>
+            <value>
+                <fullName>Humanic Solutions</fullName>
+                <default>false</default>
+                <label>Humanic Solutions</label>
+            </value>
+            <value>
+                <fullName>IBM Lotus Notes</fullName>
+                <default>false</default>
+                <label>IBM Lotus Notes</label>
+            </value>
+            <value>
+                <fullName>ICONtrol</fullName>
+                <default>false</default>
+                <label>ICONtrol</label>
+            </value>
+            <value>
+                <fullName>ICSA system</fullName>
+                <default>false</default>
+                <label>ICSA system</label>
+            </value>
+            <value>
+                <fullName>Infinity</fullName>
+                <default>false</default>
+                <label>Infinity</label>
+            </value>
+            <value>
+                <fullName>Infinium</fullName>
+                <default>false</default>
+                <label>Infinium</label>
+            </value>
+            <value>
+                <fullName>Info Support</fullName>
+                <default>false</default>
+                <label>Info Support</label>
+            </value>
+            <value>
+                <fullName>INFO:HR</fullName>
+                <default>false</default>
+                <label>INFO:HR</label>
+            </value>
+            <value>
+                <fullName>InPowerHR</fullName>
+                <default>false</default>
+                <label>InPowerHR</label>
+            </value>
+            <value>
+                <fullName>Integral</fullName>
+                <default>false</default>
+                <label>Integral</label>
+            </value>
+            <value>
+                <fullName>JD Edwards</fullName>
+                <default>false</default>
+                <label>JD Edwards</label>
+            </value>
+            <value>
+                <fullName>Jupiter</fullName>
+                <default>false</default>
+                <label>Jupiter</label>
+            </value>
+            <value>
+                <fullName>Kronos</fullName>
+                <default>false</default>
+                <label>Kronos</label>
+            </value>
+            <value>
+                <fullName>Lawson</fullName>
+                <default>false</default>
+                <label>Lawson</label>
+            </value>
+            <value>
+                <fullName>LOGA P&amp;I</fullName>
+                <default>false</default>
+                <label>LOGA P&amp;I</label>
+            </value>
+            <value>
+                <fullName>Logica CMG</fullName>
+                <default>false</default>
+                <label>Logica CMG</label>
+            </value>
+            <value>
+                <fullName>Lotus Domino</fullName>
+                <default>false</default>
+                <label>Lotus Domino</label>
+            </value>
+            <value>
+                <fullName>Meta 4</fullName>
+                <default>false</default>
+                <label>Meta 4</label>
+            </value>
+            <value>
+                <fullName>Microsoft</fullName>
+                <default>false</default>
+                <label>Microsoft</label>
+            </value>
+            <value>
+                <fullName>Microsoft Excel</fullName>
+                <default>false</default>
+                <label>Microsoft Excel</label>
+            </value>
+            <value>
+                <fullName>Midland HR: Delphi Millenium</fullName>
+                <default>false</default>
+                <label>Midland HR: Delphi Millenium</label>
+            </value>
+            <value>
+                <fullName>Midland HR: Trent</fullName>
+                <default>false</default>
+                <label>Midland HR: Trent</label>
+            </value>
+            <value>
+                <fullName>MultiproHR</fullName>
+                <default>false</default>
+                <label>MultiproHR</label>
+            </value>
+            <value>
+                <fullName>Navision</fullName>
+                <default>false</default>
+                <label>Navision</label>
+            </value>
+            <value>
+                <fullName>Net Team HR</fullName>
+                <default>false</default>
+                <label>Net Team HR</label>
+            </value>
+            <value>
+                <fullName>Next Consulting</fullName>
+                <default>false</default>
+                <label>Next Consulting</label>
+            </value>
+            <value>
+                <fullName>NMI</fullName>
+                <default>false</default>
+                <label>NMI</label>
+            </value>
+            <value>
+                <fullName>Northgate: Empower</fullName>
+                <default>false</default>
+                <label>Northgate: Empower</label>
+            </value>
+            <value>
+                <fullName>Northgate: PSE</fullName>
+                <default>false</default>
+                <label>Northgate: PSE</label>
+            </value>
+            <value>
+                <fullName>Northgate: Resource Link</fullName>
+                <default>false</default>
+                <label>Northgate: Resource Link</label>
+            </value>
+            <value>
+                <fullName>Now Solutions</fullName>
+                <default>false</default>
+                <label>Now Solutions</label>
+            </value>
+            <value>
+                <fullName>NuView Solutions</fullName>
+                <default>false</default>
+                <label>NuView Solutions</label>
+            </value>
+            <value>
+                <fullName>Optimum Solutions</fullName>
+                <default>false</default>
+                <label>Optimum Solutions</label>
+            </value>
+            <value>
+                <fullName>Oracle HR</fullName>
+                <default>false</default>
+                <label>Oracle HR</label>
+            </value>
+            <value>
+                <fullName>Orisoft</fullName>
+                <default>false</default>
+                <label>Orisoft</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>P&amp;I</fullName>
+                <default>false</default>
+                <label>P&amp;I</label>
+            </value>
+            <value>
+                <fullName>PayChex</fullName>
+                <default>false</default>
+                <label>PayChex</label>
+            </value>
+            <value>
+                <fullName>PayMaxx</fullName>
+                <default>false</default>
+                <label>PayMaxx</label>
+            </value>
+            <value>
+                <fullName>PDS</fullName>
+                <default>false</default>
+                <label>PDS</label>
+            </value>
+            <value>
+                <fullName>PeopleSoft</fullName>
+                <default>false</default>
+                <label>PeopleSoft</label>
+            </value>
+            <value>
+                <fullName>PeopleTrak</fullName>
+                <default>false</default>
+                <label>PeopleTrak</label>
+            </value>
+            <value>
+                <fullName>Persis</fullName>
+                <default>false</default>
+                <label>Persis</label>
+            </value>
+            <value>
+                <fullName>ProBusiness</fullName>
+                <default>false</default>
+                <label>ProBusiness</label>
+            </value>
+            <value>
+                <fullName>Randstad</fullName>
+                <default>false</default>
+                <label>Randstad</label>
+            </value>
+            <value>
+                <fullName>Rebus HR</fullName>
+                <default>false</default>
+                <label>Rebus HR</label>
+            </value>
+            <value>
+                <fullName>Sage</fullName>
+                <default>false</default>
+                <label>Sage</label>
+            </value>
+            <value>
+                <fullName>SAP</fullName>
+                <default>false</default>
+                <label>SAP</label>
+            </value>
+            <value>
+                <fullName>SDMS Ltd</fullName>
+                <default>false</default>
+                <label>SDMS Ltd</label>
+            </value>
+            <value>
+                <fullName>Select HR</fullName>
+                <default>false</default>
+                <label>Select HR</label>
+            </value>
+            <value>
+                <fullName>Snowdrop</fullName>
+                <default>false</default>
+                <label>Snowdrop</label>
+            </value>
+            <value>
+                <fullName>Soft2000</fullName>
+                <default>false</default>
+                <label>Soft2000</label>
+            </value>
+            <value>
+                <fullName>Software 4 People</fullName>
+                <default>false</default>
+                <label>Software 4 People</label>
+            </value>
+            <value>
+                <fullName>Software Plus</fullName>
+                <default>false</default>
+                <label>Software Plus</label>
+            </value>
+            <value>
+                <fullName>SOPRA</fullName>
+                <default>false</default>
+                <label>SOPRA</label>
+            </value>
+            <value>
+                <fullName>Spectrum HRVantage</fullName>
+                <default>false</default>
+                <label>Spectrum HRVantage</label>
+            </value>
+            <value>
+                <fullName>Spectrum iVantage</fullName>
+                <default>false</default>
+                <label>Spectrum iVantage</label>
+            </value>
+            <value>
+                <fullName>Tesseract</fullName>
+                <default>false</default>
+                <label>Tesseract</label>
+            </value>
+            <value>
+                <fullName>Ultimate Software&apos;s UltiPro</fullName>
+                <default>false</default>
+                <label>Ultimate Software&apos;s UltiPro</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>Veda</fullName>
+                <default>false</default>
+                <label>Veda</label>
+            </value>
+            <value>
+                <fullName>Vizual HR</fullName>
+                <default>false</default>
+                <label>Vizual HR</label>
+            </value>
+            <value>
+                <fullName>Wealden</fullName>
+                <default>false</default>
+                <label>Wealden</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Can_Not_Edit_Queued_for_Delete</fullName>
+    <active>true</active>
+    <description>STY-04423 - Can Not Edit Queued for Delete</description>
+    <errorConditionFormula>AND($Setup.NSP_Trigger_Switch__c.ProjectValidations__c != true, NOT(ISNEW()), PRIORVALUE(NSP_Queued_for_Delete__c))</errorConditionFormula>
+    <errorMessage>You cannot edit this Project because it&apos;s queued for deletion</errorMessage>
+</ValidationRule>

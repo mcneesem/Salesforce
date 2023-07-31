@@ -1,0 +1,284 @@
+/*   
+* Name   :  NSP_CreateProjectFromTemplate
+* Purpose: Controller for creating the project from template from the 
+button "Create Project From Template "
+*/
+public class NSP_CreateProjectFromTemplate {
+    // Class Level variables.
+    public sObject objVal{get;set;}
+    public static Map<String, String> fieldValuesMap;
+    public Case caseRecVal;
+    public Asset assetRecVal;
+    public String sObjName;
+    public static Id parentId;
+    public static Id accountId;
+    public static String caseComment;
+    public static final List<String> CASE_FIELDS = new List<String>{
+        'Id',
+        'Subject', 'AccountId', 'Project_Template__c'
+    };
+    public pse__Proj__c inputProj{
+        get{
+            if(inputProj == null)
+                inputProj = new pse__Proj__c();
+            return inputProj;
+        }set;}
+    
+    public Case caseRef;
+    public Case getcaseRef() {
+        return caseRef;
+    }
+    public void setcaseRef(Case caseRecVal){
+        caseRef = caseRecVal;
+    }
+    
+    public Asset assetRef;
+    public Asset getassetRef() {
+        return assetRef;
+    }
+    public void setassetRef(Asset assetRecVal){
+        assetRef = assetRecVal;
+    }
+    
+
+    /**
+* Name        : NSP_CreateProjectFromTemplate
+* Purpose     : Constructor to initate the instance of an object.
+* @param      : ApexPages.StandardController stdController
+* @return     : None
+*/
+    public NSP_CreateProjectFromTemplate(ApexPages.StandardController stdController) {
+        Id recId = apexpages.currentpage().getparameters().get('id');
+        sObjName = recId.getSObjectType().getDescribe().getName();
+        objVal = (sObject)stdController.getRecord();       
+    }
+    /**
+* Name        : NSP_CreateProjectFromTemplate
+* Purpose     : Constructor to initate the instance of an object.
+* @param      : None
+* @return     : None
+*/
+    public NSP_CreateProjectFromTemplate() {
+        Id recordId = System.currentPagereference().getParameters().get('parentid');
+        if(recordId != null && String.valueOf(recordId).substring(0,3) == '02i'){
+            sObjName = 'Project_Asset__c';
+            assetRecVal = [Select Id, Name, AccountId, Project_Template__c FROM Asset WHERE Id =: recordId] ;
+            setassetRef(assetRecVal);
+        }else{
+            sObjName = 'pse__Proj__c';
+            String caseQuery = new NSP_QueryBuilder('Case', CASE_FIELDS).addFilter('Id', System.currentPagereference().getParameters().get('parentid')).addLimit(1).build();
+            Case caseRecVal =  Database.query(caseQuery);
+            setcaseRef(caseRecVal);
+        }
+    }
+    /**
+* Name        : FetchFieldsDetails
+* Purpose     : Method to fetch the fields required for the VF page.
+* @param      : String sObjName
+* @param      : sObject objVal, pse__Proj__c inputProj, Case caseRef, Asset assetRef
+* @return     : None
+*/    
+    public static Map<String, String> fetchFieldsDetails(String sObjName, sObject objVal, pse__Proj__c inputProj, Case caseRef, Asset assetRef){
+        Map<String, String> fieldLebelWithValuesMap = new Map<String, String>();
+        if(sObjName == 'Case'){
+            Case caseInstance = (Case)objVal;
+            fieldLebelWithValuesMap.put('ProjectId', caseInstance.Project_Template__c);
+            fieldLebelWithValuesMap.put('StartDate', String.valueof(inputProj.pse__Start_Date__c));
+            fieldLebelWithValuesMap.put('ProjectName', caseInstance.Subject);
+            parentId = caseInstance.Id;
+            accountId = caseInstance.AccountId;
+        }
+        if(sObjName == 'pse__Proj__c'){
+            fieldLebelWithValuesMap.put('ProjectId', caseRef.Project_Template__c);
+            fieldLebelWithValuesMap.put('StartDate', String.valueof(inputProj.pse__Start_Date__c));
+            fieldLebelWithValuesMap.put('ProjectName', caseRef.Subject);
+            parentId = caseRef.Id;
+            accountId = caseRef.AccountId;
+        }  
+        if(sObjName == 'Asset'){
+            Asset assetInstance = (Asset)objVal;
+            fieldLebelWithValuesMap.put('ProjectId', assetInstance.Project_Template__c);
+            fieldLebelWithValuesMap.put('StartDate', String.valueof(inputProj.pse__Start_Date__c));
+            fieldLebelWithValuesMap.put('ProjectName', assetInstance.Name);
+            parentId = assetInstance.Id;
+            accountId = assetInstance.AccountId;
+        }
+        if(sObjName == 'Project_Asset__c'){
+            fieldLebelWithValuesMap.put('ProjectId', assetRef.Project_Template__c);
+            fieldLebelWithValuesMap.put('StartDate', String.valueof(inputProj.pse__Start_Date__c));
+            fieldLebelWithValuesMap.put('ProjectName', assetRef.Name);
+            parentId = assetRef.Id;
+            accountId = assetRef.AccountId;
+        }  
+        
+        return fieldLebelWithValuesMap;
+    }
+    /**
+* Name        : createProject
+* Purpose     : VF page commond button action method to 
+create the project from template button
+using the field specified as per the object.
+* @param      : None
+* @return     : PageReference
+*/
+    public PageReference createProject(){
+        fieldValuesMap = fetchFieldsDetails(sObjName, objVal, inputProj, caseRef, assetRef);
+        
+        //Set up input fields for template service
+        Id templateProjectId = Id.valueof(fieldValuesMap.get('ProjectId')); 
+        Date startDate = Date.valueof(fieldValuesMap.get('StartDate'));
+        //Instantiate the request
+        pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest =
+            new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(templateProjectId, 
+                                                                                      startDate);
+        //Set new project name to specified name
+        projRequest.ProjectName = fieldValuesMap.get('ProjectName');
+        //Call the service and create project
+        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
+            pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
+                new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{projRequest});
+        //If project was created successfully then redirect
+        if(projResponse[0].isSuccess()){
+            //Obtain new project id and redirect to project page
+            Id ProjectId = projResponse[0].NewProjectId;
+            //Update the project with its related entity.
+            if(sObjName == 'Case'){
+                linkProjectWithCase(ProjectId, parentId, accountId, caseComment);
+            }
+
+            if(sObjName == 'Asset' || sObjName == 'Project_Asset__c'){
+                linkProjectWithAsset(ProjectId, parentId);
+            }
+            
+            PageReference nextPage = new PageReference('/' + ProjectId);
+            nextPage.setRedirect(true);
+            return nextPage;
+            //If unsuccessful output error messages
+        }else{
+            for(pse.CreateProjectFromTemplateService.CreateProjectError err : projResponse[0].Errors){
+                ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, err.Message));
+            }
+            return null;
+        }        
+    }
+    /**
+* Name        : linkProjectWithCase
+* Purpose     : Method to link the entity to the project
+* @param      : Id projectId, Id parentId
+* @return     : None
+*/
+    public static void linkProjectWithCase(Id projectId, Id parentId, Id accountId, String caseComment){
+        pse__Proj__c newProject = new pse__Proj__c();
+        newProject.Id = projectId;
+        newProject.Case__c = parentId;
+        newProject.pse__Account__c = accountId;
+        newProject.Comments__c = caseComment;
+        update newProject;
+    }
+    
+    /**
+* Name        : linkProjectWithCase
+* Purpose     : Method to link the entity to the project
+* @param      : Id projectId, Id parentId
+* @return     : None
+*/
+    public static void linkProjectWithCase(Id projectId, Id parentId, Id accountId, String caseComment,Date dueDate , Id recordTypeId){
+        pse__Proj__c newProject = new pse__Proj__c();
+        newProject.Id = projectId;
+        newProject.Case__c = parentId;
+        newProject.pse__Account__c = accountId;
+        newProject.Comments__c = caseComment;
+        newProject.Go_Live_Date__c = dueDate;
+        newProject.recordTypeId = recordTypeId;
+        update newProject;
+    }
+    
+    /**
+* Name        : linkProjectWithAsset
+* Purpose     : Method to link the entity to the project
+* @param      : Id projectId, Id parentId
+* @return     : None
+*/
+    public static void linkProjectWithAsset(Id projectId, Id parentId){
+        Project_Asset__c newProject = new Project_Asset__c();
+        newProject.Project__c = projectId;
+        newProject.Asset__c = parentId;
+        insert newProject;
+    }    
+    
+    /**
+* Name        : createProject
+* Purpose     : LWC quick action method to 
+create the project from template button
+using the field specified as per the object.
+* @param      : sObjName, recordId, objVal, startDate
+* @return     : ResponseWrapper - status, data, errorMessage
+*/
+    @AuraEnabled
+    public static ResponseWrapper createProject(String sobjName,Id recordId, String objVal,Date startDate){
+        Asset oAsset;
+        Case oCase;
+        Id parentId,accountId;
+        String caseComment;
+        Date dueDate;
+        Map<String,String> fieldValuesMap = new Map<String,String>();
+        
+        pse__Proj__c oProject = new pse__Proj__c();
+        try{
+            if(recordId.getSobjectType() == Asset.getSObjectType()){
+                oAsset = (Asset)JSON.deserialize(objVal, Asset.class);
+                oProject.pse__Start_Date__c = startDate;
+                Asset currentAsset = [SELECT Id, Name, AccountId, Project_Template__c FROM Asset WHERE Id =: recordId] ;
+                fieldValuesMap.put('ProjectId', oAsset.Project_Template__c);
+                fieldValuesMap.put('ProjectName', oAsset.name);
+                parentId = recordId;
+                accountId = currentAsset.AccountId;
+            }else if(recordId.getSobjectType() == Case.getSObjectType()){
+                oCase = (Case)JSON.deserialize(objVal, Case.class);
+                fieldValuesMap.put('ProjectId', oCase.Project_Template__c);
+                if(oCase.Subject != ''){
+                    fieldValuesMap.put('ProjectName', oCase.Subject);
+                } else{
+                    fieldValuesMap.put('ProjectName', oCase.Project_Template__r.Name);
+                }
+                Case currentCase = [SELECT Id, Subject,Comments_for_Project__c, AccountId, Project_Template__c,NSP_Due_Date__c FROM Case WHERE Id = : recordId];
+                parentId = recordId;
+                accountId = currentCase.AccountId;
+                caseComment = currentCase.Comments_for_Project__c;
+                dueDate = currentCase.NSP_Due_Date__c;
+            }
+            Id templateProjectId = Id.valueof(fieldValuesMap.get('ProjectId')); 
+            
+            Id projectRecordTypeId = [SELECT RecordTypeId FROM pse__Proj__c WHERE Id =: templateProjectId].RecordTypeId;
+            pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest =
+                new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(templateProjectId, 
+                                                                                          startDate);
+            projRequest.ProjectName = fieldValuesMap.get('ProjectName');
+            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
+                pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
+                    new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{projRequest});
+            if(projResponse[0].isSuccess()){
+                Id ProjectId = projResponse[0].NewProjectId;
+                //Update the project with its related entity.
+                if(sObjName == 'Case'){
+                    linkProjectWithCase(ProjectId, parentId, accountId, caseComment,dueDate,projectRecordTypeId);
+                }
+                if(sObjName == 'Asset'){
+                    update new pse__Proj__c(Id = ProjectId, RecordTypeId = projectRecordTypeId);
+                    linkProjectWithAsset(ProjectId, parentId);
+                }
+                return new ResponseWrapper(true,ProjectId,'');
+                //If unsuccessful output error messages
+            }else{
+                List<String> lErros = new List<String>();
+                for(pse.CreateProjectFromTemplateService.CreateProjectError err : projResponse[0].Errors){
+                    lErros.add(err.Message);
+                }
+                return new ResponseWrapper(false,'',lErros[0]);
+            }        
+        }catch(Exception ex){
+            return new ResponseWrapper(false,'',ex.getMessage());
+        }
+    }
+    
+}

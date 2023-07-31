@@ -1,0 +1,1738 @@
+{
+  "version" : "58.0",
+  "nodes" : {
+    "LOAD_DATASET4" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "CurrencyIsoCode", "LastReferencedDate", "NSP_Renewal_Date__c", "Id", "OwnerId", "IsDeleted", "Name", "RecordTypeId", "CreatedDate", "CreatedById", "SystemModstamp", "LastActivityDate", "LastViewedDate", "NSP_Action__c", "NSP_Age_Range_Is__c", "NSP_AgreementType__c", "NSP_AnyProvisionInPreparedDocRefersStock__c", "NSP_Attached_Approval_Email__c", "NSP_CSAaddendumForStockEquity__c", "NSP_CSC_matter_for_any_WSEE__c", "NSP_Case__c", "NSP_ClientName__c", "NSP_Client_Contact__c", "NSP_Client_Reviews__c", "NSP_Client_System__c", "NSP_Consideration_Amount_min_2wks_Salary__c", "NSP_CreditApproval__c", "NSP_DOB__c", "NSP_Delay__c", "NSP_Employee_Status__c", "NSP_FinanceLevel__c", "NSP_HRSpeciallist__c", "NSP_Hours_Spent__c", "NSP_Installments_Check__c", "NSP_Integration__c", "NSP_Internal_Reviews__c", "NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c", "NSP_MHRS_Approval_Email__c", "NSP_Mid_Market_or_Mid_Market_Enterprise__c", "NSP_Misc__c", "NSP_Notes__c", "NSP_Reason_for_Separation__c", "NSP_ReportName__c", "NSP_ReportType__c", "NSP_Report_Developer__c", "NSP_ReviewType__c", "NSP_SA_Team_member_who_completed_request__c", "NSP_Segment__c", "NSP_Severance_Total__c", "NSP_SpecialItemsNote__c", "NSP_Termination_Date__c", "NSP_TotalAgreementsRequested__c", "NSP_Vendor__c", "NSP_WSEE_SubClient_Parent_Client_if_None__c", "NSP_WSEE__c", "NSP_WhoResponsibleForStockEquityPaymt__c", "NSP_Written_Approval_From_The_MHRS__c", "SR__c", "NSP_Per_ID__c", "NSP_PrimaryState__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_ReportRequest__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_ReportRequest__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET5" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET6" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "DeveloperName", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "RecordType",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "RecordType"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET7" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Case_In_Progress_Hours__c", "Id", "CaseNumber", "ContactId", "AccountId", "AssetId", "RecordTypeId", "Status", "Subject", "ClosedDate", "OwnerId", "CreatedDate", "CreatedById", "NSP_Rating__c", "NSP_Case_Sub_Status__c", "NSP_Assigned_Queue__c", "NSP_Opened_Date__c", "NSP_Category_Picklist__c", "NSP_Created_by_Division__c", "NSP_Detail__c", "NSP_Category__c", "NSP_SubCategory__c", "NSP_Original_Assigned_Queue_Date__c", "NSP_Case_Account_Name__c", "NSP_ClientNumber__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Case",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Case"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET8" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Account_Segment__c", "Id", "Name", "RecordTypeId", "BillingState", "OwnerId", "NSP_Agreement_Type__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET9" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "AccountId", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Contact",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Contact"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN2" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET4", "JOIN8" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "NSP_Case__c" ],
+        "rightQualifier" : "Case",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN3" : {
+      "action" : "join",
+      "sources" : [ "JOIN2", "LOAD_DATASET8" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "NSP_ClientName__c" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN4" : {
+      "action" : "join",
+      "sources" : [ "JOIN3", "LOAD_DATASET9" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_WSEE__c" ],
+        "rightQualifier" : "Contact",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN5" : {
+      "action" : "join",
+      "sources" : [ "JOIN4", "LOAD_DATASET6" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "RecordTypeId" ],
+        "rightQualifier" : "RecordType",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN6" : {
+      "action" : "join",
+      "sources" : [ "JOIN5", "LOAD_DATASET5" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "OwnerId", "RecordTypeId", "SystemModstamp", "LastActivityDate", "LastViewedDate", "LastReferencedDate", "Case.AccountId", "Case.RecordTypeId", "Case.Asset.AccountId", "Account.Id", "Account.RecordTypeId", "Account.OwnerId", "Contact.AccountId", "RecordType.Id" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_HRSpeciallist__c" ],
+        "rightQualifier" : "User",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET13" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Client_Segment_type__c", "Id", "ContactId", "AccountId", "Name", "NSP_Account_Status__c", "NSP_Client__c", "NSP_Renewal_Date__c", "NSP_Service_Region__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Asset",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Asset"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN8" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET7", "LOAD_DATASET13" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "AssetId" ],
+        "rightQualifier" : "Asset",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "OUTPUT0" : {
+      "action" : "save",
+      "sources" : [ "FORMULA15" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "User,  User, Contact, Account, Case, Asset, Report Request DS",
+          "name" : "Wizard_Output_Case_Asset_Recipe_V2",
+          "folderName" : "PEO"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "sfdcDigest_NSP_ReportRequest__c_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "CurrencyIsoCode", "NSP_Renewal_Date__c", "Name", "RecordTypeId", "CreatedDate", "LastActivityDate", "NSP_Age_Range_Is__c", "NSP_AgreementType__c", "NSP_AnyProvisionInPreparedDocRefersStock__c", "NSP_Attached_Approval_Email__c", "NSP_CSAaddendumForStockEquity__c", "NSP_CSC_matter_for_any_WSEE__c", "NSP_Case__c", "NSP_ClientName__c", "NSP_Consideration_Amount_min_2wks_Salary__c", "NSP_CreditApproval__c", "NSP_DOB__c", "NSP_Employee_Status__c", "NSP_FinanceLevel__c", "NSP_HRSpeciallist__c", "NSP_Installments_Check__c", "NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c", "NSP_Mid_Market_or_Mid_Market_Enterprise__c", "NSP_Reason_for_Separation__c", "NSP_ReportType__c", "NSP_ReviewType__c", "NSP_Severance_Total__c", "NSP_SpecialItemsNote__c", "NSP_Termination_Date__c", "NSP_TotalAgreementsRequested__c", "NSP_WSEE_SubClient_Parent_Client_if_None__c", "NSP_WSEE__c", "NSP_WhoResponsibleForStockEquityPaymt__c", "NSP_Written_Approval_From_The_MHRS__c", "SR__c", "NSP_Client_Number__c", "NSP_Per_ID__c", "NSP_PrimaryState__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_ReportRequest__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_ReportRequest__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "sfdcDigest_Case_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Status", "Id", "CaseNumber", "AssetId", "OwnerId", "CreatedDate", "CreatedById", "NSP_Assigned_Queue__c", "NSP_Opened_Date__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Case",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Case"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "augment_NSP_ReportRequest__c_Case_copy0" : {
+      "action" : "join",
+      "sources" : [ "sfdcDigest_NSP_ReportRequest__c_copy0", "sfdcDigest_Case_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "NSP_Case__c" ],
+        "rightQualifier" : "NSP_Case__c",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "sfdcDigest_Asset_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Service_Region__c", "Id", "AccountId", "AssetLevel", "NSP_Account_Status__c", "NSP_Client__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Asset",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Asset"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "augment_NSP_Reporting_Case_c_Asset_copy0" : {
+      "action" : "join",
+      "sources" : [ "augment_NSP_ReportRequest__c_Case_copy0", "sfdcDigest_Asset_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "AssetID.Id" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "NSP_Case__c.AssetId" ],
+        "rightQualifier" : "AssetID",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "sfdcDigest_Account_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Name", "Id", "NSP_Sales_Region__c", "NSP_Insperity_PEO_Renewal_Date__c", "NSP_Account_Segment__c", "CreatedById", "BillingCity", "BillingState" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "augment_NSP_Reporting_Case_Asset_c_Account_copy0" : {
+      "action" : "join",
+      "sources" : [ "augment_NSP_Reporting_Case_c_Asset_copy0", "sfdcDigest_Account_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "AccountID.Id" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_ClientName__c" ],
+        "rightQualifier" : "AccountID",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "register_Wizard Output-Case-Asset DF V1_copy0" : {
+      "action" : "save",
+      "sources" : [ "FORMULA1" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Case, Report Request, Asset, Account, User DS",
+          "name" : "Wizard_Output_Case_Asset_DF_V1_Converted_into_Recipe",
+          "folderName" : "PEO"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "LOAD_DATASET6_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "DeveloperName", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "RecordType",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "RecordType"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN9" : {
+      "action" : "join",
+      "sources" : [ "augment_NSP_Reporting_Case_Asset_c_Account_copy0", "LOAD_DATASET6_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "RecordTypeId" ],
+        "rightQualifier" : "RecordType",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET5_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN10" : {
+      "action" : "join",
+      "sources" : [ "JOIN9", "LOAD_DATASET5_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_HRSpeciallist__c" ],
+        "rightQualifier" : "UserCopy",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET5_copy1" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN11" : {
+      "action" : "join",
+      "sources" : [ "JOIN6", "LOAD_DATASET5_copy1" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Case.OwnerId" ],
+        "rightQualifier" : "UserCopy",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET5_copy1_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN12" : {
+      "action" : "join",
+      "sources" : [ "JOIN11", "LOAD_DATASET5_copy1_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Case.CreatedById" ],
+        "rightQualifier" : "UserCopyCo",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "FORMULA0" : {
+      "action" : "formula",
+      "sources" : [ "JOIN22" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "DATE_ONLY",
+          "name" : "Case_Created_Date",
+          "label" : "Case Created Date",
+          "formulaExpression" : "to_date(\"Case.CreatedDate\", 'yyyy-dd-mm')",
+          "format" : "MM/dd/yyyy",
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA13" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Case_Created_Date1",
+          "label" : "Case Created Date",
+          "formulaExpression" : "date_format(\"Case_Created_Date\", 'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA14" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA13" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Case_Owner1",
+          "label" : "Case Owner",
+          "formulaExpression" : "case\r\n    when startsWith(\"Case.OwnerId\", '00G')\r\n    then\"Group.Name\"\r\n    else\r\n    \"UserCopy.Name\"\r\nend",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "EDIT_ATTRIBUTES0" : {
+      "action" : "schema",
+      "sources" : [ "FORMULA14" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "Contact.Name",
+          "newProperties" : {
+            "label" : "WSEE",
+            "name" : "Contact.Name"
+          }
+        } ]
+      }
+    },
+    "FORMULA15" : {
+      "action" : "formula",
+      "sources" : [ "EDIT_ATTRIBUTES0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Renewal_Date_wizard",
+          "label" : "Renewal Date",
+          "formulaExpression" : "date_format(\"NSP_Renewal_Date__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA1" : {
+      "action" : "formula",
+      "sources" : [ "JOIN10" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "DATE_ONLY",
+          "name" : "Case_Created_Date",
+          "label" : "Case Created Date",
+          "formulaExpression" : "to_date(\"NSP_Case__c.CreatedDate\", 'yyyy-dd-mm')",
+          "format" : "MM/dd/yyyy",
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "LOAD_DATASET14" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "CaseId", "CreatedById", "CreatedDate", "Field", "DataType", "OldValue", "NewValue" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "CaseHistory",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "CaseHistory"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "OUTPUT1" : {
+      "action" : "save",
+      "sources" : [ "JOIN20" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Case, Asset, User, Case History, Report Request DS",
+          "name" : "RDT_Reports_Dataset",
+          "folderName" : "Report_Development_Team"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "JOIN14" : {
+      "action" : "join",
+      "sources" : [ "JOIN19", "LOAD_DATASET13" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "AssetId" ],
+        "rightQualifier" : "Asset",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN15" : {
+      "action" : "join",
+      "sources" : [ "JOIN14", "LOAD_DATASET4" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "NSP_Report",
+        "rightKeys" : [ "NSP_Case__c" ]
+      }
+    },
+    "JOIN16" : {
+      "action" : "join",
+      "sources" : [ "JOIN15", "LOAD_DATASET6_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "RecordTypeId" ],
+        "rightQualifier" : "RecordType",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "FORMULA3" : {
+      "action" : "formula",
+      "sources" : [ "JOIN16" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Date_Opened",
+          "label" : "Date Opened",
+          "formulaExpression" : "date_format(CreatedDate, 'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA4" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA3" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Date_Closed",
+          "label" : "Date Closed",
+          "formulaExpression" : "date_format(ClosedDate, 'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA6" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA4" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Original_Assigned_Queue_Date",
+          "label" : "Original Assigned Queue Date",
+          "formulaExpression" : "date_format(NSP_Original_Assigned_Queue_Date__c, 'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "TO_MEASURE0" : {
+      "action" : "typeCast",
+      "sources" : [ "FORMULA6" ],
+      "schema" : {
+        "fields" : [ {
+          "name" : "NSP_ClientNumber__c_to_measure",
+          "newProperties" : {
+            "name" : "NSP_ClientNumber__c"
+          }
+        } ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "NSP_ClientNumber__c" ]
+        }
+      },
+      "parameters" : {
+        "fields" : [ {
+          "name" : "NSP_ClientNumber__c",
+          "newProperties" : {
+            "label" : "Client Number",
+            "name" : "NSP_ClientNumber__c_to_measure",
+            "typeProperties" : {
+              "type" : "NUMBER",
+              "scale" : 0,
+              "precision" : 18
+            }
+          }
+        } ]
+      }
+    },
+    "JOIN17" : {
+      "action" : "join",
+      "sources" : [ "TO_MEASURE0", "LOAD_DATASET5_copy1" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_Report.NSP_Report_Developer__c" ],
+        "rightQualifier" : "User",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN18" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET7", "LOAD_DATASET5" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "OwnerId" ],
+        "rightQualifier" : "UserOwner",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN19" : {
+      "action" : "join",
+      "sources" : [ "JOIN18", "LOAD_DATASET5" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "CreatedById" ],
+        "rightQualifier" : "UserCreated",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET15" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "NSP_Case__c", "NSP_Case_Current_Sub_Category__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_Case_History__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_Case_History__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN20" : {
+      "action" : "join",
+      "sources" : [ "JOIN17", "LOAD_DATASET15" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "NSP_Case_H",
+        "rightKeys" : [ "NSP_Case__c" ]
+      }
+    },
+    "FILTER0" : {
+      "action" : "filter",
+      "sources" : [ "LOAD_DATASET14" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "Field",
+          "operator" : "EQUAL",
+          "operands" : [ "NSP_Case_Sub_Status__c" ]
+        }, {
+          "type" : "TEXT",
+          "field" : "NewValue",
+          "operator" : "EQUAL",
+          "operands" : [ "Awaiting Verification" ]
+        } ]
+      }
+    },
+    "JOIN21" : {
+      "action" : "join",
+      "sources" : [ "JOIN17", "FILTER0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "FilterSubs",
+        "rightKeys" : [ "CaseId" ]
+      }
+    },
+    "FORMULA7" : {
+      "action" : "formula",
+      "sources" : [ "JOIN21" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "NSP_Case_Current_Sub_Category__c",
+          "label" : "NSP_Case_Current_Sub_Category__c",
+          "formulaExpression" : "case \r\n\twhen \"FilterSubs.Field\" = 'NSP_Case_Sub_Status__c'\r\n\tthen \"FilterSubs.NewValue\"\r\nend",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA8" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA7" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Initial_Date",
+          "label" : "Initial Date",
+          "formulaExpression" : "case when \"FilterSubs.NewValue\" = 'Awaiting Verification' then\r\ndate_format(\"FilterSubs.CreatedDate\", 'MM/dd/yyyy')\r\nEND",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA9" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA8" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Awaiting_Verification_Datetime",
+          "label" : "Awaiting Verification Datetime",
+          "formulaExpression" : "case when \"FilterSubs.NewValue\" = 'Awaiting Verification' then\r\ndate_format(\"FilterSubs.CreatedDate\", 'MM/dd/yyyy:hh:mm:ss')\r\nEND",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "EXTRACT0" : {
+      "action" : "extractGrains",
+      "sources" : [ "FORMULA9" ],
+      "parameters" : {
+        "grainExtractions" : [ {
+          "source" : "NSP_Original_Assigned_Queue_Date__c",
+          "targets" : [ {
+            "name" : "NSP_Original_Assigned_Queue_Date__c_extract",
+            "label" : "Original Assigned Queue Date Extract",
+            "grainType" : "SEC_EPOCH"
+          } ]
+        } ]
+      }
+    },
+    "EXTRACT1" : {
+      "action" : "extractGrains",
+      "sources" : [ "EXTRACT0" ],
+      "parameters" : {
+        "grainExtractions" : [ {
+          "source" : "FilterSubs.CreatedDate",
+          "targets" : [ {
+            "name" : "FilterSubs.CreatedDate_extract",
+            "label" : "FilterSubs.Created Date Extract",
+            "grainType" : "SEC_EPOCH"
+          } ]
+        } ]
+      }
+    },
+    "FORMULA11" : {
+      "action" : "formula",
+      "sources" : [ "EXTRACT1" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Turn_Around_Time",
+          "label" : "Turn Around Time",
+          "formulaExpression" : "case when\r\n\"FilterSubs.NewValue\" = 'Awaiting Verification' then\r\nabs(NSP_Original_Assigned_Queue_Date__c_extract-\"FilterSubs.CreatedDate_extract\")/3600\r\nEnd",
+          "precision" : 16,
+          "scale" : 2,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA12" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA11" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "DATETIME",
+          "name" : "Case_Substatus_Date_formula",
+          "label" : "Case Substatus Date",
+          "formulaExpression" : "case \r\n\twhen \"FilterSubs.NewValue\" = 'WIRE - Migration Complete'\r\n\tthen \"FilterSubs.CreatedDate\"\r\n\twhen \"FilterSubs.NewValue\" = 'Awaiting Verification'\r\n\tthen \"FilterSubs.CreatedDate\"\r\n\twhen \"FilterSubs.NewValue\" = 'In Process'\r\n\tthen \"FilterSubs.CreatedDate\"\r\n\twhen \"FilterSubs.NewValue\" ='Waiting on Requester'\r\n\tthen \"FilterSubs.CreatedDate\"\r\nend",
+          "format" : "MM/dd/yyyy",
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "OUTPUT2" : {
+      "action" : "save",
+      "sources" : [ "FORMULA12" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Case History, User,  Report Request, Asset, Case DS",
+          "name" : "RDT_Reports_Awaiting_Verification",
+          "folderName" : "Report_Development_Team"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "LOAD_DATASET16" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "DeveloperName" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Group",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Group"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN22" : {
+      "action" : "join",
+      "sources" : [ "JOIN12", "LOAD_DATASET16" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Case.OwnerId" ],
+        "rightQualifier" : "Group",
+        "rightKeys" : [ "Id" ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "LOAD_DATASET4" : {
+        "label" : "NSP_ReportRequest__c",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 672,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET5" : {
+        "label" : "User",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 532,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET6" : {
+        "label" : "RecordType",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 1092,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET7" : {
+        "label" : "Case",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 252,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET8" : {
+        "label" : "Account",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 812,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET9" : {
+        "label" : "Contact",
+        "type" : "LOAD_DATASET",
+        "top" : 112,
+        "left" : 951.9,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN2" : {
+        "label" : "Join Case with Wizard Output",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 672
+      },
+      "JOIN3" : {
+        "label" : "Join Account with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 812
+      },
+      "JOIN4" : {
+        "label" : "Join Wizard output with Contact",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 252.10000000000002,
+        "left" : 952
+      },
+      "JOIN5" : {
+        "label" : "Join Record Type ID",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 1092
+      },
+      "JOIN6" : {
+        "label" : "Join HR Specialist with User",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 1232
+      },
+      "LOAD_DATASET13" : {
+        "label" : "Asset",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN8" : {
+        "label" : "Join Case with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 252
+      },
+      "OUTPUT0" : {
+        "label" : "User,  User, Contact, Account, Case, Asset, Report Request Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 531.9,
+        "left" : 1931.5
+      },
+      "sfdcDigest_NSP_ReportRequest__c_copy0" : {
+        "label" : "NSP_ReportRequest__c",
+        "type" : "LOAD_DATASET",
+        "top" : 950.2,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "sfdcDigest_Case_copy0" : {
+        "label" : "Case",
+        "type" : "LOAD_DATASET",
+        "top" : 670.2,
+        "left" : 252,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "augment_NSP_ReportRequest__c_Case_copy0" : {
+        "label" : "Join Case with Wizard Output",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 810.2,
+        "left" : 252
+      },
+      "sfdcDigest_Asset_copy0" : {
+        "label" : "Asset",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 670.2,
+        "left" : 392,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "augment_NSP_Reporting_Case_c_Asset_copy0" : {
+        "label" : "Join case with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 950.2,
+        "left" : 392
+      },
+      "sfdcDigest_Account_copy0" : {
+        "label" : "sfdcDigest_Account",
+        "type" : "LOAD_DATASET",
+        "top" : 670.2,
+        "left" : 532,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "augment_NSP_Reporting_Case_Asset_c_Account_copy0" : {
+        "label" : "Join Account with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 810.2,
+        "left" : 532
+      },
+      "register_Wizard Output-Case-Asset DF V1_copy0" : {
+        "label" : "Case, Report Request, Asset, Account, User Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 950.2,
+        "left" : 952
+      },
+      "LOAD_DATASET6_copy0" : {
+        "label" : "RecordType",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 670.2,
+        "left" : 672,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN9" : {
+        "label" : "Join with Record Type ID",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 810.2,
+        "left" : 672
+      },
+      "LOAD_DATASET5_copy0" : {
+        "label" : "User",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 670.2,
+        "left" : 812,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN10" : {
+        "label" : "Join HR Specialist with User",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 810.2,
+        "left" : 812
+      },
+      "LOAD_DATASET5_copy1" : {
+        "label" : "User",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 530.2,
+        "left" : 1232,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN11" : {
+        "label" : "Join Owner ID with User",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 1372
+      },
+      "LOAD_DATASET5_copy1_copy0" : {
+        "label" : "User",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 250.2,
+        "left" : 1512,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN12" : {
+        "label" : "Join User Created By",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 1512
+      },
+      "TRANSFORM0" : {
+        "label" : "Date Format and Derived Field",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 392.5,
+        "left" : 1792,
+        "graph" : {
+          "FORMULA0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA13" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA14" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "EDIT_ATTRIBUTES0" : {
+            "label" : "Edit Attributes"
+          },
+          "FORMULA15" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA0",
+          "target" : "FORMULA13"
+        }, {
+          "source" : "FORMULA13",
+          "target" : "FORMULA14"
+        }, {
+          "source" : "FORMULA14",
+          "target" : "EDIT_ATTRIBUTES0"
+        }, {
+          "source" : "EDIT_ATTRIBUTES0",
+          "target" : "FORMULA15"
+        } ]
+      },
+      "TRANSFORM1" : {
+        "label" : "Transform",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 810.2,
+        "left" : 952,
+        "graph" : {
+          "FORMULA1" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Case Created Date Formula"
+          }
+        },
+        "connectors" : [ ]
+      },
+      "LOAD_DATASET14" : {
+        "label" : "CaseHistory",
+        "type" : "LOAD_DATASET",
+        "top" : 812,
+        "left" : 1092,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "OUTPUT1" : {
+        "label" : "Case, Asset, User, Case History, Report Request Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 810.2,
+        "left" : 1372
+      },
+      "JOIN14" : {
+        "label" : "Case lookup with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 530.2,
+        "left" : 252
+      },
+      "JOIN15" : {
+        "label" : "Wizard Output lookup with Case Lookup",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 530.2,
+        "left" : 532
+      },
+      "JOIN16" : {
+        "label" : "Wizard lookup with recordtype",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 530.2,
+        "left" : 812
+      },
+      "TRANSFORM3" : {
+        "label" : "Date format Change",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 530.2,
+        "left" : 952,
+        "graph" : {
+          "FORMULA3" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Date Opened"
+          },
+          "FORMULA4" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Date Closed"
+          },
+          "FORMULA6" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Original Assigned Queue Date"
+          },
+          "TO_MEASURE0" : {
+            "label" : "To Number"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA3",
+          "target" : "FORMULA4"
+        }, {
+          "source" : "FORMULA6",
+          "target" : "TO_MEASURE0"
+        }, {
+          "source" : "FORMULA4",
+          "target" : "FORMULA6"
+        } ]
+      },
+      "JOIN17" : {
+        "label" : "Wizard output lookup with user",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 670.2,
+        "left" : 1232
+      },
+      "JOIN18" : {
+        "label" : "Case lookup with User Owner",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 390.2,
+        "left" : 392
+      },
+      "JOIN19" : {
+        "label" : "Case lookup with UserCreated",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 530.2,
+        "left" : 392
+      },
+      "LOAD_DATASET15" : {
+        "label" : "NSP_Case_History__c",
+        "type" : "LOAD_DATASET",
+        "top" : 530.2,
+        "left" : 1372,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN20" : {
+        "label" : "Wizard Output with CaseHistory",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 670.2,
+        "left" : 1372
+      },
+      "FILTER0" : {
+        "label" : "Filter Substatus History",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 952,
+        "left" : 1092.2
+      },
+      "JOIN21" : {
+        "label" : "Case With CaseHistory",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092.3,
+        "left" : 1232
+      },
+      "TRANSFORM4" : {
+        "label" : "Transform",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 952,
+        "left" : 1372,
+        "graph" : {
+          "FORMULA7" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Add Case Current SubCategory Value"
+          },
+          "FORMULA8" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Initial Date"
+          },
+          "FORMULA9" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Awaiting Verification Datetime"
+          },
+          "EXTRACT0" : {
+            "label" : "Original Assigned Queue Date Epoch"
+          },
+          "EXTRACT1" : {
+            "label" : "Created Date of Case History"
+          },
+          "FORMULA11" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Turn Around Time"
+          },
+          "FORMULA12" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA7",
+          "target" : "FORMULA8"
+        }, {
+          "source" : "FORMULA8",
+          "target" : "FORMULA9"
+        }, {
+          "source" : "EXTRACT0",
+          "target" : "EXTRACT1"
+        }, {
+          "source" : "EXTRACT1",
+          "target" : "FORMULA11"
+        }, {
+          "source" : "FORMULA9",
+          "target" : "EXTRACT0"
+        }, {
+          "source" : "FORMULA11",
+          "target" : "FORMULA12"
+        } ]
+      },
+      "OUTPUT2" : {
+        "label" : "Case History, User,  Report Request, Asset, Case Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 1091.9,
+        "left" : 1371.9
+      },
+      "LOAD_DATASET16" : {
+        "label" : "Group",
+        "type" : "LOAD_DATASET",
+        "top" : 532,
+        "left" : 1652,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN22" : {
+        "label" : "Join Owner ID with Group ID",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 392.1,
+        "left" : 1652
+      }
+    },
+    "connectors" : [ {
+      "source" : "JOIN17",
+      "target" : "JOIN20"
+    }, {
+      "source" : "JOIN15",
+      "target" : "JOIN16"
+    }, {
+      "source" : "LOAD_DATASET7",
+      "target" : "JOIN8"
+    }, {
+      "source" : "JOIN2",
+      "target" : "JOIN3"
+    }, {
+      "source" : "LOAD_DATASET4",
+      "target" : "JOIN2"
+    }, {
+      "source" : "JOIN8",
+      "target" : "JOIN2"
+    }, {
+      "source" : "LOAD_DATASET8",
+      "target" : "JOIN3"
+    }, {
+      "source" : "JOIN3",
+      "target" : "JOIN4"
+    }, {
+      "source" : "LOAD_DATASET9",
+      "target" : "JOIN4"
+    }, {
+      "source" : "JOIN4",
+      "target" : "JOIN5"
+    }, {
+      "source" : "LOAD_DATASET6",
+      "target" : "JOIN5"
+    }, {
+      "source" : "JOIN5",
+      "target" : "JOIN6"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "JOIN6"
+    }, {
+      "source" : "LOAD_DATASET13",
+      "target" : "JOIN8"
+    }, {
+      "source" : "TRANSFORM0",
+      "target" : "OUTPUT0"
+    }, {
+      "source" : "sfdcDigest_NSP_ReportRequest__c_copy0",
+      "target" : "augment_NSP_ReportRequest__c_Case_copy0"
+    }, {
+      "source" : "sfdcDigest_Case_copy0",
+      "target" : "augment_NSP_ReportRequest__c_Case_copy0"
+    }, {
+      "source" : "augment_NSP_ReportRequest__c_Case_copy0",
+      "target" : "augment_NSP_Reporting_Case_c_Asset_copy0"
+    }, {
+      "source" : "sfdcDigest_Asset_copy0",
+      "target" : "augment_NSP_Reporting_Case_c_Asset_copy0"
+    }, {
+      "source" : "augment_NSP_Reporting_Case_c_Asset_copy0",
+      "target" : "augment_NSP_Reporting_Case_Asset_c_Account_copy0"
+    }, {
+      "source" : "sfdcDigest_Account_copy0",
+      "target" : "augment_NSP_Reporting_Case_Asset_c_Account_copy0"
+    }, {
+      "source" : "TRANSFORM1",
+      "target" : "register_Wizard Output-Case-Asset DF V1_copy0"
+    }, {
+      "source" : "augment_NSP_Reporting_Case_Asset_c_Account_copy0",
+      "target" : "JOIN9"
+    }, {
+      "source" : "LOAD_DATASET6_copy0",
+      "target" : "JOIN9"
+    }, {
+      "source" : "JOIN9",
+      "target" : "JOIN10"
+    }, {
+      "source" : "LOAD_DATASET5_copy0",
+      "target" : "JOIN10"
+    }, {
+      "source" : "JOIN6",
+      "target" : "JOIN11"
+    }, {
+      "source" : "LOAD_DATASET5_copy1",
+      "target" : "JOIN11"
+    }, {
+      "source" : "JOIN11",
+      "target" : "JOIN12"
+    }, {
+      "source" : "LOAD_DATASET5_copy1_copy0",
+      "target" : "JOIN12"
+    }, {
+      "source" : "JOIN22",
+      "target" : "TRANSFORM0"
+    }, {
+      "source" : "JOIN10",
+      "target" : "TRANSFORM1"
+    }, {
+      "source" : "JOIN20",
+      "target" : "OUTPUT1"
+    }, {
+      "source" : "JOIN19",
+      "target" : "JOIN14"
+    }, {
+      "source" : "LOAD_DATASET13",
+      "target" : "JOIN14"
+    }, {
+      "source" : "JOIN14",
+      "target" : "JOIN15"
+    }, {
+      "source" : "LOAD_DATASET4",
+      "target" : "JOIN15"
+    }, {
+      "source" : "LOAD_DATASET6_copy0",
+      "target" : "JOIN16"
+    }, {
+      "source" : "JOIN16",
+      "target" : "TRANSFORM3"
+    }, {
+      "source" : "TRANSFORM3",
+      "target" : "JOIN17"
+    }, {
+      "source" : "LOAD_DATASET5_copy1",
+      "target" : "JOIN17"
+    }, {
+      "source" : "LOAD_DATASET7",
+      "target" : "JOIN18"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "JOIN18"
+    }, {
+      "source" : "JOIN18",
+      "target" : "JOIN19"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "JOIN19"
+    }, {
+      "source" : "LOAD_DATASET15",
+      "target" : "JOIN20"
+    }, {
+      "source" : "LOAD_DATASET14",
+      "target" : "FILTER0"
+    }, {
+      "source" : "JOIN17",
+      "target" : "JOIN21"
+    }, {
+      "source" : "FILTER0",
+      "target" : "JOIN21"
+    }, {
+      "source" : "JOIN21",
+      "target" : "TRANSFORM4"
+    }, {
+      "source" : "TRANSFORM4",
+      "target" : "OUTPUT2"
+    }, {
+      "source" : "JOIN12",
+      "target" : "JOIN22"
+    }, {
+      "source" : "LOAD_DATASET16",
+      "target" : "JOIN22"
+    } ],
+    "hiddenColumns" : [ ]
+  },
+  "runMode" : "full"
+}

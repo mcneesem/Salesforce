@@ -1,0 +1,28 @@
+<template>
+    <lightning-modal-header label="Clone Payroll Data Sheet"></lightning-modal-header>
+
+    <template if:true={isCloningInProgress}>
+        <lightning-modal-body>
+            <p style="margin: 1rem;
+            margin-left: 19rem;
+            font-size: x-large;
+            color: darkgreen;">Cloning is in progress.</p>
+        </lightning-modal-body>
+    </template>
+    <template if:false={isCloningInProgress}>
+        <lightning-modal-body>
+            <lightning-record-edit-form object-api-name="NSP_Payroll__c">
+                <lightning-input-field field-name="NSP_Sub_Client_Name__c" onchange={handleChange}>
+                </lightning-input-field>
+            </lightning-record-edit-form>
+        </lightning-modal-body>
+    </template>
+    <lightning-modal-footer>
+        <div>
+            <lightning-button style="margin-right: 10px;" label="Cancel" onclick={handleCancel} disabled={disableCancel}>
+            </lightning-button>
+            <lightning-button variant="brand" type="submit" label="Submit" onclick={handleSubmit} disabled={disableSubmit}>
+            </lightning-button>
+        </div>
+    </lightning-modal-footer>
+</template>

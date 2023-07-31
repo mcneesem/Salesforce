@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send notification about Preceding Task completion to dependent Task resources</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>PEO Preceding Task Completion Notification</name>
+    <style>freeForm</style>
+    <subject>Project Task Handoff {!pse__Project_Task__c.NSP_Project_Number__c} - {!pse__Project_Task__c.NSP_Account__c}</subject>
+    <textOnly>Project Task {!pse__Project_Task__c.Name} for {!pse__Project_Task__c.NSP_Account__c} {!pse__Project_Task__c.NSP_AIMS_Account__c} on Project {!pse__Project_Task__c.pse__Project__c} has been assigned to you and may now begin. Please click on the link below to view the record.
+{!pse__Project_Task__c.NSP_Project_Link__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

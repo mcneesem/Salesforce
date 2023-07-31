@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Spnsrd_pln_when_Insperity_hndles_payroll__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Will the client be maintaining a client sponsored plan for any amount of time that Insperity handles their payroll?</inlineHelpText>
+    <label>Spnsrd pln when Insperity hndles payroll</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_FinSvcs_R_D_Open_Cases</fullName>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>NSP_Segment__c</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_Detail__c</columns>
+    <columns>NAME</columns>
+    <columns>CONTACT.ACCOUNT</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Open,ReOpened</value>
+    </filters>
+    <label>FinSvcs R&amp;D Open Cases</label>
+    <queue>NSP_Research_and_Development</queue>
+    <sharedTo>
+        <group>NSP_Financial_Services_List_Views</group>
+    </sharedTo>
+</ListView>

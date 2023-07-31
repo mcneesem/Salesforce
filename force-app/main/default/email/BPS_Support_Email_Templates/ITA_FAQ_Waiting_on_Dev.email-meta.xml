@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Waiting on Dev</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Waiting on Dev</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Waiting on Dev</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+Thank you for touching base about your open technical support case. Currently, our development team is working on a solution for you. Unfortunately, we are unable to estimate how long it may be until they have an answer for you. Rest assured that we do still have this case on our list and will follow up with you as soon as we have any news.
+
+
+Thank you for your patience,
+
+Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

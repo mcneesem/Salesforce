@@ -1,0 +1,792 @@
+/**
+Apex Class Name      :  NSP_ProjectTriggerHelperTest
+Version              :  1.0  
+Author               :  Jatin                                                                        
+Created Date         :  06/01/22   
+Function             :  This class is used as a test class for  NSP_ProjectTriggerHelperTest
+Story                :                                                                      
+Modification Log     :                                                                              
+*--------------------------------------------------------------------------------------------------  
+* Developer                   Date                   Description                                    
+* -------------------------------------------------------------------------------------------------  
+* Anil                      9/15/2022              First Iteration
+*/
+
+@isTest(SeeAllData=false)
+private class NSP_ProjectTriggerHelperTest {
+
+    private static final Id peoProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME,'PEO_Project');
+    private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
+    private static final String NAME = 'name';
+    private static final List<String> PROJECT_FIELDS = new List<String>{
+        'Id',
+        'Name',
+        'pse__Start_Date__c',
+        'Templates_Used__c',
+        'Peer_Review__c',
+        'pse__Project_Type__c'
+    };
+    private static final List<String> ACCOUNT_FIELDS = new List<String>{
+        'Id',
+        'Name'
+    };
+    private static final List<String> CASE_FIELDS = new List<String>{
+        'Id',
+        'NSP_Category__c'
+    };
+        
+    /**
+* Does test data setup
+* @param N/A. 
+* @return void                          
+*/
+    @testSetup
+    private static void setupTestData(){
+        Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
+        Id PEOProjectTaskRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Project_Task__c',NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
+        // Account Creation
+        List<Account> accList = new List<Account>();
+        Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
+		oAccount.Name = 'Test Account';
+        accList.add(oAccount);
+        
+        Account oAccount1 = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
+		oAccount1.Name = 'Test Account 01';
+        accList.add(oAccount1);
+        
+        insert accList;
+        
+        //Insert ACR record
+        NSP_TestHelper.createContact(oAccount.Id, true);
+        List<String> acrFields = new List<String>{'Id','ContactId','AccountId','NSP_Community_Access__c'};
+            String query = new NSP_QueryBuilder('AccountContactRelation', acrFields)
+            .addFilter('AccountId', oAccount.Id).addLimit(1).build();
+        AccountContactRelation acrObj = Database.query(query);
+        acrObj.NSP_Community_Access__c = NSP_ServiceConstants.peoCommunityAccess;
+        UPDATE acrObj;
+        
+        pse__Region__c reg = new pse__Region__c();
+            reg.name = NSP_ServiceConstants.UnitedStatesRegion;
+            insert reg;
+        
+        Test.startTest();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        oProject.pse__Is_Template__c = true;
+        oProject.NSP_Asset_Type__c = 'Time_Attendance';
+        oProject.pse__Start_Date__c = System.today();
+        
+        pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject2.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        oProject2.pse__Is_Template__c = true;
+        oProject2.pse__Start_Date__c = System.today();
+        
+        //project creation
+        pse__Proj__c projectObj = new pse__Proj__c();
+        projectObj.RecordTypeId=peoProjectRecordType;
+        projectObj.pse__Project_Type__c = 'Implementation';
+        projectObj.pse__Project_Status__c = 'Active';
+        projectObj.Name = 'Test Delete 1';
+        projectObj.pse__Is_Active__c = true;
+        
+        pse__Proj__c bpsProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        bpsProject.RecordTypeId = bpsProjectRecordTypeId;
+        bpsProject.Templates_Used__c = NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        bpsProject.pse__Project_Status__c = 'Active';
+        projectObj.TemplateName__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        projectObj.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        bpsProject.pse__Is_Active__c = true; 
+
+        List<pse__Proj__c> listProject = new List<pse__Proj__c>();
+        listProject.add(oProject);
+        listProject.add(oProject2);
+        listProject.add(projectObj);
+        listProject.add(bpsProject);
+
+        insert listProject;
+        
+        pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask.Name = 'pTask3';
+        oProjectTask.pse__Project__c = listProject[0].Id;
+        oProjectTask.RecordTypeId = PEOProjectTaskRecordTypeId;
+        insert oProjectTask;
+        
+         // Asset Creation
+        Asset integra = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        integra.NSP_Client__c='2345';
+        integra.NSP_Company_Name__c='test company';
+        integra.recordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
+        integra.Project_Template__c = listProject[0].Id;
+        
+        Asset integra1 = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        integra1.NSP_Client__c='2345';
+        integra1.NSP_Company_Name__c='test company';
+        integra1.recordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
+        integra1.Project_Template__c = listProject[1].Id;
+        
+        Asset woAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        woAsset.NSP_Client__c='2345';
+        woAsset.NSP_Account_Status__c=NSP_ServiceConstants.AIMS_STATUS;
+        woAsset.NSP_AIMS_First_Pay_Date__c = system.today()- 91;
+        woAsset.recordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+        woAsset.accountId = oAccount.Id;
+        
+        List<Asset> listAsset = new List<Asset>();
+        listAsset.add(woAsset);
+        
+        insert listAsset;
+        
+         // Project Asset Creation
+        Project_Asset__c prjAsset = (Project_Asset__c)NSP_TestExtendedDataFactory.createSObject(new Project_Asset__c(), false);
+        prjAsset.Asset__c = listAsset[0].Id;
+        prjAsset.Project__c=listProject[0].Id;
+        
+        Project_Asset__c prjAsset1 = (Project_Asset__c)NSP_TestExtendedDataFactory.createSObject(new Project_Asset__c(), false);
+        prjAsset1.Asset__c = listAsset[0].Id;
+        prjAsset1.Project__c=listProject[0].Id;
+        
+        List<Project_Asset__c> listProjectAsset = new List<Project_Asset__c>();
+        listProjectAsset.add(prjAsset);
+        listProjectAsset.add(prjAsset1);
+        
+        insert listProjectAsset;
+        
+         // Order Creation
+        Order orderObj = (Order)NSP_TestExtendedDataFactory.createSObject(new Order(), false);
+        orderObj.NSP_Project__c = listProject[1].Id;
+        orderObj.AccountId = oAccount.id;
+        insert orderObj;
+
+        Implementation_Profile__c impProf = new Implementation_Profile__c();
+
+        impProf.NSP_Project__c = projectObj.Id;
+        impProf.NSP_Inactive__c = false;
+        database.insert(impProf);
+        //milstone creation
+        pse__Milestone__c milestoneObj = new pse__Milestone__c();
+        milestoneObj.Name = 'Test milestone delete 1';
+        milestoneObj.pse__Target_Date__c = system.today();
+        milestoneObj.pse__Project__c = projectObj.id;
+        insert milestoneObj;	
+        
+        
+        User BpaUser = new User(alias = 'jsmit', email='jsmith@insperity.com', 
+                                emailencodingkey='UTF-8', lastname='Smith', 
+                                languagelocalekey='en_US', 
+                                localesidkey='en_US', profileid = profileobj.Id, userroleid = BPArole.Id,
+                                timezonesidkey='America/Los_Angeles' ,
+                                username='insperitytestadminuser@insperity.com.testUsr');
+        system.runAs(new user(ID = UserInfo.getUserID())){
+            //inserting BPA user 
+            insert BpaUser;
+            Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+            newContact.pse__Salesforce_User__c = BpaUser.Id;
+            //Inserting New Contact
+            insert newContact;
+        }
+        Test.stopTest();
+    }
+    
+    
+    /***********************************************************************************************
+    * MethodName: updateAccountonProject
+    * Description :  Testing Project Account is updated and Sync with Child Project Task
+    * ********************************************************************************************/
+    @isTest
+    private static void updateAccountonProject(){
+        
+        pse__Project_Task__c projTaskObj = [Select id,pse__Project__c,NSP_Account_Id__c from pse__Project_Task__c WHERE pse__Project__c != NULL LIMIT 1];
+        Account oAccount = [Select Id from Account WHERE Name != null LIMIT 1];
+        pse__Proj__c accProj = new pse__Proj__c();
+        accProj.Id = projTaskObj.pse__Project__c;
+        accProj.pse__Account__c = oAccount.Id;
+        Test.startTest();
+        update accProj;
+        projTaskObj = new pse__Project_Task__c();
+        projTaskObj = [Select id,pse__Project__c,NSP_Account_Id__c from pse__Project_Task__c WHERE NSP_Account_Id__c != NULL LIMIT 1];
+        System.assertEquals(projTaskObj.NSP_Account_Id__c, oAccount.Id);
+        accProj.Name = 'Test';
+        update accProj;
+        System.assertEquals(projTaskObj.NSP_Account_Id__c, oAccount.Id);
+        Test.stopTest();
+    }
+
+    /***********************************************************************************************
+    * MethodName: updateProjectNameTest
+    * Description :  testing Project name is updated or not with account name
+    * ********************************************************************************************/
+    @isTest
+    private static void updateProjectNameWithAccountTest(){
+        //creating Project
+        pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.Templates_Used__c = 'TEMP USED';
+        project.RecordTypeId = peoProjectRecordType;
+        project.pse__Start_Date__c = Date.today();
+        test.startTest();
+        //inserting Project
+        insert project;
+        test.stopTest();
+        //then
+        String queryAcc = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS)
+                            .addFilter('Id', project.pse__Account__c).addLimit(1).build();
+        Account accountRec = Database.query(queryAcc);
+
+        String queryProj = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
+                            .addFilter('Id', project.id).addLimit(1).build();
+        pse__Proj__c updatedProj = Database.query(queryProj);
+
+        //checking the name of project other than BPS RecordType: Negative scenario
+        System.assertEquals(null + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year()+' - ' + accountRec.Name , updatedProj.Name, 'project name updated with start date and account name ');
+    }
+
+    /***********************************************************************************************
+    * MethodName: updateProjectNameWithTemplateName
+    * Description :  testing Project name updated as AccountName: Template Name 
+    * ********************************************************************************************/
+    @isTest
+    private static void updateProjectNameWithTemplateTest(){
+        
+        Id bpsProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME ,NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
+        pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.Templates_Used__c = 'TEMP USED';
+        project.RecordTypeId = bpsProjectRecordType;
+        project.pse__Start_Date__c = Date.today();
+        
+        test.startTest();
+        //inserting Project
+        insert project;
+        test.stopTest();
+        String queryAcc = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS)
+                            .addFilter('Id', project.pse__Account__c).addLimit(1).build();
+        Account accountRec = Database.query(queryAcc);
+        String queryProj = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
+                            .addFilter('Id', project.id).addLimit(1).build();
+        pse__Proj__c updatedProj = Database.query(queryProj);
+        //updating project name of BPS recordtype as AccountName: Template name
+        System.assertEquals(accountRec.Name +': '+ project.TemplateName__c , updatedProj.Name, 'project name updated account name and template name');
+        
+    }
+    /***********************************************************************************************
+    * MethodName: beforeInsertDirector
+    * Description :  test start date for PEO Billable Project Templates as today
+    * ********************************************************************************************/
+    @isTest
+    private static void updateProjDateofPEOBillableTest(){
+        //creating Project
+        pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        Id billableSerRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
+        project.Templates_Used__c = 'TEMP USED';
+        project.RecordTypeId = billableSerRecordTypeId;
+        project.pse__Project_Type__c = NSP_ServiceConstants.PROJECT_TYPE_BILLABLE;
+        
+        test.startTest();
+        //inserting Project
+        INSERT project;
+        test.stopTest();
+        //then
+        String queryProj = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
+                            .addFilter('Id', project.id).addLimit(1).build();
+        pse__Proj__c updatedProj = Database.query(queryProj);
+
+        //Start date of the record type as PEO Billable and project type is Service Billable
+        System.assertEquals(NSP_ServiceConstants.PROJECT_TYPE_BILLABLE, updatedProj.pse__Project_Type__c);
+    }
+    /***********************************************************************************************
+    * MethodName: updateProjectNameTest
+    * Description :  testing Project name is updated or not without account name 
+    * ********************************************************************************************/
+    @isTest
+    private static void updateProjectNameWithoutAccountTest(){
+        
+        //crating Project
+        pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.Templates_Used__c = 'TEMP USED';
+        project.RecordTypeId = peoProjectRecordType;
+        project.pse__Start_Date__c = Date.today();
+        project.pse__Account__c = null;
+
+        test.startTest();
+        //inserting Project
+        insert project;
+        test.stopTest();
+        //then
+        String queryProj = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
+                            .addFilter('Id', project.id).addLimit(1).build();
+        pse__Proj__c updatedProj = Database.query(queryProj);
+
+        System.assertEquals(null + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year() , updatedProj.Name, 'project name updated with start date');
+
+    }
+    
+    /***********************************************************************************************
+* MethodName: updateProjectOwnerTest
+* Description : This Method will update Project Manager as the Owner of the Project for Automated Projects
+* ********************************************************************************************/
+    @isTest
+    private static void updateProjectOwnerTest(){
+        Account oAccount = [Select id from Account WHERE Name != NULL LIMIT 1];
+        //creating contact
+        Contact oContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        oContact.AccountId = oAccount.Id;
+        oContact.pse__Salesforce_User__c = UserInfo.getUserId();
+        oContact.NSP_Work_email__c = 'abctestexamplyxyz@test.com.abc';
+        oContact.pse__Is_Resource__c = true;
+        oContact.pse__Is_Resource_Active__c = true;
+        //inserting contact
+        insert oContact;
+        //creating Project
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Start_Date__c = System.Today();
+        oProject.pse__Account__c= oAccount.Id;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+        //inserting Project
+        insert oProject;
+        oProject.pse__Project_Manager__c = oContact.Id;
+        Test.startTest();
+        //Updating Project
+        update oProject;
+        Test.stopTest();
+        pse__Proj__c project = [Select Id , OwnerId from pse__Proj__c WHERE pse__Project_Manager__c =:oContact.Id ];
+        System.assertEquals(project.OwnerId,oContact.pse__Salesforce_User__c);
+    }
+    
+    /***********************************************************************************************
+    * MethodName: createImplementationProfileTest
+    * Description : This Method will update Project Manager as the Owner of the Project for Automated Projects
+    * ********************************************************************************************/
+    @isTest
+    private static void createImplementationProfileTest(){
+        Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Start_Date__c = System.Today();
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+        oProject.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType ;
+        oProject.recordTypeId = peoProjectRecordTypeId;
+        Test.startTest();
+        //inserting Project
+        insert oProject;
+        Test.stopTest();
+        //getting Implimentation Profile recods
+        List<Implementation_Profile__c> impProfile = [Select Id FROM Implementation_Profile__c WHERE NSP_Project__c = :oProject.Id];
+        System.assertEquals(1, impProfile.size());
+    }
+    /***********************************************************************************************
+    * MethodName: createProjTeamRoleTest
+    * Description : This Method to create the Project Team record for MM and FSO Project
+    * ********************************************************************************************/
+    @isTest
+    private static void createProjTeamRoleTest(){
+        //creating Project
+		Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+		oProject.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+        oProject.RecordTypeId = peoProjectRecordTypeId;
+
+		pse__Proj__c oProject1 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+		oProject1.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
+        oProject1.TemplateName__c = label.FSOImplementationProject;
+        oProject1.RecordTypeId = peoProjectRecordTypeId;
+        Test.startTest();
+
+        //Inserting Project
+        insert new List<pse__Proj__c>{ oProject, oProject1 };
+
+        //getting List of Project team records
+        List<NSP_Project_Team__c> projectTeam = [Select Id , NSP_Role__c, NSP_Assignee__c FROM NSP_Project_Team__c WHERE NSP_Project__c=: oProject.Id];
+		System.assert(projectTeam.size()>0);
+        Test.stopTest();
+    }
+    
+	/***********************************************************************************************
+    * MethodName: onCancelUpdateImplProfile
+    * Description : The  
+    * ********************************************************************************************/
+    @isTest
+    private static void onCancelUpdateImplProfileTest(){
+        //GIVEN
+        pse__Proj__c proj = [SELECT Id,pse__Project_Status__c FROM pse__Proj__c WHERE pse__Project_Status__c=:'Active'  LIMIT 1];
+        //WHEN
+        proj.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
+        proj.NSP_Cancelled_Reason__c = 'Client Terminated';
+        Test.startTest();
+        update proj;
+        //THEN
+        Implementation_Profile__c impProfile = [SELECT Id, NSP_Inactive__c FROM Implementation_Profile__c WHERE NSP_Project__c =:proj.Id];
+        system.assert(true, impProfile.NSP_Inactive__c);
+        Test.stopTest();
+    }   
+    
+	/***********************************************************************************************
+    * MethodName: updateAssetProductSegmentTest
+    * Description : Unit Test for updateAssetProductSegment 
+    * ********************************************************************************************/
+    @isTest
+    private static void updateAssetProductSegmentTest(){
+  		pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        insert oProject;
+      
+        Asset integra = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        integra.NSP_Client__c='2345';
+        integra.NSP_Company_Name__c='test company';
+        integra.recordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
+        insert integra;
+        
+        Project_Asset__c prjAsset = (Project_Asset__c)NSP_TestExtendedDataFactory.createSObject(new Project_Asset__c(), false);
+        prjAsset.Asset__c = integra.Id;
+        prjAsset.Project__c=oProject.Id;
+        insert prjAsset;
+        
+        oProject.NSP_Client_Size__c = 'Middle Market Enterprise (750 + EEs)';
+       
+        Test.startTest();
+        	update oProject;
+        Test.stopTest();
+        Asset ast = [Select Id , NSP_Product_Segment__c FROM Asset WHERE Id =: prjAsset.Asset__c];
+        System.assertEquals(ast.NSP_Product_Segment__c, oProject.NSP_Client_Size__c);
+    }  
+    
+	/***********************************************************************************************
+    * MethodName: updateAssetProductSegmentException
+    * Description : Unit Test for updateAssetProductSegment 
+    * ********************************************************************************************/
+    @isTest
+    private static void updateAssetProductSegmentException(){
+  		pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        insert oProject;
+
+        Asset integra = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        integra.NSP_Client__c='2345';
+        integra.NSP_Company_Name__c='test company';
+        integra.recordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
+        insert integra;
+        
+        Project_Asset__c prjAsset = (Project_Asset__c)NSP_TestExtendedDataFactory.createSObject(new Project_Asset__c(), false);
+        prjAsset.Asset__c = integra.Id;
+        prjAsset.Project__c=oProject.Id;
+        insert prjAsset;
+        
+        oProject.NSP_Client_Size__c = 'Middle Market Enterprise (750 + EEs)';
+        
+        Test.startTest();
+		update oProject;
+        Asset ast = [Select Id , NSP_Product_Segment__c FROM Asset WHERE Id =: prjAsset.Asset__c];
+        System.assertEquals(ast.NSP_Product_Segment__c, oProject.NSP_Client_Size__c);
+        Test.stopTest();
+    }
+    
+    /***********************************************************************************************
+    * MethodName: updateRelatedAssetTest
+    * Description : Unit Test for realtedAssetupdate 
+    * ********************************************************************************************/
+    @isTest
+    private static void updateRelatedAssetTest(){  
+       
+        List<pse__Proj__c> listProject = new List<pse__Proj__c>();
+        // Updating Project for Both Positive and negative scenerio i.e. One have Order and another don't have Order
+        for(pse__Proj__c projObj : [SELECT id,TemplateName__c FROM pse__Proj__c WHERE TemplateName__c != null]){
+            projObj.Invoice_Ready__c = true;
+            projObj.Go_Live_Date__c  = System.today();
+            projObj.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCLOSED;
+            projObj.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+            listProject.add(projObj);
+         }
+                
+        Test.startTest();
+        update listProject;
+        
+        List<Asset> listofAsset = [SELECT id,Status FROM Asset WHERE Id != null];
+        pse__Proj__c projObj = [SELECT id,pse__Project_Status__c FROM pse__Proj__c WHERE ID != null LIMIT 1];
+        projObj.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSACTIVE;
+        update projObj;
+        projObj.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCLOSED;
+        System.assertEquals(projObj.pse__Project_Status__c, NSP_ServiceConstants.PROJECTSTATUSCLOSED);
+        update projObj;
+        Test.stopTest();
+    } 
+
+    /***********************************************************************************************
+    * MethodName: createWXProjectTest
+    * Description : Unit Test for WX Carrier Connection Project creation
+    * ********************************************************************************************/
+    @isTest
+    private static void createWXProjectTest(){  
+      	pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c='iSolved Benefits';
+        Test.startTest();
+        	insert oProject; 
+       	Test.stopTest();
+        pse__Proj__c wxPrj = [Select Id  ,TemplateName__c , pse__Parent_Project__c FROM pse__Proj__c WHERE  pse__Parent_Project__c =:oProject.Id  ];
+        system.assertEquals(wxPrj.TemplateName__c, NSP_ServiceConstants.WxCarrierConnectionProject);
+    }
+
+        /***********************************************************************************************
+    * MethodName: createWXProjectException
+    * Description :Negative Unit Test for WX Carrier Connection Project creation
+    * ********************************************************************************************/
+    @isTest
+    private static void createWXProjectException(){  
+      	pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        Test.startTest();
+            insert oProject;	
+       	Test.stopTest();
+        List<pse__Proj__c> wxPrj = [Select Id  ,TemplateName__c , pse__Parent_Project__c FROM pse__Proj__c WHERE  pse__Parent_Project__c =:oProject.Id];
+        system.assertEquals(wxPrj.Size(), 0);
+    }
+    
+    /***********************************************************************************************
+    * MethodName: createITAProjectTest
+    * Description : This Method to create PEO Case and unit test for ITA Project template
+    * Created as part of story STY-03820
+    * ********************************************************************************************/
+    @isTest
+    private static void createITAProjectTest(){ 
+        String queryAcc = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addLimit(1).build();
+        Account oAccount =Database.query(queryAcc);
+        //ITA template project insertion
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        oProject.pse__Account__c = oAccount.Id;
+        Test.startTest();
+            insert oProject;
+        //case should get created as the criteria are met and account as active asset
+        String queryCase = new NSP_QueryBuilder('Case', CASE_FIELDS).addLimit(1).build();
+        Case oCase =Database.query(queryCase);
+       	Test.stopTest();
+        //check assertion if case has category as mentioned in AC
+        system.assertEquals(oCase.NSP_Category__c, NSP_ServiceConstants.INFRASTRUCTURE);
+    }
+    
+    /***********************************************************************************************
+    * MethodName: createITAProjectTestException
+    * Description : This Method is negative scenario for STY-03820
+    * ********************************************************************************************/
+    @isTest
+    private static void createITAProjectTestException() { 
+        
+        //ITA template project insertion
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c = NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        
+        Test.startTest();
+            insert oProject;
+        //query for account where active asset is not associated
+        String queryAcc = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addLimit(1).build();
+        Account oAccount =Database.query(queryAcc);
+       	Test.stopTest();
+        //Active wo asset account id is not associated with project account id
+        system.assertEquals(oAccount.Id, oProject.pse__Account__c);
+    }
+    
+    /***********************************************************************************************
+* MethodName: createItaCqaCaseAndSendEmailTest
+* Description : This Method is used to cover createItaCqaCaseAndSendEmail
+* ********************************************************************************************/
+    @isTest
+    private static void createItaCqaCaseAndSendEmailTest(){
+        //query for Project
+        String bpsPrjQuery = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
+            					.addFilter('Templates_Used__c', NSP_ServiceConstants.ITA_IMPLEMENTATION)
+            					.addLimit(1).build();
+        pse__Proj__c bpsProject = Database.query(bpsPrjQuery);
+
+        Test.startTest();
+        bpsProject.recordTypeId = bpsProjectRecordTypeId;
+        bpsProject.TemplateName__c = NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        bpsProject.Peer_Review__c = NSP_ServiceConstants.PEER_REVIEW_SENT_TO_REVIEW;
+        Database.update(bpsProject);
+        NSP_ProjectTriggerHelper.createProjectAndProjectTasks(new Set<Id> {bpsProject.Id});
+        Test.stopTest();
+
+        // Query case to assert
+        String cseQuery = new NSP_QueryBuilder('Case', CASE_FIELDS)
+            .addFilter('Project__c', bpsProject.id).build();
+        List<Case> peerReviewCaseList = Database.query(cseQuery);
+        System.assertEquals(bpsProject.Peer_Review__c, NSP_ServiceConstants.PEER_REVIEW_SENT_TO_REVIEW);
+    }
+    
+    /***********************************************************************************************
+* MethodName: createItaCqaCaseAndSendEmailTest
+* Description : This Method is used to cover createItaCqaCaseAndSendEmail
+* ********************************************************************************************/
+    @isTest
+    private static void createItaCqaCaseNegativeTest() {  
+        //query for Project
+        String bpsPrjQuery = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS).addFilter('Templates_Used__c', NSP_ServiceConstants.ITA_IMPLEMENTATION).addLimit(1).build();
+        pse__Proj__c bpsProject = Database.query(bpsPrjQuery);
+        
+        Test.startTest();
+        bpsProject.Peer_Review__c = NSP_ServiceConstants.PEER_REVIEW_IN_PROGRESS;
+        database.update(bpsProject);
+        Test.stopTest();
+
+        // Query case to assert
+        String cseQuery = new NSP_QueryBuilder('Case', CASE_FIELDS)
+            .addFilter('Project__c', bpsProject.id).build();
+        List<Case> assertCase = Database.query(cseQuery); 
+        system.assert(assertCase.size() != 1, 'ITA CQA Case is not created');
+    }
+
+    /***********************************************************************************************
+    * MethodName: createWOWXProjectTest
+    * Description : Unit Test for WO WX Project creation
+    * ********************************************************************************************/
+    @isTest
+    private static void createWOWXProjectTest(){  
+        String queryAcc = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addLimit(1).build();
+        Account oAccount =Database.query(queryAcc);
+      	pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.WO_WX_TEMPLATE;
+        oProject.pse__Account__c = oAccount.id;
+        Test.startTest();
+        	insert oProject; 
+       	Test.stopTest();
+        system.assertEquals(oProject.TemplateName__c, NSP_ServiceConstants.WO_WX_TEMPLATE);
+    }
+    
+    /***********************************************************************************************
+    * MethodName: createWOWXProjectTest
+    * Description : Unit Test for WO WX Project creation
+    * ********************************************************************************************/
+    @isTest
+    private static void createWOWXProjectNegativeTest(){  
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.ITA_IMPLEMENTATION;
+        Test.startTest();
+        	insert oProject; 
+       	Test.stopTest();
+        system.assertNotEquals(oProject.pse__End_Date__c, System.today().addDays(30));
+    }
+    
+    /******************************************************************
+    * MethodName: testProjectSharing
+    * Description : Test Method to check project sharing 
+    * ****************************************************************/
+    //positive
+    @isTest
+    static void testProjectSharing(){
+        List<String> accFields = new List<String>{'Id',NAME};
+        String accQuery = new NSP_QueryBuilder('Account', accFields)
+            .addFilter(NAME, 'Test Account').addLimit(1).build();
+        Account acc = Database.query(accQuery);
+        
+        Test.startTest();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+        oProject.RecordTypeId = peoProjectRecordType;
+        oProject.NSP_Visible_to_Client__c = true;
+        oProject.pse__Account__c = acc.Id;
+        INSERT oProject;  
+        System.assertEquals(1,[SELECT Id , ParentId , UserorGroupId 
+                               FROM pse__proj__share 
+                               WHERE ParentId =:oProject.Id  
+                               AND RowCause = :Schema.pse__proj__share.RowCause.InsperitySharing__c ].Size());
+        Test.stopTest();
+    }
+    
+    /******************************************************************
+    * MethodName: testNoProjectSharing
+    * Description : Test Method to check project not getting shared 
+    * ****************************************************************/
+    //negative
+    @isTest
+    static void testNoProjectSharing(){
+        List<String> accFields = new List<String>{'Id',NAME};
+        String accQuery = new NSP_QueryBuilder('Account', accFields)
+            .addFilter(NAME, 'Test Account').addLimit(1).build();
+        Account acc = Database.query(accQuery);
+        
+        Test.startTest();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+        oProject.RecordTypeId = peoProjectRecordType;
+        oProject.pse__Account__c = acc.Id;
+        oProject.NSP_Visible_to_Client__c = false;
+        INSERT oProject;  
+        System.assertEquals(false, oProject.NSP_Visible_to_Client__c);
+        Test.stopTest();
+    }    
+    /***********************************************************************************************
+    * MethodName: updateAccountInProjectNameTest
+    * Description :  Testing Project name is updated or not with account name when Account is 
+    * 				 gets updated on Project
+    * ********************************************************************************************/
+    @isTest
+    private static void updateAccountInProjectNameTest(){
+        
+        List<String> accFields = new List<String>{'Id',NAME};
+        String accQuery = new NSP_QueryBuilder('Account', accFields)
+            .addFilter(NAME, 'Test Account').addLimit(1).build();
+        Account acc = Database.query(accQuery);
+        
+         List<String> accFields1 = new List<String>{'Id',NAME};
+        String accQuery1 = new NSP_QueryBuilder('Account', accFields)
+            .addFilter(NAME, 'Test Account 01').addLimit(1).build();
+        Account acc1 = Database.query(accQuery);
+        
+        Contact con = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        con.FirstName = 'newRecordType';
+        con.pse__Salesforce_User__c =  userinfo.getUserId();
+        con.AccountId = acc1.Id;
+        insert con;
+        //creating Project
+        pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        project.pse__Start_Date__c = Date.today();
+        project.pse__Account__c = acc.Id;
+        INSERT project;
+       
+		test.startTest();
+        project.recordTypeId = bpsProjectRecordTypeId;
+        project.pse__Account__c = acc1.Id;
+         project.TES_HCM_Implementation_Support_Tasks__c = NSP_ServiceConstants.TES_HCM_BANK_AUDIT;
+        project.NSP_Is_Bank_Audit_Task__c = true;
+        project.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
+        project.Project_Implementer__c = userinfo.getUserId();
+        project.Project_Coordinator__c = userinfo.getUserId();
+        project.pse__End_Date__c = system.today();
+        UPDATE project;
+        test.stopTest();
+        
+        System.assertEquals(project.TemplateName__c,  NSP_ServiceConstants.HCM_PROJECT_NAME);
+    }
+    
+    /***********************************************************************************************
+    * MethodName: doNotupdateAccountInProjectNameTest
+    * Description :  Testing Project name should not get updated when othen than Account field
+    * 				 gets updated
+    * ********************************************************************************************/
+    @isTest
+    private static void doNotupdateAccountInProjectNameTest(){
+        
+        List<String> accFields = new List<String>{'Id',NAME};
+        String accQuery = new NSP_QueryBuilder('Account', accFields)
+            .addFilter(NAME, 'Test Account').addLimit(1).build();
+        Account acc = Database.query(accQuery);
+        
+        //creating Project
+        pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        project.pse__Start_Date__c = Date.today();
+        project.pse__Account__c = acc.Id;
+        INSERT project;
+
+		test.startTest();
+         project.pse__Project_Type__c = 'Service Plan';
+        project.pse__Project_Status__c = 'Complete';
+        project.NSP_Rating__c = 'Unfavorable';
+        project.TES_HCM_Implementation_Support_Tasks__c = NSP_ServiceConstants.TES_HCM_BANK_AUDIT;
+        project.NSP_Is_Bank_Audit_Task__c = true;
+        project.pse__Start_Date__c = Date.today().addDays(1);
+        UPDATE project;
+        test.stopTest();
+        
+        System.assertEquals(project.pse__Project_Status__c, 'Complete');
+    }
+}

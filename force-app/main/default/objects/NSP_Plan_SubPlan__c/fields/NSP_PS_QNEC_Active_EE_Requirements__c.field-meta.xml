@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_PS_QNEC_Active_EE_Requirements__c</fullName>
+    <externalId>false</externalId>
+    <label>PS / QNEC / Active EE Requirements</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>400 hrs</fullName>
+                <default>false</default>
+                <label>400 hrs</label>
+            </value>
+            <value>
+                <fullName>500 hrs</fullName>
+                <default>false</default>
+                <label>500 hrs</label>
+            </value>
+            <value>
+                <fullName>0 hrs</fullName>
+                <default>false</default>
+                <label>0 hrs</label>
+            </value>
+            <value>
+                <fullName>501 hrs</fullName>
+                <default>false</default>
+                <label>501 hrs</label>
+            </value>
+            <value>
+                <fullName>750 hrs</fullName>
+                <default>false</default>
+                <label>750 hrs</label>
+            </value>
+            <value>
+                <fullName>960 hrs</fullName>
+                <default>false</default>
+                <label>960 hrs</label>
+            </value>
+            <value>
+                <fullName>1,000 hrs</fullName>
+                <default>false</default>
+                <label>1,000 hrs</label>
+            </value>
+            <value>
+                <fullName>480 Hrs</fullName>
+                <default>false</default>
+                <label>480 Hrs</label>
+            </value>
+            <value>
+                <fullName>570 hrs</fullName>
+                <default>false</default>
+                <label>570 hrs</label>
+            </value>
+            <value>
+                <fullName>1 hr</fullName>
+                <default>false</default>
+                <label>1 hr</label>
+            </value>
+            <value>
+                <fullName>900</fullName>
+                <default>false</default>
+                <label>900</label>
+            </value>
+            <value>
+                <fullName>520 hrs</fullName>
+                <default>false</default>
+                <label>520 hrs</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Anticipated_Growth_Plans_details__c</fullName>
+    <description>Provide details if &quot;Yes&quot; is selected in the &quot;Does Client have Growth Plans ?&quot; field</description>
+    <externalId>false</externalId>
+    <label>Provide Anticipated Growth Plans details</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

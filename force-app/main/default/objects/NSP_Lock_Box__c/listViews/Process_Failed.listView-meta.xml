@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Process_Failed</fullName>
+    <columns>NAME</columns>
+    <columns>NSP_Invoice_Number__c</columns>
+    <columns>NSP_Invoice__c</columns>
+    <columns>NSP_Remitter_Name__c</columns>
+    <columns>NSP_Account__c</columns>
+    <columns>NSP_Invoice_Account__c</columns>
+    <columns>NSP_Check_Amount__c</columns>
+    <columns>NSP_Invoice_Amount__c</columns>
+    <columns>NSP_Match_Status__c</columns>
+    <columns>NSP_Accurate__c</columns>
+    <columns>NSP_Allocation_Amount__c</columns>
+    <columns>NSP_Ready_to_Convert__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NSP_Status__c</field>
+        <operation>equals</operation>
+        <value>Process Failed</value>
+    </filters>
+    <label>Process Failed</label>
+</ListView>

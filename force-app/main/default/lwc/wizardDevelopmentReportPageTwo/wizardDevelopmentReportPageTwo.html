@@ -1,0 +1,135 @@
+<template>
+  <div class="slds-box">
+  <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
+  <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId} onsubmit ={handleSubmit} onsuccess={handleSuccess}  onload={handleOnload}>
+  <lightning-layout>
+  <lightning-layout-item size="7">
+      <div class="slds-m-around_medium">
+      
+      <lightning-messages></lightning-messages>
+      <lightning-input-field class="slds-p-vertical_medium" data-fname="ReportName" field-name="NSP_ReportName__c"  onfocusout={handleChange} required></lightning-input-field>
+      <template if:true ={enableReportType}>
+          <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_ReportType__c" data-fname="NReportType"  onchange={handleChange} required ></lightning-input-field>
+          <div class="slds-text-color_error slds-p-vertical_medium slds-form-element NSP_ReportType__c" style="display:none">
+            STOP! Attach the document to the right
+          </div>
+          <template if:true ={otherReportType}>
+            <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Other_Report_Type__c" data-fname="OtherReportType" onchange={handleChange} required ></lightning-input-field>
+        </template>
+      </template>
+
+      <div style="display:none">
+        <lightning-input-field field-name="Name" value={reportName}></lightning-input-field>
+        <lightning-input-field class="slds-hidden" required={showReportlocation} data-fname="ReportLocation" field-name="NSP_ReportLocation__c" value={selectedReportLocationOption} ></lightning-input-field>
+        <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" value={pageNumber} >
+        </lightning-input-field> 
+        <lightning-input-field  class="slds-hidden" required field-name="NSP_AreThereAdditionalClients_subAccount__c" value={selectedAdditionalClinetOption} >
+        </lightning-input-field>
+        <lightning-input-field  class="slds-hidden" field-name="NSP_ReportTypeSelectionInfo__c" value={reportTypeSelectionInfo} >
+        </lightning-input-field>
+      </div>
+
+      <template  if:true={reportTypeOne} >
+             <lightning-formatted-text class="slds-p-vertical_medium slds-form-element__label reportTypeOne" value={reportTypeOne} linkify></lightning-formatted-text>
+          <br/>
+      </template>
+      <lightning-formatted-text style="display:none" class='slds-p-vertical_xx-small slds-form-element__label reportTypeTwo'></lightning-formatted-text>
+  
+    <div class="slds-p-vertical_medium">
+    <template if:true={showReportlocation}>
+      <div class="slds-form-element slds-form-element_horizontal">
+        <lightning-radio-group name="reportLocation" id="reportLoc"  
+          label="Report Location"
+          options={reportLocationOption.data.values}
+          value={selectedReportLocationOption}
+          onchange={handleChange}
+          required
+          type="radio">
+          </lightning-radio-group>
+        </div>
+      </template>
+    </div>
+
+    <div class="slds-p-vertical_medium">
+      <template if:true={reportPlace}>
+        <div class="slds-form-element slds-form-element_horizontal">
+
+            <label class="slds-form-element__label" for="NSP_ReportPlace__c"> <span class="slds-required" >*</span>
+              {reportPlaceLabel}
+              </label>
+          
+            <div class="slds-form-element__control">
+              <lightning-input-field  id="NSP_ReportPlace__c" field-name="NSP_ReportPlace__c" data-fname="ReportPlace" value={reportPlaceValue} variant="label-hidden" required></lightning-input-field>
+             </div>
+      </div>
+      </template>
+      </div>
+     </div>
+
+     </lightning-layout-item>
+     <lightning-layout-item size="5">
+      <!--   file upload start here -->
+      <div class="slds-align_absolute-center slds-p-around_medium" >
+          <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}></c-wizard-file-upload>
+      </div>
+      <!-- File Upload End here -->
+     </lightning-layout-item>
+     </lightning-layout>
+      <lightning-layout >
+      <lightning-layout-item size="9">
+          <div class="slds-m-horizontal_medium"> 
+              <div class="slds-form-element slds-form-element_horizontal">
+                <lightning-radio-group name="additionalClient"
+                  label="Are there additional clients/subaccounts to be included on the report ?"
+                  options={additionalClinetOption}
+                  value={selectedAdditionalClinetOption}
+                  onchange={handleChange}
+                  required
+                  type="radio">
+                </lightning-radio-group>
+              </div>
+              </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="3">
+  
+      </lightning-layout-item>
+      </lightning-layout>
+
+      <lightning-layout >
+        <lightning-layout-item size="7">
+            <div class="slds-m-around_medium"> 
+                <div class="slds-p-vertical_medium">
+                  <template if:true={additionalClient}>
+                      <lightning-input-field class="slds-p-vertical_small" field-name="NSP_ListAdditionalClients_subAccounts__c" required></lightning-input-field>
+                    </template>
+                </div>
+                </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="5">
+    
+        </lightning-layout-item>
+        </lightning-layout>
+
+     <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+      <lightning-button variant="brand" label="Previous" 
+      class="slds-m-top_small"
+      onclick={handlePrev}
+      >
+      </lightning-button>
+
+      <lightning-button
+      class="slds-m-top_small slds-m-left_small"
+      label="Save and Exit"
+      onclick={handleSave}>
+    </lightning-button>
+
+      <lightning-button
+          variant="brand" 
+          class="slds-m-top_small slds-m-left_small"
+          type="submit"
+          label="Next">
+      </lightning-button>
+  </div>
+  </lightning-record-edit-form>
+  </div>
+</template>

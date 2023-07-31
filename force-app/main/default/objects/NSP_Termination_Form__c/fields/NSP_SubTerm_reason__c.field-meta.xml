@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_SubTerm_reason__c</fullName>
+    <externalId>false</externalId>
+    <label>SubTerm reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_Term_Reason__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>5201 Dissatisfied with healthcare vendor</fullName>
+                <default>false</default>
+                <label>5201 Dissatisfied with healthcare vendor</label>
+            </value>
+            <value>
+                <fullName>5202 Dissatisfied with network of physicians</fullName>
+                <default>false</default>
+                <label>5202 Dissatisfied with network of physicians</label>
+            </value>
+            <value>
+                <fullName>5203 Dissatisfied with network of hospitals</fullName>
+                <default>false</default>
+                <label>5203 Dissatisfied with network of hospitals</label>
+            </value>
+            <value>
+                <fullName>5204 Lack of network providers</fullName>
+                <default>false</default>
+                <label>5204 Lack of network providers</label>
+            </value>
+            <value>
+                <fullName>5301 Sales unresponsive</fullName>
+                <default>false</default>
+                <label>5301 Sales unresponsive</label>
+            </value>
+            <value>
+                <fullName>5302 Luck of experience/knowledge service team</fullName>
+                <default>false</default>
+                <label>5302 Luck of experience/knowledge service team</label>
+            </value>
+            <value>
+                <fullName>5303 No Dedicated Support</fullName>
+                <default>false</default>
+                <label>5303 No Dedicated Support</label>
+            </value>
+            <value>
+                <fullName>5304 High service team turnover</fullName>
+                <default>false</default>
+                <label>5304 High service team turnover</label>
+            </value>
+            <value>
+                <fullName>5305 Lack of Industry Knowledge</fullName>
+                <default>false</default>
+                <label>5305 Lack of Industry Knowledge</label>
+            </value>
+            <value>
+                <fullName>5306 Service team unresponsive</fullName>
+                <default>false</default>
+                <label>5306 Service team unresponsive</label>
+            </value>
+            <value>
+                <fullName>5307 Contact Center</fullName>
+                <default>false</default>
+                <label>5307 Contact Center</label>
+            </value>
+            <value>
+                <fullName>5308 Online Services</fullName>
+                <default>false</default>
+                <label>5308 Online Services</label>
+            </value>
+            <value>
+                <fullName>5401 Needs not met Selected Services offered</fullName>
+                <default>false</default>
+                <label>5401 Needs not met Selected Services offered</label>
+            </value>
+            <value>
+                <fullName>5402 Selected Services not provided</fullName>
+                <default>false</default>
+                <label>5402 Selected Services not provided</label>
+            </value>
+            <value>
+                <fullName>5403 Services/products too generic</fullName>
+                <default>false</default>
+                <label>5403 Services/products too generic</label>
+            </value>
+            <value>
+                <fullName>5501 All Services not used</fullName>
+                <default>false</default>
+                <label>5501 All Services not used</label>
+            </value>
+            <value>
+                <fullName>5502 Mismatch between purchased and received</fullName>
+                <default>false</default>
+                <label>5502 Mismatch between purchased and received</label>
+            </value>
+            <value>
+                <fullName>5503 Lack of understanding in cost of service</fullName>
+                <default>false</default>
+                <label>5503 Lack of understanding in cost of service</label>
+            </value>
+            <value>
+                <fullName>5504 Cannot afford</fullName>
+                <default>false</default>
+                <label>5504 Cannot afford</label>
+            </value>
+            <value>
+                <fullName>5505 Too expensive</fullName>
+                <default>false</default>
+                <label>5505 Too expensive</label>
+            </value>
+            <value>
+                <fullName>5601 Change in ownership</fullName>
+                <default>false</default>
+                <label>5601 Change in ownership</label>
+            </value>
+            <value>
+                <fullName>5602 Acquired</fullName>
+                <default>false</default>
+                <label>5602 Acquired</label>
+            </value>
+            <value>
+                <fullName>5603 Closed/Sold Business</fullName>
+                <default>false</default>
+                <label>5603 Closed/Sold Business</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5201 Dissatisfied with healthcare vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5202 Dissatisfied with network of physicians</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5203 Dissatisfied with network of hospitals</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5204 Lack of network providers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5301 Sales unresponsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5302 Luck of experience/knowledge service team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5303 No Dedicated Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5304 High service team turnover</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5305 Lack of Industry Knowledge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5306 Service team unresponsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5307 Contact Center</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
+            <valueName>5308 Online Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5400 Dissatisfied with Service/Product Offering</controllingFieldValue>
+            <valueName>5401 Needs not met Selected Services offered</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5400 Dissatisfied with Service/Product Offering</controllingFieldValue>
+            <valueName>5402 Selected Services not provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5400 Dissatisfied with Service/Product Offering</controllingFieldValue>
+            <valueName>5403 Services/products too generic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5500 Cost</controllingFieldValue>
+            <valueName>5501 All Services not used</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5500 Cost</controllingFieldValue>
+            <valueName>5502 Mismatch between purchased and received</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5500 Cost</controllingFieldValue>
+            <valueName>5503 Lack of understanding in cost of service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5500 Cost</controllingFieldValue>
+            <valueName>5504 Cannot afford</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5500 Cost</controllingFieldValue>
+            <valueName>5505 Too expensive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5600 Internal Company Reason</controllingFieldValue>
+            <valueName>5601 Change in ownership</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5600 Internal Company Reason</controllingFieldValue>
+            <valueName>5602 Acquired</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5600 Internal Company Reason</controllingFieldValue>
+            <valueName>5603 Closed/Sold Business</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Is_Referral_Task__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>STY-03876 Created for Upsell functionality. If true than will save the Task Record as Referral Task Record Type</description>
+    <externalId>false</externalId>
+    <label>Is Referral Task</label>
+    <type>Checkbox</type>
+</CustomField>

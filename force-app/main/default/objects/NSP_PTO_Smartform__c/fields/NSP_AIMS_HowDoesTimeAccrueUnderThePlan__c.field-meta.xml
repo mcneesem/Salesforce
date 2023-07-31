@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_AIMS_HowDoesTimeAccrueUnderThePlan__c</fullName>
+    <externalId>false</externalId>
+    <label>How does time accrue under the plan?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_What_is_the_plan_year__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Calendar Year Frontload: Full benefit year amount provided on 1/1 each year</fullName>
+                <default>false</default>
+                <label>Calendar Year Frontload: Full benefit year amount provided on 1/1 each year</label>
+            </value>
+            <value>
+                <fullName>Anniversary Year Frontload: Full benefit year amount provided at the start of each employee’s anniversary year</fullName>
+                <default>false</default>
+                <label>Anniversary Year Frontload: Full benefit year amount provided at the start of each employee’s anniversary year</label>
+            </value>
+            <value>
+                <fullName>Fiscal year Frontload: Full benefit year amount provided at the start of each fiscal year</fullName>
+                <default>false</default>
+                <label>Fiscal year Frontload: Full benefit year amount provided at the start of each fiscal year</label>
+            </value>
+            <value>
+                <fullName>First of Quarter: Accrual is added on the first day of each quarter in a calendar</fullName>
+                <default>false</default>
+                <label>First of Quarter: Accrual is added on the first day of each quarter in a calendar</label>
+            </value>
+            <value>
+                <fullName>First of Month: Accrual is added on the first day of each month</fullName>
+                <default>false</default>
+                <label>First of Month: Accrual is added on the first day of each month</label>
+            </value>
+            <value>
+                <fullName>Pay Period: Accrual is added on each pay date</fullName>
+                <default>false</default>
+                <label>Pay Period: Accrual is added on each pay date</label>
+            </value>
+            <value>
+                <fullName>Hours Worked/Hours Paid: Accrual is based on actual hours worked or hours worked and hours paid.</fullName>
+                <default>false</default>
+                <label>Hours Worked/Hours Paid: Accrual is based on actual hours worked or hours worked and hours paid.</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <valueName>Calendar Year Frontload: Full benefit year amount provided on 1/1 each year</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <valueName>First of Quarter: Accrual is added on the first day of each quarter in a calendar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>First of Month: Accrual is added on the first day of each month</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>Pay Period: Accrual is added on each pay date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>Hours Worked/Hours Paid: Accrual is based on actual hours worked or hours worked and hours paid.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <valueName>Anniversary Year Frontload: Full benefit year amount provided at the start of each employee’s anniversary year</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>Fiscal year Frontload: Full benefit year amount provided at the start of each fiscal year</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Sales_Stage__c</fullName>
+    <externalId>false</externalId>
+    <label>Sales Stage</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Needs BPA Debrief</fullName>
+                <default>false</default>
+                <label>Needs BPA Debrief</label>
+            </value>
+            <value>
+                <fullName>Need BPA Intro</fullName>
+                <default>false</default>
+                <label>Need BPA Intro</label>
+            </value>
+            <value>
+                <fullName>Need 1st Call</fullName>
+                <default>false</default>
+                <label>Need 1st Call</label>
+            </value>
+            <value>
+                <fullName>1st Call Complete</fullName>
+                <default>false</default>
+                <label>1st Call Complete</label>
+            </value>
+            <value>
+                <fullName>Doc Collection(PRS/IPs)</fullName>
+                <default>false</default>
+                <label>Doc Collection(PRS/IPs)</label>
+            </value>
+            <value>
+                <fullName>Proposal Complete</fullName>
+                <default>false</default>
+                <label>Proposal Complete</label>
+            </value>
+            <value>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+                <label>On Hold</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

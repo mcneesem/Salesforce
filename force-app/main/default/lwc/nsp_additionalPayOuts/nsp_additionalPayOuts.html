@@ -1,0 +1,183 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title slds-var-p-bottom_xx-small"
+      value={label.additionalPayOuts}></lightning-formatted-text>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Do_you_pay__c}
+      label={_objectInfo.NSP_Do_you_pay__c.label}
+      class={styles.NSP_Do_you_pay__c}
+      multiple
+      field-api-name="Implementation_Profile__c.NSP_Do_you_pay__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Do_you_pay__c}
+      data-name="NSP_Do_you_pay__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Non_Discretionary_Bonus__c}
+      if:true={visibility.NSP_Non_Discretionary_Bonus__c}
+      label={label.nonDiscretionaryBonus}
+      class={styles.NSP_Non_Discretionary_Bonus__c}
+      multiple
+      field-api-name="Implementation_Profile__c.NSP_Non_Discretionary_Bonus__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Non_Discretionary_Bonus__c}
+      data-name="NSP_Non_Discretionary_Bonus__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.Non_Discretionary_Bonus_Input_frequency__c} disabled={disabledFields.Non_Discretionary_Bonus_Input_frequency__c}
+      if:true={visibility.Non_Discretionary_Bonus_Input_frequency__c}
+      field-name="Non_Discretionary_Bonus_Input_frequency__c"
+      data-name="Non_Discretionary_Bonus_Input_frequency__c"
+      class={styles.Non_Discretionary_Bonus_Input_frequency__c}
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Discretionary_Bonus__c}
+      if:true={visibility.NSP_Discretionary_Bonus__c}
+      multiple
+      label={label.discretionaryBonus}
+      class={styles.NSP_Discretionary_Bonus__c}
+      field-api-name="Implementation_Profile__c.NSP_Discretionary_Bonus__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Discretionary_Bonus__c}
+      data-name="NSP_Discretionary_Bonus__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_Discretionary_Bonus_Input_Frequency__c} disabled={disabledFields.NSP_Discretionary_Bonus_Input_Frequency__c}
+      if:true={visibility.NSP_Discretionary_Bonus_Input_Frequency__c}
+      field-name="NSP_Discretionary_Bonus_Input_Frequency__c"
+      data-name="NSP_Discretionary_Bonus_Input_Frequency__c"
+      class={styles.NSP_Discretionary_Bonus_Input_Frequency__c}
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Commission_Frequency__c}
+      if:true={visibility.NSP_Commission_Frequency__c}
+      label={_objectInfo.NSP_Commission_Frequency__c.label}
+      class={styles.NSP_Commission_Frequency__c}
+      field-api-name="Implementation_Profile__c.NSP_Commission_Frequency__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Commission_Frequency__c}
+      data-name="NSP_Commission_Frequency__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_Commission_Provide_Details__c} disabled={disabledFields.NSP_Commission_Provide_Details__c}
+      if:true={visibility.NSP_Commission_Provide_Details__c}
+      field-name="NSP_Commission_Provide_Details__c"
+      data-name="NSP_Commission_Provide_Details__c"
+      class={styles.NSP_Commission_Provide_Details__c}
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Commission_Type__c}
+      if:true={visibility.NSP_Commission_Type__c}
+      multiple
+      label={_objectInfo.NSP_Commission_Type__c.label}
+      class={styles.NSP_Commission_Type__c}
+      field-api-name="Implementation_Profile__c.NSP_Commission_Type__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Commission_Type__c}
+      data-name="NSP_Commission_Type__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <template
+      if:true={visibility.NSP_DoYouPay_Other_Provide_details__c}>
+      <div class="slds-form-element__label">
+        <lightning-formatted-text
+          class={styles.NSP_DoYouPay_Other_Provide_details__c}
+          value={label.provideDetails}
+          data-field="NSP_DoYouPay_Other_Provide_details__c">
+        </lightning-formatted-text>
+      </div>
+    <lightning-input-field value={field.NSP_DoYouPay_Other_Provide_details__c} disabled={disabledFields.NSP_DoYouPay_Other_Provide_details__c}
+        variant="label-hidden"
+      field-name="NSP_DoYouPay_Other_Provide_details__c"
+      data-name="NSP_DoYouPay_Other_Provide_details__c"
+        onchange={handleValueChange}
+        class={styles.NSP_DoYouPay_Other_Provide_details__c}>
+    </lightning-input-field>
+    </template>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Do_you_pay_non_exempt_employees__c}
+      if:true={visibility.Do_you_pay_non_exempt_employees__c}
+      label={label.NSP_DoYouPayNonExemptEmployees}
+      class={styles.Do_you_pay_non_exempt_employees__c}
+      field-api-name="Implementation_Profile__c.Do_you_pay_non_exempt_employees__c"
+      record-type-id={recordTypeId}
+      value={field.Do_you_pay_non_exempt_employees__c}
+      data-name="Do_you_pay_non_exempt_employees__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_NonDiscretionaryDiscretionaryPayCode__c}
+      if:true={visibility.NSP_NonDiscretionaryDiscretionaryPayCode__c}
+      multiple
+      label={label.NSP_NonDiscretionaryDiscretionaryPayCode}
+      class={styles.NSP_NonDiscretionaryDiscretionaryPayCode__c}
+      field-api-name="Implementation_Profile__c.NSP_NonDiscretionaryDiscretionaryPayCode__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_NonDiscretionaryDiscretionaryPayCode__c}
+      data-name="NSP_NonDiscretionaryDiscretionaryPayCode__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Any_special_pay_codes_Needed__c}
+      label={label.NSP_AnySpecialPayCodesNeeded}
+      class={styles.NSP_Any_special_pay_codes_Needed__c}
+      field-api-name="Implementation_Profile__c.NSP_Any_special_pay_codes_Needed__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Any_special_pay_codes_Needed__c}
+      data-name="NSP_Any_special_pay_codes_Needed__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_Any_special_pay_code_Provide_Details__c} disabled={disabledFields.NSP_Any_special_pay_code_Provide_Details__c}
+      if:true={visibility.NSP_Any_special_pay_code_Provide_Details__c}
+      field-name="NSP_Any_special_pay_code_Provide_Details__c"
+      data-name="NSP_Any_special_pay_code_Provide_Details__c"
+      class={styles.NSP_Any_special_pay_code_Provide_Details__c}
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Does_the_client_offer_a_Stock_Purchase__c}
+      label={label.DoesTheClientOfferStockPurchasePlan}
+      class={styles.Does_the_client_offer_a_Stock_Purchase__c}
+      field-api-name="Implementation_Profile__c.Does_the_client_offer_a_Stock_Purchase__c"
+      record-type-id={recordTypeId}
+      value={field.Does_the_client_offer_a_Stock_Purchase__c}
+      data-name="Does_the_client_offer_a_Stock_Purchase__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Does_the_client_offer_Stock_Options__c}
+      label={_objectInfo.NSP_Does_the_client_offer_Stock_Options__c.label}
+      class={styles.NSP_Does_the_client_offer_Stock_Options__c}
+      field-api-name="Implementation_Profile__c.NSP_Does_the_client_offer_Stock_Options__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Does_the_client_offer_Stock_Options__c}
+      data-name="NSP_Does_the_client_offer_Stock_Options__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+  </lightning-record-edit-form>
+</template>

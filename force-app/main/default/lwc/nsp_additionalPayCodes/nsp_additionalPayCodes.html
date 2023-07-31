@@ -1,0 +1,48 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title slds-var-p-bottom_small"
+      value={label.additionalPayCodes}>
+    </lightning-formatted-text>
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_List_all_Default_Pay_Codes_in_AIMS__c}
+      label={_objectInfo.NSP_List_all_Default_Pay_Codes_in_AIMS__c.label}
+      class={styles.NSP_List_all_Default_Pay_Codes_in_AIMS__c}
+      field-api-name="Implementation_Profile__c.NSP_List_all_Default_Pay_Codes_in_AIMS__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_List_all_Default_Pay_Codes_in_AIMS__c}
+      data-name="NSP_List_all_Default_Pay_Codes_in_AIMS__c"
+      onchange={handleValueChange}
+      multiple>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_PTO_Plan_Type__c}
+      label={_objectInfo.NSP_PTO_Plan_Type__c.label}
+      class={styles.NSP_PTO_Plan_Type__c}
+      multiple
+      field-api-name="Implementation_Profile__c.NSP_PTO_Plan_Type__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_PTO_Plan_Type__c}
+      data-name="NSP_PTO_Plan_Type__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_List_all_PTO_Codes__c}
+      label={_objectInfo.NSP_List_all_PTO_Codes__c.label}
+      class={styles.NSP_List_all_PTO_Codes__c}
+      multiple
+      field-api-name="Implementation_Profile__c.NSP_List_all_PTO_Codes__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_List_all_PTO_Codes__c}
+      data-name="NSP_List_all_PTO_Codes__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+  </lightning-record-edit-form>
+</template>

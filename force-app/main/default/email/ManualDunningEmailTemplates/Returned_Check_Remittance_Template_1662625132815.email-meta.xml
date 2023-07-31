@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Returned Check Remittance Template</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Returned Check Remittance Template</name>
+    <relatedEntityType>Case</relatedEntityType>
+    <style>none</style>
+    <subject>Returned Check Remittance</subject>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Uses_WageWorks_for_commuter_benefit_plan__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Does the client currently use WageWorks as their commuter benefit plan vendor?</inlineHelpText>
+    <label>Uses WageWorks for commuter benefit plan</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

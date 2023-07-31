@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DispatchRegion_mandatory_Resource</fullName>
+    <active>true</active>
+    <description>When Salesforce Field Resource = &quot;Resource&quot;, make Dispatch Region mandatory</description>
+    <errorConditionFormula>AND(
+$Setup.NSP_Trigger_Switch__c.NSP_UserValidations__c != True,
+	OR(ISPICKVAL( NSP_Salesforce_Field_Service__c , &apos;Resource&apos;),
+	   ISPICKVAL( NSP_Salesforce_Field_Service__c , &apos;Dispatcher + Resource&apos;)),
+ISPICKVAL( NSP_Dispatch_Region__c, &apos;&apos; )
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Dispatch_Region__c</errorDisplayField>
+    <errorMessage>Please select dispatch region</errorMessage>
+</ValidationRule>

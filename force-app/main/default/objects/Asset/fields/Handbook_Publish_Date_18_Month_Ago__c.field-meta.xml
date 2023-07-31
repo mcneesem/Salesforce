@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Handbook_Publish_Date_18_Month_Ago__c</fullName>
+    <externalId>false</externalId>
+    <formula>ADDMONTHS(NSP_Handbook_Publish_Date__c,18)&lt;= TODAY()</formula>
+    <label>Handbook Publish Date &gt;=  18 Month Ago?</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

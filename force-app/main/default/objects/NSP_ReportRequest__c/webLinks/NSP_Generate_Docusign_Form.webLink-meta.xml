@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Generate_Docusign_Form</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Print</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>https://uatna11.springcm.com/atlas/doclauncher/eos/HRSurveyConfiguration?aid=50202&amp;eos[0].Id={!NSP_ReportRequest__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=NSP_ReportRequest__c&amp;eos[0].Name={!NSP_ReportRequest__c.Id}&amp;eos[0].ScmPath=/Salesforce/Wizard Output/</url>
+</WebLink>

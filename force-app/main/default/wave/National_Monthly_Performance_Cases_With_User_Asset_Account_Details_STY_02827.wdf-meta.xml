@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveDataflow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <content xsi:nil="true"/>
+    <application>WAVE_PUBLIC_DATAFLOWS</application>
+    <dataflowType>RecipeV3</dataflowType>
+    <description>Recipe National Monthly Performance_Cases_With_User_Asset_Account_Details_STY_02_recipe</description>
+    <masterLabel>National Monthly Performance_Cases_With_User_Asset_Account_Details_STY_02_recipe</masterLabel>
+</WaveDataflow>

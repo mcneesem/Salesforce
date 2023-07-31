@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Payroll Reconciliation Answer (Period Open)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Payroll Reconciliation Answer (Period Open)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Payroll Reconciliation Answer (Period Open)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+
+Thank you for the question regarding reconciling your payroll with missing data. As you haven&apos;t yet closed your period, the first thing you&apos;ll want to do is correct any hours and punches that are missing. Once that has been completed, you&apos;ll want to run a Payroll Transfer report for all employees whose hours differ from what was paid. To run that report, navigate to Reports &gt; Generate Reports and select the Payroll - Transfer report from the drop down. On that page, you&apos;ll have the option to choose the specific employees, organization levels, or pay groups you want to include. You may also want to note that you can adjust the output format to either preview the report within your browser, or save it as a PDF file, which is what your Payroll Specialist will want.
+
+Once you have this report, you&apos;ll want to provide it to your Payroll Specialist, copied here, for payroll processing, then close the period as you normally would. There is no need to export payroll, as that has already been done.
+
+Please let us know if you need any assistance with this process, or anything else, and we&apos;ll be happy to help!
+
+
+
+Thank you,
+
+Technical Support Team
+
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

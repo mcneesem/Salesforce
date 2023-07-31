@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Accrual Plan Changes - TES</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Accrual Plan Changes - TES</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Accrual Plan Changes - TES</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand that you are interested in making changes to your accrual plan setup in your system. For us to determine the extent of the changes, we have a few items we’d appreciate your answers to: 
+  
+
+Please attach a written version of your policy from your handbook, so our technicians can verify accurate setup. 
+
+Is this a change to an existing policy, or a new policy setup? 
+
+If it is a change, which policy are we adjusting? 
+
+If it is a new setup, what do you want it to be called? 
+
+What is the effective date of the change? 
+
+Will all the employees in your system be impacted by this change, or will it only be a certain group/groups? 
+
+If it is a certain group/groups, which group/groups of employees will be impacted? 
+
+Will you need a new pay type in your system for this change? 
+
+  
+Thank you for your assistance in answering these questions. Once we receive the answers, our team will determine the next steps and be in touch as soon as they’re able. 
+ 
+
+
+Thank you,  
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

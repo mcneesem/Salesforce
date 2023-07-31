@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="BPS Project Assigned" recipientType="User" relatedToType="pse__Proj__c">
+<messaging:htmlEmailBody >
+<html>
+<body>
+Hello ,<br/>
+Please note the Project below has been created.<br/>
+A new project has been created in NetSuite and you have been assigned to it.<br/>
+Resources:<br/>
+Project Implementer :Integrations@insperity.com <br/>
+
+Click below to view the record<br/>
+<span>
+<apex:outputlink value="http://test.salesforce.com/{!relatedTo.Id}">View Record</apex:outputlink>
+</span>
+
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

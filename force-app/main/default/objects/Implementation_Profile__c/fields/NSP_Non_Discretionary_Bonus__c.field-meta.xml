@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Non_Discretionary_Bonus__c</fullName>
+    <description>Non-Discretionary Bonus: Click all that apply</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Non-Discretionary Bonus: Click all that apply</inlineHelpText>
+    <label>Non-Discretionary Bonus</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Included with regular wages</fullName>
+                <default>false</default>
+                <label>Included with regular wages</label>
+            </value>
+            <value>
+                <fullName>Paid separate from regular wages</fullName>
+                <default>false</default>
+                <label>Paid separate from regular wages</label>
+            </value>
+            <value>
+                <fullName>Bonuses are paid as a percentage of total earning (including OT)</fullName>
+                <default>false</default>
+                <label>Bonuses are paid as a percentage of total earning (including OT)</label>
+            </value>
+            <value>
+                <fullName>Taxed at the supplemental withholding rate</fullName>
+                <default>false</default>
+                <label>Taxed at the supplemental withholding rate</label>
+            </value>
+            <value>
+                <fullName>Current Bonus program in place (collect copy)</fullName>
+                <default>false</default>
+                <label>Current Bonus program in place (collect copy)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

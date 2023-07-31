@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Usage_Products_Count__c</fullName>
+    <description>Gives the Total Count of Usage based order products</description>
+    <externalId>false</externalId>
+    <label>Usage Products Count</label>
+    <summaryFilterItems>
+        <field>OrderItem.NSP_Order_Activation_Trigger__c</field>
+        <operation>equals</operation>
+        <value>First Usage Upload</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

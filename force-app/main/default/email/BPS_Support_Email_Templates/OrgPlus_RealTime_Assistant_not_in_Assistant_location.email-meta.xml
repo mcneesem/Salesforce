@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OrgPlus RealTime – Assistant not in Assistant location</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OrgPlus RealTime – Assistant not in Assistant location</name>
+    <style>freeForm</style>
+    <subject>OrgPlus RealTime – Assistant not in Assistant location</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+If there is an assistant on an organization chart that is not in the assistant location, please follow the below steps:
+
+Go into the Administration Tab.
+Click on the fields Tab.
+Click on the Hierarchy &amp; Special Function Fields.
+Click the drop down and map the IsAssistant to the (Assistant Position).
+
+
+
+Please let us know if we can be of further assistance.  Thank you for allowing Insperity to serve you.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

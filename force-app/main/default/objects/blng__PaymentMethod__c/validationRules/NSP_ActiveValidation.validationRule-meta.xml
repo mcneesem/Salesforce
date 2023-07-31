@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ActiveValidation</fullName>
+    <active>true</active>
+    <description>Only one payment method can be active for an account.</description>
+    <errorConditionFormula>NSP_Active_Validation__c</errorConditionFormula>
+    <errorDisplayField>NSP_Active_Custom__c</errorDisplayField>
+    <errorMessage>Only one payment method can be active for an account.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,2580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <choices>
+        <name>Client_Location</name>
+        <choiceText>Client Location</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Client Location</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Employee_Home</name>
+        <choiceText>Employee Home</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Employee Home</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Mid_Year_Election</name>
+        <choiceText>Mid-Year Election</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Mid-Year Election</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Mid_Year_Election_if_New_Hire_Orientation_current_client</name>
+        <choiceText>Mid-Year Election if New Hire Orientation (current client)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Mid-Year Election if New Hire Orientation (current client)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Mid_Year_Election_Revolution_to_Insperity_Plan</name>
+        <choiceText>Mid-Year Election (Revolution to Insperity Plan)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Mid-Year Election (Revolution to Insperity Plan)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>New_Client_Orientation</name>
+        <choiceText>New Client Orientation</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>New Client Orientation</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>New_Hire_Orientation</name>
+        <choiceText>New Hire Orientation</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>New Hire Orientation</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>New_Hire_Orientation_current_client</name>
+        <choiceText>New Hire Orientation (current client)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>New Hire Orientation (current client)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>On_Site</name>
+        <choiceText>On-Site</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>On-Site</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PDF</name>
+        <choiceText>PDF</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PDF</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PDF_and_Shipped</name>
+        <choiceText>PDF and Shipped</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PDF and Shipped</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Shipped</name>
+        <choiceText>Shipped</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Shipped</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Virtual</name>
+        <choiceText>Virtual</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Virtual</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>X1</name>
+        <choiceText>1</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>1</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>X2</name>
+        <choiceText>2</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>2</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>X3</name>
+        <choiceText>3</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>3</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>X4</name>
+        <choiceText>4</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>4</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <collectionProcessors>
+        <name>Sort_OMRs_by_date_and_time_1</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Sort OMRs by date and time 1</label>
+        <locationX>1139</locationX>
+        <locationY>1862</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO</collectionReference>
+        <connector>
+            <targetReference>Select_1st_Employee_Orientation_Meeting</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Date_Valid__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Start_Time_Number__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
+    <collectionProcessors>
+        <name>Sort_OMRs_by_date_and_time_2</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Sort OMRs by date and time 2</label>
+        <locationX>908</locationX>
+        <locationY>2726</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</collectionReference>
+        <connector>
+            <targetReference>Select_2nd_Employee_Orientation_Meeting</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Date_Valid__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Start_Time_Number__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
+    <collectionProcessors>
+        <name>Sort_OMRs_by_date_and_time_3</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Sort OMRs by date and time 3</label>
+        <locationX>710</locationX>
+        <locationY>3266</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</collectionReference>
+        <connector>
+            <targetReference>Select_3rd_Employee_Orientation_Meeting</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Date_Valid__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Start_Time_Number__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
+    <collectionProcessors>
+        <name>Sort_OMRs_by_date_and_time_4</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Sort OMRs by date and time 4</label>
+        <locationX>578</locationX>
+        <locationY>3806</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_4</collectionReference>
+        <connector>
+            <targetReference>Select_4th_Employee_Orientation_Meeting</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Date_Valid__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Start_Time_Number__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
+    <decisions>
+        <name>Does_Active_WO_Asset_exist_EOM</name>
+        <label>Does Active WO Asset exist? EOM</label>
+        <locationX>388</locationX>
+        <locationY>1322</locationY>
+        <defaultConnector>
+            <targetReference>Enter_meeting_type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Active_WO_Asset_and_No_OMR_Task_EOM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Retrieve_Related_Asset.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Retrieve_Related_EOM_Task.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_because_no_Active_WO_Asset</targetReference>
+            </connector>
+            <label>No Active WO Asset and No OMR Task EOM</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_new_client_orientation_already_been_requested</name>
+        <label>Has new client orientation already been requested?</label>
+        <locationX>726</locationX>
+        <locationY>1538</locationY>
+        <defaultConnector>
+            <targetReference>Employee_Orientation_Meeting_Type_Start_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Already_requested</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Retrieve_Related_EOM_Task.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Retrieve_Related_EOM_Task.Subject</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>New Client Orientation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Meeting_Type_initial_screen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>New_Client_Orientation</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_client_orientation_has_already_been_requested</targetReference>
+            </connector>
+            <label>Already requested and user is requesting NCO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>More_than_1_requested_EOM</name>
+        <label>More than 1 requested EOM?</label>
+        <locationX>1139</locationX>
+        <locationY>2510</locationY>
+        <defaultConnector>
+            <targetReference>Create_OMR_Task_1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Greater_than_1_EOM_Requested</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>X1</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</targetReference>
+            </connector>
+            <label>Greater than 1 EOM Requested</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>More_than_2_requested_EOM</name>
+        <label>More than 2 requested EOM?</label>
+        <locationX>908</locationX>
+        <locationY>3050</locationY>
+        <defaultConnector>
+            <targetReference>Create_OMR_Task_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Greater_than_2_EOM_Requested</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>X1</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>X2</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</targetReference>
+            </connector>
+            <label>Greater than 2 EOM Requested</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>More_than_3_requested_EOM</name>
+        <label>More than 3 requested EOM?</label>
+        <locationX>710</locationX>
+        <locationY>3590</locationY>
+        <defaultConnector>
+            <targetReference>Create_OMR_Task_3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Greater_than_3_EOM_Requested</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>X1</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>X2</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>X3</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_4</targetReference>
+            </connector>
+            <label>Greater than 3 EOM Requested</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>decrement_omr_1</name>
+        <dataType>Number</dataType>
+        <expression>{!select_a_time_block_1.firstSelectedRow.Available_Reps__c} - 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>decrement_omr_2</name>
+        <dataType>Number</dataType>
+        <expression>{!select_a_time_block_2.firstSelectedRow.Available_Reps__c} - 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>decrement_omr_3</name>
+        <dataType>Number</dataType>
+        <expression>{!select_a_time_block_3.firstSelectedRow.Available_Reps__c} - 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>decrement_omr_4</name>
+        <dataType>Number</dataType>
+        <expression>{!select_a_time_block_4.firstSelectedRow.Available_Reps__c} - 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>eecount_formula</name>
+        <dataType>Number</dataType>
+        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),{!Retrieve_Checklist_from_Open_Opportunity.NSP_Number_of_Employees__c}, IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),{!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Number_of_Employees__c},null))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>num_eom_requested_number_format</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!Number_of_Employee_Orientation_Meetings_Required}, &quot;1&quot;, 1, &quot;2&quot;, 2, &quot;3&quot;, 3, &quot;4&quot;, 4, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>OMR_task_subject</name>
+        <dataType>String</dataType>
+        <expression>{!Meeting_Type_initial_screen} + &quot; Request | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
+    </formulas>
+    <formulas>
+        <name>SKO_date_plus_15</name>
+        <dataType>Date</dataType>
+        <expression>{!SKO_Meeting_Date} + 15</expression>
+    </formulas>
+    <formulas>
+        <name>SKO_date_plus_3</name>
+        <dataType>Date</dataType>
+        <expression>{!SKO_Meeting_Date} + 3</expression>
+    </formulas>
+    <interviewLabel>Request Employee Orientation Meeting {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>Request Employee Orientation Meeting</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_OMR_Task_1</name>
+        <label>Create OMR Task 1</label>
+        <locationX>1370</locationX>
+        <locationY>2618</locationY>
+        <connector>
+            <targetReference>Stamp_Account_with_1st_Selected_Orientation_OMR_Record</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>task_description_1meeting</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Number_Attending__c</field>
+            <value>
+                <elementReference>num_eom_requested_number_format</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>populate_notes_field_on_task</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Onboarding_Meeting_Request_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>OMR_task_subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Employee Orientation Meeting Request</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_OMR_Task_2</name>
+        <label>Create OMR Task 2</label>
+        <locationX>1106</locationX>
+        <locationY>3158</locationY>
+        <connector>
+            <targetReference>Stamp_Account_with_2nd_Selected_Orientation_OMR_Record</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>task_description_2meeting</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Number_Attending__c</field>
+            <value>
+                <elementReference>num_eom_requested_number_format</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>populate_notes_field_on_task</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Onboarding_Meeting_Request_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>OMR_task_subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Employee Orientation Meeting Request</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_OMR_Task_3</name>
+        <label>Create OMR Task 3</label>
+        <locationX>842</locationX>
+        <locationY>3698</locationY>
+        <connector>
+            <targetReference>Stamp_Account_with_3rd_Selected_Orientation_OMR_Record</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>task_description_3meeting</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Number_Attending__c</field>
+            <value>
+                <elementReference>num_eom_requested_number_format</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>populate_notes_field_on_task</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Onboarding_Meeting_Request_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>OMR_task_subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Employee Orientation Meeting Request</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_OMR_Task_4</name>
+        <label>Create OMR Task 4</label>
+        <locationX>578</locationX>
+        <locationY>4130</locationY>
+        <connector>
+            <targetReference>Stamp_Account_with_4th_Selected_Orientation_OMR_Record</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>task_description_4meeting</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Number_Attending__c</field>
+            <value>
+                <elementReference>num_eom_requested_number_format</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>populate_notes_field_on_task</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Onboarding_Meeting_Request_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>OMR_task_subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Employee Orientation Meeting Request</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_entity_definition_of_account</name>
+        <label>Get entity definition of account</label>
+        <locationX>1139</locationX>
+        <locationY>2186</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_field_definition_of_sales_office_on_account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EntityDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_field_definition_of_sales_office_on_account</name>
+        <label>Get field definition of sales office on account</label>
+        <locationX>1139</locationX>
+        <locationY>2294</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QualifiedApiName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Sales_Office__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EntityDefinitionId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_entity_definition_of_account.DurableId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>FieldDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Dates_in_Time_Parameters_After_SKO</name>
+        <label>Get OMR Dates in Time Parameters After SKO</label>
+        <locationX>1139</locationX>
+        <locationY>1754</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sort_OMRs_by_date_and_time_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_3</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_15</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Available_Reps__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Meeting_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employee Orientation Meeting</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Onboarding_Meeting_Request__c</object>
+        <sortField>Date_Valid__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</name>
+        <label>Get OMR Dates in Time Parameters After SKO 2</label>
+        <locationX>908</locationX>
+        <locationY>2618</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sort_OMRs_by_date_and_time_2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_3</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_15</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Available_Reps__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Meeting_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employee Orientation Meeting</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Onboarding_Meeting_Request__c</object>
+        <sortField>Date_Valid__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</name>
+        <label>Get OMR Dates in Time Parameters After SKO 3</label>
+        <locationX>710</locationX>
+        <locationY>3158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sort_OMRs_by_date_and_time_3</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_3</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_15</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Available_Reps__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Meeting_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employee Orientation Meeting</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Onboarding_Meeting_Request__c</object>
+        <sortField>Date_Valid__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Dates_in_Time_Parameters_After_SKO_4</name>
+        <label>Get OMR Dates in Time Parameters After SKO 4</label>
+        <locationX>578</locationX>
+        <locationY>3698</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sort_OMRs_by_date_and_time_4</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_3</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>SKO_date_plus_15</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Available_Reps__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Meeting_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employee Orientation Meeting</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Onboarding_Meeting_Request__c</object>
+        <sortField>Date_Valid__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Task_Record_Type_ID</name>
+        <label>Get OMR Task Record Type ID</label>
+        <locationX>388</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Retrieve_Related_EOM_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Orientation_Meeting_Request</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Onboarding_Meeting_Request_Queue</name>
+        <label>Get Onboarding Meeting Request Queue</label>
+        <locationX>388</locationX>
+        <locationY>1214</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_Active_WO_Asset_exist_EOM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Onboarding_Meeting_Request</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_picklistvalueinfo_of_sales_office_on_account</name>
+        <label>Get picklistvalueinfo of sales office on account</label>
+        <locationX>1139</locationX>
+        <locationY>2402</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>More_than_1_requested_EOM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityParticleId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_field_definition_of_sales_office_on_account.DurableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.NSP_Sales_Office__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PicklistValueInfo</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_STP_Checklist_RT</name>
+        <label>Get STP Checklist RT</label>
+        <locationX>388</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Retrieve_Most_Recent_Open_Opportunity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Sold_to_Paid_Checklist</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Checklist__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_WO_Asset_RT</name>
+        <label>Get WO Asset RT</label>
+        <locationX>388</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Retrieve_Related_Asset</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Asset</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_Checklist_from_Open_Opportunity</name>
+        <label>Retrieve Checklist from Open Opportunity</label>
+        <locationX>388</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Retrieve_Most_Recent_Closed_Won_Opportunity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_Most_Recent_Open_Opportunity.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_STP_Checklist_RT.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Checklist__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_Closed_Won_Opportunity_Checklist</name>
+        <label>Retrieve Closed Won Opportunity Checklist</label>
+        <locationX>388</locationX>
+        <locationY>890</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_OMR_Task_Record_Type_ID</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_Most_Recent_Closed_Won_Opportunity.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_STP_Checklist_RT.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Checklist__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_Most_Recent_Closed_Won_Opportunity</name>
+        <label>Retrieve Most Recent Closed Won Opportunity</label>
+        <locationX>388</locationX>
+        <locationY>782</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Retrieve_Closed_Won_Opportunity_Checklist</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_Most_Recent_Open_Opportunity</name>
+        <label>Retrieve Most Recent Open Opportunity</label>
+        <locationX>388</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Retrieve_Checklist_from_Open_Opportunity</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_Related_Asset</name>
+        <label>Retrieve Related Asset</label>
+        <locationX>388</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_STP_Checklist_RT</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_WO_Asset_RT.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Asset</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_Related_EOM_Task</name>
+        <label>Retrieve Related EOM Task</label>
+        <locationX>388</locationX>
+        <locationY>1106</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Onboarding_Meeting_Request_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employee Orientation Meeting Request</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Retrieve_triggering_account_record</name>
+        <label>Retrieve triggering account record</label>
+        <locationX>388</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_WO_Asset_RT</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Decrement_1st_Selected_OMR_Record</name>
+        <label>Decrement 1st Selected OMR Record</label>
+        <locationX>1139</locationX>
+        <locationY>2078</locationY>
+        <connector>
+            <targetReference>Get_entity_definition_of_account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>select_a_time_block_1.firstSelectedRow.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Available_Reps__c</field>
+            <value>
+                <elementReference>decrement_omr_1</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Meeting_Request__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Decrement_2nd_Selected_OMR_Record</name>
+        <label>Decrement 2nd Selected OMR Record</label>
+        <locationX>908</locationX>
+        <locationY>2942</locationY>
+        <connector>
+            <targetReference>More_than_2_requested_EOM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>select_a_time_block_2.firstSelectedRow.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Available_Reps__c</field>
+            <value>
+                <elementReference>decrement_omr_2</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Meeting_Request__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Decrement_3rd_Selected_OMR_Record</name>
+        <label>Decrement 3rd Selected OMR Record</label>
+        <locationX>710</locationX>
+        <locationY>3482</locationY>
+        <connector>
+            <targetReference>More_than_3_requested_EOM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>select_a_time_block_3.firstSelectedRow.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Available_Reps__c</field>
+            <value>
+                <elementReference>decrement_omr_3</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Meeting_Request__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Decrement_4th_Selected_OMR_Record</name>
+        <label>Decrement 4th Selected OMR Record</label>
+        <locationX>578</locationX>
+        <locationY>4022</locationY>
+        <connector>
+            <targetReference>Create_OMR_Task_4</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>select_a_time_block_4.firstSelectedRow.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Available_Reps__c</field>
+            <value>
+                <elementReference>decrement_omr_4</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Meeting_Request__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Stamp_Account_with_1st_Selected_Orientation_OMR_Record</name>
+        <label>Stamp Account with 1st Selected Orientation OMR Record</label>
+        <locationX>1370</locationX>
+        <locationY>2726</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id__c</field>
+            <value>
+                <elementReference>select_a_time_block_1.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Stamp_Account_with_2nd_Selected_Orientation_OMR_Record</name>
+        <label>Stamp Account with 2nd Selected Orientation OMR Record</label>
+        <locationX>1106</locationX>
+        <locationY>3266</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id_2__c</field>
+            <value>
+                <elementReference>select_a_time_block_2.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id__c</field>
+            <value>
+                <elementReference>select_a_time_block_1.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Stamp_Account_with_3rd_Selected_Orientation_OMR_Record</name>
+        <label>Stamp Account with 3rd Selected Orientation OMR Record</label>
+        <locationX>842</locationX>
+        <locationY>3806</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id_2__c</field>
+            <value>
+                <elementReference>select_a_time_block_2.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id_3__c</field>
+            <value>
+                <elementReference>select_a_time_block_3.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id__c</field>
+            <value>
+                <elementReference>select_a_time_block_1.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Stamp_Account_with_4th_Selected_Orientation_OMR_Record</name>
+        <label>Stamp Account with 4th Selected Orientation OMR Record</label>
+        <locationX>578</locationX>
+        <locationY>4238</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id_2__c</field>
+            <value>
+                <elementReference>select_a_time_block_2.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id_3__c</field>
+            <value>
+                <elementReference>select_a_time_block_3.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id_4__c</field>
+            <value>
+                <elementReference>select_a_time_block_4.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Employee_Orientation_OMR_Id__c</field>
+            <value>
+                <elementReference>select_a_time_block_1.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <screens>
+        <name>Employee_Orientation_Meeting_Type_Start_Screen</name>
+        <label>Employee Orientation Meeting Type Start Screen</label>
+        <locationX>1139</locationX>
+        <locationY>1646</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_OMR_Dates_in_Time_Parameters_After_SKO</targetReference>
+        </connector>
+        <fields>
+            <name>SKO_Meeting_Date</name>
+            <dataType>Date</dataType>
+            <fieldText>Client Transition Meeting Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;If the meeting is New Hire Orientation or Mid-Year Election, use today&apos;s date.&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Number_of_Employee_Orientation_Meetings_Required</name>
+            <choiceReferences>X1</choiceReferences>
+            <choiceReferences>X2</choiceReferences>
+            <choiceReferences>X3</choiceReferences>
+            <choiceReferences>X4</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Number of Employee Orientation Meetings Required</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Employee_Orientation_Meeting_Type_Start_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Employee_Orientation_Meeting_Type_Start_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Account_EOM</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Account:&lt;/strong&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt; {!Retrieve_triggering_account_record.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>Asset_EOM</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Client Number:&lt;/strong&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt; {!Retrieve_Related_Asset.NSP_Client__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>EE_Count_eom</name>
+                    <dataType>Number</dataType>
+                    <defaultValue>
+                        <elementReference>eecount_formula</elementReference>
+                    </defaultValue>
+                    <fieldText>EE Count</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>OSS_Name_eom</name>
+                    <dataType>String</dataType>
+                    <fieldText>OSS Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>OSS_Phone_EOM</name>
+                    <extensionName>flowruntime:phone</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>OSS Phone</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>placeholder</name>
+                        <value>
+                            <stringValue>(xxx) xxx-xxxx</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>readonly</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>OSS_Email_EOM</name>
+                    <extensionName>flowruntime:email</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>OSS Email</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>Translator_Needed_for_OT_EOM</name>
+                    <choiceReferences>Yes</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Translator Needed for OT?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Language_s_Needed_EOM</name>
+                    <dataType>String</dataType>
+                    <fieldText>Language(s) Needed?</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Translator_Needed_for_OT_EOM</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Yes</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>How_would_the_Client_like_the_OT_Materials_Delivered</name>
+                    <choiceReferences>PDF</choiceReferences>
+                    <choiceReferences>Shipped</choiceReferences>
+                    <choiceReferences>PDF_and_Shipped</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>How would the Client like the OT Materials Delivered?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Where_do_we_Ship_the_Materials</name>
+                    <choiceReferences>Client_Location</choiceReferences>
+                    <choiceReferences>Employee_Home</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Where do we Ship the Materials?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>How_would_the_Client_like_the_OT_Materials_Delivered</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Shipped</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>How_would_the_Client_like_the_OT_Materials_Delivered</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>PDF_and_Shipped</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Client_Contact</name>
+                    <dataType>String</dataType>
+                    <fieldText>Client Contact</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Where_do_we_Ship_the_Materials</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Client_Location</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Client_Address</name>
+                    <fieldText>Client Address</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Where_do_we_Ship_the_Materials</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Client_Location</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Special_Instructions</name>
+                    <fieldText>Special Instructions</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>SKO_Meeting_Date</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Number_of_Employee_Orientation_Meetings_Required</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Enter_meeting_type</name>
+        <label>Enter meeting type</label>
+        <locationX>726</locationX>
+        <locationY>1430</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Has_new_client_orientation_already_been_requested</targetReference>
+        </connector>
+        <fields>
+            <name>Meeting_Type_initial_screen</name>
+            <choiceReferences>New_Client_Orientation</choiceReferences>
+            <choiceReferences>New_Hire_Orientation_current_client</choiceReferences>
+            <choiceReferences>Mid_Year_Election_Revolution_to_Insperity_Plan</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Meeting Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_because_no_Active_WO_Asset</name>
+        <label>Error because no Active WO Asset</label>
+        <locationX>50</locationX>
+        <locationY>1430</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>error_message_no_active_WO_asset</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(244, 7, 7); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Employee Orientation Meeting cannot be requested until a WO Asset is created for Account ({!Retrieve_triggering_account_record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>New_client_orientation_has_already_been_requested</name>
+        <label>New client orientation has already been requested</label>
+        <locationX>314</locationX>
+        <locationY>1646</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Copy_1_of_error_message_no_active_WO_asset</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(244, 4, 4);&quot;&gt;New Client Orientation Meeting has already been requested for Account &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(244, 7, 7);&quot;&gt;({!Retrieve_triggering_account_record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Select_1st_Employee_Orientation_Meeting</name>
+        <label>Select 1st Employee Orientation Meeting</label>
+        <locationX>1139</locationX>
+        <locationY>1970</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decrement_1st_Selected_OMR_Record</targetReference>
+        </connector>
+        <fields>
+            <name>eom_block_1</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #1:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;font-size: 14px; color: rgb(240, 5, 5);&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>select_a_time_block_1</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Onboarding_Meeting_Request__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Select a Time Block</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Get_OMR_Dates_in_Time_Parameters_After_SKO</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-1f37&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-453a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-5e98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-fa41&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Preferred_Meeting_Time_within_Selected_Time_Block_1</name>
+            <dataType>String</dataType>
+            <fieldText>Preferred Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Meeting_Participant_Count</name>
+            <dataType>Number</dataType>
+            <fieldText>Meeting Participant Count</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>Meeting_Type</name>
+            <choiceReferences>Virtual</choiceReferences>
+            <choiceReferences>On_Site</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Meeting Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Meeting_Participant_Count</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>50.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Select_2nd_Employee_Orientation_Meeting</name>
+        <label>Select 2nd Employee Orientation Meeting</label>
+        <locationX>908</locationX>
+        <locationY>2834</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decrement_2nd_Selected_OMR_Record</targetReference>
+        </connector>
+        <fields>
+            <name>eom_block_2</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #2:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;font-size: 14px; color: rgb(240, 5, 5);&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>select_a_time_block_2</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Onboarding_Meeting_Request__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Select a Time Block</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-1f37&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-453a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-5e98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-fa41&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Preferred_Meeting_Time_within_Selected_Time_Block_2</name>
+            <dataType>String</dataType>
+            <fieldText>Preferred Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Meeting_Participant_Count_2</name>
+            <dataType>Number</dataType>
+            <fieldText>Meeting Participant Count</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>Meeting_Type_2</name>
+            <choiceReferences>Virtual</choiceReferences>
+            <choiceReferences>On_Site</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Meeting Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Meeting_Participant_Count_2</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>50.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Select_3rd_Employee_Orientation_Meeting</name>
+        <label>Select 3rd Employee Orientation Meeting</label>
+        <locationX>710</locationX>
+        <locationY>3374</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decrement_3rd_Selected_OMR_Record</targetReference>
+        </connector>
+        <fields>
+            <name>eom_block_3</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #3:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;color: rgb(240, 5, 5); font-size: 14px;&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>select_a_time_block_3</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Onboarding_Meeting_Request__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Select a Time Block</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-1f37&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-453a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-5e98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-fa41&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Preferred_Meeting_Time_within_Selected_Time_Block_3</name>
+            <dataType>String</dataType>
+            <fieldText>Preferred Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Meeting_Participant_Count_3</name>
+            <dataType>Number</dataType>
+            <fieldText>Meeting Participant Count</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>Meeting_Type_3</name>
+            <choiceReferences>Virtual</choiceReferences>
+            <choiceReferences>On_Site</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Meeting Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Meeting_Participant_Count_3</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>50.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Select_4th_Employee_Orientation_Meeting</name>
+        <label>Select 4th Employee Orientation Meeting</label>
+        <locationX>578</locationX>
+        <locationY>3914</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decrement_4th_Selected_OMR_Record</targetReference>
+        </connector>
+        <fields>
+            <name>eom_block_4</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #4:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;color: rgb(240, 5, 5); font-size: 14px;&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>select_a_time_block_4</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Onboarding_Meeting_Request__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Select a Time Block</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_4</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-1f37&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-453a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-5e98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-fa41&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Preferred_Meeting_Time_within_Selected_Time_Block_4</name>
+            <dataType>String</dataType>
+            <fieldText>Preferred Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Meeting_Participant_Count_4</name>
+            <dataType>Number</dataType>
+            <fieldText>Meeting Participant Count</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>Meeting_Type_4</name>
+            <choiceReferences>Virtual</choiceReferences>
+            <choiceReferences>On_Site</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Meeting Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Meeting_Participant_Count_4</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>50.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>262</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Retrieve_triggering_account_record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Template to populate the &apos;Notes&apos; field on Task. This is to allow for creation of an Orientation Meeting Request Task and to bypass &apos;Prevent_Manual_Creation_of_OMR_Tasks&apos; validation rule.</description>
+        <name>populate_notes_field_on_task</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Task created by &apos;Request_Employee_Orientation_Meeting&apos; flow.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>task_description_1meeting</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account: {!Retrieve_triggering_account_record.Name}
+-
+Client Number: {!Retrieve_Related_Asset.NSP_Client__c}
+-
+Number of Employee Orientation Meetings Requested: {!Number_of_Employee_Orientation_Meetings_Required}
+-
+Meeting Type: {!Meeting_Type_initial_screen}
+-
+Time Block Selected: {!select_a_time_block_1.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_1.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_1.firstSelectedRow.End_Time_picklist__c}
+-
+Preferred Time within Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_1}
+Meeting Participant Count: {!Meeting_Participant_Count}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type}
+-
+EE Count: {!EE_Count_eom}
+-
+OSS Name: {!OSS_Name_eom}
+-
+OSS Phone: {!OSS_Phone_EOM.value}
+-
+OSS Email: {!OSS_Email_EOM.value}
+-
+Translator needed for OT: {!Translator_Needed_for_OT_EOM}
+If yes to above question, language(s) needed: {!Language_s_Needed_EOM}
+-
+How would the Client like the OT Materials Delivered?: {!How_would_the_Client_like_the_OT_Materials_Delivered}
+- 
+If a &quot;Shipped&quot; Answer was Selected Above, where do we Ship the Materials?: {!Where_do_we_Ship_the_Materials}
+- 
+If &quot;Client Location&quot; was Selected Above:
+Client Contact: {!Client_Contact}
+Client Address: {!Client_Address}
+-
+Special Instructions: {!Special_Instructions}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>task_description_2meeting</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account: {!Retrieve_triggering_account_record.Name}
+-
+Client Number: {!Retrieve_Related_Asset.NSP_Client__c}
+-
+Number of Employee Orientation Meetings Requested: {!Number_of_Employee_Orientation_Meetings_Required}
+-
+Meeting Type: {!Meeting_Type_initial_screen}
+-
+#1 Time Block Selected: {!select_a_time_block_1.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_1.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_1.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #1 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_1}
+Meeting Participant Count: {!Meeting_Participant_Count}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type}
+-
+#2 Time Block Selected: {!select_a_time_block_2.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_2.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_2.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #2 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_2}
+Meeting Participant Count: {!Meeting_Participant_Count_2}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type_2}
+-
+EE Count: {!EE_Count_eom}
+-
+OSS Name: {!OSS_Name_eom}
+-
+OSS Phone: {!OSS_Phone_EOM.value}
+-
+OSS Email: {!OSS_Email_EOM.value}
+-
+Translator needed for OT: {!Translator_Needed_for_OT_EOM}
+If yes to above question, language(s) needed: {!Language_s_Needed_EOM}
+-
+How would the Client like the OT Materials Delivered?: {!How_would_the_Client_like_the_OT_Materials_Delivered}
+- 
+If a &quot;Shipped&quot; Answer was Selected Above, where do we Ship the Materials?: {!Where_do_we_Ship_the_Materials}
+- 
+If &quot;Client Location&quot; was Selected Above:
+Client Contact: {!Client_Contact}
+Client Address: {!Client_Address}
+-
+Special Instructions: {!Special_Instructions}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>task_description_3meeting</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account: {!Retrieve_triggering_account_record.Name}
+-
+Client Number: {!Retrieve_Related_Asset.NSP_Client__c}
+-
+Number of Employee Orientation Meetings Requested: {!Number_of_Employee_Orientation_Meetings_Required}
+-
+Meeting Type: {!Meeting_Type_initial_screen}
+-
+#1 Time Block Selected: {!select_a_time_block_1.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_1.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_1.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #1 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_1}
+Meeting Participant Count: {!Meeting_Participant_Count}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type}
+-
+#2 Time Block Selected: {!select_a_time_block_2.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_2.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_2.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #2 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_2}
+Meeting Participant Count: {!Meeting_Participant_Count_2}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type_2}
+-
+#3 Time Block Selected: {!select_a_time_block_3.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_3.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_3.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #3 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_3}
+Meeting Participant Count: {!Meeting_Participant_Count_3}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type_3}
+-
+EE Count: {!EE_Count_eom}
+-
+OSS Name: {!OSS_Name_eom}
+-
+OSS Phone: {!OSS_Phone_EOM.value}
+-
+OSS Email: {!OSS_Email_EOM.value}
+-
+Translator needed for OT: {!Translator_Needed_for_OT_EOM}
+If yes to above question, language(s) needed: {!Language_s_Needed_EOM}
+-
+How would the Client like the OT Materials Delivered?: {!How_would_the_Client_like_the_OT_Materials_Delivered}
+- 
+If a &quot;Shipped&quot; Answer was Selected Above, where do we Ship the Materials?: {!Where_do_we_Ship_the_Materials}
+- 
+If &quot;Client Location&quot; was Selected Above:
+Client Contact: {!Client_Contact}
+Client Address: {!Client_Address}
+-
+Special Instructions: {!Special_Instructions}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>task_description_4meeting</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account: {!Retrieve_triggering_account_record.Name}
+-
+Client Number: {!Retrieve_Related_Asset.NSP_Client__c}
+-
+Number of Employee Orientation Meetings Requested: {!Number_of_Employee_Orientation_Meetings_Required}
+-
+Meeting Type: {!Meeting_Type_initial_screen}
+-
+#1 Time Block Selected: {!select_a_time_block_1.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_1.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_1.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #1 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_1}
+Meeting Participant Count: {!Meeting_Participant_Count}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type}
+-
+#2 Time Block Selected: {!select_a_time_block_2.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_2.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_2.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #2 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_2}
+Meeting Participant Count: {!Meeting_Participant_Count_2}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type_2}
+-
+#3 Time Block Selected: {!select_a_time_block_3.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_3.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_3.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #3 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_3}
+Meeting Participant Count: {!Meeting_Participant_Count_3}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type_3}
+-
+#4 Time Block Selected: {!select_a_time_block_4.firstSelectedRow.Date_Valid__c}, {!select_a_time_block_4.firstSelectedRow.Start_Time_picklist__c} - {!select_a_time_block_4.firstSelectedRow.End_Time_picklist__c}
+Preferred Time within #4 Selected Time Block: {!Preferred_Meeting_Time_within_Selected_Time_Block_4}
+Meeting Participant Count: {!Meeting_Participant_Count_4}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!Meeting_Type_4}
+-
+EE Count: {!EE_Count_eom}
+-
+OSS Name: {!OSS_Name_eom}
+-
+OSS Phone: {!OSS_Phone_EOM.value}
+-
+OSS Email: {!OSS_Email_EOM.value}
+-
+Translator needed for OT: {!Translator_Needed_for_OT_EOM}
+If yes to above question, language(s) needed: {!Language_s_Needed_EOM}
+-
+How would the Client like the OT Materials Delivered?: {!How_would_the_Client_like_the_OT_Materials_Delivered}
+- 
+If a &quot;Shipped&quot; Answer was Selected Above, where do we Ship the Materials?: {!Where_do_we_Ship_the_Materials}
+- 
+If &quot;Client Location&quot; was Selected Above:
+Client Contact: {!Client_Contact}
+Client Address: {!Client_Address}
+-
+Special Instructions: {!Special_Instructions}</text>
+    </textTemplates>
+    <variables>
+        <name>omr_task_record_type_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

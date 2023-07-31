@@ -1,0 +1,7 @@
+<messaging:emailTemplate subject="Insperity thanks you for your business!"  relatedToType="blng__Invoice__c">
+<messaging:htmlEmailBody >
+<p>Thank you for your business! Please find attached a copy of the invoice related to your recent order.</p>
+<p>If you prefer to pay via check, the remittance address is located on the bottom on the invoice.</p>
+<p>Thank you,</p>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

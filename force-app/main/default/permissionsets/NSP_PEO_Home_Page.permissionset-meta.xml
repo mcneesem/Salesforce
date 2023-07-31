@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>NSP_PEO_Home_Page</name>
+    </customPermissions>
+    <description>To render the PEO Home page</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>PEO Home Page</label>
+</PermissionSet>

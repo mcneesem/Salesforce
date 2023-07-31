@@ -1,0 +1,687 @@
+<template>
+    <div class="benefits slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} density="comfy"
+            onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.benefits}>
+            </lightning-formatted-text>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="7">
+                    <lightning-input-field  data-id="Benefit_effective_date_carry_from_tab_4__c" value={fields.Benefit_effective_date_carry_from_tab_4__c} onchange={handleSyncChange} field-name="Benefit_effective_date_carry_from_tab_4__c">
+                    </lightning-input-field>
+                    <template if:true={packageValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.packageLabel}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Benefits_Package__c" label={label.packageLabel}
+                            variant="label-hidden" options={packageValues.data.values}
+                            value={fields.Benefits_Package__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </template>
+
+                    <template if:true={medicalLevelValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small slds-m-bottom_xx-small" value={label.medicalLevel}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Medical_Level__c" label={label.medicalLevel} variant="label-hidden"
+                            options={medicalLevelValues.data.values} value={fields.Medical_Level__c}
+                            onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </template>
+
+                    <template if:true={clientTerminatedBenefits.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small slds-m-bottom_xx-small"
+                            value={label.clientTerminatedPreviousBenefits}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="client_terminated_old_benefit_coverage__c"
+                            label={label.clientTerminatedPreviousBenefits} variant="label-hidden"
+                            options={clientTerminatedBenefits.data.values}
+                            value={fields.client_terminated_old_benefit_coverage__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showTerminationDate}>
+                            <lightning-input-field class="slds-m-left_medium"
+                                field-name="Prior_Benefits_Termination_Date__c"></lightning-input-field>
+                        </template>
+                    </template>
+
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value="Are there prior medical contributions that Insperity will collect?">
+                    </lightning-formatted-text>
+                    <lightning-radio-group class="slds-m-left_xx-small" if:true={clientHaveEEsInNYValues.data} name="NSP_prior_medical_contributions__c"
+                        label="" variant="label-hidden"
+                        options={clientHaveEEsInNYValues.data.values}
+                        value={fields.NSP_prior_medical_contributions__c} onchange={handleChange} type="radio">
+                    </lightning-radio-group>
+
+                    <template if:true={clientHaveEEsInNYValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.doesClientHaveEEsinNY}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Client_have_any_EEs_that_work_in_NY__c"
+                            label={label.doesClientHaveEEsinNY} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Client_have_any_EEs_that_work_in_NY__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.willClientMaintainEPLIPolicy}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Client_maintaining_existing_EPLI_policy__c"
+                            label={label.willClientMaintainEPLIPolicy} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Client_maintaining_existing_EPLI_policy__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesClientWantCopyOfEPLIPolicy}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Wnt_cpy_of_Insperity_EPLI_policy_cert__c"
+                            label={label.doesClientWantCopyOfEPLIPolicy} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Wnt_cpy_of_Insperity_EPLI_policy_cert__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                    </template>
+
+                    <template if:true={insperityWaitingPeriodValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.insperityBenefitsWaitingPeriod}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Insperity_benefits_waiting_period__c"
+                            label={label.insperityBenefitsWaitingPeriod} variant="label-hidden"
+                            options={insperityWaitingPeriodValues.data.values}
+                            value={fields.Insperity_benefits_waiting_period__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </template>
+
+                    <template if:true={clientHaveEEsInNYValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.areThereEEsinWaitingPeriod}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Any_EEs_in_clients_waiting_period__c"
+                            label={label.areThereEEsinWaitingPeriod} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Any_EEs_in_clients_waiting_period__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <template if:true={showWaitingPeriodFields}>
+                            <div class="slds-m-left_medium">
+                                <template if:true={clientWaitingPeriodValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                                        value={label.clientsPreviousWaitingPeriod}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group class="slds-m-left_xx-small" name="Client_s_previous_waiting_period__c"
+                                        label={label.clientsPreviousWaitingPeriod} variant="label-hidden"
+                                        options={clientWaitingPeriodValues.data.values}
+                                        value={fields.Client_s_previous_waiting_period__c} onchange={handleChange}
+                                        type="radio">
+                                    </lightning-radio-group>
+                                    <template if:true={showListEmployeeNames}>
+                                        <lightning-input-field class="slds-m-left_medium" field-name="NSP_List_Employee_Names__c"></lightning-input-field>
+                                    </template>
+                                </template>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.willThereBeBenefitsClassing}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Will_there_be_benefits_classing__c"
+                            label={label.willThereBeBenefitsClassing} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Will_there_be_benefits_classing__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-input-field field-name="Schedule_B_version__c"></lightning-input-field>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.didScheduleBChangeSKO}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Did_the_sch_B_change_at_the_SKO__c"
+                            label={label.didScheduleBChangeSKO} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Did_the_sch_B_change_at_the_SKO__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showSKOFields}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label slds-m-left_medium"
+                                    value={label.checkAllThatApply}>
+                                </lightning-formatted-text>
+                                <lightning-checkbox-group class="slds-m-left_medium" name="Check_all_sch_B_changes_that_apply__c"
+                                    label={label.checkAllThatApply} variant="label-hidden"
+                                    options={checkAllApplySchedulePeriodValues.data.values}
+                                    value={checkAllApplySchedulePeriods} onchange={handleCheckboxChange}>
+                                </lightning-checkbox-group>
+                                <lightning-input-field  if:true={isValidScheduleBChanges} class="slds-m-left_large" field-name="NSP_Provide_Schedule_B_details__c"> 
+                                </lightning-input-field>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.isInsperityReplacingClientOffering}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Insperity_grp_hlth_plan_replacing_prior__c"
+                            label={label.isInsperityReplacingClientOffering} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Insperity_grp_hlth_plan_replacing_prior__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showPreviousGroupPlanFields}>
+                            <div class="slds-m-left_medium">
+                                <template if:true={previousGroupTerminatingValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.previousGroupPlanTerminating}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="Previous_group_plan_is_terminating__c"
+                                        label={label.previousGroupPlanTerminating} variant="label-hidden"
+                                        options={previousGroupTerminatingValues.data.values}
+                                        value={fields.Previous_group_plan_is_terminating__c} onchange={handleChange}
+                                        type="radio">
+                                    </lightning-radio-group>
+                                </template>
+
+                                <template if:true={previousGroupCoveragePeriod.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.previousGroupHealthPlanCoveragePeriod}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="Old_grp_health_plan_coverage_period_was__c"
+                                        label={label.previousGroupHealthPlanCoveragePeriod} variant="label-hidden"
+                                        options={previousGroupCoveragePeriod.data.values}
+                                        value={fields.Old_grp_health_plan_coverage_period_was__c}
+                                        onchange={handleChange} type="radio">
+                                    </lightning-radio-group>
+                                    <template if:true={showPreviousStartandEndDate}>
+                                        <lightning-input-field class="slds-m-left_medium"
+                                            field-name="Provide_start_end_dates_of_plan_year__c">
+                                        </lightning-input-field>
+                                    </template>
+                                </template>
+
+                                <template if:true={previousGroupPlanAdminValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.previousGroupHealthPlanAdministrator}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="Previous_group_health_plan_administrator__c"
+                                        label={label.previousGroupHealthPlanAdministrator} variant="label-hidden"
+                                        options={previousGroupPlanAdminValues.data.values}
+                                        value={fields.Previous_group_health_plan_administrator__c}
+                                        onchange={handleChange} type="radio">
+                                    </lightning-radio-group>
+                                    <template if:true={showPreviousGroupAdminFields}>
+                                        <div class="slds-m-left_medium">
+                                            <lightning-formatted-text class="slds-form-element__label"
+                                                value={label.wasPreviousAdministratorAnotherPEO}>
+                                            </lightning-formatted-text>
+                                            <lightning-radio-group name="Old_plan_administrator_was_another_PEO__c"
+                                                label={label.wasPreviousAdministratorAnotherPEO} variant="label-hidden"
+                                                options={clientHaveEEsInNYValues.data.values}
+                                                value={fields.Old_plan_administrator_was_another_PEO__c}
+                                                onchange={handleChange} type="radio">
+                                            </lightning-radio-group>
+                                            <template if:true={showPEONameField}>
+                                                <lightning-input-field data-id="Provide_PEO_Name__c" class="slds-m-left_medium" value={fields.Provide_PEO_Name__c}
+                                                    field-name="Provide_PEO_Name__c" onchange={handleSyncChange}>
+                                                </lightning-input-field>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </template>
+
+                                <lightning-formatted-text class="slds-form-element__label Previous_group_health_plan_carrier_s__c"
+                                    value={label.previousGroupHealthPlanCarrier}>
+                                </lightning-formatted-text>
+                                <lightning-input-field variant="label-hidden"
+                                    field-name="Previous_group_health_plan_carrier_s__c" onchange={handleInputChange}></lightning-input-field>
+
+                                <template if:true={previousCoverageTypeValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.previousGroupHealthPlanCoverageTypes}>
+                                    </lightning-formatted-text>
+                                    <lightning-checkbox-group name="Previous_group_health_plan_coverage_type__c"
+                                        label={label.previousGroupHealthPlanCoverageTypes} variant="label-hidden"
+                                        options={previousCoverageTypeValues.data.values} value={previousCoverageTypes}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-checkbox-group>
+                                    <lightning-input-field class="slds-m-left_medium"
+                                        field-name="NSP_Provide_previous_coverage_details__c"></lightning-input-field>
+                                </template>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.areThereEEsWithUrgentNeeds}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Any_EEs_with_urgent_medical_needs__c"
+                            label={label.areThereEEsWithUrgentNeeds} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Any_EEs_with_urgent_medical_needs__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showEEsName}>
+                        </template>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesCignaTakeoverApplyToClient}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Does_the_Cigna_takeover_apply_to_client__c"
+                            label={label.doesCignaTakeoverApplyToClient} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Does_the_Cigna_takeover_apply_to_client__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.areParticipantsInEligibilityPeriod}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Participants_on_COBRA_eligibility_period__c"
+                            label={label.areParticipantsInEligibilityPeriod} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Participants_on_COBRA_eligibility_period__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showCOBRAFields}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.doYouHaveCOBRAEmployees}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Have_name_s_of_COBRA_takeovr_employees__c"
+                                    label={label.doYouHaveCOBRAEmployees} variant="label-hidden"
+                                    options={clientHaveEEsInNYValues.data.values}
+                                    value={fields.Have_name_s_of_COBRA_takeovr_employees__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+
+                                <c-nsp_employee-data if:true={showCOBRAEmpTable}
+                                    title="Employee Name(s):"
+                                    records={empData.Have_name_s_of_COBRA_takeovr_employees__c}
+                                    fields={childAnswerFields.Have_name_s_of_COBRA_takeovr_employees__c}
+                                    parent-field="Have_name_s_of_COBRA_takeovr_employees__c">
+                                </c-nsp_employee-data>
+
+                                <lightning-input-field if:true={showCOBRAProvideDetails} class="slds-m-left_medium"
+                                    field-name="Provide_details_for_no_COBRA_employees__c">
+                                </lightning-input-field>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.areThereEEsonLOA}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Are_there_any_EEs_on_Leave_of_Absence__c"
+                            label={label.areThereEEsonLOA} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Are_there_any_EEs_on_Leave_of_Absence__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showLOAFields}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.doYouHaveLOAInformation}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Do_you_have_the_LOA_information__c"
+                                    label={label.doYouHaveLOAInformation} variant="label-hidden"
+                                    options={clientHaveEEsInNYValues.data.values}
+                                    value={fields.Do_you_have_the_LOA_information__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <c-nsp_employee-data if:true={showLOAEmpTable}
+                                    title="Employees on LOA"
+                                    records={empData.Do_you_have_the_LOA_information__c}
+                                    fields={childAnswerFields.Do_you_have_the_LOA_information__c}
+                                    parent-field="Do_you_have_the_LOA_information__c">
+                                </c-nsp_employee-data>
+                                <lightning-input-field if:true={showStatusOfLOAField} class="slds-m-left_medium"
+                                    field-name="What_is_the_status_of_the_LOA_info__c"></lightning-input-field>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value="Select the applicable LOA types:">
+                                </lightning-formatted-text>
+                                <lightning-checkbox-group if:true={selectApplicableLoa.data}
+                                    name="Select_the_applicable_LOA_types__c"
+                                    label="" variant="label-hidden"
+                                    options={selectApplicableLoa.data.values}
+                                    value={fields.Select_the_applicable_LOA_types__c} onchange={handleCheckboxChange}>
+                                </lightning-checkbox-group>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.didYouInformThatEEwillnotbeEligible}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Told_EE_ineligble_for_active_at_work_ben__c"
+                                    label={label.didYouInformThatEEwillnotbeEligible} variant="label-hidden"
+                                    options={clientHaveEEsInNYValues.data.values}
+                                    value={fields.Told_EE_ineligble_for_active_at_work_ben__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <lightning-input-field field-name="How_will_EE_complete_their_enrollment__c">
+                                </lightning-input-field>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.doesClientOfferHSA}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Does_the_client_offer_a_HSA__c" label={label.doesClientOfferHSA}
+                            variant="label-hidden" options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Does_the_client_offer_a_HSA__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showClientHSAFields}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value="Are there any employees currently enrolled?">
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Any_employees_currently_enrolled__c"
+                                    label="" variant="label-hidden"
+                                    options={pickValueYesNo}
+                                    value={fields.Any_employees_currently_enrolled__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.isClientCurrentHSAwithOptum}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Is_client_s_current_HSA_with_Optum_Bank__c"
+                                    label={label.isClientCurrentHSAwithOptum} variant="label-hidden"
+                                    options={clientHaveEEsInNYValues.data.values}
+                                    value={fields.Is_client_s_current_HSA_with_Optum_Bank__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <template if:true={showClientCodeQuestion}>
+                                    <div class="slds-m-left_medium">
+                                        <lightning-formatted-text class="slds-form-element__label"
+                                            value={label.doesClientHaveTheirCodeAndGroupId}>
+                                        </lightning-formatted-text>
+                                        <lightning-radio-group name="Does_client_have_their_code_group_ID__c"
+                                            label={label.doesClientHaveTheirCodeAndGroupId} variant="label-hidden"
+                                            options={clientHaveEEsInNYValues.data.values}
+                                            value={fields.Does_client_have_their_code_group_ID__c}
+                                            onchange={handleChange} type="radio">
+                                        </lightning-radio-group>
+                                        <template if:true={showClientCodeField}>
+                                            <div class="slds-m-left_medium">
+                                                <lightning-input-field field-name="Optum_Bank_HSA_Code__c">
+                                                </lightning-input-field>
+                                                <lightning-input-field field-name="Optum_Bank_HSA_Group__c">
+                                                </lightning-input-field>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.areThereContributionToEEsHSA}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Any_employer_contributions_to_EE_HSA__c"
+                            label={label.areThereContributionToEEsHSA} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Any_employer_contributions_to_EE_HSA__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showContributionProvideDetails}>
+                            <lightning-input-field class="slds-m-left_medium"
+                                field-name="NSP_Employer_contributions_details__c"></lightning-input-field>
+                        </template>
+                    </template>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+                    <template if:true={clientHaveEEsInNYValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.willClientBeMaintainingSponsporedPlan}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Spnsrd_pln_when_Insperity_hndles_payroll__c"
+                            label={label.willClientBeMaintainingSponsporedPlan} variant="label-hidden"
+                            options={clientHaveEEsInNYValues.data.values}
+                            value={fields.Spnsrd_pln_when_Insperity_hndles_payroll__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showPrePostTaxFields}>
+                            <div class="slds-m-left_medium">
+                                <!-- Pre Tax - Post Tax -->
+                                <lightning-input type="checkbox" name="Sponsored_plan_contribution_type__c"
+                                    label={label.preTaxLabel} value={label.preTaxValue} checked={preTax}
+                                    onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+
+                                <lightning-input type="checkbox" name="Sponsored_plan_contribution_type__c"
+                                    label={label.postTaxLabel} value={label.postTaxValue} checked={postTax}
+                                    onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+
+                                <template if:true={preTax}>
+                                    <lightning-layout class="slds-m-left_medium">
+                                        <lightning-layout-item size="4">
+                                            <lightning-formatted-text class="slds-form-element__label" value={label.preTaxSponsoredPlanType}>
+                                            </lightning-formatted-text>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="2">
+                                            <lightning-formatted-text class="slds-form-element__label" value={label.delayedStart}>
+                                            </lightning-formatted-text>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <lightning-formatted-text class="ongoingCafeteriaheading slds-form-element__label" value={label.ongoingCSPcafeteriaPlan}>
+                                            </lightning-formatted-text>
+                                        </lightning-layout-item>
+                                        <template if:true={showProvideDetailscolumn}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-formatted-text class="slds-form-element__label" value={label.provideDetails}>
+                                                </lightning-formatted-text>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <lightning-layout class="slds-m-left_medium slds-m-bottom_medium">
+                                        <lightning-layout-item class="verticalAlign" size="4">
+                                            <lightning-input type="checkbox"
+                                                name="Pre_tax_Client_Sponsored_Plan_CSP_Type__c"
+                                                label={label.HCFSAlabel} value={label.HCFSAValue} checked={HCFSAPreTax}
+                                                onchange={handleCustomCheckboxChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="verticalAlign" size="2">
+                                            <lightning-input-field variant="label-hidden"
+                                                field-name="NSP_HCFSA_Delayed_Start_Date__c"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <template if:true={ongoingCSPdocumentValues.data}>
+                                                <lightning-radio-group
+                                                    name="NSP_HCFSA_Ongoing_CSP_cafeteria_plan_Doc__c" label=''
+                                                    variant="label-hidden"
+                                                    options={ongoingCSPdocumentValues.data.values}
+                                                    value={fields.NSP_HCFSA_Ongoing_CSP_cafeteria_plan_Doc__c}
+                                                    onchange={handleChange} type="radio">
+                                                </lightning-radio-group>
+                                            </template>
+                                        </lightning-layout-item>
+                                        <template if:true={showHCFSADetails}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-input-field variant="label-hidden" field-name="NSP_HCFSA_Provide_Details__c"></lightning-input-field>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <lightning-layout class="slds-m-left_medium slds-m-bottom_medium">
+                                        <lightning-layout-item class="verticalAlign" size="4">
+                                            <lightning-input type="checkbox"
+                                                name="Pre_tax_Client_Sponsored_Plan_CSP_Type__c" label={label.HSAlabel}
+                                                value={label.HSAValue} checked={HSAPreTax}
+                                                onchange={handleCustomCheckboxChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="verticalAlign" size="2">
+                                            <lightning-input-field variant="label-hidden"
+                                                field-name="NSP_Health_Savings_Account_Delayed_Start__c">
+                                            </lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <template if:true={ongoingCSPdocumentValues.data}>
+                                                <lightning-radio-group name="NSP_HSA_Ongoing_CSP_cafeteria_document__c"
+                                                    label='' variant="label-hidden"
+                                                    options={ongoingCSPdocumentValues.data.values}
+                                                    value={fields.NSP_HSA_Ongoing_CSP_cafeteria_document__c}
+                                                    onchange={handleChange} type="radio">
+                                                </lightning-radio-group>
+                                            </template>
+                                        </lightning-layout-item>
+                                        <template if:true={showHSADetails}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-input-field variant="label-hidden" field-name="NSP_HSA_Provide_Details__c"></lightning-input-field>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <lightning-layout class="slds-m-left_medium slds-m-bottom_medium">
+                                        <lightning-layout-item class="verticalAlign" size="4">
+                                            <lightning-input type="checkbox"
+                                                name="Pre_tax_Client_Sponsored_Plan_CSP_Type__c"
+                                                label={label.DCFSAlabel} value={label.DCFSAValue} checked={DCFSAPreTax}
+                                                onchange={handleCustomCheckboxChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="2">
+
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <template if:true={ongoingCSPdocumentValues.data}>
+                                                <lightning-radio-group
+                                                    name="NSP_DCFSA_Ongoing_CSP_Cafeteria_document__c" label=''
+                                                    variant="label-hidden"
+                                                    options={ongoingCSPdocumentValues.data.values}
+                                                    value={fields.NSP_DCFSA_Ongoing_CSP_Cafeteria_document__c}
+                                                    onchange={handleChange} type="radio">
+                                                </lightning-radio-group>
+                                            </template>
+                                        </lightning-layout-item>
+                                        <template if:true={showDCFSADetails}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-input-field variant="label-hidden" field-name="NSP_DCFSA_Provide_details__c"></lightning-input-field>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <lightning-layout class="slds-m-left_medium slds-m-bottom_medium">
+                                        <lightning-layout-item class="verticalAlign" size="4">
+                                            <lightning-input type="checkbox"
+                                                name="Pre_tax_Client_Sponsored_Plan_CSP_Type__c"
+                                                label={label.medicalPreTaxlabel} value={label.medicalPreTaxValue}
+                                                checked={medicalPreTax} onchange={handleCustomCheckboxChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="verticalAlign" size="2">
+                                            <lightning-input-field variant="label-hidden"
+                                                field-name="NSP_Medical_Pretax_Delayed_Start__c">
+                                            </lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <template if:true={ongoingCSPdocumentValues.data}>
+                                                <lightning-radio-group name="NSP_Medical_Ongoing_CSP_cafeteria_Doc__c"
+                                                    label='' variant="label-hidden"
+                                                    options={ongoingCSPdocumentValues.data.values}
+                                                    value={fields.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c}
+                                                    onchange={handleChange} type="radio">
+                                                </lightning-radio-group>
+                                            </template>
+                                        </lightning-layout-item>
+                                        <template if:true={showMedicalPretaxDetails}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-input-field variant="label-hidden" field-name="NSP_Medical_Pretax_Provide_details__c"></lightning-input-field>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <lightning-layout class="slds-m-left_medium slds-m-bottom_medium">
+                                        <lightning-layout-item class="verticalAlign" size="4">
+                                            <lightning-input type="checkbox"
+                                                name="Pre_tax_Client_Sponsored_Plan_CSP_Type__c"
+                                                label={label.dentalPreTaxlabel} value={label.dentalPreTaxValue}
+                                                checked={dentalPreTax} onchange={handleCustomCheckboxChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="verticalAlign" size="2">
+                                            <lightning-input-field variant="label-hidden"
+                                                field-name="NSP_Dental_Pretax_Delayed_Start__c"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <template if:true={ongoingCSPdocumentValues.data}>
+                                                <lightning-radio-group name="NSP_Dental_Ongoing_CSP_cafeteria_Doc__c"
+                                                    label='' variant="label-hidden"
+                                                    options={ongoingCSPdocumentValues.data.values}
+                                                    value={fields.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c}
+                                                    onchange={handleChange} type="radio">
+                                                </lightning-radio-group>
+                                            </template>
+                                        </lightning-layout-item>
+                                        <template if:true={showDentalPretaxDetails}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-input-field variant="label-hidden" field-name="NSP_Dental_Pretax_Provide_Details__c"></lightning-input-field>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <lightning-layout class="slds-m-left_medium slds-m-bottom_medium">
+                                        <lightning-layout-item class="verticalAlign" size="4">
+                                            <lightning-input type="checkbox"
+                                                name="Pre_tax_Client_Sponsored_Plan_CSP_Type__c"
+                                                label={label.visionPreTaxlabel} value={label.visionPreTaxValue}
+                                                checked={visionPreTax} onchange={handleCustomCheckboxChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="verticalAlign" size="2">
+                                            <lightning-input-field variant="label-hidden"
+                                                field-name="NSP_Vision_Pretax_Delayed_Start__c"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="slds-m-left_small" size="4">
+                                            <lightning-radio-group name="NSP_Vision_Ongoing_CSP_cafeteria_Doc__c"
+                                                label='' variant="label-hidden"
+                                                options={ongoingCSPdocumentValues.data.values}
+                                                value={fields.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c}
+                                                onchange={handleChange} type="radio">
+                                            </lightning-radio-group>
+                                        </lightning-layout-item>
+                                        <template if:true={showVisionPretaxDetails}>
+                                            <lightning-layout-item size="2">
+                                                <lightning-input-field variant="label-hidden" field-name="NSP_Vision_Pretax_Provide_Details__c"></lightning-input-field>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+                                </template>
+
+                                <template if:true={postTax}>
+                                    <div class="slds-m-left_medium">
+                                        <lightning-formatted-text class="slds-form-element__label slds-text-body_regular" value={label.postTaxSupplementalInsurance}>
+                                        </lightning-formatted-text>
+                                        <div>
+                                            <lightning-formatted-text class="slds-form-element__label" value={label.provideDetails}>
+                                            </lightning-formatted-text>
+                                            <lightning-input-field variant="label-hidden" field-name="Post_tax_suppl_insurance_provide_details__c">
+                                            </lightning-input-field>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value="Does the client currently offer a FSA?">
+                    </lightning-formatted-text>
+                    <lightning-radio-group class="slds-m-left_xx-small" name="Does_the_client_currently_offer_a_FSA__c"
+                        label="" variant="label-hidden"
+                        options={pickValueYesNo}
+                        value={fields.Does_the_client_currently_offer_a_FSA__c} onchange={handleChange} type="radio">
+                    </lightning-radio-group>
+
+                    <div if:true={hasFSA} class="slds-m-left_medium">
+                        <lightning-formatted-text class="slds-form-element__label" value="Are there employes currently enrolled?">
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Any_employees_currently_enrolled__c"
+                            label="" variant="label-hidden" options={pickValueYesNo}
+                            value={fields.Any_employees_currently_enrolled__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-input-field field-name="What_are_the_FSA_plan_dates__c"></lightning-input-field>
+
+                        <lightning-formatted-text class="slds-form-element__label" value="Will the client maintain their own FSA through current plan year?">
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_maintain_own_FSA__c"
+                            label="" variant="label-hidden" options={pickValueYesNo}
+                            value={fields.Client_maintain_own_FSA__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </div>
+                    <lightning-input-field field-name="NSP_Benefit_Notes__c"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

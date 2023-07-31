@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Resolution__c</fullName>
+    <externalId>false</externalId>
+    <label>Resolution</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Association,</fullName>
+                <default>false</default>
+                <label>Association,</label>
+            </value>
+            <value>
+                <fullName>Transition period</fullName>
+                <default>false</default>
+                <label>Transition period</label>
+            </value>
+            <value>
+                <fullName>FEIN Change Only</fullName>
+                <default>false</default>
+                <label>FEIN Change Only</label>
+            </value>
+            <value>
+                <fullName>No Action - Referred to RET Sales</fullName>
+                <default>false</default>
+                <label>No Action - Referred to RET Sales</label>
+            </value>
+            <value>
+                <fullName>Case closed - Incomplete/Missing Information</fullName>
+                <default>false</default>
+                <label>Case closed - Incomplete/Missing Information</label>
+            </value>
+            <value>
+                <fullName>Split Subplan</fullName>
+                <default>false</default>
+                <label>Split Subplan</label>
+            </value>
+            <value>
+                <fullName>Combine Subplan</fullName>
+                <default>false</default>
+                <label>Combine Subplan</label>
+            </value>
+            <value>
+                <fullName>Assign. Ltr - Referred to RET Sales</fullName>
+                <default>false</default>
+                <label>Assign. Ltr - Referred to RET Sales</label>
+            </value>
+            <value>
+                <fullName>Association w/transition period</fullName>
+                <default>false</default>
+                <label>Association w/transition period</label>
+            </value>
+            <value>
+                <fullName>FMC - Customized Plan Affiliation</fullName>
+                <default>false</default>
+                <label>FMC - Customized Plan Affiliation</label>
+            </value>
+            <value>
+                <fullName>New Plan</fullName>
+                <default>false</default>
+                <label>New Plan</label>
+            </value>
+            <value>
+                <fullName>No Action req; remains eligible</fullName>
+                <default>false</default>
+                <label>No Action req; remains eligible</label>
+            </value>
+            <value>
+                <fullName>Not Eligible for plan (no trans)</fullName>
+                <default>false</default>
+                <label>Not Eligible for plan (no trans)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

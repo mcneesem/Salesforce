@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA L2 - PTO Effective Date Plans - Changes Complete</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA L2 - PTO Effective Date Plans - Changes Complete</name>
+    <style>freeForm</style>
+    <subject>ITA L2 - PTO Effective Date Plans - Changes Complete</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for providing this confirmation. We have updated your accrual plans accordingly. Starting in the current pay period, your accrual plans will determine eligibility based on the employee&apos;s assigned PTO Effective Date. Please feel free to adjust that date for employees as appropriate, to allow for negotiated eligibility, and be sure to enter a PTO Effective Date for new employees during the onboarding process.
+ 
+I&apos;ve copied your HR Specialist here so that they are aware of this change. It does not change how the plan is configured or the standard eligibility schedule, but simply allows you to provide a negotiated eligibility on an as-needed basis. They will be able to update your employee handbook if/as needed.
+ 
+If you have any employees that should have accrued at an alternate rate in a closed pay period, you can make a manual adjustment to their accrual balance to account for that difference. I&apos;ve included a link to an article in our Help Center which details how to make that manual adjustment, if/as needed:
+ 
+https://help.insperity.com/bps/knowledge-base/accruals-making-accrual-adjustments/
+ 
+If you have additional questions or concerns, please let us know and we will be happy to help.
+
+Thank you, 
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

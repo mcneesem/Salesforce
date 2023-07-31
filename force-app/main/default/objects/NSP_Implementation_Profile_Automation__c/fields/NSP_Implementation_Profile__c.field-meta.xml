@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Implementation_Profile__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is created as a part of STY-01464</description>
+    <externalId>false</externalId>
+    <label>Implementation Profile</label>
+    <referenceTo>Implementation_Profile__c</referenceTo>
+    <relationshipLabel>Implementation Profile Automations</relationshipLabel>
+    <relationshipName>Implementation_Profile_Automations</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ApplicableProduct_AmendUpsell__c</fullName>
+    <description>Captures the applicable product bundle for project creation</description>
+    <externalId>false</externalId>
+    <label>Applicable Product AmendUpsell</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IWXBundle</fullName>
+                <default>false</default>
+                <label>IWXBundle</label>
+            </value>
+            <value>
+                <fullName>IWXBundleW2</fullName>
+                <default>false</default>
+                <label>IWXBundleW2</label>
+            </value>
+            <value>
+                <fullName>IWACore</fullName>
+                <default>false</default>
+                <label>IWACore</label>
+            </value>
+            <value>
+                <fullName>IWACoreW2</fullName>
+                <default>false</default>
+                <label>IWACoreW2</label>
+            </value>
+            <value>
+                <fullName>IPS Conversion</fullName>
+                <default>false</default>
+                <label>IPS Conversion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

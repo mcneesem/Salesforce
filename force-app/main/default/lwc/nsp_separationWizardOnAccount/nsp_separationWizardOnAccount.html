@@ -1,0 +1,15 @@
+<template >
+    
+        
+        <div if:true={checkRequiredFields}  onsaveexit={handleCloseModal} class="slds-var-m-around_medium">
+            <div class="customHeader">
+                <label class="slds-text-heading_medium slds-hyphenate header-string">{LABEL.wizardHeader}</label>
+            </div >
+            
+            <c-nsp_seperation-wizard rep-req-obj={recordObj} current-step="1">
+            </c-nsp_seperation-wizard>
+                  
+        </div>
+
+    
+</template>

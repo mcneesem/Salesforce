@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority_is_required_if_role_is_selected</fullName>
+    <active>true</active>
+    <description>if role is selected, priority must be populated</description>
+    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.ProjectTaskAssignmentValidations__c != true, pse__Project_Task__r.pse__Project__r.RecordType.DeveloperName  = &apos;PEO_Project&apos;,  NOT(ISBLANK( TEXT( pse__Resource_Role__c ) ))  , ISBLANK( TEXT( NSP_Priority__c ) ) )</errorConditionFormula>
+    <errorMessage>Priority is required if Resource role is selected.</errorMessage>
+</ValidationRule>

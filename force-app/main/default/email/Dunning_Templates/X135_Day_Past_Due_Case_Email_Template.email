@@ -1,0 +1,12 @@
+<messaging:emailTemplate subject="Response Required: Insperity Past Due Invoice(s)" recipientType="User" relatedToType="Case">
+<messaging:htmlEmailBody >
+<p>This is to notify you Case {!relatedTo.CaseNumber} related to the past due status of {!relatedTo.Account.Name}. The account is 135 days past due and remains unresolved.</p>
+<p>The following actions are necessary:</p>
+<ul>
+<li>Notify the service team the client’s service needs to be suspended/deactivated due to failure to pay.</li>
+<li>Notify your supervisor to determine next steps in the collection efforts.</li>
+</ul>
+<br/>
+<p>Thank you!</p>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

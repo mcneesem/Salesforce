@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Version_Data_entry_restriction</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NSP_Category__c  &lt;&gt; &apos;M&amp;A&apos;, NOT(ISBLANK( NSP_Version__c )))</errorConditionFormula>
+    <errorDisplayField>NSP_Version__c</errorDisplayField>
+    <errorMessage>We can only have version on M&amp;A category.</errorMessage>
+</ValidationRule>

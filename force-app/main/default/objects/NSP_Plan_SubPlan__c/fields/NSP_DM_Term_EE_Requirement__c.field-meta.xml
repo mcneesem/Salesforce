@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DM_Term_EE_Requirement__c</fullName>
+    <externalId>false</externalId>
+    <label>Disc. Match Term EE Requirements</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0 hrs</fullName>
+                <default>false</default>
+                <label>0 hrs</label>
+            </value>
+            <value>
+                <fullName>500 hrs</fullName>
+                <default>false</default>
+                <label>500 hrs</label>
+            </value>
+            <value>
+                <fullName>750 hrs</fullName>
+                <default>false</default>
+                <label>750 hrs</label>
+            </value>
+            <value>
+                <fullName>1,000 hrs</fullName>
+                <default>false</default>
+                <label>1,000 hrs</label>
+            </value>
+            <value>
+                <fullName>Last Day Rule</fullName>
+                <default>false</default>
+                <label>Last Day Rule</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

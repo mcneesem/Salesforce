@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DontContestUnemployment__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText> If the client has agreed to not contest an unemployment claim by the WSEE, please notify an unemployment specialist. Please remember to enter SEPARATION AGREEMENT – NO PROTEST into the subject line. Please include: Client Name, WSEE Name, and WSEE ID# in the body of the email. If a multi-person layoff, email unemployment specialist with a spreadsheet identifying all employees and the subject line should read: SEPARATION AGREEMENT – NO PROTEST.</inlineHelpText>
+    <label>Do not contest unemployment</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

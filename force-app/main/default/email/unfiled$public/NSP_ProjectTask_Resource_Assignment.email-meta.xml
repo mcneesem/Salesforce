@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send notification about task being assigned to resource.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_Business_Information_Sign</letterhead>
+    <name>Project Task Resource Assignment</name>
+    <style>freeForm</style>
+    <subject>Project Task Assignment - {!pse__Project_Task_Assignment__c.pse__Project_Task__c}</subject>
+    <textOnly>Hello,
+
+
+Please note the projects below have been created.
+A new project task has been created in Salesforce and you have been assigned to it. See the project and customer information below.
+
+Project Number: {!pse__Project_Task_Assignment__c.NSP_Project_Number__c}
+Project Name: {!pse__Project_Task_Assignment__c.NSP_Project__c}
+Customer: {!pse__Project_Task_Assignment__c.NSP_Customer__c}
+Project Resource: {!pse__Project_Task_Assignment__c.pse__Resource__c}
+Start Date: {!pse__Project_Task_Assignment__c.pse__Project_Task_Start_Date__c}
+
+
+Click below to view the record
+{!pse__Project_Task_Assignment__c.NSP_Project_Task_Link__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

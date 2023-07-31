@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Reporting on Terminated Employees</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Reporting on Terminated Employees</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Reporting on Terminated Employees</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+
+
+
+We received a message that you need to run reports that include terminated employees. There are a couple ways to do this:
+
+ 
+
+If you need to report on a specific terminated employee, you can navigate to a period in which he/she was active. The pay period selected in the drop-down menu in the top taskbar controls the Employee Filter list in the Report Generator. Any employees who were active within the selected period will show in the Employee Filter list, allowing you to select the terminated employee and generate your report as needed.  
+If you need to report on a group of employees over a period of time, including those who have since been terminated, you can do so by utilizing the Pay Group or Home Org Level Filters (depending on which is available in your chosen report), rather than the Employee Filter. Using one of these filters will provide a report that shows all employees who were assigned to the selected pay group(s) or home org level(s) during the date range you selected within the Report Generator, including those who have since been terminated.
+
+
+If you have additional questions or concerns, please let us know and we will be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

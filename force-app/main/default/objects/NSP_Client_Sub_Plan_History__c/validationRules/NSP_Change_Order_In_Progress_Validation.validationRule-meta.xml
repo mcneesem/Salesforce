@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Change_Order_In_Progress_Validation</fullName>
+    <active>true</active>
+    <description>Validation to stop Creation of  client sub plan history record when Change Order is in progress.</description>
+    <errorConditionFormula>ISNEW() &amp;&amp; NSP_Start_Date__c = TODAY() &amp;&amp;  NSP_Asset__r.NSP_Process_Order_Change__c &amp;&amp; NOT(ISPICKVAL(NSP_Asset__r.NSP_Change_Order_Process_Contract_Status__c,&apos;Contract Closed&apos;)) &amp;&amp;
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos;</errorConditionFormula>
+    <errorMessage>You Cannot Add Asset to New Plan as change order is in progress.</errorMessage>
+</ValidationRule>

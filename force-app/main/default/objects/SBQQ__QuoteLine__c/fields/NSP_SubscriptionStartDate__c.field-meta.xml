@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_SubscriptionStartDate__c</fullName>
+    <description>Indicates the triggering point to update subscription start date</description>
+    <externalId>false</externalId>
+    <label>Subscription Start Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Order activated date</fullName>
+                <default>false</default>
+                <label>Order activated date</label>
+            </value>
+            <value>
+                <fullName>Project go-live date</fullName>
+                <default>false</default>
+                <label>Project go-live date</label>
+            </value>
+            <value>
+                <fullName>Order Activated plus 1 Month</fullName>
+                <default>false</default>
+                <label>Order Activated plus 1 Month</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

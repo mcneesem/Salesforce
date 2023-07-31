@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Bill Now</fullName>
+        <default>false</default>
+        <label>Bill Now</label>
+    </customValue>
+    <customValue>
+        <fullName>Batch 2</fullName>
+        <default>false</default>
+        <label>Batch 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Batch 3</fullName>
+        <default>false</default>
+        <label>Batch 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Batch 4</fullName>
+        <default>false</default>
+        <label>Batch 4</label>
+    </customValue>
+    <customValue>
+        <fullName>Batch 5</fullName>
+        <default>false</default>
+        <label>Batch 5</label>
+    </customValue>
+    <customValue>
+        <fullName>Batch 6</fullName>
+        <default>false</default>
+        <label>Batch 6</label>
+    </customValue>
+    <customValue>
+        <fullName>Monthly ACH</fullName>
+        <default>false</default>
+        <label>Monthly ACH</label>
+    </customValue>
+    <customValue>
+        <fullName>Monthly CC</fullName>
+        <default>false</default>
+        <label>Monthly CC</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Scheduler</fullName>
+        <default>false</default>
+        <label>Manual Scheduler</label>
+    </customValue>
+    <customValue>
+        <fullName>One Time (Daily)</fullName>
+        <default>true</default>
+        <label>One Time (Daily)</label>
+    </customValue>
+    <customValue>
+        <fullName>iSolved Recurring</fullName>
+        <default>false</default>
+        <label>iSolved Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Recurring</fullName>
+        <default>false</default>
+        <label>Retirement Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Organizational Planning Recurring</fullName>
+        <default>false</default>
+        <label>Organizational Planning Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Recruiting Services Recurring</fullName>
+        <default>false</default>
+        <label>Recruiting Services Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Time and Attendance Recurring</fullName>
+        <default>false</default>
+        <label>Time and Attendance Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Learning and Development Recurring</fullName>
+        <default>false</default>
+        <label>Learning and Development Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Management Recurring</fullName>
+        <default>false</default>
+        <label>Performance Management Recurring</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual</fullName>
+        <default>false</default>
+        <label>Manual</label>
+    </customValue>
+    <customValue>
+        <fullName>Future Month</fullName>
+        <default>false</default>
+        <label>Future Month</label>
+    </customValue>
+    <customValue>
+        <fullName>Standalone Order</fullName>
+        <default>false</default>
+        <label>Standalone Order</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Invoice Ready</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Not Invoice Ready</label>
+    </customValue>
+    <masterLabel>Invoice Batch</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

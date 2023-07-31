@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employee_Enrollment__c</fullName>
+    <externalId>false</externalId>
+    <label>Employee Enrollment</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Employee will begin OEE prior to OT</fullName>
+                <default>false</default>
+                <label>Employee will begin OEE prior to OT</label>
+            </value>
+            <value>
+                <fullName>Employees will begin OEE on date of OT</fullName>
+                <default>false</default>
+                <label>Employees will begin OEE on date of OT</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_List_all_PTO_Codes__c</fullName>
+    <externalId>false</externalId>
+    <label>List all PTO Codes:</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PTO / Tracking PTO</fullName>
+                <default>false</default>
+                <label>PTO / Tracking PTO</label>
+            </value>
+            <value>
+                <fullName>Vacation / Tracking Vacation</fullName>
+                <default>false</default>
+                <label>Vacation / Tracking Vacation</label>
+            </value>
+            <value>
+                <fullName>Sick / Tracking Sick</fullName>
+                <default>false</default>
+                <label>Sick / Tracking Sick</label>
+            </value>
+            <value>
+                <fullName>Personal / Tracking Personal</fullName>
+                <default>false</default>
+                <label>Personal / Tracking Personal</label>
+            </value>
+            <value>
+                <fullName>Floating Holiday / Tracking Floating Holiday</fullName>
+                <default>false</default>
+                <label>Floating Holiday / Tracking Floating Holiday</label>
+            </value>
+            <value>
+                <fullName>Prior Year PTO</fullName>
+                <default>false</default>
+                <label>Prior Year PTO</label>
+            </value>
+            <value>
+                <fullName>Prior Year Vacation</fullName>
+                <default>false</default>
+                <label>Prior Year Vacation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

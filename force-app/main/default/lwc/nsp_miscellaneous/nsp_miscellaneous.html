@@ -1,0 +1,54 @@
+<template>
+    <lightning-formatted-text class="slds-page-header__title slds-var-p-bottom_xx-small" value={label.miscellaneous}>
+    </lightning-formatted-text>
+    <div class="slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} onsuccess={handleSuccess} onsubmit={handleSubmit}
+            onerror={handleError} object-api-name={objectApiName} density="comfy" onload={handleLoad}>
+            <lightning-layout multiple-rows class="slds-m-left_xx-small">
+
+                <lightning-layout-item size="7">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.NSP_Is_there_an_Enrollment_fee__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.NSP_Is_there_an_Enrollment_fee__c.apiName}
+                        field-info={objectInfo.fields.NSP_Is_there_an_Enrollment_fee__c}
+                        value={fields.NSP_Is_there_an_Enrollment_fee__c}></c-nsp_radio-group>
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isEnrollmentfee}>
+                            <lightning-layout-item size="7">
+                                <lightning-input-field field-name="NSP_Provide_Details_Enrollment_fee__c">
+                                </lightning-input-field>
+                            </lightning-layout-item>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="NSP_Discussed_E_Verify_with_the_client__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="NSP_Check_to_create_the_RRP_Case__c"></lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="NSP_CheckToSendTheClient_Summary_email__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="NSP_CheckToSendPayrollSpecialist_Summary__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="NSP_Payroll_Onboarding_Notes__c"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_AIMS_Client__c</fullName>
+    <description>Map the Account object AIMS Client field. create based on STY_02085</description>
+    <externalId>false</externalId>
+    <formula>Account.NSP_AIMS_Client__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Map the Account object AIMS Client field</inlineHelpText>
+    <label>AIMS Client #</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

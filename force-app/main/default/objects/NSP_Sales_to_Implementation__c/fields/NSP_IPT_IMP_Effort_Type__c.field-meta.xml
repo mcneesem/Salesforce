@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_IPT_IMP_Effort_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>IPT IMP Effort Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Start Up</fullName>
+                <default>false</default>
+                <label>Start Up</label>
+            </value>
+            <value>
+                <fullName>Xfer from NSPk</fullName>
+                <default>false</default>
+                <label>Xfer from NSPk</label>
+            </value>
+            <value>
+                <fullName>Xfer from Customized</fullName>
+                <default>false</default>
+                <label>Xfer from Customized</label>
+            </value>
+            <value>
+                <fullName>Xfer from Outside</fullName>
+                <default>false</default>
+                <label>Xfer from Outside</label>
+            </value>
+            <value>
+                <fullName>Xfer to NSPk</fullName>
+                <default>false</default>
+                <label>Xfer to NSPk</label>
+            </value>
+            <value>
+                <fullName>Xfer from Choice</fullName>
+                <default>false</default>
+                <label>Xfer from Choice</label>
+            </value>
+            <value>
+                <fullName>Xfer from NSPk and Outside</fullName>
+                <default>false</default>
+                <label>Xfer from NSPk and Outside</label>
+            </value>
+            <value>
+                <fullName>Association Only</fullName>
+                <default>false</default>
+                <label>Association Only</label>
+            </value>
+            <value>
+                <fullName>Association with Plan</fullName>
+                <default>false</default>
+                <label>Association with Plan</label>
+            </value>
+            <value>
+                <fullName>Xfer from Multiple Plans</fullName>
+                <default>false</default>
+                <label>Xfer from Multiple Plans</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

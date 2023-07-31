@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Adding Organization Levels Items</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Adding Organization Levels Items</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Adding Organization Levels Items</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance Support. The following steps will assist you in adding new organization levels:
+
+Navigate to Company Setup &gt; Organization Levels &gt; Org Level Items
+Select the Level you wish to update in the Depth drop-down menu
+Select the ADD button
+Enter the Name and Description
+Verify the Org Depth is correct
+Assign parent/child relationships to the item to create the assignment hierarchy for the employee use
+If you do not assign a parent relationship to at least one item, the organization level will not be available for selection
+Select SAVE at the bottom of the page
+
+Please let us know if you have any questions, and we would be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

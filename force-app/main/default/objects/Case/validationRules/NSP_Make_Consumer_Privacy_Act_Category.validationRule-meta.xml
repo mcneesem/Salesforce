@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Make_Consumer_Privacy_Act_Category</fullName>
+    <active>true</active>
+    <description>mark Consumer Privacy Act Category required if CCPA Inquiry box is checked</description>
+    <errorConditionFormula>AND( 
+$Setup.NSP_Trigger_Switch__c.CaseValidations__c != true, $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+NSP_Consumer_Privacy_Inquiry__c  = True, ISPICKVAL( NSP_Consumer_Privacy_Act_Category__c , &quot;&quot;))</errorConditionFormula>
+    <errorDisplayField>NSP_Consumer_Privacy_Act_Category__c</errorDisplayField>
+    <errorMessage>Complete this field.</errorMessage>
+</ValidationRule>

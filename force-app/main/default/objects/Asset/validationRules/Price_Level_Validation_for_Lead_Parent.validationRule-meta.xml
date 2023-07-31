@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Level_Validation_for_Lead_Parent</fullName>
+    <active>true</active>
+    <errorConditionFormula>NSP_Client_is_Lead_Parent__c = True &amp;&amp; 
+ISBLANK( TEXT(NSP_Price_Level__c) )&amp;&amp; $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True</errorConditionFormula>
+    <errorDisplayField>NSP_Price_Level__c</errorDisplayField>
+    <errorMessage>You need to set a price level before you can assign this asset as lead parent</errorMessage>
+</ValidationRule>

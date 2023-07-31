@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Multi_Year_Client_Service_Agreement__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( AND(NOT(ISNULL( NSP_CSA_Multiyear_Effective_Date__c )) , NOT(ISNULL( NSP_CSA_Multiyear_End_Date__c )) ), true, false)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Multi Year Client Service Agreement</label>
+    <description>set to true if client start date and end date are not blank</description>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

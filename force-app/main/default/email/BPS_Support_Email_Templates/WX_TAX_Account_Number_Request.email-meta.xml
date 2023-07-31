@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>WX TAX - Account Number Request</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>WX TAX - Account Number Request</name>
+    <style>freeForm</style>
+    <subject>WX TAX - Account Number Request</subject>
+    <textOnly>Hello {!Contact.FirstName} {!Contact.LastName},  
+
+ 
+Insperity is currently preparing for 4th Quarter and Year End payroll tax filings on your behalf. We currently do not have {Account name} account number for the following tax agency: 
+ 
+
+If you have not yet registered your company, please follow the link below. 
+
+
+Add Link  
+ 
+
+It is imperative that we have the tax agency account number to ensure that your tax return and tax payment are posted to your tax account. The account number is mandatory if the tax agency requires the return to be filed electronically. {Account name} will be liable for any penalty and interest that results from non-compliance with this agency’s tax laws. 
+
+If you have any questions or concerns, please contact us.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

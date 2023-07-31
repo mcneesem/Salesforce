@@ -1,0 +1,9 @@
+<apex:component access="global"  controller="NSP_RelatedProjectTeamController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    
+    <apex:outputPanel >
+        <p><span>Regards,</span><br/>
+            <span>{!projectTeam.NSP_Assignee__r.Name}</span> <br/>
+            <span>{!projectTeam.NSP_Assignee__r.NSP_Job_Title__c}</span></p>
+    </apex:outputPanel>
+</apex:component>

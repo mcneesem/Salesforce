@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initiative_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Initiative Type</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Short Term (90 day) Strategy</fullName>
+                <default>false</default>
+                <label>Short Term (90 day) Strategy</label>
+            </value>
+            <value>
+                <fullName>Long Term (through next renewal period) Strategy</fullName>
+                <default>false</default>
+                <label>Long Term (through next renewal period) Strategy</label>
+            </value>
+            <value>
+                <fullName>Response (retention-specific efforts) Strategy</fullName>
+                <default>false</default>
+                <label>Response (retention-specific efforts) Strategy</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

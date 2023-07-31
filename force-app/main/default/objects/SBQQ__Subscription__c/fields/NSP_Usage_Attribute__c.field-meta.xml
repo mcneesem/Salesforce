@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Usage_Attribute__c</fullName>
+    <description>This field is used to capture the usage attribute</description>
+    <externalId>false</externalId>
+    <label>Usage Attribute</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Active Users</fullName>
+                <default>false</default>
+                <label>Active Users</label>
+            </value>
+            <value>
+                <fullName>EE Check Count</fullName>
+                <default>false</default>
+                <label>EE Check Count</label>
+            </value>
+            <value>
+                <fullName>Delivery Count</fullName>
+                <default>false</default>
+                <label>Delivery Count</label>
+            </value>
+            <value>
+                <fullName>Total Active W2 Employees</fullName>
+                <default>false</default>
+                <label>Total Active W2 Employees</label>
+            </value>
+            <value>
+                <fullName>Total Active1099 Employees In Company</fullName>
+                <default>false</default>
+                <label>Total Active1099 Employees In Company</label>
+            </value>
+            <value>
+                <fullName>Total Employee Count</fullName>
+                <default>false</default>
+                <label>Total Employee Count</label>
+            </value>
+            <value>
+                <fullName>Total Assessments</fullName>
+                <default>false</default>
+                <label>Total Assessments</label>
+            </value>
+            <value>
+                <fullName>Total Licenses</fullName>
+                <default>false</default>
+                <label>Total Licenses</label>
+            </value>
+            <value>
+                <fullName>TOTAL PARTS WITH BAL</fullName>
+                <default>false</default>
+                <label>TOTAL PARTS WITH BAL</label>
+            </value>
+            <value>
+                <fullName>Vendor Check Count</fullName>
+                <default>false</default>
+                <label>Vendor Check Count</label>
+            </value>
+            <value>
+                <fullName>Total W2 Count</fullName>
+                <default>false</default>
+                <label>Total W2 Count</label>
+            </value>
+            <value>
+                <fullName>Active Employees</fullName>
+                <default>false</default>
+                <label>Active Employees</label>
+            </value>
+            <value>
+                <fullName>Billed Active</fullName>
+                <default>false</default>
+                <label>Billed Active</label>
+            </value>
+            <value>
+                <fullName>Billed Punchers</fullName>
+                <default>false</default>
+                <label>Billed Punchers</label>
+            </value>
+            <value>
+                <fullName>Billed Supervisors</fullName>
+                <default>false</default>
+                <label>Billed Supervisors</label>
+            </value>
+            <value>
+                <fullName>Billed Paid Employees</fullName>
+                <default>false</default>
+                <label>Billed Paid Employees</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

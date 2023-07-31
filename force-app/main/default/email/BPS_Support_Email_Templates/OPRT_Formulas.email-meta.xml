@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OPRT - Formulas</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OPRT - Formulas</name>
+    <style>freeForm</style>
+    <subject>OPRT - Formulas</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for your email. Insperity Organizational Planning offers the ability to add custom formula fields that work with your data to create powerful insight to your company’s charts. The most common formula fields include headcount, which calculates based on the number of employees in the chart, or salary totals, which calculates the sum of all the salaries within a determined range.
+
+You can view our job aid here for assistance with creating formulas in your system.  If you have any additional questions or if I can be of further assistance, please let me know.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

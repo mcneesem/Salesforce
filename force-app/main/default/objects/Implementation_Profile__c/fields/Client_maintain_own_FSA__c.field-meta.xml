@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_maintain_own_FSA__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Will the client maintain their own FSA through current plan year?</inlineHelpText>
+    <label>Client maintain own FSA in crrnt plan yr</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

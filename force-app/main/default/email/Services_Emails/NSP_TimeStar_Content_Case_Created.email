@@ -1,0 +1,24 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="font-size: 11pt; font-family: Calibri, sans-serif; margin: 0in 0in 12pt; color: rgb(34, 34, 34); line-height: 15.6933px;"></p><p class="MsoNormal" style="margin-bottom: 12pt;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><span style="line-height: 107%; color: black;"><a href="https://help.insperity.com/bps/categories/ita/?utm_source=BPSOPRTSupport&amp;utm_medium=BPSOPRTSupport&amp;utm_campaign=BPSOPRTSupport"><img src="https://insperity--sfdevph2--c.documentforce.com/servlet/servlet.ImageServer?id=0151F000001Apui&amp;oid=00D1F000000XxoF" border="0" align="left" alt=""><br></a></span></font></p><p class="MsoNormal" style="margin-bottom: 12pt;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><span style="line-height: 107%; color: black;"><br></span></font></p><p class="MsoNormal" style="margin-bottom: 12pt;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><span style="line-height: 107%; color: black;"><br></span></font></p><p class="MsoNormal" style="margin-bottom: 12pt;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><span style="line-height: 107%; color: black;"><br></span></font></p><p class="MsoNormal" style="margin-bottom: 12pt;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><span style="line-height: 107%; color: black;">Hello&nbsp;{!Case.SuppliedName},<br>
+<br>
+Thank you for contacting Insperity Technical Support. We have created a support
+case (Case #{!Case.CaseNumber}&nbsp;- "{!Case.Subject}")&nbsp;with
+your request, and our technicians will be glad to assist you&nbsp;as soon as
+they are able. Cases are handled in the order in which they are received with
+preference given to items that impact timely payroll processing.</span></font><span style="font-family: Verdana, Helvetica, sans-serif; font-size: small;">We do
+apologize that at this time, due to high volume, our response times are longer
+than we'd like. Please rest assured that we do have your request and will be in
+touch as soon as we're able. In the meantime, feel free to reference our
+new&nbsp;</span><a href="https://help.insperity.com/bps/categories/ita/?utm_source=autoreplyITA&amp;utm_medium=autoreplyITA&amp;utm_campaign=autoreplyITA" style="font-family: Verdana, Helvetica, sans-serif; font-size: small;">Help
+Center</a><span style="font-family: Verdana, Helvetica, sans-serif; font-size: small;">&nbsp;site that may assist in answering some questions.</span></p><p class="MsoNormal" style="margin-bottom: 12pt;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><span style="line-height: 107%; color: black;">
+If your ability to process your payroll in a timely manner is being affected,
+or your request is time sensitive due to some other reason, please either reply
+to this email noting the deadline and whether it is payroll critical, or call
+800-314-8223.</span></font></p><p class="MsoNormal" style="font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;"><span style="line-height: 107%; color: black;"><font face="Verdana, Helvetica, sans-serif" style="" size="2">Insperity Time
+&amp; Attendance Support<br>
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562<br>
+OFFICE: 800-314-8223 | FAX: 262-364-3800</font></span></p><p class="MsoNormal" style="font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;"><span style="line-height: 107%; color: black;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><br></font></span></p><p class="MsoNormal" style="font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;"><span style="line-height: 107%; color: black;"><font face="Verdana, Helvetica, sans-serif" style="" size="2"><img src="https://insperity--sfdevph2--c.documentforce.com/servlet/servlet.ImageServer?id=0151F000001Apkl&amp;oid=00D1F000000XxoF" border="0" align="left" alt=""><br></font></span></p><p style="font-size: 12pt; font-family: arial;"></p>]]></td>
+</tr>
+</table>

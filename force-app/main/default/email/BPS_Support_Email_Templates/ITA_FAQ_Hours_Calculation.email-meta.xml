@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Hours Calculation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Hours Calculation</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Hours Calculation</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+
+Thank you for contacting Insperity Time and Attendance Support. In order for a new employee&apos;s total hours and accruals to calculate, the current pay period within the system should include the date they were hired. After the pay period has been successfully closed and the system&apos;s current pay period dates include (Employee Name)&apos;s hire date, their total hours and accruals will calculate. The following link will assist you with closing the pay period: https://help.insperity.com/bps/knowledge-base/exporting-to-insperity-payroll/#ending-the-pay-period 
+ 
+If you need further assistance, please let us know and we&apos;ll be happy to help.  
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>PerformSmart - Exclude Employees</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>PerformSmart - Exclude Employees</name>
+    <style>freeForm</style>
+    <subject>PerformSmart - Exclude Employees</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Technical Support.
+
+When creating a review and excluding employees, for best results we recommend excluding by job title or job code rather than by employee name.
+
+To exclude by job title or job code, please follow the steps below:
+
+Click on Administration &gt; Cycle Based Reviews.
+Click on the New Review button at the right to create a new review period.
+Complete the review period information.
+Scroll down to the Employee Exclusions section.
+Click on the Add icon next to Job Title.
+Select the Job Titles / Job Codes then click the add button.
+The selected employees are listed by expanding the Employee Exclusion List area at the bottom of the page so that you can review all your exclusion selections before saving.
+Deselect any employees who should be included in the review.  Leave the check mark next to any employees who should be excluded.
+
+
+To verify who is in the review, please run a Review Inclusion/Exclusion report.
+
+If you have any questions or need anything further, please do not hesitate to contact us.
+
+
+Kind Regards,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

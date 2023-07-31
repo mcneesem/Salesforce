@@ -1,0 +1,818 @@
+{
+  "version" : "58.0",
+  "nodes" : {
+    "LOAD_DATASET1" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "OwnerId", "NSP_Owner__c", "Id", "Name", "pse__Account__c", "pse__Alert_Threshold__c", "pse__End_Date__c", "pse__Percent_Hours_Complete__c", "pse__Percent_Hours_Completed_For_Recognition__c", "pse__Project_ID__c", "pse__Project_Manager__c", "pse__Project_Type__c", "pse__Start_Date__c", "NSP_Visible_to_Client__c", "Project_Complete_Date__c", "NSP_Project_Complete__c", "NSP_Account__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "pse__Proj__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "pse__Proj__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN0" : {
+      "action" : "join",
+      "sources" : [ "FILTER0", "LOAD_DATASET2" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "pse__Account__c" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET2" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "OwnerId", "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET3" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Name", "pse__End_Date__c", "pse__Order__c", "pse__Project__c", "pse__Start_Date__c", "NSP_Percentage_Complete__c", "NSP_Visible_to_Client__c", "NSP_Owner__c", "Id" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "pse__Project_Task__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "pse__Project_Task__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN1" : {
+      "action" : "join",
+      "sources" : [ "JOIN0", "LOAD_DATASET3" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "pse__Proje",
+        "rightKeys" : [ "pse__Project__c" ]
+      }
+    },
+    "OUTPUT1" : {
+      "action" : "save",
+      "sources" : [ "JOIN5" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Project Task, Account, Project DS",
+          "name" : "projectTaskwithAccountProject",
+          "folderName" : "Communities_Project_POC"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "LOAD_DATASET4" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "OwnerId", "IsDeleted", "Name", "CurrencyIsoCode", "RecordTypeId", "CreatedDate", "CreatedById", "LastModifiedDate", "LastModifiedById", "SystemModstamp", "LastActivityDate", "LastViewedDate", "LastReferencedDate", "pse__Milestone_Amount__c", "pse__Target_Date__c", "NSP_Milestone_Complete__c", "NSP_Visible_to_Client__c", "pse__Project__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "pse__Milestone__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "pse__Milestone__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN2" : {
+      "action" : "join",
+      "sources" : [ "JOIN0", "LOAD_DATASET4" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "pse__Miles",
+        "rightKeys" : [ "pse__Project__c" ]
+      }
+    },
+    "OUTPUT2" : {
+      "action" : "save",
+      "sources" : [ "JOIN2" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Milestone, Project Account DS",
+          "name" : "milestonesWithProjectAccount",
+          "folderName" : "Communities_Project_POC"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT3" : {
+      "action" : "save",
+      "sources" : [ "JOIN13" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Project, Account DS",
+          "name" : "projectWithAccount",
+          "folderName" : "Communities_Project_POC"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "LOAD_DATASET5" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "AccountId", "Name", "pse__Salesforce_User__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Contact",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Contact"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET6" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "AccountId", "ContactId", "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN5" : {
+      "action" : "join",
+      "sources" : [ "JOIN1", "LOAD_DATASET6" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "OwnerId" ],
+        "rightQualifier" : "User",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET0_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Visible_to_Client__c", "Id", "OwnerId", "Name", "pse__End_Date_Time__c", "pse__Project__c", "pse__Start_Date_Time__c", "pse__Status__c", "NSP_Sub_Category__c", "NSP_Project_Attendance__c", "NSP_Owner__c", "NSP_Account_Id__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "pse__Project_Task__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "pse__Project_Task__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET1_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "Name", "CurrencyIsoCode", "CreatedDate", "CreatedById", "LastModifiedDate", "LastModifiedById", "SystemModstamp", "Asset__c", "Project__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Project_Asset__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Project_Asset__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET2_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Name", "Id" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Asset",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Asset"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET3_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET5_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Visible_to_Client__c", "Id", "Name", "pse__Account__c", "pse__Project_Status__c", "pse__Project_Type__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "pse__Proj__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "pse__Proj__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN5_copy0" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET0_copy0", "LOAD_DATASET5_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "pse__Project__c" ],
+        "rightQualifier" : "pse__Proj_",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN6_copy0" : {
+      "action" : "join",
+      "sources" : [ "JOIN5_copy0", "LOAD_DATASET3_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_Account_Id__c" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN7_copy0" : {
+      "action" : "join",
+      "sources" : [ "JOIN6_copy0", "LOAD_DATASET1_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "pse__Proj_.Id" ],
+        "rightQualifier" : "Project_As",
+        "rightKeys" : [ "Project__c" ]
+      }
+    },
+    "JOIN8_copy0" : {
+      "action" : "join",
+      "sources" : [ "JOIN7_copy0", "LOAD_DATASET2_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Project_As.Asset__c" ],
+        "rightQualifier" : "Asset",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "OUTPUT0_copy0" : {
+      "action" : "save",
+      "sources" : [ "JOIN8_copy0" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Project Task, Project Account, Asset DS",
+          "name" : "Project_Tasks_with_Project_Account_and_Asset",
+          "folderName" : "Communities_Project_POC"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "FILTER0" : {
+      "action" : "filter",
+      "sources" : [ "LOAD_DATASET1" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "NSP_Visible_to_Client__c",
+          "operator" : "EQUAL",
+          "operands" : [ "true" ]
+        } ]
+      }
+    },
+    "LOAD_DATASET11" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Community_Access__c", "ContactId", "IsActive", "AccountId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "AccountContactRelation",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "AccountContactRelation"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN10" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET11", "LOAD_DATASET5" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "ContactId" ],
+        "rightQualifier" : "Contact",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN11" : {
+      "action" : "join",
+      "sources" : [ "JOIN10", "LOAD_DATASET6" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Contact.Id" ],
+        "rightQualifier" : "User",
+        "rightKeys" : [ "ContactId" ]
+      }
+    },
+    "JOIN12" : {
+      "action" : "join",
+      "sources" : [ "JOIN11", "LOAD_DATASET2" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "AccountId" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN13" : {
+      "action" : "join",
+      "sources" : [ "JOIN12", "FILTER0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "AccountId" ],
+        "rightQualifier" : "pse__Proj_",
+        "rightKeys" : [ "pse__Account__c" ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "LOAD_DATASET1" : {
+        "label" : "pse__Proj__c",
+        "type" : "LOAD_DATASET",
+        "top" : 112,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN0" : {
+        "label" : "join project acct",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 392
+      },
+      "LOAD_DATASET2" : {
+        "label" : "Account",
+        "type" : "LOAD_DATASET",
+        "top" : 252,
+        "left" : 252,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET3" : {
+        "label" : "pse__Project_Task__c",
+        "type" : "LOAD_DATASET",
+        "top" : 532,
+        "left" : 392,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN1" : {
+        "label" : "project task with account project",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 252,
+        "left" : 532
+      },
+      "OUTPUT1" : {
+        "label" : "Project Tasks with Project & Account",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 112.1,
+        "left" : 951.1
+      },
+      "LOAD_DATASET4" : {
+        "label" : "pse__Milestone__c",
+        "type" : "LOAD_DATASET",
+        "top" : 672,
+        "left" : 392,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN2" : {
+        "label" : "milestone",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 532,
+        "left" : 532
+      },
+      "OUTPUT2" : {
+        "label" : "Milestones with Project & Account",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 251.8,
+        "left" : 672
+      },
+      "OUTPUT3" : {
+        "label" : "Projects & Accounts",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 391.7,
+        "left" : 1092
+      },
+      "LOAD_DATASET5" : {
+        "label" : "Contact",
+        "type" : "LOAD_DATASET",
+        "top" : 252,
+        "left" : 392,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET6" : {
+        "label" : "User",
+        "type" : "LOAD_DATASET",
+        "top" : 672,
+        "left" : 532,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN5" : {
+        "label" : "User to Proj Owner",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 111.80000000000001,
+        "left" : 672
+      },
+      "LOAD_DATASET0_copy0" : {
+        "label" : "pse__Project_Task__c",
+        "type" : "LOAD_DATASET",
+        "top" : 1092,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET1_copy0" : {
+        "label" : "Project_Asset__c",
+        "type" : "LOAD_DATASET",
+        "top" : 1232,
+        "left" : 392,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET2_copy0" : {
+        "label" : "Asset",
+        "type" : "LOAD_DATASET",
+        "top" : 1513.2,
+        "left" : 532,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET3_copy0" : {
+        "label" : "Account",
+        "type" : "LOAD_DATASET",
+        "top" : 1372.4,
+        "left" : 252,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET5_copy0" : {
+        "label" : "pse__Proj__c",
+        "type" : "LOAD_DATASET",
+        "top" : 1232,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN5_copy0" : {
+        "label" : "Lookup Join Project Task with Project",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 252
+      },
+      "JOIN6_copy0" : {
+        "label" : "Lookup Join Project Task Project with Account",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1512.4,
+        "left" : 392
+      },
+      "JOIN7_copy0" : {
+        "label" : "InnerJoin  Project with Project Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 532
+      },
+      "JOIN8_copy0" : {
+        "label" : "Lookup Join Project Asset with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 672
+      },
+      "OUTPUT0_copy0" : {
+        "label" : "Project Task with Project Account and Asset",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 1092,
+        "left" : 812
+      },
+      "FILTER0" : {
+        "label" : "Projects which are visible to client as true",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 112,
+        "left" : 252
+      },
+      "LOAD_DATASET11" : {
+        "label" : "AccountContactRelation",
+        "type" : "LOAD_DATASET",
+        "top" : 252,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN10" : {
+        "label" : "Join ACR with Contact",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 392.4,
+        "left" : 252
+      },
+      "JOIN11" : {
+        "label" : "Join Contact with User",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 391.8,
+        "left" : 672
+      },
+      "JOIN12" : {
+        "label" : "Join Contact with Account",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 392,
+        "left" : 812
+      },
+      "JOIN13" : {
+        "label" : "Join Account with Project",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 392,
+        "left" : 952
+      }
+    },
+    "connectors" : [ {
+      "source" : "LOAD_DATASET0_copy0",
+      "target" : "JOIN5_copy0"
+    }, {
+      "source" : "JOIN0",
+      "target" : "JOIN1"
+    }, {
+      "source" : "FILTER0",
+      "target" : "JOIN0"
+    }, {
+      "source" : "LOAD_DATASET2",
+      "target" : "JOIN0"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "JOIN1"
+    }, {
+      "source" : "JOIN0",
+      "target" : "JOIN2"
+    }, {
+      "source" : "LOAD_DATASET4",
+      "target" : "JOIN2"
+    }, {
+      "source" : "JOIN2",
+      "target" : "OUTPUT2"
+    }, {
+      "source" : "JOIN1",
+      "target" : "JOIN5"
+    }, {
+      "source" : "LOAD_DATASET6",
+      "target" : "JOIN5"
+    }, {
+      "source" : "JOIN5",
+      "target" : "OUTPUT1"
+    }, {
+      "source" : "LOAD_DATASET5_copy0",
+      "target" : "JOIN5_copy0"
+    }, {
+      "source" : "JOIN5_copy0",
+      "target" : "JOIN6_copy0"
+    }, {
+      "source" : "LOAD_DATASET3_copy0",
+      "target" : "JOIN6_copy0"
+    }, {
+      "source" : "JOIN6_copy0",
+      "target" : "JOIN7_copy0"
+    }, {
+      "source" : "LOAD_DATASET1_copy0",
+      "target" : "JOIN7_copy0"
+    }, {
+      "source" : "JOIN7_copy0",
+      "target" : "JOIN8_copy0"
+    }, {
+      "source" : "LOAD_DATASET2_copy0",
+      "target" : "JOIN8_copy0"
+    }, {
+      "source" : "JOIN8_copy0",
+      "target" : "OUTPUT0_copy0"
+    }, {
+      "source" : "LOAD_DATASET1",
+      "target" : "FILTER0"
+    }, {
+      "source" : "LOAD_DATASET11",
+      "target" : "JOIN10"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "JOIN10"
+    }, {
+      "source" : "JOIN10",
+      "target" : "JOIN11"
+    }, {
+      "source" : "LOAD_DATASET6",
+      "target" : "JOIN11"
+    }, {
+      "source" : "JOIN11",
+      "target" : "JOIN12"
+    }, {
+      "source" : "LOAD_DATASET2",
+      "target" : "JOIN12"
+    }, {
+      "source" : "JOIN12",
+      "target" : "JOIN13"
+    }, {
+      "source" : "JOIN13",
+      "target" : "OUTPUT3"
+    }, {
+      "source" : "FILTER0",
+      "target" : "JOIN13"
+    } ],
+    "hiddenColumns" : [ {
+      "fieldName" : "NSP_Owner__c",
+      "objectType" : "connectedDataset",
+      "objectName" : "SFDC_LOCAL$pse__Project_Task__c"
+    } ]
+  },
+  "runMode" : "full"
+}

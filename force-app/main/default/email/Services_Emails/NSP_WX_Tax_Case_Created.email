@@ -1,0 +1,20 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style=""><span style="line-height: 107%;"><font face="Verdana, Helvetica, sans-serif" style="" size="4"><br></font></span></p><p class="MsoNormal" style=""><span style="line-height: 107%;"><font face="Verdana, Helvetica, sans-serif" style="" size="4">Thank you
+for contacting Insperity Customer Support.<o:p></o:p></font></span></p><p class="MsoNormal" style=""><span style="line-height: 107%;"><font face="Verdana, Helvetica, sans-serif" style="" size="4"><br></font></span></p>
+
+<p class="MsoNormal" style=""><span style="line-height: 107%;"><o:p><font face="Verdana, Helvetica, sans-serif" size="4">&nbsp;</font></o:p></span></p>
+
+<p class="MsoNormal" style=""><span style="line-height: 107%;"><font face="Verdana, Helvetica, sans-serif" size="4">Your request
+for assistance has been received. Case #{!Case.CaseNumber}&nbsp; - "{!Case.Subject}"<span style="mso-spacerun:yes">&nbsp;</span>has been
+created for you. A member of our customer care team will respond to your case
+as soon as possible.<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style=""><span style="line-height: 107%;"><o:p><font face="Verdana, Helvetica, sans-serif" size="4">&nbsp;</font></o:p></span></p><p class="MsoNormal" style=""><font size="4" face="Verdana, Helvetica, sans-serif"><br></font></p>
+
+<p class="MsoNormal" style=""><font face="Verdana, Helvetica, sans-serif" style="" size="4"><b style=""><span style="line-height: 107%;">IPS Tax Department</span></b><span style="line-height: 107%;"><br>
+Traditional Employment Solutions<br>
+19001 Crescent Springs Dr | Kingwood, TX 77339</span></font></p>]]></td>
+</tr>
+</table>

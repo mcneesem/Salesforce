@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Root_Cause__c</fullName>
+    <externalId>false</externalId>
+    <label>Root Cause</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Administrative Assistance</fullName>
+                <default>false</default>
+                <label>Administrative Assistance</label>
+            </value>
+            <value>
+                <fullName>Administrative Relief</fullName>
+                <default>false</default>
+                <label>Administrative Relief</label>
+            </value>
+            <value>
+                <fullName>Configuration Adjustment</fullName>
+                <default>false</default>
+                <label>Configuration Adjustment</label>
+            </value>
+            <value>
+                <fullName>Data Issue</fullName>
+                <default>false</default>
+                <label>Data Issue</label>
+            </value>
+            <value>
+                <fullName>Delivery Courier</fullName>
+                <default>false</default>
+                <label>Delivery Courier</label>
+            </value>
+            <value>
+                <fullName>Information</fullName>
+                <default>false</default>
+                <label>Information</label>
+            </value>
+            <value>
+                <fullName>Insperity</fullName>
+                <default>false</default>
+                <label>Insperity</label>
+            </value>
+            <value>
+                <fullName>Known Issue</fullName>
+                <default>false</default>
+                <label>Known Issue</label>
+            </value>
+            <value>
+                <fullName>License Issue</fullName>
+                <default>false</default>
+                <label>License Issue</label>
+            </value>
+            <value>
+                <fullName>Misconfiguration</fullName>
+                <default>false</default>
+                <label>Misconfiguration</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Payment/filing error</fullName>
+                <default>false</default>
+                <label>Payment/filing error</label>
+            </value>
+            <value>
+                <fullName>Prior to Insperity</fullName>
+                <default>false</default>
+                <label>Prior to Insperity</label>
+            </value>
+            <value>
+                <fullName>Reports</fullName>
+                <default>false</default>
+                <label>Reports</label>
+            </value>
+            <value>
+                <fullName>Server Issue</fullName>
+                <default>false</default>
+                <label>Server Issue</label>
+            </value>
+            <value>
+                <fullName>Service Team Question</fullName>
+                <default>false</default>
+                <label>Service Team Question</label>
+            </value>
+            <value>
+                <fullName>Training Issue</fullName>
+                <default>false</default>
+                <label>Training Issue</label>
+            </value>
+            <value>
+                <fullName>Upgrade Issue</fullName>
+                <default>false</default>
+                <label>Upgrade Issue</label>
+            </value>
+            <value>
+                <fullName>Upgrade Needed</fullName>
+                <default>false</default>
+                <label>Upgrade Needed</label>
+            </value>
+            <value>
+                <fullName>User Error</fullName>
+                <default>false</default>
+                <label>User Error</label>
+            </value>
+            <value>
+                <fullName>Workstation Issue</fullName>
+                <default>false</default>
+                <label>Workstation Issue</label>
+            </value>
+            <value>
+                <fullName>Termination</fullName>
+                <default>false</default>
+                <label>Termination</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

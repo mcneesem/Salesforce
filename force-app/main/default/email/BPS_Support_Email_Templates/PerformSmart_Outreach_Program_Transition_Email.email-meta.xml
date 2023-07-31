@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>PerformSmart Outreach Program Transition Email</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>PerformSmart Outreach Program Transition Email</name>
+    <style>freeForm</style>
+    <subject>PerformSmart Outreach Program Transition Email</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+The Insperity Performance Management Account Transition period is complete. I hope you and your users are enjoying the system! Your {Account Name} account will now transition to our Support Staff.
+
+For day-to-day needs, our Performance Management Support staff is at your disposal. Our Performance Management Support Staff prides itself on assisting clients in a timely fashion. In order to serve all of our customers more efficiently, we ask that you not share the support team’s contact information with your users. It is meant to be a resource for Administrators and Accounting Reviewers only.
+
+In addition to your support team, we have the client help center at https://help.insperity.com/bps/categories/performance-management/
+This is where you can go to get information on the how-to&apos;s on the most frequently asked questions.
+
+
+Our Support team is available Monday through Friday from 7 am to 7 pm Central Time to assist you.
+
+Performance Management Technical Support
+performsmartsupport@insperity.com
+877-222-0499 (dial 2 for support then dial 3 for PerformSmart)</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

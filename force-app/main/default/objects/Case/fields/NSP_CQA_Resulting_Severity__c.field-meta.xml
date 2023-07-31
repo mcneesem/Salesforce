@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CQA_Resulting_Severity__c</fullName>
+    <externalId>false</externalId>
+    <label>CQA Resulting Severity</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>(L1) Accruals Miscalculation with Pay Impact</fullName>
+                <default>false</default>
+                <label>(L1) Accruals Miscalculation with Pay Impact</label>
+            </value>
+            <value>
+                <fullName>(L1) CA Accruals Miscalculation</fullName>
+                <default>false</default>
+                <label>(L1) CA Accruals Miscalculation</label>
+            </value>
+            <value>
+                <fullName>(L1) Compliance Updates with Miscalculations</fullName>
+                <default>false</default>
+                <label>(L1) Compliance Updates with Miscalculations</label>
+            </value>
+            <value>
+                <fullName>(L1) Pay Miscalculation</fullName>
+                <default>false</default>
+                <label>(L1) Pay Miscalculation</label>
+            </value>
+            <value>
+                <fullName>(L2) Compliance Updates - No Miscalculations</fullName>
+                <default>false</default>
+                <label>(L2) Compliance Updates - No Miscalculations</label>
+            </value>
+            <value>
+                <fullName>(L2) Crucial Update - No Miscalculations</fullName>
+                <default>false</default>
+                <label>(L2) Crucial Update - No Miscalculations</label>
+            </value>
+            <value>
+                <fullName>(L2) Non-CA Accruals Miscalculation no Pay Impact</fullName>
+                <default>false</default>
+                <label>(L2) Non-CA Accruals Miscalculation no Pay Impact</label>
+            </value>
+            <value>
+                <fullName>(L3) Best Practice Updates</fullName>
+                <default>false</default>
+                <label>(L3) Best Practice Updates</label>
+            </value>
+            <value>
+                <fullName>(L3) Documentation Updated</fullName>
+                <default>false</default>
+                <label>(L3) Documentation Updated</label>
+            </value>
+            <value>
+                <fullName>(L3) UX Impact</fullName>
+                <default>false</default>
+                <label>(L3) UX Impact</label>
+            </value>
+            <value>
+                <fullName>(L4) No Impact - No Updates</fullName>
+                <default>false</default>
+                <label>(L4) No Impact - No Updates</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

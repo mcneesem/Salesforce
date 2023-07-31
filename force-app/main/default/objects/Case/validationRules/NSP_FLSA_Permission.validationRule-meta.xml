@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_FLSA_Permission</fullName>
+    <active>true</active>
+    <description>This validation rule is created as part of STY-02249.</description>
+    <errorConditionFormula>AND(NOT( $Permission.NSP_FLSA  ),
+$User.NSP_Profile_Name__c &lt;&gt;&apos;System Administrator&apos;,
+$Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
+CONTAINS( $Label.NSP_FLSA_Case_Sub_Categories, NSP_SubCategory__c),
+NSP_Category__c = &apos;HR Admin Compliance - FLSA&apos;)</errorConditionFormula>
+    <errorMessage>Only the FLSA Group can create this type of case. If your client needs this service, please contact the FLSA Group.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_What_is_the_plan_year__c</fullName>
+    <description>What is the plan year or 12-month period in which time is earned?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>What is the plan year or 12-month period in which time is earned?</inlineHelpText>
+    <label>What is the plan year?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Calendar Year (1/1 – 12/31)</fullName>
+                <default>false</default>
+                <label>Calendar Year (1/1 – 12/31)</label>
+            </value>
+            <value>
+                <fullName>Anniversary Year</fullName>
+                <default>false</default>
+                <label>Anniversary Year</label>
+            </value>
+            <value>
+                <fullName>Client’s Fiscal Year</fullName>
+                <default>false</default>
+                <label>Client’s Fiscal Year</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

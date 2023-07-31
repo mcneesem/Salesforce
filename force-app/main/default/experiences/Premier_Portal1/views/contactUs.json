@@ -1,0 +1,63 @@
+{
+  "appPageId" : "4329045a-0ee7-4781-a21f-030a49949741",
+  "componentName" : "siteforce:sldsTwoCol66Layout",
+  "dataProviders" : [ ],
+  "id" : "174623c7-56e4-4f72-97de-69150ab36b08",
+  "label" : "Contact Us",
+  "regions" : [ {
+    "id" : "064b70c0-46e7-4f30-90a9-1d3df3dc8511",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "id" : "69073e66-b81e-44cd-8b78-de3807793c6f",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "askConfirmationQuestion" : true,
+        "confirmationMessageLabel" : "Got it!",
+        "deflectionSubtitle" : "Find what you need here.",
+        "deflectionTitle" : "Need Answers Fast?",
+        "firstQuestion" : "Did this content solve your issue?",
+        "maxResults" : 6,
+        "measureDeflection" : true,
+        "redirectUrl" : "",
+        "secondQuestion" : "Stop creating your case?",
+        "showArticles" : true,
+        "showDiscussions" : false,
+        "topicId" : ""
+      },
+      "componentName" : "forceCommunity:caseDeflection",
+      "id" : "499bd5cc-f559-4b87-9717-7eb239a448a2",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "b18fe88e-d6c2-48fa-9545-00b52e4f8645",
+    "regionName" : "sidebar",
+    "type" : "region"
+  }, {
+    "id" : "603fdfd6-6acb-40e1-b6ce-15455bc167a9",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Contact Us"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "ab666b18-1ae0-47cd-843d-4df4233381eb",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "aaccc85e-628e-4424-9ee1-f69872c3a6ee",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "contactsupport"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Howdoestimeaccrueunder_the_plan_AIMS__c</fullName>
+    <externalId>false</externalId>
+    <label>How does time accrue under the plan?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Fiscal Year Frontload: Full accrual is granted each year on the first day the Fiscal year</fullName>
+                <default>false</default>
+                <label>Fiscal Year Frontload: Full accrual is granted each year on the first day the Fiscal year</label>
+            </value>
+            <value>
+                <fullName>First of Month: Accrual is added on the first day of each month</fullName>
+                <default>false</default>
+                <label>First of Month: Accrual is added on the first day of each month</label>
+            </value>
+            <value>
+                <fullName>Pay Period: Accrual is added on each pay date</fullName>
+                <default>false</default>
+                <label>Pay Period: Accrual is added on each pay date</label>
+            </value>
+            <value>
+                <fullName>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</fullName>
+                <default>false</default>
+                <label>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

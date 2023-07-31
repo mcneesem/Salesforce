@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PEO_Billable_Compact_Layout</fullName>
+    <fields>pse__Account__c</fields>
+    <fields>NSP_RET_Client_ID__c</fields>
+    <fields>pse__Status_Visual__c</fields>
+    <fields>pse__Project_Type__c</fields>
+    <fields>Invoice_Ready__c</fields>
+    <fields>TemplateName__c</fields>
+    <label>PEO Billable Compact Layout</label>
+</CompactLayout>

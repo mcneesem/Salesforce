@@ -1,0 +1,8 @@
+<messaging:emailTemplate subject="Action required: Client Subscription expired 30 days ago" recipientType="User" relatedToType="SBQQ__Quote__c">
+<messaging:plainTextEmailBody >
+Hi {!relatedTo.NSP_Opportunity_Owner_Name__c},
+
+Client {!relatedTo.NSP_Account_Name__c} has not renewed their support that expired on {!relatedTo.SBQQ__StartDate__c-1}, please reach out to them with final renewal notification.
+Here is the link to the quote: <apex:outputText value=" {!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}/{!relatedTo.Id}"/>
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

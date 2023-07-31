@@ -1,0 +1,189 @@
+<template>
+  <lightning-record-edit-form
+    onerror={handleError}
+    record-id={recordId}
+    onload={handleLoad}
+    object-api-name={objectApiName}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title slds-var-p-bottom_xx-small"
+      value={label.generalPayInfo}>
+    </lightning-formatted-text>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Employee_Types__c}
+      label={objFields.NSP_Employee_Types__c.label}
+      multiple
+      field-api-name="Implementation_Profile__c.NSP_Employee_Types__c"
+      value={field.NSP_Employee_Types__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Employee_Types__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_SalaryExemptEmployeeReceiveOvertime__c}
+      if:true={visibility.NSP_SalaryExemptEmployeeReceiveOvertime__c}
+      label={label.NSP_SalaryExemptEmployeeReceiveOvertime}
+      class={styles.NSP_SalaryExemptEmployeeReceiveOvertime__c}
+      field-api-name="Implementation_Profile__c.NSP_SalaryExemptEmployeeReceiveOvertime__c"
+      value={field.NSP_SalaryExemptEmployeeReceiveOvertime__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_SalaryExemptEmployeeReceiveOvertime__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Do_you_track_hours__c}
+      label={objFields.NSP_Do_you_track_hours__c.label}
+      class={styles.NSP_Do_you_track_hours__c}
+      field-api-name="Implementation_Profile__c.NSP_Do_you_track_hours__c"
+      record-type-id={recordTypeId}
+      data-name="NSP_Do_you_track_hours__c"
+      onchange={handleValueChange}
+      value={field.NSP_Do_you_track_hours__c}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Employee_with_compensation_other__c}
+      label={label.NSP_EmployeeWithCompensationOther}
+      class={styles.NSP_Employee_with_compensation_other__c}
+      field-api-name="Implementation_Profile__c.NSP_Employee_with_compensation_other__c"
+      value={field.NSP_Employee_with_compensation_other__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Employee_with_compensation_other__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_compensation_structu_Provide_Details__c} disabled={disabledFields.NSP_compensation_structu_Provide_Details__c}
+      if:true={visibility.NSP_compensation_structu_Provide_Details__c}
+      data-name="NSP_compensation_structu_Provide_Details__c"
+      class={styles.NSP_compensation_structu_Provide_Details__c}
+      field-name="NSP_compensation_structu_Provide_Details__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Employees_with_multiple_types_of_pay__c}
+      label={label.MultiTypePay}
+      multiple
+      field-api-name="Implementation_Profile__c.NSP_Employees_with_multiple_types_of_pay__c"
+      class={styles.NSP_Employees_with_multiple_types_of_pay__c}
+      value={field.NSP_Employees_with_multiple_types_of_pay__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Employees_with_multiple_types_of_pay__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <div class="slds-form-element__label">
+      <lightning-formatted-text if:true={messageAppletForPieceRateAndCA} 
+        class="level-1"
+        value={label.messageAppletForPieceRateAndCA}>
+    </lightning-formatted-text>
+    </div>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Daily_Rate_approval_status__c}
+      if:true={visibility.NSP_Daily_Rate_approval_status__c}
+      label={objFields.NSP_Daily_Rate_approval_status__c.label}
+      class={styles.NSP_Daily_Rate_approval_status__c}
+      field-api-name="Implementation_Profile__c.NSP_Daily_Rate_approval_status__c"
+      value={field.NSP_Daily_Rate_approval_status__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Daily_Rate_approval_status__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Payroll_Specialist_to_confirm__c}
+      if:true={visibility.NSP_Payroll_Specialist_to_confirm__c}
+      class={styles.NSP_Payroll_Specialist_to_confirm__c}
+      label={objFields.NSP_Payroll_Specialist_to_confirm__c.label}
+      field-api-name="Implementation_Profile__c.NSP_Payroll_Specialist_to_confirm__c"
+      value={field.NSP_Payroll_Specialist_to_confirm__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Payroll_Specialist_to_confirm__c"
+      onchange={handleValueChange} multiple>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_DoTheEmployeeWorkA40HourWorkWeek__c}
+      class={styles.NSP_DoTheEmployeeWorkA40HourWorkWeek__c}
+      label={label.NSP_Employee40HourWorkWeekPDetails}
+      field-api-name="Implementation_Profile__c.NSP_DoTheEmployeeWorkA40HourWorkWeek__c"
+      value={field.NSP_DoTheEmployeeWorkA40HourWorkWeek__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_DoTheEmployeeWorkA40HourWorkWeek__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_employee_40_hour_work_Week_PDetails__c} disabled={disabledFields.NSP_employee_40_hour_work_Week_PDetails__c}
+      if:true={visibility.NSP_employee_40_hour_work_Week_PDetails__c}
+      data-name="NSP_employee_40_hour_work_Week_PDetails__c"
+      class={styles.NSP_employee_40_hour_work_Week_PDetails__c}
+      field-name="NSP_employee_40_hour_work_Week_PDetails__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Are_there_any_OT_exceptions__c}
+      class={styles.NSP_Are_there_any_OT_exceptions__c}
+      label={label.NSP_AreThereAnyOTExceptions}
+      field-api-name="Implementation_Profile__c.NSP_Are_there_any_OT_exceptions__c"
+      value={field.NSP_Are_there_any_OT_exceptions__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Are_there_any_OT_exceptions__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_Any_OT_Expections_Provide_Details__c} disabled={disabledFields.NSP_Any_OT_Expections_Provide_Details__c}
+      if:true={visibility.NSP_Any_OT_Expections_Provide_Details__c}
+      data-name="NSP_Any_OT_Expections_Provide_Details__c"
+      class={styles.NSP_Any_OT_Expections_Provide_Details__c}
+      field-name="NSP_Any_OT_Expections_Provide_Details__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Do_you_have_GovernmentContracted_job__c}
+      label={label.NSP_DoYouHaveGovernmentContractedJob}
+      field-api-name="Implementation_Profile__c.NSP_Do_you_have_GovernmentContracted_job__c"
+      record-type-id={recordTypeId}
+      data-name="NSP_Do_you_have_GovernmentContracted_job__c"
+      onchange={handleValueChange}
+      value={field.NSP_Do_you_have_GovernmentContracted_job__c}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Type__c}
+      class={styles.NSP_Type__c}
+      if:true={visibility.NSP_Type__c}
+      label={objFields.NSP_Type__c.label}
+      field-api-name="Implementation_Profile__c.NSP_Type__c"
+      record-type-id={recordTypeId}
+      data-name="NSP_Type__c"
+      onchange={handleValueChange}
+      value={field.NSP_Type__c}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.NSP_Govt_Type_Other_Provide_Details__c} disabled={disabledFields.NSP_Govt_Type_Other_Provide_Details__c}
+      if:true={visibility.NSP_Govt_Type_Other_Provide_Details__c}
+      data-name="NSP_Govt_Type_Other_Provide_Details__c"
+      class={styles.NSP_Govt_Type_Other_Provide_Details__c}
+      field-name="NSP_Govt_Type_Other_Provide_Details__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Are_Certified_Payroll_reports_needed__c}
+      if:true={visibility.NSP_Are_Certified_Payroll_reports_needed__c}
+      class={styles.NSP_Are_Certified_Payroll_reports_needed__c}
+      label={objFields.NSP_Are_Certified_Payroll_reports_needed__c.label}
+      field-api-name="Implementation_Profile__c.NSP_Are_Certified_Payroll_reports_needed__c"
+      record-type-id={recordTypeId}
+      data-name="NSP_Are_Certified_Payroll_reports_needed__c"
+      onchange={handleValueChange}
+      value={field.NSP_Are_Certified_Payroll_reports_needed__c}>
+    </c-nsp_selection-box>
+  </lightning-record-edit-form>
+</template>

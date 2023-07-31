@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Location-Based Punching (WO)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Location-Based Punching (WO)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Location-Based Punching (WO)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. I’m happy to share the location-based punching options for mobile punching. 
+
+IP Restrictions – This will restrict an employee’s ability to punch from an IP address that is not on the “approved” list, which is maintained by a system administrator at your facility. 
+
+Bluetooth Beacons – This is a battery-powered Bluetooth beacon that sends out a signal which the employee’s phone will pick up via Bluetooth. If configured, the mobile punch feature will look for the Insperity Bluetooth signal when an employee is punching and only allow it when a beacon is picked up. The punch button will be greyed out until the signal is picked up. 
+
+Geofencing – This will restrict an employee’s ability to punch from the mobile app based on GPS systems and a set fence, which is maintained by our Support Team at your request. 
+
+Geolocation Tracking – This will not restrict an employee’s ability to punch from any location but will record their GPS coordinates at time of punch and retain that data for reporting purposes for 60 days from the time of the punch. 
+
+Each of these would be assigned to employees by their security group assignment (Security Setup &gt; User Security &gt;&gt; Group Memberships section) and would affect the employees&apos; mobile punches exclusively. If you&apos;re interested in also restricting punch access via a computer, we have IP Restrictions capability available as well. 
+ 
+Please let us know which option(s) you would like enabled, and for which security group(s), and we will be happy to help.   
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

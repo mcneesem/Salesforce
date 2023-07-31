@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Collect All Docs Project task&apos;s Update Alert</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>NSP_CollectAllDocsTemplate</name>
+    <style>freeForm</style>
+    <subject>Plan Review Package Submitted By Sales for {!pse__Proj__c.Name}</subject>
+    <textOnly>A new Plan Amendment project is awaiting assignment of an Ops Processing Resource
+
+Client #: {!pse__Proj__c.NSP_RET_Client_ID__c}
+
+
+To review related project details, please click the following link: View Record</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

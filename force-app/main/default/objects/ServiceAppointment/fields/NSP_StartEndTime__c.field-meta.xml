@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_StartEndTime__c</fullName>
+    <description>This field is created as a part of STY-01091</description>
+    <externalId>false</externalId>
+    <formula>IF(HOUR(TIMEVALUE(SchedStartTime )) &gt; 12 &amp;&amp; LEN(TEXT(MINUTE(TIMEVALUE(SchedStartTime ))))=1, 
+  TEXT(HOUR(TIMEVALUE(SchedStartTime )) - 12) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedStartTime )))&amp; &apos;0 PM&apos;, 
+  IF(HOUR(TIMEVALUE(SchedStartTime )) &gt; 12 &amp;&amp; LEN(TEXT(MINUTE(TIMEVALUE(SchedStartTime ))))&gt;1,
+    TEXT(HOUR(TIMEVALUE(SchedStartTime )) - 12) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedStartTime )))&amp; &apos; PM&apos;, 
+    IF(HOUR(TIMEVALUE(SchedStartTime )) &lt;= 12 &amp;&amp; LEN(TEXT(MINUTE(TIMEVALUE(SchedStartTime ))))=1,
+      TEXT(HOUR( TIMEVALUE(SchedStartTime ) )) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedStartTime )))&amp; &apos;0 AM&apos;,
+      TEXT(HOUR( TIMEVALUE(SchedStartTime ) )) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedStartTime )))&amp; &apos; AM&apos;)
+  )
+) 
+&amp;
+
+&apos; to &apos;
+
+&amp;
+
+IF(HOUR(TIMEVALUE(SchedEndTime )) &gt; 12 &amp;&amp; LEN(TEXT(MINUTE(TIMEVALUE(SchedEndTime ))))=1, 
+  TEXT(HOUR(TIMEVALUE(SchedEndTime )) - 12) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedEndTime )))&amp; &apos;0 PM&apos;, 
+  IF(HOUR(TIMEVALUE(SchedEndTime )) &gt; 12 &amp;&amp; LEN(TEXT(MINUTE(TIMEVALUE(SchedEndTime ))))&gt;1,
+    TEXT(HOUR(TIMEVALUE(SchedEndTime )) - 12) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedEndTime )))&amp; &apos; PM&apos;, 
+    IF(HOUR(TIMEVALUE(SchedEndTime )) &lt;= 12 &amp;&amp; LEN(TEXT(MINUTE(TIMEVALUE(SchedEndTime ))))=1,
+      TEXT(HOUR( TIMEVALUE(SchedEndTime ) )) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedEndTime )))&amp; &apos;0 AM&apos;,
+      TEXT(HOUR( TIMEVALUE(SchedEndTime ) )) &amp; &apos;:&apos;&amp; TEXT(MINUTE(TIMEVALUE(SchedEndTime )))&amp; &apos; AM&apos;)
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>StartEndTime</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

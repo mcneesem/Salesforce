@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employees_reside_in_these_service_areas__c</fullName>
+    <externalId>false</externalId>
+    <label>Employees reside in these service areas?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Massachusetts *Tufts Plan options only</fullName>
+                <default>false</default>
+                <label>Massachusetts *Tufts Plan options only</label>
+            </value>
+            <value>
+                <fullName>California *HMO and UHC National Options</fullName>
+                <default>false</default>
+                <label>California *HMO and UHC National Options</label>
+            </value>
+            <value>
+                <fullName>Hawaii *Hawaii Plan options only</fullName>
+                <default>false</default>
+                <label>Hawaii *Hawaii Plan options only</label>
+            </value>
+            <value>
+                <fullName>NA</fullName>
+                <default>false</default>
+                <label>NA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

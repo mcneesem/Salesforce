@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>International Time - Non-Insperity Employee (ITA Only)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>International Time - Non-Insperity Employee (ITA Only)</name>
+    <style>freeForm</style>
+    <subject>International Time - Non-Insperity Employee (ITA Only)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for providing this information. This user has been approved through our Data Privacy Team and can be set up in Time &amp; Attendance. I&apos;ve provided a link to an article in our Help Center that details those steps: 
+ 
+https://help.insperity.com/bps/knowledge-base/how-to-add-a-new-employee-in-time-and-attendance/ 
+ 
+As you follow these steps, keep in mind that the user should be assigned to a non-Insperity/non-exporting Client ID. This will ensure they are not included on your payroll export. 
+ 
+Once their setup is complete, the user will be able to log in directly to Time &amp; Attendance via this URL, with the credentials you assign during setup: 
+ 
+https://timestar.insperity.com/XXX/ 
+ 
+If you have additional questions or concerns about this setup, please feel free to contact our Time &amp; Attendance Support Team for assistance. 
+  
+
+Phone: 800-314-8223 (live support is available Monday - Friday 7 am - 7 pm Central Time) 
+ 
+Email: time.support@insperity.com 
+
+ 
+Please reference this case number {Case Number} so they know the approval has been completed for this user.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

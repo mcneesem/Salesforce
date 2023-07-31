@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Unauthorized Contact</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Unauthorized Contact</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Unauthorized Contact</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We received the below email from (NAME), who is not on our list of authorized contacts for technical support for your company, so we&apos;re sending it your way to assist. If you need help with their request, or if (NAME) is an administrator who we should add to our list of authorized contacts, please let us know and we will be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

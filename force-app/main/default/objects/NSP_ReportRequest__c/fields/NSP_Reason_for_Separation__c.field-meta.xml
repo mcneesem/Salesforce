@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Reason_for_Separation__c</fullName>
+    <externalId>false</externalId>
+    <label>Reason for Separation</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Employee termination</fullName>
+                <default>false</default>
+                <label>Employee termination</label>
+            </value>
+            <value>
+                <fullName>Job Performance</fullName>
+                <default>false</default>
+                <label>Job Performance</label>
+            </value>
+            <value>
+                <fullName>Layoff</fullName>
+                <default>false</default>
+                <label>Layoff</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

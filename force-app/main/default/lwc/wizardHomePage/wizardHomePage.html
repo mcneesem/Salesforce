@@ -1,0 +1,21 @@
+<template>
+    <lightning-card > 
+    <div onsaveexit={handleCloseModal}> 
+        <c-launch-wizard record-types={recordTypes}>
+        </c-launch-wizard>
+   </div>
+    <lightning-accordion allow-multiple-sections-open
+                         onsectiontoggle={handleSectionToggle}
+                         active-section-name={activeSections}>
+            <template if:true={recordTypes}>
+                <template for:each={recordTypes} for:item="repReq">
+                    <lightning-accordion-section  key={repReq.recordTypeId} name={repReq.name} label={repReq.name}>
+                        <c-handle-draft-wizards record-type-ids={repReq.recordTypeId}>
+                        </c-handle-draft-wizards>
+                    </lightning-accordion-section>
+                </template>
+            </template>
+
+    </lightning-accordion>
+</lightning-card>
+</template>

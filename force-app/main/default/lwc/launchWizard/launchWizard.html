@@ -1,0 +1,41 @@
+<template>
+    <lightning-card title="Launch Report Request Wizard" icon-name="custom:custom19">
+
+       <template if:true={recordTypes}>
+            <div class="slds-var-m-around_medium">
+                <lightning-radio-group name="Select_Wiazrd" 
+                label={customLabel.selectWizard}
+                options={recordTypeArray}
+                onchange={handleChange}
+                type="radio">
+                </lightning-radio-group>
+            </div>
+        </template>
+
+        <div class="slds-var-m-around_medium">
+            <br />
+            <lightning-button
+                label="Launch Wizard"
+                onclick={handleShowModal}
+            ></lightning-button>
+
+            <c-modal header={header} hide-close-btn>
+                <div onsaveexit={handleCloseModal}> 
+
+                <template if:true={showDevelopReport}>
+                <c-development-report-wizard rep-req-obj={repReqObj} current-step="1" >
+                </c-development-report-wizard>
+                </template>
+                <template if:true={showSeperation}>
+                    <c-nsp_seperation-wizard rep-req-obj={repReqObj} current-step="1" >
+                    </c-nsp_seperation-wizard>
+                </template>
+                <template if:true={showSurvey}>
+                    <c-survey-wizard rep-req-obj={repReqObj} current-step="-1" >
+                    </c-survey-wizard>
+                </template>
+                </div>
+            </c-modal>
+        </div>
+    </lightning-card>
+</template>

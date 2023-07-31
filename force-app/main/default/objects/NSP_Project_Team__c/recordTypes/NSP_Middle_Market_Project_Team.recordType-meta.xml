@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Middle_Market_Project_Team</fullName>
+    <active>true</active>
+    <description>Middle Market Project Teams</description>
+    <label>Middle Market Project Team</label>
+    <picklistValues>
+        <picklist>NSP_Role__c</picklist>
+        <values>
+            <fullName>MidMarket Account Exec</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Project Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sr Benefit Rep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sr HR Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transition Specialist</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

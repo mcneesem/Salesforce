@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payroll_Data_Sheet</fullName>
+    <fields>NSP_Payroll_Data_Sheet_Name__c</fields>
+    <fields>NSP_Sub_Client_Name__c</fields>
+    <fields>NSP_Sub_Client_Number__c</fields>
+    <label>Payroll Data Sheet</label>
+</CompactLayout>

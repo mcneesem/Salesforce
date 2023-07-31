@@ -1,0 +1,175 @@
+<template>
+  <lightning-record-edit-form
+    onerror={handleError}
+    record-id={recordId}
+    onload={handleLoad}
+    object-api-name={objectApiName}
+    density="comfy">
+    <lightning-formatted-text class="slds-page-header__title" value={title}>
+    </lightning-formatted-text>
+
+    <div class="section slds-var-p-top_small" data-id="humanResources">
+      <!-- <lightning-formatted-text class="slds-page-header__title" value={sections.humanResources}></lightning-formatted-text> -->
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_have_any_urgent_HR_needs__c}
+        label={label.clientHaveUrgentHRNeeds}
+        field-api-name="Implementation_Profile__c.Client_have_any_urgent_HR_needs__c"
+        record-type-id={recordTypeId}
+        data-name="Client_have_any_urgent_HR_needs__c"
+        value={field.Client_have_any_urgent_HR_needs__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <template if:true={visibility.Select_client_urgent_HR_needs__c}>
+        <c-nsp_selection-box
+          disabled={disabledFields.Select_client_urgent_HR_needs__c}
+          class={styles.Select_client_urgent_HR_needs__c}
+          label={objFields.Select_client_urgent_HR_needs__c.label}
+          field-api-name="Implementation_Profile__c.Select_client_urgent_HR_needs__c"
+          record-type-id={recordTypeId}
+          data-name="Select_client_urgent_HR_needs__c"
+          value={field.Select_client_urgent_HR_needs__c}
+          onchange={handleValueChange}
+          multiple>
+        </c-nsp_selection-box>
+
+        <lightning-input-field
+          value={field.Other_urgent_HR_needs_provide_details__c}
+          disabled={disabledFields.Other_urgent_HR_needs_provide_details__c}
+          if:true={visibility.Other_urgent_HR_needs_provide_details__c}
+          data-name="Other_urgent_HR_needs_provide_details__c"
+          class={styles.Other_urgent_HR_needs_provide_details__c}
+          field-name="Other_urgent_HR_needs_provide_details__c"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </template>
+
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value={label.CrntOnBoardingProcNewEmp}
+        data-field="Current_onboarding_process_for_new_empl__c"></lightning-formatted-text>
+      <lightning-input-field
+        value={field.Current_onboarding_process_for_new_empl__c}
+        disabled={disabledFields.Current_onboarding_process_for_new_empl__c}
+        data-name="Current_onboarding_process_for_new_empl__c"
+        field-name="Current_onboarding_process_for_new_empl__c"
+        variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.sample_new_empl_info_packet_collected__c}
+        label={label.SampleNewEmpInfoPacketsCollected}
+        field-api-name="Implementation_Profile__c.sample_new_empl_info_packet_collected__c"
+        record-type-id={recordTypeId}
+        data-name="sample_new_empl_info_packet_collected__c"
+        value={field.sample_new_empl_info_packet_collected__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value="Are the any documents the employees need to complete during onboarding?"
+        data-field="Docs_emp_need_to_complete_for_onboarding__c"></lightning-formatted-text>
+
+      <lightning-input-field
+        value={field.Docs_emp_need_to_complete_for_onboarding__c}
+        disabled={disabledFields.Docs_emp_need_to_complete_for_onboarding__c}
+        data-name="Docs_emp_need_to_complete_for_onboarding__c"
+        field-name="Docs_emp_need_to_complete_for_onboarding__c"
+        variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Exemption_status_of_all_empl_explained__c}
+        label={label.exemptionStatus}
+        field-api-name="Implementation_Profile__c.Exemption_status_of_all_empl_explained__c"
+        record-type-id={recordTypeId}
+        data-name="Exemption_status_of_all_empl_explained__c"
+        value={field.Exemption_status_of_all_empl_explained__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Are_there_any_DOL_audits__c}
+        label={objFields.Are_there_any_DOL_audits__c.label}
+        field-api-name="Implementation_Profile__c.Are_there_any_DOL_audits__c"
+        record-type-id={recordTypeId}
+        data-name="Are_there_any_DOL_audits__c"
+        value={field.Are_there_any_DOL_audits__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <lightning-input-field
+        value={field.DOL_Audit_Provide_Details__c}
+        disabled={disabledFields.DOL_Audit_Provide_Details__c}
+        if:true={visibility.DOL_Audit_Provide_Details__c}
+        data-name="DOL_Audit_Provide_Details__c"
+        class={styles.DOL_Audit_Provide_Details__c}
+        field-name="DOL_Audit_Provide_Details__c"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_has_any_of_the_following__c}
+        label={label.ClientHaveAny}
+        field-api-name="Implementation_Profile__c.Client_has_any_of_the_following__c"
+        record-type-id={recordTypeId}
+        data-name="Client_has_any_of_the_following__c"
+        value={field.Client_has_any_of_the_following__c}
+        onchange={handleValueChange}
+        multiple>
+      </c-nsp_selection-box>
+
+      <lightning-input-field
+        value={field.When_was_the_handbook_last_updated__c}
+        disabled={disabledFields.When_was_the_handbook_last_updated__c}
+        if:true={visibility.When_was_the_handbook_last_updated__c}
+        data-name="When_was_the_handbook_last_updated__c"
+        class={styles.When_was_the_handbook_last_updated__c}
+        field-name="When_was_the_handbook_last_updated__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+      <div>
+        <c-nsp_selection-box
+          disabled={disabledFields.Does_client_perform_background_checks__c}
+          label={objFields.Does_client_perform_background_checks__c.label}
+          field-api-name="Implementation_Profile__c.Does_client_perform_background_checks__c"
+          record-type-id={recordTypeId}
+          data-name="Does_client_perform_background_checks__c"
+          value={field.Does_client_perform_background_checks__c}
+          onchange={handleValueChange}>
+        </c-nsp_selection-box>
+        <lightning-input-field
+          disabled={disabledFields.Who_is_the_provider__c}
+          if:true={visibility.Who_is_the_provider__c}
+          data-name="Who_is_the_provider__c"
+          class={styles.Who_is_the_provider__c}
+          field-name="Who_is_the_provider__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+      <div>
+        <c-nsp_selection-box
+          disabled={disabledFields.Client_does_pre_employment_drug_screen__c}
+          label={label.ClientPerformEmpDrugScreening}
+          field-api-name="Implementation_Profile__c.Client_does_pre_employment_drug_screen__c"
+          record-type-id={recordTypeId}
+          data-name="Client_does_pre_employment_drug_screen__c"
+          value={field.Client_does_pre_employment_drug_screen__c}
+          onchange={handleValueChange}>
+        </c-nsp_selection-box>
+        <lightning-input-field
+          disabled={disabledFields.Wh_is_the_provider__c}
+          if:true={visibility.Wh_is_the_provider__c}
+          data-name="Wh_is_the_provider__c"
+          class={styles.Wh_is_the_provider__c}
+          field-name="Wh_is_the_provider__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+      <lightning-input-field
+        value={field.Human_Resources_Notes__c}
+        disabled={disabledFields.Human_Resources_Notes__c}
+        field-name="Human_Resources_Notes__c"
+        data-name="Human_Resources_Notes__c"
+        onchange={handleValueChange}></lightning-input-field>
+    </div>
+  </lightning-record-edit-form>
+</template>

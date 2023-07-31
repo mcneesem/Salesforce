@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Prior Wages</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Email: PriorWageTeam@insperity.com</value>
+    </values>
+    <values>
+        <field>NSP_Email_Address__c</field>
+        <value xsi:type="xsd:string">waylon.rilynn@dissloo.com</value>
+    </values>
+    <values>
+        <field>NSP_Name__c</field>
+        <value xsi:type="xsd:string">Prior Wages</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,27 @@
+<template>
+    <template if:true={showProgress}>
+    <c-progress-bar steps={steps} type="indicator" current-step={currentStep} ></c-progress-bar>
+     <div onsaveexit={handleSave} class="slds-p-around_medium"> 
+    <template if:true={step1}   > 
+        <c-nsp_separation-wizard-page-one re-req-id={reReqId} record-obj={repReqObj} onnext={handleNext} onprev={handlePrev}> </c-nsp_separation-wizard-page-one>
+    </template>
+    <template if:true={step2}>
+        <c-nsp_separation-wizard-page-two re-req-id={reReqId} onnext={handleNext} onprev={handlePrev} onsyncfields={handleSync}> </c-nsp_separation-wizard-page-two>
+    </template>
+    <template if:true={step3}>
+        <c-nsp_separation-wizard-page-three  re-req-id={reReqId} onnext={handleNext} onprev={handlePrev} sync-field-values={syncFieldValues}> </c-nsp_separation-wizard-page-three>
+    </template>
+    <template if:true={step4}>
+        <c-nsp_seperation-wizard-page-four re-req-id={reReqId} onnext={handleNext} onprev={handlePrev}> </c-nsp_seperation-wizard-page-four>
+    </template>
+    <template if:true={step5}>
+        <c-nsp_separation-wizard-page-five re-req-id={reReqId} onnext={handleNext} onprev={handlePrev}> </c-nsp_separation-wizard-page-five>
+    </template>
+    </div>  
+    </template>
+    <template if:false={showProgress}>
+        <div onsaveexit={handleSave} > 
+           <c-wizard-case-creation re-req-obj={repReqObj}  record-input={recordInputForCreate} oncreatedcase={handleSummery} ></c-wizard-case-creation>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata">
+    <dataset>RET_Merge_Plan_List</dataset>
+    <dimensions>
+        <field>NSP_AccountName__c</field>
+        <isDerived>false</isDerived>
+        <label>Account Name</label>
+        <sortIndex>0</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Join4.NSP_Accoun.NSP_Account__c</field>
+        <isDerived>false</isDerived>
+        <label>Account</label>
+        <sortIndex>1</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Join4.Name</field>
+        <isDerived>false</isDerived>
+        <label>Account</label>
+        <sortIndex>2</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>NSP_Sales_.UserIMPL.Name</field>
+        <isDerived>false</isDerived>
+        <label>NBI IMPL Resource Name</label>
+        <sortIndex>3</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>NSP_Sales_.UserMerger.Name</field>
+        <isDerived>false</isDerived>
+        <label>NBI Merger Resource Name</label>
+        <sortIndex>4</sortIndex>
+    </dimensions>
+</WaveXmd>

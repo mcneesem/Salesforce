@@ -1,0 +1,2 @@
+A new Master CQA case has been created for {!Case.Project__c}. <br/>
+You may find the case at the following link: <a href="{!Case.Link}">{!Case.CaseNumber}</a>

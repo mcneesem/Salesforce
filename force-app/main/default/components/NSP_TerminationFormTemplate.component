@@ -1,0 +1,43 @@
+<apex:component controller="NSP_TerminationFormTemplateController" access="global">
+    <apex:image id="Logo" url="{!TopLogoUrl}"  width="500" height="100"/>
+    <div style="padding-left:2%;">
+        <b>TERMINATIONS</b>
+        <p>Please process term as stated letter will be sent U.S Mail today</p>
+    </div>
+    <apex:dataTable value="{!wrapTerminationList}" var="termination" width="100%">
+        <apex:column style="padding:2%;">
+            Client:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetName}<br/>
+            Client #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetNumber}<br/>
+            # EE's:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.eeNumber}<br/>
+            PS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.psName}<br/>
+            CL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clName}<br/>
+            <div >
+                CSA Term:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{0,date,MM dd yyyy}">
+                    <apex:param value="{!termination.csaTerm}" /> 
+                </apex:outputText>
+            </div>
+            <div >
+                Bene Term:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{0,date,MM dd yyyy}">
+                    <apex:param value="{!termination.beneterm}" /> 
+                </apex:outputText>
+            </div>
+            Reason:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.reason}
+        </apex:column>
+    </apex:dataTable>
+    <div style="padding-left:2%;">
+        <b>REINSTATEMENT</b>
+    </div>
+    <apex:dataTable value="{!reinstatementList}" var="reinstatement" width="100%">
+        <apex:column style="padding:2%;">
+            Client:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name}<br/>
+            Client #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c}<br/>
+        </apex:column>
+    </apex:datatable>
+    <apex:image id="Logo1" url="{!BottomLogoUrl}"  width="500" height="30"/>
+    <p><b>Lisa Hartsaw</b><br/>
+        Client Specialist, Service Operation Analytics<br/><br/>
+        19001 Cresent Spring Drive | Kingwood, Texas 77339<br/>
+        OFFICE: 281-312-3040 | FAX: 800-878-3015
+     </p>
+     <apex:image id="Logo2" url="{!AddressLogoUrl}"  width="200" height="200"/>
+</apex:component>

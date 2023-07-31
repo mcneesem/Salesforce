@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Inflight_Order__c</fullName>
+    <externalId>false</externalId>
+    <formula>If( SBQQ__Quote__r.NSP_Project__c != null , true, false)</formula>
+    <label>Inflight Order</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

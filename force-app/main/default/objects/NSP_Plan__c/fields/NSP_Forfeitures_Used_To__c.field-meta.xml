@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Forfeitures_Used_To__c</fullName>
+    <externalId>false</externalId>
+    <label>Forfeitures Used To</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Reduce ER</fullName>
+                <default>false</default>
+                <label>Reduce ER</label>
+            </value>
+            <value>
+                <fullName>Increase ER</fullName>
+                <default>false</default>
+                <label>Increase ER</label>
+            </value>
+            <value>
+                <fullName>Reduce Expenses, Reduce ER</fullName>
+                <default>false</default>
+                <label>Reduce Expenses, Reduce ER</label>
+            </value>
+            <value>
+                <fullName>Reduce Expenses, Increase ER</fullName>
+                <default>false</default>
+                <label>Reduce Expenses, Increase ER</label>
+            </value>
+            <value>
+                <fullName>Allocate</fullName>
+                <default>false</default>
+                <label>Allocate</label>
+            </value>
+            <value>
+                <fullName>Employer Discretion</fullName>
+                <default>false</default>
+                <label>Employer Discretion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

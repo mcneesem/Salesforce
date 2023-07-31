@@ -1,0 +1,15 @@
+.filename{
+    white-space: normal;
+     word-wrap: break-word;
+     width: 11.00rem;
+ }
+ 
+ .filedate{
+     white-space: nowrap !important;
+ }
+
+.slds-button.slds-button_neutral{
+    margin-left:5px !important;
+    margin-right:5px !important;
+
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pre_tax_Client_Sponsored_Plan_CSP_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Pre-tax Client Sponsored Plan (CSP) Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Health Care Flexible Spending Account (HCFSA)</fullName>
+                <default>false</default>
+                <label>Health Care Flexible Spending Account (HCFSA)</label>
+            </value>
+            <value>
+                <fullName>Health Savings Account</fullName>
+                <default>false</default>
+                <label>Health Savings Account</label>
+            </value>
+            <value>
+                <fullName>Dependent Care Flexible Spending Account (DCFSA)</fullName>
+                <default>false</default>
+                <label>Dependent Care Flexible Spending Account (DCFSA)</label>
+            </value>
+            <value>
+                <fullName>Medical (Pretax)</fullName>
+                <default>false</default>
+                <label>Medical (Pretax)</label>
+            </value>
+            <value>
+                <fullName>Dental (Pretax)</fullName>
+                <default>false</default>
+                <label>Dental (Pretax)</label>
+            </value>
+            <value>
+                <fullName>Vision (Pretax)</fullName>
+                <default>false</default>
+                <label>Vision (Pretax)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

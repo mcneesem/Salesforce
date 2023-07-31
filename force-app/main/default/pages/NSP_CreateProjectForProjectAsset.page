@@ -1,0 +1,14 @@
+<apex:page controller="NSP_CreateProjectFromTemplate" >
+    <apex:pageBlock title="Create Project From Template">
+        <apex:pageMessages />
+        <apex:form >
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{!assetRef.Name}" label="Project Name" />
+                <apex:inputField value="{!assetRef.Project_Template__c}" label="Project Template" />
+                <apex:inputField value="{!inputProj.pse__Start_Date__c}" label="Start Date" />
+                <apex:inputField value="{!assetRef.AccountId}" label="Account" rendered="false"/>
+                <apex:commandButton action="{!createProject}" value="Create Project From Template" />
+            </apex:pageBlockSection>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

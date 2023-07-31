@@ -1,0 +1,6 @@
+A Task titled {!Task.Subject} has been assigned to the you.
+
+
+You can access it by clicking here:
+
+<a href="{!Task.Link}">{!Task.Subject}</a>

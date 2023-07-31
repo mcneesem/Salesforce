@@ -1,0 +1,117 @@
+<!--
+@description       : LWC Component to handle the category/sub-category mapping selection edit on case records.
+@Created On        : November 8th 2021
+-->
+<template>
+<div class="container">
+    <div class="slds-grid slds-page-header slds-p-around_small">
+        <header class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__body" data-aura-rendered-by="1233:0">
+                <h2 class="slds-card__header-title">
+                    <lightning-formatted-text class="slds-text-heading_small" value={label.header}>
+                    </lightning-formatted-text>
+                </h2>
+            </div>
+            <div class="slds-no-flex">
+                <template if:true={view}>
+                    <lightning-button label={label.editCase} onclick={editCase}></lightning-button>
+                </template>
+            </div>
+        </header>
+    </div>
+    <div class="slds-p-around_medium slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <template if:true={view}>
+            <lightning-record-view-form record-id={recordId} object-api-name={objectApiName} density="compact">
+                <lightning-output-field field-name="NSP_Category__c"></lightning-output-field>
+                <lightning-output-field field-name="NSP_SubCategory__c"></lightning-output-field>
+                <template if:true={showCaseDetail}>
+                    <lightning-output-field field-name="NSP_Detail__c"></lightning-output-field>
+                </template>
+                <template if:true={showCaseVersion}>
+                    <lightning-output-field field-name="NSP_Version__c"></lightning-output-field>
+                </template>
+            </lightning-record-view-form>
+        </template>
+        <template if:false={view}>
+            <lightning-layout multiple-rows=true>
+                <lightning-layout-item size="4">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.category}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" class="slds-m-bottom_small">
+                    <lightning-combobox label={label.category} variant="label-hidden" value={oCase.NSP_Category__c}
+                        placeholder="Select a Category" options={categoryOptions} onchange={handleCategoryChange} required>
+                    </lightning-combobox>
+                        <!--added as a part of DF-02152--> 
+                        <template if:false={isBpsProfile}>
+                        <template if:true={showViewAll}>
+                        <span class="slds-text-link" onclick={showAllCategories}>
+                            <lightning-formatted-text value={label.viewAll}></lightning-formatted-text>
+                        </span>
+                    </template>
+                    </template>
+                    <template if:false={showViewAll}>
+                        <span class="slds-text-link" onclick={resetCategories}>
+                            <lightning-formatted-text value={label.reset}></lightning-formatted-text>
+                        </span>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.subcategory}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" class="slds-m-bottom_small">
+                    <lightning-combobox label={label.subcategory} variant="label-hidden"
+                        value={oCase.NSP_SubCategory__c} placeholder="Select a Sub Category"
+                        options={subCategoryOptions} onchange={handleSubCategoryChange}>
+                    </lightning-combobox>
+                        <!--added as a part of DF-02152--> 
+                        <template if:false={isBpsProfile}>
+                    <template if:true={showingAllSubCategories}>
+                        <span class="slds-text-link" onclick={showAllSubCategories}>
+                            <lightning-formatted-text value={label.viewAll}></lightning-formatted-text>
+                        </span>
+                    </template>
+                    </template>
+                    <template if:true={showingResetSubCategories}>
+                        <span class="slds-text-link" onclick={resetSubCategories}>
+                            <lightning-formatted-text value={label.reset}></lightning-formatted-text>
+                        </span>
+                    </template>
+                </lightning-layout-item>
+                <template if:true={showCaseDetail}>
+                    <lightning-layout-item size="4">
+                        <lightning-formatted-text class="slds-form-element__label" value={label.detail}>
+                        </lightning-formatted-text>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="8" class="slds-m-bottom_small">
+                        <lightning-combobox label={label.detail} variant="label-hidden" value={oCase.NSP_Detail__c}
+                            placeholder="Select a Detail" options={detailOptions} onchange={handleDetailChange} >
+                        </lightning-combobox>                                                                           
+                    </lightning-layout-item>
+                </template>
+                <template if:true={showCaseVersion}>
+                    <lightning-layout-item size="4">
+                        <lightning-formatted-text class="slds-form-element__label" value={label.version}>
+                        </lightning-formatted-text>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="8" class="slds-m-bottom_small">
+                        <lightning-combobox label={label.version} variant="label-hidden"
+                            value={oCase.NSP_Version__c} placeholder="Select a Version" options={versionOptions} onchange={handleVersionChange}>
+                        </lightning-combobox>
+                    </lightning-layout-item>
+                </template>
+
+                <div class="slds-align_absolute-center slds-m-top_small">
+                    <lightning-button variant="brand" label={label.save} onclick={updateCase}
+                        class="slds-m-right_small"></lightning-button>
+                    <lightning-button label={label.cancel} onclick={cancel}></lightning-button>
+                </div>
+            </lightning-layout>
+        </template>
+    </div>
+</div>
+</template>

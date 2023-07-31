@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Duplicate_Records</fullName>
+    <active>true</active>
+    <errorConditionFormula>Prevent_Save__c = TRUE</errorConditionFormula>
+    <errorMessage>A Parent Onboarding Meeting Request record already exists during this date/time. Please delete the existing record and recreate in order to make modifications. Note that all child records will be deleted along with the parent.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$NSP_Account_ID_18__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_AIMS_Client__c</field>
+    </columns>
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account.AccountContactRelations$Name</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.AccountContactRelations*AccountContactRelation$NSP_Is_Primary__c</field>
+    </columns>
+    <columns>
+        <field>Account.AccountContactRelations$Phone</field>
+    </columns>
+    <currency>USD</currency>
+    <description>STY-04459: Active Accounts with Primary Contact.  Use this report to lookup primary contact for the Recruiting Services - ITC Customer List</description>
+    <filter>
+        <criteriaItems>
+            <column>Account.AccountContactRelations*AccountContactRelation$NSP_Is_Primary__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account$NSP_Sales_Service_Account_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Active</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Client Recruiting Active Clients Contact</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Contact_Relationship__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Account$NSP_Account_Status_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

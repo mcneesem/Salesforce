@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ TAME Assignment Changes</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ TAME Assignment Changes</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ TAME Assignment Changes</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time and Attendance Support. You can now make employee Time Assignments in Insperity Premier, which then import to the Time and Attendance system in real time. Please see the steps below to make the assignments:
+
+Log in to Insperity Premier
+Navigate to Manage Employees &gt; Overview &gt; Employees
+Select the employee name
+Select Job Information 
+Scroll to the bottom of the page and click the pencil icon next to Time and Attendance
+Select the reason for the change in the Change Reason drop-down menu
+Select the Effective Date
+
+You will only have the first day of the current or future pay periods available for selection
+
+
+Select Next
+
+Update the desired assignments
+
+
+Available assignments include:
+
+
+Accrual Group
+Pay Group
+Schedule Group
+Time Zone
+PTO Effective Date
+Badge Number
+Security Group
+Org Levels, excluding the Client ID
+
+If the Client ID needs to be updated, please refer to your Payroll Team for assistance
+
+
+Review the new assignments for accuracy and select Next
+
+Select SUBMIT
+
+
+Note: Keep in mind that assignments effective in future pay periods may not display in Time and Attendance until your system is current in that pay period. 
+
+Please let us know if you have any questions and we will be happy to help. 
+
+
+Thank you, 
+
+Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

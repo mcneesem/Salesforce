@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Account_Health__c</fullName>
+    <description>Track health of the Account Group</description>
+    <externalId>false</externalId>
+    <label>Account Health</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Unfavorable</fullName>
+                <default>false</default>
+                <label>Unfavorable</label>
+            </value>
+            <value>
+                <fullName>Somewhat unfavorable</fullName>
+                <default>false</default>
+                <label>Somewhat unfavorable</label>
+            </value>
+            <value>
+                <fullName>Neutral</fullName>
+                <default>false</default>
+                <label>Neutral</label>
+            </value>
+            <value>
+                <fullName>Somewhat favorable</fullName>
+                <default>false</default>
+                <label>Somewhat favorable</label>
+            </value>
+            <value>
+                <fullName>Favorable</fullName>
+                <default>false</default>
+                <label>Favorable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

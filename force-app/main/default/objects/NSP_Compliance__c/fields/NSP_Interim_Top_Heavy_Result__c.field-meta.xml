@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Interim_Top_Heavy_Result__c</fullName>
+    <externalId>false</externalId>
+    <label>Interim Top Heavy Result</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Top Heavy</fullName>
+                <default>false</default>
+                <label>Top Heavy</label>
+            </value>
+            <value>
+                <fullName>Not Top Heavy</fullName>
+                <default>false</default>
+                <label>Not Top Heavy</label>
+            </value>
+            <value>
+                <fullName>Approaching Top Heavy</fullName>
+                <default>false</default>
+                <label>Approaching Top Heavy</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

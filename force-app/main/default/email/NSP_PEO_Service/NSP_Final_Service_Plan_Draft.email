@@ -1,0 +1,49 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoBodyText3" style="color: rgb(0, 0, 0); margin-right: 45.4pt;"><span style="color: rgb(38, 38, 38);"><font face="Arial, sans-serif">Your Insperity service team is thankful for the opportunity to
+learn about your company and your business objectives for the coming year. Your
+Insperity service team is available to help you create and enhance a solid
+human resources infrastructure and implement the services most appropriate to
+your objectives.<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 0in 0.2pt -0.25pt; line-height: normal;"><span style="color: rgb(38, 38, 38);"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 0in 0.2pt -0.25pt; line-height: normal;"><font face="Arial, sans-serif"><span style="color: rgb(38, 38, 38);">Our proposal outlines the
+Insperity services we believe can meet your business needs and objectives that
+will help your business grow, support your employees, and enhance your company’s
+culture. </span><o:p></o:p></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in; text-indent: 0in; line-height: normal;"><font face="Arial, sans-serif"><span style="color: rgb(0, 80, 132);"><span style="mso-spacerun:yes">&nbsp;</span></span><o:p></o:p></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 0in 0in -0.25pt; line-height: 107%;"><font face="Arial, sans-serif"><span style="line-height: 107%; color: rgb(0, 80, 132);">About Your Business: </span><span style="line-height: 107%;"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 0in 0.2pt -0.25pt;"><span style="line-height: 104%; color: rgb(38, 38, 38);"><font face="Arial, sans-serif">Based on our discussion, we understand: <o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 0in 0.2pt -0.25pt;"><font face="Arial, sans-serif">{!NSP_Service_Plan__c.NSP_Plan_Synopsis__c}</font></p>
+
+<div style="color: rgb(0, 0, 0);"><!--[if !supportAnnotations]-->
+
+<font face="Arial, sans-serif"><br></font><div style="mso-element:comment"><div id="_com_1" class="msocomtxt" language="JavaScript">
+
+<!--[if !supportAnnotations]--></div>
+
+<!--[endif]--></div>
+
+</div><div style=""><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 0in; text-indent: 0in;"><font face="Arial, sans-serif"><span style="line-height: 104%; color: rgb(0, 80, 132);">Your Current Business </span><span style="line-height: 104%; color: rgb(0, 80, 132);">Opportunities:</span></font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-left: 0in; text-indent: 0in;"></p><ol style="color: rgb(0, 0, 0);"><li style="color: rgb(0, 0, 0);"><span style="color: rgb(38, 38, 38); text-indent: 0in;"><font face="Arial, sans-serif">Reduce risk and
+administrative burden by maintaining an effective human capital infrastructure.</font></span></li><li style=""><font face="Arial, sans-serif">Ensure your
+     Insperity Service plan increases the business value received from our
+     partnership and resources<font color="#262626">.</font></font></li><li style=""><font face="Arial, sans-serif">Document
+     your policies and ensure a consistent communication of your organizations
+     culture.</font></li><li style=""><font face="Arial, sans-serif">Increase
+     employee understanding of their Insperity benefits and resources as well
+     as your organization's culture.</font></li><li style=""><font face="Arial, sans-serif">Maintain a
+     culture of stability and professionalism driven by your company values.</font></li></ol>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in; text-indent: 0in; line-height: 107%;"><font face="Arial, sans-serif"><span style="line-height: 107%; color: rgb(0, 80, 132);">Insperity’s Proposed Services: </span><span style="font-size: 11pt; line-height: 107%;"><o:p></o:p></span></font></p>
+
+<div style="font-size: 12pt;"><!--[if !supportAnnotations]-->
+
+<div style=""><div id="_com_1" class="msocomtxt" language="JavaScript" style=""><p class="MsoCommentText" style="color: rgb(0, 0, 0);"><br></p><p class="MsoCommentText" style=""><span style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; background-color: rgb(255, 255, 255);"><span style="color: red; font-weight: bold;">[</span> &lt;Insert Service Plan Table&gt; <span style="color: red; font-weight: bold;">]</span></span></p></div></div></div></div>]]></td>
+</tr>
+</table>

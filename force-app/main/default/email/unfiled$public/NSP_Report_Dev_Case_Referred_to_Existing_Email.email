@@ -1,0 +1,3 @@
+Case <a href="{!Case.Link}"> {!Case.CaseNumber}</a> has been returned to you because we believe there is an existing WIRE report that will fulfill this request. Consult the Case notes for details.<br/><br/>
+
+If you wish to respond, add a chatter to the Case. Do not reply to this email.<br/><br/>

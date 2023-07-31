@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Congratulation Payroll Template</name>
+    <style>freeForm</style>
+    <subject>Congratulations on Your First Payroll!</subject>
+    <textOnly>Congratulations on Your First Payroll!
+
+ 
+
+Congratulations! Your first payroll has been processed. Now that we’ve achieved that first big milestone together, I would like to acquaint you with some additional information that will be beneficial to you.
+
+ 
+
+Need Help:  Click on the hyperlink to navigate to our help page where you can access videos and quick tutorials designed to assist you with:
+
+ 
+
+·        Manage your employee’s information such as: compensation, job titles, classification, and processing employee terminations. Just click on an individual employee’s name to start making changes.
+
+ 
+
+·        Onboarding new employees: Setting up and managing your new employee paperwork is easy! 
+
+ 
+
+ 
+
+As always, please feel free to reach out to me if there is anything else I can help you with.
+
+Thank you for choosing Insperity!</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

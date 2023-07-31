@@ -1,0 +1,24 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})/ SubAccount needed  " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <c:InsperityEmailHeader ></c:InsperityEmailHeader>
+  <p> {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) needs subaccount(s). </p>
+  <p>Subaccount(s) are needed because:</p>
+  <p><apex:outputText escape="false" value="<li>{!SUBSTITUTE(relatedTo.Why_is_subaccount_needed__c,';','<li/>')}"/>  </p>
+  
+  <p>The following pay frequencies were selected - see the Implementation Profile for full pay frequency information.  </p>
+  
+  <p><apex:outputText escape="false" value="<li>{!SUBSTITUTE(relatedTo.Insperity_pay_frequency__c,';','<li/>')}"/> </p>
+  
+  
+<p>Regards,<br/>
+    {!relatedTo.NSP_Payroll_Specialist__r.Name}<br/>
+    {!relatedTo.NSP_Payroll_Specialist__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter ></c:InsperityEmailFooter>   
+</body>
+
+</html>
+</messaging:HtmlEmailBody>
+  
+</messaging:emailTemplate>

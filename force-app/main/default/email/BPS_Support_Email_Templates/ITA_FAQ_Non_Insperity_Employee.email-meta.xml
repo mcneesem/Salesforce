@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Non-Insperity Employee</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Non-Insperity Employee</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Non-Insperity Employee</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time and Attendance Support. Since this employee is within the United States, you can go ahead and add them to your Time &amp; Attendance system. I&apos;ve provided a link to an article in our help center which details those steps: 
+ 
+https://help.insperity.com/bps/knowledge-base/how-to-add-a-new-employee-in-time-and-attendance/ 
+ 
+As you follow these steps, keep in mind that the user should be assigned to a non-Insperity/non-exporting Client ID. This will ensure they are not included on your payroll export. Additionally, if they will be processing payroll, your Payroll Specialist (copied here) can provide you with their employee number and assist in assigning them payroll roles. The employee number will be required in Time &amp; Attendance in order for the payroll roles to sync. 
+ 
+Once their setup is complete, the user will be able to log in directly to Time &amp; Attendance via this URL, with the credentials you assign during setup: 
+ 
+https://timestar.insperity.com/XXX/ 
+ 
+If you have any questions as you work through the process, please let us know and we will gladly assist. 
+ 
+Please feel free to follow the same process for any non-Insperity users within the United States. If you have a non-Insperity user outside of the United States in the future, please let us know and we&apos;ll be happy to assist. 
+ 
+Thank you, 
+ 
+Insperity Time &amp; Attendance Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

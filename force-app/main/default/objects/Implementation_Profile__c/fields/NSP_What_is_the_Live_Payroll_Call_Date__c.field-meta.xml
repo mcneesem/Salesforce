@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_What_is_the_Live_Payroll_Call_Date__c</fullName>
+    <description>What is the Live Payroll Call Date (1st Payroll run)?</description>
+    <externalId>false</externalId>
+    <label>What is the Live Payroll Call Date?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

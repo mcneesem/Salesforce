@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Review_Employee_Orientations__c</fullName>
+    <externalId>false</externalId>
+    <label>Review Employee Orientations</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Employee Communication</fullName>
+                <default>false</default>
+                <label>Employee Communication</label>
+            </value>
+            <value>
+                <fullName>Meeting Length</fullName>
+                <default>false</default>
+                <label>Meeting Length</label>
+            </value>
+            <value>
+                <fullName>I9 Certification</fullName>
+                <default>false</default>
+                <label>I9 Certification</label>
+            </value>
+            <value>
+                <fullName>Benefit Enrollment</fullName>
+                <default>false</default>
+                <label>Benefit Enrollment</label>
+            </value>
+            <value>
+                <fullName>Enrollment Deadlines</fullName>
+                <default>false</default>
+                <label>Enrollment Deadlines</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

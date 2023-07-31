@@ -1,0 +1,7 @@
+<apex:component access="global" controller="NSP_RelatedAssetsController">
+<apex:attribute name="regulatedState" description="States" type="String" assignTo="{!state}" /> 
+ <apex:outputPanel rendered="{!IF(regulatedAreaStates.size>0, true, false)}">
+        {!regulatedAreaStates}
+           
+    </apex:outputPanel>
+    </apex:component>

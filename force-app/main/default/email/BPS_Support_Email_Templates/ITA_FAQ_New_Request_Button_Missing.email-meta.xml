@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ New Request Button Missing</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ New Request Button Missing</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ New Request Button Missing</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. When an employee&apos;s New Request button is missing it is usually due to one of two things. 
+
+They do not have a supervisor assigned to them. 
+
+With no supervisor assigned, the request has nowhere to go, so the system won&apos;t allow them. 
+
+Once you assign a supervisor to the employee, and they log out and back in, the New Request button should appear for them. (Primary supervisor assignments should be managed in Premier.) 
+
+The employee&apos;s start/effective date is after the period that is current in your system. 
+
+In this case, the employee&apos;s profile doesn&apos;t exist in the period in which they&apos;re viewing the Requests page, so it won&apos;t allow them to add new requests. 
+
+Once you&apos;ve moved the pay period forward, the New Request button will appear for the employee. 
+
+Please let us know if you have any further questions and we&apos;ll be happy to help! 
+
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

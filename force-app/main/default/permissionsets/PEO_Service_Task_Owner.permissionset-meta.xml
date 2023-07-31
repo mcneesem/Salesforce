@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>To provide read access of owner field on Project Task object</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>PEO Service Task Owner</label>
+</PermissionSet>

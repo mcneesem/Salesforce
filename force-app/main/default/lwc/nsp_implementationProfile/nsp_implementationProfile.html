@@ -1,0 +1,21 @@
+<template>
+  <c-nsp_mid-market-form-ip
+    if:true={isMidMarketRecordType}
+    record-id={recordId}
+    record-type-id={selectedRecTypeId}
+    sub-title={subTitle}
+    object-info={objectInfo}
+    field-values={fieldValues}
+    user-data={userData}>
+  </c-nsp_mid-market-form-ip>
+
+  <c-nsp_fso-form-ip
+    if:true={isFsoRecordType}
+    record-id={recordId}
+    record-type-id={selectedRecTypeId}
+    sub-title={subTitle}
+    object-info={objectInfo}
+    field-values={fieldValues}
+    user-data={userData}>
+  </c-nsp_fso-form-ip>
+</template>

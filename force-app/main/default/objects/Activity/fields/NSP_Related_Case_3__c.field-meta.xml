@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Related_Case_3__c</fullName>
+    <description>Link to the child case</description>
+    <externalId>false</externalId>
+    <formula>IF(NSP_Related_Case_3_ID__c &lt;&gt; null,HYPERLINK(&apos;/&apos; &amp; NSP_Related_Case_3_ID__c, &apos;Child Case Record 3&apos;, &apos;_self&apos;), null)</formula>
+    <label>Related Case 3</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

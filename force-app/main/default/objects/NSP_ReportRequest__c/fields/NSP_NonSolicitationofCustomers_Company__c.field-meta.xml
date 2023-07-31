@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_NonSolicitationofCustomers_Company__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>Non-Solicitation of Customers/Company EEs – Not applicable for CA employees. Not applicable for IL employees that make less than $45K per year</inlineHelpText>
+    <label>Non-Solicitation of Customer/Company EEs</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

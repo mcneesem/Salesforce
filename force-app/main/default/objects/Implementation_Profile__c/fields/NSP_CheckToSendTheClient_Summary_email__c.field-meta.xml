@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CheckToSendTheClient_Summary_email__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check to send the Client Summary email (includes Visa, Garnish &amp; Levy info, Unemployment &amp; State Tax account guidelines and RRP info.</description>
+    <externalId>false</externalId>
+    <label>Check to send the Client Summary email</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

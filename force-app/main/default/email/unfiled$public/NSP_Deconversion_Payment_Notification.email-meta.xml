@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Deconversion Payment Notification</name>
+    <style>none</style>
+    <subject>Deconversion Fee Payment Receipt {!pse__Proj__c.pse__Account__c} {!pse__Proj__c.NSP_RET_Client_ID__c}</subject>
+    <textOnly>The Deconversion fee for {transaction lookup} has been paid
+
+{Account Detail Link}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

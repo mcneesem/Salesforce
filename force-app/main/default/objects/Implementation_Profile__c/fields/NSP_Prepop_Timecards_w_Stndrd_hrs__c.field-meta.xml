@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Prepop_Timecards_w_Stndrd_hrs__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Will NSP prepopulate timecards with standard hours M-F for exempt EEs?</inlineHelpText>
+    <label>NSP Prepop Timecard w Std hrs xmt EEs?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

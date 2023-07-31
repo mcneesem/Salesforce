@@ -1,0 +1,20 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})   " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<c:InsperityEmailHeader />
+<p>This client has stated they have Equity Based Compensation. The payroll contact is:</p>
+
+<p>{!relatedTo.NSP_PC_Client_Name__c}, {!relatedTo.PC_Client_Contact_Method__c} : {!relatedTo.NSP_PC_Client_Cell_Phone__c}  {!relatedTo.NSP_PC_Client_Email__c} </p>
+
+<c:NSP_FSOEmails currentRecordId="{!relatedTo.Id}"  />
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.Name}<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.NSP_Job_Title__c}<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.NSP_Work_email__c}</p>
+<c:InsperityEmailFooter />
+ </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

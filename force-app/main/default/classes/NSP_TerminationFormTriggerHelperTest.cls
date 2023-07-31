@@ -1,0 +1,324 @@
+/**
+Apex Class Name      :  NSP_TerminationFormTriggerHelperTest
+Version              :  1.0   
+Author               :  Jatin                                                                       
+Created Date         :  06/01/22 
+Function             :  This class is used as a testclass to NSP_TerminationFormTriggerHelper 
+Story                :                                                                        
+Modification Log     :                                                                              
+*--------------------------------------------------------------------------------------------------  
+* Developer                   Date                   Description                                    
+* -------------------------------------------------------------------------------------------------  
+* Jatin                       06/09/22           First Iteration
+*/
+
+@isTest
+public class NSP_TerminationFormTriggerHelperTest {
+    public static final String NSP_Credit_Specialist_Form = 'NSP_Credit_Specialist_Form';
+    @TestSetup
+    public static void setUpData(){
+        Id woAssetRecordTypeId =  Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();
+        Id PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
+        Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', true);
+        //inserting Asset
+        Asset oAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        oAsset.NSP_Actual_Seasonal_EE_Count__c = 1;
+        oAsset.NSP_Unique_Active_Employee__c =10;
+        oAsset.recordTypeId = woAssetRecordTypeId;
+        insert oAsset;
+        
+        Asset oAsset1 = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        oAsset1.NSP_Actual_Seasonal_EE_Count__c = 1;
+        oAsset1.NSP_Unique_Active_Employee__c =10;
+        oAsset1.recordTypeId = woAssetRecordTypeId;
+        oAsset1.NSP_AIMS_First_Pay_Date__c = System.today();
+        oAsset1.Status = NSP_ServiceConstants.ASSET_ACTIVE_STATUS;
+        insert oAsset1;
+
+        NSP_Sub_Client__c oSubClient = (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', true);
+        NSP_Sub_Client__c oSubClient2 = (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
+        oSubClient2.NSP_Account__c = oAccount.Id;
+        oSubClient2.NSP_Asset__c = oAsset1.Id;
+        oSubClient2.NSP_Sub_Client__c = String.valueOf(Integer.valueOf((100000 * ( 1 -  1 * Math.random()))));
+        oSubClient2.NSP_Account_Status__c = 'Active';
+        insert oSubClient2;
+        //Inserting Contact
+        /*Contact oContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        oContact.AccountId = oAccount.Id;
+        oContact.Email = 'abctestexamplyxyz@test.com.abc';
+        insert oContact;*/
+        //Inserting Project
+        Test.startTest();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Start_Date__c = Date.Today();
+        insert oProject;
+        
+        List<NSP_Account_Team__c> accTeamList = new List<NSP_Account_Team__c>();
+        NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam.NSP_Role__c = NSP_ServiceConstants.PAYROLL_SUPERVISOR;
+        accTeam.NSP_Account__c = oAccount.Id;
+        accTeam.NSP_User__c = UserInfo.getUserId();
+        accTeamList.add(accTeam);
+        
+        NSP_Account_Team__c accTeam1 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam1.NSP_Role__c = NSP_ServiceConstants.PAYROLL_SPECIALIST;
+        accTeam1.NSP_Account__c = oAccount.Id;
+        accTeam1.NSP_User__c = UserInfo.getUserId();
+        accTeamList.add(accTeam1);
+        
+        NSP_Account_Team__c accTeam2 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam2.NSP_Role__c = NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR;
+        accTeam2.NSP_Account__c = oAccount.Id;
+        accTeam2.NSP_User__c = UserInfo.getUserId();
+        accTeamList.add(accTeam2);
+        
+        NSP_Account_Team__c accTeam3 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam3.NSP_Role__c = NSP_ServiceConstants.CLIENT_LIAISION;
+        accTeam3.NSP_Account__c = oAccount.Id;
+        accTeam3.NSP_User__c = UserInfo.getUserId();
+        accTeamList.add(accTeam3);
+        
+        NSP_Account_Team__c accTeam4 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam4.NSP_Role__c = NSP_ServiceConstants.MID_MARKET_ACC_EX;
+        accTeam4.NSP_Account__c = oAccount.Id;
+        accTeam4.NSP_User__c = UserInfo.getUserId();
+        accTeamList.add(accTeam4);
+        
+        NSP_Account_Team__c accTeam5 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam5.NSP_Role__c = NSP_ServiceConstants.MANAGER_HRSERVICES;
+        accTeam5.NSP_Account__c = oAccount.Id;
+        accTeam5.NSP_User__c = UserInfo.getUserId();
+        accTeamList.add(accTeam5);
+        
+        Insert accTeamList;
+            
+        //Inserting Project Task
+        pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask.pse__Project__c = oProject.Id;
+        oProjectTask.RecordTypeId = PEOProjectTaskRecordTypeId;
+        insert oProjectTask;
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void checkTerminationFormSharing(){
+        List<pse__Project_Task__c> lProjectTasks = new List<pse__Project_Task__c>([SELECT ID FROM pse__Project_Task__c WHERE Id != null LIMIT 1]);
+        String orgId = UserInfo.getOrganizationId();
+        User oUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
+        oUser.EmployeeNumber = System.Label.NSP_User_Employee_Number;
+        oUser.NSP_Sales_Office__c = '301';
+        oUser.userName = 'testemail@domain'+ orgId +'.com.test';
+        insert oUser;
+        Test.startTest();
+        //Inserting Termination Form
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm.NSP_Project_Task__c = lProjectTasks[0].Id;
+        insert oTerminationForm;
+        oTerminationForm.NSP_Payroll_Specialist__c = oUser.Id;
+        oTerminationForm.NSP_Supervisor__c = oUser.Id;
+        oTerminationForm.NSP_Approver__c = oUser.Id;
+        //Updating Termination Form
+        update oTerminationForm;
+        System.assertEquals(2,[SELECT count() FROM NSP_Termination_Form__Share WHERE Id != null LIMIT 10]);
+        
+        oTerminationForm.NSP_Payroll_Specialist__c = null;
+        oTerminationForm.NSP_Supervisor__c = null;
+        oTerminationForm.NSP_Approver__c = null;
+        update oTerminationForm;
+        
+        oTerminationForm.OwnerId = oUser.Id;
+        update oTerminationForm;
+        System.assertEquals(1,[SELECT count() FROM NSP_Termination_Form__Share WHERE Id != null LIMIT 10]);
+        Test.stopTest();
+    }
+    @isTest
+    public static void checkAccountandFieldsValues(){
+        List<pse__Project_Task__c> lProjectTasks = new List<pse__Project_Task__c>([SELECT ID FROM pse__Project_Task__c WHERE Id != null LIMIT 1]);
+        List<String> assetFields = new List<String>{'Id','AccountId','Status'};
+        String query = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
+            .addFilter('Status', NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
+            .addLimit(1).build();
+
+        List<Asset> assetsList = (List<Asset>)Database.query(query);
+        List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>([SELECT Id, NSP_Sub_Client__c FROM NSP_Sub_Client__c WHERE NSP_Asset__c IN :assetsList LIMIT 10]);
+        List<Asset> lAssets = new List<Asset>([SELECT Id, NSP_Unique_Active_Employee__c, RecordTypeId, Status, AccountId FROM Asset WHERE Id != null]);
+        Decimal sumOfEmployess = lAssets[0].NSP_Unique_Active_Employee__c;
+        String subClientNumbers = '';
+        for(NSP_Sub_Client__c oSubClient : lSubClients){
+            subClientNumbers = subClientNumbers + oSubClient.NSP_Sub_Client__c + ',';
+        
+        subClientNumbers = subClientNumbers.removeEnd(',');
+        Test.startTest();
+        //Inserting Termination Form
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm.NSP_Project_Task__c = lProjectTasks[0].Id;
+        insert oTerminationForm;
+        Test.stopTest();
+        List<NSP_Termination_Form__c> lTerminationForms = new List<NSP_Termination_Form__c>([SELECT ID,NSP_Client_Number__c,NSP_Client_Sub_Account_Numbers__c,NSP_Number_of_Active_Employees__c FROM NSP_Termination_Form__c WHERE Id != null LIMIT 1]);
+        System.assertEquals(subClientNumbers, lTerminationForms[0].NSP_Client_Sub_Account_Numbers__c);
+        System.assertEquals(sumOfEmployess, lTerminationForms[0].NSP_Number_of_Active_Employees__c);
+        }
+    }
+
+    @isTest
+    public static void updateUserLookupsTest(){
+        Map<String, NSP_Account_Team__c> roleAccountTeamIdMap = new Map<String, NSP_Account_Team__c>();
+        for(NSP_Account_Team__c accTeam: [SELECT NSP_User__c, NSP_Role__c FROM NSP_Account_Team__c WHERE Id != null LIMIT 10]){
+            roleAccountTeamIdMap.put(accTeam.NSP_Role__c, accTeam);
+        }
+        List<pse__Project_Task__c> lProjectTasks = new List<pse__Project_Task__c>([SELECT Id FROM pse__Project_Task__c WHERE Id != null LIMIT 1]);
+
+        Test.startTest();
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm.NSP_Project_Task__c = lProjectTasks[0].Id;
+        insert oTerminationForm;
+        Test.stopTest();
+
+        List<NSP_Termination_Form__c> lTerminationForms = new List<NSP_Termination_Form__c>([SELECT 
+                                                              NSP_Client_Liaison__c, NSP_Approver__c , NSP_Supervisor__c , NSP_Payroll_Specialist__c , 
+                                                              NSP_Sales_Representative__c, NSP_Account_Executive__c from NSP_Termination_Form__c WHERE Id != null LIMIT 1]);
+        
+        if(roleAccountTeamIdMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR)!=null){
+            System.assertEquals(roleAccountTeamIdMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR).NSP_User__c, lTerminationForms[0].NSP_Supervisor__c);
+        }
+        if(roleAccountTeamIdMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST)!=null ){
+            System.assertEquals(roleAccountTeamIdMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST).NSP_User__c, lTerminationForms[0].NSP_Payroll_Specialist__c);
+        }
+        if(roleAccountTeamIdMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR)!=null ){
+            System.assertEquals(roleAccountTeamIdMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR).NSP_User__c, lTerminationForms[0].NSP_Approver__c);
+        }
+        if(roleAccountTeamIdMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR)!=null){
+            System.assertEquals(roleAccountTeamIdMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR).NSP_User__c, lTerminationForms[0].NSP_Sales_Representative__c);
+        }
+        if(roleAccountTeamIdMap.get(NSP_ServiceConstants.CLIENT_LIAISION)!=null){
+            System.assertEquals(roleAccountTeamIdMap.get(NSP_ServiceConstants.CLIENT_LIAISION).NSP_User__c, lTerminationForms[0].NSP_Client_Liaison__c);
+        }
+        if(roleAccountTeamIdMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX)!=null){
+            System.assertEquals(roleAccountTeamIdMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX).NSP_User__c, lTerminationForms[0].NSP_Account_Executive__c);
+        }
+        //System.assertEquals(accTeam[0].NSP_User__c, lTerminationForms[0].NSP_Client_Liaison__c);
+    }
+    
+    @isTest
+    public static void updateProjectTaskStatusTest(){
+        List<pse__Project_Task__c> ProjectTaskIds = new List<pse__Project_Task__c>([SELECT Id FROM pse__Project_Task__c WHERE Id != null LIMIT 1]);
+		NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        List<NSP_Termination_Form__c> FormList = new List<NSP_Termination_Form__c>();
+        //Adding Termination Form records to Form List
+        FormList.add(oTerminationForm);
+        Test.startTest();
+        //Inserting Form List
+        insert FormList;
+        //Iterating over FormList
+        for(Integer formLst=0;formLst<FormList.size();formLst++){
+        	FormList[formLst].NSP_Status__c = NSP_ServiceConstants.TERMINATION_FORM_PR_APPROVED_STATUS;
+        }
+        //Updating FormList
+        update FormList;
+        Test.stopTest();
+        System.assertEquals(FormList[0].NSP_Status__c, NSP_ServiceConstants.TERMINATION_FORM_PR_APPROVED_STATUS);
+    }
+    
+     @isTest
+    public static void updateAccountOnTermtest(){
+        
+        Test.startTest();
+        Account oAccount = [SELECT Id FROM Account WHERE Id != null LIMIT 1];
+        List<Contact>  contactList = New List<Contact>();
+        contactList.add(New Contact(FirstName = 'FName', LastName = 'LName', AccountId = oAccount.Id));
+        insert contactList;
+        List<NSP_Termination_Form__c> terminationList = new List<NSP_Termination_Form__c>();
+        
+        Contact assertCon = [SELECT Id FROM Contact WHERE FirstName = 'FName' LIMIT 1];
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);      
+        oTerminationForm.NSP_Client_Owner__c= assertCon.Id;
+        insert oTerminationForm;
+        Test.stopTest();
+        System.assertEquals(oTerminationForm.NSP_Client_Owner__c, assertCon.Id);
+    }
+    
+    @isTest
+    public static void sendBellNotificationToPayrollSpecialistTest(){
+        String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
+		NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        List<NSP_Termination_Form__c> FormList = new List<NSP_Termination_Form__c>();
+        //Adding Termination Form records to Form List
+        FormList.add(oTerminationForm);
+        Test.startTest();
+        //Inserting Form List
+        insert FormList;
+        //Iterating over FormList
+        for(Integer formLst=0;formLst<FormList.size();formLst++){
+        	FormList[formLst].NSP_Status__c = 'PR Supervisor Denied';
+            FormList[formLst].recordtypeId = PayrollRecordTypeId;
+        }
+        //Updating FormList
+        update FormList;
+        Test.stopTest();
+        System.assertEquals(FormList[0].NSP_Status__c, 'PR Supervisor Denied');
+    }
+    
+    @isTest
+    public static void sendBellNotificationToPayrollSupervisorTest(){
+        String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
+		NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        List<NSP_Termination_Form__c> FormList = new List<NSP_Termination_Form__c>();
+        //Adding Termination Form records to Form List
+        FormList.add(oTerminationForm);
+        Test.startTest();
+        //Inserting Form List
+        insert FormList;
+        //Iterating over FormList
+        for(Integer formLst=0;formLst<FormList.size();formLst++){
+        	FormList[formLst].NSP_Status__c = 'Term Team Approved';
+            FormList[formLst].recordtypeId = PayrollRecordTypeId;
+        }
+        //Updating FormList
+        update FormList;
+        Test.stopTest();
+        System.assertEquals(FormList[0].NSP_Status__c, 'Term Team Approved');
+    }
+    
+    @isTest
+    public static void sendBellNotificationToCreditOwnerTest(){
+        String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
+		NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        List<NSP_Termination_Form__c> FormList = new List<NSP_Termination_Form__c>();
+        //Adding Termination Form records to Form List
+        FormList.add(oTerminationForm);
+        Test.startTest();
+        //Inserting Form List
+        insert FormList;
+        //Iterating over FormList
+        for(Integer formLst=0;formLst<FormList.size();formLst++){
+        	FormList[formLst].NSP_Status__c = 'Term Team Approved';
+            FormList[formLst].recordtypeId = CreditRecordTypeId;
+        }
+        //Updating FormList
+        update FormList;
+        Test.stopTest();
+        System.assertEquals(FormList[0].NSP_Status__c, 'Term Team Approved');
+    }
+    	@isTest
+        public static void sendBellNotificationToCreditSpecialistTest(){
+        String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
+		NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        List<NSP_Termination_Form__c> FormList = new List<NSP_Termination_Form__c>();
+        //Adding Termination Form records to Form List
+        FormList.add(oTerminationForm);
+        Test.startTest();
+        //Inserting Form List
+        insert FormList;
+
+        //Iterating over FormList
+        for(Integer formLst=0;formLst<FormList.size();formLst++){
+        	FormList[formLst].NSP_Status__c = 'Term Team Denied';
+            FormList[formLst].recordtypeId = CreditRecordTypeId;
+        }
+        //Updating FormList
+        update FormList;
+        Test.stopTest();
+        System.assertEquals(FormList[0].NSP_Status__c, 'Term Team Denied');
+    }
+	
+}

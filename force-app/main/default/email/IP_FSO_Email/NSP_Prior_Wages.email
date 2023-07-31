@@ -1,0 +1,33 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) - Onboarding Payroll Information " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<table border="0" width="550">
+<c:InsperityEmailHeader />
+<p>{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) is currently in the process of being onboarded. Please find the following for your information:</p>
+
+<apex:outputPanel rendered="{!AND(relatedTo.NSP_PC_Client_Name__c !=null, relatedTo.NSP_PC_Client_Email__c !=null)}">
+<p>Client Payroll Contact: {!relatedTo.NSP_PC_Client_Name__c} <br/>
+   Payroll Contact Email: {!relatedTo.NSP_PC_Client_Email__c}</p>
+</apex:outputPanel>
+<c:NSP_AdditionalClientContacts currentRecordId="{!relatedTo.Id}"  />
+<apex:outputPanel rendered="{!(relatedTo.Client_s_previous_payroll_provider__c !=null)}">
+  <p> Client’s Previous Payroll provider: {!relatedTo.Client_s_previous_payroll_provider__c} </p>
+</apex:outputPanel>
+
+<p>If the client had prior wages, the information will be listed below. If there is no information, the client had no prior wages. </p>
+
+<c:NSP_RelatedPayPeriod currentRecordId="{!relatedTo.Id}"  />
+
+<p>For more information, see the Implementation Profile in Salesforce.</p>
+</table>
+
+</body>
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template used when we receive any email not having the @insperity.com domain.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Health &amp; Welfare External Email Template</name>
+    <style>freeForm</style>
+    <subject>Thank you for contacting Insperity’s Section 125 Team</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

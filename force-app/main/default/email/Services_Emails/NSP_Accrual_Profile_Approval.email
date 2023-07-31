@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="Accrual Profile approved" recipientType="User" relatedToType="NSP_Accrual_Profile__c">
+<messaging:HtmlEmailBody >
+<apex:outputPanel >
+The Accrual Profile approval process for&nbsp;<c:NSP_ITA_AIMS_EmailTemplates currentRecordId="{!relatedTo.Id}"></c:NSP_ITA_AIMS_EmailTemplates> is complete.
+</apex:outputPanel>
+<br/>
+<span>
+<apex:outputlink value="{!LEFT($Api.Partner_Server_URL_140,FIND('.com',$Api.Partner_Server_URL_140)+4)+relatedTo.Id}">{!RelatedTo.Name}</apex:outputlink>
+</span>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

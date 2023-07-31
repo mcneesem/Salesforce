@@ -1,0 +1,65 @@
+<template>
+  <div class="slds-form-element">
+    <div class="slds-form-element__control">
+      <div class="slds-combobox_container">
+        <div
+          class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+          <lightning-input
+            label={label}
+            type="search"
+            required={required}
+            placeholder={placeholder}
+            onchange={handleSearchTermChange}
+            onfocus={handleSearchBoxFocus}
+            onblur={handleSearchBoxBlur}></lightning-input>
+          <div
+            if:true={isOptionBoxVisible}
+            class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid nsp-option-container"
+            role="listbox">
+            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+              <template for:each={options} for:item="option">
+                <li
+                  if:true={option.value}
+                  role="presentation"
+                  class={option.liClass}
+                  key={option.value}
+                  onclick={handleOptionClick}
+                  data-value={option.value}
+                  data-disabled={option.disabled}>
+                  <div
+                    class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                    role="option">
+                    <span
+                      if:true={option.iconName}
+                      class="slds-media__figure slds-listbox__option-icon">
+                      <span class="slds-icon_container">
+                        <lightning-icon
+                          icon-name={option.iconName}
+                          size="small"
+                          alternative-text={option.label}
+                          title={option.label}></lightning-icon>
+                      </span>
+                    </span>
+
+                    <span class="slds-media__body">
+                      <span
+                        class="slds-listbox__option-text slds-listbox__option-text_entity">
+                        <span><mark>{option.label}</mark></span>
+                      </span>
+                      <span if:true={option.info}
+                        class="slds-listbox__option-meta slds-listbox__option-meta_entity"
+                        >{option.info}</span>
+                        <span if:false={option.info}
+                        class="slds-listbox__option-meta slds-listbox__option-meta_entity"
+                        >&nbsp;</span>
+                    </span>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

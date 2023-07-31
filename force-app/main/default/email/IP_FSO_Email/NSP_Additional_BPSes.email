@@ -1,0 +1,47 @@
+<messaging:emailTemplate subject="{!relatedTo.Account__r.Name} would like to implement one or more Business Performance Solutions" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+
+<html>
+  <body>
+  <table border="0" width="550">
+  <c:InsperityEmailHeader />
+  <p>{!relatedTo.Account__r.Name} has expressed interest in implementing the following Business Performance Solutions: </p>
+   <p><apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Employment Screening'),true,false)}">
+   <li> Employment Screening </li> <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Expense Management'),true,false)}">
+   <li> Expense Management </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Performance Management'),true,false)}">
+   <li> Performance Management </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Organization Planning'),true,false)}">
+   <li> Organization Planning </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Insurance Services'),true,false)}">
+   <li> Insurance Services </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Recruiting Services'),true,false)}">
+   <li> Recruiting Services </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Payroll Services (non co-employment/WOSS)'),true,false)}">
+   <li> Payroll Services (non co-employment/WOSS) </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'International Payroll Services'),true,false)}">
+   <li> International Payroll Services </li><br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(CONTAINS(relatedTo.Select_BPSes__c,'Certify'),true,false)}">
+  <li> Certify </li>
+  </apex:outputPanel></p>
+  
+  
+  <p>Please create an opportunity if one does not currently exist and follow up with the client. </p>
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}</p>
+</table>
+</body>
+<c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

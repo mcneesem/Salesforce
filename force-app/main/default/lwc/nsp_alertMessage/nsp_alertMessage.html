@@ -1,0 +1,12 @@
+<template>
+  <div class={alertClass} role="alert">
+    <span class="slds-assistive-text">{mode}</span>
+    <lightning-icon
+      icon-name={icon}
+      variant={mode}
+      size="small"
+      alternative-text={mode}
+      title={mode}></lightning-icon>
+    <h2>{message}</h2>
+  </div>
+</template>

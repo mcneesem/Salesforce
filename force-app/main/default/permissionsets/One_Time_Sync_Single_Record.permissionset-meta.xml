@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>One_Time_Sync_Single_Record</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to control access to &quot;One Time Sync (Single-Record)&quot; actions.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.NSP_AIMS_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.NSP_Per_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Plan_SubPlan__c.NSP_Plan_Id_for_Merge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Plan__c.NSP_Plan_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.NSP_Account_Group_External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>One_Time_Sync_Single_Record</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Publish_One_Time_Sync_Event</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>One Time Sync (Single-Record)</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>One_Time_Sync_Event__e</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+</PermissionSet>

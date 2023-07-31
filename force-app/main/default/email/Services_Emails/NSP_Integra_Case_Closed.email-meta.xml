@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>NSP_Integra – Case Closed</name>
+    <style>freeForm</style>
+    <subject>Case #  {!Case.CaseNumber} Closed : {!Case.Subject}</subject>
+    <textOnly>All issues associated with this case have been resolved, and the case has been closed.
+The details regarding this case are listed below.
+
+Case Number {!Case.CaseNumber}
+
+Case Subject {!Case.Subject}
+
+Customer {!Case.Account}
+
+Contact {!Case.Account} : {!Case.Contact}
+
+Creation Date {!Case.CreatedDate}
+
+Case Priority {!Case.Priority}
+
+Case Status {!Case.Status}
+
+Date Closed {!Case.ClosedDate}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

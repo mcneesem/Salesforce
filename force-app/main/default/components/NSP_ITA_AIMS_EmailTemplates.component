@@ -1,0 +1,8 @@
+<apex:component access="global" controller="NSP_AccrualProfileController">
+    
+    <apex:attribute name="currentRecordId" description="recId" type="String" assignTo="{!recId}" />
+    
+        <apex:outputText value="{!accrualProfileAccountNames}" id="accountProfileAccountNameList" />&nbsp;/&nbsp;
+        <apex:outputText value="{!accrualProfilePlanName}" id="accountProfilePlanNameList" />
+        
+</apex:component>

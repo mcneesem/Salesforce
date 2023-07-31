@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Job_Title_Required_when_parent_role_true</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.ProjectTaskAssignmentValidations__c != true, NSP_Parent_Role__c  = True, ISBLANK( NSP_Job_Title__c ))</errorConditionFormula>
+    <errorMessage>Job Title is required when Parent role is checked.</errorMessage>
+</ValidationRule>

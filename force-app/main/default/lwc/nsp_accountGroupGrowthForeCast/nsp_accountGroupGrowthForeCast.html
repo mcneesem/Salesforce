@@ -1,0 +1,36 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnoreNextLine oncellchange={handleEditCellChange}-->
+<template>
+	<lightning-tabset variant="scoped">
+		<lightning-tab label="Growth Forecast">
+			<div if:true={isLoading} class="slds-is-relative">
+				<lightning-spinner class="spinner-padding" variant="brand" alternative-text="Loading Account Group"
+					size="large">
+				</lightning-spinner>
+			</div>
+			<div class="slds-m-bottom_medium">
+				<lightning-datatable    if:true={data} 
+										key-field="GrowthType" 
+										data={data} 
+										min-column-width="150"
+										draft-values={draftValues} 
+										column-widths-mode="fixed" 
+										columns={columns}
+										suppress-bottom-bar="true" 
+										hide-checkbox-column 
+										onsave={handleSave}
+										oncellchange={handleCellChange}>
+				</lightning-datatable>
+
+				<footer if:true={enableFooter} class="slds-box slds-theme_shade slds-p-top_medium slds-align_absolute-center">
+					<lightning-button class="slds-p-horizontal_x-small" onclick={handleCancel} name="Cancel"
+						label="Cancel">
+					</lightning-button>
+					<lightning-button class="slds-p-horizontal_x-small" onclick={handleSave} variant="brand"
+						type="submit" name="save" label="Save">
+					</lightning-button>
+				</footer>
+			</div>
+		</lightning-tab>
+	</lightning-tabset>
+</template>

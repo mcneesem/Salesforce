@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Rev_Rec_Model__c</fullName>
+    <description>Captures Revenue Recognition Model</description>
+    <externalId>false</externalId>
+    <label>Rev Rec Model</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Project Rev Rec</fullName>
+                <default>false</default>
+                <label>Project Rev Rec</label>
+            </value>
+            <value>
+                <fullName>Project Rev Rec 12</fullName>
+                <default>false</default>
+                <label>Project Rev Rec 12</label>
+            </value>
+            <value>
+                <fullName>12 Delay 1</fullName>
+                <default>false</default>
+                <label>12 Delay 1</label>
+            </value>
+            <value>
+                <fullName>12 Month</fullName>
+                <default>false</default>
+                <label>12 Month</label>
+            </value>
+            <value>
+                <fullName>Immediate</fullName>
+                <default>false</default>
+                <label>Immediate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

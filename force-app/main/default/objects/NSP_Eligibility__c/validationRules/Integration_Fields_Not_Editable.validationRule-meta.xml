@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Fields_Not_Editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos;,
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos;,
+$User.NSP_Profile_Name__c &lt;&gt;&apos;System Administrator&apos;,
+$Setup.NSP_Trigger_Switch__c.NSP_Eligibility__c = false,
+
+RecordType.DeveloperName = &apos;WO&apos; ,OR(
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Plan_Subplan_Relationship__c))),
+ISCHANGED(NSP_Plan_Subplan_Relationship__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE( NSP_External_ID__c ))),
+ISCHANGED( NSP_External_ID__c )),
+
+AND(NOT(ISPICKVAL(PRIORVALUE(NSP_Contribution_Type__c ),&apos;&apos;)),
+ISCHANGED(NSP_Contribution_Type__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Effective_Date__c))),
+ISCHANGED(NSP_Effective_Date__c)),
+
+AND(NSP_Inactive__c = true,
+ISCHANGED(NSP_Inactive__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Months__c))),
+ISCHANGED( NSP_Months__c )),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Hours__c))),
+ISCHANGED(NSP_Hours__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Age__c))),
+ISCHANGED(NSP_Age__c)),
+
+AND(NOT(ISBLANK( PRIORVALUE(NSP_Contribution_Description__c))),
+ISCHANGED( NSP_Contribution_Description__c )),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Term_Date__c ))),
+ISCHANGED(NSP_Term_Date__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Effective_Date__c))),
+ISCHANGED(NSP_Effective_Date__c)),
+
+AND(NOT(ISBLANK(NSP_Parent__c)),
+ISCHANGED( NSP_Parent__c ))
+))</errorConditionFormula>
+    <errorMessage>Eligibility integration fields are not editable.</errorMessage>
+</ValidationRule>

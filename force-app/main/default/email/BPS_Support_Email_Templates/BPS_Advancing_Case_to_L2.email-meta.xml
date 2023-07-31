@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BPS – Advancing Case to L2</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BPS – Advancing Case to L2</name>
+    <style>freeForm</style>
+    <subject>BPS – Advancing Case to L2</subject>
+    <textOnly>Hi {!Contact.FirstName},
+ 
+Your request for assistance has been reviewed and advanced to our level 2 technicians. They will be in touch as soon as they are available. We appreciate your patience. 
+  
+If you have additional questions or concerns in the meantime, please let us know and we will be happy to help. 
+ 
+ 
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_FinSvcs_W_2_Reporting_Assigned_Open_Case</fullName>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>NSP_Segment__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_Detail__c</columns>
+    <columns>NAME</columns>
+    <columns>CONTACT.ACCOUNT</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>NSP_Assigned_Queue__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Open,ReOpened</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.PEO</value>
+    </filters>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>notEqual</operation>
+        <value>W-2 Reporting</value>
+    </filters>
+    <filters>
+        <field>NSP_Assigned_Queue__c</field>
+        <operation>equals</operation>
+        <value>W-2 Reporting</value>
+    </filters>
+    <label>FinSvcs W-2 Reporting Assigned OpenCase</label>
+    <sharedTo>
+        <group>NSP_Financial_Services_List_Views</group>
+    </sharedTo>
+</ListView>

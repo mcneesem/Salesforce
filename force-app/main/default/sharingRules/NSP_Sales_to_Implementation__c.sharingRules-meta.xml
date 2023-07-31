@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>NSP_RET_Sales_to_Implementation_Sharing_Rule</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>To provide read and edit access to records.</description>
+        <label>RET-Sales-to-Implementation Sharing Rule</label>
+        <sharedTo>
+            <group>NSP_Ret_Services_Objects_Read_Edit</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_RET_Sales_to_Implementation_For_RET_Sales</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>To Provide read and edit access to the RET Sales Group.</description>
+        <label>RET-Sales-to-Implementation For RET Sales</label>
+        <sharedTo>
+            <group>NSP_RET_Sales</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

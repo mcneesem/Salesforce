@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Origination__c</fullName>
+    <externalId>false</externalId>
+    <label>Origination</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Change</fullName>
+                <default>false</default>
+                <label>Client Change</label>
+            </value>
+            <value>
+                <fullName>Client Initiated</fullName>
+                <default>false</default>
+                <label>Client Initiated</label>
+            </value>
+            <value>
+                <fullName>Client Touch</fullName>
+                <default>false</default>
+                <label>Client Touch</label>
+            </value>
+            <value>
+                <fullName>Fee Disclosure Request</fullName>
+                <default>false</default>
+                <label>Fee Disclosure Request</label>
+            </value>
+            <value>
+                <fullName>NIRP</fullName>
+                <default>false</default>
+                <label>NIRP</label>
+            </value>
+            <value>
+                <fullName>Sales</fullName>
+                <default>false</default>
+                <label>Sales</label>
+            </value>
+            <value>
+                <fullName>Service</fullName>
+                <default>false</default>
+                <label>Service</label>
+            </value>
+            <value>
+                <fullName>Renewal</fullName>
+                <default>false</default>
+                <label>Renewal</label>
+            </value>
+            <value>
+                <fullName>RS Compliance</fullName>
+                <default>false</default>
+                <label>RS Compliance</label>
+            </value>
+            <value>
+                <fullName>Plan Consulting</fullName>
+                <default>false</default>
+                <label>Plan Consulting</label>
+            </value>
+            <value>
+                <fullName>New Customers from AIMS Report</fullName>
+                <default>false</default>
+                <label>New Customers from AIMS Report</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

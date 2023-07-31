@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>NSP_buttomSignBusiness</letterhead>
+    <name>NSP_WX Tax – Case Created</name>
+    <style>freeForm</style>
+    <subject>Case # {!Case.CaseNumber} Created : {!Case.Subject}</subject>
+    <textOnly>Thank you for contacting Insperity Customer Support.
+
+Your request for assistance has been received. Case #{!Case.CaseNumber}  - &quot;{!Case.Subject}&quot; has been created for you. A member of our customer care team will respond to your case as soon as possible.
+ 
+IPS Tax Department
+Traditional Employment Solutions
+19001 Crescent Springs Dr | Kingwood, TX 77339</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

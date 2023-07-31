@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OPRT - Auto Logout</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OPRT - Auto Logout</name>
+    <style>freeForm</style>
+    <subject>OPRT - Add User</subject>
+    <textOnly>Dear {!Contact.FirstName}
+
+Thank you for contacting Insperity Technical Support.  We apologize for the issues you are experiencing with automatically signing out of the application. Modifying cookie handling settings in Google Chrome can resolve the issue, as can switching to another browser.
+
+To fix the issue with Auto Logout in Google Chrome:
+
+Launch Google Chrome
+
+
+In the URL, type chrome://flags
+
+
+In the Search, type Same
+
+
+Enable SameSite by default cookies and Cookies without SameSite must be secure
+
+Try accessing again
+
+
+If this does not resolve the issues, please take the additional steps listed below to allow our sites to use cookies in Google Chrome.
+
+Removing Block third-party cookies
+
+Launch Google Chrome
+
+
+Type chrome://settings/cookies in the address
+
+Select Privacy and Security
+
+
+If Block third-party cookies is blocked, try changing it to Block third-party cookies in Incognito
+
+
+Under Sites that can always use cookies add Insperity.com and Orgplus.com
+
+Have user try accessing again
+
+If neither works, try Allow all cookies
+
+Please call the support team at 877-222-0499 if additional guidance is needed.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

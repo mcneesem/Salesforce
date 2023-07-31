@@ -1,0 +1,37 @@
+<template>
+  <lightning-formatted-text
+    class="slds-page-header__title"
+    value={label.systemInfo}>
+  </lightning-formatted-text>
+  <div class="section slds-var-p-top_small" data-id="systemInfo">
+    <lightning-record-edit-form
+      onerror={handleError}
+      record-id={recordId}
+      onload={handleLoad}
+      object-api-name={objectApiName}
+      density="comfy">
+      <!-- <lightning-radio-group
+        class="slds-var-p-left_small"
+        name="radioGroup"
+        data-name="RecordTypeId"
+        label="Record Type"
+        onchange={handleValueChange}
+        options={options}
+        disabled={disabledFields.RecordTypeId}
+        value={field.RecordTypeId}
+        type="radio">
+      </lightning-radio-group> -->
+      <lightning-input-field 
+      disabled={disabledFields.NSP_Inactive__c}
+      field-name="NSP_Inactive__c"
+      data-name="NSP_Inactive__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+      <lightning-output-field
+        class="outputText"
+        field-name="LastModifiedById"></lightning-output-field>
+      <lightning-output-field class="outputText" field-name="CreatedById">
+      </lightning-output-field>
+    </lightning-record-edit-form>
+  </div>
+</template>

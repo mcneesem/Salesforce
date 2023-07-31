@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="ITA Implementation project has been created for {!relatedTo.NSP_RET_Client_ID__c}" recipientType="User" relatedToType="pse__Proj__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <c:InsperityEmailHeader ></c:InsperityEmailHeader>
+ <p>
+The <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.Id}" target="_parent"> ITA Implementation project </apex:outputLink> has been created  
+                    <apex:outputPanel rendered="{!relatedTo.NSP_RET_Client_ID__c != '' }">
+                      for {!relatedTo.NSP_RET_Client_ID__c}
+                    </apex:outputPanel>. Please review along with the PEO Implementation Profile and Project for simultaneous start.
+ </p>
+ <c:InsperityEmailFooter ></c:InsperityEmailFooter> 
+  </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

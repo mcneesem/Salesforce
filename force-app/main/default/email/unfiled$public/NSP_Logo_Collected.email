@@ -1,0 +1,18 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) - Logo " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+
+<html>
+  <body>
+  <c:InsperityEmailHeader />
+  <p>The Logo for the new client {!relatedTo.NSP_AIMS_Client_Name__c} {!relatedTo.NSP_AIMS_ClientNo__c} is in the 
+   Client Reference and ready for cobranding. </p>
+  
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

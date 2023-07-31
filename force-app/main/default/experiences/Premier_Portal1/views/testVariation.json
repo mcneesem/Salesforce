@@ -1,0 +1,40 @@
+{
+  "appPageId" : "4329045a-0ee7-4781-a21f-030a49949741",
+  "componentName" : "highspot:Highspot_Content_Layout",
+  "dataProviders" : [ ],
+  "id" : "70a0b3b9-a2b8-4267-abda-ec5b562a5083",
+  "label" : "Test Variation",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "config" : { }
+      },
+      "componentName" : "forceCommunity:dynamicCollection",
+      "id" : "b453514e-1b1d-4a24-8fe6-f9a97dc6beaa",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "f77831a8-a9de-4e2d-a069-f81003eb977f",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "703e71ce-cf87-42d6-b758-abef0898a720",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "cba84814-7774-4813-90b6-ab8cecf01dd1",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-a2o"
+}

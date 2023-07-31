@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>NSP_Cases_For_RET_Sales</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Cases For RET Sales</label>
+        <sharedTo>
+            <group>NSP_RET_Sales</group>
+        </sharedTo>
+        <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>CaseNumber</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_Confidential__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_Private__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>RET Time Tracking,PEO</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Corp_Case_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This sharing rule is created to share the cases to Corp EE public group if the corp EE check box is checked.</description>
+        <label>Corp Case Sharing</label>
+        <sharedTo>
+            <group>NSP_Corp_Cases_Visibility</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_CorporateEmployeeEE__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Share_All_Case_to_Service_Profiles</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share All Case to Service Profiles</label>
+        <sharedTo>
+            <group>NSP_Service_Profile_Group_Members</group>
+        </sharedTo>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+        <criteriaItems>
+            <field>CaseNumber</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_Confidential__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_Private__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_OrgPlus_M_A_Private__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_CorporateEmployeeEE__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OrgPlus_M_A_Private_Case_Sharing</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>For sharing OrgPlus M&amp;A Private case with public group.</description>
+        <label>OrgPlus M&amp;A Private Case Sharing</label>
+        <sharedTo>
+            <group>NSP_OrgPlus_M_A_Private_Cases</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_OrgPlus_M_A_Private__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

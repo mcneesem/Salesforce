@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Plan_SubPlan_Name__c</fullName>
+    <description>shows concatenated plan sub plan name from plan sub-plan relationship master record</description>
+    <externalId>false</externalId>
+    <formula>NSP_Plan_ID__r.NSP_Plan_Id__c &amp; &apos; &apos; &amp;  NSP_Plan_Subplan_Relationship__r.NSP_Subplan_ID__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Plan SubPlan Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

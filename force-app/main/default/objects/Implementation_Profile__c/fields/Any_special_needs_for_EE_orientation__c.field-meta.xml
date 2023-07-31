@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Any_special_needs_for_EE_orientation__c</fullName>
+    <externalId>false</externalId>
+    <label>Any special needs for EE orientation</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Multiple Sessions</fullName>
+                <default>false</default>
+                <label>Multiple Sessions</label>
+            </value>
+            <value>
+                <fullName>After hours Ots</fullName>
+                <default>false</default>
+                <label>After hours Ots</label>
+            </value>
+            <value>
+                <fullName>EE Assistance completing OEE</fullName>
+                <default>false</default>
+                <label>EE Assistance completing OEE</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

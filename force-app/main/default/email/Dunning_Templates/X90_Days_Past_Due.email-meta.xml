@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <available>true</available>
+    <description>Template for Email when Invoice is 90 Days Due</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>90 Days Past Due</name>
+    <style>none</style>
+    <subject>Insperity Past Due Invoice(s)</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

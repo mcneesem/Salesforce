@@ -1,0 +1,27 @@
+<!-- *************************************************************************************************   
+    Component Name :  NSP_dunningInvoicesList
+    Version              :  1.0                                                                          
+    Created Date         :  September 07, 2022                                                           
+    Function             :  This component is used for displaying list of invoices in dunning email templates
+    Modification Log     :                                                                             
+    ***************************************************************************************************  
+    * Developer                   Date                   Description                                     
+    ***************************************************************************************************  
+    * Rakesh                     Sept 07, 2022               Created
+    *************************************************************************************************** -->
+<apex:component controller="NSP_dunningInvoicesListController" access="global" id="dunningInvList">
+	<apex:attribute name="caseId" description="This is the Case Id for the component." type="String" required="true" assignTo="{!caseIdstr}" access="global" />
+   	<apex:attribute name="caseAccId" description="This is the Case Account Id for the component." type="String" required="true" assignTo="{!caseAccountId}" access="global" />
+   
+    <apex:outputPanel rendered="{!dunningInvoicesList.size>0}">
+        
+            <h4>Overdue Invoices :</h4>
+   
+            <ul style="margin-top : 0;">
+                <apex:repeat var="inv" value="{!dunningInvoicesList}">
+                    <li> <apex:outputlink value="{!inv.NSP_Payment_Link__c}">{!inv.Name}</apex:outputlink></li>
+                </apex:repeat>
+        </ul>
+     
+    </apex:outputPanel>
+</apex:component>

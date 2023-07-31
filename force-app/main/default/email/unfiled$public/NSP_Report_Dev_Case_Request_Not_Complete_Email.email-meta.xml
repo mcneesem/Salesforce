@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Request Not Complete case email notification</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>NSP Report Dev Case Request Not Complete Email</name>
+    <style>none</style>
+    <subject>{!Case.Account} {!Case.NSP_ClientNumber__c}: Case {!Case.CaseNumber} - Request Not Complete</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

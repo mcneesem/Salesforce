@@ -1,0 +1,17 @@
+<!-- 
+@Name: nspProjectTaskCreateAura.cmp
+@createddate: 02/28/2023
+@Story : STY-04038
+@Description: This describes about the custom creation of project task.
+-->
+<aura:component controller = "NSP_CreateProjectTaskController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,lightning:actionOverride,lightning:isUrlAddressable" access="global">
+    
+    <aura:handler action ="{!c.doInit}" name ="init" value="{!this}"  />
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.onPageReferenceChanged}" />
+    
+    <aura:attribute name="parentId" type="String" />
+    <aura:attribute name="projectTaskParentId" type="String" />
+    
+    <c:nsp_newProjectTaskCreationForm projectId = "{!v.parentId}"  projectTaskId = "{!v.projectTaskParentId}" ></c:nsp_newProjectTaskCreationForm> 
+    
+</aura:component>

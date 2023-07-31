@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_First_usage_upload__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If true, indicates that the first usage is uploaded.</description>
+    <externalId>false</externalId>
+    <label>First usage upload</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Manual_Creation_of_OMR_Tasks</fullName>
+    <active>true</active>
+    <description>Prevent manual creation on the UI of Orientation Meeting Request RT Tasks.</description>
+    <errorConditionFormula>AND(ISBLANK(Notes__c),  RecordType.DeveloperName = &quot;Orientation_Meeting_Request&quot;)</errorConditionFormula>
+    <errorMessage>You cannot create Orientation Meeting Request Tasks.</errorMessage>
+</ValidationRule>

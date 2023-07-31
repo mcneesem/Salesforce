@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send notification about Preceding Task completion to dependent Task resources</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BPS Preceding Task Completion Notification</name>
+    <style>freeForm</style>
+    <subject>Project Task Handoff {!pse__Project_Task__c.NSP_Project_Number__c} - {!pse__Project_Task__c.NSP_Account__c}</subject>
+    <textOnly>This is a project task transition alert.
+
+Preceding Task related to dependent Task({!pse__Project_Task__c.Name}) has been completed. Please review the project task schedule per the link below and take appropriate next steps on your assigned Task(s).
+
+{!pse__Project_Task__c.NSP_Project_Number__c}
+{!pse__Project_Task__c.NSP_Account__c}
+{!pse__Project_Task__c.NSP_AIMS_Account__c}
+
+Click the following link to review the project record: {!pse__Project_Task__c.NSP_Project_Link__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,586 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-09-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-quick-action-panel title="Quick Action Title" header="Create a New Case">
+        <template if:false={isMultipleContactsSelected}>
+        <div class="slds-m-top_medium slds-p-around_medium">
+            <lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}
+                density="compact" onload={handleLoad} object-api-name="Case" record-type-id={selectedRecTypeId} data-id="case-record-form">
+                <template if:true={showTypeField}>
+                    <lightning-layout class="typebox" multiple-rows>
+                        <lightning-layout-item size="12" flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">{label.typeHeader}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-align_absolute-center slds-m-vertical_small">
+                            <lightning-input-field class="caseType" field-name="Type" value={selectedType} onchange={handleChange}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size='12' class="slds-align_absolute-center">
+                            <lightning-button label={label.typeButton} onclick={handleTypeChange}></lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+                <template if:true={showCaseForm}>
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">Select Category, Subcategory and Detail</div>
+                            
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item size="6">
+                            <div class="slds-m-top_medium slds-p-around_medium">
+                                <template if:false={showAllCategory}>
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox data-fname="category" name="Category" label="Category"
+                                            value={selectedCategory} placeholder="Select a Category"
+                                            options={categoryArray} onchange={handleChange} required>
+                                        </lightning-combobox> 
+                                        <!-- Added By Sruthi start --> 
+                                        <template if:false={isBPSUser}>  
+                                            <lightning-button variant="brand" label="View All" 
+                                                class="slds-m-top_small" onclick={handleCategoryViewAll}>
+                                            </lightning-button> 
+                                        </template> 
+                                        <!-- Added By Sruthi start -->
+                                    </div>
+                                </template>
+                                <!-- Added By Sruthi start -->
+                                <template if:true={showAllCategory}>
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox data-fname="category" 
+                                            name="Category"
+                                            label="Category"
+                                            placeholder="Select a Category"
+                                            value={selectedCategory}
+                                            onchange={handleChange1}
+                                            options={categoryOptions} required>
+                                        </lightning-combobox>
+                                        <template if:false={isBPSUser}> 
+                                            <lightning-button variant="brand" label="View Filtered" 
+                                                class="slds-m-top_small" onclick={handleCategoryFilteredView}>
+                                            </lightning-button> 
+                                        </template>
+                                    </div>
+                                </template>
+                                <!-- Added By Sruthi end --> 
+                                
+                                <template if:true={showDetail}>    
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox data-fname="detail" name="Detail" label="Detail"
+                                            value={selectedDetail} placeholder="Select a Detail" options={detailOptions}
+                                            onchange={handleChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </template>
+                                <template if:true={showAllDetail}>    
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox data-fname="detail" name="Detail" label="Detail"
+                                            value={selectedDetail} placeholder="Select a Detail" options={detailOptions}
+                                            onchange={handleChange1}>
+                                        </lightning-combobox>
+                                    </div>
+                                </template>
+                                
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <div class="slds-m-top_medium slds-p-around_medium">
+                                <template if:false={showAllSubCategory}>
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox name="Sub Category" label="Sub Category"
+                                            value={selectedSubCategory} placeholder="Select a Sub Category"
+                                            options={subCategoryOptions} onchange={handleChange} >
+                                        </lightning-combobox>
+                                        <template if:true={showAllSubCategoryButton}>  
+                                            <lightning-button variant="brand" label="View All" 
+                                                class="slds-m-top_small" onclick={handleSubCategoryViewAll}>
+                                            </lightning-button> 
+                                        </template>
+                                    </div>
+                                </template>
+                                <template if:true={showAllSubCategory}>
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox name="Sub Category" label="Sub Category"
+                                            value={selectedSubCategory} placeholder="Select a Sub Category"
+                                            options={subCategoryOptions} onchange={handleChange1} >
+                                        </lightning-combobox>
+                                        <template if:true={showFilterSubCategoryButton}> 
+                                            <lightning-button variant="brand" label="View Filtered" 
+                                                class="slds-m-top_small" onclick={handleSubCategoryFiltered}>
+                                            </lightning-button> 
+                                        </template>
+                                        <template if:false={showFilterSubCategoryButton}> 
+                                            <lightning-button variant="brand"
+                                                class="slds-m-top_small" label="Hidden" style="
+                                                visibility: hidden;">
+                                            </lightning-button> 
+                                        </template>
+                                    </div>
+                                </template>
+                                <template if:true={showVersion}>    
+                                    <div class="slds-p-around_medium slds-form_horizontal">
+                                        <lightning-combobox data-fname="version" name="Version" label="Version"
+                                            value={selectedVersion} placeholder="Select a Version" options={versionOptions}
+                                            onchange={handleChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <div class="slds-m-top_medium slds-p-around_medium">
+                                <div style='display:none'>
+                                    <lightning-input-field field-name="Type" value={oCase.Type} class="slds-hidden">
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="NSP_Category__c" value={selectedCategory}
+                                        class="slds-hidden"></lightning-input-field>
+                                    <lightning-input-field field-name="NSP_SubCategory__c" value={selectedSubCategory}
+                                        class="slds-hidden"></lightning-input-field>
+                                    <lightning-input-field field-name="NSP_Detail__c" value={selectedDetail}
+                                        class="slds-hidden"></lightning-input-field>
+                                    <lightning-input-field field-name="NSP_Version__c" value={selectedVersion}
+                                        class="slds-hidden"></lightning-input-field>
+                                    <lightning-input-field field-name="Project__c" value={projectId}
+                                        class="slds-hidden">
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="OwnerId" value={oCase.OwnerId}
+                                        class="slds-hidden"></lightning-input-field>
+                                    <lightning-input-field field-name="AccountId">
+                                        </lightning-input-field>   
+                                    <lightning-input-field field-name="ContactId">
+                                       </lightning-input-field> 
+                                    <lightning-input-field field-name="ParentId">
+                                        </lightning-input-field>  
+                                    <lightning-input-field field-name="NSP_Case_Issue__c">
+                                        </lightning-input-field> 
+                                    <lightning-input-field field-name='AssetId' value={assetId}> 
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="NSP_Show_Confidential_Checkbox__c"
+                                    class="slds-hidden">
+                                    </lightning-input-field>                                                                        
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>                   
+
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">Account, Contact,Asset </div>
+                        </lightning-layout-item>
+                    </lightning-layout>      
+                    <div class="slds-m-top_medium slds-p-around_medium">
+                        <lightning-layout multiple-rows="true"> 
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field title = "Subject" field-name='Subject' required> </lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field title = "Status" field-name='Status' required> </lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='Description'> </lightning-input-field>
+                            </lightning-layout-item>  
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field title = "Sub Status" field-name='NSP_Case_Sub_Status__c' required> </lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                s-object-api-name="User"
+                                label="Owner/Queue"  
+                                icon-name = "standard:user"
+                                default-record-id = {selectedOwnerId}
+                                onlookupupdate={handlelookupRecord}
+                                show-user-or-queue = true
+                                element = "6"
+                                is-required = true
+                                placeholder="Search for Case Owner...">
+                                </c-nsp_case-custom-look-up>
+                            </lightning-layout-item> 
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field title = "Case Origin" field-name='Origin' required> </lightning-input-field>
+                            </lightning-layout-item>  
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                data-id = 'accountLookup'
+                                s-object-api-name="Account"
+                                label="Account Name"
+                                icon-name = "standard:account"
+                                default-record-id = {accountID}
+                                parent-id ={parentId}
+                                is-required = true
+                                onlookupupdate={handlelookupRecord}
+                                placeholder="Search Accounts...">
+                                </c-nsp_case-custom-look-up>
+                                <template if:true={isMultipleACRs}>
+                                  <strong class="redFont">{label.multipleAccountsAssociatedWithContact}</strong>
+                                </template>
+                              </lightning-layout-item> 
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field title = "Priority" field-name='Priority' required> </lightning-input-field>
+                              </lightning-layout-item>
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                s-object-api-name="Asset"
+                                label="Asset"
+                                icon-name = "standard:asset_object"
+                                default-record-id = {assetId}
+                                parent-id ={accountID}
+                                onlookupupdate={handlelookupRecord}
+                                placeholder="Search Assets...">
+                                </c-nsp_case-custom-look-up>                                
+                              </lightning-layout-item>
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                s-object-api-name="Contact"
+                                label="Contact Name"
+                                icon-name = "standard:contact"
+                                default-record-id = {parentId}
+                                parent-id ={accountID}
+                                onlookupupdate={handlelookupRecord}
+                                placeholder="Search Contacts...">
+                                </c-nsp_case-custom-look-up>
+                              </lightning-layout-item> 
+                            <template if:true={enableBPSFields}>
+                                <template for:each={bpsFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field class={field.apiName} field-name={field.apiName}
+                                                required={field.required} value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </template>
+                            
+                        <lightning-layout-item flexibility="auto" if:true={getDisplayConfidentialCheckBox} size="6" class="slds-p-around_small">
+                            <lightning-input-field field-name="NSP_Confidential__c" value={confidential} >
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" if:true={showPrivateCheckbox} size="6" class="slds-p-around_small">
+                            <lightning-input-field field-name="NSP_Private__c">
+                            </lightning-input-field>
+                        </lightning-layout-item>                                            
+                        </lightning-layout>
+                    </div>
+
+                    <template if:true={enableDOLAudits}>
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> DOL Audits Information </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+
+                        <div class="slds-m-top_medium slds-p-around_medium">
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={dolAuditsFieldset} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+
+                    </template>
+
+
+                    <template if:true={enableWedgeClaim}>
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageClaimInfoLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageClaimInfoFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageCliantInfoLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageCliantInfoFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageEmployeeInfoLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageEmployeeInfoFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value} onchange={handleChange}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                onchange={handleChange}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageConfrenceInfoLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageConfrenceInfoFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageAmountPaidByNSPLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageAmountPaidByNSPFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageAmountPaidByClientLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageAmountPaidByClientFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                <div class="custom-box"> {wageAmountSavedLabel} </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-top_medium slds-p-around_medium">
+
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={wageAmountSavedFields} for:item="field">
+                                    <lightning-layout-item key={field.apiName} size={elementSize}
+                                        class="slds-p-around_x-small">
+                                        <div if:true={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}
+                                                value={field.value}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div if:false={field.value}>
+                                            <lightning-input-field field-name={field.apiName} required={field.required}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+                    </template>
+
+                    <!-- Add Notes -->
+                    <div class="slds-p-around_small">
+                    <lightning-card title="Notes" icon-name="custom:custom19">
+                        <lightning-button label="Add Notes" class="slds-p-around_small" slot="actions" onclick={handleNotes}></lightning-button>
+                        <lightning-button label="Cancel" class="slds-p-around_small" slot="actions" onclick={handleCancelNotes}></lightning-button>
+                        <lightning-record-edit-form 
+                        density="compact"
+                        object-api-name="NSP_Note__c"
+                        data-id="note-record-form"
+                        if:true = {noteButtonClicked}>
+                        <div class="slds-grid slds-wrap slds-p-around--medium">
+                            <lightning-input-field field-name='Case__c' data-id = "notesCaseId" class="slds-hidden"> 
+                            </lightning-input-field>  
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning-input-field field-name='Note__c'  variant="label-hidden"> </lightning-input-field>
+                            </div>
+                            </div>
+                        </lightning-record-edit-form>
+                    </lightning-card>  
+                </div>                  
+                    <!-- Add Notes-->
+
+                    <!--Attachment Code by Sruthi - Start-->
+                    <div class="slds-p-around_small">
+                    <template if:true={showCaseForm}>
+                        <lightning-card title="Files" icon-name="custom:custom14">
+                            <div class="slds-m-around_medium">
+                                <lightning-input type="file" 
+                                accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                                label="" onchange={openfileUpload} multiple></lightning-input>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                Uploaded File/s: <br/>
+                                <template for:each={attachmentFilesName} for:item="fileIterator">
+                                    <div key={fileIterator} style="margin-top:10px;">
+                                        <lightning-icon icon-name="doctype:image" size="small" title="Image"></lightning-icon>
+                                          {fileIterator}
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-card>
+                    </template>
+                </div>
+                    <!--Attachment Code by Sruthi - Start-->
+
+                    <template if:true={showError}>
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                                <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error" variant="inverse"></lightning-icon>
+                              </span>
+                              <h2>{errorMessageToDisplay}</h2>
+                        </div>
+                    </template>
+
+                    <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+                        <template if:true={hasBPSAccess}>
+                            <lightning-button class="slds-m-top_small slds-m-right_x-small" variant="brand" onclick={goBacktoTypeScreen} label={label.previous}>
+                            </lightning-button>
+                        </template>
+
+                        <lightning-button class="slds-m-top_small slds-m-right_x-small" onclick={handleCancel} disabled={disableButton}
+                            label="Cancel">
+                        </lightning-button>
+
+                        <lightning-button class="slds-m-top_small slds-m-right_x-small" disabled={disableButton} onclick={handleButtonClick}
+                            type="submit" variant="brand" label="Save">
+                        </lightning-button>
+                        <lightning-button class="slds-m-top_small" disabled={disableButton} onclick={handleSaveAndAdd}
+                        type="submit" variant="brand" label="Save And Add Contacts">
+                    </lightning-button>                        
+                    </div>
+
+                    
+                </template>
+
+            </lightning-record-edit-form>
+        </div>
+    </template>
+        <template if:true={isMultipleContactsSelected}>
+            <lightning-card title="Add Contacts">
+                <lightning-flow flow-api-name='NSP_Add_Multiple_Contacts_On_Case'
+                flow-input-variables={inputVariables} >
+            </lightning-flow>
+            </lightning-card>
+        </template>
+        <!--Start: To display Confidential Popup-->
+        <template if:true={popUpWindow}>
+            <div class="slds-box slds-theme_shade">
+                <div class="slds-modal slds-fade-in-open slds-backdrop">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div>
+                                <p>Would you like to mark this Case as Confidential?</p>
+                            </div>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <lightning-button label="Yes" onclick={updateCaseWithConfidential}></lightning-button>
+                            <lightning-button label="No" onclick={updateCaseWithoutConfidential}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--End -->                 
+    </lightning-quick-action-panel>
+</template>

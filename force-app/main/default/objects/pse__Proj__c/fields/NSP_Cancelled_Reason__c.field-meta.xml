@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Cancelled_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Cancelled Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <controllingField>pse__Project_Status__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Terminated</fullName>
+                <default>false</default>
+                <label>Client Terminated</label>
+            </value>
+            <value>
+                <fullName>Client no longer wanted</fullName>
+                <default>false</default>
+                <label>Client no longer wanted</label>
+            </value>
+            <value>
+                <fullName>Created in Error</fullName>
+                <default>false</default>
+                <label>Created in Error</label>
+            </value>
+            <value>
+                <fullName>Benefits not currently offered</fullName>
+                <default>false</default>
+                <label>Benefits not currently offered</label>
+            </value>
+            <value>
+                <fullName>Cancelled at Intake</fullName>
+                <default>false</default>
+                <label>Cancelled at Intake</label>
+            </value>
+            <value>
+                <fullName>Client Termed with WO</fullName>
+                <default>false</default>
+                <label>Client Termed with WO</label>
+            </value>
+            <value>
+                <fullName>COVID-19</fullName>
+                <default>false</default>
+                <label>COVID-19</label>
+            </value>
+            <value>
+                <fullName>Didn&apos;t align with Insperity Values</fullName>
+                <default>false</default>
+                <label>Didn&apos;t align with Insperity Values</label>
+            </value>
+            <value>
+                <fullName>Duplicate Project</fullName>
+                <default>false</default>
+                <label>Duplicate Project</label>
+            </value>
+            <value>
+                <fullName>Feature/Functionality Limitation</fullName>
+                <default>false</default>
+                <label>Feature/Functionality Limitation</label>
+            </value>
+            <value>
+                <fullName>Funding Issue (Payroll)</fullName>
+                <default>false</default>
+                <label>Funding Issue (Payroll)</label>
+            </value>
+            <value>
+                <fullName>Key Decision Maker Change</fullName>
+                <default>false</default>
+                <label>Key Decision Maker Change</label>
+            </value>
+            <value>
+                <fullName>No Longer Wants Product</fullName>
+                <default>false</default>
+                <label>No Longer Wants Product</label>
+            </value>
+            <value>
+                <fullName>Non Responsive</fullName>
+                <default>false</default>
+                <label>Non Responsive</label>
+            </value>
+            <value>
+                <fullName>Non-Payment</fullName>
+                <default>false</default>
+                <label>Non-Payment</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Service Not Currently Applicable</fullName>
+                <default>false</default>
+                <label>Service Not Currently Applicable</label>
+            </value>
+            <value>
+                <fullName>Service/Implementation Issue</fullName>
+                <default>false</default>
+                <label>Service/Implementation Issue</label>
+            </value>
+            <value>
+                <fullName>Thought Service Level was PEO Like</fullName>
+                <default>false</default>
+                <label>Thought Service Level was PEO Like</label>
+            </value>
+            <value>
+                <fullName>Client declined to participate</fullName>
+                <default>false</default>
+                <label>Client declined to participate</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Client Terminated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Client no longer wanted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Created in Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Benefits not currently offered</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Cancelled at Intake</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Client Termed with WO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>COVID-19</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Didn&apos;t align with Insperity Values</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Duplicate Project</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Feature/Functionality Limitation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Funding Issue (Payroll)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Key Decision Maker Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>No Longer Wants Product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Non Responsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Non-Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Service Not Currently Applicable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Service/Implementation Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Thought Service Level was PEO Like</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Topic__c</fullName>
+    <externalId>false</externalId>
+    <label>Topic</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Benefits/H&amp;W</fullName>
+                <default>false</default>
+                <label>Benefits/H&amp;W</label>
+            </value>
+            <value>
+                <fullName>Client Management</fullName>
+                <default>false</default>
+                <label>Client Management</label>
+            </value>
+            <value>
+                <fullName>HR Services</fullName>
+                <default>false</default>
+                <label>HR Services</label>
+            </value>
+            <value>
+                <fullName>Payroll Services</fullName>
+                <default>false</default>
+                <label>Payroll Services</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Safety/Property &amp; Casualty</fullName>
+                <default>false</default>
+                <label>Safety/Property &amp; Casualty</label>
+            </value>
+            <value>
+                <fullName>Strategic Consulting</fullName>
+                <default>false</default>
+                <label>Strategic Consulting</label>
+            </value>
+            <value>
+                <fullName>Training/Learning Dev</fullName>
+                <default>false</default>
+                <label>Training/Learning Dev</label>
+            </value>
+            <value>
+                <fullName>Leave &amp; Disability</fullName>
+                <default>false</default>
+                <label>Leave &amp; Disability</label>
+            </value>
+            <value>
+                <fullName>Compensation Services</fullName>
+                <default>false</default>
+                <label>Compensation Services</label>
+            </value>
+            <value>
+                <fullName>Corporate Services/BPS</fullName>
+                <default>false</default>
+                <label>Corporate Services/BPS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

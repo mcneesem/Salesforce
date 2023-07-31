@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Restrict_User_for_selecting_Rating</fullName>
+    <active>true</active>
+    <description>This rule restricts the user to populate the Rating before selecting the case issue status as closed . Added as a part of STY-01562</description>
+    <errorConditionFormula>AND (
+
+$Setup.NSP_Trigger_Switch__c.CaseIssueValidation__c != true,
+ISPICKVAL( NSP_Status__c , &apos;Closed&apos;),
+ ISBLANK( TEXT(NSP_Rating__c) ) 
+)</errorConditionFormula>
+    <errorMessage>Update Quick Rate in order to close the Case Issue.</errorMessage>
+</ValidationRule>

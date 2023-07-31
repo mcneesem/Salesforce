@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LD_Activity_Compact_Layout</fullName>
+    <fields>NSP_Record_Title_LD__c</fields>
+    <label>L&amp;D Activity Compact Layout</label>
+</CompactLayout>

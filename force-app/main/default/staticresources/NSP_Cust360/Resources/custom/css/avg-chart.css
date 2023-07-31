@@ -1,0 +1,223 @@
+.performaceAvg .goal {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.performaceAvg .amount {
+    border-top: 0.063rem solid #006600;
+    color: black;
+    display: inline-block;
+    font-family: Trebuchet MS;
+    font-weight: bold;
+    padding: 0 4.688rem 0 0;
+}
+.performaceAvg .progress .amount {
+    border-top: 0.063rem solid #006600;
+    color: #006600;
+    left: 0;
+    padding: 0 0 0 4.688rem;
+    position: absolute;
+}
+.performaceAvg {
+    border-radius: 0.75rem;
+    height: 9.063rem;
+    /* margin-top:8.75rem; */
+    position: relative;
+}
+.performaceAvg .track {
+    background: #e5e5e5 none repeat scroll 0 0;
+    border-radius: 0.5rem;
+    height: 10.25rem;
+    left: 0.625rem;
+    margin: 0 auto;
+    position: relative;
+    top: 0.625rem;
+    width: 1.75rem;
+}
+/* #97c3f5 */
+.performaceAvg .progress {
+    background: #e5e5e5  none repeat scroll 0 0;
+    border-radius: 0.25rem;
+    bottom: 0;
+    height: 0;
+
+    margin-bottom: 0 !important;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+.performaceAvg .subProgress {
+    background: #8eaad9 none repeat scroll 0 0;
+    border-radius: 0.25rem;
+    bottom: 0;
+    height: 0;
+
+    margin-bottom: 0 !important;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+.performaceAvg .goal {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.performaceAvg .amount {
+    border-top: 0.063rem solid #006600;
+    color: black;
+    display: inline-block;
+    font-family: Trebuchet MS;
+    font-weight: bold;
+    padding: 0 4.688rem 0 0;
+}
+.performaceAvg .progress .amount {
+    border-top: 0.063rem solid #006600;
+    color: #006600;
+    left: 0;
+    padding: 0 0 0 4.688rem;
+    position: absolute;
+}
+
+.performaceAvg .subProgress .actualScore {
+    border-top: 0.063rem solid #006600;
+    color: #006600;
+    left: 0;
+    padding: 0 0 0 4.688rem;
+    position: absolute;
+}
+ 
+
+.arrow-left {
+    width: 0; 
+    height: 0; 
+    border-top: 0.25rem solid transparent;
+    border-bottom: 0.25rem solid transparent; 
+    
+    border-right:0.438rem solid #8eaad9; 
+    margin-left:1.875rem;
+  }
+
+   .performaceAvg {
+      margin-left:1.563rem; 
+     float: left;
+  }
+ 
+  .avgChart-section .label-xAxis {
+           position: relative;
+			left: 2.1875rem;
+			top: 1.875rem;
+    }
+	
+	.label-xAxis_SLA{
+		    position: relative;
+			    left: 4rem;
+				top: 2.4rem;
+	}
+
+    .avgChart-section{
+        position: relative;
+        float: left;
+    }
+
+  .avg-score-section svg  {
+        float: left;
+        margin-top: 0.625rem;
+        margin-left: 2.938rem;
+		margin-right: -2.75rem;
+		
+    }
+    .avgChart-section .label-xAxis-1{
+            position: relative;
+    width: 2.375rem;
+    text-align: center;
+    left: 3.55rem;
+    top: 2.4125rem;
+    }
+    
+	.label-xAxis_FCR{
+		left: 4rem;
+		top: 2.4rem;
+		position: relative;
+	}
+	.label-xAxis_Productivity{
+		left: 2.5rem;
+		top: 2.4rem;
+		position:relative;
+	}
+    
+	.st-left_social-media__card{
+		width: -webkit-fill-available;
+		
+	}
+	
+	
+	/*
+	.csat_graph_bar{
+		left:-20px
+	}
+	.csat_graph_label{
+		left:15px
+	}
+	
+	.fcr_graph_bar{
+		left:-4px;
+	}
+	
+	.fcr_graph_label{
+		left:37px;
+	}
+	
+	.productivity_graph_bar{
+		left:13px;	
+	}
+	.productivty_graph_label{
+		left:35px;
+	}
+	.compliance_graph_bar{
+		left:18px;
+	}
+	.compliance_graph_label{
+		left:62px;
+	}
+	*/
+	
+	@media (-webkit-min-device-pixel-ratio: 1.45){
+		
+		.performaceAvg .track{
+			height:12.25rem;
+		}
+		.avgChart-section .label-xAxis-1{
+			top:4.4125rem;
+		}
+		.label-xAxis_FCR{
+			top:4.4rem;
+		}
+		.label-xAxis_Productivity{
+			top:4.4rem;
+		}
+		.label-xAxis_SLA{
+			top:4.4rem;
+		}
+		
+		
+		
+		
+	}
+	
+	@media (-webkit-max-device-pixel-ratio: 1){
+	.performaceAvg .track{
+		height:8.5rem;
+	}
+	.avgChart-section .label-xAxis-1{
+		top:0.55rem;
+	}
+	.label-xAxis_FCR{
+		top:0.55rem;
+	}
+	.label-xAxis_Productivity{
+		top:0.55rem;
+	}
+	.label-xAxis_SLA{
+		top:0.55rem;
+	}
+}

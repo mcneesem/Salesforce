@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Lightning app for Field Service</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Field Service</label>
+    <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Task_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
+        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Task_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
+        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Project_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Project_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Billable_Project_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Billable_Project_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Task_Record_Page11</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
+        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Task_Record_Page11</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
+        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page11</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page11</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.TES_BPS</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.TES_BPS</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Task_Record_Page12</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
+        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Task_Record_Page12</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
+        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <tabs>FSL__FieldService</tabs>
+    <tabs>pse__Proj__c</tabs>
+    <tabs>pse__Project_Task__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>
