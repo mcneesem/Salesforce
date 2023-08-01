@@ -1,0 +1,11 @@
+{
+  "cmsSettings" : { },
+  "currentThemeId" : "5b0dee04-7164-41c0-903b-560ab444ceda",
+  "headMarkup" : "<link href=\"https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic\" rel=\"stylesheet\" type=\"text/css\">\n<link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">",
+  "id" : "4329045a-0ee7-4781-a21f-030a49949741",
+  "isLockerServiceEnabled" : true,
+  "isRelaxedCSPLevel" : true,
+  "label" : "main",
+  "templateName" : "CPT Community Template",
+  "type" : "appPage"
+}

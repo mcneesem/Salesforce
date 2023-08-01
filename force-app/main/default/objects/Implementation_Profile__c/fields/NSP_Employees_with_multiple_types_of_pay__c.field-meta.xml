@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Employees_with_multiple_types_of_pay__c</fullName>
+    <description>Are there employees with multiple types of pay? Check all that apply</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Are there employees with multiple types of pay? Check all that apply</inlineHelpText>
+    <label>Employees with multiple types of pay?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Multiple Pay Rates</fullName>
+                <default>false</default>
+                <label>Multiple Pay Rates</label>
+            </value>
+            <value>
+                <fullName>Shift Differentials</fullName>
+                <default>false</default>
+                <label>Shift Differentials</label>
+            </value>
+            <value>
+                <fullName>Piece Rate</fullName>
+                <default>false</default>
+                <label>Piece Rate</label>
+            </value>
+            <value>
+                <fullName>Car Allowance</fullName>
+                <default>false</default>
+                <label>Car Allowance</label>
+            </value>
+            <value>
+                <fullName>Housing Allowance</fullName>
+                <default>false</default>
+                <label>Housing Allowance</label>
+            </value>
+            <value>
+                <fullName>Per Diem</fullName>
+                <default>false</default>
+                <label>Per Diem</label>
+            </value>
+            <value>
+                <fullName>Fee Based</fullName>
+                <default>false</default>
+                <label>Fee Based</label>
+            </value>
+            <value>
+                <fullName>Phone Allowance</fullName>
+                <default>false</default>
+                <label>Phone Allowance</label>
+            </value>
+            <value>
+                <fullName>On-Call</fullName>
+                <default>false</default>
+                <label>On-Call</label>
+            </value>
+            <value>
+                <fullName>Daily Rate</fullName>
+                <default>false</default>
+                <label>Daily Rate</label>
+            </value>
+            <value>
+                <fullName>NA</fullName>
+                <default>false</default>
+                <label>NA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

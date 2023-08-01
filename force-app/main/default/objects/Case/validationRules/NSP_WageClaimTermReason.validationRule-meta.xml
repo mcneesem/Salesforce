@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_WageClaimTermReason</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND($Setup.NSP_Trigger_Switch__c.CaseValidations__c != true, $Profile.Name &lt;&gt; &apos;System Administrator&apos;,$RecordType.Name = &quot;Wage Claims&quot;,   ISPICKVAL(NSP_ReasonForTerm__c  , &apos;Other&apos;),  ISBLANK( NSP_OtherReasonForTerm__c) )</errorConditionFormula>
+    <errorDisplayField>NSP_ReasonForTerm__c</errorDisplayField>
+    <errorMessage>Please Update Other Reason for Term</errorMessage>
+</ValidationRule>

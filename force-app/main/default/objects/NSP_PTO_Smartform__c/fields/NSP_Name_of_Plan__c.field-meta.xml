@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Name_of_Plan__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Name of Plan</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <filterItems>
+            <field>NSP_PTO_Smartform__c.NSP_Account__r.Id</field>
+            <operation>equals</operation>
+            <valueField>$Source.NSP_Account__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>NSP_PTO_Smartform__c.NSP_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filterItems>
+        <filterItems>
+            <field>NSP_PTO_Smartform__c.NSP_Status__c</field>
+            <operation>equals</operation>
+            <value>Inactive</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>NSP_PTO_Smartform__c</referenceTo>
+    <relationshipLabel>PTO Smartforms</relationshipLabel>
+    <relationshipName>PTO_Smartforms</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

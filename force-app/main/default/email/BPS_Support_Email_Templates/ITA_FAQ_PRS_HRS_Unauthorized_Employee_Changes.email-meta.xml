@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ PRS_HRS Unauthorized Employee Changes</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ PRS_HRS Unauthorized Employee Changes</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ PRS_HRS Unauthorized Employee Changes</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+
+Thank you for contacting Insperity Time and Attendance Support. Since EMPLOYEE is not listed as an authorized contact, we are unable to make changes to their account. For security purposes, we are only able to assist authorized contacts for Time and Attendance support, and we require administrator approval before making any changes in the system. 
+
+If EMPLOYEE is a system administrator and should be added as an authorized contact, please let us know and we’ll be happy to add them to the list and assist them directly. If they should not be an authorized individual, please have them reach out to their system administrator to assist with making changes. 
+
+Please let us know if you have additional questions, and we’ll be glad to help. 
+
+Thank you,
+
+ 
+Technical Support Team
+
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

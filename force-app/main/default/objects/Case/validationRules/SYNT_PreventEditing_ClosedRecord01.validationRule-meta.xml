@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SYNT_PreventEditing_ClosedRecord01</fullName>
+    <active>true</active>
+    <description>This validation rule prevent the user editing on the Closed record</description>
+    <errorConditionFormula>AND
+(  $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
+   NOT(ISNEW()),
+   OR(AND(ISCHANGED(NSP_Show_Confidential_PopUp__c), NSP_Show_Confidential_PopUp__c = false),
+   AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), NSP_Show_Confidential_PopUp__c = true),
+   AND(NSP_Confidential__c = true, NSP_Show_Confidential_PopUp__c = false),
+AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), PRIORVALUE(NSP_Show_Confidential_PopUp__c) = false)),
+   NOT(ISPICKVAL(Status, &apos;ReOpened&apos;)),
+   NOT($User.Id  =  $Label.NSP_CaseValidationBypassUser ),
+   OR(AND(ISCHANGED(NSP_Response_After_Close__c), NSP_Response_After_Close__c = false),
+  AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), NSP_Response_After_Close__c = true),
+  AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), PRIORVALUE(NSP_Response_After_Close__c) = false)),
+   OR
+(
+NOT(ISCHANGED( NSP_Case_Sub_Status__c)),
+ISCHANGED(NSP_PotentialPenalties__c),
+ISCHANGED(NSP_Preferred_method_of_contact__c),
+ISCHANGED(Priority),
+ISCHANGED(ProductId),
+ISCHANGED(Project__c),
+ISCHANGED(Project_Template__c),
+ISCHANGED(NSP_PTO_Smartform__c),
+ISCHANGED(NSP_Question_Comment__c),
+ISCHANGED(NSP_ReasonForNSPPayment__c),
+ISCHANGED(NSP_ReasonForTerm__c),
+ISCHANGED(NSP_ReasonPaidByInsperity__c),
+ISCHANGED(Reason),
+ISCHANGED(NSP_Response_After_Close__c),
+ISCHANGED(NSP_Root_Cause__c),
+ISCHANGED(NSP_SalesOffice__c),
+ISCHANGED(NSP_Segment__c),
+ISCHANGED(ServiceContractId),
+ISCHANGED(NSP_SR__c),
+ISCHANGED(NSP_StateOfAudit__c),
+ISCHANGED(IsStopped),
+ISCHANGED(StopStartDate),
+ISCHANGED(NSP_SubCategory__c),
+ISCHANGED(NSP_SUBClients__c),
+ISCHANGED(Subject),
+ISCHANGED(NSP_Time_Zone__c),
+ISCHANGED(NSP_TotalClaimed__c),
+ISCHANGED(NSP_TotalPaidByClient__c),
+ISCHANGED(NSP_TotalPaidByNSP__c),
+ISCHANGED(NSP_TotalSavedByClient__c),
+ISCHANGED(Type),
+ISCHANGED(NSP_UnknownOutcomeExplainedInNotes__c),
+ISCHANGED(NSP_User_Is_Employee__c),
+ISCHANGED(NSP_User_Is_Supervisor__c),
+ISCHANGED(NSP_User_Notes__c),
+ISCHANGED(NSP_Version__c),
+ISCHANGED(NSP_WageClaim__c),
+ISCHANGED(NSP_WageClaimIssues__c),
+ISCHANGED(NSP_WagesClaimed__c),
+ISCHANGED(NSP_WagesPaidByClient__c),
+ISCHANGED(NSP_WagesPaidByNSP__c),
+ISCHANGED(NSP_WagesSavedByClient__c),
+ISCHANGED(SuppliedCompany),
+ISCHANGED(SuppliedEmail),
+ISCHANGED(SuppliedName),
+ISCHANGED(SuppliedPhone),
+ISCHANGED(NSP_WebToCase_ClientID__c),
+ISCHANGED(NSP_WebToCase_PerID__c),
+ISCHANGED( NSP_TypeOfDOLAudit__c ),
+ISCHANGED(ParentId),
+ISCHANGED(NSP_PayrollSpecialistName__c),
+ISCHANGED(NSP_PenaltiesPaidByClient__c),
+ISCHANGED(NSP_PenaltiesPaidByNSP__c),
+ISCHANGED(NSP_PenaltiesSavedByClient__c)
+
+),
+ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Case is closed, set the status to Reopened, save, and then edit.</errorMessage>
+</ValidationRule>

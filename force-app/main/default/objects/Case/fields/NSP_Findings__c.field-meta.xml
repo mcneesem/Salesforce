@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Findings__c</fullName>
+    <externalId>false</externalId>
+    <label>Findings</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No Violations Found</fullName>
+                <default>false</default>
+                <label>No Violations Found</label>
+            </value>
+            <value>
+                <fullName>Exemption Misclassification</fullName>
+                <default>false</default>
+                <label>Exemption Misclassification</label>
+            </value>
+            <value>
+                <fullName>Recordkeeping Violation</fullName>
+                <default>false</default>
+                <label>Recordkeeping Violation</label>
+            </value>
+            <value>
+                <fullName>Improper Wage Deductions</fullName>
+                <default>false</default>
+                <label>Improper Wage Deductions</label>
+            </value>
+            <value>
+                <fullName>Training Time</fullName>
+                <default>false</default>
+                <label>Training Time</label>
+            </value>
+            <value>
+                <fullName>Meal Breaks</fullName>
+                <default>false</default>
+                <label>Meal Breaks</label>
+            </value>
+            <value>
+                <fullName>Rest Periods</fullName>
+                <default>false</default>
+                <label>Rest Periods</label>
+            </value>
+            <value>
+                <fullName>Rounding Issue</fullName>
+                <default>false</default>
+                <label>Rounding Issue</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>9</visibleLines>
+</CustomField>

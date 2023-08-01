@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Email</fullName>
     <encryptionScheme>None</encryptionScheme>
+    <inlineHelpText>This email is used by Sales, Marketing, and Finance/CPQ for their processes. Do not update unless directed to do so by one of those groups.</inlineHelpText>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
 </CustomField>

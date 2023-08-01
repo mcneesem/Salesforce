@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send email to the resource to successor project task when predecessor task is completed.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_Internal</letterhead>
+    <name>Send email to resource</name>
+    <style>freeForm</style>
+    <subject>{!pse__Project_Task__c.pse__Project__c} Task Handoff Alert</subject>
+    <textOnly>Your peer has completed {!pse__Project_Task__c.Name}
+Your next assigned task is {!pse__Project_Task__c.Name}
+
+To review related project details, please click the following link: {!pse__Project_Task__c.NSP_Project_Link__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Plan_for_EE_Payment__c</fullName>
+    <description>to track if a written document or pay plan exist that definies how the EE will be paid?</description>
+    <externalId>false</externalId>
+    <label>Document/Plan for EE Payment</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

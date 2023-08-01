@@ -5,4 +5,10 @@
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
+    <queueSobject>
+        <sobjectType>NSP_ReportRequest__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Task</sobjectType>
+    </queueSobject>
 </Queue>

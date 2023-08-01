@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BPS_Milestone</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>NSP_BPS_Compact_layout</compactLayoutAssignment>
+    <label>BPS Milestone</label>
+    <picklistValues>
+        <picklist>pse__Recognition_Method__c</picklist>
+        <values>
+            <fullName>%25 Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deliverable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equal Split%3A 4%2C4%2C5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equal Split%3A Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equal Split%3A Months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equal Split%3A Months%2FPart Periods</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Status__c</picklist>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>On Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unscheduled</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

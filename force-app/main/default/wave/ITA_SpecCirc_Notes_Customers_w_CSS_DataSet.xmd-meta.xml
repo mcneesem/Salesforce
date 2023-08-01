@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata">
+    <dataset>ITA_SpecCirc_Notes_Customers_w_CSS_DataSet</dataset>
+    <dimensions>
+        <field>Name</field>
+        <isDerived>false</isDerived>
+        <label>Name</label>
+        <sortIndex>0</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Account.Name</field>
+        <isDerived>false</isDerived>
+        <label>Account</label>
+        <linkTemplateEnabled>true</linkTemplateEnabled>
+        <recordIdField>AccountId</recordIdField>
+        <salesforceActionsEnabled>false</salesforceActionsEnabled>
+        <sortIndex>1</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>User.Name</field>
+        <isDerived>false</isDerived>
+        <label>Customer Success Specialist</label>
+        <sortIndex>2</sortIndex>
+    </dimensions>
+</WaveXmd>

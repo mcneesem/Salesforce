@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Any_employee_with_temporary_status__c</fullName>
+    <description>to track if there are nay employee with temporary status</description>
+    <externalId>false</externalId>
+    <label>Any employee with temporary status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

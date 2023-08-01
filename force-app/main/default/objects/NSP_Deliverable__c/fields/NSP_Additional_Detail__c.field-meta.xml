@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Additional_Detail__c</fullName>
+    <externalId>false</externalId>
+    <label>Additional Detail</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>NSP_Deliverable__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Create/Revision/Update</fullName>
+                <default>false</default>
+                <label>Create/Revision/Update</label>
+            </value>
+            <value>
+                <fullName>Custom policy development</fullName>
+                <default>false</default>
+                <label>Custom policy development</label>
+            </value>
+            <value>
+                <fullName>Facilitate employee meeting</fullName>
+                <default>false</default>
+                <label>Facilitate employee meeting</label>
+            </value>
+            <value>
+                <fullName>Compensation Support</fullName>
+                <default>false</default>
+                <label>Compensation Support</label>
+            </value>
+            <value>
+                <fullName>Handbook Revision</fullName>
+                <default>false</default>
+                <label>Handbook Revision</label>
+            </value>
+            <value>
+                <fullName>Handbook Policy Analysis &amp; Develop</fullName>
+                <default>false</default>
+                <label>Handbook Policy Analysis &amp; Develop</label>
+            </value>
+            <value>
+                <fullName>Job Description Analysis &amp; Develop</fullName>
+                <default>false</default>
+                <label>Job Description Analysis &amp; Develop</label>
+            </value>
+            <value>
+                <fullName>Policy Guidance</fullName>
+                <default>false</default>
+                <label>Policy Guidance</label>
+            </value>
+            <value>
+                <fullName>PTO Plan Analysis &amp; Development</fullName>
+                <default>false</default>
+                <label>PTO Plan Analysis &amp; Development</label>
+            </value>
+            <value>
+                <fullName>Policy Guidance (General)</fullName>
+                <default>false</default>
+                <label>Policy Guidance (General)</label>
+            </value>
+            <value>
+                <fullName>Navigation</fullName>
+                <default>false</default>
+                <label>Navigation</label>
+            </value>
+            <value>
+                <fullName>Personal information</fullName>
+                <default>false</default>
+                <label>Personal information</label>
+            </value>
+            <value>
+                <fullName>Benefits (health, EAP, etc.)</fullName>
+                <default>false</default>
+                <label>Benefits (health, EAP, etc.)</label>
+            </value>
+            <value>
+                <fullName>Marketplace</fullName>
+                <default>false</default>
+                <label>Marketplace</label>
+            </value>
+            <value>
+                <fullName>Online training</fullName>
+                <default>false</default>
+                <label>Online training</label>
+            </value>
+            <value>
+                <fullName>Develop</fullName>
+                <default>false</default>
+                <label>Develop</label>
+            </value>
+            <value>
+                <fullName>Analysis/Refine</fullName>
+                <default>false</default>
+                <label>Analysis/Refine</label>
+            </value>
+            <value>
+                <fullName>Enhance</fullName>
+                <default>false</default>
+                <label>Enhance</label>
+            </value>
+            <value>
+                <fullName>Review primary duty in relation to available exemptions in regulation</fullName>
+                <default>false</default>
+                <label>Review primary duty in relation to available exemptions in regulation</label>
+            </value>
+            <value>
+                <fullName>Introduction to service team</fullName>
+                <default>false</default>
+                <label>Introduction to service team</label>
+            </value>
+            <value>
+                <fullName>On-Site Supervisors Introduction to Insperity: Online enrollment</fullName>
+                <default>false</default>
+                <label>On-Site Supervisors Introduction to Insperity: Online enrollment</label>
+            </value>
+            <value>
+                <fullName>On-Site Supervisors Introduction to Insperity: Reporting</fullName>
+                <default>false</default>
+                <label>On-Site Supervisors Introduction to Insperity: Reporting</label>
+            </value>
+            <value>
+                <fullName>On-Site Supervisors Introduction to Insperity: Payroll processing</fullName>
+                <default>false</default>
+                <label>On-Site Supervisors Introduction to Insperity: Payroll processing</label>
+            </value>
+            <value>
+                <fullName>Payroll &amp; Benefits online enrollment: Self-Paced Orientation</fullName>
+                <default>false</default>
+                <label>Payroll &amp; Benefits online enrollment: Self-Paced Orientation</label>
+            </value>
+            <value>
+                <fullName>Online training resources</fullName>
+                <default>false</default>
+                <label>Online training resources</label>
+            </value>
+            <value>
+                <fullName>Orientation into job function and company culture</fullName>
+                <default>false</default>
+                <label>Orientation into job function and company culture</label>
+            </value>
+            <value>
+                <fullName>Create an Insperity Kiosk</fullName>
+                <default>false</default>
+                <label>Create an Insperity Kiosk</label>
+            </value>
+            <value>
+                <fullName>Illness Injury and Prevention Program (IIPP)</fullName>
+                <default>false</default>
+                <label>Illness Injury and Prevention Program (IIPP)</label>
+            </value>
+            <value>
+                <fullName>OSHA compliance</fullName>
+                <default>false</default>
+                <label>OSHA compliance</label>
+            </value>
+            <value>
+                <fullName>Workplace Ergonomics</fullName>
+                <default>false</default>
+                <label>Workplace Ergonomics</label>
+            </value>
+            <value>
+                <fullName>Safety Meeting Materials</fullName>
+                <default>false</default>
+                <label>Safety Meeting Materials</label>
+            </value>
+            <value>
+                <fullName>DHPT</fullName>
+                <default>false</default>
+                <label>DHPT</label>
+            </value>
+            <value>
+                <fullName>Diversity</fullName>
+                <default>false</default>
+                <label>Diversity</label>
+            </value>
+            <value>
+                <fullName>Effective Employee Counseling</fullName>
+                <default>false</default>
+                <label>Effective Employee Counseling</label>
+            </value>
+            <value>
+                <fullName>HR Fundamentals for Supervisors</fullName>
+                <default>false</default>
+                <label>HR Fundamentals for Supervisors</label>
+            </value>
+            <value>
+                <fullName>Interview &amp; Selection</fullName>
+                <default>false</default>
+                <label>Interview &amp; Selection</label>
+            </value>
+            <value>
+                <fullName>Perf. Appraisal (supervisor)</fullName>
+                <default>false</default>
+                <label>Perf. Appraisal (supervisor)</label>
+            </value>
+            <value>
+                <fullName>Substance Abuse</fullName>
+                <default>false</default>
+                <label>Substance Abuse</label>
+            </value>
+            <value>
+                <fullName>Workplace Violence &amp; Protection</fullName>
+                <default>false</default>
+                <label>Workplace Violence &amp; Protection</label>
+            </value>
+            <value>
+                <fullName>Quarterly: Face-to-face</fullName>
+                <default>false</default>
+                <label>Quarterly: Face-to-face</label>
+            </value>
+            <value>
+                <fullName>Quarterly: Phone</fullName>
+                <default>false</default>
+                <label>Quarterly: Phone</label>
+            </value>
+            <value>
+                <fullName>Monthly: Face-to-face</fullName>
+                <default>false</default>
+                <label>Monthly: Face-to-face</label>
+            </value>
+            <value>
+                <fullName>Monthly: Phone</fullName>
+                <default>false</default>
+                <label>Monthly: Phone</label>
+            </value>
+            <value>
+                <fullName>Change Management</fullName>
+                <default>false</default>
+                <label>Change Management</label>
+            </value>
+            <value>
+                <fullName>Client Guidance</fullName>
+                <default>false</default>
+                <label>Client Guidance</label>
+            </value>
+            <value>
+                <fullName>Culture Development</fullName>
+                <default>false</default>
+                <label>Culture Development</label>
+            </value>
+            <value>
+                <fullName>Custom Solution</fullName>
+                <default>false</default>
+                <label>Custom Solution</label>
+            </value>
+            <value>
+                <fullName>Deliver Perf Development Plan</fullName>
+                <default>false</default>
+                <label>Deliver Perf Development Plan</label>
+            </value>
+            <value>
+                <fullName>Mission, Vision, Values</fullName>
+                <default>false</default>
+                <label>Mission, Vision, Values</label>
+            </value>
+            <value>
+                <fullName>PDP Manager Review</fullName>
+                <default>false</default>
+                <label>PDP Manager Review</label>
+            </value>
+            <value>
+                <fullName>Process Improvement</fullName>
+                <default>false</default>
+                <label>Process Improvement</label>
+            </value>
+            <value>
+                <fullName>Targeted Curriculum</fullName>
+                <default>false</default>
+                <label>Targeted Curriculum</label>
+            </value>
+            <value>
+                <fullName>Appraisal Analysis/Development</fullName>
+                <default>false</default>
+                <label>Appraisal Analysis/Development</label>
+            </value>
+            <value>
+                <fullName>Best Practice Guidance</fullName>
+                <default>false</default>
+                <label>Best Practice Guidance</label>
+            </value>
+            <value>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+                <label>Succession Planning</label>
+            </value>
+            <value>
+                <fullName>Client Training Admin Support</fullName>
+                <default>false</default>
+                <label>Client Training Admin Support</label>
+            </value>
+            <value>
+                <fullName>Learning Product Guidance</fullName>
+                <default>false</default>
+                <label>Learning Product Guidance</label>
+            </value>
+            <value>
+                <fullName>Employee Climate Survey: Analysis / Review Results</fullName>
+                <default>false</default>
+                <label>Employee Climate Survey: Analysis / Review Results</label>
+            </value>
+            <value>
+                <fullName>Employee Climate Survey: Recommendations</fullName>
+                <default>false</default>
+                <label>Employee Climate Survey: Recommendations</label>
+            </value>
+            <value>
+                <fullName>Employee Engagement Survey: Analysis / Review Results</fullName>
+                <default>false</default>
+                <label>Employee Engagement Survey: Analysis / Review Results</label>
+            </value>
+            <value>
+                <fullName>Employee Engagement Survey: Recommendations</fullName>
+                <default>false</default>
+                <label>Employee Engagement Survey: Recommendations</label>
+            </value>
+            <value>
+                <fullName>Interview &amp; Selection resources: Structure interview guide</fullName>
+                <default>false</default>
+                <label>Interview &amp; Selection resources: Structure interview guide</label>
+            </value>
+            <value>
+                <fullName>Employment Screening: Background checks</fullName>
+                <default>false</default>
+                <label>Employment Screening: Background checks</label>
+            </value>
+            <value>
+                <fullName>Employment Screening: Drug testing</fullName>
+                <default>false</default>
+                <label>Employment Screening: Drug testing</label>
+            </value>
+            <value>
+                <fullName>Employment Screening: Assessments (skill based and/or cognitive)</fullName>
+                <default>false</default>
+                <label>Employment Screening: Assessments (skill based and/or cognitive)</label>
+            </value>
+            <value>
+                <fullName>Benchmarking</fullName>
+                <default>false</default>
+                <label>Benchmarking</label>
+            </value>
+            <value>
+                <fullName>Salary information</fullName>
+                <default>false</default>
+                <label>Salary information</label>
+            </value>
+            <value>
+                <fullName>Incentive plan guidance</fullName>
+                <default>false</default>
+                <label>Incentive plan guidance</label>
+            </value>
+            <value>
+                <fullName>Review Total Compensation Statements: Clarify employees cash and non-cash compensation</fullName>
+                <default>false</default>
+                <label>Review Total Compensation Statements: Clarify employees cash and non-cash compensation</label>
+            </value>
+            <value>
+                <fullName>Leadership Coaching</fullName>
+                <default>false</default>
+                <label>Leadership Coaching</label>
+            </value>
+            <value>
+                <fullName>Team Coaching</fullName>
+                <default>false</default>
+                <label>Team Coaching</label>
+            </value>
+            <value>
+                <fullName>Workforce Coaching</fullName>
+                <default>false</default>
+                <label>Workforce Coaching</label>
+            </value>
+            <value>
+                <fullName>Benefit options and pricing</fullName>
+                <default>false</default>
+                <label>Benefit options and pricing</label>
+            </value>
+            <value>
+                <fullName>Cost analysis of services</fullName>
+                <default>false</default>
+                <label>Cost analysis of services</label>
+            </value>
+            <value>
+                <fullName>People Analytics</fullName>
+                <default>false</default>
+                <label>People Analytics</label>
+            </value>
+            <value>
+                <fullName>Test</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Test</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Analyze Company Culture</controllingFieldValue>
+            <valueName>Employee Climate Survey: Analysis / Review Results</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Analyze Company Culture</controllingFieldValue>
+            <valueName>Employee Climate Survey: Recommendations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Analyze Company Culture</controllingFieldValue>
+            <valueName>Employee Engagement Survey: Analysis / Review Results</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Analyze Company Culture</controllingFieldValue>
+            <valueName>Employee Engagement Survey: Recommendations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Change Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Client Guidance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Culture Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Custom Solution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Deliver Perf Development Plan</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Mission, Vision, Values</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>PDP Manager Review</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Process Improvement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Leadership Development</controllingFieldValue>
+            <controllingFieldValue>Employee Development</controllingFieldValue>
+            <valueName>Targeted Curriculum</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruiting Support</controllingFieldValue>
+            <valueName>Interview &amp; Selection resources: Structure interview guide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruiting Support</controllingFieldValue>
+            <valueName>Employment Screening: Background checks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruiting Support</controllingFieldValue>
+            <valueName>Employment Screening: Drug testing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruiting Support</controllingFieldValue>
+            <valueName>Employment Screening: Assessments (skill based and/or cognitive)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Strategy</controllingFieldValue>
+            <valueName>Benchmarking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Strategy</controllingFieldValue>
+            <valueName>Salary information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Strategy</controllingFieldValue>
+            <valueName>Incentive plan guidance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Strategy</controllingFieldValue>
+            <valueName>Review Total Compensation Statements: Clarify employees cash and non-cash compensation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Coaching</controllingFieldValue>
+            <valueName>Leadership Coaching</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Coaching</controllingFieldValue>
+            <valueName>Team Coaching</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Coaching</controllingFieldValue>
+            <valueName>Workforce Coaching</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New OSS or KDM Introduction &amp; Resources</controllingFieldValue>
+            <valueName>Introduction to service team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New OSS or KDM Introduction &amp; Resources</controllingFieldValue>
+            <valueName>On-Site Supervisors Introduction to Insperity: Online enrollment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New OSS or KDM Introduction &amp; Resources</controllingFieldValue>
+            <valueName>On-Site Supervisors Introduction to Insperity: Reporting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New OSS or KDM Introduction &amp; Resources</controllingFieldValue>
+            <valueName>On-Site Supervisors Introduction to Insperity: Payroll processing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Safety Review</controllingFieldValue>
+            <valueName>Illness Injury and Prevention Program (IIPP)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Safety Review</controllingFieldValue>
+            <valueName>OSHA compliance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Safety Review</controllingFieldValue>
+            <valueName>Workplace Ergonomics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Safety Review</controllingFieldValue>
+            <valueName>Safety Meeting Materials</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>DHPT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>Diversity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>Effective Employee Counseling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>HR Fundamentals for Supervisors</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>Interview &amp; Selection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>Perf. Appraisal (supervisor)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>Substance Abuse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability Training</controllingFieldValue>
+            <valueName>Workplace Violence &amp; Protection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Check-in meetings</controllingFieldValue>
+            <valueName>Quarterly: Face-to-face</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Check-in meetings</controllingFieldValue>
+            <valueName>Quarterly: Phone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Check-in meetings</controllingFieldValue>
+            <valueName>Monthly: Face-to-face</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Check-in meetings</controllingFieldValue>
+            <valueName>Monthly: Phone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Strategy Review</controllingFieldValue>
+            <valueName>Benefit options and pricing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Strategy Review</controllingFieldValue>
+            <valueName>Cost analysis of services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>Appraisal Analysis/Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>Best Practice Guidance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <valueName>Succession Planning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Analyze Company Data</controllingFieldValue>
+            <valueName>People Analytics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Training Administration</controllingFieldValue>
+            <valueName>Client Training Admin Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Training Administration</controllingFieldValue>
+            <valueName>Learning Product Guidance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Employee Handbook</controllingFieldValue>
+            <valueName>Create/Revision/Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Employee Handbook</controllingFieldValue>
+            <valueName>Custom policy development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Employee Handbook</controllingFieldValue>
+            <valueName>Facilitate employee meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Human Capital Infrastructure</controllingFieldValue>
+            <valueName>Compensation Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Human Capital Infrastructure</controllingFieldValue>
+            <valueName>Handbook Revision</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Human Capital Infrastructure</controllingFieldValue>
+            <controllingFieldValue>Policy/Procedures</controllingFieldValue>
+            <valueName>Handbook Policy Analysis &amp; Develop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Human Capital Infrastructure</controllingFieldValue>
+            <valueName>Job Description Analysis &amp; Develop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Human Capital Infrastructure</controllingFieldValue>
+            <valueName>Policy Guidance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Human Capital Infrastructure</controllingFieldValue>
+            <controllingFieldValue>Policy/Procedures</controllingFieldValue>
+            <valueName>PTO Plan Analysis &amp; Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Policy/Procedures</controllingFieldValue>
+            <valueName>Policy Guidance (General)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Premier Training</controllingFieldValue>
+            <valueName>Navigation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Premier Training</controllingFieldValue>
+            <valueName>Personal information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Premier Training</controllingFieldValue>
+            <valueName>Benefits (health, EAP, etc.)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Premier Training</controllingFieldValue>
+            <valueName>Marketplace</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Premier Training</controllingFieldValue>
+            <valueName>Online training</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Job Descriptions</controllingFieldValue>
+            <valueName>Develop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Job Descriptions</controllingFieldValue>
+            <valueName>Analysis/Refine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Job Descriptions</controllingFieldValue>
+            <valueName>Enhance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FLSA Review</controllingFieldValue>
+            <valueName>Review primary duty in relation to available exemptions in regulation</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

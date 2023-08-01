@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_Startup_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>RET - Startup Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Testing Concerns</fullName>
+                <default>false</default>
+                <label>Testing Concerns</label>
+            </value>
+            <value>
+                <fullName>Wants Special Featus not available in an ARS product</fullName>
+                <default>false</default>
+                <label>Wants Special Featus not available in an ARS product</label>
+            </value>
+            <value>
+                <fullName>Too expensive</fullName>
+                <default>false</default>
+                <label>Too expensive</label>
+            </value>
+            <value>
+                <fullName>Can&apos;t finalize document collection</fullName>
+                <default>false</default>
+                <label>Can&apos;t finalize document collection</label>
+            </value>
+            <value>
+                <fullName>Plan provisions are too restrictive</fullName>
+                <default>false</default>
+                <label>Plan provisions are too restrictive</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Ties to investments/broker</fullName>
+                <default>false</default>
+                <label>Ties to investments/broker</label>
+            </value>
+            <value>
+                <fullName>Not the right time - maybe later</fullName>
+                <default>false</default>
+                <label>Not the right time - maybe later</label>
+            </value>
+            <value>
+                <fullName>Unresponsive</fullName>
+                <default>false</default>
+                <label>Unresponsive</label>
+            </value>
+            <value>
+                <fullName>Broker provides tailored investment advise to ee&apos;s</fullName>
+                <default>false</default>
+                <label>Broker provides tailored investment advise to ee&apos;s</label>
+            </value>
+            <value>
+                <fullName>CG Certification</fullName>
+                <default>false</default>
+                <label>CG Certification</label>
+            </value>
+            <value>
+                <fullName>Funds selection</fullName>
+                <default>false</default>
+                <label>Funds selection</label>
+            </value>
+            <value>
+                <fullName>Too time-consuming</fullName>
+                <default>false</default>
+                <label>Too time-consuming</label>
+            </value>
+            <value>
+                <fullName>Not The right time</fullName>
+                <default>false</default>
+                <label>Not The right time</label>
+            </value>
+            <value>
+                <fullName>Dissatisfied with other Insperity services</fullName>
+                <default>false</default>
+                <label>Dissatisfied with other Insperity services</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>San_Diego_Earned_Sick__c</fullName>
+    <externalId>false</externalId>
+    <label>San Diego Earned Sick</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1 hr. for every 30 hrs</fullName>
+                <default>false</default>
+                <label>1 hr. for every 30 hrs</label>
+            </value>
+            <value>
+                <fullName>Frontload 40 hrs.</fullName>
+                <default>false</default>
+                <label>Frontload 40 hrs.</label>
+            </value>
+            <value>
+                <fullName>Exceeds</fullName>
+                <default>false</default>
+                <label>Exceeds</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

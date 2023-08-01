@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Accrual Balance Display</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Accrual Balance Display</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Accrual Balance Display</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. We have a few options for what is considered the &quot;available balance&quot; when submitting a time off request: 
+
+The first option determines the &quot;available balance&quot; based on the employee&apos;s accrual year balance (the balance shown on the Accrual Summary Balances tab in your system). 
+
+If you are forecasting accruals, this means an employee could potentially request time off in January even if they will not fully accrue the time until December, for example.  
+
+If your accrual plans are set to allow a minimum balance threshold of zero, employees would not be able to request into the negative in terms of the balance shown on the Balances tab, but they would potentially be able to request into the negative in terms of the running balance shown on the Transactions tab.  
+
+The second option determines the &quot;available balance&quot; based on the current accrued balance, meaning the running balance as of the last closed pay period.  
+
+This is the most restrictive option, as it will not consider accruals in the current or future pay periods. Some clients do not prefer this method, as it makes it hard for employees to request time off early in the year or well in advance.  
+
+The third option determines the &quot;available balance&quot; based on the projected balance as of the requested date.  
+
+For example, if an employee is requesting time off in July, it would look at their scheduled accruals and taken transactions up to that date to determine if they have enough time available. It would not consider any scheduled accruals or taken transactions beyond that date.  
+
+While this does ensure employees aren&apos;t using time before they fully accrue it, there is the possibility that an employee could request a week off in December and have that approved, then request a week off in November and have that approved, and then request a week off in October and have that approved, and so forth, since the system does not consider future transactions. It would be particularly important for the supervisor to review future transactions before approving a request in this scenario.  
+
+Your system is currently configured with the option NUMBER. Please note this is a system-wide setting and cannot be changed on a per-plan basis. If you would like to change this setting or have questions about any of these options, please let us know and we will be happy to help.  
+ 
+ 
+Thank you,  
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

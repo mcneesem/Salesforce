@@ -3,11 +3,18 @@
     <fullName>NSP_Order_Product_Type__c</fullName>
     <description>Indicates the product type by which order gets created</description>
     <externalId>false</externalId>
-    <formula>IF(SBQQ__RequiredBy__c !=null, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;), SBQQ__Quote__r.NSP_Has_WX_product__c = true ),&apos;IWX Bundle&apos;, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
+    <formula>IF(AND(SBQQ__RequiredBy__c !=null,SBQQ__Quote__r.NSP_Has_LD_Product__c = false), IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;), SBQQ__Quote__r.NSP_Has_WX_product__c = true ),&apos;IWX Bundle&apos;, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
 SBQQ__Quote__r.NSP_Has_WA_product__c = true),&apos;IWA Bundle&apos;, IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
-SBQQ__Quote__r.NSP_Has_IPS__c = true),&apos;IPS Conversion&apos;, TEXT(SBQQ__RequiredBy__r.NSP_Product_Type__c)))),IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),SBQQ__ProductCode__c =&apos;ITSTimeSimplicitySU&apos;),SBQQ__Quote__r.NSP_Has_WX_product__c = true), &apos;IWX Bundle&apos;, IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),SBQQ__ProductCode__c =&apos;ITSTimeSimplicitySU&apos;),
+SBQQ__Quote__r.NSP_Has_IPS__c = true),&apos;IPS Conversion&apos;, 
+IF(AND(ISPICKVAL(SBQQ__RequiredBy__r.NSP_Product_Type__c, &apos;Time &amp; Attendance Hardware&apos;),SBQQ__Quote__r.NSP_Has_TimeAndAttendance__c = true),&apos;Time &amp; Attendance&apos;,
+TEXT(SBQQ__RequiredBy__r.NSP_Product_Type__c))))),IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),SBQQ__ProductCode__c =&apos;ITSTimeSimplicitySU&apos;),SBQQ__Quote__r.NSP_Has_WX_product__c = true), &apos;IWX Bundle&apos;, IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),SBQQ__ProductCode__c =&apos;ITSTimeSimplicitySU&apos;),
 SBQQ__Quote__r.NSP_Has_WA_product__c = true),&apos;IWA Bundle&apos;, IF(AND(ISPICKVAL(NSP_Product_Type__c, &apos;iSolved Hardware&apos;),
-SBQQ__Quote__r.NSP_Has_IPS__c = true),&apos;IPS Conversion&apos;, IF(AND(SBQQ__ProductCode__c =&apos;IPSSU&apos;,SBQQ__Quote__r.NSP_Has_LASSO_product__c = true),&apos;Lasso&apos;, TEXT(NSP_Product_Type__c))))))</formula>
+SBQQ__Quote__r.NSP_Has_IPS__c = true),&apos;IPS Conversion&apos;, 
+IF(AND(OR(ISPICKVAL(NSP_Product_Type__c, &apos;Time &amp; Attendance Hardware&apos;),(ISPICKVAL(NSP_Product_Type__c, &apos;BPS Technology&apos;))),SBQQ__Quote__r.NSP_Has_TimeAndAttendance__c = true),&apos;Time &amp; Attendance&apos;,
+IF(AND(SBQQ__ProductCode__c =&apos;IPSSU&apos;,SBQQ__Quote__r.NSP_Has_LASSO_product__c = true),&apos;Lasso&apos;,
+IF(AND(OR(SBQQ__ProductCode__c =&apos;LDSU&apos;,SBQQ__ProductCode__c = &apos;LDAccess&apos;),SBQQ__Quote__r.NSP_Has_LD_Product__c = true),&apos;Learning Direct&apos;,
+IF(AND(OR(SBQQ__ProductCode__c =&apos;LDESelect&apos;,SBQQ__ProductCode__c = &apos;LDESelectSU&apos;),SBQQ__Quote__r.NSP_Has_LD_Product__c = true),&apos;Learning Select&apos;,
+IF(AND(OR(SBQQ__ProductCode__c =&apos;LDHostingFull&apos;,SBQQ__ProductCode__c = &apos;LDHostingStorage&apos;),SBQQ__Quote__r.NSP_Has_LD_Product__c = true),&apos;Learning Hosting&apos;,TEXT(NSP_Product_Type__c))))))))))</formula>
     <label>Order Product Type</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

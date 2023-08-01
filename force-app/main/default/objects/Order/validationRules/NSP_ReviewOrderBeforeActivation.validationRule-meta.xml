@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ReviewOrderBeforeActivation</fullName>
+    <active>true</active>
+    <description>This validation ensures the order is reviewed by Order Management team before order activation</description>
+    <errorConditionFormula>AND(ISPICKVAL( Status , &apos;Activated&apos;),ISCHANGED(Status), ISPICKVAL(PRIORVALUE(Status),&quot;Draft&quot;),
+ NOT(SBQQ__Quote__r.NSP_Change_Order_Process_Quote__c) )</errorConditionFormula>
+    <errorMessage>The order should be reviewed before activation</errorMessage>
+</ValidationRule>

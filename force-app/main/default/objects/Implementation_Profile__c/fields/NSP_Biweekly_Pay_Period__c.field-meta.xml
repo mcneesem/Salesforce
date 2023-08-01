@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Biweekly_Pay_Period__c</fullName>
+    <description>Pay period of Biweekly Pay Frequency</description>
+    <externalId>false</externalId>
+    <label>Biweekly Pay Period</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Short 1st Pay Period</fullName>
+                <default>false</default>
+                <label>Short 1st Pay Period</label>
+            </value>
+            <value>
+                <fullName>Long 1st Pay Period</fullName>
+                <default>false</default>
+                <label>Long 1st Pay Period</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

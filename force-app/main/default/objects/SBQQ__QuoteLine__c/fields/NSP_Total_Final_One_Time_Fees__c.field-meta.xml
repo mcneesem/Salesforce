@@ -3,7 +3,7 @@
     <fullName>NSP_Total_Final_One_Time_Fees__c</fullName>
     <description>Calculates the Total One Time Fees</description>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL( SBQQ__ChargeType__c ,&apos;One-Time&apos;) &amp;&amp; NOT(ISPICKVAL(NSP_Product_Group__c,&apos;Shipping&apos;)) ,
+    <formula>IF(ISPICKVAL(SBQQ__BillingFrequency__c ,&apos;Invoice Plan&apos;) &amp;&amp; NOT(ISPICKVAL(NSP_Product_Group__c,&apos;Shipping&apos;)) ,
 ( IF(NSP_Quoted_Quantity__c &gt; 0, NSP_Quoted_Quantity__c,SBQQ__Quantity__c) * SBQQ__NetPrice__c)
 ,0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

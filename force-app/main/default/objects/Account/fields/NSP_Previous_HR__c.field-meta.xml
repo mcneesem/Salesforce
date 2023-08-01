@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Previous_HR__c</fullName>
+    <externalId>false</externalId>
+    <label>Previous HR</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GEAC SmartStream</fullName>
+                <default>false</default>
+                <label>GEAC SmartStream</label>
+            </value>
+            <value>
+                <fullName>GEAC TotalHR</fullName>
+                <default>false</default>
+                <label>GEAC TotalHR</label>
+            </value>
+            <value>
+                <fullName>Genesys</fullName>
+                <default>false</default>
+                <label>Genesys</label>
+            </value>
+            <value>
+                <fullName>Great Plains HR</fullName>
+                <default>false</default>
+                <label>Great Plains HR</label>
+            </value>
+            <value>
+                <fullName>High Line</fullName>
+                <default>false</default>
+                <label>High Line</label>
+            </value>
+            <value>
+                <fullName>HR Access</fullName>
+                <default>false</default>
+                <label>HR Access</label>
+            </value>
+            <value>
+                <fullName>HR Stream</fullName>
+                <default>false</default>
+                <label>HR Stream</label>
+            </value>
+            <value>
+                <fullName>Hrtrac</fullName>
+                <default>false</default>
+                <label>Hrtrac</label>
+            </value>
+            <value>
+                <fullName>Human Resource Microsystems</fullName>
+                <default>false</default>
+                <label>Human Resource Microsystems</label>
+            </value>
+            <value>
+                <fullName>Humanic Solutions</fullName>
+                <default>false</default>
+                <label>Humanic Solutions</label>
+            </value>
+            <value>
+                <fullName>IBM Lotus Notes</fullName>
+                <default>false</default>
+                <label>IBM Lotus Notes</label>
+            </value>
+            <value>
+                <fullName>ICONtrol</fullName>
+                <default>false</default>
+                <label>ICONtrol</label>
+            </value>
+            <value>
+                <fullName>ICSA system</fullName>
+                <default>false</default>
+                <label>ICSA system</label>
+            </value>
+            <value>
+                <fullName>Infinity</fullName>
+                <default>false</default>
+                <label>Infinity</label>
+            </value>
+            <value>
+                <fullName>Infinium</fullName>
+                <default>false</default>
+                <label>Infinium</label>
+            </value>
+            <value>
+                <fullName>Info Support</fullName>
+                <default>false</default>
+                <label>Info Support</label>
+            </value>
+            <value>
+                <fullName>INFO:HR</fullName>
+                <default>false</default>
+                <label>INFO:HR</label>
+            </value>
+            <value>
+                <fullName>InPowerHR</fullName>
+                <default>false</default>
+                <label>InPowerHR</label>
+            </value>
+            <value>
+                <fullName>Integral</fullName>
+                <default>false</default>
+                <label>Integral</label>
+            </value>
+            <value>
+                <fullName>JD Edwards</fullName>
+                <default>false</default>
+                <label>JD Edwards</label>
+            </value>
+            <value>
+                <fullName>Jupiter</fullName>
+                <default>false</default>
+                <label>Jupiter</label>
+            </value>
+            <value>
+                <fullName>Kronos</fullName>
+                <default>false</default>
+                <label>Kronos</label>
+            </value>
+            <value>
+                <fullName>Lawson</fullName>
+                <default>false</default>
+                <label>Lawson</label>
+            </value>
+            <value>
+                <fullName>LOGA P&amp;I</fullName>
+                <default>false</default>
+                <label>LOGA P&amp;I</label>
+            </value>
+            <value>
+                <fullName>Logica CMG</fullName>
+                <default>false</default>
+                <label>Logica CMG</label>
+            </value>
+            <value>
+                <fullName>Lotus Domino</fullName>
+                <default>false</default>
+                <label>Lotus Domino</label>
+            </value>
+            <value>
+                <fullName>Meta 4</fullName>
+                <default>false</default>
+                <label>Meta 4</label>
+            </value>
+            <value>
+                <fullName>Microsoft</fullName>
+                <default>false</default>
+                <label>Microsoft</label>
+            </value>
+            <value>
+                <fullName>Microsoft Excel</fullName>
+                <default>false</default>
+                <label>Microsoft Excel</label>
+            </value>
+            <value>
+                <fullName>Midland HR: Delphi Millenium</fullName>
+                <default>false</default>
+                <label>Midland HR: Delphi Millenium</label>
+            </value>
+            <value>
+                <fullName>Midland HR: Trent</fullName>
+                <default>false</default>
+                <label>Midland HR: Trent</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

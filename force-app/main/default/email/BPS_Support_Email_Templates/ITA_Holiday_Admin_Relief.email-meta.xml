@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA Holiday Admin Relief</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA Holiday Admin Relief</name>
+    <style>freeForm</style>
+    <subject>ITA Holiday Admin Relief</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Hello and Happy New Year,
+
+In an effort to provide administrative relief during a busy time, the Insperity Time &amp; Attendance team took a look at your system and discovered that the holidays for 2023 were not in line with your 2022 holidays. In the interest of saving you time and effort, our team generated holidays for 2023 that matched your 2021 dates.
+
+As sometimes companies choose different dates to observe holidays, we highly recommend navigating to Company Setup &gt; Holidays to verify that the dates we chose are correct. If you do need to make a correction, this link leads to a page on our Help Center that details how to modify existing holidays.
+
+Please let us know if you have any questions or concerns and we&apos;ll be happy to assist.
+
+Thank you for allowing Insperity to serve you.
+
+Sincerely,
+
+Insperity Time &amp; Attendance Support
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

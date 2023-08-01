@@ -1,0 +1,116 @@
+<template>
+    <div class="slds-box"> 
+        <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
+        <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId} onsubmit={handleSubmit}
+            onsuccess={handleSuccess} onload={handleOnload}>
+            <lightning-messages></lightning-messages>
+            <lightning-layout>
+                <lightning-layout-item size="7">
+                    <div class="slds-m-around_medium">
+                            <div class="slds-p-vertical_medium">
+                                <label class="slds-form-element__label">
+                                    {attachmentMsg}
+                                </label>
+                            </div>
+
+                            <div if:true={NSP_CreditApproval__c}> 
+                                <div class="slds-p-vertical_medium " >
+                                    <div  class="slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" >Credit Approval</label>
+                                        <lightning-input-field variant="label-hidden"
+                                            field-name="NSP_DocVerifyCreditApproval__c" required={NSP_CreditApproval__c}  ></lightning-input-field>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={NSP_RequestingMultipleEmployees__c} >
+                                <div class="slds-p-vertical_medium " >
+                                    <div  class="slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" >Separation Agreement Spreadsheet</label>
+                                    <lightning-input-field variant="label-hidden"
+                                    field-name="NSP_DocVerifySeparationAgremtSpreedSheet__c" required ={NSP_RequestingMultipleEmployees__c} ></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={NSP_ReferenceTospecificClientDocument__c}>
+                                <div class="slds-p-vertical_medium " >
+                                    <div  class="slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" >Additional Client-Prepared Doc (OL,LE..)</label>
+                                    <lightning-input-field variant="label-hidden"
+                                    field-name="NSP_AdditionalClientPreparedDoc_OL_etc__c" required={NSP_ReferenceTospecificClientDocument__c}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={NSP_WhoResponsibleForStockEquityPaymt__c} >
+                                <div class="slds-p-vertical_medium " >
+                                    <div  class="slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" >Stock/Equity email</label>
+                                    <lightning-input-field variant="label-hidden"
+                                    field-name="NSP_DocVerifyStockEquityEmail__c" required={NSP_WhoResponsibleForStockEquityPaymt__c}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={NSP_HaveYouattachedPreparedAgreement__c}>
+                                <div class="slds-p-vertical_medium " >
+                                    <div  class="slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" >Client-Prepared Separation Agreement</label>
+                                    <lightning-input-field variant="label-hidden"
+                                    field-name="NSP_DocVerifyClientPreparedSeparationAgr__c" required={NSP_HaveYouattachedPreparedAgreement__c}>
+                                    </lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={NSP_Attached_Approval_Email__c}>
+                                <div class="slds-p-vertical_medium " >
+                                    <div  class="slds-form-element_horizontal">
+                                    <label class="slds-form-element__label" for="fieldid">MHRS approval email for MM/Enterprise HRS Review</label>
+                                    <lightning-input-field variant="label-hidden"
+                                    id="fieldid" field-name="NSP_MHRS_Approval_Email__c" required={NSP_Attached_Approval_Email__c} >
+                                    </lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-text-color_error slds-p-vertical_medium slds-form-element AttachmentVerify" style="display:none">
+                                STOP! Minimum {fileCounts} files required to submit 
+                              </div>
+                    </div>
+
+                </lightning-layout-item>
+
+                <lightning-layout-item size="5">
+                    <!--   file upload start here -->
+                    <div class="slds-align_absolute-center slds-p-around_medium">
+                      <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}> </c-wizard-file-upload>
+                    </div>
+                    <!-- File Upload End here -->
+                    <div style="display:none"> 
+                        <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+                        </lightning-input-field> 
+                    </div>
+                </lightning-layout-item>
+
+            </lightning-layout>
+
+
+            <c-confirmation-dialog title='Confirm Submission?' message={customLabel.wizardsubmitmsg} confirm-label='Yes'
+                cancel-label='No' visible={isDialogVisible} original-message={originalMessage} name="confirmModal"
+                onmodalaction={handleSubmit}>
+            </c-confirmation-dialog>
+
+
+            <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+
+                <lightning-button variant="brand" label="Previous" class="slds-m-top_small slds-m-left_small" onclick={handlePrev}>
+                </lightning-button>
+
+                <lightning-button class="slds-m-top_small slds-m-left_small" label="Save and Exit" onclick={handleSave}>
+                </lightning-button>
+
+                <lightning-button variant="brand" class="slds-m-top_small slds-m-left_small" type="submit"
+                    label="Submit">
+                </lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

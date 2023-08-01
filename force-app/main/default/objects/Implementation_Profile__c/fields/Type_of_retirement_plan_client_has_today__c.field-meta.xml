@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_retirement_plan_client_has_today__c</fullName>
+    <description>What kind of retirement plan does client have today?</description>
+    <externalId>false</externalId>
+    <label>Type of retirement plan client has today</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PEO Multiple Employer Plan (MEP)</fullName>
+                <default>false</default>
+                <label>PEO Multiple Employer Plan (MEP)</label>
+            </value>
+            <value>
+                <fullName>CSP 401K and wants to move to NSP RS</fullName>
+                <default>false</default>
+                <label>CSP 401K and wants to move to NSP RS</label>
+            </value>
+            <value>
+                <fullName>CSP 401K and wants to keep it</fullName>
+                <default>false</default>
+                <label>CSP 401K and wants to keep it</label>
+            </value>
+            <value>
+                <fullName>Simple IRA</fullName>
+                <default>false</default>
+                <label>Simple IRA</label>
+            </value>
+            <value>
+                <fullName>403B</fullName>
+                <default>false</default>
+                <label>403B</label>
+            </value>
+            <value>
+                <fullName>Unidentified ORK</fullName>
+                <default>false</default>
+                <label>Unidentified ORK</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

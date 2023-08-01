@@ -1,0 +1,608 @@
+<template>
+    <lightning-card
+    title="Accrual Profile"
+    class="slds-show slds-p-bottom">
+      <c-nsp_alert-message
+        if:true={state.errorMessage}
+        message={state.errorMessage}
+        mode="error">
+    </c-nsp_alert-message>
+    <lightning-record-edit-form
+      record-id={recordId}
+      object-api-name={accrualProfileObject}
+      onerror={handleError}
+      onload={handleLoad}
+      density="comfy">
+        <lightning-spinner
+        if:true={state.isLoading}
+        alternative-text="Loading">
+      </lightning-spinner>
+      
+    <lightning-accordion
+      if:true={isRecordTypeSelected}
+      active-section-name={activeSections}
+      allow-multiple-sections-open>
+    <!-- Client Information -->
+    <lightning-accordion-section
+      name="ClientInformation"
+      label="Client Information ">
+      <div class="slds-grid slds-gutters slds-p-top_x-small">
+        <div class="slds-col slds-size_1-of-2">
+                <lightning-formatted-text
+                    value="Sub Clients :">
+                </lightning-formatted-text>
+            <div class="customPadding">
+                <ul>
+                    <template for:each={selectedSubClients} for:item="subClient">
+                        <li key={subClient.value}>
+                            <a href="#" data-value={subClient.value} onclick={handleSubClientClick}>{subClient.label}</a>
+                    </li>
+                    </template>
+                </ul>
+                </div>
+            <div class="slds-p-top_small slds-p-bottom_small">
+                <lightning-formatted-text
+                    value="Accounts : ">
+                </lightning-formatted-text>
+            <div class="customPad">
+                <ul>
+                    <template for:each={selectedAccounts} for:item="account">
+                        <li key={account.value}>
+                            <a href="#" data-value={account.value} onclick={handleSubClientClick}>{account.label}</a>
+                    </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+          <lightning-input-field disabled
+            field-name="NSP_Account_HRS__c"
+            data-name="NSP_Account_HRS__c"
+            value={fieldValue.NSP_Account_HRS__c}
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            field-name="NSP_Submitted_by__c"
+            data-name="NSP_Submitted_by__c"
+            value={fieldValue.NSP_Submitted_by__c}
+            >
+          </lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+          <lightning-input-field disabled
+            field-name="NSP_Contact__c"
+            data-name="NSP_Contact__c"
+            value={fieldValue.NSP_Contact__c}
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            field-name="NSP_Contact_email__c"
+            data-name="NSP_Contact_email__c"
+            value={fieldValue.NSP_Contact_email__c}
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            value={fieldValue.NSP_Is_this_a_Middle_Market_client__c}
+            field-name="NSP_Is_this_a_Middle_Market_client__c"
+            data-name="NSP_Is_this_a_Middle_Market_client__c"
+            >
+          </lightning-input-field>
+        </div>
+      </div>
+    </lightning-accordion-section>
+
+    <!-- Policy Information -->
+    <lightning-accordion-section
+      name="PolicyInformation"
+      label="Policy Information">
+      <div class="slds-grid slds-gutters slds-p-top_x-small">
+        <div class="slds-col slds-size_1-of-2">
+          <lightning-input-field disabled
+            value={fieldValue.NSP_Type_of_Policy__c}
+            field-name="NSP_Type_of_Policy__c"
+            data-name="NSP_Type_of_Policy__c"
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            if:true={visibility.NSP_Policy_Type_Provide_Details__c}
+            field-name="NSP_Policy_Type_Provide_Details__c"
+            value={fieldValue.NSP_Policy_Type_Provide_Details__c}
+            data-name="NSP_Policy_Type_Provide_Details__c"
+            >
+          </lightning-input-field>
+
+          <lightning-formatted-text
+            if:true={visibility.NSP_Type_of_Policy_info_msg}
+            value="This will not show on the paystub."
+            class="slds-show slds-text-heading_small slds-var-m-around_medium">
+          </lightning-formatted-text>
+
+          <lightning-input-field disabled
+            value={fieldValue.NSP_Accrual_Profile_Plan_Name__c}
+            field-name="NSP_Accrual_Profile_Plan_Name__c"
+            data-name="NSP_Accrual_Profile_Plan_Name__c"
+            >
+          </lightning-input-field>
+
+          <lightning-combobox read-only
+            label="Status"
+            value={fieldValue.NSP_Status__c}
+            options={statusOptionsAims}
+            data-name="NSP_Status__c"
+            class="slds-var-m-horizontal_x-small"
+            >
+          </lightning-combobox>
+
+          <c-nsp_selection-box disabled
+            label="New/Revised"
+            field-api-name="NSP_Accrual_Profile__c.NSP_New_Revised__c"
+            record-type-id={fieldValue.recordTypeId}
+            value={fieldValue.NSP_New_Revised__c}
+            data-name="NSP_New_Revised__c"
+            class="slds-show slds-var-m-bottom_medium"
+            >
+          </c-nsp_selection-box>
+
+          <lightning-input-field disabled
+            value={fieldValue.NSP_Effective_date__c}
+            field-name="NSP_Effective_date__c"
+            data-name="NSP_Effective_date__c"
+            >
+          </lightning-input-field>
+
+          <lightning-formatted-text
+            value="Does this plan replace another (or other) plans?"
+            class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+          </lightning-formatted-text>
+
+          <lightning-input-field disabled
+            field-name="NSP_Does_this_plan_replace_other_plans__c"
+            data-name="NSP_Does_this_plan_replace_other_plans__c"
+            variant="label-hidden"
+            value={fieldValue.NSP_Does_this_plan_replace_other_plans__c}
+            class="slds-show slds-var-p-horizontal_xx-small"
+            >
+          </lightning-input-field>
+
+          <lightning-combobox read-only 
+            lwc:if={visibility.NSP_Accrual_Profile__c}
+            label="Name of the plan being replaced"
+            value={nameOfThePlanBeingReplaced}
+            options={planOptions}
+            data-name="NSP_Accrual_Profile__c"
+            class="slds-var-m-horizontal_x-small"
+            >
+          </lightning-combobox>
+
+          <lightning-input-field disabled
+            if:true={visibility.NSP_Other_Plan__c}
+            field-name="NSP_Other_Plan__c"
+            data-name="NSP_Other_Plan__c"
+            value={fieldValue.NSP_Other_Plan__c}
+            class="slds-show slds-var-p-horizontal_xx-small"
+            >
+          </lightning-input-field>
+
+          <c-nsp_selection-box disabled
+            label="Employee Status (check all that apply)"
+            field-api-name="NSP_Accrual_Profile__c.NSP_Employee_Status_check_all_that_apply__c"
+            record-type-id={fieldValue.recordTypeId}
+            value={fieldValue.NSP_Employee_Status_check_all_that_apply__c}
+            data-name="NSP_Employee_Status_check_all_that_apply__c"
+            class="slds-show slds-var-m-bottom_medium"
+            
+            multiple>
+          </c-nsp_selection-box>
+
+          <lightning-formatted-text
+            value="What additional information describes this group of employees? "
+            class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+          </lightning-formatted-text>
+
+        <lightning-input-field disabled
+          variant="label-hidden"
+          value={fieldValue.NSP_Add_info_describles_group_of_emp__c}
+          field-name="NSP_Add_info_describles_group_of_emp__c"
+          data-name="NSP_Add_info_describles_group_of_emp__c"
+          >
+        </lightning-input-field>
+
+        </div>
+        <div class="slds-col slds-size_1-of-2"></div>
+      </div>
+    </lightning-accordion-section>
+
+    <!-- Policy Details -->
+    <lightning-accordion-section
+      name="PolicyDetails"
+      label="Policy Details">
+      <div class="slds-grid slds-gutters slds-var-p-top_x-small">
+        <div class="slds-col slds-size_1-of-2"> 
+
+          <lightning-formatted-text
+            value="What is the plan year or 12-month period in which time is earned?"
+            class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+          </lightning-formatted-text>
+
+          <lightning-input-field disabled
+              field-name="NSP_What_is_the_plan_year__c"
+              data-name="NSP_What_is_the_plan_year__c"
+              variant="label-hidden"
+              value={fieldValue.NSP_What_is_the_plan_year__c}
+              class="slds-show slds-var-p-horizontal_xx-small"
+              >
+          </lightning-input-field>
+          
+          <div if:true={visibility.isCalendarYear}>
+            <lightning-combobox read-only
+              label="When do accrual level changes happen?"
+              value={fieldValue.NSP_When_do_accrual_level_changes_happen__c}
+              options={accrualLevelChangesAimsCalendarYear}
+              data-name="NSP_When_do_accrual_level_changes_happen__c"
+              class="slds-var-m-horizontal_x-small"
+              >
+            </lightning-combobox>
+            
+            <lightning-input-field disabled
+              lwc:if={visibility.NSP_time_accrue_under_plan_aims_calendar__c}
+              field-name="NSP_time_accrue_under_plan_aims_calendar__c"
+              value={fieldValue.NSP_time_accrue_under_plan_aims_calendar__c}
+              data-name="NSP_time_accrue_under_plan_aims_calendar__c"
+              >
+            </lightning-input-field>
+
+            <lightning-formatted-text
+              if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_CALENDAR}
+              value="If hired midway through the year, is a prorated accrual earned?"
+              class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+            </lightning-formatted-text>
+
+            <lightning-input-field disabled
+              if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_CALENDAR}
+              variant="label-hidden"
+              data-visibility-name="NSP_If_hired_midway_through_pay_period__c_AIMS_CALENDAR"
+              value={fieldValue.NSP_If_hired_midway_through_pay_period__c}
+              field-name="NSP_If_hired_midway_through_pay_period__c"
+              data-name="NSP_If_hired_midway_through_pay_period__c"
+              >
+            </lightning-input-field>
+
+            <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_CALENDAR}>
+              <div class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                <label> Accrual rates are based on every 
+                  <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_CALENDAR}>
+                    <strong>&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
+                  </span>
+                   hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals</label>
+                  <c-nsp_selection-box disabled
+                    field-api-name="NSP_Accrual_Profile__c.NSP_Hours_paid_for_earning_accruals__c"
+                    record-type-id={fieldValue.recordTypeId}
+                    value={fieldValue.NSP_Hours_paid_for_earning_accruals__c}
+                    data-name="NSP_Hours_paid_for_earning_accruals__c"
+                    data-visibility-name="NSP_Hours_paid_for_earning_accruals__c_AIMS_CALENDAR"
+                    class="slds-show slds-var-m-bottom_medium"
+                    
+                    multiple>
+                  </c-nsp_selection-box>
+              </div>
+
+              <lightning-input-field disabled
+                if:true={visibility.NSP_List_pay_codes__c_AIMS_CALENDAR}
+                field-name="NSP_List_pay_codes__c"
+                data-name="NSP_List_pay_codes__c"
+                data-visibility-name="NSP_List_pay_codes__c_AIMS_CALENDAR"
+                value={fieldValue.NSP_List_pay_codes__c}
+                >
+              </lightning-input-field>
+            </template>
+          </div>
+
+          <div if:true={visibility.isAnniversaryYear}>
+            
+            <lightning-combobox read-only
+              label="When do accrual level changes happen?"
+              value={fieldValue.NSP_When_do_accrual_level_changes_happen__c}
+              options={accrualLevelChangesAimsAnniversaryYear}
+              data-name="NSP_When_do_accrual_level_changes_happen__c"
+              class="slds-var-m-horizontal_x-small"
+              >
+            </lightning-combobox>
+
+            <lightning-input-field disabled
+              lwc:if={visibility.NSP_timeaccrue_underplan_aimsanniversary__c}
+              field-name="NSP_timeaccrue_underplan_aimsanniversary__c"
+              data-name="NSP_timeaccrue_underplan_aimsanniversary__c"
+              value={fieldValue.NSP_timeaccrue_underplan_aimsanniversary__c}
+              >
+            </lightning-input-field>
+
+            <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY}>
+
+              <div class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                <label> Accrual rates are based on every 
+                  <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_ANNIVERSARY}>
+                    <strong>&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
+                  </span>
+                   hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals
+                </label>
+                <c-nsp_selection-box disabled
+                  if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY}
+                  field-api-name="NSP_Accrual_Profile__c.NSP_Hours_paid_for_earning_accruals__c"
+                  record-type-id={fieldValue.recordTypeId}
+                  value={fieldValue.NSP_Hours_paid_for_earning_accruals__c}
+                  data-name="NSP_Hours_paid_for_earning_accruals__c"
+                  data-visibility-name="NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY"
+                  class="slds-show slds-var-m-bottom_medium"
+                  
+                  multiple>
+                </c-nsp_selection-box>
+              </div>
+
+            <lightning-input-field disabled
+              if:true={visibility.NSP_List_pay_codes__c_AIMS_ANNIVERSARY}
+              field-name="NSP_List_pay_codes__c"
+              data-name="NSP_List_pay_codes__c"
+              value={fieldValue.NSP_List_pay_codes__c}
+              data-visibility-name="NSP_List_pay_codes__c_AIMS_ANNIVERSARY"
+              >
+            </lightning-input-field>
+          </template>
+        </div>
+
+          <div if:true={visibility.isClientFiscalYear}>
+            <lightning-formatted-text value="List start of fiscal year:">
+            </lightning-formatted-text>
+
+            <lightning-input-field disabled
+              lwc:if={visibility.NSP_Month__c}
+              field-name="NSP_Month__c"
+              data-name="NSP_Month__c"
+              value={fieldValue.NSP_Month__c}
+              >
+            </lightning-input-field>
+
+            <lightning-input-field disabled
+              lwc:if={visibility.NSP_Day__c}
+              field-name="NSP_Day__c"
+              data-name="NSP_Day__c"
+              value={fieldValue.NSP_Day__c}
+              >
+            </lightning-input-field>
+
+            <lightning-combobox read-only
+              label="When do accrual level changes happen?"
+              value={fieldValue.NSP_When_do_accrual_level_changes_happen__c}
+              options={accrualLevelChangesAimsFiscalYear}
+              data-name="NSP_When_do_accrual_level_changes_happen__c"
+              class="slds-var-m-horizontal_x-small"
+              >
+            </lightning-combobox>
+
+            <lightning-input-field disabled
+              lwc:if={visibility.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c}
+              field-name="NSP_Howdoestimeaccrueunder_the_plan_AIMS__c"
+              data-name="NSP_Howdoestimeaccrueunder_the_plan_AIMS__c"
+              value={fieldValue.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c}
+              >
+            </lightning-input-field>
+
+            <lightning-formatted-text
+              if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_FISCALYEAR}
+              value="If hired midway through the pay period, is a prorated accrual earned?"
+              class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+            </lightning-formatted-text>
+
+            <lightning-input-field disabled
+              if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_FISCALYEAR}
+              variant="label-hidden"
+              field-name="NSP_If_hired_midway_through_pay_period__c"
+              data-name="NSP_If_hired_midway_through_pay_period__c"
+              data-visibility-name="NSP_If_hired_midway_through_pay_period__c_AIMS_FISCALYEAR"
+              value={fieldValue.NSP_If_hired_midway_through_pay_period__c}
+              >
+            </lightning-input-field>
+
+            <lightning-formatted-text
+              if:true={visibility.frontLoad}
+              value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved.">
+            </lightning-formatted-text>
+
+            <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_FISCAL}>
+              <div class="slds-show slds-var-m-around_xx-small slds-text-body_small" >
+                <label> Accrual rates are based on every 
+                  <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_FISCAL}>
+                    <strong>&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
+                  </span>
+                  hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals
+                </label>
+                <c-nsp_selection-box disabled
+                  if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_FISCAL}
+                  field-api-name="NSP_Accrual_Profile__c.NSP_Hours_paid_for_earning_accruals__c"
+                  record-type-id={fieldValue.recordTypeId}
+                  value={fieldValue.NSP_Hours_paid_for_earning_accruals__c}
+                  data-name="NSP_Hours_paid_for_earning_accruals__c"
+                  data-visibility-name="NSP_Hours_paid_for_earning_accruals__c_AIMS_FISCAL"
+                  class="slds-show slds-var-m-bottom_medium"
+                  
+                  multiple>
+                </c-nsp_selection-box>
+              </div>
+
+              <lightning-input-field disabled
+                if:true={visibility.NSP_List_pay_codes__c_AIMS_FISCAL}
+                field-name="NSP_List_pay_codes__c"
+                data-visibility-name="NSP_List_pay_codes__c_AIMS_FISCAL"
+                data-name="NSP_List_pay_codes__c"
+                value={fieldValue.NSP_List_pay_codes__c}
+                >
+              </lightning-input-field>
+            </template>
+          </div>
+        
+          <lightning-formatted-text value="In what unit of time are accruals tracked?">
+          </lightning-formatted-text>
+
+          <lightning-input-field disabled
+            variant="label-hidden"
+            field-name="NSP_What_unitoftime_are_accruals_tracked__c"
+            data-name="NSP_What_unitoftime_are_accruals_tracked__c"
+            value={fieldValue.NSP_What_unitoftime_are_accruals_tracked__c}
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            field-name="NSP_Accrual_waiting_period__c"
+            data-name="NSP_Accrual_waiting_period__c"
+            value={fieldValue.NSP_Accrual_waiting_period__c}
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            if:true={visibility.NSP_Length_of_period__c}
+            field-name="NSP_Length_of_period__c"
+            data-name="NSP_Length_of_period__c"
+            value={fieldValue.NSP_Length_of_period__c}
+            >
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            if:true={visibility.NSP_Select__c}
+            field-name="NSP_Select__c"
+            value={fieldValue.NSP_Select__c}
+            data-name="NSP_Select__c"
+            >
+          </lightning-input-field>
+
+      <lightning-input-field disabled
+        field-name="NSP_Is_there_a_Maximum_Balance_Cap__c"
+        data-name="NSP_Is_there_a_Maximum_Balance_Cap__c"
+        value={fieldValue.NSP_Is_there_a_Maximum_Balance_Cap__c}
+        >
+      </lightning-input-field>
+
+      <lightning-formatted-text
+          value={doBalancesCarryOverLabel}
+          class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+        </lightning-formatted-text>
+
+      <lightning-input-field disabled
+        field-name="NSP_Do_balances_carry_over_into_next_yer__c"
+        data-name="NSP_Do_balances_carry_over_into_next_yer__c"
+        variant="label-hidden"
+        class="slds-show slds-var-p-horizontal_xx-small"
+        value={fieldValue.NSP_Do_balances_carry_over_into_next_yer__c}
+        >
+      </lightning-input-field>
+
+      <lightning-input-field disabled
+          if:true={visibility.NSP_Carryover_in_Hours_or_percentage__c}
+          field-name="NSP_Carryover_in_Hours_or_percentage__c"
+          data-name="NSP_Carryover_in_Hours_or_percentage__c"
+          value={fieldValue.NSP_Carryover_in_Hours_or_percentage__c}
+          >
+      </lightning-input-field>
+
+      <lightning-input-field disabled
+          if:true={visibility.NSP_Does_carryover_expire__c}
+          field-name="NSP_Does_carryover_expire__c"
+          value={fieldValue.NSP_Does_carryover_expire__c}
+          data-name="NSP_Does_carryover_expire__c"
+          >
+      </lightning-input-field>
+        
+      <lightning-input-field disabled
+          field-name="NSP_balances_paid_in_lieu_of_carryover__c"
+          value={fieldValue.NSP_balances_paid_in_lieu_of_carryover__c}
+          data-name="NSP_balances_paid_in_lieu_of_carryover__c"
+          >
+      </lightning-input-field>
+
+      <lightning-input-field disabled
+        if:true={visibility.NSP_Carryover_in_Hours_or_paid_in_lieu__c}
+        field-name="NSP_Carryover_in_Hours_or_paid_in_lieu__c"
+        data-name="NSP_Carryover_in_Hours_or_paid_in_lieu__c"
+        value={fieldValue.NSP_Carryover_in_Hours_or_paid_in_lieu__c}
+        >
+      </lightning-input-field>
+
+      <lightning-input-field disabled
+        field-name="NSP_Are_balances_paid_on_termination__c"
+        data-name="NSP_Are_balances_paid_on_termination__c"
+        value={fieldValue.NSP_Are_balances_paid_on_termination__c}
+        >
+      </lightning-input-field>
+
+    <lightning-formatted-text
+      value={infoMessage.NSP_Add_info_not_already_listed_on_form_info_msg}
+      class="slds-show slds-var-m-around_medium">
+    </lightning-formatted-text>
+
+    <lightning-input-field disabled
+      field-name="NSP_Add_info_not_already_listed_on_form__c"
+      data-name="NSP_Add_info_not_already_listed_on_form__c"
+      variant="label-hidden"
+      value={fieldValue.NSP_Add_info_not_already_listed_on_form__c}
+      class="slds-show slds-var-p-horizontal_xx-small"
+      >
+    </lightning-input-field>
+    
+    <lightning-formatted-text
+      value="Policy/Accrual supporting documentation attached"
+      class="slds-show slds-var-m-around_medium">
+    </lightning-formatted-text>
+    <lightning-output-field
+      variant="label-hidden"
+      field-name="NSP_Policy_Accrual_supporting_doc__c"
+      data-name="NSP_Policy_Accrual_supporting_doc__c"
+      value={fieldValue.NSP_Policy_Accrual_supporting_doc__c}
+      class="slds-show slds-var-p-horizontal_xx-small"
+      onchange={handleCheckBoxChange}>
+    </lightning-output-field>
+
+        </div>
+        <div class="slds-col slds-size_1-of-2"></div>
+      </div>
+    </lightning-accordion-section>
+  </lightning-accordion>
+  <!-- Accrual Profile Grid-->
+  <div if:true={isRecordTypeSelected} class="slds-var-p-around_large">
+    <div class="slds-grid slds-gutters slds-var-m-bottom_large">
+      <div class="slds-col slds-size_1-of-3">
+        <strong>Plan Year</strong> - {fieldValue.NSP_What_is_the_plan_year__c}
+      </div>
+      <div class="slds-col slds-size_1-of-3">
+        <strong>Time Accrual</strong> - 
+          <span class="slds-var-m-left_x-small" lwc:if={visibility.isCalendarYear}>
+            {fieldValue.NSP_time_accrue_under_plan_aims_calendar__c}
+          </span>
+          <span class="slds-var-m-left_x-small" lwc:elseif={visibility.isAnniversaryYear}>
+            {fieldValue.NSP_timeaccrue_underplan_aimsanniversary__c}
+          </span>
+          <span class="slds-var-m-left_x-small" lwc:elseif={visibility.isClientFiscalYear}>
+            {fieldValue.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c}
+          </span>
+      </div>
+    </div>
+
+    <lightning-datatable
+      key-field="Id"
+      data={apgData}
+      columns={apgColumnsAims}
+      hide-checkbox-column>
+  </lightning-datatable>
+  </div>
+
+  <div slot="footer">
+    <lightning-button
+      variant="brand"
+      label="Save"
+      onclick={handleSaveButtonClick}></lightning-button>
+  </div>
+</lightning-record-edit-form>
+</lightning-card>
+
+</template>

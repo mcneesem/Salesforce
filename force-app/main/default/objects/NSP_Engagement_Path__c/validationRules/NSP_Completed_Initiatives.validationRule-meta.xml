@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Completed_Initiatives</fullName>
+    <active>true</active>
+    <description>Completed Initiatives should not be able to selected on a  Non Completed Engagement Paths</description>
+    <errorConditionFormula>AND(
+$Setup.NSP_Trigger_Switch__c.NSP_Engagement_Path_Trigger__c!=true,
+Text(NSP_Initiative__r.NSP_Status__c )  =&quot;Complete&quot;   &amp;&amp;   NOT(ISPICKVAL(NSP_Status__c,&apos;Complete&apos;))
+)</errorConditionFormula>
+    <errorMessage>You Cannot select a completed intiative on a Non-Completed Engagement Path</errorMessage>
+</ValidationRule>

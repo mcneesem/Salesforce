@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Payroll Reconciliation Answer (Period Closed)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Payroll Reconciliation Answer (Period Closed)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Payroll Reconciliation Answer (Period Closed)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+Thank you for the question regarding reconciling your payroll with missing data. As you have already closed your period, you will need to determine the appropriate number of hours, and with which pay type, an employee&apos;s time/pay needs to be adjusted. Once you have this information, you&apos;ll want to provide it to your Payroll Specialist, copied on this email, for payroll processing. There is no need to export payroll, as that has already been done.
+
+If you need to make an adjustment to an employee&apos;s accrual balance because of leave usage which was not recorded, you may add this adjustment by following the instructions on our Help Center here.
+
+Please let us know if you need any assistance with this process, or anything else, and we&apos;ll be happy to help!
+
+
+Thank you,
+
+Technical Support Team
+
+GoToAssist
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

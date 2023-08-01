@@ -1,4 +1,4 @@
-<?xml  version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__CalculateQuote</customButtons>
     <customButtons>Submit_for_Approval</customButtons>
@@ -226,6 +226,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Bypass_DocuSign_Signature__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_TerminationDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -430,11 +434,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>SBQQ__CalculateQuote</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Submit_for_Approval</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>1</sortOrder>
@@ -443,6 +442,11 @@
             <actionName>Recall_Approval</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SBQQ__CalculateQuote</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>ChangeOwnerOne</actionName>

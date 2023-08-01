@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Labor_Dist_Job_Costing_or_cert_payroll__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Is there Labor Distribution, Job Costing or Certified Payrolls?</inlineHelpText>
+    <label>Labor Dist, Job Costing or cert payroll?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

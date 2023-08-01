@@ -1,0 +1,141 @@
+<template>
+	<lightning-card title = "">
+		<div class="slds-grid slds-gutters slds-p-around_small">
+			<div class="slds-col">
+				<label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+					Status
+				</label>
+				<select class="slds-select" name = "status" onchange={handleValueChange} >
+					<option value="None">--None--</option>
+					<template for:each = {options} for:item="opt">
+						<option key={opt.label} value={opt.value}>{opt.value}</option>
+					 </template>
+				</select>
+			</div>
+			<div class="slds-col">
+				<label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+					Open Date Filter
+				</label>
+				<select class="slds-select" name = "Open Date Filter" onchange={handleValueChange} >
+					<option value="=">EqualTo</option>
+					<template for:each = {dateFilters} for:item="openOpt">
+						<option key={openOpt.label} value={openOpt.value}>{openOpt.label}</option>
+					 </template>
+				</select>
+			</div>
+			<div class="slds-col">
+				<lightning-input type="date" name="openDate" data-id="openDate" label="Open Date" value={selectedOpenDateValue} onchange={handleValueChange} placeholder="Select Open date"></lightning-input>
+			</div>
+			<div class="slds-col">
+				<label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+					Close Date Filter
+				</label>
+				<select class="slds-select" name = "Close Date Filter" onchange={handleValueChange} >
+					<option value="=">EqualTo</option>
+					<template for:each = {dateFilters} for:item="closeopt">
+						<option key={closeopt.label} value={closeopt.value}>{closeopt.label}</option>
+					 </template>
+				</select>
+			</div>
+			<div class="slds-col">
+				<lightning-input type="date" name="closedDate" data-id="closedDate" label="Close Date" value={selectedClosedDateValue} onchange={handleValueChange} placeholder="Select Closed date"></lightning-input>
+			</div>
+		</div>
+        <div if:true={showRecords}>
+            <div class="slds-scrollable_x">
+		<div class="slds-box slds-theme_default">
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+				<thead>
+					<tr>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Subject">Subject</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Owner Name">Owner Name</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Status">Status</div>
+						  </th>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Sub Status">Sub Status</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Resolution">Resolution</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Date Opened">Date Opened</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Date Closed">Date Closed</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Category">Category</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Sub Category">Sub Category</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Detail">Detail</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Due Date">Due Date</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Priority">Priority</div>
+						  </th>
+						  <th class="" scope="col">
+							<div class="slds-truncate" title="Account Name">Account Name</div>
+						  </th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={data} for:item="cse">
+						<tr key={cse.Id}>
+							<td>{cse.Subject}</td>
+							<td>{cse.Owner.Name}</td>
+							<td>{cse.Status}</td>
+							<td>{cse.NSP_Case_Sub_Status__c}</td>
+							<td>{cse.Reason}</td>
+							<td><lightning-formatted-date-time value={cse.CreatedDate} time-zone="UTC"></lightning-formatted-date-time></td>
+							<td><lightning-formatted-date-time value={cse.NSP_Date_Closed__c} time-zone="UTC"></lightning-formatted-date-time></td>
+							<td>{cse.NSP_Category__c}</td>
+							<td>{cse.NSP_SubCategory__c}</td>
+							<td>{cse.NSP_Detail__c}</td>
+							<td><lightning-formatted-date-time value={cse.NSP_Due_Date__c} time-zone="UTC"></lightning-formatted-date-time></td>
+							<td>{cse.Priority}</td>
+							<td>{cse.Account.Name}</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>   
+    </div>
+	<br/>
+<lightning-layout horizontal-align="space">
+	<lightning-layout-item flexibility="auto">
+		<lightning-button 
+		disabled={bDisableFirst}
+			label="Previous" 
+			icon-name="utility:chevronleft" 
+			onclick={previousHandler}>
+		</lightning-button>
+	</lightning-layout-item>
+	<lightning-layout-item flexibility="auto">
+		Page {page} of {totalPage}
+	</lightning-layout-item>
+	<lightning-layout-item flexibility="auto">
+		<lightning-button 
+		disabled={bDisableLast}
+			label="Next" 
+			icon-name="utility:chevronright" 
+			icon-position="right"
+			onclick={nextHandler}>
+		</lightning-button>
+	</lightning-layout-item>
+</lightning-layout>
+    </div>
+	<div if:false={showRecords}>
+		<h1 class="slds-align_absolute-center"> No Cases Exist.</h1>
+	</div>
+	</lightning-card>
+</template>

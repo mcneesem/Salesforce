@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Plan_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Plan Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401K</fullName>
+                <default>false</default>
+                <label>401K</label>
+            </value>
+            <value>
+                <fullName>403b</fullName>
+                <default>false</default>
+                <label>403b</label>
+            </value>
+            <value>
+                <fullName>414h Plan</fullName>
+                <default>false</default>
+                <label>414h Plan</label>
+            </value>
+            <value>
+                <fullName>Non Qualified Deferral Compensation Plan</fullName>
+                <default>false</default>
+                <label>Non Qualified Deferral Compensation Plan</label>
+            </value>
+            <value>
+                <fullName>Safe Harbor 401K</fullName>
+                <default>false</default>
+                <label>Safe Harbor 401K</label>
+            </value>
+            <value>
+                <fullName>Simple 401K</fullName>
+                <default>false</default>
+                <label>Simple 401K</label>
+            </value>
+            <value>
+                <fullName>Simple IRA</fullName>
+                <default>false</default>
+                <label>Simple IRA</label>
+            </value>
+            <value>
+                <fullName>SRP ROTH IRA- ASCENSUS</fullName>
+                <default>false</default>
+                <label>SRP ROTH IRA- ASCENSUS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

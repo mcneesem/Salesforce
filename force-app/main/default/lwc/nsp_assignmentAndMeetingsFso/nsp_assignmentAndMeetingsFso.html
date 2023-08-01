@@ -1,0 +1,222 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.assignmentMeetings}>
+    </lightning-formatted-text>
+
+    <lightning-input-field
+      disabled={disabledFields.NSP_Legal_Name__c}
+      field-name="NSP_Legal_Name__c"
+      class={styles.NSP_Legal_Name__c}
+      onchange={handleValueChange}
+      data-name="NSP_Legal_Name__c"></lightning-input-field>
+    <lightning-input-field
+      disabled={disabledFields.DBA__c}
+      field-name="DBA__c"
+      data-name="DBA__c"
+      value={field.DBA__c}
+      onchange={handleValueChange}></lightning-input-field>
+
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field
+        disabled
+        field-name="NSP_BPA_BPC__c"
+        data-name="NSP_BPA_BPC__c"
+        value={field.NSP_BPA_BPC__c}
+        ></lightning-input-field>
+
+        <lightning-input-field
+          disabled={disabledFields.NSP_Project_Manager__c}
+          field-name="NSP_Project_Manager__c"
+          data-name="NSP_Project_Manager__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Client_Liaison__c}
+          field-name="NSP_Client_Liaison__c"
+          data-name="NSP_Client_Liaison__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Manager_HR_Services__c}
+          field-name="NSP_Manager_HR_Services__c"
+          data-name="NSP_Manager_HR_Services__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_OT_Representative__c}
+          field-name="NSP_OT_Representative__c"
+          data-name="NSP_OT_Representative__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_HR_Quality_Support_Team_Member__c}
+          field-name="NSP_HR_Quality_Support_Team_Member__c"
+          data-name="NSP_HR_Quality_Support_Team_Member__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_ITA_Project_Manager__c}
+          field-name="NSP_ITA_Project_Manager__c"
+          data-name="NSP_ITA_Project_Manager__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_ITA_Analyst__c}
+          field-name="NSP_ITA_Analyst__c"
+          data-name="NSP_ITA_Analyst__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field
+          disabled={disabledFields.Sales_Office__c}
+          field-name="Sales_Office__c"
+          data-name="Sales_Office__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Payroll_Specialist__c}
+          field-name="NSP_Payroll_Specialist__c"
+          data-name="NSP_Payroll_Specialist__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Payroll_Supervisor__c}
+          field-name="NSP_Payroll_Supervisor__c"
+          data-name="NSP_Payroll_Supervisor__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_HR_Specialist__c}
+          field-name="NSP_HR_Specialist__c"
+          data-name="NSP_HR_Specialist__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Orientation_Coordinator__c}
+          field-name="NSP_Orientation_Coordinator__c"
+          data-name="NSP_Orientation_Coordinator__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Onboarding_Specialist_Coordinator__c}
+          field-name="NSP_Onboarding_Specialist_Coordinator__c"
+          data-name="NSP_Onboarding_Specialist_Coordinator__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          disabled={disabledFields.NSP_Orientation_Planner__c}
+          field-name="NSP_Orientation_Planner__c"
+          data-name="NSP_Orientation_Planner__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+    </div>
+
+    <lightning-formatted-text
+      class="slds-text-heading_small"
+      value={label.numberOfWorkSiteEmployees}>
+    </lightning-formatted-text>
+    <lightning-input-field
+      disabled={disabledFields.Num_of_Worksite_Employees_Full_Time__c}
+      field-name="Num_of_Worksite_Employees_Full_Time__c"
+      data-name="Num_of_Worksite_Employees_Full_Time__c"
+      value={field.Num_of_Worksite_Employees_Full_Time__c}
+      onchange={handleValueChange}></lightning-input-field>
+    <lightning-input-field
+      disabled={disabledFields.Num_of_Worksite_Employees_Part_Time__c}
+      field-name="Num_of_Worksite_Employees_Part_Time__c"
+      data-name="Num_of_Worksite_Employees_Part_Time__c"
+      value={field.Num_of_Worksite_Employees_Part_Time__c}
+      onchange={handleValueChange}></lightning-input-field>
+    <lightning-input-field
+      disabled={disabledFields.Num_of_Worksite_Employees_Seasonal__c}
+      field-name="Num_of_Worksite_Employees_Seasonal__c"
+      data-name="Num_of_Worksite_Employees_Seasonal__c"
+      onchange={handleValueChange}
+      value={field.Num_of_Worksite_Employees_Seasonal__c}>
+    </lightning-input-field>
+
+    <lightning-layout multiple-rows>
+      <!-- Client Transition Meeting -->
+      <lightning-layout-item size="12">
+        <lightning-formatted-text
+          class="slds-text-heading_small"
+          value={label.serviceKickoffMeetings}>
+        </lightning-formatted-text>
+      </lightning-layout-item>
+
+      <lightning-layout-item size="3">
+        <lightning-formatted-text
+          class="slds-form-element__label"
+          value={label.dateTime}
+          data-field="Date_and_Time__c">
+        </lightning-formatted-text>
+        <lightning-input-field
+          disabled={disabledFields.Date_and_Time__c}
+          field-name="Date_and_Time__c"
+          data-name="Date_and_Time__c"
+          variant="label-hidden"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </lightning-layout-item>
+      <lightning-layout-item size="3">
+        <lightning-input-field
+          disabled={disabledFields.Duration__c}
+          field-name="Duration__c"
+          data-name="Duration__c"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </lightning-layout-item>
+      <lightning-layout-item size="3">
+        <lightning-input-field
+          disabled={disabledFields.NSP_Orientation_Rep__c}
+          field-name="NSP_Orientation_Rep__c"
+          data-name="NSP_Orientation_Rep__c"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </lightning-layout-item>
+    </lightning-layout>
+
+    <c-nsp_record-form
+      title="Employee Orientation Meeting"
+      fields={empOrientationFields}
+      records={empOrientationRecords}
+      object-api-name={employeeObjectApiName}
+      data-id="empOrientation"
+      disabled={checkIfIpisActive}>
+    </c-nsp_record-form>
+
+    <lightning-layout multiple-rows>
+      <!-- Configuration Call -->
+      <lightning-layout-item size="12">
+        <lightning-formatted-text
+          class="slds-text-heading_small"
+          value={label.configurationCall}>
+        </lightning-formatted-text>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-formatted-text
+      class="slds-form-element__label"
+      value={label.dateTime}
+      data-field="NSP_Date_and_Time__c">
+    </lightning-formatted-text>
+    <lightning-input-field
+      disabled={disabledFields.NSP_Date_and_Time__c}
+      field-name="NSP_Date_and_Time__c"
+      data-name="NSP_Date_and_Time__c"
+      variant="label-hidden"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Tracking_Solution__c}
+      label={label.trackingSolution}
+      field-api-name="Implementation_Profile__c.NSP_Tracking_Solution__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Tracking_Solution__c}
+      data-name="NSP_Tracking_Solution__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field
+      disabled={disabledFields.NSP_Pre_SKO_Notes__c}
+      field-name="NSP_Pre_SKO_Notes__c"
+      data-name="NSP_Pre_SKO_Notes__c"
+      onchange={handleValueChange}></lightning-input-field>
+  </lightning-record-edit-form>
+</template>

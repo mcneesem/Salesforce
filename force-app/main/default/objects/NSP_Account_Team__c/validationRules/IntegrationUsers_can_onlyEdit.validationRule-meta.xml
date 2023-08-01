@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IntegrationUsers_can_onlyEdit</fullName>
+    <active>true</active>
+    <description>Other User can&apos;t edit the field if it is created by Integration User. Created this validation rule based on STY-03314</description>
+    <errorConditionFormula>AND($Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c!=True,
+ NOT(ISNEW()),
+ CreatedBy.Profile.Name = &apos;Integration User&apos;,
+ $Profile.Name  &lt;&gt;  &apos;Integration User&apos;,
+ $Profile.Name  &lt;&gt;  &apos;Sales Administrator&apos;,
+ $Profile.Name  &lt;&gt;  &apos;Data Migration&apos;,
+ ISCHANGED( NSP_Primary__c ) 
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Primary__c</errorDisplayField>
+    <errorMessage>The Primary checkbox field is created by IntegrationUser other users can&apos;t edit it.</errorMessage>
+</ValidationRule>

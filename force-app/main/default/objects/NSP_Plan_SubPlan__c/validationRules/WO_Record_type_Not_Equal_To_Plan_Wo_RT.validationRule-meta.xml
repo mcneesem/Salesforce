@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WO_Record_type_Not_Equal_To_Plan_Wo_RT</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( RecordType.Name = &apos;WO&apos; , NSP_Parent_Plan_ID__r.RecordType.Name &lt;&gt; &apos;WO&apos;)</errorConditionFormula>
+    <errorMessage>Sub plan record type shoud be same as plan record type.</errorMessage>
+</ValidationRule>

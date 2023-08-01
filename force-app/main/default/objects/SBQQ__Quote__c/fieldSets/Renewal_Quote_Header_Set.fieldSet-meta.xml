@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Renewal_Quote_Header_Set</fullName>
+    <description>This field set is used for Renewal transaction</description>
+    <displayedFields>
+        <field>SBQQ__StartDate__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>NSP_BPS_Billing_Frequency__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <label>Renewal Quote Header Set</label>
+</FieldSet>

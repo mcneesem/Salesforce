@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Formal Training Request</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Formal Training Request</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Formal Training Request</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. We have a number of training resources available in our Help Center: https://help.insperity.com/bps/categories/ita/ 
+ 
+Specifically, based on your request, these videos and/or articles may be helpful: 
+
+ 
+INCLUDE SPECIFIC LINKS 
+
+ 
+If you&apos;re interested in a more formal training, please let us know and we will be happy to advance this request to our Professional Services Team for scheduling. 
+ 
+Please note: We do not typically provide direct employee training following implementation. Post-implementation training is generally reserved for administrators, but we will certainly do our best to accommodate alternate training requests as needed. 
+ 
+Thank you, 
+ 
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

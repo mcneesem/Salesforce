@@ -1,0 +1,12 @@
+<apex:component access="global" controller="NSP_RelatedIPPayPeriodController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    
+    <p rendered="{!IF(relatedIPpayPeriods!=null, true, false)}">
+    
+        <apex:repeat value="{!relatedIPpayPeriods}" var="payPeriod" id="realtedPayPeriodList" rendered="{!NOT(relatedIPpayPeriods.empty)}">
+            Final<apex:outputText value=" {!payPeriod.Frequency__c}" id="frequency" /> Pay period prior to Insperity: <apex:outputText value=" {!payPeriod.Final_pay_period_prior_to_Insperity__c}" id="finalDateRange"/>; Final
+           <apex:outputText value=" {!payPeriod.Frequency__c}" id="frequences" /> Pay date prior to Insperity: <apex:outputText value=" {!payPeriod.Final_pay_date_prior_to_Insperity__c}" id="finalPayDate" /><br/>
+        </apex:repeat>
+    </p>
+    
+    </apex:component>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Will_there_be_benefits_classing__c</fullName>
+    <externalId>false</externalId>
+    <label>Will there be benefits classing?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

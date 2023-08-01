@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Accrual Payout Balance</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Accrual Payout Balance</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Accrual Payout Balance</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time and Attendance Support. You can review an employee’s accrual transactions balance by following the steps below: 
+
+Select the employee in the drop-down menu 
+
+Navigate to Employee Maintenance &gt; Employee Information &gt; Accrual Summary &gt; Transactions (tab) 
+
+Select the appropriate accrual type in the “Accrual Type” field 
+
+Select “Current Year” in the “View Range” field 
+
+Review the “Running Balance” that displays with the last transaction within their final pay period 
+
+We’ve copied your Human Resource Specialist on this email, so they can assist with calculating the employee’s accrual balance, in the event that it needs to be prorated. We have also copied your Payroll Specialist to assist with paying the employee their remaining accrual balance. 
+ 
+Once you’ve determined the accrual payout amount, you’ll want to make a negative accrual manual adjustment to zero out the employee’s balance. You can find instructions on how to make that manual adjustment here on our Help Center. (help.insperity.com/bps/knowledge-base/accruals-making-accrual-adjustments/) 
+ 
+Please let us know if you have additional questions, and we’ll be glad to help. 
+ 
+Thank you,  
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

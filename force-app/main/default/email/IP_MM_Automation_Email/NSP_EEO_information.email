@@ -1,0 +1,47 @@
+<messaging:emailTemplate subject="EEO information for {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<c:InsperityEmailHeader />
+<br/>
+
+<apex:outputPanel rendered="{!AND(relatedTo.Client_Profile_Information__c!=NULL, CONTAINS(relatedTo.Client_Profile_Information__c ,'Related Clients'))}">
+{!relatedTo.NSP_AIMS_Client_Name__c} is related to the following Insperity clients: 
+<c:NSP_RelatedAssets currentRecordId="{!relatedTo.Id}"  />
+</apex:outputPanel>
+<apex:outputPanel rendered="{!OR(relatedTo.Is_the_client_a_federal_contractor__c = 'Yes',relatedTo.Is_the_client_a_federal_contractor__c = 'No')}">
+<p>-------------------------------------------------------------------------</p>
+<p>Is the Client a Federal Contractor? : {!relatedTo.Is_the_client_a_federal_contractor__c}</p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!OR(relatedTo.Client_have_EEO_filing_under__c = 'Yes',relatedTo.Client_have_EEO_filing_under__c = 'No')}">
+<p>Does the Client have an EEO number they have been filing under? : {!relatedTo.Client_have_EEO_filing_under__c}</p>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(relatedTo.Client_have_EEO_filing_under__c = 'Yes', relatedTo.Can_client_provide_EEO_filing_address__c = 'Yes')}">
+<p>The Client’s EEO Unit Number is  : {!relatedTo.EEO__c}. The filing address is {!relatedTo.Filing_address__c}</p>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(relatedTo.Client_have_EEO_filing_under__c = 'Yes',relatedTo.Can_client_provide_EEO_filing_address__c = 'No',IF(relatedTo.RecordType.Name =='Middle Market',TRUE,FALSE))}">
+<p>The Client did not have the filing information at the time of the Discovery meeting.<br/>
+ Please work with the {!relatedTo.NSP_Project_Manager__r.Name} to collect outstanding information. </p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(relatedTo.Client_have_EEO_filing_under__c = 'Yes',relatedTo.Can_client_provide_EEO_filing_address__c = 'No',IF(relatedTo.RecordType.Name =='FSO',TRUE,FALSE))}">
+<p>The Client did not have the filing information at the time of the Transition Meeting <br/>
+  Please contact {!relatedTo.EEO_name_phone_contact_email_for_info__c} for information </p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!OR(relatedTo.NSP_co_employ_100_of_client_workforce__c = 'Yes',relatedTo.NSP_co_employ_100_of_client_workforce__c = 'No')}">
+<p>Does Insperity co-employ 100% of the Client’s workforce? {!relatedTo.NSP_co_employ_100_of_client_workforce__c}</p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!OR(relatedTo.Client_part_of_entity_w_o_NSP__c = 'Yes',relatedTo.Client_part_of_entity_w_o_NSP__c = 'No')}">
+<p>Is the client part of an entity not with NSP where the parent company is responsible<br/>
+ for Equal Employment Opportunity (EEO)? {!relatedTo.Client_part_of_entity_w_o_NSP__c}</p>
+</apex:outputPanel>
+</body>
+
+<p>Regards,<br/>
+ {!relatedTo.NSP_Project_Manager__r.Name}<br/>
+ {!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+  <c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

@@ -459,41 +459,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Actual__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Image__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_Risk_Assessment_Level_Image__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Risk_Assessment_Level__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Anticipated_Date_of_Termination__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Calc__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Calc_Text__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_AccountRiskAssessmentLevel_Calc_Text__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_Risk_Level__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -721,6 +687,16 @@
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.Request_an_Employee_Orientation_Meeting</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>19</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.Request_a_Discover_SKO_Meeting</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedContent>
         <relatedContentItems>
@@ -759,6 +735,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>SBQQ__Product__c</fields>
+        <fields>NSP_Status__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>SBQQ__EndDate__c</fields>

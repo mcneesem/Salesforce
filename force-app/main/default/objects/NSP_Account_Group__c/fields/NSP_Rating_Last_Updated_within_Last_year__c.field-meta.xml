@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Rating_Last_Updated_within_Last_year__c</fullName>
+    <description>For reporting purposes</description>
+    <externalId>false</externalId>
+    <formula>NSP_Last_Reviewed__c &lt; today()-365</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Rating Last Updated within Last year ?</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

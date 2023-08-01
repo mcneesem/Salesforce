@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>Check_for_WX_WA_Child</name>
+        <label>Check for WX_WA Child</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>WX_WA_Child_Greater_Than_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_CHILD_ID__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_CHILD_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_Parent_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_iSolved_ID_Field</targetReference>
+            </connector>
+            <label>WX_WA Child Greater Than 0</label>
+        </rules>
+        <rules>
+            <name>WX_WA_Child_Less_Than_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_CHILD_ID__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_CHILD_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_Parent_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_iSolved_ID_Field_to_Empty</targetReference>
+            </connector>
+            <label>WX_WA Child Less Than 0</label>
+        </rules>
+        <rules>
+            <name>On_Create_WX_WA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isNewWXAsset</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_CHILD_ID__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_WX_WA_CHILD_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_iSolved_ID_Field</targetReference>
+            </connector>
+            <label>On Create WX_WA</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>isNewWXAsset</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Update iSolved ID on Asset {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update iSolved ID on Asset</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_iSolved_ID_Field</name>
+        <label>Update iSolved ID Field</label>
+        <locationX>182</locationX>
+        <locationY>767</locationY>
+        <inputAssignments>
+            <field>NSP_iSolved_ID__c</field>
+            <value>
+                <stringValue>{!$Record.NSP_WX_WA_Parent_ID__c}-{!$Record.NSP_WX_WA_CHILD_ID__c}</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_iSolved_ID_Field_to_Empty</name>
+        <label>Update iSolved ID Field</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>NSP_iSolved_ID__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_for_WX_WA_Child</targetReference>
+        </connector>
+        <filterFormula>AND(
+{!$Record.RecordType.DeveloperName} = &apos;NSP_Asset_Product&apos;,
+OR(
+ISCHANGED({!$Record.NSP_WX_WA_Parent_ID__c}),
+ISCHANGED({!$Record.NSP_WX_WA_CHILD_ID__c}),
+ISNEW()
+)
+)</filterFormula>
+        <object>Asset</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

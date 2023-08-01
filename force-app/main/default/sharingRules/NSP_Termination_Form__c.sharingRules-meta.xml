@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>NSP_Read_Access_to_Termination_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Access to Termination Group</label>
+        <sharedTo>
+            <group>NSP_Termination_Form_Access_Public_Group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Termination_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share all Termination Forms with Termination Team</description>
+        <label>Termination Team</label>
+        <sharedTo>
+            <group>NSP_Termination_Team</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

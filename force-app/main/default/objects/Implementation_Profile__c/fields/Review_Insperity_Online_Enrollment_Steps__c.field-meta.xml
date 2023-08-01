@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Review_Insperity_Online_Enrollment_Steps__c</fullName>
+    <externalId>false</externalId>
+    <label>Review Insperity Online Enrollment Steps</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Priming</fullName>
+                <default>false</default>
+                <label>Priming</label>
+            </value>
+            <value>
+                <fullName>Enrollment Admin</fullName>
+                <default>false</default>
+                <label>Enrollment Admin</label>
+            </value>
+            <value>
+                <fullName>I9 Approver</fullName>
+                <default>false</default>
+                <label>I9 Approver</label>
+            </value>
+            <value>
+                <fullName>Employee Enrollment</fullName>
+                <default>false</default>
+                <label>Employee Enrollment</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BPS - CO Project Created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BPS - CO Project Created</name>
+    <style>freeForm</style>
+    <subject>BPS - CO Project Created</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Your request for assistance has been reviewed and we&apos;ve determined that this will be best handled as a Change Order. We have sent the information to the Professional Services team (project number PRXXXXXX), and they will be in touch with you as soon as they&apos;re able. The team handles orders based on when they&apos;re received, with priority given to payroll impacting and compliance related requests. For all other items, you can expect that they&apos;ll begin working on your request within 8 weeks. We appreciate your patience. 
+  
+If you have questions regarding this change in the meantime, please reach out to our Customer Success Team at BPS.CustomerService@insperity.com. Or, if you have additional questions related to Time &amp; Attendance, please feel free to contact our Support Team at Time.Support@insperity.com; our Support Team will be happy to help.   
+ 
+Thank you, 
+ 
+Time &amp; Attendance Technical Support 
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

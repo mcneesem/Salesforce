@@ -110,6 +110,12 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>runtime_approval_process:pendingApprovalCard</componentName>
+                <identifier>runtime_approval_process_pendingApprovalCard</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>bottomLeft</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -162,6 +168,19 @@
                 </componentInstanceProperties>
                 <componentName>home:newsPanel</componentName>
                 <identifier>home_newsPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>wizardHomePage</componentName>
+                <identifier>c_wizardHomePage</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>System Administrator</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

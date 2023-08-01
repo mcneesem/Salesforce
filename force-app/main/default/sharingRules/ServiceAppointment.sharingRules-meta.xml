@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Service_Appointment_Read_Edit</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Service Appointment Read Edit</label>
+        <sharedTo>
+            <group>NSP_Service_Appointment_Object_Read_Edit</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>AppointmentNumber</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

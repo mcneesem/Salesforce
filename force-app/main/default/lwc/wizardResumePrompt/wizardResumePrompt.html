@@ -1,0 +1,32 @@
+<template>
+    <template if:true={showModal}>  
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           <header class="slds-modal__header slds-modal__header_empty" style="border-bottom-style:none; background-color: unset;">
+            <lightning-button-icon
+                class="slds-modal__close"
+                title="Close"
+                icon-name="utility:close"
+                icon-class="slds-button_icon-inverse"
+                onclick={handleCloseModal}
+            ></lightning-button-icon> 
+           </header>
+           <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1"> 
+              <div>
+                <h2 class="slds-text-heading_large slds-m-bottom_large slds-p-horizontal_medium ">
+                    <b> Welcome Back! </b>
+                  </h2>
+              </div>
+              <div class="slds-m-top_small slds-m-bottom_medium">
+                  <h2 class="slds-text-heading_small slds-m-bottom_large slds-p-horizontal_medium">
+                      Do you want to pick up where you left off or start over from the beginning?
+                  </h2>
+                  <lightning-button variant="brand"  label="Resume" title="Non-primary action" onclick={handleResume} class="slds-m-left_x-small slds-m-horizontal_x-large"></lightning-button>
+                  <lightning-button variant="brand" label="Start Over" title="Primary action" onclick={handleStartOver} class="slds-m-left_x-small slds-m-horizontal_x-large"></lightning-button>
+              </div>
+        </div>
+     </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+</template>

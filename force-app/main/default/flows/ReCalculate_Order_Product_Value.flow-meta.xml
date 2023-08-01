@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls invocable method to trigger calculation engine. Order Item Id is passed as argument</description>
+        <name>Call_ReCalculation_API</name>
+        <label>Call ReCalculation API</label>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
+        <actionName>OrderProductUpdateCaller</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>orderProductIds</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <description>Triggers CPQ calculation engine to recalculate order product amount.</description>
+    <interviewLabel>ReCalculate Order Product Value {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ReCalculate Order Product Value</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Order_Product_Activated__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_ReCalculation_Status_Internal__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Staged</stringValue>
+            </value>
+        </filters>
+        <object>OrderItem</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Run_after_X_mins</name>
+            <connector>
+                <targetReference>Call_ReCalculation_API</targetReference>
+            </connector>
+            <label>Run after X mins</label>
+            <offsetNumber>2</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>LastModifiedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

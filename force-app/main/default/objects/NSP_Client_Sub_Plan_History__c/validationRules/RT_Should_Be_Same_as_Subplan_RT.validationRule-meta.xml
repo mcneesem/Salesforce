@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RT_Should_Be_Same_as_Subplan_RT</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( RecordType.Name  &lt;&gt;  NSP_Plan_ID__r.RecordType.Name ,   RecordType.Name  &lt;&gt; NSP_Plan_Subplan_Relationship__r.RecordType.Name,
+$Setup.NSP_Trigger_Switch__c.NSP_Client_Sub_Plan_History__c =false
+)</errorConditionFormula>
+    <errorMessage>Record Type Should Be Same as Subplan Record Type.</errorMessage>
+</ValidationRule>

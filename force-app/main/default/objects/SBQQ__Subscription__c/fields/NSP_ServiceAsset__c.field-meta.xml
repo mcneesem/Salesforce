@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ServiceAsset__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Holds the service asset created on opportunity closure</description>
+    <externalId>false</externalId>
+    <label>Service Asset</label>
+    <referenceTo>Asset</referenceTo>
+    <relationshipLabel>Subscriptions</relationshipLabel>
+    <relationshipName>Subscriptions</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

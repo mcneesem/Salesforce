@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ReasonForTerm__c</fullName>
+    <externalId>false</externalId>
+    <label>Reason For Term</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Layoff</fullName>
+                <default>false</default>
+                <label>Layoff</label>
+            </value>
+            <value>
+                <fullName>Resignation with Notice</fullName>
+                <default>false</default>
+                <label>Resignation with Notice</label>
+            </value>
+            <value>
+                <fullName>Resignation without Notice</fullName>
+                <default>false</default>
+                <label>Resignation without Notice</label>
+            </value>
+            <value>
+                <fullName>Misconduct</fullName>
+                <default>false</default>
+                <label>Misconduct</label>
+            </value>
+            <value>
+                <fullName>Unsatisfactory Job Performance</fullName>
+                <default>false</default>
+                <label>Unsatisfactory Job Performance</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

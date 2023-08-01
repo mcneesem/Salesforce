@@ -1,0 +1,209 @@
+<apex:page >
+    <apex:slds />
+    <apex:form >
+        <div id="liveagent_button_online_5730R0000004SwT" href="javascript://Chat" style="display: none;">
+            <apex:commandButton value="Start Chat with 401K" onclick="startWith401k(); return false;" />
+        </div>
+        <div id="liveagent_button_offline_5730R0000004SwT" style="display: none;">
+            No Agent available for 401k
+        </div>
+        <div id="liveagent_button_online_5730R0000004SwU" href="javascript://Chat" style="display: none;">
+            <apex:commandButton value="Start Chat with Benefits" onclick="startWithBenefits(); return false;" />
+        </div>
+        <div id="liveagent_button_offline_5730R0000004SwU" style="display: none;">
+            No Agent available for Benefits
+        </div>
+        <div id="liveagent_button_online_5730R0000004SwV" href="javascript://Chat" style="display: none;">
+            <apex:commandButton value="Start Chat with Escalations" onclick="startWithEscalations(); return false;" />
+        </div>
+        <div id="liveagent_button_offline_5730R0000004SwV" style="display: none;">
+            No Agent available for Escalations
+        </div>
+        <div id="liveagent_button_online_5730R0000004SwW" href="javascript://Chat" style="display: none;">
+            <apex:commandButton value="Start Chat with Web Chat Support" onclick="startWithWebSupport(); return false;" />
+        </div>
+        <div id="liveagent_button_offline_5730R0000004SwW" style="display: none;">
+            No Agent available for Web Support
+        </div>
+    </apex:form>
+    
+    <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+        background-color: #005290;
+        font-family: "Arial", sans-serif;
+        }
+        
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+        outline: 1px solid #005290;
+        }
+        
+        .message {
+        padding: 0;
+        margin: 0;
+        color: white;
+        background-color: unset;
+        border-style: unset;
+        border-width: unset;
+        }
+    </style>
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'
+    src='https://c.la2-c1cs-iad.salesforceliveagent.com/content/g/js/52.0/deployment.js'></script>
+    <script type='text/javascript'>
+    if (!window._laq) { window._laq = []; }
+    window._laq.push(function () {
+        liveagent.showWhenOnline('5730R0000004SwT', document.getElementById('liveagent_button_online_5730R0000004SwT'));
+        liveagent.showWhenOffline('5730R0000004SwT', document.getElementById('liveagent_button_offline_5730R0000004SwT'));
+    });
+    window._laq.push(function () {
+        liveagent.showWhenOnline('5730R0000004SwU', document.getElementById('liveagent_button_online_5730R0000004SwU'));
+        liveagent.showWhenOffline('5730R0000004SwU', document.getElementById('liveagent_button_offline_5730R0000004SwU'));
+    });
+    window._laq.push(function () {
+        liveagent.showWhenOnline('5730R0000004SwV', document.getElementById('liveagent_button_online_5730R0000004SwV'));
+        liveagent.showWhenOffline('5730R0000004SwV', document.getElementById('liveagent_button_offline_5730R0000004SwV'));
+    });
+    window._laq.push(function () {
+        liveagent.showWhenOnline('5730R0000004SwW', document.getElementById('liveagent_button_online_5730R0000004SwW'));
+        liveagent.showWhenOffline('5730R0000004SwW', document.getElementById('liveagent_button_offline_5730R0000004SwW'));
+    });
+    liveagent.init('https://d.la2-c1cs-iad.salesforceliveagent.com/chat', '5720R0000004PQv', '00D0R000000Ovg1');
+    function startWith401k() {
+        embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            return "5730R0000004SwT";
+        }
+        embedded_svc.settings.prepopulatedPrechatFields = {
+            FirstName: "John",
+            LastName: "Doe",
+            Email: "john.doe@salesforce.com",
+            Subject: "About 401K Enrollment",
+            NSP_Category__c : "401k",
+            NSP_SubCategory__c : "Address Change",
+            NSP_Assigned_Queue__c : "401k"
+        };
+        embedded_svc.liveAgentAPI.startChat({
+            directToAgentRouting: {
+                buttonId: "5730R0000004SwT",
+                fallback: true
+            },
+            extraPrechatInfo: [],
+            extraPrechatFormDetails: []
+        });
+    }
+    function startWithBenefits() {
+        embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            return "5730R0000004SwU";
+        }
+        embedded_svc.settings.prepopulatedPrechatFields = {
+            FirstName: "John",
+            LastName: "Doe",
+            Email: "john.doe@salesforce.com",
+            Subject: "About Employee Benefits",
+            NSP_Category__c : "Benefits",
+            NSP_SubCategory__c : "Address Change",
+            NSP_Assigned_Queue__c : "Benefits"
+        };
+        embedded_svc.liveAgentAPI.startChat({
+            directToAgentRouting: {
+                buttonId: "5730R0000004SwU",
+                fallback: true
+            },
+            extraPrechatInfo: [],
+            extraPrechatFormDetails: []
+        });
+    }
+    function startWithEscalations() {
+        embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            return "5730R0000004SwV";
+        }
+        embedded_svc.settings.prepopulatedPrechatFields = {
+            FirstName: "John",
+            LastName: "Doe",
+            Email: "john.doe@salesforce.com",
+            Subject: "About Escalations Queries",
+            NSP_Category__c : "Escalations",
+            NSP_SubCategory__c : "Payroll Services",
+            NSP_Assigned_Queue__c : "Escalations"
+        };
+        embedded_svc.liveAgentAPI.startChat({
+            directToAgentRouting: {
+                buttonId: "5730R0000004SwV",
+                fallback: true
+            },
+            extraPrechatInfo: [],
+            extraPrechatFormDetails: []
+        });
+    }
+    function startWithWebSupport() {
+        embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            return "5730R0000004SwW";
+        }
+        embedded_svc.settings.prepopulatedPrechatFields = {
+            FirstName: "John",
+            LastName: "Doe",
+            Email: "john.doe@salesforce.com",
+            Subject: "About Web Support",
+            NSP_Category__c : "Web Support",
+            NSP_SubCategory__c : "Address Change",
+            NSP_Assigned_Queue__c : "Web Support"
+        };
+        embedded_svc.liveAgentAPI.startChat({
+            directToAgentRouting: {
+                buttonId: "5730R0000004SwW",
+                fallback: true
+            },
+            extraPrechatInfo: [],
+            extraPrechatFormDetails: []
+        });
+    }
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = false; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+        
+        //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+        //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+        
+        //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+        
+        // Settings for Chat
+        //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+        // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+        // Returns a valid button ID.
+        //};
+        //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+        //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+        //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+        
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+        
+        embedded_svc.init(
+            'https://insperity--sfqaph2.my.salesforce.com',
+            'https://sfqaph2-inspirity.cs94.force.com/service',
+            gslbBaseURL,
+            '00D0R000000Ovg1',
+            'NSP_Benefits',
+            {
+                baseLiveAgentContentURL: 'https://c.la2-c1cs-iad.salesforceliveagent.com/content',
+                deploymentId: '5720R0000004PQv',
+                buttonId: '5730R0000004SwU',
+                baseLiveAgentURL: 'https://d.la2-c1cs-iad.salesforceliveagent.com/chat',
+                eswLiveAgentDevName: 'Benefits_Group',
+                isOfflineSupportEnabled: false
+            }
+        );
+    };
+    
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://insperity--sfqaph2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+    </script>
+</apex:page>

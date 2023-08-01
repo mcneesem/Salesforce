@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows users to edit the &quot;ACH Active&quot; field on Payment Methods.   
+Might also be used for Finance users</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__PaymentMethod__c.NSP_Active_Custom__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>TES - ACH Edit</label>
+</PermissionSet>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <dataset xsi:nil="true"/>
+    <dimensions>
+        <defaultAction>openActionsMenu</defaultAction>
+        <field>ITA___Project_Report_1.Proj_ProjAsset.pse__Project_ID__c</field>
+        <isDerived>false</isDerived>
+        <sortIndex>0</sortIndex>
+    </dimensions>
+    <type>Asset</type>
+    <waveVisualization>ITA_Project_Report_All_Projects_w_CQA</waveVisualization>
+</WaveXmd>

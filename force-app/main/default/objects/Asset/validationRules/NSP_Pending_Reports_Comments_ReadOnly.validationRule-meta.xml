@@ -3,6 +3,7 @@
     <fullName>NSP_Pending_Reports_Comments_ReadOnly</fullName>
     <active>false</active>
     <errorConditionFormula>ISCHANGED(NSP_Pending_Report_Comments__c) &amp;&amp; 
+$Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True &amp;&amp;
  AND(
 $UserRole.DeveloperName  &lt;&gt; &apos;New_Client_Sales&apos;,
 $UserRole.DeveloperName  &lt;&gt; &apos;District_Administrator&apos;,

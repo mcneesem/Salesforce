@@ -1,0 +1,6 @@
+<template>
+    <template if:true={typeAttributes.subClients} for:each={typeAttributes.subClients} for:item="contact" for:index="index">
+        <c-nsp_custom-link key={contact.Id} record-id={contact.Id} sub-client="true" records-count={typeAttributes.subClients.length} index={index} record-name={contact.Name}>
+        </c-nsp_custom-link>
+    </template>
+</template>

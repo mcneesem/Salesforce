@@ -1,0 +1,712 @@
+<template>
+  <lightning-record-edit-form
+    onerror={handleError}
+    record-id={recordId}
+    onload={handleLoad}
+    object-api-name={objectApiName}
+    density="comfy">
+    <lightning-formatted-text class="slds-page-header__title" value={title}>
+    </lightning-formatted-text>
+
+    <div class="section slds-p-top_small" data-id="clientInfo">
+      <!-- <lightning-formatted-text class="slds-page-header__title" value={sections.clientInformation}>
+      </lightning-formatted-text> -->
+      <div class="slds-grid slds-wrap">
+        <!-- KDM -->
+        <lightning-formatted-text
+          class="slds-text-heading_small slds-col slds-size_1-of-1"
+          value={label.KDM}></lightning-formatted-text>
+
+        <lightning-input-field
+          value={field.NSP_KDM_Client_Name__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_KDM_Client_Name__c}
+          field-name="NSP_KDM_Client_Name__c"
+          data-name="NSP_KDM_Client_Name__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_KDM_Job_Title__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_KDM_Job_Title__c}
+          field-name="NSP_KDM_Job_Title__c"
+          data-name="NSP_KDM_Job_Title__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <div class="slds-size_12-of-12">
+          <lightning-input-field
+            value={field.NSP_AIMS_ClientNo_KDM__c}
+            class="slds-col slds-size_6-of-12"
+            disabled={disabledFields.NSP_AIMS_ClientNo_KDM__c}
+            field-name="NSP_AIMS_ClientNo_KDM__c"
+            data-name="NSP_AIMS_ClientNo_KDM__c"
+            onchange={handleValueChange}></lightning-input-field>
+        </div>
+
+        <lightning-input
+          disabled={disabled.NSP_KDM_Client_Office_Phone__c}
+          label={objectInfo.NSP_KDM_Client_Office_Phone__c.label}
+          data-name="NSP_KDM_Client_Office_Phone__c"
+          value={formattedValue.NSP_KDM_Client_Office_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+        <lightning-input
+          disabled={disabled.NSP_KDM_Client_Cell_Phone__c}
+          label={objectInfo.NSP_KDM_Client_Cell_Phone__c.label}
+          data-name="NSP_KDM_Client_Cell_Phone__c"
+          value={formattedValue.NSP_KDM_Client_Cell_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+        <lightning-input-field
+          value={field.NSP_KDM_Client_Email__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_KDM_Client_Email__c}
+          field-name="NSP_KDM_Client_Email__c"
+          data-name="NSP_KDM_Client_Email__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_KDM_Client_Contact_Method__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_KDM_Client_Contact_Method__c}
+          field-name="NSP_KDM_Client_Contact_Method__c"
+          data-name="NSP_KDM_Client_Contact_Method__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+
+      <!-- OSS -->
+
+      <div class="slds-grid slds-wrap">
+        <lightning-formatted-text
+          class="slds-text-heading_small slds-col slds-size_6-of-12"
+          value={label.OSS}>
+        </lightning-formatted-text>
+        <lightning-input-field
+          value={field.NSP_OSS_contact_is_same_as_KDM__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_OSS_contact_is_same_as_KDM__c}
+          field-name="NSP_OSS_contact_is_same_as_KDM__c"
+          data-name="NSP_OSS_contact_is_same_as_KDM__c"
+          onchange={handleCheckBoxChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_OSS_Client_Name__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_OSS_Client_Name__c}
+          field-name="NSP_OSS_Client_Name__c"
+          data-name="NSP_OSS_Client_Name__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_OSS_Job_Title__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_OSS_Job_Title__c}
+          field-name="NSP_OSS_Job_Title__c"
+          data-name="NSP_OSS_Job_Title__c"
+          onchange={handleValueChange}></lightning-input-field>
+
+        <div class="slds-size_12-of-12">
+          <lightning-input-field
+            value={field.NSP_AIMS_ClientNo_OSS__c}
+            class="slds-col slds-size_6-of-12"
+            disabled={disabledFields.NSP_AIMS_ClientNo_OSS__c}
+            field-name="NSP_AIMS_ClientNo_OSS__c"
+            data-name="NSP_AIMS_ClientNo_OSS__c"
+            onchange={handleValueChange}></lightning-input-field>
+        </div>
+        <lightning-input
+          disabled={disabled.NSP_OSS_Client_Office_Phone__c}
+          label={objectInfo.NSP_OSS_Client_Office_Phone__c.label}
+          data-name="NSP_OSS_Client_Office_Phone__c"
+          value={formattedValue.NSP_OSS_Client_Office_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+        <lightning-input
+          disabled={disabled.NSP_OSS_Client_Cell_Phone__c}
+          label={objectInfo.NSP_OSS_Client_Cell_Phone__c.label}
+          data-name="NSP_OSS_Client_Cell_Phone__c"
+          value={formattedValue.NSP_OSS_Client_Cell_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+
+        <lightning-input-field
+          value={field.NSP_OSS_Client_Email__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_OSS_Client_Email__c}
+          field-name="NSP_OSS_Client_Email__c"
+          data-name="NSP_OSS_Client_Email__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_OSS_Client_Contact_Method__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_OSS_Client_Contact_Method__c}
+          field-name="NSP_OSS_Client_Contact_Method__c"
+          data-name="NSP_OSS_Client_Contact_Method__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+
+      <!-- WC -->
+
+      <div class="slds-grid slds-wrap">
+        <lightning-formatted-text
+          class="slds-text-heading_small slds-col slds-size_6-of-12"
+          value={label.WC}>
+        </lightning-formatted-text>
+        <lightning-input-field
+          value={field.NSP_WC_contact_is_same_as_OSS__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_WC_contact_is_same_as_OSS__c}
+          field-name="NSP_WC_contact_is_same_as_OSS__c"
+          data-name="NSP_WC_contact_is_same_as_OSS__c"
+          onchange={handleCheckBoxChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_WC_Client_Name__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_WC_Client_Name__c}
+          field-name="NSP_WC_Client_Name__c"
+          data-name="NSP_WC_Client_Name__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_WC_Job_Title__c}
+          class="slds-col slds-size_6-of-12 wcClientName"
+          disabled={disabledFields.NSP_WC_Job_Title__c}
+          field-name="NSP_WC_Job_Title__c"
+          data-name="NSP_WC_Job_Title__c"
+          onchange={handleValueChange}></lightning-input-field>
+
+        <div class="slds-size_12-of-12">
+          <lightning-input-field
+            value={field.NSP_AIMS_ClientNo_WC__c}
+            class="slds-col slds-size_6-of-12 wcClientName"
+            disabled={disabledFields.NSP_AIMS_ClientNo_WC__c}
+            field-name="NSP_AIMS_ClientNo_WC__c"
+            data-name="NSP_AIMS_ClientNo_WC__c"
+            onchange={handleValueChange}></lightning-input-field>
+        </div>
+        <lightning-input
+          disabled={disabled.NSP_WC_Client_Office_Phone__c}
+          label={objectInfo.NSP_WC_Client_Office_Phone__c.label}
+          data-name="NSP_WC_Client_Office_Phone__c"
+          value={formattedValue.NSP_WC_Client_Office_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+        <lightning-input
+          disabled={disabled.NSP_WC_Client_Cell_Phone__c}
+          label={objectInfo.NSP_WC_Client_Cell_Phone__c.label}
+          data-name="NSP_WC_Client_Cell_Phone__c"
+          value={formattedValue.NSP_WC_Client_Cell_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+        <lightning-input-field
+          value={field.NSP_WC_Client_Email__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_WC_Client_Email__c}
+          field-name="NSP_WC_Client_Email__c"
+          data-name="NSP_WC_Client_Email__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_WC_Client_Contact_Method__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_WC_Client_Contact_Method__c}
+          field-name="NSP_WC_Client_Contact_Method__c"
+          data-name="NSP_WC_Client_Contact_Method__c"
+          onchange={handleValueChange}></lightning-input-field>
+      </div>
+
+      <!-- HR Contact -->
+      <div class="slds-grid slds-wrap">
+        <lightning-formatted-text
+          class="slds-text-heading_small slds-col slds-size_6-of-12"
+          value={label.HrCont}></lightning-formatted-text>
+        <lightning-input-field
+          value={field.HR_contact_is_same_as_OSS__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.HR_contact_is_same_as_OSS__c}
+          field-name="HR_contact_is_same_as_OSS__c"
+          data-name="HR_contact_is_same_as_OSS__c"
+          onchange={handleCheckBoxChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_HR_Client_Name__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_HR_Client_Name__c}
+          field-name="NSP_HR_Client_Name__c"
+          data-name="NSP_HR_Client_Name__c"
+          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field
+          value={field.NSP_HR_Job_Title__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.NSP_HR_Job_Title__c}
+          field-name="NSP_HR_Job_Title__c"
+          data-name="NSP_HR_Job_Title__c"
+          onchange={handleValueChange}></lightning-input-field>
+
+        <div class="slds-size_12-of-12">
+          <lightning-input-field
+            disabled={disabled.NSP_AIMS_ClientNo_HR__c}
+            field-name="NSP_AIMS_ClientNo_HR__c"
+            data-name="NSP_AIMS_ClientNo_HR__c"
+            class="slds-col slds-size_6-of-12"
+            value={field.NSP_AIMS_ClientNo_HR__c}
+            onchange={handleValueChange}>
+          </lightning-input-field>
+        </div>
+        
+        <lightning-input
+          disabled={disabled.HR_Contact_Office_Phone__c}
+          label={objectInfo.HR_Contact_Office_Phone__c.label}
+          data-name="HR_Contact_Office_Phone__c"
+          value={formattedValue.HR_Contact_Office_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+
+        <lightning-input
+          disabled={disabled.HR_Contact_Cell_Phone__c}
+          label={objectInfo.HR_Contact_Cell_Phone__c.label}
+          data-name="HR_Contact_Cell_Phone__c"
+          value={formattedValue.HR_Contact_Cell_Phone__c}
+          onchange={handleValueChange}
+          onfocus={handlePhoneFieldFocus}
+          onblur={handlePhoneFieldBlur}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input>
+
+        <lightning-input-field
+          disabled={disabled.NSP_HR_Client_Email__c}
+          field-name="NSP_HR_Client_Email__c"
+          value={field.NSP_HR_Client_Email__c}
+          data-name="NSP_HR_Client_Email__c"
+          class="slds-col slds-size_6-of-12"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+
+        <lightning-input-field
+          value={field.HR_Contact_Method__c}
+          class="slds-col slds-size_6-of-12"
+          disabled={disabledFields.HR_Contact_Method__c}
+          field-name="HR_Contact_Method__c"
+          data-name="HR_Contact_Method__c"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+
+      </div>
+      
+      <c-nsp_record-form
+        title="Additional Records"
+        fields-group={addnClientContactsFields}
+        records={addnClientContactRecords}
+        object-api-name={addnClientContactsObjectApiName}
+        data-id="addnClientContacts"
+        disabled={checkIfIpisActive}>
+      </c-nsp_record-form>
+
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value={label.IpEffDatePyrolcompl}
+        data-field="Effective_Date_Payroll_Worker_comp_EPLI__c"></lightning-formatted-text>
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+          <lightning-input-field
+            disabled={disabledFields.Effective_Date_Payroll_Worker_comp_EPLI__c}
+            field-name="Effective_Date_Payroll_Worker_comp_EPLI__c"
+            data-name="Effective_Date_Payroll_Worker_comp_EPLI__c"
+            value={field.Effective_Date_Payroll_Worker_comp_EPLI__c}
+            variant="label-hidden"
+            onchange={handleValueChange}
+            class={styles.Effective_Date_Payroll_Worker_comp_EPLI__c}></lightning-input-field>
+        </div>
+      </div>
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Service_Model__c}
+        label={objFields.NSP_Service_Model__c.label}
+        data-name="NSP_Service_Model__c"
+        field-api-name="Implementation_Profile__c.NSP_Service_Model__c"
+        record-type-id={recordTypeId}
+        value={field.NSP_Service_Model__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_Profile_Information__c}
+        label={objFields.Client_Profile_Information__c.label}
+        data-name="Client_Profile_Information__c"
+        field-api-name="Implementation_Profile__c.Client_Profile_Information__c"
+        record-type-id={recordTypeId}
+        value={field.Client_Profile_Information__c}
+        onchange={handleValueChange}
+        multiple>
+      </c-nsp_selection-box>
+
+      <div if:true={visibility.Show_Related_Clients} class={styles.Show_Related_Clients}>
+        <c-nsp_record-form
+          fields={ipRelatedClientFields}
+          records={ipClientRelatedClient}
+          object-api-name={ipRelatedClientApiName}
+          data-id="ipRelatedClients"
+          parent-field="Client_Profile_Information__c"
+          disabled={checkIfIpisActive}>
+        </c-nsp_record-form>
+      </div>
+
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+          <lightning-input-field
+            value={field.Business_Inception_Date__c}
+            disabled={disabledFields.Business_Inception_Date__c}
+            field-name="Business_Inception_Date__c"
+            data-name="Business_Inception_Date__c"
+            onchange={handleValueChange}></lightning-input-field>
+        </div>
+      </div>
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value={label.CFEIN}
+        data-field="Client_FEIN__c"></lightning-formatted-text>
+      <lightning-input
+        data-name="Client_FEIN__c"
+        type="text"
+        value={field.Client_FEIN__c}
+        pattern="^\d{2}-\d{7}$"
+        message-when-pattern-mismatch={label.FEINInvalidFormat}
+        maxlength="10"
+        variant="label-hidden"
+        disabled={disabledFields.Client_FEIN__c}
+        onkeypress={onFEINKeyPress}
+        onchange={handleValueChange}>
+      </lightning-input>
+      <c-nsp_selection-box
+        disabled={disabledFields.All_EEs_paid_under_same_FEIN_currently__c}
+        label={label.EEpayFEIN}
+        data-name="All_EEs_paid_under_same_FEIN_currently__c"
+        field-api-name="Implementation_Profile__c.All_EEs_paid_under_same_FEIN_currently__c"
+        record-type-id={recordTypeId}
+        value={field.All_EEs_paid_under_same_FEIN_currently__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-input-field
+        value={field.List_additional_FEIN_s__c}
+        disabled={disabledFields.List_additional_FEIN_s__c}
+        if:true={visibility.List_additional_FEIN_s__c}
+        data-name="List_additional_FEIN_s__c"
+        field-name="List_additional_FEIN_s__c"
+        class={styles.List_additional_FEIN_s__c}
+        onchange={handleValueChange}></lightning-input-field>
+      <c-nsp_selection-box
+        disabled={disabledFields.Has_FEIN_documentation_been_collected__c}
+        label={objFields.Has_FEIN_documentation_been_collected__c.label}
+        data-name="Has_FEIN_documentation_been_collected__c"
+        field-api-name="Implementation_Profile__c.Has_FEIN_documentation_been_collected__c"
+        record-type-id={recordTypeId}
+        value={field.Has_FEIN_documentation_been_collected__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Has_form_8973_been_discussed__c}
+        label={objFields.Has_form_8973_been_discussed__c.label}
+        data-name="Has_form_8973_been_discussed__c"
+        field-api-name="Implementation_Profile__c.Has_form_8973_been_discussed__c"
+        record-type-id={recordTypeId}
+        value={field.Has_form_8973_been_discussed__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-input-field
+        value={field.Form_8973_Contact__c}
+        disabled={disabledFields.Form_8973_Contact__c}
+        if:true={visibility.Form_8973_Contact__c}
+        data-name="Form_8973_Contact__c"
+        field-name="Form_8973_Contact__c"
+        class={styles.Form_8973_Contact__c}
+        onchange={handleValueChange}></lightning-input-field>
+      <lightning-input-field
+        value={field.Contact_Information__c}
+        disabled={disabledFields.Contact_Information__c}
+        if:true={visibility.Contact_Information__c}
+        data-name="Contact_Information__c"
+        field-name="Contact_Information__c"
+        class={styles.Contact_Information__c}
+        onchange={handleValueChange}></lightning-input-field>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Arbitration_Agreement_been_discussed__c}
+        label={label.hasArbitrationDiscussed}
+        data-name="Arbitration_Agreement_been_discussed__c"
+        field-api-name="Implementation_Profile__c.Arbitration_Agreement_been_discussed__c"
+        record-type-id={recordTypeId}
+        value={field.Arbitration_Agreement_been_discussed__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value={label.SUINum}
+        data-field="State_Unemployment_Insurance_SUI_Num__c"></lightning-formatted-text>
+      <lightning-input-field
+        value={field.State_Unemployment_Insurance_SUI_Num__c}
+        disabled={disabledFields.State_Unemployment_Insurance_SUI_Num__c}
+        field-name="State_Unemployment_Insurance_SUI_Num__c"
+        data-name="State_Unemployment_Insurance_SUI_Num__c"
+        variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_expect_chnges_in_the_organization__c}
+        label={label.ClntExpChng}
+        data-name="Client_expect_chnges_in_the_organization__c"
+        field-api-name="Implementation_Profile__c.Client_expect_chnges_in_the_organization__c"
+        record-type-id={recordTypeId}
+        value={field.Client_expect_chnges_in_the_organization__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Check_all_changes_that_apply__c}
+        if:true={visibility.Check_all_changes_that_apply__c}
+        label={objFields.Check_all_changes_that_apply__c.label}
+        field-api-name="Implementation_Profile__c.Check_all_changes_that_apply__c"
+        record-type-id={recordTypeId}
+        data-name="Check_all_changes_that_apply__c"
+        value={field.Check_all_changes_that_apply__c}
+        class={styles.Check_all_changes_that_apply__c}
+        onchange={handleValueChange}
+        multiple>
+      </c-nsp_selection-box>
+      <div class="slds-form-element__label">
+        <lightning-formatted-text
+          if:true={visibility.List_change_s__c}
+          value={label.provideDetails}
+          data-field="List_change_s__c"
+          class={styles.List_change_s__c}>
+        </lightning-formatted-text>
+      </div>
+      <lightning-input-field
+        value={field.List_change_s__c}
+        variant="label-hidden"
+        disabled={disabledFields.List_change_s__c}
+        if:true={visibility.List_change_s__c}
+        data-name="List_change_s__c"
+        class={styles.List_change_s__c}
+        field-name="List_change_s__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+      <c-nsp_selection-box
+        disabled={disabledFields.Is_the_client_a_federal_contractor__c}
+        label={label.ClientaFedControrGovtcontJobs}
+        data-name="Is_the_client_a_federal_contractor__c"
+        field-api-name="Implementation_Profile__c.Is_the_client_a_federal_contractor__c"
+        record-type-id={recordTypeId}
+        value={field.Is_the_client_a_federal_contractor__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_has_Service_Contract_Act_SCA_EEs__c}
+        if:true={visibility.Client_has_Service_Contract_Act_SCA_EEs__c}
+        class={styles.Client_has_Service_Contract_Act_SCA_EEs__c}
+        label={label.serviceactSCA}
+        field-api-name="Implementation_Profile__c.Client_has_Service_Contract_Act_SCA_EEs__c"
+        record-type-id={recordTypeId}
+        data-name="Client_has_Service_Contract_Act_SCA_EEs__c"
+        value={field.Client_has_Service_Contract_Act_SCA_EEs__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Have_the_SCA_EEs_been_approved__c}
+        if:true={visibility.Have_the_SCA_EEs_been_approved__c}
+        class={styles.Have_the_SCA_EEs_been_approved__c}
+        label={objFields.Have_the_SCA_EEs_been_approved__c.label}
+        field-api-name="Implementation_Profile__c.Have_the_SCA_EEs_been_approved__c"
+        record-type-id={recordTypeId}
+        data-name="Have_the_SCA_EEs_been_approved__c"
+        value={field.Have_the_SCA_EEs_been_approved__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.SCA_EEs_get_wages_in_lieu_of_benefits__c}
+        if:true={visibility.SCA_EEs_get_wages_in_lieu_of_benefits__c}
+        class={styles.SCA_EEs_get_wages_in_lieu_of_benefits__c}
+        label={label.receiveWages}
+        field-api-name="Implementation_Profile__c.SCA_EEs_get_wages_in_lieu_of_benefits__c"
+        record-type-id={recordTypeId}
+        data-name="SCA_EEs_get_wages_in_lieu_of_benefits__c"
+        value={field.SCA_EEs_get_wages_in_lieu_of_benefits__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Is_the_client_required_to_track__c}
+        if:true={visibility.Is_the_client_required_to_track__c}
+        class={styles.Is_the_client_required_to_track__c}
+        label={objFields.Is_the_client_required_to_track__c.label}
+        field-api-name="Implementation_Profile__c.Is_the_client_required_to_track__c"
+        record-type-id={recordTypeId}
+        data-name="Is_the_client_required_to_track__c"
+        value={field.Is_the_client_required_to_track__c}
+        onchange={handleValueChange}
+        multiple>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Are_Certified_Payroll_reports_needed__c}
+        if:true={visibility.NSP_Are_Certified_Payroll_reports_needed__c}
+        class={styles.NSP_Are_Certified_Payroll_reports_needed__c}
+        label={objFields.NSP_Are_Certified_Payroll_reports_needed__c.label}
+        field-api-name="Implementation_Profile__c.NSP_Are_Certified_Payroll_reports_needed__c"
+        record-type-id={recordTypeId}
+        data-name="NSP_Are_Certified_Payroll_reports_needed__c"
+        value={field.NSP_Are_Certified_Payroll_reports_needed__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Are_sample_intro_letters_being_provided__c}
+        label="Are sample intro letters being provided?"
+        field-api-name="Implementation_Profile__c.Are_sample_intro_letters_being_provided__c"
+        record-type-id={recordTypeId}
+        data-name="Are_sample_intro_letters_being_provided__c"
+        value={field.Are_sample_intro_letters_being_provided__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_previously_filed_an_EEO_1_Report__c}
+        label={label.PrevFiledEEO1Rept}
+        field-api-name="Implementation_Profile__c.Client_previously_filed_an_EEO_1_Report__c"
+        record-type-id={recordTypeId}
+        data-name="Client_previously_filed_an_EEO_1_Report__c"
+        value={field.Client_previously_filed_an_EEO_1_Report__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_needs_to_e_verify_all_employees__c}
+        label={label.ClientreqEverifyEmpl}
+        field-api-name="Implementation_Profile__c.Client_needs_to_e_verify_all_employees__c"
+        record-type-id={recordTypeId}
+        data-name="Client_needs_to_e_verify_all_employees__c"
+        value={field.Client_needs_to_e_verify_all_employees__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-input-field
+        value={field.NSP_How_e_verify_be_completed__c}
+        disabled={disabledFields.NSP_How_e_verify_be_completed__c}
+        if:true={visibility.NSP_How_e_verify_be_completed__c}
+        data-name="NSP_How_e_verify_be_completed__c"
+        class={styles.NSP_How_e_verify_be_completed__c}
+        field-name="NSP_How_e_verify_be_completed__c"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <!-- Does the client have an EEO # they have been filing under? -->
+      <div>
+        <c-nsp_selection-box
+          disabled={disabledFields.Client_have_EEO_filing_under__c}
+          label={label.doesClientHaveEEONumber}
+          field-api-name="Implementation_Profile__c.Client_have_EEO_filing_under__c"
+          record-type-id={recordTypeId}
+          data-name="Client_have_EEO_filing_under__c"
+          value={field.Client_have_EEO_filing_under__c}
+          onchange={handleValueChange}>
+        </c-nsp_selection-box>
+      </div>
+      <c-nsp_selection-box
+        disabled={disabledFields.Can_client_provide_EEO_filing_address__c}
+        if:true={visibility.Can_client_provide_EEO_filing_address__c}
+        class={styles.Can_client_provide_EEO_filing_address__c}
+        label={objFields.Can_client_provide_EEO_filing_address__c.label}
+        field-api-name="Implementation_Profile__c.Can_client_provide_EEO_filing_address__c"
+        record-type-id={recordTypeId}
+        data-name="Can_client_provide_EEO_filing_address__c"
+        value={field.Can_client_provide_EEO_filing_address__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-input-field
+        value={field.EEO__c}
+        disabled={disabledFields.EEO__c}
+        if:true={visibility.EEO__c}
+        data-name="EEO__c"
+        field-name="EEO__c"
+        class={styles.EEO__c}
+        onchange={handleValueChange}></lightning-input-field>
+      <lightning-input-field
+        value={field.Filing_address__c}
+        disabled={disabledFields.Filing_address__c}
+        if:true={visibility.Filing_address__c}
+        data-name="Filing_address__c"
+        field-name="Filing_address__c"
+        class={styles.Filing_address__c}
+        onchange={handleValueChange}></lightning-input-field>
+        <div if:true={visibility.EEO_name_phone_contact_email_for_info__c}>
+          <div class="slds-form-element__label">
+            <lightning-formatted-text
+              class={styles.EEO_name_phone_contact_email_for_info__c}
+              value={label.provideEEOContactPhoneNumberDetails}
+              data-field="EEO_name_phone_contact_email_for_info__c"></lightning-formatted-text>
+          </div>
+        <lightning-input-field
+          value={field.EEO_name_phone_contact_email_for_info__c}
+          disabled={disabledFields.EEO_name_phone_contact_email_for_info__c}
+          variant="label-hidden"
+          data-name="EEO_name_phone_contact_email_for_info__c"
+          class={styles.EEO_name_phone_contact_email_for_info__c}
+          field-name="EEO_name_phone_contact_email_for_info__c"
+          onchange={handleValueChange}></lightning-input-field>
+        </div>
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_co_employ_100_of_client_workforce__c}
+        label={label.InspCoempClientWrkfrc}
+        field-api-name="Implementation_Profile__c.NSP_co_employ_100_of_client_workforce__c"
+        record-type-id={recordTypeId}
+        data-name="NSP_co_employ_100_of_client_workforce__c"
+        value={field.NSP_co_employ_100_of_client_workforce__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_part_of_entity_w_o_NSP__c}
+        label={label.clientPartOfEntityWOEEO}
+        field-api-name="Implementation_Profile__c.Client_part_of_entity_w_o_NSP__c"
+        record-type-id={recordTypeId}
+        data-name="Client_part_of_entity_w_o_NSP__c"
+        value={field.Client_part_of_entity_w_o_NSP__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value={label.ClientRecivStandInsprtyComm}
+        data-field="NSP_Who_receives_Insperity_Communication__c"></lightning-formatted-text>
+      <lightning-input-field
+        value={field.NSP_Who_receives_Insperity_Communication__c}
+        disabled={disabledFields.NSP_Who_receives_Insperity_Communication__c}
+        data-name="NSP_Who_receives_Insperity_Communication__c"
+        field-name="NSP_Who_receives_Insperity_Communication__c"
+        variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+      <c-nsp_selection-box
+        disabled={disabledFields.Direct_deposit_offered_to_employees__c}
+        label={label.DrctDepositOffrdtoEmplys}
+        field-api-name="Implementation_Profile__c.Direct_deposit_offered_to_employees__c"
+        record-type-id={recordTypeId}
+        data-name="Direct_deposit_offered_to_employees__c"
+        value={field.Direct_deposit_offered_to_employees__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-formatted-text
+        class="slds-form-element__label slds-m-left_xx-small"
+        value={label.ClientNotes}
+        data-field="Client_Contact_Notes__c"></lightning-formatted-text>
+      <lightning-input-field
+        value={field.Client_Contact_Notes__c}
+        disabled={disabledFields.Client_Contact_Notes__c}
+        field-name="Client_Contact_Notes__c"
+        data-name="Client_Contact_Notes__c"
+        variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+    </div>
+  </lightning-record-edit-form>
+</template>

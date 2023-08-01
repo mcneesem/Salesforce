@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Uncheck_Create_Work_Order_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+
+ NOT($Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c),
+ PRIORVALUE(NSP_Create_Work_Order__c ) = True,
+ ISCHANGED( NSP_Create_Work_Order__c )
+)</errorConditionFormula>
+    <errorMessage>A work order exists for this project task. You cannot uncheck this box.</errorMessage>
+</ValidationRule>

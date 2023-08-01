@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Content_Version</fullName>
+    <active>true</active>
+    <label>Content Version</label>
+    <picklistValues>
+        <picklist>NSP_Type__c</picklist>
+        <values>
+            <fullName>Client Correspondence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Deliverable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complexity Factors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact Related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dfsle__GeneratedFileFormat__c</picklist>
+        <values>
+            <fullName>PDF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dfsle__GeneratedFileSuffix__c</picklist>
+        <values>
+            <fullName>date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>name</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>name_date</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

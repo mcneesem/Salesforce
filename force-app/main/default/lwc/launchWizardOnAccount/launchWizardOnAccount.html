@@ -1,0 +1,42 @@
+<template>
+    <div class="container">
+        <div class="slds-grid slds-page-header slds-p-around_small">
+            <header class="slds-align_absolute-center">
+                <h2 class="slds-card__header-title">
+                    <lightning-formatted-text class="slds-text-heading_small" value='Launch Wizard'>
+                    </lightning-formatted-text>
+                </h2>
+            </header>
+        </div>
+        <div class="slds-box slds-theme_default">
+            <div class='slds-p-vertical_x-large'>
+                <lightning-layout>
+                    <template if:true={recordTypes} for:each={recordTypes} for:item="each">
+                        <lightning-layout-item size={layoutSize} key={each.recordTypeId} class="slds-align_absolute-center">
+                            <lightning-button label={each.label} name={each.name} onclick={openWizard}
+                                class="slds-var-m-left_x-small" value={each.recordTypeId}></lightning-button>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </div>
+        </div>
+        <div class="slds-var-m-around_medium">
+        <c-modal header={header}>
+            <div onsaveexit={handleCloseModal}>
+                <template if:true={showDevelopReport}>
+                    <c-development-report-wizard rep-req-obj={recordObj} current-step="1">
+                    </c-development-report-wizard>
+                </template>
+                <template if:true={showSeperation}>
+                    <c-nsp_seperation-wizard rep-req-obj={recordObj} current-step="1">
+                    </c-nsp_seperation-wizard>
+                </template>
+                <template if:true={showSurvey}>
+                    <c-survey-wizard rep-req-obj={recordObj} current-step="-1">
+                    </c-survey-wizard>
+                </template>
+            </div>
+        </c-modal>
+        </div>
+    </div>
+</template>

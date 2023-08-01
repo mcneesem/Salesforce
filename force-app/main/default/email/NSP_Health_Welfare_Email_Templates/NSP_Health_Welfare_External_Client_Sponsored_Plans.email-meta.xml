@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template used for Client Sponsored Plan autoresponse</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>H&amp;W External Client Sponsored Plans</name>
+    <style>freeForm</style>
+    <subject>Case Number {!Case.CaseNumber} Insperity’s Client-Sponsored Plan Request</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

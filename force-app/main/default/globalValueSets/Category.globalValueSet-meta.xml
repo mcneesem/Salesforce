@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Adoption</fullName>
+        <default>false</default>
+        <label>Adoption</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Coordinator</fullName>
+        <default>false</default>
+        <label>Ben Coordinator</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - Administrative</fullName>
+        <default>false</default>
+        <label>Ben Service - Administrative</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - Claims</fullName>
+        <default>false</default>
+        <label>Ben Service - Claims</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - Client-Level Req</fullName>
+        <default>false</default>
+        <label>Ben Service - Client-Level Req</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - Data Correction</fullName>
+        <default>false</default>
+        <label>Ben Service - Data Correction</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - Eligibility</fullName>
+        <default>false</default>
+        <label>Ben Service - Eligibility</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - Forms</fullName>
+        <default>false</default>
+        <label>Ben Service - Forms</label>
+    </customValue>
+    <customValue>
+        <fullName>Ben Service - General Info</fullName>
+        <default>false</default>
+        <label>Ben Service - General Info</label>
+    </customValue>
+    <customValue>
+        <fullName>Business Insurance</fullName>
+        <default>false</default>
+        <label>Business Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>changeme</fullName>
+        <default>false</default>
+        <label>changeme</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Letters</fullName>
+        <default>false</default>
+        <label>Client Letters</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Management</fullName>
+        <default>false</default>
+        <label>Client Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Client Sponsored Plans</fullName>
+        <default>false</default>
+        <label>Client Sponsored Plans</label>
+    </customValue>
+    <customValue>
+        <fullName>COBRA</fullName>
+        <default>false</default>
+        <label>COBRA</label>
+    </customValue>
+    <customValue>
+        <fullName>Commuter</fullName>
+        <default>false</default>
+        <label>Commuter</label>
+    </customValue>
+    <customValue>
+        <fullName>Compensation Services</fullName>
+        <default>false</default>
+        <label>Compensation Services</label>
+    </customValue>
+    <customValue>
+        <fullName>COVID I-9 Cleanup</fullName>
+        <default>false</default>
+        <label>COVID I-9 Cleanup</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Service</fullName>
+        <default>false</default>
+        <label>Customer Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Dental</fullName>
+        <default>false</default>
+        <label>Dental</label>
+    </customValue>
+    <customValue>
+        <fullName>Disability</fullName>
+        <default>false</default>
+        <label>Disability</label>
+    </customValue>
+    <customValue>
+        <fullName>Diversity &amp; Inclusion</fullName>
+        <default>false</default>
+        <label>Diversity &amp; Inclusion</label>
+    </customValue>
+    <customValue>
+        <fullName>Ed Assist</fullName>
+        <default>false</default>
+        <label>Ed Assist</label>
+    </customValue>
+    <customValue>
+        <fullName>EEO - Govt Contract Services</fullName>
+        <default>false</default>
+        <label>EEO - Govt Contract Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Employment Screening</fullName>
+        <default>false</default>
+        <label>Employment Screening</label>
+    </customValue>
+    <customValue>
+        <fullName>Employment Verification</fullName>
+        <default>false</default>
+        <label>Employment Verification</label>
+    </customValue>
+    <customValue>
+        <fullName>EPLI</fullName>
+        <default>false</default>
+        <label>EPLI</label>
+    </customValue>
+    <customValue>
+        <fullName>E-Verify</fullName>
+        <default>false</default>
+        <label>E-Verify</label>
+    </customValue>
+    <customValue>
+        <fullName>Expense Management</fullName>
+        <default>false</default>
+        <label>Expense Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Finance</fullName>
+        <default>false</default>
+        <label>Finance</label>
+    </customValue>
+    <customValue>
+        <fullName>Foreign Travel</fullName>
+        <default>false</default>
+        <label>Foreign Travel</label>
+    </customValue>
+    <customValue>
+        <fullName>FSA</fullName>
+        <default>false</default>
+        <label>FSA</label>
+    </customValue>
+    <customValue>
+        <fullName>H&amp;W Corrections</fullName>
+        <default>false</default>
+        <label>H&amp;W Corrections</label>
+    </customValue>
+    <customValue>
+        <fullName>H&amp;W Enrollment</fullName>
+        <default>false</default>
+        <label>H&amp;W Enrollment</label>
+    </customValue>
+    <customValue>
+        <fullName>H&amp;W QMCSO</fullName>
+        <default>false</default>
+        <label>H&amp;W QMCSO</label>
+    </customValue>
+    <customValue>
+        <fullName>H&amp;W Reporting &amp; Compliance</fullName>
+        <default>false</default>
+        <label>H&amp;W Reporting &amp; Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>H&amp;W Reports/Audits</fullName>
+        <default>false</default>
+        <label>H&amp;W Reports/Audits</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Admin Compliance</fullName>
+        <default>false</default>
+        <label>HR Admin Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Admin Compliance - FLSA</fullName>
+        <default>false</default>
+        <label>HR Admin Compliance - FLSA</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Client Support</fullName>
+        <default>false</default>
+        <label>HR Client Support</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Employee Relations</fullName>
+        <default>false</default>
+        <label>HR Employee Relations</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Infrastructure</fullName>
+        <default>false</default>
+        <label>HR Infrastructure</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Liability Training</fullName>
+        <default>false</default>
+        <label>HR Liability Training</label>
+    </customValue>
+    <customValue>
+        <fullName>HR Performance</fullName>
+        <default>false</default>
+        <label>HR Performance</label>
+    </customValue>
+    <customValue>
+        <fullName>HSA</fullName>
+        <default>false</default>
+        <label>HSA</label>
+    </customValue>
+    <customValue>
+        <fullName>Human Capital Svc Strategy</fullName>
+        <default>false</default>
+        <label>Human Capital Svc Strategy</label>
+    </customValue>
+    <customValue>
+        <fullName>International Employee</fullName>
+        <default>false</default>
+        <label>International Employee</label>
+    </customValue>
+    <customValue>
+        <fullName>Learning &amp; Development Svcs</fullName>
+        <default>false</default>
+        <label>Learning &amp; Development Svcs</label>
+    </customValue>
+    <customValue>
+        <fullName>Leave &amp; Disability</fullName>
+        <default>false</default>
+        <label>Leave &amp; Disability</label>
+    </customValue>
+    <customValue>
+        <fullName>Life</fullName>
+        <default>false</default>
+        <label>Life</label>
+    </customValue>
+    <customValue>
+        <fullName>Medical</fullName>
+        <default>false</default>
+        <label>Medical</label>
+    </customValue>
+    <customValue>
+        <fullName>MM Orientation</fullName>
+        <default>false</default>
+        <label>MM Orientation</label>
+    </customValue>
+    <customValue>
+        <fullName>MM Tier 1 Support</fullName>
+        <default>false</default>
+        <label>MM Tier 1 Support</label>
+    </customValue>
+    <customValue>
+        <fullName>MM Transition Services</fullName>
+        <default>false</default>
+        <label>MM Transition Services</label>
+    </customValue>
+    <customValue>
+        <fullName>NY Disability</fullName>
+        <default>false</default>
+        <label>NY Disability</label>
+    </customValue>
+    <customValue>
+        <fullName>Onboarding Follow Up</fullName>
+        <default>false</default>
+        <label>Onboarding Follow Up</label>
+    </customValue>
+    <customValue>
+        <fullName>Organizational Planning</fullName>
+        <default>false</default>
+        <label>Organizational Planning</label>
+    </customValue>
+    <customValue>
+        <fullName>Orientation</fullName>
+        <default>false</default>
+        <label>Orientation</label>
+    </customValue>
+    <customValue>
+        <fullName>PAI</fullName>
+        <default>false</default>
+        <label>PAI</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll Quality Support</fullName>
+        <default>false</default>
+        <label>Payroll Quality Support</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll Services</fullName>
+        <default>false</default>
+        <label>Payroll Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Svc Coaching</fullName>
+        <default>false</default>
+        <label>Performance Svc Coaching</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Svc eLearn &amp; LMS</fullName>
+        <default>false</default>
+        <label>Performance Svc eLearn &amp; LMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Svc Facilitation</fullName>
+        <default>false</default>
+        <label>Performance Svc Facilitation</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Svc Needs Analysis</fullName>
+        <default>false</default>
+        <label>Performance Svc Needs Analysis</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Svc Perf Solutions</fullName>
+        <default>false</default>
+        <label>Performance Svc Perf Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart</fullName>
+        <default>false</default>
+        <label>PerformSmart</label>
+    </customValue>
+    <customValue>
+        <fullName>PPM Request</fullName>
+        <default>false</default>
+        <label>PPM Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Privacy</fullName>
+        <default>false</default>
+        <label>Privacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Recruiting Services</fullName>
+        <default>false</default>
+        <label>Recruiting Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Renewals</fullName>
+        <default>false</default>
+        <label>Renewals</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Svc - Recon</fullName>
+        <default>false</default>
+        <label>Retirement Svc - Recon</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Svc-Compliance</fullName>
+        <default>false</default>
+        <label>Retirement Svc-Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Svc-Consulting</fullName>
+        <default>false</default>
+        <label>Retirement Svc-Consulting</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Svc-NewBusiness</fullName>
+        <default>false</default>
+        <label>Retirement Svc-NewBusiness</label>
+    </customValue>
+    <customValue>
+        <fullName>Retirement Svc-Processing</fullName>
+        <default>false</default>
+        <label>Retirement Svc-Processing</label>
+    </customValue>
+    <customValue>
+        <fullName>Safety Services</fullName>
+        <default>false</default>
+        <label>Safety Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Selected Services</fullName>
+        <default>false</default>
+        <label>Selected Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Service Operations</fullName>
+        <default>false</default>
+        <label>Service Operations</label>
+    </customValue>
+    <customValue>
+        <fullName>STP</fullName>
+        <default>false</default>
+        <label>STP</label>
+    </customValue>
+    <customValue>
+        <fullName>Subpoena</fullName>
+        <default>false</default>
+        <label>Subpoena</label>
+    </customValue>
+    <customValue>
+        <fullName>SuccessFactors</fullName>
+        <default>false</default>
+        <label>SuccessFactors</label>
+    </customValue>
+    <customValue>
+        <fullName>TBSM</fullName>
+        <default>false</default>
+        <label>TBSM</label>
+    </customValue>
+    <customValue>
+        <fullName>Time and Attendance</fullName>
+        <default>false</default>
+        <label>Time and Attendance</label>
+    </customValue>
+    <customValue>
+        <fullName>Unemployment</fullName>
+        <default>false</default>
+        <label>Unemployment</label>
+    </customValue>
+    <customValue>
+        <fullName>Vision</fullName>
+        <default>false</default>
+        <label>Vision</label>
+    </customValue>
+    <customValue>
+        <fullName>Voice of the Customer</fullName>
+        <default>false</default>
+        <label>Voice of the Customer</label>
+    </customValue>
+    <customValue>
+        <fullName>Web Support</fullName>
+        <default>false</default>
+        <label>Web Support</label>
+    </customValue>
+    <customValue>
+        <fullName>Wellness/EAP</fullName>
+        <default>false</default>
+        <label>Wellness/EAP</label>
+    </customValue>
+    <customValue>
+        <fullName>White Collar</fullName>
+        <default>false</default>
+        <label>White Collar</label>
+    </customValue>
+    <customValue>
+        <fullName>Workers Comp Claim Mgmt</fullName>
+        <default>false</default>
+        <label>Workers Comp Claim Mgmt</label>
+    </customValue>
+    <masterLabel>Category</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

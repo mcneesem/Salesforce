@@ -1,3 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <autoResponseRule>
+        <fullName>Case Notification</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Contact Center</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test Contact Center</senderName>
+            <template>Services_Emails/NSP_ContactCenter_CaseCreation</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Health &amp; Welfare Leave Admin</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>No reply</senderName>
+            <template>NSP_Health_Welfare_Email_Templates/NSP_Health_Welfare_Leave_Admin</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Health &amp; Welfare Client Sponsored Plans</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>No reply</senderName>
+            <template>NSP_Health_Welfare_Email_Templates/NSP_Health_Welfare_External_Client_Sponsored_Plans</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Health &amp; Welfare Ed Assist</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>No reply</senderName>
+            <template>NSP_Health_Welfare_Email_Templates/NSP_Health_Welfare_External_Ed_Assist</template>
+        </ruleEntry>
+    </autoResponseRule>
+</AutoResponseRules>

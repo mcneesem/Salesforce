@@ -1,0 +1,9 @@
+<!--
+	Description: Quick Action Component to assign Task Project Task Owners 
+	CreatedDate: 22/06/2022
+	Author: Nischay Jindal 
+    Name: NSP_assignTask
+-->
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="NSP_assignTaskOwners" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+</aura:component>

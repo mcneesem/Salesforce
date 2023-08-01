@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Unable to Schedule Call</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Unable to Schedule Call</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Unable to Schedule Call</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Unfortunately, due to the unpredictable nature of support calls, we are unable to schedule a specific call time for our technicians. If you would like to call in (1-800-314-8223) at your convenience and reference this case number ({!Case.CaseNumber}), a member of our live support team will be happy to assist immediately. Otherwise, all requests are answered in the order received so a member of our support team will reach out to assist you as soon as they are able.
+
+We look forward to hearing from you.
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

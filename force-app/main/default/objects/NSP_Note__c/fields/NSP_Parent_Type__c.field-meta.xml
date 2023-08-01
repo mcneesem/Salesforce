@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Parent_Type__c</fullName>
+    <defaultValue>IF($Permission.NSP_FLSA, &apos;FLSA&apos;, IF( $Permission.NSP_Unemployment , &apos;Unemployment&apos; ,  IF( $Permission.NSP_UX , &apos;UX&apos; , &apos;Default&apos;) ) )</defaultValue>
+    <externalId>false</externalId>
+    <label>Parent Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>FLSA</fullName>
+                <default>false</default>
+                <label>FLSA</label>
+            </value>
+            <value>
+                <fullName>UX</fullName>
+                <default>false</default>
+                <label>UX</label>
+            </value>
+            <value>
+                <fullName>Unemployment</fullName>
+                <default>false</default>
+                <label>Unemployment</label>
+            </value>
+            <value>
+                <fullName>Default</fullName>
+                <default>false</default>
+                <label>Default</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

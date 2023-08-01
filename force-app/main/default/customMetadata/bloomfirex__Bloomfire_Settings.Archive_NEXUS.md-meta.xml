@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Archive_NEXUS</label>
+    <protected>false</protected>
+    <values>
+        <field>bloomfirex__API_Key__c</field>
+        <value xsi:type="xsd:string">f27938217cf1ecb33fd8765b4c003e7273e70482</value>
+    </values>
+    <values>
+        <field>bloomfirex__Community_Domain__c</field>
+        <value xsi:type="xsd:string">https://archive.bloomfire.nz</value>
+    </values>
+    <values>
+        <field>bloomfirex__Is_Default_Community__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>bloomfirex__Is_Test__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

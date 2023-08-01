@@ -1,0 +1,66 @@
+<template>
+  <div
+    class="slds-box slds-p-left_none slds-p-right_none slds-p-top_none slds-p-bottom_none">
+    <div class="slds-card">
+      <div
+        class="slds-card slds-card__header slds-theme_shade slds-p-left_none slds-p-right_none slds-p-top_none slds-p-bottom_none">
+        <header
+          class="demo-only-element slds-theme_shade slds-border_bottom slds-var-p-around_large slds-text-align_right">
+          <div class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+              <span
+                class="slds-icon_container slds-icon-standard-contact"
+                title="contact">
+                <lightning-icon
+                  size="small"
+                  icon-name="standard:contact"
+                  alternative-text="contact"
+                  title="contact">
+                </lightning-icon>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <h1 class="slds-card__header-title">Account Group Members</h1>
+            </div>
+            <div class="slds-no-flex slds-p-top_none">
+              <button class="slds-button slds-button_neutral">
+                <a onclick={handleClickNew}>New </a>
+              </button>
+            </div>
+          </div>
+        </header>
+        <div style="width: auto">
+          <template if:true={data}>
+            <lightning-datatable
+              data={data}
+              columns={columns}
+              key-field="Id"
+              hide-checkbox-column="true"
+              onrowaction={handleRowAction}>
+            </lightning-datatable>
+            <div
+              if:true={data.length}
+              class="slds-p-top_none slds-p-bottom_none">
+              <div class="slds-var-p-vertical_small slds-border_top">
+                <p class="slds-text-align_center" slot="footer">
+                  <a onclick={handleClickViewAll}>View All</a>
+                </p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- STY-04139 Start -->
+    <c-confirmation-dialog title='Confirmation Delete ?'
+    message='Do you want to create self group ?'
+    confirm-label='Yes'
+    cancel-label='No'
+    visible={isDialogVisible}
+    original-message={originalMessage}
+    name="confirmModal"
+    onmodalaction={deleteReportRequest}>
+   </c-confirmation-dialog>
+<!-- STY-04139 end -->
+</template>

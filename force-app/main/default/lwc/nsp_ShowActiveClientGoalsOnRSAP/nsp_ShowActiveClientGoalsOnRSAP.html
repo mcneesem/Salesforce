@@ -1,0 +1,14 @@
+<template>
+    
+    
+    <div slot="title" class="slds-page-header" icon="standard:relationship"><lightning-icon icon-name="utility:money" alternative-text="Money" title="money icon with success variant"
+        variant="success"></lightning-icon><b>&nbsp;&nbsp;Client Goals</b></div>
+        <template if:true={clientGoalsList}>
+        <lightning-datatable data={clientGoalsList} columns={columns} key-field="Id" show-row-number-column suppress-bottom-bar row-number-offset={rowOffset} >
+        </lightning-datatable>
+    </template>
+    <template if:true={error}>
+        {error}
+    </template>
+
+</template>

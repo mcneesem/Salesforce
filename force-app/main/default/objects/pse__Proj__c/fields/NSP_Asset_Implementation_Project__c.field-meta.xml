@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Asset_Implementation_Project__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is populated for implementation projects when created from Automation . 
+Added as part of STY-02129</description>
+    <externalId>false</externalId>
+    <label>Asset Implementation Project</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Show_Confidential_Checkbox__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is created as part of STY-04166 to display Confidential check box field on case based on the eligibility from the Cat/sub Category combination sheet. And it will not used on any page layout but used for Confidential checkbox visibility on flexipages.</description>
+    <externalId>false</externalId>
+    <label>Show Confidential Checkbox</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

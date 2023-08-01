@@ -1,0 +1,16 @@
+<apex:component access="global" controller="NSP_RelatedAssetsController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    
+    <apex:outputPanel >
+        <p>Client First Pay Date: {!ipWrapper.firstPayDate}</p>
+    </apex:outputPanel> 
+    <apex:outputPanel rendered="{!ipWrapper.fullTimeEmpCount != null}">
+        <p>Full Time Employee Count: {!ipWrapper.fullTimeEmpCount} </p>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!ipWrapper.partTimeEmpCount != null}">
+        <p>Part Time Employee Count: {!ipWrapper.partTimeEmpCount} </p>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!ipWrapper.seasonalTimeEmpCount != null}">
+        <p>Seasonal Employee Count: {!ipWrapper.seasonalTimeEmpCount} </p>
+    </apex:outputPanel>
+</apex:component>

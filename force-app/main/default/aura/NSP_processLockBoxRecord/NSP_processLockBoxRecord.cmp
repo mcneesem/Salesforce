@@ -1,0 +1,28 @@
+<!-- **************************************************************************************************   
+Component Name :  NSP_processLockBoxRecord
+Version              :  1.0                                                                          
+Created Date         :  August 16, 2022                                                             
+Function             :  This component is used as for processing Lock Box records	
+Story                :                                                                             
+Modification Log     :                                                                               
+*	Rakesh           August 16, 2022          First Iteration
+-->
+<aura:component controller="NSP_LockBox_Controller" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    <aura:attribute name="validLockBoxRecord" type="Boolean" default="true" />
+    <div class="maincontent">
+        <aura:if isTrue="{! v.loaded }">
+
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Processing File Transaction.." />
+            </aura:set>
+        </aura:if>
+    </div>
+
+
+
+
+
+</aura:component>

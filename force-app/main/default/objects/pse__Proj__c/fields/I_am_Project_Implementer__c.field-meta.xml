@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>I_am_Project_Implementer__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Project_Implementer__c = $User.Id, True, False)</formula>
+    <label>I am Project Implementer</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

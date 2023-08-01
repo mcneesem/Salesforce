@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>International Time - Non-Employee Administrator</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>International Time - Non-Employee Administrator</name>
+    <style>freeForm</style>
+    <subject>International Time - Non-Employee Administrator</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for providing this information. This user has been approved through our Data Privacy Team and can be set up in Time &amp; Attendance. Since this user will not need Insperity Premier access, is not their own time or accruals, and will have administrator access, they can be added as a non-employee administrator. This means they will be able to log in and perform administrative functions without being listed in the employee drop-down menu. 
+ 
+That setup can be completed by a system administrator as follows: 
+
+Navigate to Security Setup &gt; User Security 
+
+Click the ADD button; this will open a blank User Security template 
+
+Set a username and password 
+
+Leave &quot;Employee&quot; blank, as this login will not be linked to an employee profile 
+
+Set the &quot;Force user to change password&quot; field to NO 
+
+In the Group Membership section toward the bottom of the page, move the default security group to the box on the right and the desired security group (System Administrator) to the box on the left 
+
+Please note that exactly one Group Membership should be assigned as missing or multiple assignments can create a security conflict, resulting in login errors and/or loss of function upon login 
+
+Click the SAVE button 
+
+Once this is complete, the user will be able to log in with the assigned credentials via this URL: 
+ 
+https//timestar.insperity.com/XXX/ 
+ 
+If their role changes in the future and you find that they will need to track their own time or accruals, have lower-than administrator access, or be assigned directly as a supervisor to other employees, please let our Time &amp; Attendance team know and they will be happy to assist with a non-paid employee setup and Premier account at that time. 
+ 
+If you have additional questions or concerns about this setup, please feel free to contact our Time &amp; Attendance Support Team for assistance. 
+  
+
+Phone: 800-314-8223 (live support is available Monday - Friday, 7 am - 7 pm Central Time) 
+ 
+Email: time.support@insperity.com 
+
+ 
+Please reference this case number {Case number} so they know the approval has been completed for this user. 
+ 
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

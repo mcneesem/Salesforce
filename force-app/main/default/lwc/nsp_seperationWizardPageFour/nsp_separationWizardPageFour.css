@@ -1,0 +1,22 @@
+.slds-form-element__legend{
+    font-weight: normal!important;
+}
+
+legend{
+    font-weight: normal!important;
+}
+.slds-form-element__legend {
+    font-weight: normal;
+    float: left;
+}
+
+:host .statusFilter {
+    --lwc-formLabelFontSize: .9rem !important;
+    --lwc-fontWeightBold: .1rem !important;
+}
+
+:host {
+    --sds-c-radio-group-font-weight: normal !important;
+    --lwc-formLabelFontSize: .9rem !important;
+    --lwc-fontWeightBold: .1rem !important;
+} 

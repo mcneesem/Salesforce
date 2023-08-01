@@ -1,0 +1,143 @@
+<template>
+    <div class="slds-box">
+    <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId} onsubmit ={handleOnSubmit} onsuccess={handleSuccess}  onload={handleOnload}>
+        <lightning-messages></lightning-messages>
+        <div class="slds-var-m-around_medium ">
+            <div class="slds-m-around_small">
+                <p> <b>Note: A maximum number of ten questions can be included and all questions are subject to HR COE approval. </b> </p>
+          </div>
+        </div>
+    <lightning-layout>
+        <lightning-layout-item size="8">
+         <div class="slds-var-m-around_medium ">
+            <lightning-layout>
+
+                <lightning-layout-item size="6">
+                    <label class="slds-form-element__label" >Does the client want to include any custom questions on the survey?</label>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-radio-group name="NSP_ClientWantsToincludeCustomQuestion__c"   
+                options={pickValueYesNo}
+                value={NSP_ClientWantsToincludeCustomQuestion__c}
+                onchange={handleRadioChange}
+                required
+                variant ='label-hidden'
+                type="radio">
+                </lightning-radio-group>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div style="display:none"> 
+                <lightning-input-field style="display:none" class="slds-hidden" field-name="NSP_ClientWantsToincludeCustomQuestion__c" value={NSP_ClientWantsToincludeCustomQuestion__c} required>
+                </lightning-input-field>
+                <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+                </lightning-input-field>
+            </div>
+            <lightning-input-field  class="slds-hidden" style="display: none;" field-name="NSP_TotalCustomQuestion_Added__c" value={NSP_TotalCustomQuestion_Added__c}  ></lightning-input-field>
+              
+              <template if:true ={questionFields}>
+              <template for:each={questionFields} for:item="fields">
+                <div key={fields.Question} >
+                  <template if:true ={fields.IsNewQuestion}>
+                    <div class="slds-form-element_horizontal">
+                        <label class="slds-form-element__label " for={fields.Matrix_SubCategory} ><span class="slds-required" >*</span>
+                            <strong>{fields.QuestionLabel}</strong> 
+                        </label>
+                    <lightning-input-field variant="label-hidden"  data-fname={fields.Question} value={restValue} field-name={fields.Question} required > 
+                    </lightning-input-field>
+                    </div>
+                    <div class="slds-form-element_horizontal">
+                         <lightning-input-field data-fname={fields.QuestionType} field-name={fields.QuestionType}
+                             onchange={handleChange} required  value={restValue} >
+                         </lightning-input-field>
+                    </div>
+
+                  </template>
+                  <template if:false ={fields.IsNewQuestion}>
+                    <div class="slds-form-element_horizontal">
+                        <label class="slds-form-element__label " for={fields.Matrix_SubCategory} ><span class="slds-required" >*</span>
+                          <strong>{fields.QuestionLabel}</strong>  
+                        </label>
+                    <lightning-input-field variant="label-hidden"  data-fname={fields.Question} field-name={fields.Question} required > 
+                    </lightning-input-field>
+                    </div>
+                    <div class="slds-form-element_horizontal">
+                         <lightning-input-field data-fname={fields.QuestionType} field-name={fields.QuestionType}
+                             onchange={handleChange} required >
+                         </lightning-input-field>
+                    </div>
+
+                  </template>
+
+                    <template if:false ={fields.MatrixCategory}>
+                        <div class={fields.QuestionType} style='display:none'>
+                         <div class='slds-p-vertical_medium'>
+                            <div class="slds-form-element_horizontal" >
+                                <label class="slds-form-element__label " for={fields.Matrix_SubCategory} ><span class="slds-required" >*</span>
+                                    List Matrix subcategories, separated by a semi-colon
+                                </label>
+                            <lightning-input-field variant="label-hidden"  id={fields.Matrix_SubCategory} class={fields.QuestionType}  data-fname={fields.Matrix_SubCategory}  field-name={fields.Matrix_SubCategory} required={fields.matrixRequired}>
+                           </lightning-input-field>
+                          </div>
+                          </div>
+                          <div class=slds-p-vertical_medium >
+                          <div class="slds-form-element_horizontal" >
+                            <label class="slds-form-element__label " for={fields.Matrix_Rating} ><span class="slds-required" >*</span>
+                                  List rating values, separated by a semi-colon
+                            </label>
+                            <lightning-input-field variant="label-hidden" id={fields.Matrix_Rating}  class={fields.QuestionType}  data-fname={fields.Matrix_Rating}  field-name={fields.Matrix_Rating}  required={fields.matrixRequired} >
+                            </lightning-input-field>
+                         </div>     
+                        </div>
+                        </div>
+                    </template>
+
+                    <template if:true ={fields.MatrixCategory}>
+                        <div class={fields.QuestionType} style='display:none'>
+                            <div class='slds-p-vertical_medium'>
+                            <div class="slds-form-element_horizontal" >
+                                <label class="slds-form-element__label " for={fields.Matrix_SubCategory} ><span class="slds-required" >*</span>
+                                    List Matrix subcategories, separated by a semi-colon
+                                </label>
+                            <lightning-input-field variant="label-hidden" class={fields.QuestionType} data-fname={fields.Matrix_SubCategory} value={fields.MatrixCategory} field-name={fields.Matrix_SubCategory} required={fields.matrixRequired}>
+                           </lightning-input-field>
+                           </div>
+                           </div>
+                           <div class='slds-p-vertical_medium'>
+                           <div class="slds-form-element_horizontal" >
+                            <label class="slds-form-element__label " for={fields.Matrix_Rating} ><span class="slds-required" >*</span>
+                                  List rating values, separated by a semi-colon
+                            </label>
+                           <lightning-input-field variant="label-hidden" class={fields.QuestionType} data-fname={fields.Matrix_Rating} value={fields.MatrixRating} field-name={fields.Matrix_Rating} required={fields.matrixRequired} >
+                           </lightning-input-field>
+                           </div>
+                          </div>
+                       </div>
+                    </template>
+                    </div>
+            </template>
+            <lightning-layout>
+                <lightning-layout-item>
+                    <lightning-button variant="Brand" label="Add" title="Add" onclick={addQuestion} class="slds-m-left_x-small" disabled={addButton}></lightning-button>
+                    <lightning-button label="Delete"  title="Delete" onclick={removeQuestion} class="slds-m-left_x-small"  disabled={deleteButton} ></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size=4>
+
+        </lightning-layout-item>
+        </lightning-layout>
+    <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+        <lightning-button variant="brand" label="Previous" class="slds-m-top_small slds-m-left_small" onclick={handlePrev}>
+        </lightning-button>
+     <lightning-button class="slds-m-top_small slds-m-left_small" onclick={handleSave} label="Save and Exit" >
+     </lightning-button>
+        <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next">
+        </lightning-button>
+    </div>
+</lightning-record-edit-form>
+</div>
+</template>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Plan_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Plan Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401(k)</fullName>
+                <default>false</default>
+                <label>401(k)</label>
+            </value>
+            <value>
+                <fullName>401(k)/Profit Sharing combination</fullName>
+                <default>false</default>
+                <label>401(k)/Profit Sharing combination</label>
+            </value>
+            <value>
+                <fullName>403(b)</fullName>
+                <default>false</default>
+                <label>403(b)</label>
+            </value>
+            <value>
+                <fullName>457</fullName>
+                <default>false</default>
+                <label>457</label>
+            </value>
+            <value>
+                <fullName>Defined Benefit</fullName>
+                <default>false</default>
+                <label>Defined Benefit</label>
+            </value>
+            <value>
+                <fullName>Other (Describe)</fullName>
+                <default>false</default>
+                <label>Other (Describe)</label>
+            </value>
+            <value>
+                <fullName>Profit Sharing</fullName>
+                <default>false</default>
+                <label>Profit Sharing</label>
+            </value>
+            <value>
+                <fullName>SEP IRA</fullName>
+                <default>false</default>
+                <label>SEP IRA</label>
+            </value>
+            <value>
+                <fullName>SIMPLE 401(k)</fullName>
+                <default>false</default>
+                <label>SIMPLE 401(k)</label>
+            </value>
+            <value>
+                <fullName>SIMPLE-IRA</fullName>
+                <default>false</default>
+                <label>SIMPLE-IRA</label>
+            </value>
+            <value>
+                <fullName>State Retirement Plan</fullName>
+                <default>false</default>
+                <label>State Retirement Plan</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

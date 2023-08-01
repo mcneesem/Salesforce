@@ -1,0 +1,6 @@
+Hi
+<p>
+The Deconversion fee for {!pse__Proj__c.pse__Project_ID__c}  {!pse__Proj__c.Name} has been paid.<br/>
+
+<a href="{!$Label.NSP_SalesForceOrgBaseUrl}/{!pse__Proj__c.pse__AccountId__c}" target="_blank">{!pse__Proj__c.pse__Account__c}</a>
+</p>

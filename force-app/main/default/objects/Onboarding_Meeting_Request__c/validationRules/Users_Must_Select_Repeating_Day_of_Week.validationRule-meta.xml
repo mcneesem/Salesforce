@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Users_Must_Select_Repeating_Day_of_Week</fullName>
+    <active>true</active>
+    <description>Users Must Select Repeating Day of Week when Creating Parent OMR Record</description>
+    <errorConditionFormula>AND(Parent__c = TRUE, Monday__c = FALSE, Tuesday__c = FALSE, Wednesday__c = FALSE, Thursday__c = FALSE, Friday__c = FALSE)</errorConditionFormula>
+    <errorMessage>Select at least 1 day of week for this block to repeat on.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>NSP_buttomSignBusiness</letterhead>
+    <name>NSP_Integra – Case Created</name>
+    <style>freeForm</style>
+    <subject>Case # {!Case.CaseNumber}  Created : {!Case.Subject}</subject>
+    <textOnly>Hello {!Case.OwnerFullName},
+
+Thank you for contacting Insperity Technical Support. We have created a support case Case #{!Case.CaseNumber} to document your call. Please reference this case number if you require further assistance regarding this issue.
+
+Regards,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

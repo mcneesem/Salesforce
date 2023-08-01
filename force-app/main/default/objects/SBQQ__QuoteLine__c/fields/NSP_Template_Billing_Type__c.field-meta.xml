@@ -3,7 +3,7 @@
     <fullName>NSP_Template_Billing_Type__c</fullName>
     <description>It is used to Display the Billing Frequency Column on the Template Document</description>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL( SBQQ__ChargeType__c ,&apos;One-Time&apos;),TEXT(SBQQ__ChargeType__c),
+    <formula>IF(ISPICKVAL(SBQQ__BillingFrequency__c,&apos;Invoice Plan&apos;),&apos;One-Time&apos;,
 IF(ISPICKVAL( SBQQ__ChargeType__c ,&apos;Recurring&apos;),TEXT(SBQQ__BillingFrequency__c),&apos;&apos;))</formula>
     <label>Template Billing Type</label>
     <required>false</required>

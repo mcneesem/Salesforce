@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CreateWorkOrder_Depends_ProjectType</fullName>
+    <active>true</active>
+    <description>If the project Type is Implementation then the create work Order check Box is Editable</description>
+    <errorConditionFormula>AND(
+NOT($Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c),
+OR($Profile.Name &lt;&gt; &apos;Customer Community User&apos;,
+$Profile.Name &lt;&gt; &apos;Contact Center&apos;),
+TEXT(pse__Project__r.pse__Project_Type__c) &lt;&gt; &apos;Implementation&apos;,
+NSP_Create_Work_Order__c == true
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Create_Work_Order__c</errorDisplayField>
+    <errorMessage>If the project Type is Implementation then the create work Order check Box is Editable</errorMessage>
+</ValidationRule>

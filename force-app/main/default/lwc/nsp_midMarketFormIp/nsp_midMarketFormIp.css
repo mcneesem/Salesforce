@@ -1,0 +1,4 @@
+.nsp_box-height{
+    height : var(--availableHeight, 450px);
+    overflow-y: auto;
+}

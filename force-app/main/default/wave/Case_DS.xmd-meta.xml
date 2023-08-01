@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <dataset>Case_DS</dataset>
+    <dates>
+        <alias>Caselookup.Opened Date</alias>
+        <firstDayOfWeek>-1</firstDayOfWeek>
+        <fiscalMonthOffset>0</fiscalMonthOffset>
+        <label>Case Created Date</label>
+        <sortIndex>0</sortIndex>
+        <type xsi:nil="true"/>
+    </dates>
+    <dates>
+        <alias>Caselookup.Created Date</alias>
+        <firstDayOfWeek>0</firstDayOfWeek>
+        <fiscalMonthOffset>0</fiscalMonthOffset>
+        <label>Date Created</label>
+        <sortIndex>1</sortIndex>
+        <type xsi:nil="true"/>
+    </dates>
+    <dimensions>
+        <field>Caselookup.UserCreatedbyName.Name</field>
+        <isDerived>false</isDerived>
+        <label>Case Created by Name</label>
+        <sortIndex>0</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Caselookup.Contact.Name</field>
+        <isDerived>false</isDerived>
+        <label>Case Contact Name</label>
+        <sortIndex>1</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Caselookup.User.Name</field>
+        <isDerived>false</isDerived>
+        <label>Case Owner Name</label>
+        <sortIndex>2</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Caselookup.NSP_Opened_Date__c_formula</field>
+        <isDerived>false</isDerived>
+        <label>Case Date Created</label>
+        <sortIndex>3</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Caselookup.CaseNumber</field>
+        <isDerived>false</isDerived>
+        <linkTemplateEnabled>true</linkTemplateEnabled>
+        <recordDisplayFields>
+            <recordDisplayField>Caselookup.CaseNumber</recordDisplayField>
+            <sortIndex>0</sortIndex>
+        </recordDisplayFields>
+        <recordIdField>Caselookup.Id</recordIdField>
+        <salesforceActionsEnabled>false</salesforceActionsEnabled>
+        <sortIndex>4</sortIndex>
+    </dimensions>
+</WaveXmd>

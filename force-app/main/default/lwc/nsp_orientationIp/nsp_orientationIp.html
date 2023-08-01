@@ -1,0 +1,77 @@
+<template>
+    <div class="serviceTeam slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form onsubmit={handleSubmit} record-id={recordId} object-api-name={objectApiName}
+            density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.orientation}>
+            </lightning-formatted-text>
+            <lightning-layout multiple-rows >
+                <lightning-layout-item size="7">
+                    <div class="slds-m-left_xx-small">
+                    <lightning-input-field field-name="Client_Address__c"></lightning-input-field>
+                    <template if:true={multipleWorksiteFieldQuestion.data}>
+                        <lightning-formatted-text class="slds-form-element__label"
+                            value={label.multipleWorksitelocationQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Are_there_multiple_worksite_locations__c" class="slds-m-left_xx-small"
+                            label={label.multipleWorksitelocationQuestion} variant="label-hidden"
+                            options={multipleWorksiteFieldQuestion.data.values}
+                            value={fields.Are_there_multiple_worksite_locations__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showWorksiteDetails}>
+                            <lightning-input-field class="slds-m-left_medium"
+                                field-name="Provide_multiple_worksite_details__c">
+                            </lightning-input-field>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label" value={label.isTranslatorNeeded}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="NSP_Is_a_translator_needed__c" label={label.isTranslatorNeeded}
+                            variant="label-hidden" options={multipleWorksiteFieldQuestion.data.values}
+                            value={fields.NSP_Is_a_translator_needed__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showTranslatorFields}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.whatlangaugeTranslatorNeeded}>
+                                </lightning-formatted-text>
+                                <lightning-input-field variant="label-hidden" field-name="Wht_language_whn_is_translator_needed__c">
+                                </lightning-input-field>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label" value={label.isThereNeedForTechpack}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Is_there_a_need_for_a_tech_package__c"
+                            label={label.isThereNeedForTechpack} variant="label-hidden"
+                            options={multipleWorksiteFieldQuestion.data.values}
+                            value={fields.Is_there_a_need_for_a_tech_package__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showTechpackField}>
+                            <lightning-input-field  class="slds-m-left_medium" field-name="Tech_pack_when_where_quantity_needed__c">
+                            </lightning-input-field>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label" value={label.areThereOtherEEOrientationNeed}>
+                        </lightning-formatted-text>
+                        <lightning-checkbox-group if:true={eeOrientationOptions.data} name="Any_special_needs_for_EE_orientation__c"
+                            label={label.isThereNeedForTechpack} variant="label-hidden" class="slds-form-element__label"
+                            options={eeOrientationOptions.data.values} value={fields.Any_special_needs_for_EE_orientation__c}
+                            onchange={handleCheckboxChange}>
+                        </lightning-checkbox-group>
+
+                        <lightning-input-field field-name="Client_internal_deadline_for_OEE_OBE__c">
+                        </lightning-input-field>
+                        <lightning-input-field field-name="NSP_Orientation_Notes__c">
+                        </lightning-input-field>
+
+                    </template>
+                </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

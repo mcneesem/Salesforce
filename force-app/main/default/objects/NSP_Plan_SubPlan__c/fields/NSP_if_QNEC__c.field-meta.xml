@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_if_QNEC__c</fullName>
+    <externalId>false</externalId>
+    <label>if Annual QNEC</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NHCE only</fullName>
+                <default>false</default>
+                <label>NHCE only</label>
+            </value>
+            <value>
+                <fullName>All Eligible at end of Plan year</fullName>
+                <default>false</default>
+                <label>All Eligible at end of Plan year</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

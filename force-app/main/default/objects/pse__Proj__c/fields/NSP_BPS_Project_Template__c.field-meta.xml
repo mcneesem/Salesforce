@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_BPS_Project_Template__c</fullName>
+    <externalId>false</externalId>
+    <label>BPS Project Template</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WX Benefits Renewal Project</fullName>
+                <default>false</default>
+                <label>WX Benefits Renewal Project</label>
+            </value>
+            <value>
+                <fullName>Training &amp; Development</fullName>
+                <default>false</default>
+                <label>Training &amp; Development</label>
+            </value>
+            <value>
+                <fullName>HR Resource Center</fullName>
+                <default>false</default>
+                <label>HR Resource Center</label>
+            </value>
+            <value>
+                <fullName>HR Process Mapping</fullName>
+                <default>false</default>
+                <label>HR Process Mapping</label>
+            </value>
+            <value>
+                <fullName>Interview Guides</fullName>
+                <default>false</default>
+                <label>Interview Guides</label>
+            </value>
+            <value>
+                <fullName>iSolved ACA</fullName>
+                <default>false</default>
+                <label>iSolved ACA</label>
+            </value>
+            <value>
+                <fullName>iSolved Benefits</fullName>
+                <default>false</default>
+                <label>iSolved Benefits</label>
+            </value>
+            <value>
+                <fullName>iSolved Flexible Benefits</fullName>
+                <default>false</default>
+                <label>iSolved Flexible Benefits</label>
+            </value>
+            <value>
+                <fullName>ISolved HCM Implementation</fullName>
+                <default>false</default>
+                <label>ISolved HCM Implementation</label>
+            </value>
+            <value>
+                <fullName>iSolved Performance Management</fullName>
+                <default>false</default>
+                <label>iSolved Performance Management</label>
+            </value>
+            <value>
+                <fullName>iSolved Reporting</fullName>
+                <default>false</default>
+                <label>iSolved Reporting</label>
+            </value>
+            <value>
+                <fullName>iSolved Time</fullName>
+                <default>false</default>
+                <label>iSolved Time</label>
+            </value>
+            <value>
+                <fullName>Leave Admin</fullName>
+                <default>false</default>
+                <label>Leave Admin</label>
+            </value>
+            <value>
+                <fullName>New Tax IMPL</fullName>
+                <default>false</default>
+                <label>New Tax IMPL</label>
+            </value>
+            <value>
+                <fullName>WX to WO Transition</fullName>
+                <default>false</default>
+                <label>WX to WO Transition</label>
+            </value>
+            <value>
+                <fullName>Carrier Connection</fullName>
+                <default>false</default>
+                <label>Carrier Connection</label>
+            </value>
+            <value>
+                <fullName>WX/WA Data Migration</fullName>
+                <default>false</default>
+                <label>WX/WA Data Migration</label>
+            </value>
+            <value>
+                <fullName>Compensation - Market Competitive Analysis</fullName>
+                <default>false</default>
+                <label>Compensation - Market Competitive Analysis</label>
+            </value>
+            <value>
+                <fullName>Handbook</fullName>
+                <default>false</default>
+                <label>Handbook</label>
+            </value>
+            <value>
+                <fullName>Manager Liability Training</fullName>
+                <default>false</default>
+                <label>Manager Liability Training</label>
+            </value>
+            <value>
+                <fullName>Salary Survey</fullName>
+                <default>false</default>
+                <label>Salary Survey</label>
+            </value>
+            <value>
+                <fullName>Standard Climate Survey</fullName>
+                <default>false</default>
+                <label>Standard Climate Survey</label>
+            </value>
+            <value>
+                <fullName>Total Compensation Statement</fullName>
+                <default>false</default>
+                <label>Total Compensation Statement</label>
+            </value>
+            <value>
+                <fullName>Core HR Health Assessment</fullName>
+                <default>false</default>
+                <label>Core HR Health Assessment</label>
+            </value>
+            <value>
+                <fullName>Strategic HR Health Assessment</fullName>
+                <default>false</default>
+                <label>Strategic HR Health Assessment</label>
+            </value>
+            <value>
+                <fullName>Integra - Implementation</fullName>
+                <default>false</default>
+                <label>Integra - Implementation</label>
+            </value>
+            <value>
+                <fullName>Integra - Rework</fullName>
+                <default>false</default>
+                <label>Integra - Rework</label>
+            </value>
+            <value>
+                <fullName>XML Utility Implementation</fullName>
+                <default>false</default>
+                <label>XML Utility Implementation</label>
+            </value>
+            <value>
+                <fullName>XML Utility Rework</fullName>
+                <default>false</default>
+                <label>XML Utility Rework</label>
+            </value>
+            <value>
+                <fullName>QA - OPD</fullName>
+                <default>false</default>
+                <label>QA - OPD</label>
+            </value>
+            <value>
+                <fullName>QA - OPRT</fullName>
+                <default>false</default>
+                <label>QA - OPRT</label>
+            </value>
+            <value>
+                <fullName>QA - PerformSmart</fullName>
+                <default>false</default>
+                <label>QA - PerformSmart</label>
+            </value>
+            <value>
+                <fullName>Premier Employee Directory – Implementation</fullName>
+                <default>false</default>
+                <label>Premier Employee Directory – Implementation</label>
+            </value>
+            <value>
+                <fullName>Premier Employee Directory – Rework</fullName>
+                <default>false</default>
+                <label>Premier Employee Directory – Rework</label>
+            </value>
+            <value>
+                <fullName>OPRT Trainings</fullName>
+                <default>false</default>
+                <label>OPRT Trainings</label>
+            </value>
+            <value>
+                <fullName>OPRT Implementation</fullName>
+                <default>false</default>
+                <label>OPRT Implementation</label>
+            </value>
+            <value>
+                <fullName>PerformSmart Implementation</fullName>
+                <default>false</default>
+                <label>PerformSmart Implementation</label>
+            </value>
+            <value>
+                <fullName>PS Trainings</fullName>
+                <default>false</default>
+                <label>PS Trainings</label>
+            </value>
+            <value>
+                <fullName>Service Hours - OPRT</fullName>
+                <default>false</default>
+                <label>Service Hours - OPRT</label>
+            </value>
+            <value>
+                <fullName>Service Hours - PS</fullName>
+                <default>false</default>
+                <label>Service Hours - PS</label>
+            </value>
+            <value>
+                <fullName>RS TalentConnect Implementation</fullName>
+                <default>false</default>
+                <label>RS TalentConnect Implementation</label>
+            </value>
+            <value>
+                <fullName>ITA-Implementation</fullName>
+                <default>false</default>
+                <label>ITA-Implementation</label>
+            </value>
+            <value>
+                <fullName>ITA-Other</fullName>
+                <default>false</default>
+                <label>ITA-Other</label>
+            </value>
+            <value>
+                <fullName>Abra - HR</fullName>
+                <default>false</default>
+                <label>Abra - HR</label>
+            </value>
+            <value>
+                <fullName>Abra - Other</fullName>
+                <default>false</default>
+                <label>Abra - Other</label>
+            </value>
+            <value>
+                <fullName>Abra - Payroll</fullName>
+                <default>false</default>
+                <label>Abra - Payroll</label>
+            </value>
+            <value>
+                <fullName>Sage Support</fullName>
+                <default>false</default>
+                <label>Sage Support</label>
+            </value>
+            <value>
+                <fullName>iSolved - Other</fullName>
+                <default>false</default>
+                <label>iSolved - Other</label>
+            </value>
+            <value>
+                <fullName>TES Termination</fullName>
+                <default>false</default>
+                <label>TES Termination</label>
+            </value>
+            <value>
+                <fullName>TES HR Compliance Review</fullName>
+                <default>false</default>
+                <label>TES HR Compliance Review</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

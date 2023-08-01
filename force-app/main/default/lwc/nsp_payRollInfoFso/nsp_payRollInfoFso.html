@@ -1,0 +1,236 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.payRollInfo}>
+    </lightning-formatted-text>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Have_the_user_roles_been_updated_in_AIMS__c}
+      label={label.HaveTheUserRolesBeenUpdatedAIMS}
+      class={styles.Have_the_user_roles_been_updated_in_AIMS__c}
+      field-api-name="Implementation_Profile__c.Have_the_user_roles_been_updated_in_AIMS__c"
+      record-type-id={recordTypeId}
+      value={field.Have_the_user_roles_been_updated_in_AIMS__c}
+      data-name="Have_the_user_roles_been_updated_in_AIMS__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Are_there_any_non_paid_users__c}
+      label={label.AnyNonPaidUsers}
+      class={styles.Are_there_any_non_paid_users__c}
+      field-api-name="Implementation_Profile__c.Are_there_any_non_paid_users__c"
+      record-type-id={recordTypeId}
+      value={field.Are_there_any_non_paid_users__c}
+      data-name="Are_there_any_non_paid_users__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field disabled={disabledFields.NSP_Non_paid_users_Enter_User_Names__c}
+      if:true={visibility.NSP_Non_paid_users_Enter_User_Names__c}
+      class={styles.NSP_Non_paid_users_Enter_User_Names__c}
+      data-name="NSP_Non_paid_users_Enter_User_Names__c"
+      value={field.NSP_Non_paid_users_Enter_User_Names__c}
+      field-name="NSP_Non_paid_users_Enter_User_Names__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Payroll_submitted_frm_multiple_contacts__c}
+      label={label.payRollSubmittedForMultipleConts}
+      class={styles.Payroll_submitted_frm_multiple_contacts__c}
+      field-api-name="Implementation_Profile__c.Payroll_submitted_frm_multiple_contacts__c"
+      record-type-id={recordTypeId}
+      value={field.Payroll_submitted_frm_multiple_contacts__c}
+      data-name="Payroll_submitted_frm_multiple_contacts__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field disabled={disabledFields.Provide_multiple_contact_details__c}
+      if:true={visibility.Provide_multiple_contact_details__c}
+      class={styles.Provide_multiple_contact_details__c}
+      data-name="Provide_multiple_contact_details__c"
+      value={field.Provide_multiple_contact_details__c}
+      field-name="Provide_multiple_contact_details__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Any_users_who_cannot_see_salary__c}
+      label={label.whoCannotSeeSalary}
+      class={styles.Any_users_who_cannot_see_salary__c}
+      field-api-name="Implementation_Profile__c.Any_users_who_cannot_see_salary__c"
+      record-type-id={recordTypeId}
+      value={field.Any_users_who_cannot_see_salary__c}
+      data-name="Any_users_who_cannot_see_salary__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field disabled={disabledFields.Enter_user_names_that_can_t_see_salary__c}
+      if:true={visibility.Enter_user_names_that_can_t_see_salary__c}
+      class={styles.Enter_user_names_that_can_t_see_salary__c}
+      data-name="Enter_user_names_that_can_t_see_salary__c"
+      value={field.Enter_user_names_that_can_t_see_salary__c}
+      field-name="Enter_user_names_that_can_t_see_salary__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_TimeZone__c}
+      label={objectInfo.NSP_TimeZone__c.label}
+      class={styles.NSP_TimeZone__c}
+      field-api-name="Implementation_Profile__c.NSP_TimeZone__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_TimeZone__c}
+      data-name="NSP_TimeZone__c"
+      onchange={handleValueChange}
+      multiple>
+    </c-nsp_selection-box>
+
+    <lightning-input-field disabled={disabledFields.NSP_Work_Hours__c}
+      data-name="NSP_Work_Hours__c"
+      value={field.NSP_Work_Hours__c}
+      field-name="NSP_Work_Hours__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Are_the_subaccounts_set_up__c}
+      label={objectInfo.NSP_Are_the_subaccounts_set_up__c.label}
+      class={styles.NSP_Are_the_subaccounts_set_up__c}
+      field-api-name="Implementation_Profile__c.NSP_Are_the_subaccounts_set_up__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Are_the_subaccounts_set_up__c}
+      data-name="NSP_Are_the_subaccounts_set_up__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Different_contact_for_subaccounts__c}
+      label={label.diffContactForSubAccts}
+      class={styles.NSP_Different_contact_for_subaccounts__c}
+      field-api-name="Implementation_Profile__c.NSP_Different_contact_for_subaccounts__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Different_contact_for_subaccounts__c}
+      data-name="NSP_Different_contact_for_subaccounts__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field disabled={disabledFields.NSP_PD_different_contact_for_subaccount__c}
+      if:true={visibility.NSP_PD_different_contact_for_subaccount__c}
+      class={styles.NSP_PD_different_contact_for_subaccount__c}
+      data-name="NSP_PD_different_contact_for_subaccount__c"
+      value={field.NSP_PD_different_contact_for_subaccount__c}
+      field-name="NSP_PD_different_contact_for_subaccount__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <div class={styles.NSP_States_added_since_Kickoff_Meeting__c}>
+      <lightning-formatted-text
+        class="slds-form-element__label"
+        data-field="NSP_States_added_since_Kickoff_Meeting__c"
+        value={label.kickOffMeeting}>
+      </lightning-formatted-text>
+      <lightning-input-field disabled={disabledFields.NSP_States_added_since_Kickoff_Meeting__c}
+        field-name="NSP_States_added_since_Kickoff_Meeting__c"
+        variant="label-hidden"
+        value={field.NSP_States_added_since_Kickoff_Meeting__c}
+        data-name="NSP_States_added_since_Kickoff_Meeting__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_ArrearageInComplianceWithEachState__c}
+      label={label.complianceWithEachState}
+      class={styles.NSP_ArrearageInComplianceWithEachState__c}
+      field-api-name="Implementation_Profile__c.NSP_ArrearageInComplianceWithEachState__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_ArrearageInComplianceWithEachState__c}
+      data-name="NSP_ArrearageInComplianceWithEachState__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_SubaccountNeededDifferentPayPeriod__c}
+      if:true={visibility.NSP_SubaccountNeededDifferentPayPeriod__c}
+      label={label.subaccountNeededDifferentPayPeriod}
+      class={styles.NSP_SubaccountNeededDifferentPayPeriod__c}
+      field-api-name="Implementation_Profile__c.NSP_SubaccountNeededDifferentPayPeriod__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_SubaccountNeededDifferentPayPeriod__c}
+      data-name="NSP_SubaccountNeededDifferentPayPeriod__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Did_you_verify_Calendar_in_AIMS__c}
+      label={label.verifyCalenderAIMS}
+      class={styles.NSP_Did_you_verify_Calendar_in_AIMS__c}
+      field-api-name="Implementation_Profile__c.NSP_Did_you_verify_Calendar_in_AIMS__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Did_you_verify_Calendar_in_AIMS__c}
+      data-name="NSP_Did_you_verify_Calendar_in_AIMS__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field 
+      if:true={visibility.NSP_Enter_Time_Entry_for_all_subaccounts__c}
+      class={styles.NSP_Enter_Time_Entry_for_all_subaccounts__c}
+      value={field.NSP_Enter_Time_Entry_for_all_subaccounts__c}
+      disabled={disabledFields.NSP_Enter_Time_Entry_for_all_subaccounts__c}
+      field-name="NSP_Enter_Time_Entry_for_all_subaccounts__c"
+      data-name="NSP_Enter_Time_Entry_for_all_subaccounts__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <div class="slds-grid slds-gutters"> 
+      <div class="slds-col slds-size_1-of-2">
+        <div class={styles.NSP_What_is_the_Live_Payroll_Call_Date__c}>
+          <lightning-formatted-text
+            class="slds-form-element__label"
+            data-field="NSP_What_is_the_Live_Payroll_Call_Date__c"
+            value={label.livePayRollCallDate}>
+          </lightning-formatted-text>
+          <lightning-input-field 
+            value={field.NSP_What_is_the_Live_Payroll_Call_Date__c}
+            disabled={disabledFields.NSP_What_is_the_Live_Payroll_Call_Date__c}
+            variant="label-hidden"
+            field-name="NSP_What_is_the_Live_Payroll_Call_Date__c"
+            data-name="NSP_What_is_the_Live_Payroll_Call_Date__c"
+            onchange={handleValueChange}>
+          </lightning-input-field>
+        </div>
+      </div>
+    </div>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_ClientInterestedHavingAutoApproval__c}
+      label={label.clientAutoApproval}
+      class={styles.NSP_ClientInterestedHavingAutoApproval__c}
+      field-api-name="Implementation_Profile__c.NSP_ClientInterestedHavingAutoApproval__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_ClientInterestedHavingAutoApproval__c}
+      data-name="NSP_ClientInterestedHavingAutoApproval__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Has_the_addendum_been_collected__c}
+      if:true={visibility.NSP_Has_the_addendum_been_collected__c}
+      class={styles.NSP_Has_the_addendum_been_collected__c}
+      label={objectInfo.NSP_Has_the_addendum_been_collected__c.label}
+      field-api-name="Implementation_Profile__c.NSP_Has_the_addendum_been_collected__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Has_the_addendum_been_collected__c}
+      data-name="NSP_Has_the_addendum_been_collected__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+  </lightning-record-edit-form>
+</template>

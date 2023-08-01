@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ben_Rep_Team_Enterprise_All_Cases</fullName>
+    <columns>pse__Start_Date_Time__c</columns>
+    <columns>pse__End_Date_Time__c</columns>
+    <columns>NAME</columns>
+    <columns>NSP_Owner__c</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_Sub_Category__c</columns>
+    <columns>pse__Priority__c</columns>
+    <columns>pse__Project__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>pse__Status__c</field>
+        <operation>equals</operation>
+        <value>Not Started,In Progress,On Hold,Scheduled,Unscheduled,Complete,Dispatched,Canceled</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>pse__Project_Task__c.PEO_Project_Task</value>
+    </filters>
+    <label>Ben Rep Team - Enterprise All PT</label>
+    <queue>Benefits_Rep_Team_Enterprise_Rgn</queue>
+</ListView>

@@ -1,0 +1,133 @@
+<template>
+    <div if:false={fullView}>
+        <div class="slds-box slds-p-left_none slds-p-right_none slds-p-top_none slds-p-bottom_none">
+            <div class="slds-card">
+                <div
+                    class="slds-card slds-card__header slds-theme_shade slds-p-left_none slds-p-right_none slds-p-top_none slds-p-bottom_none">
+                    <header
+                        class="demo-only-element slds-theme_shade slds-border_bottom slds-var-p-around_large slds-text-align_right">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-contact" title="contact">
+                                    <lightning-icon size="small" icon-name="standard:contact" alternative-text="contact"
+                                        title="contact">
+                                    </lightning-icon>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    Main Service Contacts
+                                </h2>
+                            </div>
+                        </div>
+                    </header>
+                    <template if:true={data}>
+                        <div if:true={isLoading}>
+                            <lightning-spinner alternative-text="Loading...">
+                            </lightning-spinner>
+                        </div>
+                        <c-nsp_main-service-contacts-datatable if:true={data.length} hide-checkbox-column
+                            wrap-text-max-lines="20" load-more-offset={loadMoreOffset}
+                            enable-infinite-loading={enableInfiniteLoading} column-widths-mode='fixed'
+                            onloadmore={handleLoadMore} show-row-number-column key-field="accountId" data={data}
+                            columns={columns}>
+                        </c-nsp_main-service-contacts-datatable>
+                    </template>
+                </div>
+                <template if:true={data}>
+                    <div if:true={data.length} class="slds-p-top_none slds-p-bottom_none">
+                        <div class="slds-var-p-vertical_small slds-border_top">
+                            <p class="slds-text-align_center" slot="footer"><a onclick={handleClick}>View All</a>
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <lightning-card if:true={fullView} variant="narrow" icon-name="standard:contact">
+        <h1 slot="title">
+            Main Service Contacts
+        </h1>
+        <lightning-button-icon-stateful icon-name="utility:filterList" selected={filterState}
+            onclick={handlefilterButtonClick} alternative-text="Like" slot="actions">
+        </lightning-button-icon-stateful>
+            <div class="demo-only-element"
+                style={sldsPanel}>
+            <div data-id="divblock"
+                class="slds-panel slds-col slds-size_medium slds-panel_docked slds-panel_docked-right"
+                aria-hidden="false" id="example-unique-id-15">
+                <div class="slds-panel__header">
+                    <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Filter">
+                        Filter
+                    </h2>
+                    <div class="slds-panel__header-actions">
+                            <lightning-button variant="brand" label="Search" class="slds-var-m-right_small"
+                                title="Search" onclick={handleFilter}>
+                        </lightning-button>
+                        <lightning-button variant="Netural" label="Clear" title="Search"
+                            onclick={handleClearFilter}></lightning-button>
+                    </div>
+                </div>
+                <div class="slds-panel__body">
+                    <div class="slds-filters">
+                        <h3 class="slds-text-body_small slds-var-m-vertical_x-small">Matching all
+                            these
+                            filters
+                        </h3>
+                        <div class="slds-var-p-top_xxx-small">
+                            <h3 class="slds-text-body_small slds-var-m-vertical_x-small">
+                                <b>AccountContactRelation</b>
+                            </h3>
+                            <ol class="slds-list_vertical slds-list_vertical-space">
+                                <li class="slds-item slds-hint-parent">
+                                    <lightning-input checked={isOwnerACRfilter} type="checkbox" data-name='isOwner'
+                                        data-id="checkbox" onchange={handleInput} label="Owner">
+                                    </lightning-input>
+                                </li>
+                                <template if:true={supportPicklistValues}>
+                                    <li class="slds-item slds-hint-parent">
+                                        <c-nsp_multi-select label="Support Role" onselect={handleSelect}
+                                            field-api-name='NSP_Support_Role__c' options={supportPicklistValues}>
+                                        </c-nsp_multi-select>
+                                    </li>
+                                </template>
+                                <template if:true={serviceRolePicklistValues}>
+                                    <li class="slds-item slds-hint-parent">
+                                            <c-nsp_multi-select label="Service Role"
+                                                field-api-name='NSP_Service_Roles__c' onselect={handleSelect}
+                                                options={serviceRolePicklistValues}>
+                                        </c-nsp_multi-select>
+                                    </li>
+                                </template>
+
+                            </ol>
+                        </div>
+                        <div class="slds-var-p-top_medium">
+                            <ol class="slds-list_vertical slds-list_vertical-space">
+                                <li class="slds-item slds-hint-parent">
+                                    <lightning-checkbox-group name="Checkbox Group" label="Sub Client Contact"
+                                        options={options} value={value} onchange={handleSubChange}>
+                                    </lightning-checkbox-group>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="demo-only-content slds-p-left_none">
+                <div if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading...">
+                    </lightning-spinner>
+                </div>
+                <div class="slds-table_bordered" style={viewType}>
+                    <c-nsp_main-service-contacts-datatable column-widths-mode='fixed'
+                        hide-checkbox-column wrap-text-max-lines="20" load-more-offset={loadMoreOffset}
+                        enable-infinite-loading={enableInfiniteLoading} onloadmore={handleLoadMore}
+                        show-row-number-column key-field="accountId" data={data} columns={columns}>
+                    </c-nsp_main-service-contacts-datatable>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

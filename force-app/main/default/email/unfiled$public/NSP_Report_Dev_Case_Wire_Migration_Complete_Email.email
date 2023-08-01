@@ -1,0 +1,8 @@
+CASE <a href="{!Case.Link}"> {!Case.CaseNumber}</a> has been completed and reassigned to you.<br/>
+
+<p>The report has been published/updated in WIRE.</p> 
+
+<p>Please notify the client that the report is available in WIRE and then close the CASE.</p><br/><br/>
+
+Thank you,<br/>
+The Report Development Team

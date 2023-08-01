@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>NSP_Approver__c</field>
+        <field>Owner</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Mark_Form_Status_PR_Supervisor_Approved</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <name>NSP_Approver__c</name>
+                <type>relatedUserField</type>
+            </approver>
+            <whenMultipleApprovers>Unanimous</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>NSP_Termination_Form__c.NSP_Approver__c</field>
+                <operation>notEqual</operation>
+            </criteriaItems>
+            <criteriaItems>
+                <field>NSP_Termination_Form__c.RecordType</field>
+                <operation>equals</operation>
+                <value>Payroll Specialist Form</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>NSP_Termination_Form__c.NSP_Status__c</field>
+                <operation>equals</operation>
+                <value>Resubmitted by PS</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Assign to Payroll Supervisor</label>
+        <name>Assign_to_Payroll_Supervisor</name>
+        <rejectionActions>
+            <action>
+                <name>Mark_Form_Status_PR_Supervisor_Denied</name>
+                <type>FieldUpdate</type>
+            </action>
+        </rejectionActions>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Set_Status_to_Resubmitted_by_PR_Super</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <name>NSP_Approver__c</name>
+                <type>relatedUserField</type>
+            </approver>
+            <whenMultipleApprovers>Unanimous</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>NSP_Termination_Form__c.NSP_Approver__c</field>
+                <operation>notEqual</operation>
+            </criteriaItems>
+            <criteriaItems>
+                <field>NSP_Termination_Form__c.RecordType</field>
+                <operation>equals</operation>
+                <value>Payroll Specialist Form</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>NSP_Termination_Form__c.NSP_Status__c</field>
+                <operation>equals</operation>
+                <value>Term Team Denied</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Reassign to Payroll Supervisor</label>
+        <name>Reassign_to_Payroll_Supervisor</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Mark_Form_Status_PR_Supervisor_Denied</name>
+                <type>FieldUpdate</type>
+            </action>
+        </rejectionActions>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Mark_Form_Status_Term_Team_Approved</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <name>Termination_Team</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Assign to Termination team</label>
+        <name>Assign_to_Termination_team</name>
+        <rejectBehavior>
+            <type>BackToPrevious</type>
+        </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Mark_Form_Status_Term_Team_Denied</name>
+                <type>FieldUpdate</type>
+            </action>
+        </rejectionActions>
+    </approvalStep>
+    <emailTemplate>Services_Emails/Termination_Form_Assigned</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(
+OR(
+ISPICKVAL(NSP_Status__c, &quot;Term Team Denied&quot;),
+ISPICKVAL(NSP_Status__c, &quot;PR Supervisor Denied&quot;)
+),
+IF(RecordType.Name = &apos;Payroll Specialist Form&apos;,
+NOT(ISBLANK(NSP_Approver__c)),
+TRUE)
+)</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Send_Email_to_Owner_and_Created_By</name>
+            <type>Alert</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Send_Email_to_Owner_and_Created_By_if_rejected</name>
+            <type>Alert</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Set_Status_to_Resubmitted_by_PS</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Resubmit Approval for Termination Form1</label>
+    <processOrder>1</processOrder>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" controller="NSP_ProjectDeleteController">
+    <aura:attribute name="recordError" type="String" access="private"/>
+    <aura:attribute name="isAllowedDelete" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div class="Delete Record slds-is-relative">
+        <lightning:spinner aura:id="deleteSpinner" class="slds-hide"/>
+        <aura:if isTrue="{!v.isAllowedDelete}">
+            <lightning:card iconName="action:delete" title="Delete Record">
+                <div class="slds-p-horizontal--small" > <p> <b> Note: </b> {!$Label.c.NSP_Before_project_delete_alert_message}</p>  </div>
+                <br/>
+                <div class="slds-p-horizontal--small">
+                    <lightning:button label="Delete Record" variant="destructive" onclick="{!c.handleDeleteRecord}"/>
+                </div>
+            </lightning:card>
+            <aura:set attribute="else">
+                <div class="slds-p-horizontal--small" > <p>{!$Label.c.NSP_project_delete_allowed_error}</p></div>
+            </aura:set>
+        </aura:if>
+        
+    </div>
+    <!-- Display Lightning Data Service errors, if any -->
+    <aura:if isTrue="{!not(empty(v.recordError))}">
+        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+            </span>
+            <h2> Error !:  {!v.recordError}
+            </h2>
+        </div>  
+    </aura:if>
+</aura:component>

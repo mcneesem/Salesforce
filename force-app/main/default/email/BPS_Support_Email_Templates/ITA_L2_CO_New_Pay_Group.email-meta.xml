@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA L2 - CO - New Pay Group</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA L2 - CO - New Pay Group</name>
+    <style>freeForm</style>
+    <subject>ITA L2 - CO - New Pay Group</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand you would like to add a new pay group to your Time &amp; Attendance system. In order to determine the extent of this change, and ensure proper setup, we have a few questions:
+
+Will this new pay group be exporting to payroll directly from Time &amp; Attendance?
+Will this new pay group require unique export mapping for any pay types, so that they are sent to a different code within your payroll system?
+
+Has this addition been discussed with an Insperity Payroll Specialist?
+
+Will this pay group be similar to one of your existing pay groups? If so, which one and in what areas will it differ? If not, please provide an explanation of how you would like this pay group to function. Some areas to consider are:
+
+
+Are there any special rules regarding:
+
+
+Shift Differentials?
+
+Call Back In?
+
+
+Holiday (worked and not worked)?
+
+Alerts?
+
+Percent allocations to split the total hours between locations/departments/cost centers?
+
+
+When does the workweek start?
+
+Will overtime be calculated daily and/or weekly?
+
+
+Will employees in this pay group be paid on the last day of the pay period or afterwards?
+
+
+How many employees will be using this pay group to start, and in what state(s) are they located?
+
+Do you import pay group assignments from your HR software or a file feed?
+
+
+Thank you in advance for providing this information. Once it is received, a member of our team will determine the next steps and a representative will be in touch as soon as they are able.
+
+Thank you, 
+
+Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,72 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}): Payroll Call Summary follow up items  " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <table border="0" width="550">
+  <c:InsperityEmailHeader ></c:InsperityEmailHeader>
+  <p>The following are items from the Payroll First call that need your attention.  </p>
+  <c:NSP_RelatedArrearageFrequency currentRecordId="{!relatedTo.Id}" />
+  <apex:outputPanel rendered="{!relatedTo.Has_expenses_allowances_through_payroll__c =  'Yes'}">
+   <apex:outputPanel rendered="{!CONTAINS(relatedTo.Client_runs_expenses_or_payroll__c,'Expenses')}">
+   <p>• The client has indicated they have expense reimbursements – identify how these will be handled
+    going forward and if a demo through Certify is needed. See the Implementation Profile for any notes <br />captured on the
+     Client Transition Meeting call or First Call.</p>  
+  </apex:outputPanel>
+   <apex:outputPanel rendered="{!CONTAINS(relatedTo.Client_runs_expenses_or_payroll__c,'Allowances')}">
+   <p>• The client has indicated they have allowances. See the Implementation Profile for any notes <br />captured on
+    the Client Transition Meeting call or First Call. </p>  
+  </apex:outputPanel>
+   </apex:outputPanel>
+   <apex:outputPanel rendered="{!relatedTo.Will_the_owner_s_be_on_payroll__c = 'Yes'}">
+   <p>• The client’s owners are on payroll. Verify the SEO addendum has been collected and 
+   that the SEO <br />information has been set up in AIMS correctly.</p>  
+  </apex:outputPanel>
+    <apex:outputPanel rendered="{!relatedTo.NSP_Is_there_an_Enrollment_fee__c= 'Yes'}">
+   <p>• The client has an enrollment fee. Please review the following notes for details:<br />  
+  {!relatedTo.NSP_Provide_Details_Enrollment_fee__c} </p>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!relatedTo.NSP_Any_special_pay_codes_Needed__c= 'Yes'}">
+   <p>• The client has special pay IPes and/or relabeling.  Please review the following <br /> notes for details:
+  {!relatedTo.NSP_Any_special_pay_code_Provide_Details__c} </p>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Integra')}">
+   <p>• Integra / Quick Books integration has been requested – complete “forms online” request.</p>
+   <p>   Please see the Implementation Profile in Salesforce if you have any questions </p>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!OR(CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Departments'),CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Job Costing'),
+CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Client Managed Data'),
+CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Locations'),
+CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Custom 401(k) report'),
+CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Certified Payroll Reports'))}">
+<p>• The following items have been selected under Reporting and require follow up: </p>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Departments')}">
+<p><pre>     •Departments</pre></p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c, 'Job Costing')}">
+<p><pre>     •Job Costing</pre></p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Client Managed Data')}">
+<p><pre>     •Client Managed Data </pre></p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Locations')}">
+<p><pre>     •Locations</pre></p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Custom 401(k) report')}">
+<p><pre>     •Custom 401(k) report</pre></p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Certified Payroll Reports')}">
+<p><pre>     •Certified Payroll Reports</pre></p>
+</apex:outputPanel>
+</apex:outputPanel>
+ 
+<p>Regards,<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.Name}<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.NSP_Job_Title__c}<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.NSP_Work_email__c}</p>
+<c:InsperityEmailFooter ></c:InsperityEmailFooter> 
+</table> 
+</body>
+</html>
+</messaging:HtmlEmailBody>
+  
+</messaging:emailTemplate>

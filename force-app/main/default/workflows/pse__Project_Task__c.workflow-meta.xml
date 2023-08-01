@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Set_Project_Task_Time_Category</fullName>
+        <field>Time_Category_Text__c</field>
+        <formula>IF(
+NOT(ISBLANK(TEXT(Time_Entry__c))),
+IF($Label.NSP_Client_Management_Database == TEXT(Time_Entry__c),
+&quot;Non Reimbursable&quot;,
+IF(
+OR(
+CONTAINS($Label.NSP_Fiduciary_Time_Category_Values, TEXT(Time_Entry__c)),
+CONTAINS($Label.NSP_Fiduciary_Time_Category_Values_2, TEXT(Time_Entry__c)),
+CONTAINS($Label.NSP_Fiduciary_Time_Category_Values_3, TEXT(Time_Entry__c))),
+&quot;Fiduciary&quot;,
+IF(CONTAINS($Label.NSP_General_Business_Time_Category_Values, TEXT(Time_Entry__c)),
+&quot;General Business&quot;,
+IF(OR(
+CONTAINS($Label.NSP_Non_Reimbursable_Time_Category_Values_2, TEXT(Time_Entry__c)),
+CONTAINS($Label.NSP_Non_Reimbursable_Time_Category_Values, TEXT(Time_Entry__c))),
+&quot;Non Reimbursable&quot;,
+IF(CONTAINS($Label.NSP_Settlor_Time_Category_Values, TEXT(Time_Entry__c)),
+&quot;Settlor&quot;,
+IF(CONTAINS($Label.NSP_PTO_Time_Category_Values, TEXT(Time_Entry__c)),
+&quot;PTO&quot;,
+&quot;&quot;
+)))))), &quot;&quot;)</formula>
+        <name>Set Project Task Time Category</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Project Task Time Category</fullName>
+        <actions>
+            <name>Set_Project_Task_Time_Category</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

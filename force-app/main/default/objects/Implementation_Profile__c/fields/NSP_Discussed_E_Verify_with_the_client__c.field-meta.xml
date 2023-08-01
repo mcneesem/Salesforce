@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Discussed_E_Verify_with_the_client__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check once you have discussed E-Verify with the client and they understand the process.</description>
+    <externalId>false</externalId>
+    <label>Discussed E-Verify with the client</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

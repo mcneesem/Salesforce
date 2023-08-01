@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Created_From__c</fullName>
+    <description>Link to the parent task</description>
+    <externalId>false</externalId>
+    <formula>IF(NSP_Parent_Task_Id__c  &lt;&gt; null, HYPERLINK( &apos;/&apos; &amp; NSP_Parent_Task_Id__c , &apos;Parent Record&apos;, &apos;_self&apos;), null)</formula>
+    <label>Created From</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

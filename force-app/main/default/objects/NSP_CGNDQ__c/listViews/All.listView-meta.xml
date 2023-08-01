@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>NSP_Year__c</columns>
+    <columns>NSP_Record_ID__c</columns>
+    <columns>NSP_Parent_Client_ID__c</columns>
+    <columns>NSP_Client__c</columns>
+    <columns>NSP_Online_Submit_Date__c</columns>
+    <columns>NSP_Control_Group__c</columns>
+    <columns>NSP_Review_Complete__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

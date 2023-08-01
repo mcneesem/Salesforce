@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Term_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Term Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <controllingField>NSP_Term_Code__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1400 Financial Default</fullName>
+                <default>false</default>
+                <label>1400 Financial Default</label>
+            </value>
+            <value>
+                <fullName>1600 Void</fullName>
+                <default>false</default>
+                <label>1600 Void</label>
+            </value>
+            <value>
+                <fullName>1900 Merger with Insperity Client</fullName>
+                <default>false</default>
+                <label>1900 Merger with Insperity Client</label>
+            </value>
+            <value>
+                <fullName>2100 Confirmation – client has 0 employees</fullName>
+                <default>false</default>
+                <label>2100 Confirmation – client has 0 employees</label>
+            </value>
+            <value>
+                <fullName>2200 Insperity Request</fullName>
+                <default>false</default>
+                <label>2200 Insperity Request</label>
+            </value>
+            <value>
+                <fullName>2300 Mutual Agreement</fullName>
+                <default>false</default>
+                <label>2300 Mutual Agreement</label>
+            </value>
+            <value>
+                <fullName>2700 Change in FEIN</fullName>
+                <default>false</default>
+                <label>2700 Change in FEIN</label>
+            </value>
+            <value>
+                <fullName>3100 Non-Compliance of Client</fullName>
+                <default>false</default>
+                <label>3100 Non-Compliance of Client</label>
+            </value>
+            <value>
+                <fullName>3200 Non-Renewal</fullName>
+                <default>false</default>
+                <label>3200 Non-Renewal</label>
+            </value>
+            <value>
+                <fullName>5200 Health Benefits</fullName>
+                <default>false</default>
+                <label>5200 Health Benefits</label>
+            </value>
+            <value>
+                <fullName>5300 Poor Customer Service</fullName>
+                <default>false</default>
+                <label>5300 Poor Customer Service</label>
+            </value>
+            <value>
+                <fullName>5400 Dissatisfied with Service/Product Offering</fullName>
+                <default>false</default>
+                <label>5400 Dissatisfied with Service/Product Offering</label>
+            </value>
+            <value>
+                <fullName>5500 Cost</fullName>
+                <default>false</default>
+                <label>5500 Cost</label>
+            </value>
+            <value>
+                <fullName>5600 Internal Company Reason</fullName>
+                <default>false</default>
+                <label>5600 Internal Company Reason</label>
+            </value>
+            <value>
+                <fullName>5700 Alternate Reasons</fullName>
+                <default>false</default>
+                <label>5700 Alternate Reasons</label>
+            </value>
+            <value>
+                <fullName>5900 Client Delay CSA Start Date</fullName>
+                <default>false</default>
+                <label>5900 Client Delay CSA Start Date</label>
+            </value>
+            <value>
+                <fullName>2500 Reinstatement (client request)</fullName>
+                <default>false</default>
+                <label>2500 Reinstatement (client request)</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>1400 Financial Default</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>1600 Void</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>1900 Merger with Insperity Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>2100 Confirmation – client has 0 employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>2200 Insperity Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>2300 Mutual Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>2500 Reinstatement (client request)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>2700 Change in FEIN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>3100 Non-Compliance of Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>3200 Non-Renewal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5200 Health Benefits</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5300 Poor Customer Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5400 Dissatisfied with Service/Product Offering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5500 Cost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5600 Internal Company Reason</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5700 Alternate Reasons</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
+            <valueName>5900 Client Delay CSA Start Date</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,596 @@
+{
+  "version" : "58.0",
+  "nodes" : {
+    "LOAD_DATASET10" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "blng__Invoice__c", "Id", "Name", "blng__LegalEntity__c", "blng__Product__c", "blng__Subtotal__c", "NSP_NetSuite_Item_Name__c", "NSP_Product_Code__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "blng__InvoiceLine__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "blng__InvoiceLine__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET11" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "blng__CreditNote__c", "blng__CreditNoteLineDate__c", "Id", "blng__LegalEntity__c", "blng__ProductName__c", "blng__Product__c", "blng__Subtotal__c", "NSP_NetSuite_Item_Name__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "blng__CreditNoteLine__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "blng__CreditNoteLine__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN6" : {
+      "action" : "join",
+      "sources" : [ "JOIN11", "JOIN12" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "blng__Product__c" ],
+        "rightQualifier" : "blng__Invo",
+        "rightKeys" : [ "blng__Product__c" ]
+      }
+    },
+    "JOIN7" : {
+      "action" : "join",
+      "sources" : [ "JOIN11", "JOIN12" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_NetSuite_Item_Name__c" ],
+        "rightQualifier" : "blng__Invo",
+        "rightKeys" : [ "NSP_NetSuite_Item_Name__c" ]
+      }
+    },
+    "APPEND0" : {
+      "action" : "appendV2",
+      "sources" : [ "JOIN6", "JOIN7" ],
+      "parameters" : {
+        "fieldMappings" : [ {
+          "top" : "blng__ProductName__c",
+          "bottom" : "blng__ProductName__c"
+        }, {
+          "top" : "blng__Product__c",
+          "bottom" : "blng__Product__c"
+        }, {
+          "top" : "Id",
+          "bottom" : "Id"
+        }, {
+          "top" : "blng__LegalEntity__c",
+          "bottom" : "blng__LegalEntity__c"
+        }, {
+          "top" : "blng__Subtotal__c",
+          "bottom" : "blng__Subtotal__c"
+        }, {
+          "top" : "NSP_NetSuite_Item_Name__c",
+          "bottom" : "NSP_NetSuite_Item_Name__c"
+        }, {
+          "top" : "blng__Invo.Name",
+          "bottom" : "blng__Invo.Name"
+        }, {
+          "top" : "blng__Invo.Id",
+          "bottom" : "blng__Invo.Id"
+        }, {
+          "top" : "blng__Invo.blng__LegalEntity__c",
+          "bottom" : "blng__Invo.blng__LegalEntity__c"
+        }, {
+          "top" : "blng__Invo.blng__Subtotal__c",
+          "bottom" : "blng__Invo.blng__Subtotal__c"
+        }, {
+          "top" : "blng__Invo.NSP_NetSuite_Item_Name__c",
+          "bottom" : "blng__Invo.NSP_NetSuite_Item_Name__c"
+        } ]
+      }
+    },
+    "OUTPUT2" : {
+      "action" : "save",
+      "sources" : [ "FORMULA17" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Invoice, Inv Line, Credit Note, Cred Note Line, Product, Legal Entity DS",
+          "name" : "RETRevenueByItem",
+          "folderName" : "RET"
+        }
+      }
+    },
+    "FORMULA14" : {
+      "action" : "formula",
+      "sources" : [ "JOIN10" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "InvoiceLineORCreditNoteLine_Formula",
+          "label" : "Invoice Line or Credit Note Line",
+          "formulaExpression" : "case \r\n\twhen (\"Product2_Join_Lookup.Name\"!= '')\r\n\tthen (\"Product2_Join_Lookup.Name\")\r\n\telse    \r\n\t\"NSP_NetSuite_Item_Name__c\"    \r\nend",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA15" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA14" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Invoice_formula",
+          "label" : "Invoice",
+          "formulaExpression" : "\"blng__Invo.blng__Subtotal__c\"",
+          "precision" : 16,
+          "scale" : 2,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA16" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA15" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Credit_formula",
+          "label" : "Credit",
+          "formulaExpression" : "-blng__Subtotal__c",
+          "precision" : 16,
+          "scale" : 2,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA17" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA16" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Balance_formula",
+          "label" : "Balance",
+          "formulaExpression" : "\"blng__Invo.blng__Subtotal__c\" - blng__Subtotal__c",
+          "precision" : 16,
+          "scale" : 2,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "JOIN8" : {
+      "action" : "join",
+      "sources" : [ "APPEND0", "LOAD_DATASET12" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "blng__Product__c" ],
+        "rightQualifier" : "Product2_Join_Lookup",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET12" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "ProductCode" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Product2",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Product2"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN9" : {
+      "action" : "join",
+      "sources" : [ "JOIN8", "LOAD_DATASET13" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "blng__LegalEntity__c" ],
+        "rightQualifier" : "Credit_Legal_Join",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET13" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "blng__LegalEntity__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "blng__LegalEntity__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN10" : {
+      "action" : "join",
+      "sources" : [ "JOIN9", "LOAD_DATASET14" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "blng__Invo.blng__LegalEntity__c" ],
+        "rightQualifier" : "Invoice_Legal_Join",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET14" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "blng__LegalEntity__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "blng__LegalEntity__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET15" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "blng__CreditNoteDate__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "blng__CreditNote__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "blng__CreditNote__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN11" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET11", "LOAD_DATASET15" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "blng__CreditNote__c" ],
+        "rightQualifier" : "CreditParent2ChildLine",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET16" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "blng__InvoiceDate__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "blng__Invoice__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "blng__Invoice__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN12" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET10", "LOAD_DATASET16" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "blng__Invoice__c" ],
+        "rightQualifier" : "InvoiceParent2ChildLine",
+        "rightKeys" : [ "Id" ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "LOAD_DATASET10" : {
+        "label" : "blng__InvoiceLine__c",
+        "type" : "LOAD_DATASET",
+        "top" : 112,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET11" : {
+        "label" : "blng__CreditNoteLine__c",
+        "type" : "LOAD_DATASET",
+        "top" : 672,
+        "left" : 393.5,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN6" : {
+        "label" : "Join via Product Name",
+        "description" : "Join via Product Name",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 392
+      },
+      "JOIN7" : {
+        "label" : "Join via Netsuit",
+        "description" : "Join via Netsuit",
+        "type" : "JOIN",
+        "top" : 392,
+        "left" : 252.10000000000002
+      },
+      "APPEND0" : {
+        "label" : "Append for Product Name and NetSuite",
+        "description" : "Append for Product Name and NetSuite",
+        "type" : "APPEND",
+        "top" : 112,
+        "left" : 532
+      },
+      "OUTPUT2" : {
+        "label" : "Inv, Inv Line, Credit Note, Cred Note Line, Product, Legal Entity DS",
+        "description" : "Invoice, Invoice Line, Credit Note, Credit Note Line, Product, Legal Entity DS",
+        "type" : "OUTPUT",
+        "top" : 112.30000000000001,
+        "left" : 1652.4
+      },
+      "TRANSFORM2" : {
+        "label" : "Transform for Final Columns",
+        "description" : "Transform for Final Formula Columns",
+        "type" : "TRANSFORM",
+        "top" : 112.1,
+        "left" : 1373.1,
+        "graph" : {
+          "FORMULA14" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA15" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA16" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA17" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA14",
+          "target" : "FORMULA15"
+        }, {
+          "source" : "FORMULA15",
+          "target" : "FORMULA16"
+        }, {
+          "source" : "FORMULA16",
+          "target" : "FORMULA17"
+        } ]
+      },
+      "JOIN8" : {
+        "label" : "Join with Product",
+        "description" : "Join with Product for fetching Product Name",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 672
+      },
+      "LOAD_DATASET12" : {
+        "label" : "Product2",
+        "type" : "LOAD_DATASET",
+        "top" : 252.39999999999998,
+        "left" : 672,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN9" : {
+        "label" : "Credit legal Join",
+        "description" : "Join for legal Entity Name",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 812
+      },
+      "LOAD_DATASET13" : {
+        "label" : "blng__LegalEntity__c",
+        "type" : "LOAD_DATASET",
+        "top" : 252.10000000000002,
+        "left" : 812.1,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN10" : {
+        "label" : "Invoice_Legal_Join",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 952
+      },
+      "LOAD_DATASET14" : {
+        "label" : "blng__LegalEntity__c",
+        "type" : "LOAD_DATASET",
+        "top" : 252.10000000000002,
+        "left" : 952.8,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET15" : {
+        "label" : "blng__CreditNote__c",
+        "type" : "LOAD_DATASET",
+        "top" : 532.6,
+        "left" : 670.9,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN11" : {
+        "label" : "CreditParent2ChildLine",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 531.8,
+        "left" : 392.1
+      },
+      "LOAD_DATASET16" : {
+        "label" : "blng__Invoice__c",
+        "type" : "LOAD_DATASET",
+        "top" : 251.39999999999998,
+        "left" : 111.9,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN12" : {
+        "label" : "InvoiceParent2ChildLine",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 252
+      }
+    },
+    "connectors" : [ {
+      "source" : "JOIN11",
+      "target" : "JOIN6"
+    }, {
+      "source" : "JOIN12",
+      "target" : "JOIN6"
+    }, {
+      "source" : "JOIN11",
+      "target" : "JOIN7"
+    }, {
+      "source" : "JOIN12",
+      "target" : "JOIN7"
+    }, {
+      "source" : "JOIN6",
+      "target" : "APPEND0"
+    }, {
+      "source" : "JOIN7",
+      "target" : "APPEND0"
+    }, {
+      "source" : "TRANSFORM2",
+      "target" : "OUTPUT2"
+    }, {
+      "source" : "JOIN10",
+      "target" : "TRANSFORM2"
+    }, {
+      "source" : "APPEND0",
+      "target" : "JOIN8"
+    }, {
+      "source" : "LOAD_DATASET12",
+      "target" : "JOIN8"
+    }, {
+      "source" : "JOIN8",
+      "target" : "JOIN9"
+    }, {
+      "source" : "LOAD_DATASET13",
+      "target" : "JOIN9"
+    }, {
+      "source" : "JOIN9",
+      "target" : "JOIN10"
+    }, {
+      "source" : "LOAD_DATASET14",
+      "target" : "JOIN10"
+    }, {
+      "source" : "LOAD_DATASET11",
+      "target" : "JOIN11"
+    }, {
+      "source" : "LOAD_DATASET15",
+      "target" : "JOIN11"
+    }, {
+      "source" : "LOAD_DATASET10",
+      "target" : "JOIN12"
+    }, {
+      "source" : "LOAD_DATASET16",
+      "target" : "JOIN12"
+    } ],
+    "hiddenColumns" : [ ]
+  },
+  "runMode" : "full"
+}

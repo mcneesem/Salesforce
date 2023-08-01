@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This email template is created to send an email to Project Implementer the master case is closed.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>NSP ITA CQA Master Case Closed Alert</name>
+    <style>none</style>
+    <subject>PR #  - Peer Review Complete</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

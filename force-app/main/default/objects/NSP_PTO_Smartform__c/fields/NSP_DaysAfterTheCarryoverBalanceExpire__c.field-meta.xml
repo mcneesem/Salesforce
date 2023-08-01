@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DaysAfterTheCarryoverBalanceExpire__c</fullName>
+    <description>How many days after the carryover or date after carryover does the balance expire?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>How many days after the carryover or date after carryover does the balance expire?</inlineHelpText>
+    <label>Days after the carryover, Balance expire</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

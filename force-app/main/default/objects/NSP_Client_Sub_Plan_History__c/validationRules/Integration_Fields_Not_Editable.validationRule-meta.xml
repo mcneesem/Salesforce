@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Fields_Not_Editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos;,
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos;,
+$User.NSP_Profile_Name__c &lt;&gt;&apos;System Administrator&apos;,
+$Setup.NSP_Trigger_Switch__c.NSP_Client_Sub_Plan_History__c =false,
+RecordType.DeveloperName = &apos;WO&apos; ,
+OR(
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Asset__c))),
+ISCHANGED( NSP_Asset__c )),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Start_Date__c))),
+ISCHANGED(NSP_Start_Date__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_End_Date__c))),
+ISCHANGED(NSP_End_Date__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Plan_ID__c))),
+ISCHANGED( NSP_Plan_ID__c )),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Plan_Subplan_Relationship__c))),
+ISCHANGED( NSP_Plan_Subplan_Relationship__c ))
+))</errorConditionFormula>
+    <errorMessage>Client Sub Plan History integration fields are not editable.</errorMessage>
+</ValidationRule>

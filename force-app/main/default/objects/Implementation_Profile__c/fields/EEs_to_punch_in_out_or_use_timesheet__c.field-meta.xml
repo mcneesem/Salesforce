@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EEs_to_punch_in_out_or_use_timesheet__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Will the client want EEs to punch in/out or use hours timesheet?</inlineHelpText>
+    <label>EEs to punch in/out or use timesheet?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Punch in/out</fullName>
+                <default>false</default>
+                <label>Punch in/out</label>
+            </value>
+            <value>
+                <fullName>Timesheet</fullName>
+                <default>false</default>
+                <label>Timesheet</label>
+            </value>
+            <value>
+                <fullName>N/A - client is not tracking hours</fullName>
+                <default>false</default>
+                <label>N/A - client is not tracking hours</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

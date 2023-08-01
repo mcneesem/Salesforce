@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_QtyForTemplate__c</fullName>
+    <description>This field is used to display quantity on Invoice template</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(blng__Product__r.SBQQ__PricingMethod__c, &apos;Block&apos;),1, blng__Quantity__c)</formula>
+    <label>Qty for Template</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

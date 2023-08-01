@@ -3,7 +3,9 @@
     <fullName>NSP_Task_Validation_for_Due_Date</fullName>
     <active>true</active>
     <description>This rule will prevent the users to add the due date less than the Opportunity Close date</description>
-    <errorConditionFormula>AND(ActivityDate &lt; TODAY () ,
+    <errorConditionFormula>AND(
+NOT ($Setup.NSP_Trigger_Switch__c.TaskValidations__c),
+ActivityDate &lt; TODAY () ,
 BEGINS(  WhatId ,&quot;006&quot;),
 IsChanged(ActivityDate)
 )</errorConditionFormula>

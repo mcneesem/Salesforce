@@ -1,8 +1,7 @@
 @isTest
 public class NSP_SyncSalesOfficeDetailsOnUserTest {
     
-    static testMethod void testBatch()
-    {
+    static testMethod void testBatch(){
         User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =: userinfo.getUserId() limit 1];
         currentUser.NSP_Sales_Office__c = '1081';
         update currentUser;

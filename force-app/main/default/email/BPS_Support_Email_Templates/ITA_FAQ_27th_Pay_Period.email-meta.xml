@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ 27th Pay Period</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ 27th Pay Period</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ 27th Pay Period</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance Support. We cannot add a 27th pay period to the schedule, as the system is designed to recognize the number of weeks within a year rather than the exact number of days within a year. That is to say, with a bi-weekly pay schedule, the time &amp; attendance system will generate 26 pay periods per year (52 weeks per year / 2 weeks per pay period = 26 pay periods per year). Since the number of days within a year exceeds that calculation (26 pay periods x 14 days per pay period = 364 days), we expect there to be some crossover from year-to-year when generating pay periods. Please rest assured that the pay period schedule in the time &amp; attendance system serves only as a guideline and does not impact your annual payroll numbers or reporting capabilities. 
+
+ 
+I’ve included instructions here for how you can generate your next year’s pay periods: 
+
+Select Company Setup &gt; Pay Periods. 
+Select the appropriate schedule from the SELECT PAY PERIOD drop-down menu 
+Select the Generate Dates button. 
+Choose the year from the drop down menu. 
+Time and Attendance will automatically fill in the Initial Date field to align with the day after your last pay period of the previous year. 
+Select the Generate Dates button to see a preview of the new year’s dates.   
+Verify the Start Date, Stop Date and Pay Date for the pay period listed are correct. 
+When all dates are accurate, select the Save Dates button. 
+When generating your pay periods, you will just want to ensure that there are no gaps or overlap in dates from year-to-year. For example, if the schedule for your current year ends on 12/23, you would want the following year’s pay periods to begin as of 12/24. 
+ 
+If you have additional questions or concerns, please let us know and we will be happy to help.
+
+
+Thank you,  
+
+
+Technical Support Team  
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

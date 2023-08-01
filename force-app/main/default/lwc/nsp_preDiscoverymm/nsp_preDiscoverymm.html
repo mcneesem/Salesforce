@@ -1,0 +1,85 @@
+<template>
+    <lightning-record-edit-form
+        onerror={handleError} record-id={recordId} onload={handleLoad}
+        object-api-name={objectApiName} density="comfy">
+        <lightning-formatted-text class="slds-page-header__title" value={label.preDiscovery}>
+        </lightning-formatted-text>
+    <div class="section slds-p-top_small" data-id="preDiscovery">
+        <lightning-formatted-text
+            class="slds-form-element__label slds-m-left_xx-small" value={label.NoWSFullTimeEmp}
+            data-field="Num_of_Worksite_Employees_Full_Time__c"></lightning-formatted-text>
+        <lightning-input-field disabled={disabledFields.Num_of_Worksite_Employees_Full_Time__c} field-name="Num_of_Worksite_Employees_Full_Time__c" 
+        value={field.Num_of_Worksite_Employees_Full_Time__c} data-name="Num_of_Worksite_Employees_Full_Time__c" class="slds-form-element_stacked" variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+        <lightning-formatted-text 
+            class="slds-form-element__label slds-m-left_xx-small" value={label.NoWSPartTimeEmp}
+            data-field="Num_of_Worksite_Employees_Part_Time__c"></lightning-formatted-text>
+        <lightning-input-field disabled={disabledFields.Num_of_Worksite_Employees_Part_Time__c} field-name="Num_of_Worksite_Employees_Part_Time__c" data-name="Num_of_Worksite_Employees_Part_Time__c" variant="label-hidden"
+        value={field.Num_of_Worksite_Employees_Part_Time__c} onchange={handleValueChange}></lightning-input-field>
+        <lightning-formatted-text
+            class="slds-form-element__label slds-m-left_xx-small" value={label.NoWSSeasonalEmp}
+            data-field="Num_of_Worksite_Employees_Seasonal__c"></lightning-formatted-text>
+        <lightning-input-field value={field.Num_of_Worksite_Employees_Seasonal__c} disabled={disabledFields.Num_of_Worksite_Employees_Seasonal__c} field-name="Num_of_Worksite_Employees_Seasonal__c" data-name="Num_of_Worksite_Employees_Seasonal__c" variant="label-hidden"
+        onchange={handleValueChange}></lightning-input-field>
+        
+        <c-nsp_selection-box disabled={disabledFields.Any_Special_Agreements_Addendum_in_CSA__c}
+            label={label.splAgrmntsAddndmsCsa} data-name="Any_Special_Agreements_Addendum_in_CSA__c"
+            field-api-name="Implementation_Profile__c.Any_Special_Agreements_Addendum_in_CSA__c"
+            record-type-id={recordTypeId}
+            value={field.Any_Special_Agreements_Addendum_in_CSA__c} 
+            onchange={handleValueChange}>
+        </c-nsp_selection-box>
+        
+        <lightning-input-field value={field.Special_Agreement_Addendum_details__c} disabled={disabledFields.Special_Agreement_Addendum_details__c} if:true={visibility.Special_Agreement_Addendum_details__c} field-name="Special_Agreement_Addendum_details__c"
+            class={styles.Special_Agreement_Addendum_details__c} data-name="Special_Agreement_Addendum_details__c" onchange={handleValueChange}></lightning-input-field>
+        
+        <c-nsp_selection-box disabled={disabledFields.Insperity_Empl_contrib_rate_determined__c} label={label.IpEmpContri} data-name="Insperity_Empl_contrib_rate_determined__c"
+            field-api-name="Implementation_Profile__c.Insperity_Empl_contrib_rate_determined__c"
+            record-type-id={recordTypeId}
+            value={field.Insperity_Empl_contrib_rate_determined__c} 
+            onchange={handleValueChange}>
+        </c-nsp_selection-box>
+        <c-nsp_selection-box disabled={disabledFields.Received_Section_125_Questionnaire__c} label={objFields.Received_Section_125_Questionnaire__c.label} data-name="Received_Section_125_Questionnaire__c"
+            field-api-name="Implementation_Profile__c.Received_Section_125_Questionnaire__c"
+            record-type-id={recordTypeId}
+            value={field.Received_Section_125_Questionnaire__c} 
+            onchange={handleValueChange}>
+         </c-nsp_selection-box> 
+         <c-nsp_selection-box disabled={disabledFields.Gotten_Cvrg_Cert_Gen_Liability_Auto__c} label={label.CrtofGnlLbltyAuto} data-name="Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
+            field-api-name="Implementation_Profile__c.Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
+            record-type-id={recordTypeId}
+            value={field.Gotten_Cvrg_Cert_Gen_Liability_Auto__c} 
+            onchange={handleValueChange}>
+         </c-nsp_selection-box>                                                        
+        <lightning-input-field value={field.Gen_liability_auto_coverage_details__c} disabled={disabledFields.Gen_liability_auto_coverage_details__c} if:true={visibility.Gen_liability_auto_coverage_details__c} field-name="Gen_liability_auto_coverage_details__c"
+            class={styles.Gen_liability_auto_coverage_details__c} data-name="Gen_liability_auto_coverage_details__c" onchange={handleValueChange}></lightning-input-field>
+        <c-nsp_selection-box disabled={disabledFields.Received_Enrollment_Fee__c} label={objFields.Received_Enrollment_Fee__c.label} data-name="Received_Enrollment_Fee__c"
+            field-api-name="Implementation_Profile__c.Received_Enrollment_Fee__c"
+            record-type-id={recordTypeId}
+            value={field.Received_Enrollment_Fee__c} 
+            onchange={handleValueChange}>
+        </c-nsp_selection-box>
+        <c-nsp_selection-box disabled={disabledFields.Will_there_be_benefits_classing__c} label={objFields.Will_there_be_benefits_classing__c.label} data-name="Will_there_be_benefits_classing__c"
+            field-api-name="Implementation_Profile__c.Will_there_be_benefits_classing__c"
+            record-type-id={recordTypeId}
+            value={field.Will_there_be_benefits_classing__c}
+            onchange={handleValueChange}>
+        </c-nsp_selection-box>    
+        <c-nsp_selection-box disabled={disabledFields.Employees_work_in_the_following_states__c} label={objFields.Employees_work_in_the_following_states__c.label} data-name="Employees_work_in_the_following_states__c"
+            field-api-name="Implementation_Profile__c.Employees_work_in_the_following_states__c"
+            record-type-id={recordTypeId}
+            value={field.Employees_work_in_the_following_states__c}
+            no-of-columns="4"
+            onchange={handleValueChange}
+            help-text="e-Verify states - AL, AZ, GA, FL, LA, MO, MS, NC, SC, TN, UT"
+            multiple>
+        </c-nsp_selection-box>
+
+        <lightning-formatted-text if:true={visibility.newHampshire} class="headerMessage slds-text-color_error"
+            value={label.newHampshire}>
+        </lightning-formatted-text>
+                        
+       <lightning-input-field value={field.Pre_Discovery_Notes__c} disabled={disabledFields.Pre_Discovery_Notes__c} field-name="Pre_Discovery_Notes__c" data-name="Pre_Discovery_Notes__c" onchange={handleValueChange}></lightning-input-field>
+    </div>
+    </lightning-record-edit-form>
+</template>

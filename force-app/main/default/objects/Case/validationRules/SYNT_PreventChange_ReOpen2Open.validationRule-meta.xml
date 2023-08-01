@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SYNT_PreventChange_ReOpen2Open</fullName>
+    <active>true</active>
+    <description>This validation rule prevent the user from Changing ReOpen to Opoen</description>
+    <errorConditionFormula>AND(
+   $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
+   $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+   ISPICKVAL(Status, &apos;Open&apos;), 
+   ISPICKVAL(PRIORVALUE(Status),&apos;ReOpened&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Can&apos;t change the Status from ReOpened to Open</errorMessage>
+</ValidationRule>

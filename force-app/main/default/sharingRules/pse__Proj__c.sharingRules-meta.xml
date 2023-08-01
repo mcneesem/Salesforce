@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>BPS_Templates</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>BPS Templates</label>
+        <sharedTo>
+            <role>BPS_Service_User</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>pse__Is_Template__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>TES+BPS,RET Project Type</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>NSP_Share_All_Project_to_Service_Profiles</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share All Project to Service Profiles</label>
+        <sharedTo>
+            <group>NSP_Service_Profile_Group_Members</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Non_Template_Projects</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Non-Template Projects</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>pse__Is_Template__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>PEO_Templates</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>PEO Templates</label>
+        <sharedTo>
+            <role>PEO_Service_User</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>pse__Is_Template__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>PEO Project</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+   
+</SharingRules>

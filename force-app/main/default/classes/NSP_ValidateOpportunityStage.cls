@@ -271,7 +271,7 @@ public class NSP_ValidateOpportunityStage {
             return userMap;
     }  
     
-/**
+    /**
 * Checks if current user can modify opportunity stage to closed lost
 * @param Opportunity opp
 *  

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BPS - CSS Task Created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BPS - CSS Task Created</name>
+    <style>freeForm</style>
+    <subject>BPS - CSS Task Created</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+Your request for assistance has been reviewed and we&apos;ve determined that this will be best handled by your Customer Success Specialist. We have sent the information to them, and they will be in touch with you as soon as they&apos;re able. We appreciate your patience.
+
+ If you have additional questions or concerns in the meantime, please let us know and we will be happy to help.
+
+Thank you,
+
+2990 Triverton Pike Drive | Madison, WI 53711
+
+OFFICE: 800-314-8223 | FAX: 262-364-3800 Time &amp; Attendance Technical Support
+2990 Triverton Pike Drive | Madison, WI 53711
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

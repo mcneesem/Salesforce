@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Mapping101</label>
+    <protected>false</protected>
+    <values>
+        <field>Key__c</field>
+        <value xsi:type="xsd:string">ITA-Implementation</value>
+    </values>
+    <values>
+        <field>NSP_From_Object__c</field>
+        <value xsi:type="xsd:string">AssetOpportunity</value>
+    </values>
+    <values>
+        <field>Template_ID__c</field>
+        <value xsi:type="xsd:string">a2o3C000000Ku0ZQAS</value>
+    </values>
+    <values>
+        <field>Template_Name__c</field>
+        <value xsi:type="xsd:string">ITA-Implementation</value>
+    </values>
+</CustomMetadata>

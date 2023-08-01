@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OPRT - Data Import</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OPRT - Data Import</name>
+    <style>freeForm</style>
+    <subject>OPRT - Data Import</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for your email. Insperity Organizational Planning offers the ability to create charts or directories from data stored in a variety of file formats, databases, and directories.
+
+You can view the job aid here for assistance with importing employee data in the format required by Insperity Organizational Planning.  If you have any additional questions or if I can be of further assistance, please let me know.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

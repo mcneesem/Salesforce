@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>NSP_TimeStar – Content – Case Created</name>
+    <style>freeForm</style>
+    <subject>Case # {!Case.CaseNumber} Created : {!Case.Subject}</subject>
+    <textOnly>Hello {!Case.SuppliedName},
+
+Thank you for contacting Insperity Technical Support. We have created a support case (Case #{!Case.CaseNumber} - &quot;{!Case.Subject}&quot;) with your request, and our technicians will be glad to assist you as soon as they are able. Cases are handled in the order in which they are received with preference given to items that impact timely payroll processing. We do apologize that at this time, due to high volume, our response times are longer than we&apos;d like. Please rest assured that we do have your request and will be in touch as soon as we&apos;re able. In the meantime, feel free to reference our new Help Center site that may assist in answering some questions.
+
+If your ability to process your payroll in a timely manner is being affected, or your request is time sensitive due to some other reason, please either reply to this email noting the deadline and whether it is payroll critical, or call 800-314-8223.
+
+Insperity Time &amp; Attendance Support
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

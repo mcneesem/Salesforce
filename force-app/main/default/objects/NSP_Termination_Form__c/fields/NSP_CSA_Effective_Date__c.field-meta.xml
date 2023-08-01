@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CSA_Effective_Date__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Note: In order of preference, this date is: 
+
+1. The &apos;effective date of the CSA: or
+
+2. The executed date of the CSA; or
+
+3. The original employment date from the AIMS general contract screen.</inlineHelpText>
+    <label>CSA Effective Date</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

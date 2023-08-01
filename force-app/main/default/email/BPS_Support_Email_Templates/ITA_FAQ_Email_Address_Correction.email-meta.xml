@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Email Address Correction</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Email Address Correction</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Email Address Correction</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+A support case will be opened to address your request. You will receive a confirmation email with the new case number shortly. We would like to request that you send any new requests to the email address that is monitored by the team who is best suited to answer promptly. That email address is time.support@insperity.com. Sending an email directly there, rather than replying to an older item ensures that the information you provide is received in a timely manner and accurately recorded in your case. We appreciate your assistance in this matter. 
+ 
+ 
+Thank you, 
+ 
+Technical Support Team  
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

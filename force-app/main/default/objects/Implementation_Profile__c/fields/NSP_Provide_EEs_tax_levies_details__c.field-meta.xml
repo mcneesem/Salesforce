@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Provide_EEs_tax_levies_details__c</fullName>
+    <description>If &quot;Yes&quot; is selected in &quot;Do any EEs have tax levies?&quot;</description>
+    <externalId>false</externalId>
+    <label>Provide EEs tax levies details</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

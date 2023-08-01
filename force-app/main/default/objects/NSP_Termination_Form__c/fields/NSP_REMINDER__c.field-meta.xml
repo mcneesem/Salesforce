@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_REMINDER__c</fullName>
+    <defaultValue>&quot;REMINDER: Additional time will be needed to process the termination as Legal will review the letter before it is released internally and to the client.&quot;</defaultValue>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
+    <inlineHelpText>REMINDER: Additional time will be needed to process the termination as Legal will review the letter before it is released internally and to the client.</inlineHelpText>
+    <label>REMINDER</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

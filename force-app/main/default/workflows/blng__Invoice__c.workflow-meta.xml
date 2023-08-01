@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+     <alerts>
+        <fullName>NSP_Send_Invoice_Link_for_ACH</fullName>
+        <description>Send Invoice Link for ACH</description>
+        <protected>false</protected>
+        <recipients>
+            <field>blng__BillToContact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>pwc_qa@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/NSP_SendEmailforACH</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Send_Invoice_Link_for_Payment</fullName>
+        <description>Send Invoice Link for Payment</description>
+        <protected>false</protected>
+        <recipients>
+            <field>blng__BillToContact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>pwc_qa@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/NSP_SendInvoiceLink</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Invoice_Payment_Reminder_After_30_Days</fullName>
+        <description>Send Invoice Payment Reminder After 30 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>blng__BillToContact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>NSP_Invoice_To_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>pwc_qa@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Dunning_Templates/X30_Days_Past_Due_Reminder</template>
+    </alerts>
+</Workflow>

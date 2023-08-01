@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - Integration Change Notification (ITA ONLY Term - TED Client)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - Integration Change Notification (ITA ONLY Term - TED Client)</name>
+    <style>freeForm</style>
+    <subject>ITA - Integration Change Notification (ITA ONLY Term - Partial Site)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand that COMPANY NAME (CLIENT ID) will be terminating Insperity Time &amp; Attendance services as of XX/XX/2022. In preparation for that, we would like to confirm some details and share some information on what you can expect post-termination:
+
+Payroll Team – Please confirm the date of the client&apos;s last payroll run using the Time &amp; Attendance system. Since the client is utilizing TED, we will need this information to ensure the timing of their Time &amp; Attendance to Payroll integration change is correct.
+
+Employees – Existing employees will be able to continue using the Insperity Premier to Time &amp; Attendance single sign-on and mobile features as normal through your termination date listed above. Employees will not have access to track time and/or accruals in Time &amp; Attendance following that date.
+
+Administrators – Administrators, like employees, will be able to continue using the Insperity Premier to Time &amp; Attendance single sign-on and mobile features as normal through your termination date listed above. After that, administrators will need to use the URL below to access Time &amp; Attendance for reporting and payroll purposes:
+
+https://timestar.insperity.com/SSO/WO.aspx
+
+They will use the same credentials for this site that they are already using to log in to Insperity Premier and will still be able to process payroll as normal, through the payroll date confirmed by your Payroll Team.
+
+The link provided above will continue to work for 90 days following your termination date and you will receive a separate notification prior to your Time and Attendance site being deactivated, after that time. We recommend extracting your time and accrual data prior to the site being deactivated, and have provided a link below that details that process for you:
+
+https://help.insperity.com/bps/knowledge-base/performing-full-time-and-attendance-data-exports-payroll-and-accrual-data/
+
+
+Thank you,
+
+Insperity Time &amp; Attendance Support
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

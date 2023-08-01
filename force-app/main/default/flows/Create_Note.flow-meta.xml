@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>54.0</apiVersion>
+    <choices>
+        <name>NSP_Type_choices</name>
+        <choiceText>Types</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <dynamicChoiceSets>
+        <name>Types</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Note_Type__c</picklistField>
+        <picklistObject>NSP_Note__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>Create Note {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Note</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>Create_a_note</name>
+        <label>Create a note</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NSP_Type</name>
+            <choiceReferences>Types</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <stringValue>Note</stringValue>
+            </defaultValue>
+            <fieldText>Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>NSP_Note</name>
+            <fieldText>Note</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_a_note</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Contribution_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Contribution Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401</fullName>
+                <default>false</default>
+                <label>401 Employee Pre-tax</label>
+            </value>
+            <value>
+                <fullName>402</fullName>
+                <default>false</default>
+                <label>402 Employer Match</label>
+            </value>
+            <value>
+                <fullName>403</fullName>
+                <default>false</default>
+                <label>403 Safe Harbor Match</label>
+            </value>
+            <value>
+                <fullName>404</fullName>
+                <default>false</default>
+                <label>404 Non-Elective Employer</label>
+            </value>
+            <value>
+                <fullName>405</fullName>
+                <default>false</default>
+                <label>405 Non-Elective Safe Harbor</label>
+            </value>
+            <value>
+                <fullName>406</fullName>
+                <default>false</default>
+                <label>406 Employee After Tax</label>
+            </value>
+            <value>
+                <fullName>407</fullName>
+                <default>false</default>
+                <label>407 Employee Catch Up</label>
+            </value>
+            <value>
+                <fullName>408</fullName>
+                <default>false</default>
+                <label>408 Employer Catch Up Match</label>
+            </value>
+            <value>
+                <fullName>409</fullName>
+                <default>false</default>
+                <label>409 Safe Harbor Catch Up Match</label>
+            </value>
+            <value>
+                <fullName>410</fullName>
+                <default>false</default>
+                <label>410 Roth After Tax</label>
+            </value>
+            <value>
+                <fullName>411</fullName>
+                <default>false</default>
+                <label>411 Roth Catch Up</label>
+            </value>
+            <value>
+                <fullName>412</fullName>
+                <default>false</default>
+                <label>412 Non-Qualified Pre-tax</label>
+            </value>
+            <value>
+                <fullName>413</fullName>
+                <default>false</default>
+                <label>413 Non-Qualified Match</label>
+            </value>
+            <value>
+                <fullName>414</fullName>
+                <default>false</default>
+                <label>414 414h</label>
+            </value>
+            <value>
+                <fullName>415</fullName>
+                <default>false</default>
+                <label>415 NQDC Employer Contribution</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

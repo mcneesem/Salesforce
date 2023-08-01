@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Listof_reports_received_with_payroll__c</fullName>
+    <externalId>false</externalId>
+    <label>List of reports received with payroll</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Adjustment Memo Report</fullName>
+                <default>false</default>
+                <label>Adjustment Memo Report</label>
+            </value>
+            <value>
+                <fullName>Deductions Adjustment</fullName>
+                <default>false</default>
+                <label>Deductions Adjustment</label>
+            </value>
+            <value>
+                <fullName>Hours Worked Reconciliation Report</fullName>
+                <default>false</default>
+                <label>Hours Worked Reconciliation Report</label>
+            </value>
+            <value>
+                <fullName>HSA Employer Contribution</fullName>
+                <default>false</default>
+                <label>HSA Employer Contribution</label>
+            </value>
+            <value>
+                <fullName>Invoice Adjustment Report</fullName>
+                <default>false</default>
+                <label>Invoice Adjustment Report</label>
+            </value>
+            <value>
+                <fullName>Invoice Reconciliation J/C</fullName>
+                <default>false</default>
+                <label>Invoice Reconciliation J/C</label>
+            </value>
+            <value>
+                <fullName>Negative Checks Report</fullName>
+                <default>false</default>
+                <label>Negative Checks Report</label>
+            </value>
+            <value>
+                <fullName>New Worksheet Report</fullName>
+                <default>false</default>
+                <label>New Worksheet Report</label>
+            </value>
+            <value>
+                <fullName>Packing Slip</fullName>
+                <default>false</default>
+                <label>Packing Slip</label>
+            </value>
+            <value>
+                <fullName>PTO Anniversary Report</fullName>
+                <default>false</default>
+                <label>PTO Anniversary Report</label>
+            </value>
+            <value>
+                <fullName>Worksheet Report</fullName>
+                <default>false</default>
+                <label>Worksheet Report</label>
+            </value>
+            <value>
+                <fullName>Employe Authorization List</fullName>
+                <default>false</default>
+                <label>Employe Authorization List</label>
+            </value>
+            <value>
+                <fullName>Garnishment Report</fullName>
+                <default>false</default>
+                <label>Garnishment Report</label>
+            </value>
+            <value>
+                <fullName>Grand Total Deduction Report</fullName>
+                <default>false</default>
+                <label>Grand Total Deduction Report</label>
+            </value>
+            <value>
+                <fullName>Invoice Reconciliation</fullName>
+                <default>false</default>
+                <label>Invoice Reconciliation</label>
+            </value>
+            <value>
+                <fullName>Invoice Report</fullName>
+                <default>false</default>
+                <label>Invoice Report</label>
+            </value>
+            <value>
+                <fullName>Medical insurance Owed (EEs Not Paid) Report</fullName>
+                <default>false</default>
+                <label>Medical insurance Owed (EEs Not Paid) Report</label>
+            </value>
+            <value>
+                <fullName>Missed Administrative Fee Report</fullName>
+                <default>false</default>
+                <label>Missed Administrative Fee Report</label>
+            </value>
+            <value>
+                <fullName>Pay Sheet</fullName>
+                <default>false</default>
+                <label>Pay Sheet</label>
+            </value>
+            <value>
+                <fullName>RS Client Match Report</fullName>
+                <default>false</default>
+                <label>RS Client Match Report</label>
+            </value>
+            <value>
+                <fullName>PackSlip Exception Report</fullName>
+                <default>false</default>
+                <label>PackSlip Exception Report</label>
+            </value>
+            <value>
+                <fullName>Employee return to client deductions</fullName>
+                <default>false</default>
+                <label>Employee return to client deductions</label>
+            </value>
+            <value>
+                <fullName>Newly Hired/Termed Employees Report</fullName>
+                <default>false</default>
+                <label>Newly Hired/Termed Employees Report</label>
+            </value>
+            <value>
+                <fullName>Deductions Arrear</fullName>
+                <default>false</default>
+                <label>Deductions Arrear</label>
+            </value>
+            <value>
+                <fullName>Detail Departmental Report</fullName>
+                <default>false</default>
+                <label>Detail Departmental Report</label>
+            </value>
+            <value>
+                <fullName>Detail JobCost Report</fullName>
+                <default>false</default>
+                <label>Detail JobCost Report</label>
+            </value>
+            <value>
+                <fullName>Employees without paychecks report</fullName>
+                <default>false</default>
+                <label>Employees without paychecks report</label>
+            </value>
+            <value>
+                <fullName>Invoice - Group Only Display</fullName>
+                <default>false</default>
+                <label>Invoice - Group Only Display</label>
+            </value>
+            <value>
+                <fullName>PTO Balances - Payroll</fullName>
+                <default>false</default>
+                <label>PTO Balances - Payroll</label>
+            </value>
+            <value>
+                <fullName>Rate Detail Report (DCAA)</fullName>
+                <default>false</default>
+                <label>Rate Detail Report (DCAA)</label>
+            </value>
+            <value>
+                <fullName>Rate Detail Report (JOBCOST DCAA)</fullName>
+                <default>false</default>
+                <label>Rate Detail Report (JOBCOST DCAA)</label>
+            </value>
+            <value>
+                <fullName>Rate Summary Report (DCAA)</fullName>
+                <default>false</default>
+                <label>Rate Summary Report (DCAA)</label>
+            </value>
+            <value>
+                <fullName>Rate Summary Report (JOBCOST DCAA)</fullName>
+                <default>false</default>
+                <label>Rate Summary Report (JOBCOST DCAA)</label>
+            </value>
+            <value>
+                <fullName>RRP CALCULATED PREMIUM</fullName>
+                <default>false</default>
+                <label>RRP CALCULATED PREMIUM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

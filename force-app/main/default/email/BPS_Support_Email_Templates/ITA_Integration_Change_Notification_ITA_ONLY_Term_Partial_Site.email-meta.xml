@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - Integration Change Notification (ITA ONLY Term - Partial Site)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - Integration Change Notification (ITA ONLY Term - Partial Site)</name>
+    <style>freeForm</style>
+    <subject>ITA - Integration Change Notification (ITA ONLY Term - Partial Site)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand that you are terminating your services with Insperity Payroll and Time &amp;  Attendance as of MM/DD/YYYY for client ID(s):
+
+XXX
+
+
+Existing users with that client ID will be able to continue using the Insperity Premier to Time &amp; Attendance single sign-on and mobile features as normal through the date listed above. After that, administrators for that account will need to use the URL below to access Time &amp; Attendance for payroll and reporting purposes:
+
+https://timestar.insperity.com/SSO/WO.aspx 
+
+They will use the same credentials for this site that they are already using to log in to Insperity Premier.
+
+Employees will not have access to track time and/or accruals in Time &amp; Attendance following the date listed above. However, you will still be able to process your payroll as normal, and the link provided above will continue to work for administrators through the next 90 days from your termination date.
+
+Please let us know if you have any questions, and we would be happy to help.
+
+Thank you,
+
+Insperity Time &amp; Attendance Support
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

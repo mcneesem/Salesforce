@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Backup_Payroll_Contact_SCC__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Backup Payroll Contact SCC</label>
+    <referenceTo>NSP_Sub_Client_Contact__c</referenceTo>
+    <relationshipLabel>Payroll Data Sheets (Backup Payroll Contact SCC)</relationshipLabel>
+    <relationshipName>Payroll_Data_Sheets2</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

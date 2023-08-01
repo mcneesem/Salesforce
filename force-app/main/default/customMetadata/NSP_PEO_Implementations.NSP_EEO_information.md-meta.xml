@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>EEO Information</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">MM Form EEO information 
+            Automation Section: Client Information
+            Automation name: EEO Information
+            Automation icon: envelope
+            Email Address:EEOTeam@insperity.com</value>
+    </values>
+    <values>
+        <field>NSP_Email_Address__c</field>
+        <value xsi:type="xsd:string">malyk.peniel@dissloo.com</value>
+    </values>
+    <values>
+        <field>NSP_Name__c</field>
+        <value xsi:type="xsd:string">EEO Information</value>
+    </values>
+</CustomMetadata>

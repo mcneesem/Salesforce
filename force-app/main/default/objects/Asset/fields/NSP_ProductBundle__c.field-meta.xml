@@ -7,6 +7,7 @@
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>NSP_Product_Line__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -40,6 +41,114 @@
                 <default>false</default>
                 <label>WX (WO to WX)</label>
             </value>
-        </valueSetDefinition>
+            <value>
+                <fullName>WO/WS</fullName>
+                <default>false</default>
+                <label>WO/WS</label>
+            </value>
+            <value>
+                <fullName>Stand Alone</fullName>
+                <default>false</default>
+                <label>Stand Alone</label>
+            </value>
+            <value>
+                <fullName>Certify</fullName>
+                <default>false</default>
+                <label>Certify</label>
+            </value>
+            <value>
+                <fullName>Expensable</fullName>
+                <default>false</default>
+                <label>Expensable</label>
+            </value>
+        </valueSetDefinition>        
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <controllingFieldValue>Recruiting Services</controllingFieldValue>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <controllingFieldValue>Certify</controllingFieldValue>
+            <controllingFieldValue>XML</controllingFieldValue>
+            <controllingFieldValue>Integra</controllingFieldValue>
+            <controllingFieldValue>Workforce Administration</controllingFieldValue>
+            <controllingFieldValue>Applicant Tracking</controllingFieldValue>
+            <controllingFieldValue>Employment Screening</controllingFieldValue>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <controllingFieldValue>Learning &amp; Development</controllingFieldValue>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>WA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <controllingFieldValue>Recruiting Services</controllingFieldValue>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <controllingFieldValue>Certify</controllingFieldValue>
+            <controllingFieldValue>XML</controllingFieldValue>
+            <controllingFieldValue>Integra</controllingFieldValue>
+            <controllingFieldValue>Workforce Acceleration</controllingFieldValue>
+            <controllingFieldValue>Applicant Tracking</controllingFieldValue>
+            <controllingFieldValue>Employment Screening</controllingFieldValue>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <controllingFieldValue>Learning &amp; Development</controllingFieldValue>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>WX</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <controllingFieldValue>Recruiting Services</controllingFieldValue>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <controllingFieldValue>Certify</controllingFieldValue>
+            <controllingFieldValue>XML</controllingFieldValue>
+            <controllingFieldValue>Integra</controllingFieldValue>
+            <controllingFieldValue>Workforce Optimization</controllingFieldValue>
+            <controllingFieldValue>Workforce Synchronization</controllingFieldValue>
+            <controllingFieldValue>Applicant Tracking</controllingFieldValue>
+            <controllingFieldValue>Employment Screening</controllingFieldValue>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <controllingFieldValue>Learning &amp; Development</controllingFieldValue>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>WO/WS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Management</controllingFieldValue>
+            <controllingFieldValue>Recruiting Services</controllingFieldValue>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Time &amp; Attendance</controllingFieldValue>
+            <controllingFieldValue>Certify</controllingFieldValue>
+            <controllingFieldValue>XML</controllingFieldValue>
+            <controllingFieldValue>Integra</controllingFieldValue>
+            <controllingFieldValue>Applicant Tracking</controllingFieldValue>
+            <controllingFieldValue>Employment Screening</controllingFieldValue>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <controllingFieldValue>Learning &amp; Development</controllingFieldValue>
+            <controllingFieldValue>Organizational Planning</controllingFieldValue>
+            <valueName>Stand Alone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Workforce Acceleration</controllingFieldValue>
+            <valueName>WX (WO to WX)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Workforce Administration</controllingFieldValue>
+            <valueName>WA (WO to WA)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Workforce Administration</controllingFieldValue>
+            <valueName>Payroll Only</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Workforce Administration</controllingFieldValue>
+            <valueName>WOSS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense Management</controllingFieldValue>
+            <valueName>Certify</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense Management</controllingFieldValue>
+            <valueName>Expensable</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

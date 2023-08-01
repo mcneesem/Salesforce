@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_System_Generated_Focus_Item</fullName>
+    <active>true</active>
+    <description>STY-02424 - Automation - Tenure/401k - Client Health &amp; Renewal Probability Focus Items</description>
+    <label>System Generated Focus Item</label>
+    <picklistValues>
+        <picklist>Area_of_Focus__c</picklist>
+        <values>
+            <fullName>Customer Relationship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Macro Environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solutions %26 Execution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Focus_Item__c</picklist>
+        <values>
+            <fullName>Administrative Relief%2F Staffing Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Restructure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Reference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communication %26 Engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data %26 Reporting Availability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Early Tenure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Economic Shifts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evaluating Alternative Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Dissatisfaction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International Employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International Ownership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoicing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Key Client Contact Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M%26A Activity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Navigation %26 Workflow Challenges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Insperity 401k</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price Increase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rapid Growth or Decline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risk Mitigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Continuity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology %26 Seamless Data Transfer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Detail__c</picklist>
+        <values>
+            <fullName>Account Team turnover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acquired by PE firm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acquired%2Facquiring%2Fmerged with another firm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client escalates within Insperity due to unresolved concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client financial health decline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client indicates they are spending more time than expected on HR%2FPayroll support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client indicates they are willing to be a reference for prospects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client indicates they have outgrown the PEO%2FWX%2FWA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client is unresponsive to meeting request%2Fphone calls</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client notes Insperity errors %28data entry%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client operates outside the compliance guidance provided by Insperity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client raises Concerns about lack of seamless data transfer between Insperity systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor or broker offers significant savings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declining 20%25 or more in WSEE over 12 months or less</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Departmental realignments%2C change in business model or offering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Difficulty with Insperity processes and workflows</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct cost renewal increases %28medical benefits%2C WC%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfied with HR service model %28not as expected at purchase%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfied with benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfied with deliverable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfied with policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfied with service engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downturn or Upturn in economic environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Early Tenure Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Execution issue that impacts one or more employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extensive Salary Reduction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Frustration with invoices or pricing transparency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Growing 20%25 or more in WSEE over 12 months or less</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hiring HR%2FPayroll employee%28s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal escalations within client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Key stakeholder changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notable increase%2Fdecrease in engagement or communication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Consultants being used</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partial or whole ownership by International parent company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policy issue that impacts one or more employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potential bankruptcy%2C dissolution or other critical financial concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shopping a competitor for standard due diligence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shopping a competitor with intent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transitioned despite objections%2Freluctance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transitioned to new segment%2Fservice team%2Fplatform</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US based company with EEs in other countries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unable to have visibility into important data</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unable to pull data%2Freporting in format needed due to Insperity policy or regulations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unexpected increase in service fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voices concern that they are paying more than expected or agreed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Estimated_Impact__c</picklist>
+        <values>
+            <fullName>Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat unfavorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_System_Generated__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Y</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

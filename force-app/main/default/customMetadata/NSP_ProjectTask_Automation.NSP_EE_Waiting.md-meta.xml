@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>EE Waiting</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Category__c</field>
+        <value xsi:type="xsd:string">Onboarding Benefits</value>
+    </values>
+    <values>
+        <field>NSP_Milestone__c</field>
+        <value xsi:type="xsd:string">Benefits</value>
+    </values>
+    <values>
+        <field>NSP_Sub_Category__c</field>
+        <value xsi:type="xsd:string">Benefits</value>
+    </values>
+    <values>
+        <field>NSP_Task_Name__c</field>
+        <value xsi:type="xsd:string">Client&apos;s previous wait period is less than NSPs-follow up on WSEEs in waitperiod</value>
+
+    </values>
+</CustomMetadata>

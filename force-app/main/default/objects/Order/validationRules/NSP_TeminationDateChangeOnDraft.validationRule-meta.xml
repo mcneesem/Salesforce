@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_TeminationDateChangeOnDraft</fullName>
+    <active>true</active>
+    <description>Termination date can only change while order is in draft status</description>
+    <errorConditionFormula>AND(ISPICKVAL(Type ,&apos;Termination&apos;),ISCHANGED(NSP_TerminationDate__c ),NOT(ISPICKVAL(Status,&apos;Draft&apos;)))</errorConditionFormula>
+    <errorDisplayField>NSP_TerminationDate__c</errorDisplayField>
+    <errorMessage>Termination Date Can Not be Changed at This Status</errorMessage>
+</ValidationRule>

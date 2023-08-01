@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_KIP_Perspective_of_Relationship__c</fullName>
+    <description>to track KIP perspective of relationship</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Key Internal Partner is usually the AE | CL | Bus. Team-HRSp/CL.</inlineHelpText>
+    <label>KIP Perspective of Relationship</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Trusted Business Advisor</fullName>
+                <default>false</default>
+                <label>Trusted Business Advisor</label>
+            </value>
+            <value>
+                <fullName>Pro-Active Resource</fullName>
+                <default>false</default>
+                <label>Pro-Active Resource</label>
+            </value>
+            <value>
+                <fullName>Reactive Problem Solver/Vendor</fullName>
+                <default>false</default>
+                <label>Reactive Problem Solver/Vendor</label>
+            </value>
+            <value>
+                <fullName>No Relationship</fullName>
+                <default>false</default>
+                <label>No Relationship</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

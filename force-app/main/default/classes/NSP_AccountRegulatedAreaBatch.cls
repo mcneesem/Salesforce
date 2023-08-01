@@ -1,0 +1,556 @@
+/**
+Apex Class Name      :  NSP_AccountRegulatedAreaBatch
+Version              :  1.0 
+Author               :  Jatin                                                                          
+Created Date         :  06/01/22 
+Function             :  Creates AccountRegulatedArea and Cases when it matches with Regulated Area State/ZipCode.
+Story                :  As part of STY-03789                                                                    
+Modification Log     :                                                                              
+*--------------------------------------------------------------------------------------------------  
+* Developer                   Date                   Description                                    
+* -------------------------------------------------------------------------------------------------  
+* Anil                      8/19/2022               First Iteration
+*/
+public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject> {
+    private static final String CASE_SUBJECT = 'Employees work in ';
+    private static List<NSP_Account_Regulated_area__c> accRegulatedAreaList = new List<NSP_Account_Regulated_area__c>();
+    private static Map<String, List<String>> accWithCaseSubjStates = new Map<String, List<String>>();
+    private static Map<String, List<Address>> accIdWithStateAddress = new Map<String, List<Address>>();
+    private static Map<String, List<Address>> accIdWithZipAddress = new Map<String, List<Address>>();
+    private static Map<String, Set<String>> accWithAddressStates = new Map<String, Set<String>>();
+    private static Map<String, Set<String>> accWithAddressZipCodes = new Map<String, Set<String>>();
+    private static List<NSP_Address__c> lstAddressToUpdate = new List<NSP_Address__c>();
+    private static Map<Id, Set<String>> accWithAccRegState = new Map<Id, Set<String>>();
+    private static Map<Id, set<String>> accWithAccRegCity = new Map<Id, Set<String>>();
+    private static Map<String, String> accIdRegIdWithCaseSubject = new Map<String, String>();
+    private static Set<String> setAccRegArea = new Set<String>();
+    private static Set<String> setCases = new Set<String>();
+    private static Set<String> setAddressId = new Set<String>();
+    private static Map<Id, Map<String,Id>> accountWithTeamMemberId = new Map<Id, Map<String,Id>>();
+    private static List<Case> lstCases = new List<Case>();
+    private static Id recordTypePEOID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
+    @TestVisible private static Set<Id> setAccountIds = new Set<Id>();
+    @TestVisible NSP_AccountRegulatedAreaBatch.Selector selector = new NSP_AccountRegulatedAreaBatch.Selector();
+
+    public Set<String> setRegulatedStates = new Set<String>();
+    public Map<String, NSP_Regulated_Area__c> stateWithRegulatedArea = new Map<String, NSP_Regulated_Area__c>();
+    public Map<String, NSP_Regulated_Area__c> zipCodesWithRegArea = new Map<String, NSP_Regulated_Area__c>(); 
+    public Integer counter = 0;
+    public String query;
+
+    public NSP_AccountRegulatedAreaBatch(Map<String,Object> data){
+        this.counter = (Integer) data.get('counter');
+        this.setRegulatedStates =  (Set<String>) data.get('setRegulatedStates');
+        this.stateWithRegulatedArea = (Map<String, NSP_Regulated_Area__c>) data.get('stateWithRegulatedArea');
+        this.zipCodesWithRegArea = (Map<String, NSP_Regulated_Area__c>) data.get('zipCodesWithRegArea');
+
+       	if(counter == 1){
+
+            String regulatedStatesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( new List<String>(setRegulatedStates) , '\',\'') });
+            String zipCodesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( new List<String>(zipCodesWithRegArea.keySet()) , '\',\'') });
+        
+            query = 'SELECT Id, NSP_Address__c,  NSP_Address__r.NSP_Related_Site__c, NSP_City__c, NSP_State__c,'
+                + ' NSP_Postal_Code__c,NSP_Postal_Code_New__c, NSP_Address_Type__c, NSP_Contact__c, NSP_Contact__r.AccountId, NSP_Sub_Client_Contact__c,'
+                + ' NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c'
+                + ' FROM NSP_Sub_Client_Contact_Address__c'
+                + ' WHERE (NSP_Address_Type__c =\''+ NSP_ServiceConstants.WORK_SITE +'\' OR NSP_Address_Type__c =\''+ NSP_ServiceConstants.US_MAIL +'\')'
+                + ' AND NSP_Contact__c != NULL'
+                + ' AND NSP_Address__r.NSP_Regulated_Batch__c = FALSE'
+                + ' AND (NSP_City__c != NULL OR NSP_State__c != NULL OR NSP_Postal_Code_New__c != NULL)'
+                + ' AND (NSP_State__c IN '+regulatedStatesString+' OR NSP_Postal_Code_New__c IN '+zipCodesString+')';
+        }
+    }
+    
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        return Database.getQueryLocator(query);
+    }
+
+    public void execute(Database.BatchableContext bc, List<sObject> lstRecords) {
+        try {
+
+            getSubClientContactAddress((List<NSP_Sub_Client_Contact_Address__c>) lstRecords);
+            getAccountRecords();
+            getAccountTeams();
+            prepareAccRegAreaAndCase();
+            createRecords();
+
+        } catch (Exception ex) {
+            NSP_ErrorLogHandler.logSaveException('NSP_AccountRegulatedAreaBatch', 'execute', ex.getMessage());
+        }
+    }
+
+    /**
+     * @description insert AccountRegulatedArea Records and Cases into the database
+     */
+    private void createRecords() {
+
+        Map<String, String> subjectWithCaseId = new Map<String, String>();
+        Set<Id> setAccRegAreas = new Set<Id>();
+
+        if (!accRegulatedAreaList.isEmpty()) {
+            Database.insert(accRegulatedAreaList, false);
+
+            for (NSP_Account_Regulated_area__c accRegArea : accRegulatedAreaList) {
+                setAccRegAreas.add(accRegArea.Id);
+            }
+        }
+
+
+        if (!lstCases.isEmpty()) {
+
+            Database.insert(lstCases, false);
+
+            for (Case cse : lstCases) {
+                String subject = cse.Subject?.replace(CASE_SUBJECT, '');
+                List<String> lstDescription = new List<String>();
+                if (subject?.contains('/ ')) {
+                    List<String> localCities = subject?.Split('/');
+                    lstDescription.add(localCities[0]);
+                    if (localCities[1] != null) {
+                        lstDescription.addAll(localCities[1].split(', '));
+                    }
+                } else {
+                    lstDescription.addAll(subject?.split(', '));
+                }
+                for (String str : lstDescription) {
+                    subjectWithCaseId.put(cse.AccountId + '_' + str, cse.Id);
+                }
+            }
+        }
+
+        connectAccRegAreaWithCase(subjectWithCaseId, setAccRegAreas);
+        
+        if (!lstAddressToUpdate.isEmpty()) {
+            Database.update(lstAddressToUpdate, false);
+        }
+    }
+
+    private void connectAccRegAreaWithCase(Map<String, String> subjectWithCaseId, Set<Id> setAccRegAreas){
+        if (!setAccRegAreas.isEmpty()) {
+
+            List<NSP_Account_Regulated_area__c> lstToUpdate = new List<NSP_Account_Regulated_area__c>();
+
+            for (NSP_Account_Regulated_area__c accRegArea : selector.getAccountsRegulatedAreaRecords(setAccRegAreas)) {
+
+                if (accRegArea.NSP_State__c != null &&
+                    subjectWithCaseId.containsKey(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_State__c)) {
+                    accRegArea.NSP_Case__c = subjectWithCaseId?.get(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_State__c);
+                }
+
+                if (accRegArea.NSP_City__c != null &&
+                    subjectWithCaseId.containsKey(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_City__c)) {
+                    accRegArea.NSP_Case__c = subjectWithCaseId?.get(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_City__c);
+                }
+               
+                lstToUpdate.add(accRegArea);
+            }
+            if (!lstToUpdate.isEmpty()) {
+                Database.update(lstToUpdate, false);                
+            }
+        }
+    }
+
+    private void prepareAccRegAreaAndCase() {
+        List<Address> lstAddress = new List<Address>();
+        Map<String, Set<String>> accIdWithCaseSubjToCreate = new Map<String, Set<String>>();
+
+        for(Id accountId : setAccountIds){
+            if(accIdWithStateAddress.containsKey(accountId)){
+                lstAddress.addAll(accIdWithStateAddress.get(accountId));
+            }
+            if(accIdWithZipAddress.containsKey(accountId)){
+                lstAddress.addAll(accIdWithZipAddress.get(accountId));
+            } 
+        }
+
+        //if Address exists and not created any of the case with state and city then it will prepare case to create
+        if (!lstAddress.isEmpty()) {
+            for (Address oAddress : lstAddress) {
+
+                Set<String> lstExistingStates = accWithAccRegState.containsKey(oAddress.accountId) ? accWithAccRegState.get(oAddress.accountId) : new Set<String>();
+                Set<String> accIdHasAddressStates = accWithAddressStates.containsKey(oAddress.accountId) ? accWithAddressStates.get(oAddress.accountId) : new Set<String>();
+
+                Set<String> lstExistingZipCodes = accWithAccRegCity.containsKey(oAddress.accountId) ? accWithAccRegCity.get(oAddress.accountId) : new Set<String>();
+                Set<String> accIdHasAddressZipCodes = accWithAddressZipCodes.containsKey(oAddress.accountId) ? accWithAddressZipCodes.get(oAddress.accountId) : new Set<String>();
+                
+                List<String> lstExistingCaseStates = accWithCaseSubjStates.containsKey(oAddress.accountId) ? accWithCaseSubjStates.get(oAddress.accountId) : new List<String>();
+
+                //check for the state/Zip that exists or not then create new Account Regulated Area
+                if (
+                    stateWithRegulatedArea.containsKey(oAddress.state) &&
+                    stateWithRegulatedArea?.get(oAddress.state)?.NSP_State__c != null &&
+                    accIdHasAddressStates.contains(oAddress.state) &&
+                    stateWithRegulatedArea?.get(oAddress.state)?.NSP_City__c == null &&
+                    stateWithRegulatedArea?.get(oAddress.state)?.NSP_Zip_Code__c == null &&
+                    !lstExistingStates.contains(oAddress.state)
+                ) {
+                    newAccountRegulatedArea(oAddress);
+                } else if (
+                    zipCodesWithRegArea.containsKey(oAddress.zipCode) &&
+                    !lstExistingZipCodes.contains(oAddress.zipCode) &&
+                    accIdHasAddressZipCodes.contains(oAddress.zipCode) &&
+                    zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_State__c == null &&
+                    zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_City__c != null &&
+                    zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_Zip_Code__c != null
+                ) {
+                    newAccountRegulatedArea(oAddress);
+                }
+
+                //check for the state/Zip that exists or not then create new Case
+                if (
+                    stateWithRegulatedArea.containsKey(oAddress.state) &&
+                    !lstExistingCaseStates.contains(oAddress.state) &&
+                    accIdHasAddressStates.contains(oAddress.state) &&
+                    stateWithRegulatedArea?.get(oAddress.state)?.NSP_State__c != null &&
+                    stateWithRegulatedArea?.get(oAddress.state)?.NSP_City__c == null &&
+                    stateWithRegulatedArea?.get(oAddress.state)?.NSP_Zip_Code__c == null
+                ) {
+                    if (accIdWithCaseSubjToCreate.containsKey(oAddress.accountId)) {
+                        accIdWithCaseSubjToCreate.get(oAddress.accountId).add(oAddress.state);
+                    } else {
+                        accIdWithCaseSubjToCreate.put(
+                            oAddress.accountId,
+                            new Set<String>{ oAddress.state }
+                        );
+                    }
+                } else if (
+                    zipCodesWithRegArea.containsKey(oAddress.zipCode) &&
+                    accIdHasAddressZipCodes.contains(oAddress.zipCode) &&
+                    !lstExistingZipCodes.contains(oAddress.zipCode) &&
+                    zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_State__c == null &&
+                    zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_City__c != null &&
+                    zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_Zip_Code__c != null
+                ) {
+                    if (accIdWithCaseSubjToCreate.containsKey(oAddress.accountId)) {
+                        accIdWithCaseSubjToCreate.get(oAddress.accountId).add(
+                                zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_City__c
+                            );
+                    } else {
+                        accIdWithCaseSubjToCreate.put(
+                            oAddress.accountId,
+                            new Set<String>{
+                                zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_City__c 
+                            }
+                            // + '/', oAddress.zipCode
+                        );
+                    }
+                }
+                if (!setAddressId.contains(oAddress.id)) {
+                    setAddressId.add(oAddress.id);
+                    lstAddressToUpdate.add(
+                        new NSP_Address__c(
+                            Id = oAddress.id,
+                            NSP_Regulated_Batch__c = true
+                        )
+                    );
+                }
+            }
+        }
+
+        //preparing Case for Account to create
+        if (!accIdWithCaseSubjToCreate.isEmpty()) {
+            for (String accountId : accIdWithCaseSubjToCreate.keySet()) {
+                List<String> lstSubj = new List<String>();
+                lstSubj.addAll(accIdWithCaseSubjToCreate.get(accountId));
+                accIdRegIdWithCaseSubject.put(
+                    accountId,
+                    CASE_SUBJECT + String.join(lstSubj, ', ')
+                );
+                newCase(accountId, CASE_SUBJECT + String.join(lstSubj, ', '));
+            }
+        }
+    }
+
+    /**
+     * @description getAccountRecords based onthe Address relatedContact and check whether the account records
+     * has existingAccounts and then existing Cases
+     */
+    @TestVisible
+    private void getAccountRecords() {
+        for (Account oAccount : selector.getAccounts()) {
+
+            for (Case ocase : oAccount?.Cases) {
+                if(ocase.Subject != NULL && ocase?.Subject?.startsWithIgnoreCase(CASE_SUBJECT)){
+                    caseData(ocase, oAccount.Id);
+                }
+            }
+
+            for (NSP_Account_Regulated_area__c accRegArea : oAccount?.Account_Regulated_areas__r) {
+                List<String> setZipCodes = accRegArea.NSP_Regulated_Area__r
+                    ?.NSP_Zip_Code__c?.deleteWhiteSpace()?.split(',');
+                Set<String> zipCodes = new Set<String>();
+                if (setZipCodes != null) {
+                    zipCodes.addAll(setZipCodes);
+                }
+                if (accWithAccRegState.containsKey(oAccount.Id)) {
+                    accWithAccRegState.get(oAccount.Id)
+                        .add(accRegArea.NSP_State__c);
+                    accWithAccRegCity.get(oAccount.Id).addAll(zipCodes);
+                } else {
+                    accWithAccRegState.put(
+                        oAccount.Id,
+                        new Set<String>{
+                            accRegArea.NSP_State__c
+                        }
+                    );
+                    accWithAccRegCity.put(oAccount.Id, zipCodes);
+                }
+            }
+        }
+    }
+    
+    /**
+     * @description getAccountRecords based onthe Address relatedContact has existingAccounts and then existing Cases
+     */
+    private void caseData(Case ocase, Id accountId) {
+        String subject = ocase.Subject?.replace(CASE_SUBJECT, '');
+        List<String> subj = new List<String>();
+        subj.addAll(subject?.split(', '));
+        if (accWithCaseSubjStates.containsKey(accountId)) {
+            accWithCaseSubjStates.get(accountId).addAll(subj);
+        } else {
+            accWithCaseSubjStates.put(accountId, subj);
+        }
+    }
+
+    private List<NSP_Sub_Client_Contact_Address__c> getFilteredContactAddress(List<NSP_Sub_Client_Contact_Address__c> lstAddress){
+        Set<Id> setAccountIds = new Set<Id>();
+        Set<Id> setWoAssetAccountIds = new Set<Id>();
+        for (NSP_Sub_Client_Contact_Address__c oAddress : lstAddress) {
+            setAccountIds.add(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c);
+        }
+        for(Asset oAsset : [SELECT Id, AccountId FROM Asset 
+                            WHERE AccountId IN: setAccountIds
+                            AND RecordType.DeveloperName =: NSP_ServiceConstants.WO_ASSET_RECORDTYPE 
+                            AND NSP_AIMS_First_Pay_Date__c = NULL 
+                            AND NSP_Account_Status__c= :NSP_ServiceConstants.ASSET_ACTIVE_STATUS]){
+            setWoAssetAccountIds.add(oAsset.AccountId);
+        }
+
+        Integer addressSize = 0;
+        while (addressSize < lstAddress.size()){
+            NSP_Sub_Client_Contact_Address__c ref = lstAddress.get(addressSize);
+            if(!setWoAssetAccountIds.contains(ref.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c)){
+                lstAddress.remove(addressSize);
+            } else {
+                addressSize++;
+            }
+        }
+
+        return lstAddress;
+    }
+
+    private void getSubClientContactAddress(List<NSP_Sub_Client_Contact_Address__c> lstSubClientContactAddress){
+        // SubClient ContactAddress object that has Regulated Area State or City/ZipCode matched
+        for (NSP_Sub_Client_Contact_Address__c oAddress : getFilteredContactAddress(lstSubClientContactAddress)) {
+
+            String state = oAddress.NSP_State__c;
+            setAccountIds.add(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c);
+			
+            //State matches with the regulated Area
+            if (stateWithRegulatedArea.containsKey(state)) {
+                if (accIdWithStateAddress.containsKey(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c)) {
+                    accWithAddressStates.get(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c).add(state);
+                    accIdWithStateAddress.get(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c)
+                        .add(
+                            new Address(
+                                oAddress.NSP_Address__c,
+                                oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                oAddress.NSP_Postal_Code_New__c
+                            )
+                        );
+                } else {
+                    accIdWithStateAddress.put(
+                        oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c,
+                        new List<Address>{
+                            new Address(
+                                oAddress.NSP_Address__c,
+                                oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                oAddress.NSP_Postal_Code_New__c
+                            )
+                        }
+                    );
+                    accWithAddressStates.put( oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c, new Set<String>{ state } );
+                }
+            }
+
+            //Zip matches with the regulated Area
+            if (zipCodesWithRegArea.containsKey(oAddress.NSP_Postal_Code_New__c)) {
+                if (accIdWithZipAddress.containsKey(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c)) {
+                    accIdWithZipAddress.get(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c)
+                        .add(
+                            new Address(
+                                oAddress.NSP_Address__c,
+                                oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                oAddress.NSP_Postal_Code_New__c
+                            )
+                        );
+                    accWithAddressZipCodes.get( oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c ).add(oAddress.NSP_Postal_Code_New__c);
+                } else {
+                    accIdWithZipAddress.put(
+                        oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c,
+                        new List<Address>{
+                            new Address(
+                                oAddress.NSP_Address__c,
+                                oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                oAddress.NSP_Postal_Code_New__c
+                            )
+                        }
+                    );
+                    accWithAddressZipCodes.put( oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c, new Set<String>{ oAddress.NSP_Postal_Code_New__c } );
+                }
+            }
+        }
+    }
+
+    /**
+     * @description newAccountRegulatedArea prepare new account Regulated area to Insert
+     * @param  address         address that has state and city information
+     */
+    private void newAccountRegulatedArea(Address address) {
+        NSP_Account_Regulated_area__c accRegulatedArea = new NSP_Account_Regulated_area__c();
+        accRegulatedArea.NSP_Account__c = address.AccountId;
+        if (stateWithRegulatedArea.containsKey(address.State)) {
+            accRegulatedArea.NSP_Regulated_Area__c = stateWithRegulatedArea.get(address.State)?.Id;
+        } else if (zipCodesWithRegArea?.containsKey(address.zipCode)) {
+            accRegulatedArea.NSP_Regulated_Area__c = zipCodesWithRegArea.get(address.zipCode)?.Id;
+        }
+        String accRegId = accRegulatedArea.NSP_Account__c + '_' + accRegulatedArea.NSP_Regulated_Area__c;
+        if (!setAccRegArea.contains(accRegId)) {
+            setAccRegArea.add(accRegId);
+            accRegulatedAreaList.add(accRegulatedArea);
+        }
+    }
+
+    /**
+     * @description newCase preare new case to Insert
+     * @param  accountId   mapping the new case to the account
+     * @param  caseSubject subject of the new case
+     */
+    private void newCase(String accountId, String caseSubject) {
+        Map<String,Id> roleMap = new Map<String,Id>();
+        Case newCase = new Case();
+        newCase.RecordTypeId = recordTypePEOID;
+        newCase.AccountId = accountId;
+        newCase.NSP_Category__c = NSP_ServiceConstants.INFRASTRUCTURE;
+        newCase.NSP_SubCategory__c = NSP_ServiceConstants.SUBCATEGORY_PAID_SICK_LEAVE;
+        newCase.Status = NSP_SalesConstants.OPEN;
+        if(accountWithTeamMemberId?.get(accountId)!=null){
+            roleMap.putAll(accountWithTeamMemberId?.get(accountId));
+        }
+        if(roleMap?.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)){
+            newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
+        }else if(roleMap?.containsKey(NSP_SalesConstants.HRSpecialist)){
+            newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.HRSpecialist);
+        }else{
+            newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.MANAGER_HRSERVICES);
+        }
+        newCase.OwnerId = newCase.OwnerId!=null ? newCase.OwnerId : UserInfo.getUserId();
+        newCase.Subject = caseSubject?.replace('/,', '/');
+        String caseString =
+            newCase.RecordTypeId + '_' + newCase.AccountId + '_' + newCase.NSP_Category__c +
+            '_' + newCase.Status + '_' + newCase.OwnerId +'_'+ newCase.Subject;
+        if (!setCases.Contains(caseString)) {
+            setCases.add(caseString);
+            lstCases.add(newCase);
+        }
+
+    }
+
+    /**
+     * @description get Account Team Records based on the AccountId and Role
+     */
+    private void getAccountTeams() {
+        for (NSP_Account_Team__c accTeamMember : selector.getAccountTeamRecords()) {
+            accountWithTeamMemberId.put(accTeamMember.NSP_Account__c, new Map<String,Id>{accTeamMember.NSP_Role__c => accTeamMember.NSP_User__c});
+        }
+    }
+
+    @TestVisible
+    private without sharing class Selector {
+
+        /**
+         * @description get Account Team Records based on the AccountId and Role
+         */
+        public List<NSP_Account_Team__c> getAccountTeamRecords() {
+            String accTeamQuery = new NSP_QueryBuilder(
+                        'NSP_Account_Team__c',
+                        new List<String> { 'Id', 'NSP_Role__c', 'NSP_Account__c', 'NSP_Email__c', 'NSP_User__c' }
+                    )
+                    .setSecurityEnforce(false)
+                    .build();
+                    accTeamQuery += ' WHERE NSP_Account__c IN :setAccountIds AND NSP_User__c != NULL '+
+                    ' AND (NSP_Role__c = \''+NSP_ServiceConstants.MANAGER_HRSERVICES+'\''+
+                    ' OR NSP_Role__c = \''+NSP_ServiceConstants.BUS_TEAM_HRSP_CL+'\''+
+                    ' OR (NSP_Role__c = \''+NSP_SalesConstants.HRSpecialist+'\' AND NSP_Primary__c = true) )'+
+                    ' ORDER BY NSP_Role__c DESC';
+            return Database.query(accTeamQuery);
+        }
+
+        /**
+         * @description Accounts which has existing AccountRegulatedArea and Cases
+         * @return              list of Accounts that matched with the regulated Area State/ZipCodes
+         */
+        public  List<Account> getAccounts() {
+            String strSubject = CASE_SUBJECT + '%';
+            return [
+                SELECT Id, Name, Type,  NSP_Account_Status__c, NSP_First_Pay_Date__c,
+                    (SELECT Id, AccountId, Subject
+                        FROM Cases 
+                        WHERE NSP_Category__c = :NSP_ServiceConstants.INFRASTRUCTURE AND Subject LIKE : strSubject),
+                    (SELECT Id, NSP_Account__c, NSP_State__c, NSP_City__c, NSP_Regulated_Area__r.NSP_Zip_Code__c
+                        FROM Account_Regulated_areas__r)
+                FROM Account
+                WHERE Id IN :setAccountIds
+            ];
+        }
+
+        /**
+         * @description  AccountRegulatedArea based on Inserted AccountIds
+         * @param setAccRegAreas setOfAccountId that matches with AccountRgArea.
+         * @return       lstOf of AccountregulatedAreas
+         */
+        public  List<NSP_Account_Regulated_area__c> getAccountsRegulatedAreaRecords(Set<Id> setAccRegAreas ) {
+            String query = new NSP_QueryBuilder(
+                            'NSP_Account_Regulated_area__c',
+                            new List<String> { 'Id', 'NSP_Account__c', 'NSP_City__c', 'NSP_State__c', 'NSP_Regulated_Area__r.NSP_Zip_Code__c' }
+                        )
+                        .addFilter('Id', new List<Id>(setAccRegAreas) , NSP_QueryBuilder.Operator.INCLUDES)
+                        .build();
+            return Database.Query(query);
+        }
+
+    }
+
+    public void finish(Database.BatchableContext bc) { }
+
+    class Address {
+        String id;
+        String accountId;
+        String contactId;
+        String state;
+        String city;
+        String zipCode;
+
+        Address( String id, String accountId, String contactId, String state, String city, String zipCode ) {
+            this.id = id;
+            this.accountId = accountId;
+            this.contactId = contactId;
+            this.state = state;
+            this.city = city;
+            this.zipCode = zipCode;
+        }
+    }
+}

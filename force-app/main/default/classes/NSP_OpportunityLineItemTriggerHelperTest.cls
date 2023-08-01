@@ -10,6 +10,9 @@ public class NSP_OpportunityLineItemTriggerHelperTest {
      public static final String PRODUCTNAME ='Test Product'; // Added as part of code scan fix
   @testSetup
     static void setupTestData(){
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
+        blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
        
         Account objaccount = NSP_TestHelper.createAccount(true);
         NSP_Address__c addressBillToRecord = NSP_TestHelper.createCustomAddress();
@@ -21,10 +24,15 @@ public class NSP_OpportunityLineItemTriggerHelperTest {
         addressShipToRecord.NSP_Address_Type__c = 'Ship To';
         insert addressShipToRecord;
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
+        objproduct.blng__BillingRule__c = objBillingRule.Id;
+        objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
+        objproduct.blng__TaxRule__c = objTaxRule.Id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
         objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
+        objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
+        objproduct.blng__TaxRule__c = objTaxRule.Id;
         insert objproduct;
        
     }

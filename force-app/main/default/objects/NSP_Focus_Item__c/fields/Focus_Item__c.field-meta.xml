@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Focus_Item__c</fullName>
+    <externalId>false</externalId>
+    <label>Focus Item</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Administrative Relief/ Staffing Up</fullName>
+                <default>false</default>
+                <label>Administrative Relief/ Staffing Up</label>
+            </value>
+            <value>
+                <fullName>Business Restructure</fullName>
+                <default>false</default>
+                <label>Business Restructure</label>
+            </value>
+            <value>
+                <fullName>Client Reference</fullName>
+                <default>false</default>
+                <label>Client Reference</label>
+            </value>
+            <value>
+                <fullName>Communication &amp; Engagement</fullName>
+                <default>false</default>
+                <label>Communication &amp; Engagement</label>
+            </value>
+            <value>
+                <fullName>Data &amp; Reporting Availability</fullName>
+                <default>false</default>
+                <label>Data &amp; Reporting Availability</label>
+            </value>
+            <value>
+                <fullName>Early Tenure</fullName>
+                <default>false</default>
+                <label>Early Tenure</label>
+            </value>
+            <value>
+                <fullName>Economic Shifts</fullName>
+                <default>false</default>
+                <label>Economic Shifts</label>
+            </value>
+            <value>
+                <fullName>Employee Impact</fullName>
+                <default>false</default>
+                <label>Employee Impact</label>
+            </value>
+            <value>
+                <fullName>Escalations</fullName>
+                <default>false</default>
+                <label>Escalations</label>
+            </value>
+            <value>
+                <fullName>Evaluating Alternative Solutions</fullName>
+                <default>false</default>
+                <label>Evaluating Alternative Solutions</label>
+            </value>
+            <value>
+                <fullName>Financial Risk</fullName>
+                <default>false</default>
+                <label>Financial Risk</label>
+            </value>
+            <value>
+                <fullName>General Dissatisfaction</fullName>
+                <default>false</default>
+                <label>General Dissatisfaction</label>
+            </value>
+            <value>
+                <fullName>International Employees</fullName>
+                <default>false</default>
+                <label>International Employees</label>
+            </value>
+            <value>
+                <fullName>International Ownership</fullName>
+                <default>false</default>
+                <label>International Ownership</label>
+            </value>
+            <value>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+                <label>Invoicing</label>
+            </value>
+            <value>
+                <fullName>Key Client Contact Changes</fullName>
+                <default>false</default>
+                <label>Key Client Contact Changes</label>
+            </value>
+            <value>
+                <fullName>M&amp;A Activity</fullName>
+                <default>false</default>
+                <label>M&amp;A Activity</label>
+            </value>
+            <value>
+                <fullName>Navigation &amp; Workflow Challenges</fullName>
+                <default>false</default>
+                <label>Navigation &amp; Workflow Challenges</label>
+            </value>
+            <value>
+                <fullName>Price Increase</fullName>
+                <default>false</default>
+                <label>Price Increase</label>
+            </value>
+            <value>
+                <fullName>Rapid Growth or Decline</fullName>
+                <default>false</default>
+                <label>Rapid Growth or Decline</label>
+            </value>
+            <value>
+                <fullName>Risk Mitigation</fullName>
+                <default>false</default>
+                <label>Risk Mitigation</label>
+            </value>
+            <value>
+                <fullName>Service Continuity</fullName>
+                <default>false</default>
+                <label>Service Continuity</label>
+            </value>
+            <value>
+                <fullName>Technology &amp; Seamless Data Transfer</fullName>
+                <default>false</default>
+                <label>Technology &amp; Seamless Data Transfer</label>
+            </value>
+            <value>
+                <fullName>No Insperity 401k</fullName>
+                <default>false</default>
+                <label>No Insperity 401k</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

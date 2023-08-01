@@ -1,0 +1,5 @@
+A new note has been added to CASE <a href="{!Case.Link}"> {!Case.CaseNumber}</a> which may require your attention. If you added the note no further action is required at this time.<br/><br/>
+
+If you wish to respond, add a note to the Case. Do not reply to this email.<br/><br/>
+
+Case Notes<br/>

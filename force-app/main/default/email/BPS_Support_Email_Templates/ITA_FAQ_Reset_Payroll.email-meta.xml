@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Reset Payroll</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Reset Payroll</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Reset Payroll</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time and Attendance support. We understand that you are unable to transmit your payroll file. The &quot;Event ID Service returned the following message: There are no payroll events for this pay period.&quot; message indicates that the payroll input needs to be reset in Premier by your Payroll Team. We have copied (PAYROLL TEAM NAME), your Payroll Team here at Insperity, on this email so that they can reset the payroll event. You may also reach them directly at PAYROLL TEAM’S CONTACT INFO (email/phone).
+
+If you need further assistance, please let us know and we’ll be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

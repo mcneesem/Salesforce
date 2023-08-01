@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RET_Project_Task</fullName>
+    <active>true</active>
+    <label>RET Project Task</label>
+    <picklistValues>
+        <picklist>NSP_Group_Membership_for_Plan_Projects__c</picklist>
+        <values>
+            <fullName>Group 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Offset_Date__c</picklist>
+        <values>
+            <fullName>Asset Renewal Date</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Percentage_Complete__c</picklist>
+        <values>
+            <fullName>0%25</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>100%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>75%25</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Rating__c</picklist>
+        <values>
+            <fullName>Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat unfavorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Responsible_Party__c</picklist>
+        <values>
+            <fullName>RET Compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Executive %26 Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET NBI - Conversion %26 Ork</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET NBI - Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET NBI - QC Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Ops - OMNI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Ops - Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Plan Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Sec 125</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Time_Entry__c</picklist>
+        <values>
+            <fullName>Administrative tasks related to CGQ processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annual Contributions-PS%2C QNEC%2C THM%2C SIMPLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annual Employer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application Development - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application Maintenance - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application Support - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attorney%2FClient %E2%80%93 Priv Data Collection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA - Prospect Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Balancing Plan Accounts - SDA%2C Regions%2C etc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CGQ review for ALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Management Database</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Management Database-Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Touch Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client%2FParticipant Communication - Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client%2FParticipant Communication - Non-Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications to clients to collect data for testing %28both 401%28k%29 and 125 Testing%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contributions Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Controlled Group%28CGQ%29%2FFEIN or Client Change %26 Related Research</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conversion Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DOL Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daily Business Duties - Filing%2C Email%2C Phone%2C Timesheet%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deconversions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DefCon %28Projects%2C Meetings Testing%2C Troubleshooting%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DefCon Operational Issue - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DefCon Operational Issue - Non reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disaster Recovery Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disbursements %26 Withdrawal Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERISA Testing-ADP%2FACP%2C TH%2C 410b</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fee Disclosure Analysis-Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance - Budget Process %26 Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance - Expense Submission %26 Account Recon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Folder Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Questions from WOS clients</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Activities - Reviews%2C Training%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IRS Forms-5500%2C 5330%2C audit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Implementation%2FPlan Sponsor Guides - call%2Fwalk through</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Improving online CGQ %E2%80%93 benefits both 401K and 125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoicing Clients</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Processing %26 Maint%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manage Team In Boxes %28One Voice%2FEmail%29 - Specific to a Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Managerial Activities - Approve timesheets%2C job descrip%2E%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing Activities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Company%2FTown Hall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Non-Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - One on One%2C Goals%2C HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Project Related - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Project Related - Non-Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Settlor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Staff%2FInter-Team Meetings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Metrics compilation and review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mutual Fund Corrections - Pricing%2C Manual Trades%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mutual Fund Related - Notices%2C Prospectus%27%2CChanges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NQDC - Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NQDC - Plan Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NetSuite Support - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Plan Set Up activities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New plan implementation %28all processes%2Fall systems%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newkirk - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK - Expanded Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK Match Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK Related Duties</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK to RS Campaign</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OmniPlus Reporting - Ppt Valuation%2FDeferral Matching%2F1099</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Operational Issues - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Meetings%2C Section 125 Specific Tasks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Settlor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Record Keeper %28ORK%29 Form 5500</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Record Keeper %28ORKs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PTO%2FCommunity Service%2FHoliday</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Participant Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Participant Forms Processing %28Beneficiary%2C enrollment%2C etc%2E%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Amendments - Settlor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Related Admin%3A making folders%2Ffiling%2C records%2C printing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Review %28Document Collection for Legal Analysis%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Valuations %26 Trust Statements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan%2FParticipant Maintenance %26 Corrections</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparing%2Fimplementing required plan documents %26 amendments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procedure %28Creation%2C Review%2C Update%29 - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Process automation%2FTextfile Maintenance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project 1 - Trustee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Projects - Management%2FMaintenance of Project List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Projects - Working on Specific Project%28s%29 - Chargeable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Projects - Working on Specific Project%28s%29 - Non Chargeable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Assurance Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly Statements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RMD and QDRO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Development %26 Training</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Implementation%2FConversion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Project - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Suitability%2FPlan Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Research - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Research - Related to a plan or set of plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revenue - pmts%2C research%2C recon%2C ppt counts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review CGQ for client implementing a 401%28k%29 Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review CGQ for nondiscrimination testing %28125 testing only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review CGQ for nondiscrimination testing %28both 401%28k%29 and 125 testing%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review of Prior Plan Documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOC-1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SRP Facilitation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales - Calls%2C Conferences%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales - RSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales - WOS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suitablity%2FNew Plan Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Maintenance %28Insperity%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Testing %26 Maintenance - Sungard Products%2FCompliance Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade%2FShare Reconciliation %26 Files</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training - 401k Plan%2C Compliance%2C etc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training - Non-401k</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transaction Processing - Dividends%2C Disbursements%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trustee Review%2FSearch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Transition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Year-end Activities - Fid</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Jira_Issue_Type_Category__c</picklist>
+        <values>
+            <fullName>Standard Issue Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sub-Task Issue Type</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Jira_Issue_Type__c</picklist>
+        <values>
+            <fullName>Bug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Epic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Story</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sub-task</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Task</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Priority__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Status__c</picklist>
+        <values>
+            <fullName>Canceled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>On Hold</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

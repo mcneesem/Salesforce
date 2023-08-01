@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "6601459d-41fb-4745-b938-4b750ec8be15",
+  "appPageId" : "4329045a-0ee7-4781-a21f-030a49949741",
+  "configurationTags" : [ ],
+  "id" : "115ac4e5-21ca-436c-939c-b54443ba1951",
+  "label" : "Project Related List",
+  "objectApiName" : "pse__Proj__c",
+  "routeType" : "relatedlist-a2o",
+  "type" : "route",
+  "urlPrefix" : "proj"
+}

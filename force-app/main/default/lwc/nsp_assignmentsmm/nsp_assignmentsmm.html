@@ -1,0 +1,23 @@
+<template>
+    <lightning-record-edit-form
+        onerror={handleError} record-id={recordId} onload={handleLoad}
+        object-api-name={objectApiName} density="comfy">
+        <lightning-formatted-text class="slds-page-header__title" value={title}>
+        </lightning-formatted-text>
+        
+    <div class="section slds-p-top_small" data-id="assignments">
+        
+        <lightning-input-field disabled field-name="NSP_BPA_BPC__c"  data-name="NSP_BPA_BPC__c" value={field.NSP_BPA_BPC__c}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Project_Manager__c} field-name="NSP_Project_Manager__c" data-name="NSP_Project_Manager__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Payroll_Project_Manager__c} field-name="NSP_Payroll_Project_Manager__c" data-name="NSP_Payroll_Project_Manager__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Transition_Specialist__c} field-name="NSP_Transition_Specialist__c" data-name="NSP_Transition_Specialist__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Sr_Onboarding_Benefit_Rep__c} field-name="NSP_Sr_Onboarding_Benefit_Rep__c" data-name="NSP_Sr_Onboarding_Benefit_Rep__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Account_Executive__c} field-name="NSP_Account_Executive__c" data-name="NSP_Account_Executive__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Payroll_Specialist__c} field-name="NSP_Payroll_Specialist__c" data-name="NSP_Payroll_Specialist__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Payroll_Supervisor__c} field-name="NSP_Payroll_Supervisor__c" data-name="NSP_Payroll_Supervisor__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_HR_Specialist__c} field-name="NSP_HR_Specialist__c" data-name="NSP_HR_Specialist__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Manager_HR_Services__c} field-name="NSP_Manager_HR_Services__c" data-name="NSP_Manager_HR_Services__c" onchange={handleValueChange}></lightning-input-field>
+        <lightning-input-field disabled={disabledFields.NSP_Assignment_Notes__c} field-name="NSP_Assignment_Notes__c" data-name="NSP_Assignment_Notes__c" onchange={handleValueChange}></lightning-input-field>
+    </div>
+    </lightning-record-edit-form>
+</template>

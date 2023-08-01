@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_Time_Entry__c</fullName>
+    <externalId>false</externalId>
+    <label>RET Time Entry</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Administrative tasks related to CGQ processing</fullName>
+                <default>false</default>
+                <label>Administrative tasks related to CGQ processing</label>
+            </value>
+            <value>
+                <fullName>Annual Contributions-PS, QNEC, THM, SIMPLE</fullName>
+                <default>false</default>
+                <label>Annual Contributions-PS, QNEC, THM, SIMPLE</label>
+            </value>
+            <value>
+                <fullName>Annual Employer</fullName>
+                <default>false</default>
+                <label>Annual Employer</label>
+            </value>
+            <value>
+                <fullName>Application Development - Fiduciary</fullName>
+                <default>false</default>
+                <label>Application Development - Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Application Maintenance - Non Reimbursable</fullName>
+                <default>false</default>
+                <label>Application Maintenance - Non Reimbursable</label>
+            </value>
+            <value>
+                <fullName>Application Support - Fiduciary</fullName>
+                <default>false</default>
+                <label>Application Support - Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Attorney/Client – Priv Data Collection</fullName>
+                <default>false</default>
+                <label>Attorney/Client – Priv Data Collection</label>
+            </value>
+            <value>
+                <fullName>Balancing Plan Accounts - SDA, Regions, etc.</fullName>
+                <default>false</default>
+                <label>Balancing Plan Accounts - SDA, Regions, etc.</label>
+            </value>
+            <value>
+                <fullName>BPA - Prospect Call</fullName>
+                <default>false</default>
+                <label>BPA - Prospect Call</label>
+            </value>
+            <value>
+                <fullName>CGQ review for ALE</fullName>
+                <default>false</default>
+                <label>CGQ review for ALE</label>
+            </value>
+            <value>
+                <fullName>Client Changes</fullName>
+                <default>false</default>
+                <label>Client Changes</label>
+            </value>
+            <value>
+                <fullName>Client Management Database</fullName>
+                <default>false</default>
+                <label>Client Management Database</label>
+            </value>
+            <value>
+                <fullName>Client Management Database-Fiduciary</fullName>
+                <default>false</default>
+                <label>Client Management Database-Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Client Touch Call</fullName>
+                <default>false</default>
+                <label>Client Touch Call</label>
+            </value>
+            <value>
+                <fullName>Client/Participant Communication - Admin</fullName>
+                <default>false</default>
+                <label>Client/Participant Communication - Admin</label>
+            </value>
+            <value>
+                <fullName>Client/Participant Communication - Non-Admin</fullName>
+                <default>false</default>
+                <label>Client/Participant Communication - Non-Admin</label>
+            </value>
+            <value>
+                <fullName>Communications to clients to collect data for testing (both 401(k) and 125 Testing)</fullName>
+                <default>false</default>
+                <label>Communications to clients to collect data for testing (both 401(k) and 125 Testing)</label>
+            </value>
+            <value>
+                <fullName>Contributions Processing</fullName>
+                <default>false</default>
+                <label>Contributions Processing</label>
+            </value>
+            <value>
+                <fullName>Controlled Group(CGQ)/FEIN or Client Change &amp; Related Research</fullName>
+                <default>false</default>
+                <label>Controlled Group(CGQ)/FEIN or Client Change &amp; Related Research</label>
+            </value>
+            <value>
+                <fullName>Conversion Process</fullName>
+                <default>false</default>
+                <label>Conversion Process</label>
+            </value>
+            <value>
+                <fullName>Daily Business Duties - Filing, Email, Phone, Timesheet, etc</fullName>
+                <default>false</default>
+                <label>Daily Business Duties - Filing, Email, Phone, Timesheet, etc</label>
+            </value>
+            <value>
+                <fullName>Deconversions</fullName>
+                <default>false</default>
+                <label>Deconversions</label>
+            </value>
+            <value>
+                <fullName>DefCon (Projects, Meetings Testing, Troubleshooting)</fullName>
+                <default>false</default>
+                <label>DefCon (Projects, Meetings Testing, Troubleshooting)</label>
+            </value>
+            <value>
+                <fullName>DefCon Operational Issue - Administrative</fullName>
+                <default>false</default>
+                <label>DefCon Operational Issue - Administrative</label>
+            </value>
+            <value>
+                <fullName>DefCon Operational Issue - Non reimbursable</fullName>
+                <default>false</default>
+                <label>DefCon Operational Issue - Non reimbursable</label>
+            </value>
+            <value>
+                <fullName>Disaster Recovery Planning</fullName>
+                <default>false</default>
+                <label>Disaster Recovery Planning</label>
+            </value>
+            <value>
+                <fullName>Disbursements &amp; Withdrawal Processing</fullName>
+                <default>false</default>
+                <label>Disbursements &amp; Withdrawal Processing</label>
+            </value>
+            <value>
+                <fullName>DOL Investigation</fullName>
+                <default>false</default>
+                <label>DOL Investigation</label>
+            </value>
+            <value>
+                <fullName>ERISA Testing-ADP/ACP, TH, 410b</fullName>
+                <default>false</default>
+                <label>ERISA Testing-ADP/ACP, TH, 410b</label>
+            </value>
+            <value>
+                <fullName>Fee Disclosure Analysis-Sales</fullName>
+                <default>false</default>
+                <label>Fee Disclosure Analysis-Sales</label>
+            </value>
+            <value>
+                <fullName>Finance - Budget Process &amp; Review</fullName>
+                <default>false</default>
+                <label>Finance - Budget Process &amp; Review</label>
+            </value>
+            <value>
+                <fullName>Finance - Expense Submission &amp; Account Recon</fullName>
+                <default>false</default>
+                <label>Finance - Expense Submission &amp; Account Recon</label>
+            </value>
+            <value>
+                <fullName>Folder Processing</fullName>
+                <default>false</default>
+                <label>Folder Processing</label>
+            </value>
+            <value>
+                <fullName>General Questions from WOS clients</fullName>
+                <default>false</default>
+                <label>General Questions from WOS clients</label>
+            </value>
+            <value>
+                <fullName>HR Activities - Reviews, Training, etc</fullName>
+                <default>false</default>
+                <label>HR Activities - Reviews, Training, etc</label>
+            </value>
+            <value>
+                <fullName>Implementation/Plan Sponsor Guides - call/walk through</fullName>
+                <default>false</default>
+                <label>Implementation/Plan Sponsor Guides - call/walk through</label>
+            </value>
+            <value>
+                <fullName>Improving online CGQ – benefits both 401K and 125</fullName>
+                <default>false</default>
+                <label>Improving online CGQ – benefits both 401K and 125</label>
+            </value>
+            <value>
+                <fullName>Invoicing Clients</fullName>
+                <default>false</default>
+                <label>Invoicing Clients</label>
+            </value>
+            <value>
+                <fullName>IRS Forms-5500, 5330, audit</fullName>
+                <default>false</default>
+                <label>IRS Forms-5500, 5330, audit</label>
+            </value>
+            <value>
+                <fullName>Loan Processing &amp; Maint.</fullName>
+                <default>false</default>
+                <label>Loan Processing &amp; Maint.</label>
+            </value>
+            <value>
+                <fullName>Manage Team In Boxes (One Voice/Email) - Specific to a Plan</fullName>
+                <default>false</default>
+                <label>Manage Team In Boxes (One Voice/Email) - Specific to a Plan</label>
+            </value>
+            <value>
+                <fullName>Managerial Activities - Approve timesheets, job descrip., etc</fullName>
+                <default>false</default>
+                <label>Managerial Activities - Approve timesheets, job descrip., etc</label>
+            </value>
+            <value>
+                <fullName>Marketing Activities</fullName>
+                <default>false</default>
+                <label>Marketing Activities</label>
+            </value>
+            <value>
+                <fullName>Meeting - Company/Town Hall</fullName>
+                <default>false</default>
+                <label>Meeting - Company/Town Hall</label>
+            </value>
+            <value>
+                <fullName>Meeting - Fiduciary</fullName>
+                <default>false</default>
+                <label>Meeting - Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Meeting - Non-Fiduciary</fullName>
+                <default>false</default>
+                <label>Meeting - Non-Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Meeting - One on One, Goals, HR</fullName>
+                <default>false</default>
+                <label>Meeting - One on One, Goals, HR</label>
+            </value>
+            <value>
+                <fullName>Meeting - Project Related - Fiduciary</fullName>
+                <default>false</default>
+                <label>Meeting - Project Related - Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Meeting - Project Related - Non-Fiduciary</fullName>
+                <default>false</default>
+                <label>Meeting - Project Related - Non-Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Meeting - Settlor</fullName>
+                <default>false</default>
+                <label>Meeting - Settlor</label>
+            </value>
+            <value>
+                <fullName>Meeting - Staff/Inter-Team Meetings</fullName>
+                <default>false</default>
+                <label>Meeting - Staff/Inter-Team Meetings</label>
+            </value>
+            <value>
+                <fullName>Metrics compilation and review</fullName>
+                <default>false</default>
+                <label>Metrics compilation and review</label>
+            </value>
+            <value>
+                <fullName>Mutual Fund Corrections - Pricing, Manual Trades, etc</fullName>
+                <default>false</default>
+                <label>Mutual Fund Corrections - Pricing, Manual Trades, etc</label>
+            </value>
+            <value>
+                <fullName>Mutual Fund Related - Notices, Prospectus&apos;,Changes</fullName>
+                <default>false</default>
+                <label>Mutual Fund Related - Notices, Prospectus&apos;,Changes</label>
+            </value>
+            <value>
+                <fullName>NetSuite Support - Fiduciary</fullName>
+                <default>false</default>
+                <label>NetSuite Support - Fiduciary</label>
+            </value>
+            <value>
+                <fullName>New plan implementation (all processes/all systems)</fullName>
+                <default>false</default>
+                <label>New plan implementation (all processes/all systems)</label>
+            </value>
+            <value>
+                <fullName>New Plan Set Up activities</fullName>
+                <default>false</default>
+                <label>New Plan Set Up activities</label>
+            </value>
+            <value>
+                <fullName>Newkirk - Administrative</fullName>
+                <default>false</default>
+                <label>Newkirk - Administrative</label>
+            </value>
+            <value>
+                <fullName>NQDC - Consulting</fullName>
+                <default>false</default>
+                <label>NQDC - Consulting</label>
+            </value>
+            <value>
+                <fullName>NQDC - Plan Administration</fullName>
+                <default>false</default>
+                <label>NQDC - Plan Administration</label>
+            </value>
+            <value>
+                <fullName>OmniPlus Reporting - Ppt Valuation/Deferral Matching/1099</fullName>
+                <default>false</default>
+                <label>OmniPlus Reporting - Ppt Valuation/Deferral Matching/1099</label>
+            </value>
+            <value>
+                <fullName>Operational Issues - Administrative</fullName>
+                <default>false</default>
+                <label>Operational Issues - Administrative</label>
+            </value>
+            <value>
+                <fullName>ORK - Expanded Services</fullName>
+                <default>false</default>
+                <label>ORK - Expanded Services</label>
+            </value>
+            <value>
+                <fullName>ORK Match Service</fullName>
+                <default>false</default>
+                <label>ORK Match Service</label>
+            </value>
+            <value>
+                <fullName>ORK Related Duties</fullName>
+                <default>false</default>
+                <label>ORK Related Duties</label>
+            </value>
+            <value>
+                <fullName>ORK to RS Campaign</fullName>
+                <default>false</default>
+                <label>ORK to RS Campaign</label>
+            </value>
+            <value>
+                <fullName>Other - Meetings, Section 125 Specific Tasks</fullName>
+                <default>false</default>
+                <label>Other - Meetings, Section 125 Specific Tasks</label>
+            </value>
+            <value>
+                <fullName>Other - Non Reimbursable</fullName>
+                <default>false</default>
+                <label>Other - Non Reimbursable</label>
+            </value>
+            <value>
+                <fullName>Other - Settlor</fullName>
+                <default>false</default>
+                <label>Other - Settlor</label>
+            </value>
+            <value>
+                <fullName>Outside Record Keeper (ORK) Form 5500</fullName>
+                <default>false</default>
+                <label>Outside Record Keeper (ORK) Form 5500</label>
+            </value>
+            <value>
+                <fullName>Outside Record Keeper (ORKs)</fullName>
+                <default>false</default>
+                <label>Outside Record Keeper (ORKs)</label>
+            </value>
+            <value>
+                <fullName>Participant Education</fullName>
+                <default>false</default>
+                <label>Participant Education</label>
+            </value>
+            <value>
+                <fullName>Participant Forms Processing (Beneficiary, enrollment, etc.)</fullName>
+                <default>false</default>
+                <label>Participant Forms Processing (Beneficiary, enrollment, etc.)</label>
+            </value>
+            <value>
+                <fullName>Plan Amendments - Settlor</fullName>
+                <default>false</default>
+                <label>Plan Amendments - Settlor</label>
+            </value>
+            <value>
+                <fullName>Plan Related Admin: making folders/filing, records, printing</fullName>
+                <default>false</default>
+                <label>Plan Related Admin: making folders/filing, records, printing</label>
+            </value>
+            <value>
+                <fullName>Plan Review (Document Collection for Legal Analysis)</fullName>
+                <default>false</default>
+                <label>Plan Review (Document Collection for Legal Analysis)</label>
+            </value>
+            <value>
+                <fullName>Plan Valuations &amp; Trust Statements</fullName>
+                <default>false</default>
+                <label>Plan Valuations &amp; Trust Statements</label>
+            </value>
+            <value>
+                <fullName>Plan/Participant Maintenance &amp; Corrections</fullName>
+                <default>false</default>
+                <label>Plan/Participant Maintenance &amp; Corrections</label>
+            </value>
+            <value>
+                <fullName>Preparing/implementing required plan documents &amp; amendments</fullName>
+                <default>false</default>
+                <label>Preparing/implementing required plan documents &amp; amendments</label>
+            </value>
+            <value>
+                <fullName>Procedure (Creation, Review, Update) - Fiduciary</fullName>
+                <default>false</default>
+                <label>Procedure (Creation, Review, Update) - Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Process automation/Textfile Maintenance</fullName>
+                <default>false</default>
+                <label>Process automation/Textfile Maintenance</label>
+            </value>
+            <value>
+                <fullName>Product Development</fullName>
+                <default>false</default>
+                <label>Product Development</label>
+            </value>
+            <value>
+                <fullName>Project 1 - Trustee</fullName>
+                <default>false</default>
+                <label>Project 1 - Trustee</label>
+            </value>
+            <value>
+                <fullName>Projects - Management/Maintenance of Project List</fullName>
+                <default>false</default>
+                <label>Projects - Management/Maintenance of Project List</label>
+            </value>
+            <value>
+                <fullName>Projects - Working on Specific Project(s) - Chargeable</fullName>
+                <default>false</default>
+                <label>Projects - Working on Specific Project(s) - Chargeable</label>
+            </value>
+            <value>
+                <fullName>Projects - Working on Specific Project(s) - Non Chargeable</fullName>
+                <default>false</default>
+                <label>Projects - Working on Specific Project(s) - Non Chargeable</label>
+            </value>
+            <value>
+                <fullName>PTO/Community Service/Holiday</fullName>
+                <default>false</default>
+                <label>PTO/Community Service/Holiday</label>
+            </value>
+            <value>
+                <fullName>Quality Assurance Review</fullName>
+                <default>false</default>
+                <label>Quality Assurance Review</label>
+            </value>
+            <value>
+                <fullName>Quarterly Statements</fullName>
+                <default>false</default>
+                <label>Quarterly Statements</label>
+            </value>
+            <value>
+                <fullName>Research - Non Reimbursable</fullName>
+                <default>false</default>
+                <label>Research - Non Reimbursable</label>
+            </value>
+            <value>
+                <fullName>Research - Related to a plan or set of plans</fullName>
+                <default>false</default>
+                <label>Research - Related to a plan or set of plans</label>
+            </value>
+            <value>
+                <fullName>Revenue - pmts, research, recon, ppt counts</fullName>
+                <default>false</default>
+                <label>Revenue - pmts, research, recon, ppt counts</label>
+            </value>
+            <value>
+                <fullName>Review CGQ for client implementing a 401(k) Plan</fullName>
+                <default>false</default>
+                <label>Review CGQ for client implementing a 401(k) Plan</label>
+            </value>
+            <value>
+                <fullName>Review CGQ for nondiscrimination testing (125 testing only)</fullName>
+                <default>false</default>
+                <label>Review CGQ for nondiscrimination testing (125 testing only)</label>
+            </value>
+            <value>
+                <fullName>Review CGQ for nondiscrimination testing (both 401(k) and 125 testing)</fullName>
+                <default>false</default>
+                <label>Review CGQ for nondiscrimination testing (both 401(k) and 125 testing)</label>
+            </value>
+            <value>
+                <fullName>Review of Prior Plan Documents</fullName>
+                <default>false</default>
+                <label>Review of Prior Plan Documents</label>
+            </value>
+            <value>
+                <fullName>RMD and QDRO</fullName>
+                <default>false</default>
+                <label>RMD and QDRO</label>
+            </value>
+            <value>
+                <fullName>RSO Development &amp; Training</fullName>
+                <default>false</default>
+                <label>RSO Development &amp; Training</label>
+            </value>
+            <value>
+                <fullName>RSO Implementation/Conversion</fullName>
+                <default>false</default>
+                <label>RSO Implementation/Conversion</label>
+            </value>
+            <value>
+                <fullName>RSO Project - Non Reimbursable</fullName>
+                <default>false</default>
+                <label>RSO Project - Non Reimbursable</label>
+            </value>
+            <value>
+                <fullName>RSO Suitability/Plan Design</fullName>
+                <default>false</default>
+                <label>RSO Suitability/Plan Design</label>
+            </value>
+            <value>
+                <fullName>Sales - Calls, Conferences, etc</fullName>
+                <default>false</default>
+                <label>Sales - Calls, Conferences, etc</label>
+            </value>
+            <value>
+                <fullName>Sales - RSO</fullName>
+                <default>false</default>
+                <label>Sales - RSO</label>
+            </value>
+            <value>
+                <fullName>Sales - WOS</fullName>
+                <default>false</default>
+                <label>Sales - WOS</label>
+            </value>
+            <value>
+                <fullName>SOC-1</fullName>
+                <default>false</default>
+                <label>SOC-1</label>
+            </value>
+            <value>
+                <fullName>SRP Facilitation</fullName>
+                <default>false</default>
+                <label>SRP Facilitation</label>
+            </value>
+            <value>
+                <fullName>Suitablity/New Plan Design</fullName>
+                <default>false</default>
+                <label>Suitablity/New Plan Design</label>
+            </value>
+            <value>
+                <fullName>System Maintenance (Insperity)</fullName>
+                <default>false</default>
+                <label>System Maintenance (Insperity)</label>
+            </value>
+            <value>
+                <fullName>System Testing &amp; Maintenance - Sungard Products/Compliance Software</fullName>
+                <default>false</default>
+                <label>System Testing &amp; Maintenance - Sungard Products/Compliance Software</label>
+            </value>
+            <value>
+                <fullName>Trade/Share Reconciliation &amp; Files</fullName>
+                <default>false</default>
+                <label>Trade/Share Reconciliation &amp; Files</label>
+            </value>
+            <value>
+                <fullName>Training - 401k Plan, Compliance, etc.</fullName>
+                <default>false</default>
+                <label>Training - 401k Plan, Compliance, etc.</label>
+            </value>
+            <value>
+                <fullName>Training - Non-401k</fullName>
+                <default>false</default>
+                <label>Training - Non-401k</label>
+            </value>
+            <value>
+                <fullName>Transaction Processing - Dividends, Disbursements, etc</fullName>
+                <default>false</default>
+                <label>Transaction Processing - Dividends, Disbursements, etc</label>
+            </value>
+            <value>
+                <fullName>Trustee Review/Search</fullName>
+                <default>false</default>
+                <label>Trustee Review/Search</label>
+            </value>
+            <value>
+                <fullName>Vendor Management</fullName>
+                <default>false</default>
+                <label>Vendor Management</label>
+            </value>
+            <value>
+                <fullName>Vendor Transition</fullName>
+                <default>false</default>
+                <label>Vendor Transition</label>
+            </value>
+            <value>
+                <fullName>Year-end Activities - Fid</fullName>
+                <default>false</default>
+                <label>Year-end Activities - Fid</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

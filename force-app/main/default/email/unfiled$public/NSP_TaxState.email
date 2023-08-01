@@ -1,0 +1,96 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) – Unemployment Tax States " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+
+<html>
+  <body>
+  <c:InsperityEmailHeader />
+  <p><strong>This new client has employees that work in the following state(s) with special rules for unemployment  
+  taxes.<br/>
+   Clients should NOT close these unemployment tax accounts. Their Payroll Specialist will work<br/> 
+  with them on these states. All state withholding tax accounts may be closed since those taxes are paid  <br/> 
+  under Insperity’s accounts.</strong> </p>
+  
+  
+  <p><apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'AK')}">
+  Alaska <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'AR')}">
+   Arkansas<br/> 
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'CT')}">
+   Connecticut<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'DE')}">
+   Delaware<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IL')}">
+   Illinois<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IA')}">
+   Iowa<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'KS')}">
+   Kansas<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'KY')}">
+   Kentucky<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ME')}">
+   Maine<br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MA')}">
+   Massachusetts <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MN')}">
+   Minnesota  <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MS')}">
+   Mississippi <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'NE')}">
+   Nebraska <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ND')}">
+   North Dakota <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'OH')}">
+   Ohio <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'PA')}">
+   Pennsylvania <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'RI')}">
+   Rhode Island   <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'SC')}">
+   South Carolina   <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'SD')}">
+   South Dakota    <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'TN')}">
+   Tennessee   <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'VT')}">
+   Vermont      <br/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'WA')}">
+   Washington         
+  </apex:outputPanel></p>
+  
+  
+  <p>For more information and FAQ’s on <apex:outputLink value="https://portal.insperity.com/cs/nsp/SitePage/payroll_tax_guidelines" target="_parent"> Payroll Tax Guidelines - CLICK HERE </apex:outputLink></p>
+  <p> or email the <apex:outputLink > Unemployment_Tax@insperity.com</apex:outputLink></p>
+  
+  <p><Span style="color:red">Payroll Tax Guidelines link is:</span> <apex:outputLink value="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fportal.insperity.com%2Fcs%2Fnsp%2FSitePage%2Fpayroll_tax_guidelines&data=02%7C01%7CMonica.Adams%40insperity.com%7C6a1a28b7771b4bdb8ca208d7774af0e4%7C895d9ea7ce114131829f33f878d784b2%7C0%7C0%7C637109036054484324&sdata=sgyJ32gv%2FMEcemkdP5HYyPq47h00aWcipxyplP5WKo0%3D&reserved=0"
+      target="_parent"> https://portal.insperity.com/cs/nsp/SitePage/payroll_tax_guidelines </apex:outputLink></p>
+  
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

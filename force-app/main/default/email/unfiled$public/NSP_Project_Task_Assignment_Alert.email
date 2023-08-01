@@ -1,0 +1,21 @@
+Hello
+
+You have been assigned to a new WX Benefits Renewal Project. Please see below
+
+
+Project Number: {!pse__Proj__c.Id}
+
+Project Name: {!pse__Proj__c.Name}
+
+Account: {!pse__Proj__c.pse__Account__c}
+
+Project Implementer: {!pse__Proj__c.Project_Implementer__c}
+
+Project Coordinator: {!pse__Proj__c.Project_Coordinator__c}
+
+Start Date: {!pse__Proj__c.pse__Start_Date__c}
+
+
+
+Please click the link to be take to the project record in Salesforce;
+{!pse__Proj__c.Link}

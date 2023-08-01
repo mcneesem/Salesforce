@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_OverrideSubscriptionDate__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If true, the Subscription Start Date will be overridden based on billing frequency</description>
+    <externalId>false</externalId>
+    <label>Override Subscription Date</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,72 @@
+<template>
+    <div class="slds-box">
+        <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId}
+             onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError} onload={handleOnLoad}>
+            <lightning-messages></lightning-messages>
+            <lightning-layout>
+                <lightning-layout-item size="6">
+                <div class="slds-m-around_medium">
+                    <div style="display:none"> 
+                        <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+                        </lightning-input-field> 
+                    </div>
+                    <div class='slds-p-vertical_large'>
+                        <div class="slds-form-element_horizontal" >
+                            <label class="slds-form-element__label" for='NSP_AdditionalInformation__c' >
+                                Please provide any additional information pertinent to the survey (Optional)
+                            </label>
+                        <lightning-input-field variant="label-hidden"  id='NSP_AdditionalInformation__c'  field-name='NSP_AdditionalInformation__c' >
+                       </lightning-input-field>
+                      </div>
+                    </div>
+                <br/>
+                <br/>
+                <div class="slds-p-vertical_large">
+                    <div class="slds-form-element_horizontal" >   
+                        <lightning-radio-group name="NSP_AnyRevisionsDeletionsToStdQuestions__c"
+                         label="Does the client want to make any revisions/deletions to the standard questions in the survey?"
+                         options={yesNoOptions} value={NSP_AnyRevisionsDeletionsToStdQuestions__c} required onchange={handleChange}>
+                         </lightning-radio-group>
+                     </div>
+                     <lightning-input-field style='display:none' field-name='NSP_AnyRevisionsDeletionsToStdQuestions__c' required
+                     value={NSP_AnyRevisionsDeletionsToStdQuestions__c}>
+                     </lightning-input-field>
+                </div>
+
+                 <template if:true={showUploadMessage}>
+                    <div class="slds-p-vertical_medium">
+                     <p>You must attach the appropriate&nbsp;<a href={fileHyperLink} target="_blank" rel="noopener noreferrer">Survey Revision Request</a>&nbsp;before you can submit the survey request.</p>
+                    </div>
+                 </template>
+
+                 <div class="slds-text-color_error slds-p-vertical_medium slds-form-element AttachmentVerify" style="display:none">
+                    STOP! Attach the appropriate file to the right.
+                  </div>
+                        
+                </div>  
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <!--   file upload start here -->
+                    <div class="slds-align_absolute-center slds-p-around_medium" >
+                       <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}> </c-wizard-file-upload> 
+                    </div>
+                    <!-- File Upload End here -->
+                 </lightning-layout-item>
+            </lightning-layout>
+
+           <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+
+                <lightning-button variant="brand" label="Previous" class="slds-m-top_small slds-m-left_small" onclick={handlePrev}>
+                </lightning-button>
+                
+               <lightning-button class="slds-m-top_small slds-m-left_small" onclick={handleSave} label="Save and Exit" >
+               </lightning-button>
+
+                <lightning-button class="slds-m-top_small slds-m-left_small" type="submit" variant="brand" label="Submit">
+                </lightning-button>
+            </div>
+
+        </lightning-record-edit-form>
+    </div>
+
+</template>

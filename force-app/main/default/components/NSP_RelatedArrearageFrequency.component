@@ -1,0 +1,15 @@
+<apex:component access="global" controller="NSP_RelatedIPPayPeriodController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    
+    <p rendered="{!IF(additionalArrearageFrequency.size>0, true, false)}">
+    
+        <apex:repeat value="{!additionalArrearageFrequency}" var="payPeriod" id="realtedPayPeriodList" rendered="{!NOT(additionalArrearageFrequency.empty)}">
+           
+           •<apex:outputText value=" {!payPeriod.Frequency__c}" id="frequency" /> pay frequency has an arrearage greater than 7 days and
+            Credit Services has not approved. Please follow up with Credit Services for approval. <br/> 
+           
+           
+             </apex:repeat>
+    </p>
+    
+    </apex:component>

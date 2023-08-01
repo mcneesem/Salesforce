@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Client_Address__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Client Address</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>NSP_Address__c.NSP_Address_Type__c</field>
+            <operation>equals</operation>
+            <value>U.S. Mail</value>
+        </filterItems>
+        <filterItems>
+            <field>NSP_Address__c.NSP_Related_Site__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.NSP_Account__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>NSP_Address__c</referenceTo>
+    <relationshipLabel>Termination Forms</relationshipLabel>
+    <relationshipName>Termination_Forms</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

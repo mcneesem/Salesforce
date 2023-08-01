@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Day_of_Week_Number__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Parent__c = FALSE, CASE(
+MOD( Date_Valid__c - DATE( 1900, 1, 7 ), 7 ),
+0, 0,
+1, 1,
+2, 2,
+3, 3,
+4, 4,
+5, 5,
+6
+), null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Day of Week Number</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

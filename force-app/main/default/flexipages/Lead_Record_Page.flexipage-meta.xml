@@ -1582,8 +1582,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_SDRLeadSource__c</fieldItem>
-                <identifier>RecordNSP_SDRLeadSource_cField</identifier>
+                <fieldItem>Record.NSP_SDR__c</fieldItem>
+                <identifier>RecordNSP_SDR_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2bd644d7-d846-4059-8f3d-df778ff50b9d</name>

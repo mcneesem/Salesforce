@@ -223,6 +223,11 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
+        <field>SBQQ__BillingFrequency__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
         <field>SBQQ__ListPrice__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -239,11 +244,6 @@
     </displayedFields>
     <displayedFields>
         <field>NSP_Net_Total__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>SBQQ__BillingFrequency__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>

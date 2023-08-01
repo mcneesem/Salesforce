@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ New EEs (WO)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ New EEs (WO)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ New EEs (WO)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. When onboarding new employees in Insperity Premier, you will see a &quot;Time and Attendance Management&quot; screen, where supervisor, pay group, accrual group, and other assignments can be made. These will appear as a sequence of drop-down menus, based on your company&apos;s setup. Once onboarding is complete, a profile will be immediately created in the Time &amp; Attendance system for that employee without the need to wait for I-9 verification. Generally, no additional steps are needed in the system at that point. Should an incorrect assignment be made during the onboarding process or if an employee&apos;s information changes, such as an incorrect supervisor, pay group, or accrual group, the correction can be made in Premier &gt; Manage Employees. 
+ 
+If you have any further questions, please let us know and we will be happy to help. 
+ 
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

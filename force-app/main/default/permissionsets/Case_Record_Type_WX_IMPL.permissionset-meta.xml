@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Provide WX_IMPL record type access</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Case Record Type: WX IMPL</label>
+    <recordTypeVisibilities>
+        <recordType>Case.NSP_WX_IMPL</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Case_Sub_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Substatus</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Assigned</fullName>
+                <default>false</default>
+                <label>Assigned</label>
+            </value>
+            <value>
+                <fullName>Awaiting Verification</fullName>
+                <default>false</default>
+                <label>Awaiting Verification</label>
+            </value>
+            <value>
+                <fullName>BPS - Pending BPS Contact</fullName>
+                <default>false</default>
+                <label>BPS - Pending BPS Contact</label>
+            </value>
+            <value>
+                <fullName>BPS -Pending Enrollment Status</fullName>
+                <default>false</default>
+                <label>BPS -Pending Enrollment Status</label>
+            </value>
+            <value>
+                <fullName>Can&apos;t Confirm</fullName>
+                <default>false</default>
+                <label>Can&apos;t Confirm</label>
+            </value>
+            <value>
+                <fullName>Client Contacted</fullName>
+                <default>false</default>
+                <label>Client Contacted</label>
+            </value>
+            <value>
+                <fullName>Client Terminated</fullName>
+                <default>false</default>
+                <label>Client Terminated</label>
+            </value>
+            <value>
+                <fullName>Closed</fullName>
+                <default>false</default>
+                <label>Closed</label>
+            </value>
+            <value>
+                <fullName>Customer Update</fullName>
+                <default>false</default>
+                <label>Customer Update</label>
+            </value>
+            <value>
+                <fullName>Duplicate</fullName>
+                <default>false</default>
+                <label>Duplicate</label>
+            </value>
+            <value>
+                <fullName>Escalated</fullName>
+                <default>false</default>
+                <label>Escalated</label>
+            </value>
+            <value>
+                <fullName>Escalation</fullName>
+                <default>false</default>
+                <label>Escalation</label>
+            </value>
+            <value>
+                <fullName>In Development</fullName>
+                <default>false</default>
+                <label>In Development</label>
+            </value>
+            <value>
+                <fullName>In Process</fullName>
+                <default>false</default>
+                <label>In Process</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Junk Mail</fullName>
+                <default>false</default>
+                <label>Junk Mail</label>
+            </value>
+            <value>
+                <fullName>Known Error</fullName>
+                <default>false</default>
+                <label>Known Error</label>
+            </value>
+            <value>
+                <fullName>Not an Issue</fullName>
+                <default>false</default>
+                <label>Not an Issue</label>
+            </value>
+            <value>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+                <label>Not Started</label>
+            </value>
+            <value>
+                <fullName>Product Ticket Created</fullName>
+                <default>false</default>
+                <label>Product Ticket Created</label>
+            </value>
+            <value>
+                <fullName>PTO Smartform resubmitted</fullName>
+                <default>false</default>
+                <label>PTO Smartform resubmitted</label>
+            </value>
+            <value>
+                <fullName>Re-Opened</fullName>
+                <default>false</default>
+                <label>Re-Opened</label>
+            </value>
+            <value>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+                <label>Resolved</label>
+            </value>
+            <value>
+                <fullName>Resolved by Client</fullName>
+                <default>false</default>
+                <label>Resolved by Client</label>
+            </value>
+            <value>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+                <label>Scheduled</label>
+            </value>
+            <value>
+                <fullName>Sent to Other</fullName>
+                <default>false</default>
+                <label>Sent to Other</label>
+            </value>
+            <value>
+                <fullName>Solution Identified</fullName>
+                <default>false</default>
+                <label>Solution Identified</label>
+            </value>
+            <value>
+                <fullName>To Be Scheduled</fullName>
+                <default>false</default>
+                <label>To Be Scheduled</label>
+            </value>
+            <value>
+                <fullName>Unable to contact</fullName>
+                <default>false</default>
+                <label>Unable to contact</label>
+            </value>
+            <value>
+                <fullName>Unassigned</fullName>
+                <default>true</default>
+                <label>Unassigned</label>
+            </value>
+            <value>
+                <fullName>Unresolved</fullName>
+                <default>false</default>
+                <label>Unresolved</label>
+            </value>
+            <value>
+                <fullName>Waiting on Client</fullName>
+                <default>false</default>
+                <label>Waiting on Client</label>
+            </value>
+            <value>
+                <fullName>Waiting on Customer</fullName>
+                <default>false</default>
+                <label>Waiting on Customer</label>
+            </value>
+            <value>
+                <fullName>Waiting on Development</fullName>
+                <default>false</default>
+                <label>Waiting on Development</label>
+            </value>
+            <value>
+                <fullName>Waiting on Requester</fullName>
+                <default>false</default>
+                <label>Waiting on Requester</label>
+            </value>
+            <value>
+                <fullName>Waiting on Tax Agency</fullName>
+                <default>false</default>
+                <label>Waiting on Tax Agency</label>
+            </value>
+            <value>
+                <fullName>WIRE - Migration Complete</fullName>
+                <default>false</default>
+                <label>WIRE - Migration Complete</label>
+            </value>
+            <value>
+                <fullName>With Internal/External Partner</fullName>
+                <default>false</default>
+                <label>With Internal/External Partner</label>
+            </value>
+            <value>
+                <fullName>WSEE Terminated</fullName>
+                <default>false</default>
+                <label>WSEE Terminated</label>
+            </value>
+            <value>
+                <fullName>Can not Confirm</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Can not Confirm</label>
+            </value>
+            <value>
+                <fullName>Paired with Closed Status</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Paired with Closed Status</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Can&apos;t Confirm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Closed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Resolved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Resolved by Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Sent to Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <valueName>Unable to contact</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Unresolved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Assigned</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Awaiting Verification</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>BPS - Pending BPS Contact</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>BPS -Pending Enrollment Status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Client Contacted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Customer Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Escalation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>In Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>In Process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>In Progress</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Known Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Not Started</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Product Ticket Created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Re-Opened</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Scheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Solution Identified</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>To Be Scheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Unassigned</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Waiting on Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Waiting on Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Waiting on Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Waiting on Requester</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Waiting on Tax Agency</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>WIRE - Migration Complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>With Internal/External Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Client Terminated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Duplicate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Junk Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Not an Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>PTO Smartform resubmitted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>WSEE Terminated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Escalated</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

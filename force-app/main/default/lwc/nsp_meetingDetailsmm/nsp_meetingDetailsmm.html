@@ -1,0 +1,34 @@
+<template>
+    <lightning-record-edit-form
+        onerror={handleError} record-id={recordId} onload={handleLoad}
+        object-api-name={objectApiName} density="comfy">
+        <lightning-formatted-text class="slds-page-header__title" value={title}>
+        </lightning-formatted-text>
+    <div class="section slds-var-p-top_small" data-id="meetingDetails">
+        <lightning-input-field
+            field-name="NSP_Legal_Name__c"
+            class={styles.NSP_Legal_Name__c}
+            onchange={handleValueChange}>
+        </lightning-input-field>
+
+        <lightning-formatted-text
+            class="slds-form-element__label slds-m-left_xx-small" value={label.dba}
+            data-field="DBA__c"></lightning-formatted-text>
+        <lightning-input-field disabled={disabledFields.DBA__c} field-name="DBA__c" data-name="DBA__c" class="slds-form-element_stacked" 
+        value={field.DBA__c} onchange={handleValueChange} variant="label-hidden"></lightning-input-field>
+        <lightning-formatted-text
+            class="slds-form-element__label slds-m-left_xx-small" value={label.discovery}
+            data-field="Discovery_Meeting_Date_Time_Location__c"></lightning-formatted-text>
+        <lightning-input-field disabled={disabledFields.Discovery_Meeting_Date_Time_Location__c} field-name="Discovery_Meeting_Date_Time_Location__c" data-name="Discovery_Meeting_Date_Time_Location__c" class="slds-form-element_stacked" onchange={handleValueChange} variant="label-hidden"></lightning-input-field>
+        
+        <lightning-formatted-text
+            class="slds-form-element__label slds-m-left_xx-small" value={label.meetParticipants}
+            data-field="Meeting_Participants__c"></lightning-formatted-text>
+        <lightning-input-field disabled={disabledFields.Meeting_Participants__c} field-name="Meeting_Participants__c" data-name="Meeting_Participants__c" class="slds-form-element_stacked" onchange={handleValueChange} variant="label-hidden"></lightning-input-field>
+        <lightning-formatted-text
+            class="slds-form-element__label slds-m-left_xx-small" value={label.meetNotes}
+            data-field="Meeting_Notes__c"></lightning-formatted-text>
+        <lightning-input-field disabled={disabledFields.Meeting_Notes__c} field-name="Meeting_Notes__c" data-name="Meeting_Notes__c" class="slds-form-element_stacked" onchange={handleValueChange} variant="label-hidden"></lightning-input-field>
+        </div>
+    </lightning-record-edit-form>
+</template>

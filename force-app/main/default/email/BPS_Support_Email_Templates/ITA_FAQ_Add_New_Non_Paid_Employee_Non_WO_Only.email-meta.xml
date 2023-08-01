@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Add New Non-Paid Employee (Non-WO Only)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Add New Non-Paid Employee (Non-WO Only)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Add New Non-Paid Employee (Non-WO Only)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time and Attendance Support. To add a new employee directly to your Time &amp; Attendance system, please visit https://help.insperity.com/bps/knowledge-base/how-to-add-a-new-employee-in-time-and-attendance/ and follow the instructions contained in the knowledge base article.  
+ 
+As you follow the instructions, there are several things to keep in mind: 
+
+When on the &quot;Org Level&quot; tab, in the first field, you will need to assign the employee to the option that notes it does not export, or that the employee is unpaid, or something similar, so that the system does not try to export the employee&apos;s information when processing payroll. 
+
+The employee will not be able to single sign-on into the system, and must log in directly to Time and Attendance using the username and password you will setup on the &quot;Security&quot; tab. Here is the web address the employee must navigate to to login: (enter this client&apos;s ITA URL here) 
+
+If you have any questions as you work through the process, please let us know and we will gladly assist. 
+ 
+Thank you,  
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

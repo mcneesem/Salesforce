@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Queue_Assigned_Cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_Detail__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>NSP_Owner__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Open,ReOpened</value>
+    </filters>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>contains</operation>
+        <value>Health,National Benefits Team</value>
+    </filters>
+    <label>Queue Assigned Cases</label>
+</ListView>

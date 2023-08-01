@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>To send email when iSolved HCM Implementation project having configuration task status as complete.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>NSP Isolved HCM Configuration Task Completion Email</name>
+    <style>none</style>
+    <subject>New Client Tax Audit Completed | {!pse__Project_Task__c.pse__Project__c}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

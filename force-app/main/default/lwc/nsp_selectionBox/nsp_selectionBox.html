@@ -1,0 +1,39 @@
+<template>
+  <div>
+    <lightning-formatted-text
+      if:true={label}
+      class={labelClass}
+      value={label}>
+    </lightning-formatted-text>
+
+    <lightning-helptext if:true={helpText} content={helpText}>
+    </lightning-helptext>
+
+    <template if:true={picklistValues}>
+      <lightning-checkbox-group
+        if:true={multiple}
+        name={fieldApiName}
+        label={fieldLabel}
+        options={picklistValues}
+        variant="label-hidden"
+        class="slds-m-left_small"
+        value={values}
+        style={inlineStyles}
+        disabled={disabled}>
+      </lightning-checkbox-group>
+
+      <lightning-radio-group
+        if:false={multiple}
+        name={fieldApiName}
+        label={fieldLabel}
+        options={picklistValues}
+        variant="label-hidden"
+        value={finalValue}
+        class="slds-m-left_small"
+        type="radio"
+        style={inlineStyles}
+        disabled={disabled}>
+      </lightning-radio-group>
+    </template>
+  </div>
+</template>

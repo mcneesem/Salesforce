@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Case In Process - 1st follow up</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Case In Process - 1st follow up</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Case In Process - 1st follow up</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+We have a support case {!Case.CaseNumber} open to address your request. Our technicians answer cases in the order in which they were received, with preference given to urgent issues that will delay or prevent payroll processing. Unfortunately, we’ve been receiving an unusually high number of such emergency cases, and so our response times are longer than we would like. 
+  
+We absolutely apologize for the delay that you’ve experienced in receiving a response, but please rest assured that our technicians are working through their queue as quickly as they possibly can and will be in touch as soon as they are able. We appreciate your patience! 
+ 
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

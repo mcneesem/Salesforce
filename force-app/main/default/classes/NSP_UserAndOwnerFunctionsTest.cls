@@ -28,7 +28,7 @@ public class NSP_UserAndOwnerFunctionsTest {
         UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
         UserRole SalesLeaderRole = [SELECT Id FROM UserRole WHERE Name='Sales Leader'];
         // Adding BPA User
-        User BpaUser = new User(alias = 'jsmiths', email='jsmith@acmetestusers.com', 
+        User BpaUser = new User(alias = 'jsmiths', email='jsmith@insperity.com', 
                                 emailencodingkey=emailencodingkey, lastname='Smiths', 
                                 languagelocalekey=languagekey, 
                                 localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
@@ -43,7 +43,7 @@ public class NSP_UserAndOwnerFunctionsTest {
             
         Account account = New Account(Name = 'TestAccount',AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1',  OwnerId = BpaUser.Id);
         insert account;
-            
+        Test.startTest();  
         NSP_TestHelper.createContact(account.id, true);
         AccountContactRelation acrObj  = [Select Id , NSP_Is_Primary__c ,ContactId, IsActive from AccountContactRelation WHERE AccountId =: account.Id ];
         acrObj.NSP_Is_Primary__c=true;
@@ -58,6 +58,7 @@ public class NSP_UserAndOwnerFunctionsTest {
         opportuniytObject3.OwnerId = BpaUser.Id;
         insert opportuniytObject3;
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject3.Id,true);
+        Test.stopTest();
        }
         
     }
@@ -148,11 +149,10 @@ public class NSP_UserAndOwnerFunctionsTest {
     */
     @isTest
     static void setDummyUserTest(){
+         Test.startTest(); 
         Account accObj = [Select Id,Name from Account WHERE Name= 'TestAccount'  LIMIT 1];
         AccountContactRelation acrObj  = [Select Id , NSP_Is_Primary__c ,ContactId, IsActive from AccountContactRelation WHERE AccountId =: accObj.Id AND NSP_Is_Primary__c = True ];
-		User usr = [SELECT Id , LastName from User WHERE LastName ='Smiths'];
-        
-        Test.startTest();      
+		User usr = [SELECT Id , LastName from User WHERE LastName ='Smiths'];            
         System.runAs (usr){
           Opportunity opportuniytObject3 = new Opportunity();
             opportuniytObject3 = NSP_TestHelper.createOpenOpportunity(accObj.Id, OPP_TYPE, false);

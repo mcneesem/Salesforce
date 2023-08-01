@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Holiday Admin Relief</fullName>
+        <default>false</default>
+        <label>Holiday Admin Relief</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internal Request - WX</fullName>
+        <default>false</default>
+        <label>Internal Request - WX</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internal Request WO</fullName>
+        <default>false</default>
+        <label>Internal Request WO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mobile - WO</fullName>
+        <default>false</default>
+        <label>Mobile - WO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mobile – WX</fullName>
+        <default>false</default>
+        <label>Mobile – WX</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Outage - WO</fullName>
+        <default>false</default>
+        <label>Outage - WO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Outage – WX</fullName>
+        <default>false</default>
+        <label>Outage – WX</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TimeStar Termination</fullName>
+        <default>false</default>
+        <label>Time &amp; Attendance Termination</label>
+    </standardValue>
+    <standardValue>
+        <fullName>WO Termination</fullName>
+        <default>false</default>
+        <label>WO Termination</label>
+    </standardValue>
+    <standardValue>
+        <fullName>WO/WA Transition</fullName>
+        <default>false</default>
+        <label>WO/WA Transition</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Congruex</fullName>
+        <default>false</default>
+        <label>Congruex</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Trigild – New Property</fullName>
+        <default>false</default>
+        <label>Trigild – New Property</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CASPSL</fullName>
+        <default>false</default>
+        <label>CASPSL</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CASPSL New PT EE</fullName>
+        <default>false</default>
+        <label>CASPSL New PT EE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>New Jurisdiction</fullName>
+        <default>false</default>
+        <label>New Jurisdiction</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Time International User</fullName>
+        <default>false</default>
+        <label>Time International User</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Performance International User</fullName>
+        <default>false</default>
+        <label>Performance International User</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dunning - Account</fullName>
+        <default>false</default>
+        <label>Dunning - Account</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dunning - Invoice</fullName>
+        <default>false</default>
+        <label>Dunning - Invoice</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non-Insperity Employee</fullName>
+        <default>false</default>
+        <label>Non-Insperity Employee</label>
+    </standardValue>
+</StandardValueSet>

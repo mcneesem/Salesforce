@@ -1,0 +1,99 @@
+<template>
+  <lightning-record-edit-form
+    onerror={handleError}
+    record-id={recordId}
+    onload={handleLoad}
+    object-api-name={objectApiName}
+    density="comfy">
+    <lightning-formatted-text class="slds-page-header__title" value={title}>
+    </lightning-formatted-text>
+
+    <div class="section slds-var-p-top_small" data-id="workersCompSafety">
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Immediateworkerscomporsafety_concern__c}
+        label={label.ClientHasImmSafetyConcerns}
+        field-api-name="Implementation_Profile__c.NSP_Immediateworkerscomporsafety_concern__c"
+        record-type-id={recordTypeId}
+        data-name="NSP_Immediateworkerscomporsafety_concern__c"
+        value={field.NSP_Immediateworkerscomporsafety_concern__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <lightning-input-field
+        value={field.NSP_workers_comp_or_safety_concerns_PD__c}
+        disabled={disabledFields.NSP_workers_comp_or_safety_concerns_PD__c}
+        if:true={visibility.NSP_workers_comp_or_safety_concerns_PD__c}
+        data-name="NSP_workers_comp_or_safety_concerns_PD__c"
+        class={styles.NSP_workers_comp_or_safety_concerns_PD__c}
+        field-name="NSP_workers_comp_or_safety_concerns_PD__c"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <c-nsp_selection-box
+        if:true={field.employeesWorktaxStates}
+        disabled={disabledFields.NSP_collected_copies_of_state_WC_policy__c}
+        label={labelWithStatesIncluded}
+        field-api-name="Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c"
+        data-name="NSP_collected_copies_of_state_WC_policy__c"
+        record-type-id={recordTypeId}
+        value={field.NSP_collected_copies_of_state_WC_policy__c}
+        class={styles.NSP_collected_copies_of_state_WC_policy__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Regulatory_accreditation_inspections__c}
+        label={label.ClientInspectedRegulatoryAgency}
+        field-api-name="Implementation_Profile__c.Regulatory_accreditation_inspections__c"
+        record-type-id={recordTypeId}
+        data-name="Regulatory_accreditation_inspections__c"
+        value={field.Regulatory_accreditation_inspections__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <lightning-input-field
+        value={field.Inspection_details__c}
+        disabled={disabledFields.Inspection_details__c}
+        if:true={visibility.Inspection_details__c}
+        data-name="Inspection_details__c"
+        class={styles.Inspection_details__c}
+        field-name="Inspection_details__c"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Interested_in_on_site_safety_inspections__c}
+        label={label.ClientInterestedOnSiteSafetyInsp}
+        field-api-name="Implementation_Profile__c.Interested_in_on_site_safety_inspections__c"
+        record-type-id={recordTypeId}
+        data-name="Interested_in_on_site_safety_inspections__c"
+        value={field.Interested_in_on_site_safety_inspections__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Immediate_need_for_Workers_Comp_Cert__c}
+        label={label.immediateNeedForWorkers}
+        field-api-name="Implementation_Profile__c.NSP_Immediate_need_for_Workers_Comp_Cert__c"
+        record-type-id={recordTypeId}
+        data-name="NSP_Immediate_need_for_Workers_Comp_Cert__c"
+        value={field.NSP_Immediate_need_for_Workers_Comp_Cert__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <lightning-input-field
+        value={field.When_are_certificates_needed__c}
+        disabled={disabledFields.When_are_certificates_needed__c}
+        if:true={visibility.When_are_certificates_needed__c}
+        data-name="When_are_certificates_needed__c"
+        class={styles.When_are_certificates_needed__c}
+        field-name="When_are_certificates_needed__c"
+        onchange={handleValueChange}></lightning-input-field>
+
+      <lightning-input-field
+        value={field.Workers_Comp_Safety_Notes__c}
+        disabled={disabledFields.Workers_Comp_Safety_Notes__c}
+        field-name="Workers_Comp_Safety_Notes__c"
+        data-name="Workers_Comp_Safety_Notes__c"
+        onchange={handleValueChange}></lightning-input-field>
+    </div>
+  </lightning-record-edit-form>
+</template>

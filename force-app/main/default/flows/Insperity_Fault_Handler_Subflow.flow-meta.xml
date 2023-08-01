@@ -53,6 +53,7 @@ Updated email to remove Org for now</description>
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Retro Accrual Adjustments</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Retro Accrual Adjustments</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Retro Accrual Adjustments</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time and Attendance Support. We do not make accrual data changes in pay periods that are now closed. The reason for this is that such edits alter more than simply the transactions being added, which can raise concerns in the case of an audit.
+
+Making edits in an already closed period can affect a number of things, including causing a disparity between the timesheet and the accruals records, since the newly added transactions would not match the Hours records in Payroll or Time &amp; Attendance reports. Any changes to historical data in Time &amp; Attendance would conflict with values shown in reports run through Premier, such as leave liability reporting. Additionally, the accrual numbers already printed on employee checks would no longer match the accrual history in Time &amp; Attendance.
+
+This is a change that cannot be made without sacrificing significant data integrity, so as with any accounting process, the changes must be made in the current period as a retroactive adjustment. As a system administrator, you can make a manual adjustment to your employees accruals by referencing this page. For auditing purposes, when adding the adjustment, please enter a comment/reason for the adjustment.
+
+If you have additional questions or concerns, please let us know and we&apos;ll be happy to help.
+
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Can_not_Activate_Backed_Out_Orders</fullName>
+    <active>true</active>
+    <description>Backed Out Orders Can not be Activated</description>
+    <errorConditionFormula>AND(NSP_Back_Out__c=TRUE,ISCHANGED(Status), ISPICKVAL(Status, &apos;Activated&apos;))</errorConditionFormula>
+    <errorMessage>Can Not Activate Backed Out Orders</errorMessage>
+</ValidationRule>

@@ -1,0 +1,120 @@
+<template>
+    <div class="slds-box">
+    <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
+    <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId} onsubmit ={handleSubmit} onsuccess={handleSuccess}  onload={handleOnload}>
+    <lightning-messages></lightning-messages>
+    <lightning-layout>
+    <lightning-layout-item size="7">
+        <div class="slds-m-around_medium">
+        <lightning-input-field class="slds-p-vertical_medium" data-fname="clientName"  field-name='NSP_ClientName__c' required value={clientId}	onchange={handleChange} ></lightning-input-field>
+        <lightning-layout-item class="slds-p-vertical_medium">
+          <template if:true={isOnloadCalled}>
+           <c-nsp_case-custom-look-up
+                                      data-id = 'contactLookup'
+                                      label="Client Contact"
+                                      s-object-api-name="Contact"
+                                      icon-name = "standard:contact"
+                                      parent-id ={clientAccId}
+                                      default-record-id = {NSP_Client_Contact__c}
+                                      onlookupupdate={handlelookupRecord}
+                                      search-key={cname}
+                                      placeholder="Search Contacts...">
+                                      </c-nsp_case-custom-look-up>
+            </template>
+            </lightning-layout-item>
+          
+          <div style='display:none'>
+        <lightning-input-field class="slds-p-vertical_medium" data-fname="clientContact"  field-name='NSP_Client_Contact__c' value={clientContact}></lightning-input-field>
+        </div>
+        <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_HRSpeciallist__c" value={userID}  required ></lightning-input-field>
+        <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_FinanceLevel__c"  value={financeLevel} required ></lightning-input-field>
+        <lightning-input-field  field-name="NSP_Segment__c"  value={segmentType}  class="slds-hidden"></lightning-input-field>
+        
+         <div class="slds-p-vertical_medium">
+            <template if:true={creditApproval.data}>
+              <div class="slds-form-element slds-form-element_horizontal">
+                <lightning-radio-group name="creditApproval" for="creditApproval"  
+                  label="Credit Approval"
+                  options={creditApproval.data.values}
+                  value={creditApprovalValue}
+                  onchange={handleChange}
+                  required
+                  type="radio">
+                  </lightning-radio-group>
+                </div>
+                <div class='slds-text-color_error NSP_CreditApproval__c slds-p-vertical_medium' style="display:none"> STOP! Attach the credit approval email to the right. </div>
+              </template>
+              <div style="display:none">
+                <lightning-input-field  class="slds-hidden" field-name="NSP_CreditApproval__c" id="creditApproval" value={creditApprovalValue} required ></lightning-input-field>
+             </div>
+            </div>
+            <template if:true={enableMultipleEmployee}>
+              <div class="slds-p-vertical_medium">
+                <div class="slds-form-element slds-form-element_horizontal">
+                <lightning-radio-group name="RequestingMultipleEmployees" for="RequestingMultipleEmployees"  
+                    label="Are you requesting agreements for multiple employees ?"
+                    options={pickValueYesNo}
+                    value={multipleEmployeesValue}
+                    onchange={handleChange}
+                    required
+                    type="radio">
+                    </lightning-radio-group>
+                </div>
+                 <div style="display:none">
+                  <lightning-input-field  class="slds-hidden" id="RequestingMultipleEmployees" field-name="NSP_RequestingMultipleEmployees__c" value={multipleEmployeesValue} required ></lightning-input-field>
+                 </div>
+                
+            </div>
+            <template if:true={enableTotalAgreement}>
+            <lightning-input-field  class="slds-p-vertical_medium" field-name="NSP_TotalAgreementsRequested__c" required ></lightning-input-field>
+          <div  class="slds-form-element_horizontal">
+            <label class="slds-form-element__label" >
+              <span style="color:red">* </span>Severance Total including all considerations</label>
+          <lightning-input-field  class="slds-p-vertical_medium" variant="label-hidden" field-name="NSP_Severance_Total__c" required ></lightning-input-field>
+          </div>
+            <div class="slds-text-color_error NSP_RequestingMultipleEmployees__c slds-p-vertical_medium" style="display:none" >  STOP! Attach the Separation Agreement Spreadsheet to the right. </div> 
+          </template>
+        </template>
+       </div>
+  
+       </lightning-layout-item>
+       <lightning-layout-item size="5">
+        <!--   file upload start here -->
+        <div class="slds-align_absolute-center slds-p-around_medium" >
+            <c-wizard-file-upload re-req-id={reReqId} onfileaction={findeFileSize}> </c-wizard-file-upload>
+        </div>
+        
+        <div style="display:none"> 
+          <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+          </lightning-input-field> 
+        </div>
+        <!-- File Upload End here -->
+       </lightning-layout-item>
+       </lightning-layout>
+       
+ 
+  
+       <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+        <lightning-button variant="brand" label="Previous" 
+        class="slds-m-top_small slds-m-left_small"
+        onclick={handlePrev}
+        >
+        </lightning-button>
+  
+        <lightning-button
+        class="slds-m-top_small slds-m-left_small"
+        label="Save and Exit"
+        onclick={handleSave}>
+      </lightning-button>
+  
+        <lightning-button
+            variant="brand" 
+            class="slds-m-top_small slds-m-left_small"
+            type="submit"
+            onclick={hanldeNext}
+            label="Next">
+        </lightning-button>
+    </div>
+    </lightning-record-edit-form>
+    </div>
+  </template>

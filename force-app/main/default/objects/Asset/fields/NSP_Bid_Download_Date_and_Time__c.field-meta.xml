@@ -4,7 +4,7 @@
     <description>This field is used for Integration</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Bid Download Date and Time</label>
+    <label>Bid Download Date</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Date</type>

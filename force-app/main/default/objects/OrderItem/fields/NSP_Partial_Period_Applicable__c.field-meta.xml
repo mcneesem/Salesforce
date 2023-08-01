@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Partial_Period_Applicable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if partial period is applicable.</description>
+    <externalId>false</externalId>
+    <label>Partial Period Applicable?</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

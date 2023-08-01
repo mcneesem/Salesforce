@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_AIMS_WhenDoAccrualLevelChangesHappen__c</fullName>
+    <externalId>false</externalId>
+    <label>When do accrual level changes happen?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_What_is_the_plan_year__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Calendar Year: Accrual rate increases on 1/1 prior to the designated anniversary</fullName>
+                <default>false</default>
+                <label>Calendar Year: Accrual rate increases on 1/1 prior to the designated anniversary</label>
+            </value>
+            <value>
+                <fullName>Calendar Year: Accrual rate increases on 1/1/ after the designated anniversary</fullName>
+                <default>false</default>
+                <label>Calendar Year: Accrual rate increases on 1/1/ after the designated anniversary</label>
+            </value>
+            <value>
+                <fullName>Fiscal Year: Accrual rate increase in the first day of the designated fiscal year</fullName>
+                <default>false</default>
+                <label>Fiscal Year: Accrual rate increase in the first day of the designated fiscal year</label>
+            </value>
+            <value>
+                <fullName>Anniversary Date: Accrual rate increases on each employee’s anniversary date</fullName>
+                <default>false</default>
+                <label>Anniversary Date: Accrual rate increases on each employee’s anniversary date</label>
+            </value>
+            <value>
+                <fullName>Anniversary Month: Accrual rate increases on the first day of each employee’s anniversary month</fullName>
+                <default>false</default>
+                <label>Anniversary Month: Accrual rate increases on the first day of each employee’s anniversary month</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <valueName>Calendar Year: Accrual rate increases on 1/1 prior to the designated anniversary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <valueName>Calendar Year: Accrual rate increases on 1/1/ after the designated anniversary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>Anniversary Date: Accrual rate increases on each employee’s anniversary date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calendar Year (1/1 – 12/31)</controllingFieldValue>
+            <controllingFieldValue>Anniversary Year</controllingFieldValue>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>Anniversary Month: Accrual rate increases on the first day of each employee’s anniversary month</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client’s Fiscal Year</controllingFieldValue>
+            <valueName>Fiscal Year: Accrual rate increase in the first day of the designated fiscal year</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

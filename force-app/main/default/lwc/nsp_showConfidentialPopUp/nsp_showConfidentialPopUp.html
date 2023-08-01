@@ -1,0 +1,13 @@
+<!--
+	@story : STY-04166
+	@Description: When the case is confidential eligible and confidentail checkbox is not checked during the
+				  closure of case, A modal box will be opened to mark the case confidential for the last
+				  time after the case is closed
+	@createdDate : 6/20/2023
+-->
+
+<template>
+    <c-nsp_modal-dialog buttons={buttonConfig} if:true={isShowPopUp} onbuttonclick={handleButtonClick}>
+        <h1 class="slds-align_absolute-center"><strong>{confMessage}</strong></h1>
+    </c-nsp_modal-dialog>
+</template>

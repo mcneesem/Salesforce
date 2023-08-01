@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_checkVirginiaAndorNewYorkToContinue</fullName>
+    <active>true</active>
+    <description>You must check Virginia and/or New York to continue.</description>
+    <errorConditionFormula>ISPICKVAL(NSP_EmployeesEverWorkedInStateNewYork__c , &apos;yes&apos;) &amp;&amp;
+NOT(NSP_Virginia__c = true || NSP_New_York__c = true) &amp;&amp;
+(RecordType.Name = &apos;Payroll Specialist Form&apos; || RecordType.Name = &apos;Credit Specialist Form&apos;)</errorConditionFormula>
+    <errorMessage>You must check Virginia and/or New York to continue.</errorMessage>
+</ValidationRule>

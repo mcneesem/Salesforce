@@ -1,0 +1,10 @@
+<messaging:emailTemplate subject="Response Required: Insperity Past Due Invoice(s)" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+<p>Your prompt attention is needed in resolving the past due status of the attached invoices(s).  To avoid disruption of your service with Insperity, payment must be received within 15 days.</p>
+<p>If you would like to pay by credit card, please follow the link below to our payment portal or contact us directly at <a href="mailto:orders@insperity.com">orders@insperity.com</a>.</p>
+<p>
+  <c:NSP_dunningInvoicesList caseId="{!relatedTo.Id}" caseAccId="{!relatedTo.AccountId}"> </c:NSP_dunningInvoicesList> 
+</p>
+<p>Thank you for your prompt attention to this matter.</p>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

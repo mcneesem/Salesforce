@@ -32,6 +32,14 @@
             <fullName>Monthly</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semi-Annual</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Client_For_Life__c</picklist>
@@ -91,6 +99,10 @@
         </values>
         <values>
             <fullName>Combination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estimate</fullName>
             <default>false</default>
         </values>
         <values>

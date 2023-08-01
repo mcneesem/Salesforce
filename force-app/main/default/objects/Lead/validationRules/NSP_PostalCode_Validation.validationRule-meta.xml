@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_PostalCode_Validation</fullName>
+    <active>true</active>
+    <description>To make postal code required for address field required for service profiles(STY-01112)</description>
+    <errorConditionFormula>AND(ISBLANK(PostalCode), OR($Profile.Name = &apos;PEO Service&apos;,$Profile.Name = &apos;BPS Service&apos;,
+$Profile.Name = &apos;Contact Center&apos;,
+$Profile.Name = &apos;Retirement Services&apos;
+), $RecordType.Name = &quot;Service Referral Lead&quot;,NOT( $Setup.NSP_Trigger_Switch__c.LeadValidations__c))</errorConditionFormula>
+    <errorMessage>Zip code is required.</errorMessage>
+</ValidationRule>

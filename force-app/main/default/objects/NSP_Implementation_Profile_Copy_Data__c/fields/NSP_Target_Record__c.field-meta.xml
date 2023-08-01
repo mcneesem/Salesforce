@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Target_Record__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Target IP record</description>
+    <externalId>false</externalId>
+    <label>Target Record</label>
+    <referenceTo>Implementation_Profile__c</referenceTo>
+    <relationshipLabel>Implementation Profiles Copy Data (Target Record)</relationshipLabel>
+    <relationshipName>Implementation_Profiles_Copy_Data1</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

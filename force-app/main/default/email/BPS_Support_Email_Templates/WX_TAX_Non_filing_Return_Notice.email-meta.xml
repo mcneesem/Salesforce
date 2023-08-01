@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>WX TAX - Non-filing Return Notice</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>WX TAX - Non-filing Return Notice</name>
+    <style>freeForm</style>
+    <subject>WX TAX - Non-filing Return Notice</subject>
+    <textOnly>Insperity Payroll Services
+19001 Crescent Springs Drive
+Kingwood, Texas 77339 
+ 
+{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}  
+ 
+Name of Agency 
+Agency Department Name 
+Mailing Address 
+City, State Zip Code 
+ 
+RE: {!Case.Account}
+{!Account.NSP_FEIN__c}
+{!Account.AccountNumber} 
+Notice Number
+
+ 
+Dear Sir or Madam, 
+ 
+Our client received the attached failure to file notice. We assumed the tax filing responsibility for our client as of first check date. I have carefully reviewed the information provided in this notice. 
+ 
+Our records indicate that the tax return was submitted on date. I have enclosed a copy of the return for your reference. 
+ 
+OR 
+ 
+Our records confirm that the tax return was not filed due to a delay in the client receiving their account number. 
+This was not due to a malicious intent or willful neglect of compliance. The completed return is attached. 
+ 
+If you need additional assistance in this matter or have any questions, I can be reached at or IPS.TAX@Insperity.com. 
+ 
+Many thanks for your attention to this matter. 
+ 
+Regards,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

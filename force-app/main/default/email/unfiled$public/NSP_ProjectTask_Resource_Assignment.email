@@ -1,0 +1,22 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p class="MsoNormal" style="margin-bottom: 0in; line-height: normal;"><span style="font-size: 12pt;"><font style="" face="Times New Roman, Times, serif">Hello, <o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0in; line-height: normal;"><span style="font-size: 12pt;"><font face="Times New Roman, Times, serif">&nbsp;</font></span></p>
+
+<span style="font-size: 12pt; line-height: 107%;"><font face="Times New Roman, Times, serif">Please note the projects below have been
+created.<br>
+A new project task has been created in Salesforce and you have been assigned to it.
+See the project and customer information below.</font></span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Times New Roman, Times, serif"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p class="MsoNormal" style="margin-bottom: 0in; line-height: normal;"><font face="Times New Roman, Times, serif"><font style="color: rgb(0, 0, 0); font-size: 12pt;"><span style="font-size: 12pt;">Project Number: </span>{!pse__Project_Task_Assignment__c.NSP_Project_Number__c}</font><br><font style="color: rgb(0, 0, 0); font-size: 12pt;"><span style="font-size: 12pt;">
+Project Name:&nbsp;</span></font>{!pse__Project_Task_Assignment__c.NSP_Project__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-size: 12pt; margin-bottom: 0in; line-height: normal;"><font face="Times New Roman, Times, serif"><span style="font-size: 12pt;">Customer:&nbsp;<o:p></o:p></span>{!pse__Project_Task_Assignment__c.NSP_Customer__c}</font></p>
+
+<span style="color: rgb(0, 0, 0); font-size: 12pt; line-height: 107%;"><font face="Times New Roman, Times, serif">Project Resource: {!pse__Project_Task_Assignment__c.pse__Resource__c}<br>
+Start Date:&nbsp;{!pse__Project_Task_Assignment__c.pse__Project_Task_Start_Date__c}<br>
+<br>
+<br>
+Click below to view the record</font></span></div><div style=""><span style="line-height: 107%;"><font face="Times New Roman, Times, serif" style="">{!pse__Project_Task_Assignment__c.NSP_Project_Task_Link__c}</font></span></div>]]></td>
+</tr>
+</table>

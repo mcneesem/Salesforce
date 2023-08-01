@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mandatory_Termination_Form</fullName>
+    <active>true</active>
+    <description>Make fields mandatory to input value for anticipated termination date and reason for termination</description>
+    <errorConditionFormula>AND($Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True,
+OR(
+AND( NSP_Verbal_Term_recd__c=TRUE,
+OR(
+ISBLANK( NSP_Verbal_Term_Date__c )
+)),
+AND( NSP_Written_Term_recd__c =TRUE,
+OR(
+ISBLANK( NSP_Written_Term_Date__c ),
+ISBLANK( NSP_Anticipated_Date_Of_Termination__c ),
+ISBLANK( NSP_Reason_for_Term__c )
+))
+))</errorConditionFormula>
+    <errorMessage>Anticipated Date of Termination and reason for termination is mandatory</errorMessage>
+</ValidationRule>

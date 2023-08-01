@@ -1,0 +1,10 @@
+.input-place-holder {
+    border: none;
+    border-bottom: 1px solid #1890ff;
+    outline: none;
+ }
+
+[placeholder]:focus::-webkit-input-placeholder {
+    text-indent: -100%;
+    opacity: 1;
+ }

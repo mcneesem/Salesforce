@@ -10,9 +10,9 @@ Modification Log     :
 * Developer                   Date                   Description                                     
 * -------------------------------------------------------------------------------------------------  
 
-*	Tejas           October 10, 2021          First Iteration
+*   Tejas           October 10, 2021          First Iteration
 *   ManiTeja        February 18 2022          modified saveAddress method to remove null
-											  while catching exception and passing to aura component as part of DF-01313
+                                              while catching exception and passing to aura component as part of DF-01313
 ***************************************************************************************************/
 public without sharing class NSP_AddressCtrl{
     public static final string SUCCESS = 'Success';
@@ -28,9 +28,9 @@ public without sharing class NSP_AddressCtrl{
         
             NSP_Address__c address;
             try{
-                address = [SELECT NSP_Address_Type__c,NSP_Country__c,recordtypeId, NSP_State__c FROM NSP_Address__c WHERE Id =:recId];
-             }catch(Exception e){
-                throw new AuraHandledException(e.getMessage());
+                address = [SELECT NSP_Address_Type__c,NSP_Country__c, NSP_State__c FROM NSP_Address__c WHERE Id =:recId];
+             }catch(Exception ex){
+                throw new AuraHandledException(ex.getMessage());
             }
             return address;
         }
@@ -59,15 +59,8 @@ public without sharing class NSP_AddressCtrl{
         return responseWrap;
     }
 
-@AuraEnabled
-public static Id getDefaultRecordType(){
-    try{
-    Id recordTypeId= SObjectType.NSP_Address__c.getRecordTypeInfosByDeveloperName().get('NSP_Account_Address').getRecordTypeId();
-    return recordTypeId;
-    }catch(Exception e){
-    throw new AuraHandledException(e.getMessage());
-    }
-}
+     
+        
 
     
     // Wrapper class for response

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Term_Reasons_Is_Required</fullName>
+    <active>true</active>
+    <description>Term_Reasons_Is_Required</description>
+    <errorConditionFormula>AND( 
+OR( 
+ISPICKVAL( NSP_Term_Code__c ,&apos;5200 Health Benefits&apos;),
+ISPICKVAL( NSP_Term_Code__c ,&apos;5300 Poor Customer Service&apos;),
+ISPICKVAL( NSP_Term_Code__c ,&apos;5400 Dissatisfied with Service/Product Offering&apos;),
+ISPICKVAL( NSP_Term_Code__c ,&apos;5500 Cost&apos;),
+ISPICKVAL( NSP_Term_Code__c ,&apos;5600 Internal Company Reason&apos;)),
+ISBLANK(  TEXT( NSP_Term_Reason__c ) ))</errorConditionFormula>
+    <errorMessage>Term Reasons is Required</errorMessage>
+</ValidationRule>

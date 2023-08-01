@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upcoming_Parent_Discovery_SKO_Blocks</fullName>
+    <columns>NAME</columns>
+    <columns>Start__c</columns>
+    <columns>End__c</columns>
+    <columns>On__c</columns>
+    <columns>Start_Time_picklist__c</columns>
+    <columns>End_Time_picklist__c</columns>
+    <columns>Available_Reps__c</columns>
+    <columns>Parent__c</columns>
+    <columns>Meeting_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Meeting_Type__c</field>
+        <operation>equals</operation>
+        <value>Discovery/SKO</value>
+    </filters>
+    <filters>
+        <field>Parent__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>End_Greater_or_Equal_to_Today__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Active Parent Client Transition Blocks</label>
+</ListView>

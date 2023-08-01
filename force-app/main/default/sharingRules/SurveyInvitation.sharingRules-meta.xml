@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Share_with_View_All_Survey_Responses_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share with View All Survey Responses Group</label>
+        <sharedTo>
+            <group>View_All_Survey_Responses</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

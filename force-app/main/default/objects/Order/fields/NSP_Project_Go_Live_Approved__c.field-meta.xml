@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Project_Go_Live_Approved__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicated if Project Go Live is approved</description>
+    <externalId>false</externalId>
+    <label>Project Go Live Approved</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

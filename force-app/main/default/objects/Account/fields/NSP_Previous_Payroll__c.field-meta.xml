@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Previous_Payroll__c</fullName>
+    <externalId>false</externalId>
+    <label>Previous Payroll</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADP</fullName>
+                <default>false</default>
+                <label>ADP</label>
+            </value>
+            <value>
+                <fullName>Alliance</fullName>
+                <default>false</default>
+                <label>Alliance</label>
+            </value>
+            <value>
+                <fullName>Amcheck</fullName>
+                <default>false</default>
+                <label>Amcheck</label>
+            </value>
+            <value>
+                <fullName>Ascentis</fullName>
+                <default>false</default>
+                <label>Ascentis</label>
+            </value>
+            <value>
+                <fullName>Ceridian Source 500</fullName>
+                <default>false</default>
+                <label>Ceridian Source 500</label>
+            </value>
+            <value>
+                <fullName>CompuPay Payload</fullName>
+                <default>false</default>
+                <label>CompuPay Payload</label>
+            </value>
+            <value>
+                <fullName>CompuPay Payright</fullName>
+                <default>false</default>
+                <label>CompuPay Payright</label>
+            </value>
+            <value>
+                <fullName>CompuPay Payroll Online</fullName>
+                <default>false</default>
+                <label>CompuPay Payroll Online</label>
+            </value>
+            <value>
+                <fullName>CompuPay PowerPayroll</fullName>
+                <default>false</default>
+                <label>CompuPay PowerPayroll</label>
+            </value>
+            <value>
+                <fullName>CompuPay Xpress Payroll</fullName>
+                <default>false</default>
+                <label>CompuPay Xpress Payroll</label>
+            </value>
+            <value>
+                <fullName>Custom/Manual</fullName>
+                <default>false</default>
+                <label>Custom/Manual</label>
+            </value>
+            <value>
+                <fullName>Honkamp Krueger</fullName>
+                <default>false</default>
+                <label>Honkamp Krueger</label>
+            </value>
+            <value>
+                <fullName>HTE</fullName>
+                <default>false</default>
+                <label>HTE</label>
+            </value>
+            <value>
+                <fullName>Insperity AIMS</fullName>
+                <default>false</default>
+                <label>Insperity AIMS</label>
+            </value>
+            <value>
+                <fullName>Intuit Payroll</fullName>
+                <default>false</default>
+                <label>Intuit Payroll</label>
+            </value>
+            <value>
+                <fullName>IOI Payroll</fullName>
+                <default>false</default>
+                <label>IOI Payroll</label>
+            </value>
+            <value>
+                <fullName>IPS</fullName>
+                <default>false</default>
+                <label>IPS</label>
+            </value>
+            <value>
+                <fullName>Lawson</fullName>
+                <default>false</default>
+                <label>Lawson</label>
+            </value>
+            <value>
+                <fullName>Microsoft Dynamics</fullName>
+                <default>false</default>
+                <label>Microsoft Dynamics</label>
+            </value>
+            <value>
+                <fullName>MIP</fullName>
+                <default>false</default>
+                <label>MIP</label>
+            </value>
+            <value>
+                <fullName>New World Systems</fullName>
+                <default>false</default>
+                <label>New World Systems</label>
+            </value>
+            <value>
+                <fullName>Oasis</fullName>
+                <default>false</default>
+                <label>Oasis</label>
+            </value>
+            <value>
+                <fullName>Oracle</fullName>
+                <default>false</default>
+                <label>Oracle</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paychex Preview</fullName>
+                <default>false</default>
+                <label>Paychex Preview</label>
+            </value>
+            <value>
+                <fullName>Paycor</fullName>
+                <default>false</default>
+                <label>Paycor</label>
+            </value>
+            <value>
+                <fullName>Paylocity</fullName>
+                <default>false</default>
+                <label>Paylocity</label>
+            </value>
+            <value>
+                <fullName>Payroll Data Systems</fullName>
+                <default>false</default>
+                <label>Payroll Data Systems</label>
+            </value>
+            <value>
+                <fullName>PDS</fullName>
+                <default>false</default>
+                <label>PDS</label>
+            </value>
+            <value>
+                <fullName>PeopleSoft</fullName>
+                <default>false</default>
+                <label>PeopleSoft</label>
+            </value>
+            <value>
+                <fullName>QuickBooks</fullName>
+                <default>false</default>
+                <label>QuickBooks</label>
+            </value>
+            <value>
+                <fullName>Sage Abra Payroll</fullName>
+                <default>false</default>
+                <label>Sage Abra Payroll</label>
+            </value>
+            <value>
+                <fullName>SAP</fullName>
+                <default>false</default>
+                <label>SAP</label>
+            </value>
+            <value>
+                <fullName>SurePayroll</fullName>
+                <default>false</default>
+                <label>SurePayroll</label>
+            </value>
+            <value>
+                <fullName>The Payroll Company Payroll</fullName>
+                <default>false</default>
+                <label>The Payroll Company Payroll</label>
+            </value>
+            <value>
+                <fullName>Trinet</fullName>
+                <default>false</default>
+                <label>Trinet</label>
+            </value>
+            <value>
+                <fullName>Ultimate</fullName>
+                <default>false</default>
+                <label>Ultimate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

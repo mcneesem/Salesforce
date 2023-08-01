@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EBN_Request_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>EBN Request Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>EDI Cancellation</fullName>
+                <default>false</default>
+                <label>EDI Cancellation</label>
+            </value>
+            <value>
+                <fullName>EDI Error</fullName>
+                <default>false</default>
+                <label>EDI Error</label>
+            </value>
+            <value>
+                <fullName>New 401k EDI</fullName>
+                <default>false</default>
+                <label>New 401k EDI</label>
+            </value>
+            <value>
+                <fullName>New Benefits EDI</fullName>
+                <default>false</default>
+                <label>New Benefits EDI</label>
+            </value>
+            <value>
+                <fullName>OE EDI Request</fullName>
+                <default>false</default>
+                <label>OE EDI Request</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

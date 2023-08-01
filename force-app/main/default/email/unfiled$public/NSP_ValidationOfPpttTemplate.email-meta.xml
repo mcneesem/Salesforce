@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Validation of pptt  Project task&apos;s Update Alert</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>NSP_ValidationOfPpttTemplate</name>
+    <style>freeForm</style>
+    <subject>Install for Conversion Complete {!pse__Proj__c.Name}</subject>
+    <textOnly>The Install for Conversion Project for the following customer has been completed.
+
+Client #: {!pse__Proj__c.NSP_RET_Client_ID__c}
+
+
+To review related project details, please click the following link: View Record</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

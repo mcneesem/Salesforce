@@ -98,9 +98,69 @@
                 <label>Sage Endorsement</label>
             </value>
             <value>
+                <fullName>Workforce Administration Per Check</fullName>
+                <default>false</default>
+                <label>Workforce Administration Per Check</label>
+            </value>
+            <value>
+                <fullName>Workforce Acceleration Per Check</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration Per Check</label>
+            </value>
+            <value>
                 <fullName>WS Services</fullName>
                 <default>false</default>
                 <label>WS Services</label>
+            </value>
+            <value>
+                <fullName>Applicant Tracking</fullName>
+                <default>false</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Organizational Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance Hardware</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance Hardware</label>
+            </value>
+            <value>
+                <fullName>HR Services</fullName>
+                <default>false</default>
+                <label>HR Services</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance Services</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance Services</label>
+            </value>
+            <value>
+                <fullName>Learning Select</fullName>
+                <default>false</default>
+                <label>Learning Select</label>
+            </value>
+            <value>
+                <fullName>Learning Direct</fullName>
+                <default>false</default>
+                <label>Learning Direct</label>
+            </value>
+            <value>
+                <fullName>Learning Hosting</fullName>
+                <default>false</default>
+                <label>Learning Hosting</label>
             </value>
         </valueSetDefinition>
     </valueSet>
