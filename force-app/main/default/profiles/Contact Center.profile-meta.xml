@@ -21653,6 +21653,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.NSP_NiceCX_ContactID_Leg__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.NSP_After_Save_Step__c</field>
         <readable>true</readable>
     </fieldPermissions>

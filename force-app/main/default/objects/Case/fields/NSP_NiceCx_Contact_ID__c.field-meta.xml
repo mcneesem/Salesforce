@@ -3,7 +3,7 @@
     <fullName>NSP_NiceCx_Contact_ID__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>NiceCx Contact ID</label>
+    <label>NiceCX Master Contact ID</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
