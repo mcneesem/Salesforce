@@ -538,6 +538,7 @@
         <relatedList>Activity.NSP_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHAT_NAME</fields>
         <fields>Title__c</fields>
