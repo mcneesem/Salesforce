@@ -14,19 +14,95 @@
         <valueSetName>NSP_Sub_Product</valueSetName>
         <valueSettings>
             <controllingFieldValue>Retirement Services</controllingFieldValue>
-            <valueName>Insperity 401k Plan</valueName>
+            <valueName>Choice Customized</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Retirement Services</controllingFieldValue>
-            <valueName>Insperity Customized Plan</valueName>
+            <valueName>Choice Merger</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Retirement Services</controllingFieldValue>
-            <valueName>WX Choice Plan</valueName>
+            <valueName>Choice Startup</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Retirement Services</controllingFieldValue>
-            <valueName>WX Choice Customized Plan</valueName>
+            <valueName>NSPK Association</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK Association w/ merger</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK Merger</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Merger &lt;150</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Merger &gt;501 Ees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Merger 150-300 Ees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Merger 301-500 Ees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Startup &lt;150</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Startup &gt;501 Ees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Startup 150-300 Ees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK MM Startup 301-500 Ees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>NSPK Startup</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>WO Customized</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>WO Customized MM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Tier 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Tier 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Tier 3</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Tier 4</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Tier 5</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <valueName>Tier 6</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Insurance Services</controllingFieldValue>
