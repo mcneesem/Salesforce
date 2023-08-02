@@ -737,6 +737,16 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>NSP_Record_ID__c</fields>
+        <fields>NSP_Client__c</fields>
+        <fields>NSP_Status__c</fields>
+        <fields>NSP_Status_Date__c</fields>
+        <fields>NSP_Sales_Consultant__c</fields>
+        <relatedList>NSP_Sales_to_Implementation__c.NSP_Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
