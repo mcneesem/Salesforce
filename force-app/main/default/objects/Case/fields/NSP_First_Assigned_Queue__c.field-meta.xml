@@ -4,7 +4,7 @@
     <description>Will be populated with value in NSP_NiceCx_Original_Assigned_Queue__c if NSP_NiceCx_Case__c = TRUE. Will be populated with value in NSP_Assigned_Queue__c if NSP_NiceCx_Case__c = FALSE.</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>First Assigned Queue</label>
+    <label>NiceCX First Assigned Queue</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
