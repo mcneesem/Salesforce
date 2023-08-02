@@ -4,21 +4,7 @@
         <fullName>Case Notification</fullName>
         <active>true</active>
         <ruleEntry>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Email</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.NSP_Assigned_Queue__c</field>
-                <operation>equals</operation>
-                <value>Contact Center</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.SuppliedEmail</field>
-                <operation>notEqual</operation>
-                <value>null</value>
-            </criteriaItems>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Contact Center&apos;,  SuppliedEmail != Null,  $Setup.NSP_Trigger_Switch__c.NSP_CC_Cse_Creation_Notification__c = false)</formula>            
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
             <senderName>Test Contact Center</senderName>
