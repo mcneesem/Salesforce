@@ -3,6 +3,7 @@
 <p>Thank you for your business! Please find attached a copy of the invoice related to your recent order.</p>
 <p>To pay this transaction online please see your invoice here: &nbsp; <apex:outputlink value="{!relatedTo.NSP_Payment_Link__c}">{!relatedTo.Name}</apex:outputlink>. </p>
 <p>If you prefer to pay via check, the remittance address is located on the bottom on the invoice.</p>
-<p>Thank you,</p>
+<p>Thank you.</p>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo> 
 </messaging:htmlEmailBody>
 </messaging:emailTemplate>
