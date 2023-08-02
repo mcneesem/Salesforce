@@ -314,7 +314,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
         Set<String> lstReferralQueues = new Set<String>{NSP_ServiceConstants.INTEGRA_QUEUE, NSP_ServiceConstants.CERTIFY_QUEUE, NSP_ServiceConstants.SERVICE_REFERRAL,
             NSP_ServiceConstants.RECRUITING_SERVICES, NSP_ServiceConstants.INSURANCE_SERVICES, NSP_ServiceConstants.HR_CONSULTING, NSP_ServiceConstants.RETIREMENT_SERVICES};
                 Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
-        for(Group ogroup : [SELECT Id, DeveloperName FROM GROUP WHERE DeveloperName IN: lstReferralQueues WITH SECURITY_ENFORCED]){
+        for(Group ogroup : [SELECT Id, DeveloperName FROM GROUP WHERE DeveloperName IN: lstReferralQueues AND Type = 'Queue' WITH SECURITY_ENFORCED]){
             mapQueueDeveloperNameQueueId.put(ogroup.DeveloperName,ogroup.Id);
         }
         return mapQueueDeveloperNameQueueId;
