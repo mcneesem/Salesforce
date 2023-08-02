@@ -244,12 +244,19 @@
         <connector>
             <targetReference>Check_Account_Group_Type</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
-            <field>NSP_Account__c</field>
-            <operator>IsNull</operator>
+            <field>NSP_Account_Health__c</field>
+            <operator>IsChanged</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Renewal_Probability__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>NSP_Account_Group__c</object>

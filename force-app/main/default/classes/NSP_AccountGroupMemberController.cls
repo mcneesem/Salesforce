@@ -122,19 +122,20 @@ public with sharing class NSP_AccountGroupMemberController {
     
     /***********************************************************************
     * @MethodName : isSelfAccountGroup
-    * @Description: This method is used to verify if Account Group Member is self group or not.
+    * @Description: This method is used to verify self group for  Account Group Member using Primary check.
     * 				return true if Account Group Member is self group else return false
-    * @param      : String groupRecordId, String groupMemberAccName
+    * @param      : String groupMemberRecordId
     * @Story      : STY-04139
     * @return     : Boolean                          
     **************************************************************************/
     @AuraEnabled
-    public static Boolean isSelfAccountGroup(String groupRecordId, String groupMemberAccName) {
+    public static Boolean isSelfAccountGroup(String groupMemberRecordId) {
         
-        String accountQuery = new NSP_QueryBuilder('NSP_Account_Group__c', new List<String>{'Id', 'NSP_Account__c'})
-                                .addFilter('Id', groupRecordId).build();
-        NSP_Account_Group__c groupRecord  =  (NSP_Account_Group__c)Database.query(accountQuery);                
-        return (groupRecord.NSP_Account__c == groupMemberAccName? true : false);        
+        //DF-05559 - Use primary field of Account Group member to identify the Self Account Group
+        String accountQuery = new NSP_QueryBuilder('NSP_Account_Group_Member__c', new List<String>{'Id', 'NSP_Primary__c'})
+                                .addFilter('Id', groupMemberRecordId).build();
+        NSP_Account_Group_Member__c groupMemberRecord  =  (NSP_Account_Group_Member__c)Database.query(accountQuery);                
+        return groupMemberRecord.NSP_Primary__c;
     }
 
 }
