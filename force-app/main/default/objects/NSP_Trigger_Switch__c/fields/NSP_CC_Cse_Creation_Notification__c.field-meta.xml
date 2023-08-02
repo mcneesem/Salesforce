@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CC_Cse_Creation_Notification__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is created as part of DF-05591, so that auto response email of contact case creation can be enabled and disabled when needed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Auto response email of contact case creation can be enabled and disabled when needed.</inlineHelpText>
+    <label>Do Not Send CC CaseCreatoin Notification</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
