@@ -8,5 +8,6 @@
 </ul>
 <br/>
 <p>Thank you!</p>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
 </messaging:htmlEmailBody>
 </messaging:emailTemplate>
