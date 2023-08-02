@@ -45,6 +45,10 @@ Private class NSP_RelatedAssetsController_Test {
         oIProfile.Client_have_any_EEs_on_F1_or_J1_Visa_s__c = NSP_ServiceConstants.YES;
         oIProfile.NSP_EE_Name__c = 'Test 123';
         oIProfile.Client_Profile_Information__c = 'Related Clients';
+        oIProfile.Do_any_EEs_have_tax_levies__c = NSP_ServiceConstants.YES;
+        oIProfile.Do_any_EEs_have_garnishments__c = NSP_ServiceConstants.YES;
+        oIProfile.NSP_Employee_Names_List_garnishments__c = 'Test , Test2';
+        oIProfile.NSP_List_Employee_Names_Levies__c = 'Test , Test2';
         insert oIProfile;
         
         NSP_IP_Related_Client__c relateClient = new NSP_IP_Related_Client__c();
@@ -63,7 +67,8 @@ Private class NSP_RelatedAssetsController_Test {
         List<NSP_IP_Related_Client__c> ipRelatedClients = NSP_RelatedAssetsController.ipRelatedClients; 
         
         NSP_RelatedAssetsController.getFSOEmail();
-        
+        NSP_RelatedAssetsController.garnishmentEmpData(oIProfile.Id);
+        NSP_RelatedAssetsController.leviesEmpData(oIProfile.Id);
         //THEN
         System.assertEquals(accountId, acc.Id, 'Account Id Matched');
         System.assertEquals(regulatedAreaStates.size(), 2, '2 states found');
