@@ -5,7 +5,7 @@
   <table border="0" width="550">
     <c:InsperityEmailHeader ></c:InsperityEmailHeader>
 <p> Sub-accounts have been added for the following reason(s): </p>
-<p> {!relatedTo.Why_is_subaccount_needed__c}</p>
+<p><apex:outputText escape="false" value="<li>{!SUBSTITUTE(relatedTo.Why_is_subaccount_needed__c,';','<li/>')}"/></p>
 <p>Due to classing the sub account will require a new download. Please notify the orientation<br/>
 coordinator and payroll specialist once this has been completed.  </p>
 

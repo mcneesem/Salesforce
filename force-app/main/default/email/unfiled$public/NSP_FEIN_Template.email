@@ -3,8 +3,8 @@
 <html>
   <body>
   <c:InsperityEmailHeader />
-  <p>This NEW Client is onboarding with employees in the same client number with more than one </p>
-  <p>FEIN number. <br/>
+  <p>This NEW Client is onboarding with employees in the same client number with more than one <br/>
+    FEIN number. <br/>
      Client Name: {!relatedTo.NSP_AIMS_Client_Name__c} <br/>
      Client Number: {!relatedTo.NSP_AIMS_ClientNo__c}<br/>
     <apex:outputPanel rendered="{!IF(relatedTo.List_additional_FEIN_s__c !=Null,True,FALSE)}">
