@@ -17781,6 +17781,16 @@
     </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_ReportRequest__c.NSP_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_ReportRequest__c.NSP_Segment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Sub_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
