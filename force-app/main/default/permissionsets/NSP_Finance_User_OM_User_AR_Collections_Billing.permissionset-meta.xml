@@ -4646,7 +4646,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.NSP_Account_DBA__c</field>
         <readable>true</readable>
     </fieldPermissions>
