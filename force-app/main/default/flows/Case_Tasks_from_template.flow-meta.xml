@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Each_Task_Creation</name>
+        <label>Each Task Creation</label>
+        <locationX>138</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>NewTask.NSP_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewTask.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewTask.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_PEO_Record_Type_Id.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewTask.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewTask.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Over_Activity_template_Detail_Recs.NSP_Subject__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewTask.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>TaskCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>NewTask</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Over_Activity_template_Detail_Recs</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>PEO_RecordTypeName</name>
         <dataType>String</dataType>
@@ -11,8 +69,8 @@
     <decisions>
         <name>Check_Cat_Subcat_Detail_is_changed</name>
         <label>Check Cat/Subcat/Detail is changed</label>
-        <locationX>336</locationX>
-        <locationY>335</locationY>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isChanged</name>
@@ -48,7 +106,7 @@
         <name>Check_if_Task_template_matches</name>
         <label>Check if Task template matches</label>
         <locationX>182</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isTaskTemplateNull</name>
@@ -95,12 +153,15 @@
         <name>Over_Activity_template_Detail_Recs</name>
         <label>Over Activity template Detail Recs</label>
         <locationX>50</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <collectionReference>Get_Activity_Template_Detail_Recs</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Create_Tasks</targetReference>
+            <targetReference>Each_Task_Creation</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_Tasks</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -124,55 +185,15 @@
     <recordCreates>
         <name>Create_Tasks</name>
         <label>Create Tasks</label>
-        <locationX>138</locationX>
-        <locationY>1055</locationY>
-        <connector>
-            <targetReference>Over_Activity_template_Detail_Recs</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NSP_Start_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>$Record.OwnerId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_PEO_Record_Type_Id.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Not Started</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <elementReference>Over_Activity_template_Detail_Recs.NSP_Subject__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WhatId</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <locationX>50</locationX>
+        <locationY>1163</locationY>
+        <inputReference>TaskCollection</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Activity_Template_Detail_Recs</name>
         <label>Get Activity Template Detail Recs</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_PEO_Record_Type_Id</targetReference>
@@ -193,7 +214,7 @@
         <name>Get_PEO_Record_Type_Id</name>
         <label>Get PEO Record Type Id</label>
         <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Over_Activity_template_Detail_Recs</targetReference>
@@ -221,7 +242,7 @@
         <name>Get_Task_Template_Record</name>
         <label>Get Task Template Record</label>
         <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Task_template_matches</targetReference>
@@ -253,7 +274,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>210</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Cat_Subcat_Detail_is_changed</targetReference>
@@ -278,4 +299,20 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>NewTask</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>TaskCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
 </Flow>
