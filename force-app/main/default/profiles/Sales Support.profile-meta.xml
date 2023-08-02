@@ -2339,6 +2339,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Sales_Service_Account_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Short_Term_KPIs_to_Measure_Success__c</field>
         <readable>true</readable>
     </fieldPermissions>
