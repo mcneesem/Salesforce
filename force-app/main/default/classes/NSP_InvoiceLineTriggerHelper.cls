@@ -93,10 +93,23 @@ public static void updateAddProductDescription(list<blng__InvoiceLine__c> invLin
             NSP_AdditionalProductDescription_Setting__mdt descriptionSetting = additionalProductDesSetMap.get(newInvoiceLine.NSP_Product_Code__c);
             string prodDescStr = descriptionSetting.NSP_Product_Description_Syntex__c;
             Decimal perunitPrice = newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c != null ? newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c:newInvoiceLine.blng__UnitPrice__c;
-            prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',string.valueof(perunitPrice.setScale(2))):prodDescStr;
-            prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',string.valueof(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2))):prodDescStr;
-            prodDescStr = (prodDescStr.contains('{Qty}') && newInvoiceLine.blng__Quantity__c != null ) ? prodDescStr.replace('{Qty}',string.valueof(newInvoiceLine.blng__Quantity__c)):prodDescStr;
-
+             
+            //DF-05546 -- updating prices with accounting format
+             List<String> args = new String[]{'0','number','###,###,##0.00'};
+             String pepm_Text = '$'+String.format(perunitPrice.setScale(2).format(), args);
+             //monthly minimum should be removed if it's 0 or null
+             String mm_Text = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
+                                 '$'+String.format(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2).format(), args) :
+                                 null;
+            
+             prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',pepm_Text):prodDescStr;
+         
+             prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && mm_Text != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',mm_Text)
+                             :prodDescStr.contains(', {Upper Tier_Flat Price} Monthly Minimum') ? prodDescStr.replace(', {Upper Tier_Flat Price} Monthly Minimum','')
+                             :prodDescStr.contains('{Upper Tier_Flat Price} monthly minimum; ') ? prodDescStr.replace('{Upper Tier_Flat Price} monthly minimum; ',''):prodDescStr;
+ 
+             prodDescStr = (prodDescStr.contains('{Qty}') && newInvoiceLine.blng__Quantity__c != null ) ? prodDescStr.replace('{Qty}',string.valueof(newInvoiceLine.blng__Quantity__c)):prodDescStr;
+ 
             if(newInvoiceLine.NSP_Product_Code__c == 'Lasso'   ){
                 prodDescStr = newInvoiceLine.NSP_Order_Product_Account__c;
             }
