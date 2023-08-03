@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_to_SORec</name>
         <label>Add to SORec</label>
-        <locationX>1668</locationX>
-        <locationY>311</locationY>
+        <locationX>1986</locationX>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>varOpptyTeamMember.OpportunityAccessLevel</assignToReference>
             <operator>Assign</operator>
@@ -41,8 +41,8 @@
     <assignments>
         <name>AssigntoSo</name>
         <label>AssigntoSo</label>
-        <locationX>1843</locationX>
-        <locationY>293</locationY>
+        <locationX>1986</locationX>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>varOpptyMemberSO</assignToReference>
             <operator>Add</operator>
@@ -57,8 +57,8 @@
     <assignments>
         <name>BPABPS_Assignment</name>
         <label>BPABPS Assignment</label>
-        <locationX>303</locationX>
-        <locationY>773</locationY>
+        <locationX>2448</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>varIsBPABPS</assignToReference>
             <operator>Assign</operator>
@@ -71,26 +71,27 @@
         </connector>
     </assignments>
     <assignments>
-        <name>DADMVarAssignment</name>
-        <label>DADMVarAssignment</label>
-        <locationX>968</locationX>
-        <locationY>1469</locationY>
+        <name>DADMRASSSVarAssignment</name>
+        <label>DADMRASSSVarAssignment</label>
+        <locationX>50</locationX>
+        <locationY>1322</locationY>
         <assignmentItems>
-            <assignToReference>varIsDADM</assignToReference>
+            <assignToReference>varIsDADMRASSS</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Valid_User</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Groupmember_Id</name>
         <label>Groupmember Id</label>
-        <locationX>1188</locationX>
-        <locationY>1543</locationY>
+        <locationX>182</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>PublicGroupmemberId</assignToReference>
             <operator>Assign</operator>
@@ -99,14 +100,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>DADM_Check_In_Group</targetReference>
+            <targetReference>DA_DM_RA_SSS_Check_In_Group</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>ncsVarAssignment</name>
         <label>ncsVarAssignment</label>
-        <locationX>1265</locationX>
-        <locationY>1003</locationY>
+        <locationX>3086</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>varIsNCS</assignToReference>
             <operator>Assign</operator>
@@ -115,27 +116,29 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Valid_User</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>NullLooper</name>
         <label>NullLooper</label>
-        <locationX>1674</locationX>
-        <locationY>674</locationY>
+        <locationX>1854</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>varOpptyTeamMember</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Opportunity_Team_Addition</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>RecordIdAssignment</name>
         <label>RecordIdAssignment</label>
-        <locationX>538</locationX>
-        <locationY>162</locationY>
+        <locationX>3336</locationX>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>varOpptyId</assignToReference>
             <operator>Assign</operator>
@@ -150,8 +153,8 @@
     <assignments>
         <name>varOpptyOwnerSalesoffice</name>
         <label>varOpptyOwnerSalesoffice</label>
-        <locationX>978</locationX>
-        <locationY>959</locationY>
+        <locationX>468</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>varSalesoffice</assignToReference>
             <operator>Assign</operator>
@@ -216,11 +219,18 @@
             <stringValue>NSP_New_Client_Sales</stringValue>
         </value>
     </constants>
+    <constants>
+        <name>flowName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Opportunity Team Member Creation</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Add_Another</name>
         <label>Add Another</label>
-        <locationX>1896</locationX>
-        <locationY>576</locationY>
+        <locationX>1986</locationX>
+        <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>Create_OpptyMember</targetReference>
         </defaultConnector>
@@ -244,8 +254,8 @@
     <decisions>
         <name>Check_User_Role_Not_Null</name>
         <label>Check User Role Not Null</label>
-        <locationX>258</locationX>
-        <locationY>288</locationY>
+        <locationX>3336</locationX>
+        <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Null</name>
@@ -266,8 +276,8 @@
     <decisions>
         <name>checkGroup</name>
         <label>checkGroup</label>
-        <locationX>742</locationX>
-        <locationY>1233</locationY>
+        <locationX>468</locationX>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
@@ -291,8 +301,8 @@
     <decisions>
         <name>checkOwnerSalesoffice</name>
         <label>checkOwnerSalesoffice</label>
-        <locationX>254</locationX>
-        <locationY>1000</locationY>
+        <locationX>831</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
@@ -316,14 +326,14 @@
     <decisions>
         <name>checkRoleDecision</name>
         <label>checkRoleDecision</label>
-        <locationX>279</locationX>
-        <locationY>606</locationY>
+        <locationX>2442</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>DA_DMRole</name>
+            <name>DA_DM_RA_SSS_Role</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$UserRole.DeveloperName</leftValueReference>
@@ -339,10 +349,24 @@
                     <stringValue>District_Manager</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Regional_Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales_Support_Specialist</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetOppty</targetReference>
             </connector>
-            <label>DA/DMRole</label>
+            <label>DA/DM/RA/SSS Role</label>
         </rules>
         <rules>
             <name>BPA_BPS_SEMRole</name>
@@ -418,6 +442,20 @@
                     <stringValue>BPS_Sales_Manager</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Regional_Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales_Support_Specialist</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetNCSGroupInfo</targetReference>
             </connector>
@@ -425,10 +463,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>DADM_Check_In_Group</name>
-        <label>DADM Check In Group</label>
-        <locationX>792</locationX>
-        <locationY>1734</locationY>
+        <name>DA_DM_RA_SSS_Check_In_Group</name>
+        <label>DA-DM-RA-SSS Check In Group</label>
+        <locationX>182</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
@@ -444,7 +482,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>DADMVarAssignment</targetReference>
+                <targetReference>DADMRASSSVarAssignment</targetReference>
             </connector>
             <label>User Existing In Group</label>
         </rules>
@@ -452,8 +490,8 @@
     <decisions>
         <name>User_Existing_NCSGroup</name>
         <label>User Existing NCSGroup</label>
-        <locationX>913</locationX>
-        <locationY>696</locationY>
+        <locationX>3218</locationX>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
@@ -477,8 +515,8 @@
     <decisions>
         <name>UserID_to_Team_Compare</name>
         <label>UserID to Team Compare</label>
-        <locationX>1840</locationX>
-        <locationY>103</locationY>
+        <locationX>2206</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>LoopExistingMembers</targetReference>
         </defaultConnector>
@@ -502,8 +540,8 @@
     <decisions>
         <name>Valid_User</name>
         <label>Valid User?</label>
-        <locationX>1721</locationX>
-        <locationY>1212</locationY>
+        <locationX>2448</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>NoAccess</targetReference>
         </defaultConnector>
@@ -512,7 +550,7 @@
             <name>Is_SEM_or_NCS</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>varIsDADM</leftValueReference>
+                <leftValueReference>varIsDADMRASSS</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -538,6 +576,7 @@
             <label>Is SEM or NCS or BPA</label>
         </rules>
     </decisions>
+    <description>Added access for RA and SSS and fault handler subflow</description>
     <dynamicChoiceSets>
         <name>OppAccessLevelPL</name>
         <dataType>Picklist</dataType>
@@ -554,13 +593,14 @@
         <picklistField>TeamMemberRole</picklistField>
         <picklistObject>OpportunityTeamMember</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>Opportunity Team Member Access {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity Team Member Creation</label>
     <loops>
         <name>LoopExistingMembers</name>
         <label>LoopExistingMembers</label>
-        <locationX>1581</locationX>
-        <locationY>121</locationY>
+        <locationX>1986</locationX>
+        <locationY>890</locationY>
         <collectionReference>GetOpptyteamMembers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -579,7 +619,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -592,45 +632,27 @@
     <recordCreates>
         <name>Create_OpptyMember</name>
         <label>Create OpptyMember</label>
-        <locationX>2134</locationX>
-        <locationY>451</locationY>
+        <locationX>2118</locationX>
+        <locationY>1814</locationY>
         <faultConnector>
-            <targetReference>FaultLog</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputReference>varOpptyMemberSO</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <name>FaultLog</name>
-        <label>FaultLog</label>
-        <locationX>1906</locationX>
-        <locationY>865</locationY>
-        <connector>
-            <targetReference>Error</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NSP_ErrorSource__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_StackTrace__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Exception_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
         <name>Get_Group</name>
         <label>Get Group</label>
-        <locationX>704</locationX>
-        <locationY>979</locationY>
+        <locationX>468</locationX>
+        <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>checkGroup</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -646,12 +668,16 @@
     <recordLookups>
         <name>GetGroupmember</name>
         <label>GetGroupmember</label>
-        <locationX>1078</locationX>
-        <locationY>1336</locationY>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Groupmember_Id</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>GroupId</field>
@@ -674,12 +700,16 @@
     <recordLookups>
         <name>GetMembers</name>
         <label>GetMembers</label>
-        <locationX>653</locationX>
-        <locationY>677</locationY>
+        <locationX>3218</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>User_Existing_NCSGroup</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>UserOrGroupId</field>
@@ -702,12 +732,16 @@
     <recordLookups>
         <name>GetNCSGroupInfo</name>
         <label>GetNCSGroupInfo</label>
-        <locationX>534</locationX>
-        <locationY>675</locationY>
+        <locationX>3218</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetMembers</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -723,12 +757,15 @@
     <recordLookups>
         <name>GetOppty</name>
         <label>GetOppty</label>
-        <locationX>50</locationX>
-        <locationY>765</locationY>
+        <locationX>831</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>checkOwnerSalesoffice</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -744,14 +781,15 @@
     <recordLookups>
         <name>GetOpptyteamMembers</name>
         <label>GetOpptyteamMembers</label>
-        <locationX>1326</locationX>
-        <locationY>360</locationY>
+        <locationX>1986</locationX>
+        <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Opportunity_Team_Addition</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>FaultLog</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -767,26 +805,10 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>2109</locationX>
-        <locationY>913</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ErrorDisplay</name>
-            <fieldText>&lt;p&gt;An Error has occurred, please provide your System Administrator the below information&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Exception ID: &lt;/b&gt;{!FaultLog}&lt;/p&gt;&lt;p&gt;&lt;b&gt;Error Message: &lt;/b&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>NoAccess</name>
         <label>NoAccess</label>
-        <locationX>1411</locationX>
-        <locationY>608</locationY>
+        <locationX>2442</locationX>
+        <locationY>2282</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -801,8 +823,8 @@
     <screens>
         <name>Opportunity_Team_Addition</name>
         <label>Opportunity Team Addition</label>
-        <locationX>1474</locationX>
-        <locationY>249</locationY>
+        <locationX>1986</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -952,8 +974,8 @@
     <screens>
         <name>UserExistsOnTeam</name>
         <label>UserExistsOnTeam</label>
-        <locationX>2037</locationX>
-        <locationY>118</locationY>
+        <locationX>2074</locationX>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -966,13 +988,32 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>417</locationX>
-        <locationY>16</locationY>
+        <locationX>3210</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>RecordIdAssignment</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Fault_Handler_subflow</name>
+        <label>Fault Handler subflow</label>
+        <locationX>1370</locationX>
+        <locationY>566</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>Opportunity Team Member Creation</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>PublicGroupmemberId</name>
         <dataType>String</dataType>
@@ -1015,7 +1056,7 @@
         </value>
     </variables>
     <variables>
-        <name>varIsDADM</name>
+        <name>varIsDADMRASSS</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
