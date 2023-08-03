@@ -96,6 +96,11 @@
                 <label>HR Specialist</label>
             </value>
             <value>
+                <fullName>HR COE</fullName>
+                <default>false</default>
+                <label>HR COE</label>
+            </value>
+            <value>
                 <fullName>Health &amp; Welfare</fullName>
                 <default>false</default>
                 <label>Health &amp; Welfare</label>
