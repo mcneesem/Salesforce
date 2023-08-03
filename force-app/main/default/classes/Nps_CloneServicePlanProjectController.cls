@@ -221,6 +221,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
 
         //Setting the fields on project
         projectrequest.ProjectName = projField.Name;
+        projectrequest.ProjectOwnerId = Userinfo.getUserId();
         projectrequest.IsActive = projField.pse__Is_Active__c;
         pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
         pse.SObjectCloneMapper.Field mapperFieldEndDate = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__End_Date__c);
