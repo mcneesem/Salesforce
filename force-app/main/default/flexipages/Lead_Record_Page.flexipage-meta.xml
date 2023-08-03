@@ -1994,6 +1994,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Most_Recent_Activity_Date__c</fieldItem>
+                <identifier>RecordMost_Recent_Activity_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Last_Activity__c</fieldItem>
                 <identifier>RecordNSP_Last_Activity_cField</identifier>
             </fieldInstance>

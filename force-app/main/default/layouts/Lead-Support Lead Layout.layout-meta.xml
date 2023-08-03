@@ -604,6 +604,10 @@
                 <field>NSP_Mission_Statement__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Most_Recent_Activity_Date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Nonprofit__c</field>
             </layoutItems>

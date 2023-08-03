@@ -356,6 +356,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Last_Activity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Most_Recent_Activity_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
