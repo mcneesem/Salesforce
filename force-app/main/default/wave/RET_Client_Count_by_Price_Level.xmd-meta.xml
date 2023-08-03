@@ -2,7 +2,7 @@
 <WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <dataset xsi:nil="true"/>
     <measures>
-        <field>RET_Client_Count_by__1.A</field>
+        <field>RET_Client_Count_by__2.A</field>
         <isDerived>false</isDerived>
         <label># of Clients</label>
         <sortIndex>0</sortIndex>

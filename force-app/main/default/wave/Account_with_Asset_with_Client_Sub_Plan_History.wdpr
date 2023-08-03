@@ -684,14 +684,13 @@
     },
     "OUTPUT4" : {
       "action" : "save",
-      "sources" : [ "JOIN17" ],
+      "sources" : [ "JOIN36" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
           "type" : "analyticsDataset",
           "label" : "Plan, Plan Subplan, Asset DS",
-          "name" : "RET_Client_Count_by_Price_Level_DataSet",
-          "folderName" : "RET"
+          "name" : "RET_Client_Count_by_Price_Level_DataSet"
         },
         "measuresToCurrencies" : [ ]
       }
@@ -786,7 +785,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Name", "Id", "NSP_Plan_Subplan_Relationship__c" ],
+        "fields" : [ "NSP_RET_Original_Plan_Effective_Date__c", "NSP_Current_Subplan__c", "Id", "Name", "NSP_Asset__c", "NSP_Plan_Subplan_Relationship__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "NSP_Client_Sub_Plan_History__c",
@@ -1608,6 +1607,24 @@
         "rightQualifier" : "Acc_Contact",
         "rightKeys" : [ "AccountId" ]
       }
+    },
+    "JOIN36" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET19", "JOIN17" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "RIGHT_OUTER",
+        "leftKeys" : [ "NSP_Asset__c" ],
+        "rightQualifier" : "LookupJoin",
+        "rightKeys" : [ "Asset.Id" ]
+      }
     }
   },
   "ui" : {
@@ -2210,8 +2227,8 @@
         "label" : "Join Subplan with Contribution",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1372.6,
-        "left" : 1092
+        "top" : 1372,
+        "left" : 1232
       },
       "LOAD_DATASET26" : {
         "label" : "NSP_Eligibility__c",
@@ -2227,21 +2244,21 @@
         "description" : "",
         "type" : "JOIN",
         "top" : 1372,
-        "left" : 1232
+        "left" : 1372
       },
       "OUTPUT6" : {
         "label" : "Plan, Subplan, Asset, Contribution, Eligibility DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1372.1,
-        "left" : 1512
+        "top" : 1372,
+        "left" : 1652
       },
       "TRANSFORM7" : {
         "label" : "Date Attributes",
         "description" : "",
         "type" : "TRANSFORM",
         "top" : 1372,
-        "left" : 1372,
+        "left" : 1512,
         "graph" : {
           "EDIT_ATTRIBUTES0" : {
             "label" : "Edit Attributes"
@@ -2477,9 +2494,19 @@
         "type" : "JOIN",
         "top" : 812,
         "left" : 952.1
+      },
+      "JOIN36" : {
+        "label" : "Join client subplan history with Asset",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1512,
+        "left" : 812
       }
     },
     "connectors" : [ {
+      "source" : "LOAD_DATASET19",
+      "target" : "JOIN36"
+    }, {
       "source" : "LOAD_DATASET0",
       "target" : "JOIN5"
     }, {
@@ -2660,9 +2687,6 @@
       "source" : "LOAD_DATASET25",
       "target" : "JOIN27"
     }, {
-      "source" : "JOIN17",
-      "target" : "OUTPUT4"
-    }, {
       "source" : "JOIN27",
       "target" : "JOIN28"
     }, {
@@ -2746,6 +2770,12 @@
     }, {
       "source" : "LOAD_DATASET6",
       "target" : "JOIN35"
+    }, {
+      "source" : "JOIN17",
+      "target" : "JOIN36"
+    }, {
+      "source" : "JOIN36",
+      "target" : "OUTPUT4"
     } ],
     "hiddenColumns" : [ ]
   },

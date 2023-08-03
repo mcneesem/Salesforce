@@ -89,4 +89,16 @@
         <salesforceActionsEnabled>false</salesforceActionsEnabled>
         <sortIndex>10</sortIndex>
     </dimensions>
+    <dimensions>
+        <field>FilterLate.Note__c</field>
+        <isDerived>false</isDerived>
+        <label>Most Recent Notes</label>
+        <sortIndex>11</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Case_Owner_s_Manager__c</field>
+        <isDerived>false</isDerived>
+        <label>Case Owner Manager</label>
+        <sortIndex>12</sortIndex>
+    </dimensions>
 </WaveXmd>

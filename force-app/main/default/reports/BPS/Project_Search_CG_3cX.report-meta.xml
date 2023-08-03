@@ -7,6 +7,9 @@
         <field>pse__Proj__c.pse__Account__c</field>
     </columns>
     <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
         <field>pse__Proj__c.pse__Project_ID__c</field>
     </columns>
     <columns>
@@ -33,6 +36,27 @@
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Charlotte Gallo</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>pse__Proj__c.pse__Start_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>pse__Proj__c.pse__Project_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>

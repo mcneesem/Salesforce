@@ -26,70 +26,64 @@
         <sortIndex>3</sortIndex>
     </measures>
     <measures>
-        <field>lens_3.B</field>
-        <isDerived>false</isDerived>
-        <label># Project Tasks</label>
-        <sortIndex>4</sortIndex>
-    </measures>
-    <measures>
         <field>Clients_Assigned_to__1.B</field>
         <isDerived>false</isDerived>
         <label>Unique Active Employees</label>
-        <sortIndex>5</sortIndex>
+        <sortIndex>4</sortIndex>
     </measures>
     <measures>
         <field>Handbook_Audit_1.B</field>
         <isDerived>false</isDerived>
         <label>Years Since Last Publish Date</label>
-        <sortIndex>6</sortIndex>
+        <sortIndex>5</sortIndex>
     </measures>
     <measures>
         <field>Account_Health___Tot_1.C</field>
         <isDerived>false</isDerived>
         <label>Payroll Employees</label>
-        <sortIndex>7</sortIndex>
+        <sortIndex>6</sortIndex>
     </measures>
     <measures>
         <field>Account_Health___Tot_1.A</field>
         <isDerived>false</isDerived>
         <label>Total Payroll Employees</label>
-        <sortIndex>8</sortIndex>
+        <sortIndex>7</sortIndex>
     </measures>
     <measures>
         <field>Account_Health___Tot_1.B</field>
         <isDerived>false</isDerived>
         <label>Total # of Account Health</label>
-        <sortIndex>9</sortIndex>
-    </measures>
-    <measures>
-        <field>Account_Health___Tot_2.B</field>
-        <isDerived>false</isDerived>
-        <label>Total # of Account Health</label>
-        <sortIndex>10</sortIndex>
-    </measures>
-    <measures>
-        <field>Account_Health___Tot_2.A</field>
-        <isDerived>false</isDerived>
-        <label>Total Payroll Employees</label>
-        <sortIndex>11</sortIndex>
-    </measures>
-    <measures>
-        <field>Account_Health___Tot_2.C</field>
-        <isDerived>false</isDerived>
-        <label>Payroll Employees</label>
-        <sortIndex>12</sortIndex>
+        <sortIndex>8</sortIndex>
     </measures>
     <measures>
         <field>AC_6_chart_Project_T_1.B</field>
         <isDerived>false</isDerived>
         <label># Project Tasks</label>
-        <sortIndex>13</sortIndex>
+        <sortIndex>9</sortIndex>
     </measures>
     <measures>
         <field>lens_4.B</field>
         <isDerived>false</isDerived>
         <label># Clients</label>
-        <sortIndex>14</sortIndex>
+        <sortIndex>10</sortIndex>
+    </measures>
+    <measures>
+        <field>AC2_Account_Health_T_1.C</field>
+        <isDerived>false</isDerived>
+        <label>Payroll Employees</label>
+        <sortIndex>11</sortIndex>
+    </measures>
+    <measures>
+        <field>AC2_Account_Health_T_1.A</field>
+        <isDerived>false</isDerived>
+        <label>Total Payroll Employees</label>
+        <sortIndex>12</sortIndex>
+    </measures>
+    <measures>
+        <field>AC2_Account_Health_T_1.B</field>
+        <isDerived>false</isDerived>
+        <label>Total # of Account Health</label>
+        <sortIndex>13</sortIndex>
     </measures>
     <type>Asset</type>
     <waveVisualization>MHRS_specific_to_team_dashboard</waveVisualization>

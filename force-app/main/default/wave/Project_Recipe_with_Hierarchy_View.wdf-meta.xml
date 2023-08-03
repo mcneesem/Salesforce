@@ -3,6 +3,6 @@
     <content xsi:nil="true"/>
     <application>WAVE_PUBLIC_DATAFLOWS</application>
     <dataflowType>RecipeV3</dataflowType>
-    <description>Recipe Project Recipe with Hierarchy View_recipe</description>
-    <masterLabel>Project Recipe with Hierarchy View_recipe</masterLabel>
+    <description>Recipe Case with Account, Project, User_recipe</description>
+    <masterLabel>Case with Account, Project, User_recipe</masterLabel>
 </WaveDataflow>

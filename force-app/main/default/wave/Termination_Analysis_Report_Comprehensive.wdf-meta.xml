@@ -3,6 +3,6 @@
     <content xsi:nil="true"/>
     <application>WAVE_PUBLIC_DATAFLOWS</application>
     <dataflowType>RecipeV3</dataflowType>
-    <description>Recipe Termination Analysis Report-Comprehensive_recipe</description>
-    <masterLabel>Termination Analysis Report-Comprehensive_recipe</masterLabel>
+    <description>Recipe Account with Project, Asset, Case_recipe</description>
+    <masterLabel>Account with Project, Asset, Case_recipe</masterLabel>
 </WaveDataflow>

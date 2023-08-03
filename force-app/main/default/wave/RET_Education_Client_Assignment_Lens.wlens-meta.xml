@@ -4,6 +4,6 @@
     <application>RET</application>
     <datasets>RET_Education_Client_Assignment</datasets>
     <dateVersion>1</dateVersion>
-    <masterLabel>RET_Education_Client_Assignment_Lens</masterLabel>
+    <masterLabel>RET Education Client Assignment Lens</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>
