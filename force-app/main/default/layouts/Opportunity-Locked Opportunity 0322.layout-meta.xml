@@ -539,6 +539,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_WetSignature__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Non_docupay__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
