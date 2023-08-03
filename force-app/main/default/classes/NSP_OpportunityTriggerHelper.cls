@@ -500,15 +500,18 @@ public class NSP_OpportunityTriggerHelper {
         NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet); 
         
         
-        
-        //STY-01519 - Asset creation from Opportunity line item
-        if(closedWonOpptyList.size() > 0){
-            createAssetForCloseWonOpportunity(closedWonOpptyList);
-            // commented as a part of Defect-DF-01797
-            //NSP_EmailServicesUtility.sendEmailsTOService(closedWonOpptyList, opportunityNewMap, workforceProductsList);
-        }
-        if(closedOpptyList!= null && closedOpptyList.size() > 0){
-            createAsset(closedOpptyList,accountIdSet,recordTypeSet);
+        // Adding Automation switch to disable Asset creation on Opportunity Close Won
+        NSP_AutomationSetting__mdt isAssetCreationEnabled = NSP_AutomationSetting__mdt.getInstance('NSP_AssetCreationFromOppty');
+        if(!isAssetCreationEnabled.NSP_Disable__c || Test.isrunningTest() ) {
+            //STY-01519 - Asset creation from Opportunity line item
+            if(closedWonOpptyList.size() > 0){
+                createAssetForCloseWonOpportunity(closedWonOpptyList);
+                // commented as a part of Defect-DF-01797
+                //NSP_EmailServicesUtility.sendEmailsTOService(closedWonOpptyList, opportunityNewMap, workforceProductsList);
+            }
+            if(closedOpptyList!= null && closedOpptyList.size() > 0){
+                createAsset(closedOpptyList,accountIdSet,recordTypeSet);
+            }
         }
         //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
         /*NSP_GenerateOrderFromOpportunity.updateQuotetoOrderWhenOppWON(Trigger.new,opportunityOldMap);*/
