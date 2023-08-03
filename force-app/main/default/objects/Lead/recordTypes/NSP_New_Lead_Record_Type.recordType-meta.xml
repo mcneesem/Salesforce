@@ -3586,107 +3586,11 @@
     <picklistValues>
         <picklist>NSP_Sub_Product__c</picklist>
         <values>
-            <fullName>Abra Migration</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Add On Software</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CompuPayTime</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Descriptions Now</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dotcoms</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ExpenseAble Corporate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ExpenseAble Express</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hardware</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Health %26 Welfare</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>OPRT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OPRT Express</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OPRT Renewal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OrgPlus Desktop</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PerformSmart</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PerformSmart Renewal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Performance Now</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pro Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Property %26 Casualty</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sage OrgPlus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sage Time</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TFW Migration</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TimeStar Mgd Hosted</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TimeStar On Prem</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Timestar SaaS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UED Bundle</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Choice Custom</fullName>
             <default>false</default>
         </values>
     </picklistValues>
