@@ -4578,6 +4578,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Most_Recent_Activity_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.NSP_Account_Segment__c</field>
         <readable>true</readable>
@@ -8442,6 +8447,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.NSP_New_Client_Sales_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Non_docupay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
