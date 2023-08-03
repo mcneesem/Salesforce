@@ -28146,12 +28146,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Segment__c</field>
         <readable>true</readable>
     </fieldPermissions>
