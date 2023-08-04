@@ -1461,6 +1461,13 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         Id recordTypeIdWxImpl = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.WX_IMPL);
         //Get email template
         EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_First_Live_Payroll_Case_Creation_Email');
+        OrgWideEmailAddress orgWideAddress;
+        if(Label.NSP_Report_Dev_OrgWideEmail != null && !Test.isRunningTest()){
+            List<String> orgWideEmailFields = new List<String>{'Id'};
+                String query = new NSP_QueryBuilder(NSP_ServiceConstants.ORG_WIDE_EMAIL_SOBJECT_TYPE, orgWideEmailFields)
+                .addFilter('Address', Label.NSP_Report_Dev_OrgWideEmail).setSecurityEnforce(false).build();
+            orgWideAddress = Database.query(query);
+        }
         //for each project task create a case
         for(pse__Project_Task__c projTaskRec: projTaskList){
             Case newCase = new Case();
@@ -1493,8 +1500,8 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             email.setToAddresses(sendToList);
             email.setWhatId(eachCase.Id);
             email.setSaveAsActivity(false);
-            if(Label.NSP_Report_Dev_OrgWideEmail != null){
-                email.setOrgWideEmailAddressId(Label.NSP_Report_Dev_OrgWideEmail);
+            if(orgWideAddress != null && orgWideAddress.Id != null && !Test.isRunningTest()){
+                    email.setOrgWideEmailAddressId(orgWideAddress.Id);
             }
             lstEmailMessages.add(email);
         }
