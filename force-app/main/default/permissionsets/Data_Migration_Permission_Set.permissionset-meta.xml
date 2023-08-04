@@ -22440,6 +22440,11 @@
         <field>pse__Work_Calendar__c.pse__WeekendsAreWorkdays__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Project_Account__c.NSP_Project_Account_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Data Migration Permission Set</label>
     <license>Salesforce</license>

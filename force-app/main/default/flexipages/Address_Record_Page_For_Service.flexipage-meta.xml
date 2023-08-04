@@ -63,6 +63,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Name__c</fieldItem>
                 <identifier>RecordAccount_Name_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Related_Site__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -73,6 +79,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Related_Site__c</fieldItem>
                 <identifier>RecordNSP_Related_Site_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Related_Site__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -83,6 +95,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Legal_Name__c</fieldItem>
                 <identifier>RecordNSP_Legal_Name_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Related_Site__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -93,6 +111,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Contact__c</fieldItem>
                 <identifier>RecordNSP_Contact_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact__r.LastName}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
