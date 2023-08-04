@@ -1118,6 +1118,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.NSP_Contact_Name_Pref_First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Contact.NSP_Do_Not_Contact__c</field>
         <readable>true</readable>
@@ -1125,6 +1130,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.NSP_Do_Not_Postal_Mail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.NSP_Job_Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5467,6 +5477,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Awards_and_Recognition__c.NSP_Special_Award_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

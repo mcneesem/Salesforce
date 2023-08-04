@@ -19987,6 +19987,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+		<editable>true</editable>
+		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.Existing_Payroll_Provider__c</field>
         <readable>true</readable>
