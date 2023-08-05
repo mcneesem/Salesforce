@@ -140,15 +140,16 @@ public class NSP_CaseTriggerHelper {
         //STY-01785 mapping of NSP_CQA_Severity__c based on NSP_CQA_Resulting_Severity__c
         if(!itaCaseList.isEmpty()){
             updateCqaSeverity(itaCaseList);
-        }      
+        }     
+
+         if(!confidentialEligilbleList.isEmpty()){
+            checkTheEligibiltyOfConfidentiality(categorySet, subCategorySet, confidentialEligilbleList);
+        } 
         
         if(!assetpopulationCategoryIdSet.isEmpty() && !assetpopulationAccIdSet.isEmpty()){
             autoPopulateAsset(newList, assetpopulationCategoryIdSet, assetpopulationSubCategoryIdSet, assetpopulationAccIdSet, true);
         }
         
-        if(!confidentialEligilbleList.isEmpty()){
-            checkTheEligibiltyOfConfidentiality(categorySet, subCategorySet, confidentialEligilbleList);
-        }
     }
     
     // record the first queue name in a piclist value
