@@ -1,5 +1,5 @@
 /**
-Apex Class Name      :  NSP_SubClientAssetSyncJob
+Apex Class Name      :  NSP_SubClientAssetStateSyncJob
 Version              :  1.0 
 Author               :  Virendra Kumar                                                                          
 Created Date         :  10/20/22 
@@ -17,7 +17,8 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
     global Database.QueryLocator start(Database.BatchableContext bc) {
         DateTime last4Hours = system.now().addHours(-4);
         //Get sub client contact history records
-        Return Database.getqueryLocator([SELECT Id, OldValue, NewValue, Field, ParentId, Parent.NSP_Sub_Client_Contact__c, DataType FROM NSP_Sub_Client_Contact_Address__History WHERE Field = 'NSP_Address_State_Changed_Date__c']);
+        Return Database.getqueryLocator([SELECT Id, OldValue, NewValue, Field, ParentId, Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c, 
+                                         DataType FROM NSP_Sub_Client_Contact_Address__History WHERE Field = 'NSP_Address_State_Changed_Date__c']);
         
     }
     
@@ -36,22 +37,31 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
         //collect all sub client Contact where NSP_Employee_Status__c Or NSP_Paid_Non_Paid__c or NSP_Union_Employee__c is changed
         for(NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : scope ) {  
             If(String.valueof(existingSubClientConAddress.ParentId).startsWith(Label.NSP_Sub_Client_Contact_Address_Initial)) {
-                setOfParentIds.Add(existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__c);
+                setOfParentIds.Add(existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c);
             }
         }
-        system.debug('setOfParentIds' + setOfParentIds);
-        //Get details for sub client contact where sub client != null
-        List<NSP_Sub_Client_Contact__c> subClientContact = [SELECT Id, NSP_Sub_Client__c, NSP_Paid_Non_Paid__c, NSP_Employee_Status__c, NSP_Union_Employee__c FROM 
-                                                            NSP_Sub_Client_Contact__c WHERE Id =:setOfParentIds AND NSP_Sub_Client__c != null];
-        system.debug('subClientContact' + subClientContact);
-        try{            
-            if(subClientContact.size() > 0){
-                updateStateOfOperation(subClientContact);
+        
+        if(!setOfParentIds.isEmpty()) {
+            system.debug('setOfParentIds' + setOfParentIds);
+            Map<Id, NSP_Sub_Client__c> existingSubClients = new Map<Id, NSP_Sub_Client__c>([SELECT Id FROM NSP_Sub_Client__c WHERE NSP_Asset__c =: setOfParentIds]);
+            
+            if(!existingSubClients.isEmpty()) {
+                //Get details for sub client contact where sub client != null
+                List<NSP_Sub_Client_Contact__c> subClientContact = [SELECT Id, NSP_Sub_Client__c, NSP_Paid_Non_Paid__c, NSP_Employee_Status__c, NSP_Union_Employee__c FROM 
+                                                                    NSP_Sub_Client_Contact__c WHERE NSP_Sub_Client__c =: existingSubClients.keyset()];
+                system.debug('subClientContact' + subClientContact);
+                try{            
+                    if(subClientContact.size() > 0){
+                        updateStateOfOperation(subClientContact, existingSubClients, setOfParentIds);
+                    }
+                    
+                }catch(Exception exp){
+                    NSP_ErrorLogHandler.logSaveException('NSP_SubClientAssetStateSyncJob', 'execute', exp.getMessage());
+                }
             }
             
-        }catch(Exception exp){
-            
         }
+        
     }
     
     public void execute(SchedulableContext scon) {
@@ -65,7 +75,7 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
 * Params:       List<NSP_Sub_Client_Contact__c> subClientContact
 * ********************************************************************************************/ 
     
-    public static void updateStateOfOperation(List<NSP_Sub_Client_Contact__c> subClientContact) {
+    public static void updateStateOfOperation(List<NSP_Sub_Client_Contact__c> subClientContact, Map<Id, NSP_Sub_Client__c> existingSubClients, Set<Id> setOfParentIds) {
         
         Map<Id, String> subClientByStates = new  Map<Id, String>();
         Map<Id, String> assetByStates = new  Map<Id, String>();
@@ -97,21 +107,21 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
                                                                          }
                                                                      }
         //build state of operation field for sub client
-        if(!subClientByStates.isEmpty()) {
+        if(!existingSubClients.isEmpty()) {
             
-            for(Id subClientId : subClientByStates.keyset()) {
+            for(Id subClientId : existingSubClients.keyset()) {
                 NSP_Sub_Client__c updatedSubClient = new NSP_Sub_Client__c();
                 updatedSubClient.Id = subClientId;
-                updatedSubClient.NSP_States_of_Operations__c = subClientByStates.get(subClientId);
+                updatedSubClient.NSP_States_of_Operations__c = subClientByStates.containsKey(subClientId)? subClientByStates.get(subClientId) : null;
                 subClientStateToBeUpdated.add(updatedSubClient);
             }
         }
         //build state of operation field for Asset
-        if(!assetByStates.isEmpty()) {
-            for(Id assetId : assetByStates.keyset()) {
+        if(!setOfParentIds.isEmpty()) {
+            for(Id assetId : setOfParentIds) {
                 Asset updatedAsset = new Asset();
                 updatedAsset.Id = assetId;
-                updatedAsset.NSP_States_of_Operations__c = assetByStates.get(assetId);
+                updatedAsset.NSP_States_of_Operations__c = assetByStates.containsKey(assetId) ? assetByStates.get(assetId) : null;
                 assetStateToBeUpdated.add(updatedAsset);
             }
         }
