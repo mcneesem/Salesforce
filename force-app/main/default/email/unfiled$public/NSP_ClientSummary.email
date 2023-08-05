@@ -20,7 +20,6 @@ in order to ensure your payroll is in compliance and that your employees’ payc
 <p>You have indicated the following employees are on a F1 or J1 visa. Please send copies of the <br/>
 visa(s) to me so we can exempt them from withholding taxes. I will need the copies prior to <br/>
 running your first payroll to ensure their taxes are correct on their first paycheck from Insperity. </p>
-<p>List of Employees:</p>
 <c:NSP_EmployeeVisaCmp currentRecordId="{!relatedTo.Id}"/>
 </apex:outputPanel>
 
@@ -28,9 +27,7 @@ running your first payroll to ensure their taxes are correct on their first payc
                              IF(relatedTo.NSP_Employee_Names_List_garnishments__c!=Null,True,FALSE))}">
 <p>Please provide the most recent copy of the garnishments for the following employees. I will need the copies <br/>
 prior to running your first payroll to ensure the garnishments are properly deducted. </p>
-<p>List of Employees: </p>
- <p>{!relatedTo.NSP_Employee_Names_List_garnishments__c}
-</p>
+<c:NSP_EmployeeGarnishmentCmp currentRecordId="{!relatedTo.Id}"/>
 </apex:outputPanel>
 
 <apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_tax_levies__c,'Yes'),
@@ -48,8 +45,7 @@ Kingwood, TX 77339
 Fax Number: 866-309-1267</p>
 
 <p>Once we receive the levy in Insperity’s name we will begin processing it.
-List of Employees:
-{!relatedTo.NSP_List_Employee_Names_Levies__c}
+<c:NSP_EmployeeLeviesCmp currentRecordId="{!relatedTo.Id}"/>
 </p>
 
 </apex:outputPanel>
@@ -59,7 +55,7 @@ CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IL'),CONTAINS(rel
 CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ME'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MA'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MS'),
 CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'NV'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ND'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'OH'),
 CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'RI'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'SD'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'VT'))}">
-<p>State Unemployment Taxes </p>
+<p><b>State Unemployment Taxes</b> </p>
 
 <p> You indicated there are employees working in the following states that have specific <br/>
 rules on filing state unemployment taxes. Please review the section State <br/>
@@ -67,62 +63,52 @@ Unemployment Taxes on the <apex:outputLink value="https://nam12.safelinks.protec
 for additional details.</p>
 
 
-
+ <ul>
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'CT')}">
-<p>Connecticut</p>
+<li>Connecticut</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'DE')}">
-<p>Delaware</p>
+<li>Delaware</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IL')}">
-<p>Illinois</p>
+<li>Illinois</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IA')}">
-<p>Iowa</p>
+<li>Iowa</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'KY')}">
-<p>Kentucky</p>
-
+<li>Kentucky</li>
 </apex:outputPanel>
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ME')}">
-<p>Maine</p>
+<li>Maine</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MA')}">
-<p>Massachusetts</p>
+<li>Massachusetts</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MS')}">
-<p>Mississippi</p>
+<li>Mississippi</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'NV')}">
-<p>Nevada</p>
+<li>Nevada</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ND')}">
-<p>North Dakota</p>
+<li>North Dakota</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'OH')}">
-<p>Ohio</p>
+<li>Ohio</li>
 </apex:outputPanel>
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'RI')}">
-<p>Rhode Island</p>
+<li>Rhode Island</li>
 </apex:outputPanel>
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'SD')}">
-<p>South Dakota</p>
+<li>South Dakota</li>
 </apex:outputPanel>
-
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'VT')}">
-<p>Vermont</p>
+<li>Vermont</li>
 </apex:outputPanel>
+</ul>
 </apex:outputPanel>
-<p>State Employment Tax Accounts Information</p>
+<p><b>State Employment Tax Accounts Information</b></p>
 
 <p>Closure of a client’s state payroll tax account is solely a client decision. As a client of <br/>
 Insperity, you may choose to leave your employment tax accounts open. If you do leave <br/>
@@ -132,7 +118,7 @@ are active – even if they are zero reports.</p>
 <p>For more information visit the Closing State Employment Tax Accounts section on the <br/>
 <apex:outputLink value="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fportal.insperity.com%2Fcs%2Fnsp%2FSitePage%2Fpayroll_tax_guidelines&data=04%7C01%7COneVoice_Dev%40insperity.com%7C4eb7f194f9724cac244d08d90b1d7731%7C895d9ea7ce114131829f33f878d784b2%7C0%7C0%7C637553043444463305%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=YsgHRUhL5J8qAa3hFerFtIzlTIqQQSUldxFXRpK939w%3D&reserved=0" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier.</p>
 
-<p>Regular Rate of Pay Resources</p>
+<p><b>Regular Rate of Pay Resources</b></p>
 
 <p>At Insperity, one of our main goals is to provide clients with the necessary information to <br/>
 make informed decisions regarding compliance. Most companies are aware of the portion of the <br/>
