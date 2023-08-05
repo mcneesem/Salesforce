@@ -157,7 +157,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "psaws__Actual_Hours__c", "Id", "Name", "CreatedDate", "pse__Account__c", "pse__Project_ID__c", "pse__Project_Manager__c", "pse__Project_Status__c", "pse__Project_Type__c", "pse__Start_Date__c", "Assignment_Date__c", "Fee_Inclusive__c", "First_Contact_Date__c", "Go_Live_Date__c", "Hold_Start_Date__c", "Hold_Status__c", "Invoice_Ready__c", "NSP_Sales_Rep__c", "Product_Line__c", "Project_Coordinator__c", "Project_Extension__c", "Project_Implementer__c", "TemplateName__c", "Total_Days_on_Hold__c", "NSP_BPS_Project_Template__c", "NSP_Client_Size__c", "NSP_Account__c" ],
+        "fields" : [ "NSP_BPS_Project_Template__c", "TemplateName__c", "pse__Is_Template__c", "Id", "Name", "CreatedDate", "pse__Account__c", "pse__Project_ID__c", "pse__Project_Manager__c", "pse__Project_Status__c", "pse__Project_Type__c", "pse__Start_Date__c", "psaws__Actual_Hours__c", "NSP_Account__c", "NSP_Sales_Rep__c", "Assignment_Date__c", "Fee_Inclusive__c", "First_Contact_Date__c", "Go_Live_Date__c", "Hold_Start_Date__c", "Hold_Status__c", "Invoice_Ready__c", "NSP_Client_Size__c", "Product_Line__c", "Project_Coordinator__c", "Project_Extension__c", "Project_Implementer__c", "Total_Days_on_Hold__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "pse__Proj__c",
@@ -207,7 +207,7 @@
     },
     "OUTPUT1" : {
       "action" : "save",
-      "sources" : [ "FORMULA5" ],
+      "sources" : [ "JOIN32" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -291,7 +291,7 @@
     },
     "FORMULA0" : {
       "action" : "formula",
-      "sources" : [ "JOIN30" ],
+      "sources" : [ "JOIN6" ],
       "parameters" : {
         "expressionType" : "SQL",
         "fields" : [ {
@@ -1214,6 +1214,7 @@
       "action" : "join",
       "sources" : [ "JOIN6", "JOIN29" ],
       "schema" : {
+        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -1231,6 +1232,7 @@
       "action" : "join",
       "sources" : [ "JOIN30", "JOIN22" ],
       "schema" : {
+        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -1243,6 +1245,41 @@
         "rightQualifier" : "Contact_With_Project",
         "rightKeys" : [ "LookupJoin.Id" ]
       }
+    },
+    "LOAD_DATASET22" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_AIMS_Client__c", "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN32" : {
+      "action" : "join",
+      "sources" : [ "FORMULA5", "LOAD_DATASET22" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "pse__Account__c" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
     }
   },
   "ui" : {
@@ -1250,8 +1287,8 @@
       "LOAD_DATASET0" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 392,
+        "top" : 1232.1,
+        "left" : 2070.8,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1259,8 +1296,8 @@
       "LOAD_DATASET1" : {
         "label" : "NSP_Plan_SubPlan__c",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 672,
+        "top" : 1232,
+        "left" : 1372.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1269,14 +1306,14 @@
         "label" : "Lookup Join Between Project and Plansubplan",
         "description" : "",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 812
+        "top" : 1092.2,
+        "left" : 2072
       },
       "LOAD_DATASET2" : {
         "label" : "pse__Project_Task__c",
         "type" : "LOAD_DATASET",
-        "top" : 670.2,
-        "left" : 392,
+        "top" : 1792,
+        "left" : 2072.2,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1285,14 +1322,14 @@
         "label" : "Inner Join Between Project Task and Project",
         "description" : "",
         "type" : "JOIN",
-        "top" : 112,
-        "left" : 672
+        "top" : 1650.8,
+        "left" : 1792
       },
       "LOAD_DATASET3" : {
         "label" : "pse__Timecard_Header__c",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 112,
+        "top" : 1790.8,
+        "left" : 1372,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1301,14 +1338,14 @@
         "label" : "Timecard, Project Task, Plan Subplan Output",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 250.2,
-        "left" : 952
+        "top" : 1372,
+        "left" : 2492.3
       },
       "LOAD_DATASET4" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 250.2,
-        "left" : 112,
+        "top" : 1790.8,
+        "left" : 1232,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1316,8 +1353,8 @@
       "LOAD_DATASET6" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 1232.4,
-        "left" : 812.1,
+        "top" : 952,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1325,8 +1362,8 @@
       "LOAD_DATASET7" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 950.2,
-        "left" : 112,
+        "top" : 671.8,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1334,8 +1371,8 @@
       "LOAD_DATASET8" : {
         "label" : "pse__Project_Task__c",
         "type" : "LOAD_DATASET",
-        "top" : 1512.2,
-        "left" : 1232.2,
+        "top" : 672,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1345,20 +1382,20 @@
         "description" : "Using Lookup to get all project task related to project",
         "type" : "JOIN",
         "top" : 812,
-        "left" : 532
+        "left" : 812
       },
       "OUTPUT1" : {
         "label" : "Asset, Project, Project Asset, Project Task, User, Project Output",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 812,
-        "left" : 1511.9
+        "top" : 952,
+        "left" : 2492
       },
       "LOAD_DATASET9" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 1091.8,
-        "left" : 251.89999999999998,
+        "top" : 671.5,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1367,14 +1404,14 @@
         "label" : "Lookup Join Between User and Project",
         "description" : "Using Lookup to get Project implementer",
         "type" : "JOIN",
-        "top" : 812.2,
-        "left" : 392
+        "top" : 812,
+        "left" : 672
       },
       "LOAD_DATASET9_copy0" : {
         "label" : "User Copy",
         "type" : "LOAD_DATASET",
-        "top" : 810.2,
-        "left" : 112,
+        "top" : 671.5,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1383,15 +1420,15 @@
         "label" : "Lookup Join Between User and Project",
         "description" : "Using Lookup to get Project Coordinator.",
         "type" : "JOIN",
-        "top" : 810.2,
-        "left" : 252
+        "top" : 811.5,
+        "left" : 532
       },
       "TRANSFORM0" : {
         "label" : "Date Transform",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 812,
-        "left" : 1371.9,
+        "top" : 672.1,
+        "left" : 1092,
         "graph" : {
           "FORMULA0" : {
             "parameters" : {
@@ -1450,8 +1487,8 @@
       "LOAD_DATASET10" : {
         "label" : "NSP_Plan__c",
         "type" : "LOAD_DATASET",
-        "top" : 530.2,
-        "left" : 392,
+        "top" : 1232,
+        "left" : 1932.5,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1460,14 +1497,14 @@
         "label" : "Left Join Between Project and Plan",
         "description" : "Using left join to get all the project info and only related plan details",
         "type" : "JOIN",
-        "top" : 390.2,
-        "left" : 532
+        "top" : 1372,
+        "left" : 2072
       },
       "LOAD_DATASET11" : {
         "label" : "pse__Task_Time__c",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 252,
+        "top" : 1790.8,
+        "left" : 1512,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1476,28 +1513,28 @@
         "label" : "Right Join Between Task Time and Project Task",
         "description" : "",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 532
+        "top" : 1650.8,
+        "left" : 1652
       },
       "JOIN11" : {
         "label" : "Lookup Join Between Task Time and Timecard",
         "description" : "",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 392
+        "top" : 1650.8,
+        "left" : 1512
       },
       "JOIN12" : {
         "label" : "Lookup Join Between Timecard and User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 252
+        "top" : 1650.8,
+        "left" : 1372
       },
       "LOAD_DATASET12" : {
         "label" : "NSP_Deconversion__c",
         "type" : "LOAD_DATASET",
-        "top" : 392.1,
-        "left" : 812,
+        "top" : 1511.9,
+        "left" : 1232.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1506,14 +1543,14 @@
         "label" : "Lookup Join between Plansubplan and Deconversion",
         "description" : "",
         "type" : "JOIN",
-        "top" : 390.2,
-        "left" : 952
+        "top" : 1092.4,
+        "left" : 1373
       },
       "LOAD_DATASET13" : {
         "label" : "NSP_RET_Deconversion_Assets__c",
         "type" : "LOAD_DATASET",
-        "top" : 532,
-        "left" : 672,
+        "top" : 1232.5,
+        "left" : 1093,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1522,29 +1559,29 @@
         "label" : "Inner join between Deconversion and Deconversion Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 530.2,
-        "left" : 1092
+        "top" : 1092.5,
+        "left" : 1233
       },
       "JOIN15" : {
         "label" : "Inner Join Between Asset and Deconversion Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 532,
-        "left" : 812
+        "top" : 1092.5,
+        "left" : 1093
       },
       "OUTPUT2" : {
         "label" : "Deconversion, Asset, Plan Subplan Ouput",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 390.2,
-        "left" : 1232
+        "top" : 1092,
+        "left" : 2492
       },
       "TRANSFORM1" : {
         "label" : "Date Transform",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 672.3,
-        "left" : 952,
+        "top" : 1372,
+        "left" : 1232,
         "graph" : {
           "FORMULA6" : {
             "parameters" : {
@@ -1567,8 +1604,8 @@
       "LOAD_DATASET14" : {
         "label" : "pse__Time_Date__c",
         "type" : "LOAD_DATASET",
-        "top" : 250.2,
-        "left" : 1372,
+        "top" : 2070.8,
+        "left" : 1652,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1577,28 +1614,28 @@
         "label" : "Right Join Between Time Date and Timecard",
         "description" : "Using right join to get all data from timecard and related data from time date",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1512
+        "top" : 1930.8,
+        "left" : 1652
       },
       "JOIN17" : {
         "label" : "Lookup Join Between  Project and Timecard",
         "description" : "Using lookup to get related timecard record for the project",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1652
+        "top" : 1652,
+        "left" : 2072.2
       },
       "JOIN18" : {
         "label" : "Lookup Join Between Project task and Task Time",
         "description" : "Using Lookup to get the Associated Project Task on the task time record",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1792
+        "top" : 1932,
+        "left" : 2212.2
       },
       "LOAD_DATASET15" : {
         "label" : "Case",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 1932,
+        "top" : 2072,
+        "left" : 2352.2,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1607,28 +1644,28 @@
         "label" : "Left Join Between Project and Case",
         "description" : "Using left join to get all the record from project and only assoicated cases.",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1932
+        "top" : 1932.3,
+        "left" : 2352.3
       },
       "OUTPUT3" : {
         "label" : "Project, Project Task, Plan, Timecard, User, Task Time, Time Date OP",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 250.2,
-        "left" : 2072
+        "top" : 1932,
+        "left" : 2493.5
       },
       "JOIN20" : {
         "label" : "Left Join Between Project Task and Account",
         "description" : "Using left join to get All data from Project task and associated account.",
         "type" : "JOIN",
-        "top" : 670.2,
-        "left" : 1512
+        "top" : 1652.3,
+        "left" : 2211.9
       },
       "LOAD_DATASET16" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 530.2,
-        "left" : 1512,
+        "top" : 1512.1,
+        "left" : 2211.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1636,8 +1673,8 @@
       "LOAD_DATASET17" : {
         "label" : "Contact",
         "type" : "LOAD_DATASET",
-        "top" : 1231.9,
-        "left" : 1232.1,
+        "top" : 392.3,
+        "left" : 812.4,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1646,21 +1683,21 @@
         "label" : "Right Join Between Contact and Project",
         "description" : "Using Right Join to get Project Manager value from Contact and all values from Project",
         "type" : "JOIN",
-        "top" : 1092,
-        "left" : 1232.2
+        "top" : 532,
+        "left" : 812
       },
       "JOIN22" : {
         "label" : "Left Join Between Project and Project Task",
         "description" : "Using Left join to get all the project data and all the related project tasks",
         "type" : "JOIN",
-        "top" : 1092,
-        "left" : 1372.1
+        "top" : 532,
+        "left" : 1372
       },
       "LOAD_DATASET19" : {
         "label" : "NSP_Note__c",
         "type" : "LOAD_DATASET",
-        "top" : 1652,
-        "left" : 1792.4,
+        "top" : 1232,
+        "left" : 1512,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1669,14 +1706,14 @@
         "label" : "Left Join Between Note and Project",
         "description" : "Using Left join to get all the Project data and related note records.",
         "type" : "JOIN",
-        "top" : 1090.2,
-        "left" : 1792
+        "top" : 811.6,
+        "left" : 1652
       },
       "LOAD_DATASET20" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 1232.2,
-        "left" : 671.7,
+        "top" : 952,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1690,8 +1727,8 @@
       "LOAD_DATASET3_copy0" : {
         "label" : "pse__Timecard_Header__c",
         "type" : "LOAD_DATASET",
-        "top" : 1650.8,
-        "left" : 1933.8,
+        "top" : 672.1,
+        "left" : 1792,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1700,22 +1737,22 @@
         "label" : "Left Join Between Project and Timecard",
         "description" : "Using Left Join to get All the project data and related timecard records.",
         "type" : "JOIN",
-        "top" : 1090.2,
-        "left" : 1932
+        "top" : 812,
+        "left" : 2212
       },
       "OUTPUT4" : {
         "label" : "Project, Project Task, Asset, Project Asset Output",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1090.2,
-        "left" : 2212
+        "top" : 812,
+        "left" : 2492
       },
       "TRANSFORM2" : {
         "label" : "Date Transform",
         "description" : "Transforming Date into the required Date Format",
         "type" : "TRANSFORM",
-        "top" : 1090.2,
-        "left" : 2072,
+        "top" : 812,
+        "left" : 2352,
         "graph" : {
           "FORMULA8" : {
             "parameters" : {
@@ -1775,8 +1812,8 @@
         "label" : "First Value Transformation",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1511.9,
-        "left" : 1792.1,
+        "top" : 1092,
+        "left" : 1512.1,
         "graph" : {
           "FORMULA17" : {
             "label" : "Formula"
@@ -1797,15 +1834,15 @@
         "label" : "Latest Note Filter",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1371.9,
-        "left" : 1792
+        "top" : 1092,
+        "left" : 1652
       },
       "TRANSFORM4" : {
         "label" : "First Value Transformation",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1371.9,
-        "left" : 1232,
+        "top" : 532,
+        "left" : 952,
         "graph" : {
           "FORMULA19" : {
             "label" : "Formula"
@@ -1826,15 +1863,15 @@
         "label" : "Modified Project Task Filter",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1232.2,
-        "left" : 1372
+        "top" : 532,
+        "left" : 1232
       },
       "TRANSFORM5" : {
         "label" : "First Value Transform",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1371.9,
-        "left" : 1932,
+        "top" : 812.1,
+        "left" : 1792,
         "graph" : {
           "FORMULA21" : {
             "label" : "Formula"
@@ -1855,21 +1892,21 @@
         "label" : "Latest Timecard Filter",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1231.9,
+        "top" : 812.1,
         "left" : 1932
       },
       "JOIN29" : {
         "label" : "Asset lookup to Account",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.2,
-        "left" : 812.3
+        "top" : 1092,
+        "left" : 952.1
       },
       "LOAD_DATASET21" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1092,
-        "left" : 952.6,
+        "top" : 952,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1879,14 +1916,30 @@
         "description" : "",
         "type" : "JOIN",
         "top" : 812,
-        "left" : 952.1
+        "left" : 952
       },
       "JOIN31" : {
         "label" : "Project with Asset Right Join with Project with contact",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1092,
-        "left" : 1512.3
+        "top" : 812.4,
+        "left" : 1371.9
+      },
+      "LOAD_DATASET22" : {
+        "label" : "Account",
+        "type" : "LOAD_DATASET",
+        "top" : 951.3,
+        "left" : 251.89999999999998,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN32" : {
+        "label" : "Project left join with Account",
+        "description" : "To get account related fields",
+        "type" : "JOIN",
+        "top" : 672,
+        "left" : 1232
       }
     },
     "connectors" : [ {
@@ -1914,7 +1967,7 @@
       "source" : "LOAD_DATASET8",
       "target" : "JOIN6"
     }, {
-      "source" : "TRANSFORM0",
+      "source" : "JOIN32",
       "target" : "OUTPUT1"
     }, {
       "source" : "JOIN8",
@@ -2079,8 +2132,14 @@
       "source" : "JOIN22",
       "target" : "JOIN31"
     }, {
-      "source" : "JOIN30",
+      "source" : "JOIN6",
       "target" : "TRANSFORM0"
+    }, {
+      "source" : "TRANSFORM0",
+      "target" : "JOIN32"
+    }, {
+      "source" : "LOAD_DATASET22",
+      "target" : "JOIN32"
     } ],
     "hiddenColumns" : [ ]
   },

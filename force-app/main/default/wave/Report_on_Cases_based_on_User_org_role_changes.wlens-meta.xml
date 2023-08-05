@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>Case_History_By_Individual</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Report on Cases based on User org/role changes</masterLabel>
     <visualizationType>comparisontable</visualizationType>
 </WaveLens>

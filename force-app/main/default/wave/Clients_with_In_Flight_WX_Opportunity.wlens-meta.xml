@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>Clients_with_In_Flight_WX_Opp1</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Clients with In Flight WX Opp</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

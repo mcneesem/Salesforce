@@ -71,7 +71,7 @@
     },
     "JOIN2" : {
       "action" : "join",
-      "sources" : [ "JOIN5", "JOIN9" ],
+      "sources" : [ "JOIN17_copy1", "JOIN9" ],
       "schema" : {
         "fields" : [ ],
         "slice" : {
@@ -159,7 +159,7 @@
     },
     "JOIN6" : {
       "action" : "join",
-      "sources" : [ "JOIN2", "JOIN4" ],
+      "sources" : [ "JOIN22", "JOIN4" ],
       "schema" : {
         "fields" : [ ],
         "slice" : {
@@ -195,7 +195,7 @@
     },
     "OUTPUT0" : {
       "action" : "save",
-      "sources" : [ "JOIN6" ],
+      "sources" : [ "JOIN23" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -211,7 +211,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Plan_Subplan_Relationship__c", "Id", "NSP_RET_Original_Plan_Effective_Date__c", "NSP_RET_Plan_Type__c", "NSP_Asset__c", "NSP_Start_Date__c" ],
+        "fields" : [ "Id", "NSP_Asset__c", "NSP_Plan_Subplan_Relationship__c", "NSP_Start_Date__c", "NSP_RET_Original_Plan_Effective_Date__c", "NSP_RET_Plan_Type__c", "Name" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "NSP_Client_Sub_Plan_History__c",
@@ -296,7 +296,7 @@
     },
     "JOIN10" : {
       "action" : "join",
-      "sources" : [ "LOAD_DATASET3", "LOAD_DATASET7_copy0" ],
+      "sources" : [ "EDIT_ATTRIBUTES17", "LOAD_DATASET7_copy0" ],
       "schema" : {
         "fields" : [ ],
         "slice" : {
@@ -1848,6 +1848,305 @@
         },
         "measuresToCurrencies" : [ ]
       }
+    },
+    "JOIN22" : {
+      "action" : "join",
+      "sources" : [ "JOIN2", "LOAD_DATASET2" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "RecordTypeId" ],
+        "rightQualifier" : "RecordType",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET11_copy0_copy0_copy0_copy0_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN23" : {
+      "action" : "join",
+      "sources" : [ "JOIN6", "LOAD_DATASET11_copy0_copy0_copy0_copy0_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Join4.NSP_Accoun.NSP_User__c" ],
+        "rightQualifier" : "Rolewise_Username",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET0_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Client_is_Lead_Parent__c", "NSP_Subplan_Lead_Parent__c", "NSP_RET_lead_parent__c", "Id", "AccountId", "Name", "RecordTypeId", "NSP_Account_Status__c", "NSP_Business_Type__c", "NSP_Client_Segment_type__c", "NSP_Client__c", "NSP_Company_Name__c", "NSP_FEIN__c", "NSP_Price_Level__c", "NSP_Current_Contract_Start_Date__c", "NSP_RET_Plan_and_Sub_Plan__c", "NSP_RET_Client_ID__c", "NSP_RET_Client_Type__c", "NSP_RET_AIMS_Original_Empl_Date__c", "NSP_RET_Employee_Count__c", "NSP_AccountName__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Asset",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Asset"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET1_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Plan_ID_Form__c", "Id", "Name", "NSP_Parent_Plan_ID__c", "NSP_Auto_Deferral__c", "NSP_Original_PE_Date__c", "NSP_Plan_Id_for_Merge__c", "NSP_Status__c", "NSP_Subplan_ID__c", "NSP_Subplan_Name__c", "NSP_Plan_Subplan_Relationship__c", "NSP_Subplan_Lead_Parent__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_Plan_SubPlan__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_Plan_SubPlan__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN7_copy0" : {
+      "action" : "join",
+      "sources" : [ "JOIN8_copy0", "LOAD_DATASET1_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "NSP_Client.NSP_Plan_Subplan_Relationship__c" ],
+        "rightQualifier" : "NSP_Plan_S",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET6_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Current_Subplan__c", "Id", "Name", "NSP_Asset__c", "NSP_Plan_Subplan_Relationship__c", "NSP_Start_Date__c", "NSP_RET_Original_Plan_Effective_Date__c", "NSP_RET_Plan_Type__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_Client_Sub_Plan_History__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_Client_Sub_Plan_History__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN8_copy0" : {
+      "action" : "join",
+      "sources" : [ "JOIN20_copy0", "FILTER10" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "NSP_Client",
+        "rightKeys" : [ "NSP_Asset__c" ]
+      }
+    },
+    "LOAD_DATASET11_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_Original_Plan_Effective_Date__c", "Id", "Name", "NSP_Plan_Id__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_Plan__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_Plan__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN17_copy1" : {
+      "action" : "join",
+      "sources" : [ "JOIN7_copy0", "FORMULA7_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_Plan_S.NSP_Parent_Plan_ID__c" ],
+        "rightQualifier" : "Plan",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "FORMULA6_copy0" : {
+      "action" : "formula",
+      "sources" : [ "LOAD_DATASET11_copy0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "NSP_Plan_Id__c_Seven",
+          "label" : "Plan Id Seven",
+          "formulaExpression" : "case \r\n    when startsWith(\"NSP_Plan_Id__c\", '7')\r\nthen 'True'\r\n    else\r\n    'false'\r\n       \r\nend\r\n",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA7_copy0" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA6_copy0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "NSP_Plan_Id__c_ContainsData",
+          "label" : "Plan Id ContainsData",
+          "formulaExpression" : "case \r\n    when contains(\"NSP_Plan_Id__c\", '201069')\r\n    then 'True'\r\n    else\r\n    'False'\r\nend\r\n",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "JOIN20_copy0" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET0_copy0", "EDIT_ATTRIBUTES0_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "NSP_RET_lead_parent__c" ],
+        "rightQualifier" : "Asset_Lead_Parent",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET13_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Asset",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Asset"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "EDIT_ATTRIBUTES0_copy0" : {
+      "action" : "schema",
+      "sources" : [ "LOAD_DATASET13_copy0" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "Name",
+          "newProperties" : {
+            "label" : "RET Lead Parent",
+            "name" : "Asset_Name_RET_Lead_Parent"
+          }
+        } ]
+      }
+    },
+    "FILTER10" : {
+      "action" : "filter",
+      "sources" : [ "LOAD_DATASET6_copy0" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "NSP_Current_Subplan__c",
+          "operator" : "EQUAL",
+          "operands" : [ "true" ]
+        } ]
+      }
+    },
+    "EDIT_ATTRIBUTES16" : {
+      "action" : "schema",
+      "sources" : [ "LOAD_DATASET3" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "NSP_Blackout_Period_Begins__c",
+          "newProperties" : {
+            "label" : "Blackout Period Begins",
+            "name" : "NSP_Blackout_Period_Begins__c",
+            "typeProperties" : {
+              "type" : "DATETIME",
+              "format" : "MM/dd/yyyy"
+            }
+          }
+        } ]
+      }
+    },
+    "EDIT_ATTRIBUTES17" : {
+      "action" : "schema",
+      "sources" : [ "EDIT_ATTRIBUTES16" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "NSP_Blackout_Period_Ends__c",
+          "newProperties" : {
+            "label" : "Blackout Period Ends",
+            "name" : "NSP_Blackout_Period_Ends__c",
+            "typeProperties" : {
+              "type" : "DATETIME",
+              "format" : "MM/dd/yyyy"
+            }
+          }
+        } ]
+      }
     }
   },
   "ui" : {
@@ -1855,7 +2154,7 @@
       "LOAD_DATASET0" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 112.19999999999999,
+        "top" : 250.2,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1864,7 +2163,7 @@
       "LOAD_DATASET1" : {
         "label" : "NSP_Plan_SubPlan__c",
         "type" : "LOAD_DATASET",
-        "top" : 252.10000000000002,
+        "top" : 390.2,
         "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
@@ -1873,7 +2172,7 @@
       "LOAD_DATASET2" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
@@ -1882,8 +2181,8 @@
       "LOAD_DATASET3" : {
         "label" : "NSP_Sales_to_Implementation__c",
         "type" : "LOAD_DATASET",
-        "top" : 672.1,
-        "left" : 1092.3,
+        "top" : 810.2,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1892,14 +2191,14 @@
         "label" : "Asset lookup with NSP_Sales_to_Implementation__c",
         "description" : "Asset lookup with NSP_Sales_to_Implementation__c to get fields from NSP_Sales_to_Implementation__c",
         "type" : "JOIN",
-        "top" : 812.5,
-        "left" : 1093.5
+        "top" : 812,
+        "left" : 812
       },
       "LOAD_DATASET4" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 112,
-        "left" : 1232,
+        "top" : 530.2,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1907,7 +2206,7 @@
       "LOAD_DATASET5" : {
         "label" : "NSP_Account_Team__c",
         "type" : "LOAD_DATASET",
-        "top" : 533.7,
+        "top" : 670.2,
         "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
@@ -1917,41 +2216,41 @@
         "label" : "Account lookup with Account Team",
         "description" : "Account lookup with Account Team to get Account Name",
         "type" : "JOIN",
-        "top" : 391.9,
+        "top" : 530.2,
         "left" : 952
       },
       "JOIN5" : {
         "label" : "Asset lookup with Record Type",
         "description" : "Asset lookup with Record Type to get Record Type Name",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 952
       },
       "JOIN6" : {
         "label" : "Asset lookup with Account Team",
         "description" : "Asset lookup with Account Team to get Account Team Details",
         "type" : "JOIN",
-        "top" : 812,
-        "left" : 1512
+        "top" : 810.2,
+        "left" : 1932
       },
       "JOIN7" : {
         "label" : "Asset Left join with NSP_Plan_SubPlan__c",
         "description" : "Asset lookup with NSP_Plan_SubPlan__c to get  NSP_Plan_SubPlan__c related objects",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 532
       },
       "OUTPUT0" : {
         "label" : "Account, Account Team, Asset, Client Sub Plan History, Plan",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 950.2,
-        "left" : 1932
+        "top" : 812,
+        "left" : 2211.5
       },
       "LOAD_DATASET6" : {
         "label" : "NSP_Client_Sub_Plan_History__c",
         "type" : "LOAD_DATASET",
-        "top" : 252.10000000000002,
+        "top" : 390.2,
         "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
@@ -1961,15 +2260,15 @@
         "label" : "Asset Left join with NSP_Client_Sub_Plan_History__c",
         "description" : "Asset lookup with NSP_Client_Sub_Plan_History__c to get NSP_Client_Sub_Plan_History__c related fields",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 392
       },
       "LOAD_DATASET7" : {
         "label" : "User IMPL",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 812.6,
-        "left" : 952.2,
+        "top" : 950.2,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1978,15 +2277,15 @@
         "label" : "NSP_Sales_to_Implementation__c lookup with User",
         "description" : "NSP_Sales_to_Implementation__c lookup with User  to get NBI IMP Resource Name",
         "type" : "JOIN",
-        "top" : 672.1,
-        "left" : 1370.2
+        "top" : 950.2,
+        "left" : 1372
       },
       "LOAD_DATASET7_copy0" : {
         "label" : "User Merger",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 811.9,
-        "left" : 811.9,
+        "top" : 810.2,
+        "left" : 1512,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1995,28 +2294,28 @@
         "label" : "NSP_Sales_to_Implementation__c lookup with User",
         "description" : "NSP_Sales_to_Implementation__c lookup with User  to get NBI Merger Resource Name",
         "type" : "JOIN",
-        "top" : 672,
-        "left" : 1232
+        "top" : 810.2,
+        "left" : 1372
       },
       "JOIN11" : {
         "label" : "Asset lookup with Sales to Implementation",
         "description" : "",
         "type" : "JOIN",
-        "top" : 112,
-        "left" : 1372
+        "top" : 250.2,
+        "left" : 1652
       },
       "JOIN12" : {
         "label" : "Asset lookup with Address",
         "description" : "",
         "type" : "JOIN",
-        "top" : 252,
-        "left" : 1512
+        "top" : 390.2,
+        "left" : 1792
       },
       "LOAD_DATASET8" : {
         "label" : "NSP_Address__c",
         "type" : "LOAD_DATASET",
-        "top" : 533.8,
-        "left" : 1372.9,
+        "top" : 250.2,
+        "left" : 1932,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2025,15 +2324,15 @@
         "label" : "Account Team lookup with User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 392.1,
-        "left" : 1092.2
+        "top" : 530.2,
+        "left" : 1092
       },
       "TRANSFORM0_copy0" : {
         "label" : "Creating Role Columns",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 392.2,
-        "left" : 1232.4,
+        "top" : 530.2,
+        "left" : 1232,
         "graph" : {
           "FORMULA0_copy0" : {
             "parameters" : {
@@ -2093,14 +2392,14 @@
         "label" : "Account lookup with Group Member",
         "description" : "",
         "type" : "JOIN",
-        "top" : 390.2,
-        "left" : 1652
+        "top" : 530.2,
+        "left" : 2352
       },
       "LOAD_DATASET9" : {
         "label" : "NSP_Account_Group_Member__c",
         "type" : "LOAD_DATASET",
-        "top" : 530.2,
-        "left" : 1652,
+        "top" : 670.2,
+        "left" : 2352,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2109,14 +2408,14 @@
         "label" : "Account Group Member lookup with Account Group",
         "description" : "",
         "type" : "JOIN",
-        "top" : 390.2,
-        "left" : 1792
+        "top" : 530.2,
+        "left" : 2632
       },
       "LOAD_DATASET10" : {
         "label" : "NSP_Account_Group__c",
         "type" : "LOAD_DATASET",
         "top" : 670.2,
-        "left" : 1652,
+        "left" : 2632,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2125,28 +2424,28 @@
         "label" : "Asset lookup with Account Group",
         "description" : "",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1652
+        "top" : 390.2,
+        "left" : 2632
       },
       "OUTPUT1" : {
         "label" : "Participation, Plan SubPlan, Client Sub Plan History, Plan, Asset",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 252.2,
-        "left" : 2072.2
+        "top" : 390.2,
+        "left" : 3332
       },
       "FILTER0" : {
         "label" : "Filter Assets with Retirement Services record type",
         "description" : "",
         "type" : "FILTER",
-        "top" : 252,
-        "left" : 1232
+        "top" : 250.2,
+        "left" : 1792
       },
       "LOAD_DATASET11" : {
         "label" : "NSP_Plan__c",
         "type" : "LOAD_DATASET",
-        "top" : 392.1,
-        "left" : 392.1,
+        "top" : 530.2,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2161,7 +2460,7 @@
       "LOAD_DATASET12" : {
         "label" : "NSP_Participation_SaaS_Activity__c",
         "type" : "LOAD_DATASET",
-        "top" : 252,
+        "top" : 390.2,
         "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
@@ -2171,21 +2470,21 @@
         "label" : "RET Plan-Subplan Left  join with RET-Monthly Participation",
         "description" : "",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 812
       },
       "OUTPUT2" : {
         "label" : "Asset, Client Sub Plan History, Plan Subplan, Plan",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 252,
+        "top" : 390.2,
         "left" : 952
       },
       "TRANSFORM1" : {
         "label" : "Filter Numeric Data",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 392,
+        "top" : 251.89999999999998,
         "left" : 672,
         "graph" : {
           "FORMULA6" : {
@@ -2210,8 +2509,8 @@
         "label" : "DateFormatChange",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 252,
-        "left" : 1931.8,
+        "top" : 390.2,
+        "left" : 2912,
         "graph" : {
           "FORMULA8_copy0" : {
             "parameters" : {
@@ -2235,20 +2534,20 @@
         "label" : "Sales implementation lookup with User Salesconsultant",
         "description" : "",
         "type" : "JOIN",
-        "top" : 252,
-        "left" : 1792
+        "top" : 390.2,
+        "left" : 2772
       },
       "JOIN20" : {
         "label" : "Asset left joint with Asset for Asset Lead parent",
         "description" : "",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 252
       },
       "LOAD_DATASET13" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 252.2,
+        "top" : 390.2,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -2258,7 +2557,7 @@
         "label" : "Relabel RET Lead Parent",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 252.10000000000002,
+        "top" : 390.2,
         "left" : 252,
         "graph" : {
           "EDIT_ATTRIBUTES0" : {
@@ -2271,8 +2570,8 @@
         "label" : "NSP_Sales_to_Implementation__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 952.3999999999999,
-        "left" : 112,
+        "top" : 1232,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2281,15 +2580,15 @@
         "label" : "SalestoImplementation lookup to Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.3,
-        "left" : 392.4
+        "top" : 1092,
+        "left" : 1232
       },
       "LOAD_DATASET1_copy0_copy0_copy0" : {
         "label" : "Asset",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1232.3,
-        "left" : 392.4,
+        "top" : 1371.8,
+        "left" : 1232.7,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2298,15 +2597,15 @@
         "label" : "SalestoImplementation Left join SubplanHistory",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.5,
-        "left" : 812.1
+        "top" : 1092.2,
+        "left" : 1652
       },
       "LOAD_DATASET7_copy1_copy0_copy0" : {
         "label" : "NSP_Client_Sub_Plan_History__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1512.4,
-        "left" : 812.8,
+        "top" : 1652,
+        "left" : 1652.3,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2315,8 +2614,8 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1232.3,
-        "left" : 531.9,
+        "top" : 1511.8,
+        "left" : 1511.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2325,22 +2624,22 @@
         "label" : "S2I Salesconsultant lookup user",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.5999999999999,
-        "left" : 672.3
+        "top" : 1092,
+        "left" : 1512
       },
       "JOIN14_copy0_copy0_copy0" : {
         "label" : "S2I IMPL lookup to User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.3,
-        "left" : 532
+        "top" : 1092.1,
+        "left" : 1372
       },
       "TRANSFORM6_copy0_copy0" : {
         "label" : "Transform Date",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1232.1,
-        "left" : 812.5,
+        "top" : 1372,
+        "left" : 1652.7,
         "graph" : {
           "EDIT_ATTRIBUTES6_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2367,8 +2666,8 @@
         "label" : "Transform Date Copy",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 952.3999999999999,
-        "left" : 252.29999999999998,
+        "top" : 1092.3,
+        "left" : 1092,
         "graph" : {
           "EDIT_ATTRIBUTES7_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2413,8 +2712,8 @@
         "label" : "Transform Date Copy1",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1091.6,
-        "left" : 392.4,
+        "top" : 1231.9,
+        "left" : 1232.3,
         "graph" : {
           "EDIT_ATTRIBUTES10_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2444,22 +2743,22 @@
         "label" : "Filter Current Subplan",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1372.1,
-        "left" : 812.1
+        "top" : 1511.9,
+        "left" : 1653.1
       },
       "FILTER9_copy0_copy0" : {
         "label" : "Filter Most Recent CSPH",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1092.4,
-        "left" : 812
+        "top" : 1232.4,
+        "left" : 1652
       },
       "LOAD_DATASET4_copy0_copy0_copy0" : {
         "label" : "NSP_Plan_SubPlan__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1092.3,
-        "left" : 952,
+        "top" : 1231.4,
+        "left" : 1792,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2468,15 +2767,15 @@
         "label" : "CSPH Lookup to Plan Sub Plan",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.3,
-        "left" : 952
+        "top" : 1092.1,
+        "left" : 1791.9
       },
       "LOAD_DATASET5_copy0_copy0_copy0" : {
         "label" : "NSP_Plan__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1092.4,
-        "left" : 1092,
+        "top" : 1232,
+        "left" : 1932.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2485,15 +2784,15 @@
         "label" : "CSPH Plan Id Lookup to Plan",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.3,
-        "left" : 1092
+        "top" : 1092,
+        "left" : 1932
       },
       "LOAD_DATASET2_copy0_copy0_copy0" : {
         "label" : "RecordType",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1092,
-        "left" : 1232,
+        "top" : 1232.3,
+        "left" : 2072,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2502,8 +2801,8 @@
         "label" : "Account",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1372.3,
-        "left" : 1372,
+        "top" : 1511.9,
+        "left" : 2212.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2512,15 +2811,15 @@
         "label" : "Asset Record Type lookupto RecordType",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.3,
-        "left" : 1232
+        "top" : 1092.1,
+        "left" : 2071.8
       },
       "LOAD_DATASET6_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "NSP_Account_Group_Member__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1512.3,
-        "left" : 1512.2,
+        "top" : 1652.1,
+        "left" : 2353.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2529,15 +2828,15 @@
         "label" : "Filter Type Control Group",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1371.9,
-        "left" : 1512.1
+        "top" : 1512.1,
+        "left" : 2352.3
       },
       "TRANSFORM9_copy0_copy0" : {
         "label" : "Transformation to find Latest Member Account",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1232.3,
-        "left" : 1512,
+        "top" : 1372,
+        "left" : 2352,
         "graph" : {
           "FORMULA11_copy0_copy0" : {
             "label" : "Formula"
@@ -2558,29 +2857,29 @@
         "label" : "Filter Latest Member Account",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1092.3,
-        "left" : 1512
+        "top" : 1232.1,
+        "left" : 2351.5
       },
       "JOIN18_copy0" : {
         "label" : "S2I Account lookup to Account",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.1999999999999,
-        "left" : 1372
+        "top" : 1092.1,
+        "left" : 2211.8
       },
       "JOIN19_copy0" : {
         "label" : "Account Left Join to Account Team Member",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952,
-        "left" : 1512
+        "top" : 1092.3,
+        "left" : 2352
       },
       "LOAD_DATASET0_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "NSP_Account_Team__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1653.9,
-        "left" : 113.30000000000001,
+        "top" : 1790.2,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2589,14 +2888,14 @@
         "label" : "Lookup user",
         "description" : "Based on key column to get user name",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 252
       },
       "LOAD_DATASET1_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1792.3,
+        "top" : 1930.2,
         "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
@@ -2606,14 +2905,14 @@
         "label" : "Lookup Account",
         "description" : "to get Account Name",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 392
       },
       "LOAD_DATASET2_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "Account",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1512,
+        "top" : 1650.2,
         "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
@@ -2623,28 +2922,28 @@
         "label" : "Bus. Team-HRSp/CL",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1651.2146310089001,
-        "left" : 531.1097031679842
+        "top" : 1790.2,
+        "left" : 532
       },
       "FILTER1_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "Client Liaison",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1794.5000000000002,
+        "top" : 1930.2,
         "left" : 532
       },
       "FILTER2_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "MidMarket Account Exec",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1934.3,
+        "top" : 2070.2,
         "left" : 532
       },
       "TRANSFORM0_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "Transform Bus Team HRSp/CL",
         "description" : "Rename full Name to Business",
         "type" : "TRANSFORM",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES0_copy0_copy0_copy0_copy0_copy0" : {
@@ -2657,7 +2956,7 @@
         "label" : "Transform Client Liaison",
         "description" : "Rename full Name to Client",
         "type" : "TRANSFORM",
-        "top" : 1794.0000000000002,
+        "top" : 1930.2,
         "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES1_copy0_copy0_copy0_copy0_copy0" : {
@@ -2670,7 +2969,7 @@
         "label" : "Transform MidMarket",
         "description" : "Rename full Name to Midmarket",
         "type" : "TRANSFORM",
-        "top" : 1934.0000000000002,
+        "top" : 2070.2,
         "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES2_copy0_copy0_copy0_copy0_copy0" : {
@@ -2683,21 +2982,21 @@
         "label" : "401k Plan Consultant",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2073.8,
-        "left" : 532.5
+        "top" : 2210.2,
+        "left" : 532
       },
       "FILTER4_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "Payroll Specialist",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2214.2,
+        "top" : 2350.2,
         "left" : 532
       },
       "TRANSFORM3_copy0_copy0_copy0_copy0_copy0" : {
         "label" : "Transform Plan Consultant",
         "description" : "Rename full Name to MHRS Team",
         "type" : "TRANSFORM",
-        "top" : 2074,
+        "top" : 2210.2,
         "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES3_copy0_copy0_copy0_copy0_copy0" : {
@@ -2710,7 +3009,7 @@
         "label" : "Transform Payroll Specialist",
         "description" : "Rename full Name to Renewal Team",
         "type" : "TRANSFORM",
-        "top" : 2214,
+        "top" : 2350.2,
         "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES4_copy0_copy0_copy0_copy0_copy0" : {
@@ -2722,8 +3021,8 @@
       "AGGREGATE0_copy0_copy0_copy0" : {
         "label" : "Aggregate 0",
         "type" : "AGGREGATE",
-        "top" : 2492.2,
-        "left" : 532.2,
+        "top" : 2630.2,
+        "left" : 532,
         "graph" : {
           "EXTRACT0_copy0_copy0_copy0" : null,
           "AGGREGATE1_copy0_copy0_copy0" : null
@@ -2737,35 +3036,35 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 812
       },
       "JOIN16_copy0_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 952
       },
       "FILTER5_copy0_copy0_copy0" : {
         "label" : "Business Performance Advisor",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2352.2,
-        "left" : 532.2
+        "top" : 2490.2,
+        "left" : 532
       },
       "JOIN17_copy0_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 1092
       },
       "TRANSFORM5_copy0_copy0_copy0" : {
         "label" : "Transform Business Performance Advisor",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 2354,
+        "top" : 2490.2,
         "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES5_copy0_copy0_copy0" : {
@@ -2778,44 +3077,203 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 1232
       },
       "JOIN19_copy0_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1654,
+        "top" : 1790.2,
         "left" : 1372
       },
       "JOIN20_copy0_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1092.4,
-        "left" : 1652
+        "top" : 1232.5,
+        "left" : 2492.3
       },
       "JOIN21_copy0" : {
         "label" : "Account lookup to Multivalue Account Team",
         "description" : "",
         "type" : "JOIN",
-        "top" : 952.3,
-        "left" : 1652
+        "top" : 1092.2,
+        "left" : 2492.1
       },
       "OUTPUT0_copy0_copy0_copy0" : {
         "label" : "S2I, Asset, User, Account Team, Client Subplan History, Account",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 952.3,
-        "left" : 1792
+        "top" : 1092.8,
+        "left" : 2632.3
+      },
+      "JOIN22" : {
+        "label" : "Asset lookup to RecordType",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 810.2,
+        "left" : 952
+      },
+      "LOAD_DATASET11_copy0_copy0_copy0_copy0_copy0" : {
+        "label" : "User",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 952,
+        "left" : 2072,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN23" : {
+        "label" : "Account Team User lookup for UserName",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 812,
+        "left" : 2072
+      },
+      "LOAD_DATASET0_copy0" : {
+        "label" : "Asset Copy",
+        "type" : "LOAD_DATASET",
+        "top" : 1090.2,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET1_copy0" : {
+        "label" : "NSP_Plan_SubPlan__c Copy",
+        "type" : "LOAD_DATASET",
+        "top" : 1230.2,
+        "left" : 532,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN7_copy0" : {
+        "label" : "Asset Left join with NSP_Plan_SubPlan__c Copy",
+        "description" : "Asset lookup with NSP_Plan_SubPlan__c to get  NSP_Plan_SubPlan__c related objects",
+        "type" : "JOIN",
+        "top" : 1090.2,
+        "left" : 532
+      },
+      "LOAD_DATASET6_copy0" : {
+        "label" : "NSP_Client_Sub_Plan_History__c",
+        "type" : "LOAD_DATASET",
+        "top" : 1372,
+        "left" : 392,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN8_copy0" : {
+        "label" : "Asset Left join with NSP_Client_Sub_Plan_History__c Copy",
+        "description" : "Asset lookup with NSP_Client_Sub_Plan_History__c to get NSP_Client_Sub_Plan_History__c related fields",
+        "type" : "JOIN",
+        "top" : 1090.2,
+        "left" : 392
+      },
+      "LOAD_DATASET11_copy0" : {
+        "label" : "NSP_Plan__c Copy",
+        "type" : "LOAD_DATASET",
+        "top" : 1370.2,
+        "left" : 672,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN17_copy1" : {
+        "label" : "NSP_Plan_SubPlan__c lookup with NSP_Plan__c Copy",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 952,
+        "left" : 672
+      },
+      "TRANSFORM1_copy0" : {
+        "label" : "Filter Numeric Data Copy",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 1091.9,
+        "left" : 672,
+        "graph" : {
+          "FORMULA6_copy0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA7_copy0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA6_copy0",
+          "target" : "FORMULA7_copy0"
+        } ]
+      },
+      "JOIN20_copy0" : {
+        "label" : "Asset left joint with Asset for Asset Lead parent Copy",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1090.2,
+        "left" : 252
+      },
+      "LOAD_DATASET13_copy0" : {
+        "label" : "Asset Copy1",
+        "type" : "LOAD_DATASET",
+        "top" : 1230.2,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "TRANSFORM3_copy0" : {
+        "label" : "Relabel RET Lead Parent Copy",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 1230.2,
+        "left" : 252,
+        "graph" : {
+          "EDIT_ATTRIBUTES0_copy0" : {
+            "label" : "Edit Attributes"
+          }
+        },
+        "connectors" : [ ]
+      },
+      "FILTER10" : {
+        "label" : "Filter 10",
+        "type" : "FILTER",
+        "top" : 1232,
+        "left" : 392
+      },
+      "TRANSFORM10" : {
+        "label" : "Transform 10",
+        "type" : "TRANSFORM",
+        "top" : 812,
+        "left" : 1232,
+        "graph" : {
+          "EDIT_ATTRIBUTES16" : {
+            "label" : "Edit Attributes"
+          },
+          "EDIT_ATTRIBUTES17" : {
+            "label" : "Edit Attributes"
+          }
+        },
+        "connectors" : [ {
+          "source" : "EDIT_ATTRIBUTES16",
+          "target" : "EDIT_ATTRIBUTES17"
+        } ]
       }
     },
     "connectors" : [ {
-      "source" : "JOIN5",
-      "target" : "JOIN11"
+      "source" : "JOIN17_copy1",
+      "target" : "JOIN2"
     }, {
       "source" : "JOIN5",
-      "target" : "JOIN2"
+      "target" : "JOIN11"
     }, {
       "source" : "JOIN9",
       "target" : "JOIN2"
@@ -2832,7 +3290,7 @@
       "source" : "LOAD_DATASET2",
       "target" : "JOIN5"
     }, {
-      "source" : "JOIN2",
+      "source" : "JOIN22",
       "target" : "JOIN6"
     }, {
       "source" : "JOIN8",
@@ -2841,7 +3299,7 @@
       "source" : "LOAD_DATASET1",
       "target" : "JOIN7"
     }, {
-      "source" : "JOIN6",
+      "source" : "JOIN23",
       "target" : "OUTPUT0"
     }, {
       "source" : "JOIN20",
@@ -2856,7 +3314,7 @@
       "source" : "LOAD_DATASET7",
       "target" : "JOIN9"
     }, {
-      "source" : "LOAD_DATASET3",
+      "source" : "TRANSFORM10",
       "target" : "JOIN10"
     }, {
       "source" : "LOAD_DATASET7_copy0",
@@ -3116,6 +3574,54 @@
     }, {
       "source" : "JOIN21_copy0",
       "target" : "OUTPUT0_copy0_copy0_copy0"
+    }, {
+      "source" : "JOIN2",
+      "target" : "JOIN22"
+    }, {
+      "source" : "LOAD_DATASET2",
+      "target" : "JOIN22"
+    }, {
+      "source" : "JOIN6",
+      "target" : "JOIN23"
+    }, {
+      "source" : "LOAD_DATASET11_copy0_copy0_copy0_copy0_copy0",
+      "target" : "JOIN23"
+    }, {
+      "source" : "JOIN8_copy0",
+      "target" : "JOIN7_copy0"
+    }, {
+      "source" : "LOAD_DATASET1_copy0",
+      "target" : "JOIN7_copy0"
+    }, {
+      "source" : "JOIN20_copy0",
+      "target" : "JOIN8_copy0"
+    }, {
+      "source" : "FILTER10",
+      "target" : "JOIN8_copy0"
+    }, {
+      "source" : "JOIN7_copy0",
+      "target" : "JOIN17_copy1"
+    }, {
+      "source" : "TRANSFORM1_copy0",
+      "target" : "JOIN17_copy1"
+    }, {
+      "source" : "LOAD_DATASET11_copy0",
+      "target" : "TRANSFORM1_copy0"
+    }, {
+      "source" : "LOAD_DATASET0_copy0",
+      "target" : "JOIN20_copy0"
+    }, {
+      "source" : "TRANSFORM3_copy0",
+      "target" : "JOIN20_copy0"
+    }, {
+      "source" : "LOAD_DATASET13_copy0",
+      "target" : "TRANSFORM3_copy0"
+    }, {
+      "source" : "LOAD_DATASET6_copy0",
+      "target" : "FILTER10"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "TRANSFORM10"
     } ],
     "hiddenColumns" : [ ]
   },

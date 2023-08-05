@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>RET</application>
     <datasets>Project_with_Project_Task_and_Asset_and_Resource_Request</datasets>
+    <dateVersion>1</dateVersion>
     <description>Created for STY-03384</description>
     <masterLabel>Merge Project Step 15 Search - VB</masterLabel>
     <visualizationType>valuestable</visualizationType>

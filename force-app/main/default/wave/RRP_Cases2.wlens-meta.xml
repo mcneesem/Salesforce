@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>Payroll</application>
     <datasets>Case_CaseHistory_Asset_User_Dataset</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>RRP Cases</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

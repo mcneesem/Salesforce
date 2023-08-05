@@ -14,19 +14,19 @@
         <sortIndex>1</sortIndex>
     </dimensions>
     <dimensions>
-        <field>A5_Coaching_Commissi_1.JoinRecord.User.Name</field>
+        <field>Coaching_Commission__1.JoinRecord.User.Name</field>
         <isDerived>false</isDerived>
         <label>Case Owner Name</label>
         <sortIndex>2</sortIndex>
     </dimensions>
     <dimensions>
-        <field>Coaching_Commission__1.JoinRecord.User.Name</field>
+        <field>lens_4.JoinRecord.User.Name</field>
         <isDerived>false</isDerived>
         <label>Case Owner Name</label>
         <sortIndex>3</sortIndex>
     </dimensions>
     <dimensions>
-        <field>lens_4.JoinRecord.User.Name</field>
+        <field>A5_Coaching_Commissi_1.JoinRecord.User.Name</field>
         <isDerived>false</isDerived>
         <label>Case Owner Name</label>
         <sortIndex>4</sortIndex>

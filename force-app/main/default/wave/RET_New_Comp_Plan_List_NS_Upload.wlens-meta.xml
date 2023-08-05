@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>RET</application>
     <datasets>Plan_Subplan_Asset_Dataset</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>RET-New Comp Plan List (NS Upload)</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>Clients_with_No_Key_Decision_Makers_DS</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>My Clients With No Key Decision Maker Lens</masterLabel>
     <visualizationType>comparisontable</visualizationType>
 </WaveLens>
