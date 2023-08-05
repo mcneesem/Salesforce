@@ -7552,6 +7552,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Contribution__c.NSP_NS_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>

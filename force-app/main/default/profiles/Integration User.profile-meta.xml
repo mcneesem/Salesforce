@@ -4418,6 +4418,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Active_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.NSP_RET_Plan_and_Sub_Plan_Form__c</field>
         <readable>true</readable>
     </fieldPermissions> 
