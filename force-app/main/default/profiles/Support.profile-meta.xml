@@ -2808,6 +2808,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_AIMS_First_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.NSP_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
