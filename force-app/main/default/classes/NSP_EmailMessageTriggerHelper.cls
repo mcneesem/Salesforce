@@ -13,7 +13,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         List<Case> caseToUpdate = new List<Case> ();
         Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
         for(EmailMessage eMessage : newList){
-            if(incomingEmailCheck(eMessage)){
+            if(eMessage.ParentId != null && incomingEmailCheck(eMessage)){
                 setOfCaseId.add(eMessage.ParentId);   
             }
 
