@@ -20940,6 +20940,21 @@
         <field>blng__UsageSummary__c.blng__UsageCount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Support_Entitlement__c.NSP_Support_Entitlement_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__SubscriptionConsumptionRate__c.NSP_Subscription_Rate_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__SubscriptionConsumptionSchedule__c.NSP_Subscription_Schedule_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NSP Billing Super Admin</label>
     <objectPermissions>
