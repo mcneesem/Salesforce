@@ -13,6 +13,7 @@ Modification Log     :
 */
 
 global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObject>, Schedulable {
+    // test w/ NSP_SubClientAssetSyncJob_Test (93%)
     
     global Database.QueryLocator start(Database.BatchableContext bc) {
         DateTime last4Hours = system.now().addHours(-4);
