@@ -5,7 +5,7 @@
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
         <locationX>842</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assign_LeadId</name>
         <label>Assign LeadId</label>
         <locationX>1898</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>Assign_OpportunityId_and_AccountId</name>
         <label>Assign OpportunityId and AccountId</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +67,7 @@
         <name>Is_Event_Status_Completed_and_should_Lead_Status_be_changed_to_Working</name>
         <label>Is Event Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
         <locationX>1898</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
             <name>Yes_Event_is_Completed_and_Lead_should_move_to_Working</name>
@@ -95,8 +95,8 @@
     <decisions>
         <name>What_type_of_record_is_in_WhatId</name>
         <label>What type of record is in WhatId?</label>
-        <locationX>1326</locationX>
-        <locationY>335</locationY>
+        <locationX>1370</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Not related to a relevant record</defaultConnectorLabel>
         <rules>
             <name>Related_to_Opportunity</name>
@@ -144,7 +144,7 @@
             <label>Related to Lead</label>
         </rules>
     </decisions>
-    <description>Removed &quot;Update Event Record&quot; connection to Lead part of flow</description>
+    <description>Updated &quot;Update Record&quot; node to exclude Status = &quot;Cancelled&quot;</description>
     <environments>Default</environments>
     <interviewLabel>Event - Created {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Created</label>
@@ -171,7 +171,7 @@
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
         <locationX>842</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_AccountId</targetReference>
@@ -196,7 +196,7 @@
         <name>Get_Lead_Info</name>
         <label>Get Lead Info</label>
         <locationX>1898</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_LeadId</targetReference>
@@ -221,7 +221,7 @@
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_OpportunityId_and_AccountId</targetReference>
@@ -246,9 +246,9 @@
         <name>Update_Account_Record</name>
         <label>Update Account Record</label>
         <locationX>842</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
-            <targetReference>Update_Event_Record</targetReference>
+            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -271,13 +271,21 @@
         <object>Account</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Event_Record</name>
-        <label>Update Event Record</label>
-        <locationX>1326</locationX>
-        <locationY>1283</locationY>
+        <name>Update_Event_Record_if_Status_not_Cancelled</name>
+        <label>Update Event Record if Status not Cancelled</label>
+        <locationX>1370</locationX>
+        <locationY>1139</locationY>
         <faultConnector>
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
         <inputAssignments>
             <field>NSP_Account__c</field>
             <value>
@@ -296,7 +304,7 @@
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
         <locationX>1634</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_subflow</targetReference>
@@ -321,9 +329,9 @@
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
-            <targetReference>Update_Event_Record</targetReference>
+            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -346,7 +354,7 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>1200</locationX>
+        <locationX>1244</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>What_type_of_record_is_in_WhatId</targetReference>
@@ -362,8 +370,8 @@ NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>2866</locationX>
-        <locationY>1403</locationY>
+        <locationX>2954</locationX>
+        <locationY>1247</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
