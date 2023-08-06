@@ -3,7 +3,6 @@ public class NSP_dunningInvoicesListController {
 
     public String caseIdstr{get;set;}
     public String caseAccountId{get;set;}
-    static List<String> FIELDS = new List<String>{'Id'};
     //constructor
     public NSP_dunningInvoicesListController() {
         
