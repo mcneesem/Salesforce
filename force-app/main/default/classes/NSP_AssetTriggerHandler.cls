@@ -5,8 +5,9 @@
 * V2.0    - STY-02841 - Ramya Ravi - TES Asset & RET Asset - AIMS Information - <STY-02841>
  */
 
- public class NSP_AssetTriggerHandler implements NSP_ITriggerHandler{
-	
+public class NSP_AssetTriggerHandler implements NSP_ITriggerHandler {
+    // test w/ NSP_AssetTriggerHelperTest
+
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
     public static Boolean restrictProjectCreation = false;
