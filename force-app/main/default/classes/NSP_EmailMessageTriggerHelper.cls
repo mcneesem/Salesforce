@@ -2,6 +2,8 @@
 * Represents the EmailMessage trigger helper which handles all the logic.
 */
 public with sharing class NSP_EmailMessageTriggerHelper {
+    // test w/ NSP_EmailMessageTriggerHelperTest (92%)
+
     public static boolean isFirst = false;
     public static final String CLASS_NAME = 'NSP_EmailMessageTriggerHelper';
     

@@ -2,6 +2,8 @@
 * Represents the NSP_RelatedAssetsController for RelatedAssets logic email Templates.
 */
 public with sharing class NSP_RelatedAssetsController {
+    // test w/ NSP_RelatedAssetsController_Test (100%)
+
     public static String recId;
     public static String state;
     public static  NSP_RelatedAssetsWrapper ipWrapper{get; set;}

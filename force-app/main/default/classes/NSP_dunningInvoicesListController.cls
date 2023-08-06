@@ -1,4 +1,5 @@
 public class NSP_dunningInvoicesListController {
+    // test w/ NSP_dunningCaseCreationBatchTest (91%)
 
     public String caseIdstr{get;set;}
     public String caseAccountId{get;set;}

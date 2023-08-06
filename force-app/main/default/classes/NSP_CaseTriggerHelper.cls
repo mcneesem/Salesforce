@@ -3,6 +3,8 @@
 *
 */
 public class NSP_CaseTriggerHelper {
+    // test w/ NSP_CaseTriggerHelperTest (80%)
+
     public static string ESCALATION_QUEUE = 'NSP_Escalations';
     public static string QUEUE_TYPE       = 'Queue';
     public static string CATEGORY_VALUE   = 'CSS';
