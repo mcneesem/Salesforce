@@ -24,17 +24,25 @@ public class NSP_dunningInvoicesListController {
                                            
         return overdueInvoices;
     }
-    
+
     // Getting the Document Id and creating a Document Url.
-    public String getLogoUrl(){
-        String query = new NSP_QueryBuilder('Document', FIELDS)
-                              .addFilter('DeveloperName', 'Insperity_HR_Logo')
-                                            .build()  ;
-        Document lstDocument = Database.query(query);
-    String strOrgId = UserInfo.getOrganizationId();
-    String nspLogoUrl = System.URL.getSalesforceBaseUrl().toExternalForm() + 
-                       '/servlet/servlet.ImageServer?id='+lstDocument.Id +
-                       '&oid=' + strOrgId;
-        return nspLogoUrl;
+    public String getLogoUrl() {
+        List<String> FIELDS = new List<String>{'Id'};
+        String query = new NSP_QueryBuilder( 'Document' , FIELDS )
+            .addFilter( 'DeveloperName' , 'Insperity_HR_Logo' )
+            .build();
+        List<Document> logoDocuments = Database.query( query );
+        Id logoDocumentId = null;
+        if ( ( logoDocuments != null ) && ( logoDocuments.size() > 0 ) ) {
+            logoDocumentId = logoDocuments[0].Id;
+        }
+        String logoUrl = ''
+            + System.URL.getSalesforceBaseUrl().toExternalForm()
+            + '/servlet/servlet.ImageServer'
+            + '?id=' + logoDocumentId
+            + '&oid=' + UserInfo.getOrganizationId();
+        return logoUrl;
     }
+
 }
+//
