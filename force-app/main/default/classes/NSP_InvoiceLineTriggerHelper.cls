@@ -13,6 +13,7 @@ Modification Log     :
 *
 ***************************************************************************************************/
 public class NSP_InvoiceLineTriggerHelper {
+    // test w/ NSP_InvoiceLineTriggerTest (81%)
 
     private NSP_InvoiceLineTriggerHelper(){}
 
