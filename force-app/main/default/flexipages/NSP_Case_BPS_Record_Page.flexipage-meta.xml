@@ -29,6 +29,34 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Case.Project_Setup</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>BPS</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Integra</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>OrgPlus Software</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>PerformSmart Software</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Time &amp; Attendance</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.nsp_Create_Project_From_Template</value>
