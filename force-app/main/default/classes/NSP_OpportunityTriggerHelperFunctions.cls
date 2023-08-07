@@ -34,6 +34,7 @@ public class NSP_OpportunityTriggerHelperFunctions {
             //opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_New_Client_Sales_Email;
              /*Added if condition as part of DF-01369 */
             
+            if(opportunityObject.NSP_Account_Name__c != null){
             String accountName = opportunityObject.NSP_Account_Name__c;
         	Integer accountNameLength = accountName.length();
             String trimmedAccountName;
@@ -46,6 +47,7 @@ public class NSP_OpportunityTriggerHelperFunctions {
                 }
                 opportunityObject.Name = trimmedAccountName + ' - ' + DateTime.now().format();
             
+            }
             }
             //STY-01818 - Setting Client for Life
             opportunityObject.NSP_Client_For_Life__c = setClientForLifeOnOppty(opportunityObject.NSP_Client_For_Life__c, opportunityObject.NSP_PrimaryProduct__c);
