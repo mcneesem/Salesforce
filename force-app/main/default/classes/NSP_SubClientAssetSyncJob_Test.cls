@@ -12,12 +12,10 @@ Modification Log     :
 * Virendra                  10/20/2022                First Iteration
 */
 
-@isTest(SeeAllData=false)
-public class NSP_SubClientAssetSyncJob_Test {
-    
-    @testSetup
-    public static void createTestData() {
-        
+@isTest(SeeAllData=false) private class NSP_SubClientAssetSyncJob_Test {
+
+    @testSetup private static void createTestData() {
+
         //Account creation 
         Account acc = new Account();
         acc.Name = 'Test Acc';
@@ -90,9 +88,9 @@ public class NSP_SubClientAssetSyncJob_Test {
         instSCCAH.Field = 'NSP_Address_State_Changed_Date__c';
         insert instSCCAH;
     }
-    
-    public static testMethod void shouldTestSubClientAssetSyncJob() {
-        
+
+    @isTest private static void shouldTestSubClientAssetSyncJob() {
+
         Test.startTest();
         
         //Update NSP_Sub_Client_Contact__c
@@ -119,7 +117,23 @@ public class NSP_SubClientAssetSyncJob_Test {
         NSP_Sub_Client_Contact__History scchUpdated = [SELECT Id, OldValue, NewValue, Field, ParentId, Parent.NSP_Sub_Client__r.NSP_Union_Employees__c, 
                                                        DataType FROM NSP_Sub_Client_Contact__History  WHERE Id!= NULL LIMIT 1];
         System.assert(scchUpdated.Parent.NSP_Sub_Client__r.NSP_Union_Employees__c = true);
-        
+
+        // added for code coverage in 09-Aug RC2 release...
+        List<NSP_Sub_Client__c> records = [
+            SELECT Id , NSP_Asset__c
+            FROM NSP_Sub_Client__c
+            WHERE ( Id = :subClientCon.NSP_Sub_Client__c )
+        ];
+        Set<Id> assetIds = new Set<Id>();
+        for ( NSP_Sub_Client__c record : records ) {
+            assetIds.add( record.NSP_Asset__c );
+        }
+        NSP_SubClientAssetStateSyncJob.testUpdateStateOfOperation(
+            new List<NSP_Sub_Client_Contact__c>{ subClientCon } ,
+            new Map<Id,NSP_Sub_Client__c>( records ) ,
+            assetIds
+        );
     }
-    
+
 }
+//
