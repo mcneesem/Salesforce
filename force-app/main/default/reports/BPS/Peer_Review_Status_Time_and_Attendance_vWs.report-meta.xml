@@ -30,28 +30,28 @@
         <criteriaItems>
             <column>pse__Proj__c.Go_Live_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterOrEqual</operator>
             <value>9/1/2020</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>Close/Lost,Complete,Inactive,Intake</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>ITA-Implementation,ITA-Other</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.Go_Live_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>12/31/2099</value>
         </criteriaItems>

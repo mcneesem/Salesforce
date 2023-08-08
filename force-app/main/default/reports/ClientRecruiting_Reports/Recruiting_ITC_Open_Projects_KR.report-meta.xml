@@ -10,6 +10,12 @@
         <field>pse__Proj__c$pse__Project_Status__c</field>
     </columns>
     <columns>
+        <field>pse__Proj__c.pse__Project_Tasks__r$Name</field>
+    </columns>
+    <columns>
+        <field>pse__Proj__c.pse__Project_Tasks__r$pse__Status__c</field>
+    </columns>
+    <columns>
         <field>pse__Proj__c$First_Contact_Date__c</field>
     </columns>
     <columns>
@@ -19,16 +25,10 @@
         <field>pse__Proj__c$Hold_Start_Date__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c.pse__Project_Tasks__r$pse__Status__c</field>
-    </columns>
-    <columns>
         <field>pse__Proj__c.pse__Project_Tasks__r$pse__Start_Date__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.pse__Project_Tasks__r$pse__End_Date__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$NSP_Account__c</field>
     </columns>
     <currency>USD</currency>
     <description>STY-03953 - Recruiting Services - All ITC Implementations
@@ -47,13 +47,6 @@ Report used by Client Recruiting to monitor all open ITC implementation projects
             <isUnlocked>true</isUnlocked>
             <operator>contains</operator>
             <value>TalentConnect</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>pse__Proj__c.pse__Project_Tasks__r$pse__Status__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value>In Progress</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$pse__Is_Template__c</column>
@@ -78,12 +71,7 @@ Report used by Client Recruiting to monitor all open ITC implementation projects
     </groupingsDown>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>pse__Proj__c$TemplateName__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>pse__Proj__c.pse__Project_Tasks__r$Name</field>
+        <field>pse__Proj__c$NSP_Account__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Recruiting - ITC Open Projects</name>
@@ -95,7 +83,7 @@ Report used by Client Recruiting to monitor all open ITC implementation projects
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Proj__c$CreatedDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

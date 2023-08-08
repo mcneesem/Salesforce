@@ -54,21 +54,21 @@ need to locate billing start date and put in term date. also need to finalize fi
         <criteriaItems>
             <column>Asset.NSP_ProductBundle__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>WOSS</value>
         </criteriaItems>
         <criteriaItems>
             <column>Asset.NSP_WOSS_Type__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Asset.NSP_Billing_Active__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>

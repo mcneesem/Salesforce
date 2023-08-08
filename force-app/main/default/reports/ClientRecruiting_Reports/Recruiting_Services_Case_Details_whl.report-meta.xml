@@ -61,7 +61,7 @@
         </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>Recruiting Services - Case Details</name>
+    <name>Recruiting - Current Year Case Details</name>
     <params>
         <name>units</name>
         <value>h</value>
@@ -79,6 +79,6 @@
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <interval>INTERVAL_CURFY</interval>
     </timeFrameFilter>
 </Report>

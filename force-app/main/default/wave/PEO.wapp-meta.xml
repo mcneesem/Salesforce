@@ -8,6 +8,11 @@
         <sharedToType>Organization</sharedToType>
     </shares>
     <shares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>AllCustomerPortalUsers</sharedTo>
+        <sharedToType>AllCspUsers</sharedToType>
+    </shares>
+    <shares>
         <accessLevel>Manage</accessLevel>
         <sharedTo>kathi.farinacci@insperity.com</sharedTo>
         <sharedToType>User</sharedToType>

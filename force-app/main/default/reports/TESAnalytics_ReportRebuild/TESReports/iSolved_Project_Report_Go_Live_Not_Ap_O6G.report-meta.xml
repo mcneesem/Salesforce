@@ -23,19 +23,7 @@
         <field>pse__Proj__c$Invoice_Ready__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c$Project_Implementer__c</field>
-    </columns>
-    <columns>
         <field>pse__Proj__c$Project_Coordinator__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$TemplateName__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$Product_Line__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$Template_Name__c</field>
     </columns>
     <currency>USD</currency>
     <description>STY-03614: iSolved - Project Report (Go Live Not Approved)</description>
@@ -70,7 +58,17 @@
             <value>WA,iSolved Time</value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c$TemplateName__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c$Project_Implementer__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>TES - Projects (Go Live Not Approved)</name>
     <params>
         <name>co</name>
@@ -80,7 +78,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Proj__c$Go_Live_Date__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

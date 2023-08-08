@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>RET</application>
     <datasets>Timecard_With_Project_Task_and_PlanSubplan_DS</datasets>
-    <masterLabel>RET-Time Tracking By Quarter Lens</masterLabel>
+    <dateVersion>1</dateVersion>
+    <masterLabel>RET-Time Tracking By Quarter</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

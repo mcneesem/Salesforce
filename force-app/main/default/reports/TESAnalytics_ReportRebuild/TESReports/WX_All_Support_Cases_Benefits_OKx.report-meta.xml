@@ -7,6 +7,9 @@
         <field>Case.NSP_SubCategory__c</field>
     </columns>
     <columns>
+        <field>Account.NSP_Account_Id__c</field>
+    </columns>
+    <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
@@ -25,13 +28,6 @@
         <field>CREATED_DATE</field>
     </columns>
     <columns>
-        <field>STATUS</field>
-    </columns>
-    <columns>
-        <field>OWNER</field>
-    </columns>
-    <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>Case.NSP_Actual_Minutes_Spent_To_Resolve_Case__c</field>
     </columns>
     <currency>USD</currency>
@@ -40,19 +36,36 @@
         <criteriaItems>
             <column>Case.NSP_Category__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>WX/WA</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Benefits</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Case.NSP_Case_Created_date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>1/1/2022</value>
+        </criteriaItems>
     </filter>
-    <format>Tabular</format>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>TES - WX All Support Cases Benefits</name>
     <params>
         <name>units</name>
@@ -66,7 +79,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

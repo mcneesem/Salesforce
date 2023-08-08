@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>Account$NSP_Account_ID_18__c</field>
+        <field>Account$NSP_Account_Id__c</field>
     </columns>
     <columns>
         <field>Account$NSP_AIMS_Client__c</field>
     </columns>
     <columns>
         <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Account_Segment__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_AIMS_Service_Package__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account$NumberOfEmployees</field>
+    </columns>
+    <columns>
+        <field>Account$BillingAddress</field>
+    </columns>
+    <columns>
+        <field>Account$Website</field>
+    </columns>
+    <columns>
+        <field>Account$Sic</field>
+    </columns>
+    <columns>
+        <field>Account$SicDesc</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Sales_Division__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Product_First_Pay_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Account_Health__c</field>
     </columns>
     <columns>
         <field>Account.AccountContactRelations$Name</field>
@@ -18,6 +49,9 @@
     </columns>
     <columns>
         <field>Account.AccountContactRelations$Phone</field>
+    </columns>
+    <columns>
+        <field>Account.AccountContactRelations$Email</field>
     </columns>
     <currency>USD</currency>
     <description>STY-04459: Active Accounts with Primary Contact.  Use this report to lookup primary contact for the Recruiting Services - ITC Customer List</description>
@@ -38,7 +72,7 @@
         </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>Client Recruiting Active Clients Contact</name>
+    <name>Active NSP Clients w/ Primary Contact</name>
     <params>
         <name>co</name>
         <value>1</value>

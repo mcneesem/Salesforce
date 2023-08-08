@@ -10,16 +10,10 @@
         <field>Case.NSP_Case_Sub_Status__c</field>
     </columns>
     <columns>
-        <field>CASE_ID</field>
-    </columns>
-    <columns>
         <field>OWNER</field>
     </columns>
     <columns>
-        <field>Case.NSP_Case_Created_date__c</field>
-    </columns>
-    <columns>
-        <field>CREATED_DATEONLY</field>
+        <field>CREATED_DATE</field>
     </columns>
     <columns>
         <field>PRIORITY</field>
@@ -84,15 +78,15 @@ STY-03610</description>
             <value>3/1/2022 12:00 AM</value>
         </criteriaItems>
         <criteriaItems>
-            <column>OWNER</column>
+            <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value>Susan Stelter,Celeste Parr,Jada Francis,Jennifer Wright,Ashley Hamlin,Asmita Chaugule,Dina Cabrera,Jessica Serrano,Rachel Vincent,Renee Morris,Sandra Godwn,TeMeisha Mackey</value>
+            <operator>contains</operator>
+            <value>Payroll</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>TES - Payroll Support Open Cases Report</name>
+    <name>TES - WX Payroll Open Cases</name>
     <params>
         <name>units</name>
         <value>h</value>

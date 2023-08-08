@@ -4,62 +4,77 @@
         <field>FK_NAME</field>
     </columns>
     <columns>
+        <field>FK_$Account.NSP_Account_Id__c</field>
+    </columns>
+    <columns>
         <field>pse__Proj__c.NSP_Client_Size__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.pse__Project_ID__c</field>
     </columns>
     <columns>
-        <field>CUST_NAME</field>
+        <field>pse__Proj__c.pse__Project_Type__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.TemplateName__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c.Project_Implementer__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c.Project_Coordinator__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c.pse__Project_Type__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c.Product_Line__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c.pse__Project_Status__c</field>
-    </columns>
-    <columns>
         <field>pse__Proj__c.pse__Start_Date__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c.pse__End_Date__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.Go_Live_Date__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
+        <field>pse__Proj__c.pse__End_Date__c</field>
+    </columns>
+    <columns>
         <field>pse__Proj__c.Invoice_Ready__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
+        <field>pse__Proj__c.Project_Coordinator__c</field>
+    </columns>
+    <columns>
+        <field>pse__Proj__c.Project_Implementer__c</field>
+    </columns>
+    <columns>
         <field>pse__Proj__c.Total_Days_on_Hold__c</field>
     </columns>
+    <columns>
+        <field>pse__Proj__c.Project_Lost_Reason__c</field>
+    </columns>
+    <columns>
+        <field>pse__Proj__c.Lost_Detail__c</field>
+    </columns>
     <currency>USD</currency>
-    <description>only iSolved Benefits projects</description>
+    <description>STY-03948 - Only iSolved Benefits Projects</description>
     <filter>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>iSolved Benefits</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>pse__Proj__c.pse__Project_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Active,Close/Lost,Complete,Intake,On Hold</value>
+        </criteriaItems>
     </filter>
-    <format>Tabular</format>
-    <name>TES - All Benefits Projects Report</name>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Year</dateGranularity>
+        <field>CUST_CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c.pse__Project_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>TES - Benefits Implementation Projects</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -68,7 +83,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CUST_CREATED_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

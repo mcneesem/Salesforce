@@ -3,5 +3,5 @@
     <content xsi:nil="true"/>
     <dataflow>Wizard_Output_Case_Asset</dataflow>
     <format>R3</format>
-    <masterLabel>Case with Asset, Account, Report Request, Contact, User</masterLabel>
+    <masterLabel>Wizard Output-Case-Asset Recipe</masterLabel>
 </WaveRecipe>

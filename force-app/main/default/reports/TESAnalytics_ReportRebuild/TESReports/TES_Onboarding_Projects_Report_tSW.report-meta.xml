@@ -81,16 +81,16 @@ status of hold, open, intake only</description>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>iSolved HCM,iSolved Benefits,iSolved Time</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Active,On Hold,Intake</value>
+            <value>Active,Intake,On Hold</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>

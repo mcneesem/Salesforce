@@ -30,12 +30,6 @@
     <columns>
         <field>NSP_Account_Team__c$NSP_Role__c</field>
     </columns>
-    <columns>
-        <field>NSP_Account_Team__c$NSP_First_Name__c</field>
-    </columns>
-    <columns>
-        <field>NSP_Account_Team__c$NSP_Last_Name__c</field>
-    </columns>
     <currency>USD</currency>
     <description>STY-03564</description>
     <filter>
@@ -60,7 +54,7 @@
         <field>NSP_Account_Team__c$NSP_User__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>TES - CSS Assignments</name>
+    <name>TES - CSS Assigned Client Count</name>
     <params>
         <name>co</name>
         <value>1</value>
