@@ -321,14 +321,8 @@ export default class Nsp_payrollFso extends LightningElement {
 
   updateEEGarnishments(empDataRecords, fields) {
     if (empDataRecords) {
-      const onlyEmpRequestedRec = empDataRecords.filter(
-        (rec) =>
-          this.label.employeeDataRequested.toLowerCase() ==
-          rec[fields[1]]?.toLowerCase()
-      );
-
       this.field.NSP_Employee_Names_List_garnishments__c =
-        this.getCSVFromObjectList(onlyEmpRequestedRec, fields[0]);
+        this.getCSVFromObjectList(empDataRecords, fields[0]);
       this.field.NSP_Documents_garnishments__c = empDataRecords
         .map((rec) => `${rec[fields[0]]}~${rec[fields[1]]}`)
         .join(',');
@@ -337,13 +331,8 @@ export default class Nsp_payrollFso extends LightningElement {
 
   updateTaxLevies(empDataRecords, fields) {
     if (empDataRecords) {
-      const onlyEmpRequestedRec = empDataRecords.filter(
-        (rec) =>
-          this.label.employeeDataRequested.toLowerCase() ==
-          rec[fields[1]]?.toLowerCase()
-      );
       this.field.NSP_List_Employee_Names_Levies__c = this.getCSVFromObjectList(
-        onlyEmpRequestedRec,
+        empDataRecords,
         fields[0]
       );
     }
