@@ -22,19 +22,19 @@
         <field>CREATED_DATEONLY</field>
     </columns>
     <columns>
-        <field>CLOSED_DATEONLY</field>
+        <field>Case.NSP_First_Reply_Date__c</field>
+    </columns>
+    <columns>
+        <field>Case.NSP_Last_Message_Date__c</field>
     </columns>
     <columns>
         <field>PRIORITY</field>
     </columns>
     <columns>
-        <field>Case.NSP_Category__c</field>
-    </columns>
-    <columns>
-        <field>Case.NSP_SubCategory__c</field>
-    </columns>
-    <columns>
         <field>Case.NSP_Detail__c</field>
+    </columns>
+    <columns>
+        <field>Case.NSP_Rating__c</field>
     </columns>
     <columns>
         <field>CREATED</field>
@@ -52,39 +52,64 @@
         <field>Case.NSP_Root_Cause__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Average</aggregateTypes>
         <field>AGE</field>
     </columns>
     <columns>
         <field>Case.NSP_Due_Date__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>Case.NSP_Open_to_Assigned_Hours__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>Case.NSP_Open_to_Closed_Hours__c</field>
+    </columns>
+    <columns>
+        <field>CLOSED_DATEONLY</field>
     </columns>
     <currency>USD</currency>
     <description>Master-level Report for All TES Cases</description>
     <filter>
+        <booleanFilter>(1 AND 2) OR (1 AND 3 AND 4)</booleanFilter>
+        <criteriaItems>
+            <column>STATUS</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Open,ReOpened</value>
+        </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_Category__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>WX/WA,CSS</value>
+            <value>WX/WA</value>
         </criteriaItems>
         <criteriaItems>
-            <column>STATUS</column>
+            <column>Case.NSP_Category__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Open,ReOpened</value>
+            <value>CSS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.NSP_SubCategory__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>WA/WX</value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.NSP_Category__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.NSP_SubCategory__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>TES - All  Open Cases Report</name>
     <params>
         <name>units</name>
@@ -98,7 +123,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <sortColumn>Account.NSP_Service_Segment__c</sortColumn>
     <sortOrder>Desc</sortOrder>
     <timeFrameFilter>

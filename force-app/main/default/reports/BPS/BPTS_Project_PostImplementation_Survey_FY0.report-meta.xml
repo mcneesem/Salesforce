@@ -56,42 +56,42 @@
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>ITA-Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.Template_Name__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>OPRT-Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.Template_Name__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>PerformSmart-Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>Cancelled,Close/Lost</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.Invoice_Ready__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Type__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>New</value>
         </criteriaItems>

@@ -30,30 +30,16 @@
         <criteriaItems>
             <column>pse__Proj__c.Assets__r$RecordType</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Asset.NSP_Asset_Product</value>
         </criteriaItems>
         <criteriaItems>
-            <column>pse__Proj__c$TemplateName__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>contains</operator>
-            <value>iSolved</value>
-        </criteriaItems>
-        <criteriaItems>
             <column>pse__Proj__c$pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Cancelled,Close/Lost</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>pse__Proj__c$Project_Lost_Reason__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value>Benefits not currently offered,Cancelled at Intake,Client Termed with WO,COVID-19,Didn&apos;t align with Insperity Values,Duplicate Project,Feature/Functionality Limitation,Funding Issue (Payroll),Key Decision Maker Change,No Longer Wants Product,Non Responsive,Non-Payment,Other,Service/Implementation Issue,Thought Service Level was PEO Like</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$Go_Live_Date__c</column>
@@ -61,6 +47,13 @@
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>LAST_WEEK</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>pse__Proj__c$pse__Project_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>New</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>

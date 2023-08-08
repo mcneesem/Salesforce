@@ -42,6 +42,7 @@
             <sortIndex>0</sortIndex>
         </recordDisplayFields>
         <recordIdField>Join1.Case.Id</recordIdField>
+        <salesforceActionsEnabled>false</salesforceActionsEnabled>
         <sortIndex>0</sortIndex>
     </dimensions>
     <dimensions>

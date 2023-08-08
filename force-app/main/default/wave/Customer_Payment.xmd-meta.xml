@@ -13,6 +13,13 @@
         <isDerived>false</isDerived>
         <sortIndex>1</sortIndex>
     </measures>
+    <measures>
+        <field>Query_for_Top_1.A</field>
+        <formatCustomFormat>[&quot;$#,###.00&quot;,1]</formatCustomFormat>
+        <isDerived>false</isDerived>
+        <label>Amount Due</label>
+        <sortIndex>2</sortIndex>
+    </measures>
     <type>Asset</type>
     <waveVisualization>Customer_Payment</waveVisualization>
 </WaveXmd>

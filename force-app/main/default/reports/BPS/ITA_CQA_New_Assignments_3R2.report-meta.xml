@@ -40,7 +40,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>contains</operator>
-            <value>CQA</value>
+            <value></value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>

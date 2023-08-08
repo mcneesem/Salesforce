@@ -27,21 +27,21 @@
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Tasks__r$pse__Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>In Progress</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active,On Hold,Special Extension</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>iSolved Benefits,iSolved HCM,iSolved Time</value>
         </criteriaItems>

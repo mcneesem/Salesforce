@@ -7,16 +7,13 @@
         <field>Account.pse__Projects__r$pse__Project_Type__c</field>
     </columns>
     <columns>
-        <field>Account.pse__Projects__r$Name</field>
-    </columns>
-    <columns>
         <field>Account.pse__Projects__r$pse__Project_ID__c</field>
     </columns>
     <columns>
         <field>Account$Name</field>
     </columns>
     <columns>
-        <field>Account.pse__Projects__r$pse__Project_Status__c</field>
+        <field>Account$NSP_Account_Segment__c</field>
     </columns>
     <columns>
         <field>Account.pse__Projects__r$Go_Live_Date__c</field>
@@ -24,6 +21,9 @@
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
         <field>Account.pse__Projects__r$Invoice_Ready__c</field>
+    </columns>
+    <columns>
+        <field>Account.pse__Projects__r$Project_Coordinator__c</field>
     </columns>
     <columns>
         <field>Account.pse__Projects__r$pse__Start_Date__c</field>
@@ -36,9 +36,6 @@
         <field>Account.pse__Projects__r$Total_Days_on_Hold__c</field>
     </columns>
     <columns>
-        <field>Account.pse__Projects__r.pse__Project_Tasks__r$Id</field>
-    </columns>
-    <columns>
         <field>Account.pse__Projects__r.pse__Project_Tasks__r$Name</field>
     </columns>
     <columns>
@@ -47,13 +44,6 @@
     <currency>USD</currency>
     <description>STY-04096</description>
     <filter>
-        <criteriaItems>
-            <column>Account.pse__Projects__r.pse__Project_Tasks__r$pse__Status__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>notEqual</operator>
-            <value>In Progress</value>
-        </criteriaItems>
         <criteriaItems>
             <column>Account.pse__Projects__r$TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
@@ -75,8 +65,32 @@
             <operator>equals</operator>
             <value>In Progress,Not Started,On Hold</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Account$Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>PwC,PWC,UAT,FIN</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.pse__Projects__r$pse__Project_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Active,Intake,On Hold,Special Extension</value>
+        </criteriaItems>
     </filter>
-    <format>Tabular</format>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.pse__Projects__r$Project_Implementer__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.pse__Projects__r$pse__Project_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>TES - Project Report (Task Review)</name>
     <params>
         <name>co</name>
@@ -86,7 +100,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Account$CreatedDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

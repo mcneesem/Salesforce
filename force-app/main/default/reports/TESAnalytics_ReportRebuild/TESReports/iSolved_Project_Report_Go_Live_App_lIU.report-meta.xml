@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>FK_ACC_ID</field>
-    </columns>
-    <columns>
-        <field>FK_$Account.NSP_Account_Id__c</field>
-    </columns>
-    <columns>
         <field>FK_NAME</field>
-    </columns>
-    <columns>
-        <field>CUST_ID</field>
     </columns>
     <columns>
         <field>pse__Proj__c.pse__Project_ID__c</field>
@@ -26,9 +17,6 @@
     </columns>
     <columns>
         <field>pse__Proj__c.Project_Coordinator__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c.pse__Project_Manager__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.pse__Project_Type__c</field>
@@ -57,10 +45,10 @@
         <field>pse__Proj__c.Total_Days_on_Hold__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c.Lost_Detail__c</field>
+        <field>pse__Proj__c.Project_Lost_Reason__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c.Project_Lost_Reason__c</field>
+        <field>pse__Proj__c.Lost_Detail__c</field>
     </columns>
     <currency>USD</currency>
     <description>STY-03673: iSolved - Project Report (Go Live Approved)</description>
@@ -69,14 +57,14 @@
         <criteriaItems>
             <column>pse__Proj__c.Invoice_Ready__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>iSolved</value>
         </criteriaItems>
