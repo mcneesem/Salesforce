@@ -26,6 +26,16 @@
                 <label>Choice Startup</label>
             </value>
             <value>
+                <fullName>NSPK Association</fullName>
+                <default>false</default>
+                <label>NSPK Association</label>
+            </value>
+            <value>
+                <fullName>NSPK Association w/ merger</fullName>
+                <default>false</default>
+                <label>NSPK Association w/ merger</label>
+            </value>
+            <value>
                 <fullName>NSPK Merger</fullName>
                 <default>false</default>
                 <label>NSPK Merger</label>
