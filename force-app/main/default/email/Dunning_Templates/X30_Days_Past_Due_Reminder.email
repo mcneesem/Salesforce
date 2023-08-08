@@ -5,6 +5,6 @@
 If you would like to pay by credit card, please use the link below to access our online payment portal or contact us directly.</p>
 <c:NSP_dunningInvoicesList caseId="{!relatedTo.Id}" caseAccId="{!relatedTo.Id}"> </c:NSP_dunningInvoicesList>  
 <p>Thank you for your prompt attention to this matter.</p>
-
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
 </messaging:htmlEmailBody>
 </messaging:emailTemplate>

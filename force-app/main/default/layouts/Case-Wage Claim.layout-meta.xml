@@ -579,7 +579,7 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems> 
+        </quickActionListItems>
     </quickActionList>
     <relatedContent>
         <relatedContentItems>
@@ -608,6 +608,7 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>NSP_Status__c</fields>
         <fields>NSP_Start_Date__c</fields>
@@ -638,16 +639,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>NSP_ReportRequest__c.NSP_Case__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>MergedRecord.CaseNumber</fields>
-        <fields>MergedRecord.Subject</fields>
-        <fields>LatestMaster.CaseNumber</fields>
-        <fields>CreatedDate</fields>
-        <relatedList>RelatedMergeHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

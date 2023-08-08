@@ -4,13 +4,13 @@
     <dimensions>
         <field>NSP_What_Name__c</field>
         <isDerived>false</isDerived>
-        <label>Account Name</label>
+        <label>Related To What Name</label>
         <sortIndex>0</sortIndex>
     </dimensions>
     <dimensions>
         <field>NSP_Who_Name__c</field>
         <isDerived>false</isDerived>
-        <label>Contact Name</label>
+        <label>Related To Who Name</label>
         <sortIndex>1</sortIndex>
     </dimensions>
     <dimensions>
@@ -18,5 +18,17 @@
         <isDerived>false</isDerived>
         <label>Manager Name</label>
         <sortIndex>2</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Id</field>
+        <isDerived>false</isDerived>
+        <linkTemplateEnabled>true</linkTemplateEnabled>
+        <recordDisplayFields>
+            <recordDisplayField>Id</recordDisplayField>
+            <sortIndex>0</sortIndex>
+        </recordDisplayFields>
+        <recordIdField>Id</recordIdField>
+        <salesforceActionsEnabled>false</salesforceActionsEnabled>
+        <sortIndex>3</sortIndex>
     </dimensions>
 </WaveXmd>

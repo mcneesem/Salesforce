@@ -2808,6 +2808,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_AIMS_First_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.NSP_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13590,6 +13595,11 @@ m   <fieldPermissions>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Most_Recent_Activity_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.NSP_Is_Sales_Office_Assigned__c</field>
         <readable>true</readable>
@@ -15669,6 +15679,11 @@ m   <fieldPermissions>
         <field>NSP_Category_Sub_Category_Mapping__c.NSP_Public_Groups_To_Share__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.NSP_AIMS_Client__c</field>
@@ -22313,6 +22328,11 @@ m   <fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.NSP_New_Client_Sales_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Non_docupay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

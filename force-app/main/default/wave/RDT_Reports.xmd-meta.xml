@@ -27,25 +27,25 @@
     </dimensions>
     <dimensions>
         <defaultAction>openSfdcRecord</defaultAction>
-        <field>lens_4.CaseNumber</field>
+        <field>RDT_Report_with_Case_1.CaseNumber</field>
         <isDerived>false</isDerived>
         <sortIndex>4</sortIndex>
     </dimensions>
     <dimensions>
         <defaultAction>openSfdcRecord</defaultAction>
-        <field>RDT_Report_with_Case_1.CaseNumber</field>
+        <field>lens_3.CaseNumber</field>
         <isDerived>false</isDerived>
         <sortIndex>5</sortIndex>
     </dimensions>
     <dimensions>
         <defaultAction>openSfdcRecord</defaultAction>
-        <field>lens_3.CaseNumber</field>
+        <field>Report_Development_C_1.CaseNumber</field>
         <isDerived>false</isDerived>
         <sortIndex>6</sortIndex>
     </dimensions>
     <dimensions>
         <defaultAction>openSfdcRecord</defaultAction>
-        <field>Report_Development_C_1.CaseNumber</field>
+        <field>lens_4.CaseNumber</field>
         <isDerived>false</isDerived>
         <sortIndex>7</sortIndex>
     </dimensions>
@@ -68,25 +68,25 @@
         <sortIndex>2</sortIndex>
     </measures>
     <measures>
-        <field>lens_4.NSP_ClientNumber__c</field>
+        <field>RDT_Report_with_Case_1.NSP_ClientNumber__c</field>
         <formatCustomFormat>[&quot;####&quot;,1]</formatCustomFormat>
         <isDerived>false</isDerived>
         <sortIndex>3</sortIndex>
     </measures>
     <measures>
-        <field>RDT_Report_with_Case_1.NSP_ClientNumber__c</field>
+        <field>lens_3.NSP_ClientNumber__c</field>
         <formatCustomFormat>[&quot;####&quot;,1]</formatCustomFormat>
         <isDerived>false</isDerived>
         <sortIndex>4</sortIndex>
     </measures>
     <measures>
-        <field>lens_3.NSP_ClientNumber__c</field>
+        <field>Report_Development_C_1.NSP_ClientNumber__c</field>
         <formatCustomFormat>[&quot;####&quot;,1]</formatCustomFormat>
         <isDerived>false</isDerived>
         <sortIndex>5</sortIndex>
     </measures>
     <measures>
-        <field>Report_Development_C_1.NSP_ClientNumber__c</field>
+        <field>lens_4.NSP_ClientNumber__c</field>
         <formatCustomFormat>[&quot;####&quot;,1]</formatCustomFormat>
         <isDerived>false</isDerived>
         <sortIndex>6</sortIndex>

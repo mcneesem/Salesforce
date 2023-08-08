@@ -33,18 +33,18 @@
     <description>Created for STY-03706. The ITA product support team track support cases metrics for their product line</description>
     <filter>
         <criteriaItems>
-            <column>OWNER</column>
+            <column>Case.Case_Owner_s_Manager__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>contains</operator>
-            <value>Adam Kelling,Ashley Urban,Carlos Echeverria,Chad Haggard,Chee Cia Her,Chris Lambrix,Devin McGarry,Hunter Larson,Jessica Scott,Jonathan Toro,Joseph Dowling,Latrent Childs,Laura Felton,Marco Hernandez,Michael Klein,Miguel Avalos,Pamela Buchunam,Patrick Sullivan,Paul Miller,Paul Provinzano,Reed Hoile,Rhyann Cullick</value>
+            <value>Stacy Hadwin,Dennis Gordon,Chase Power,Laura Felton,Paul Provinzano,Patrick Sullivan,Michael Klein,Kevin Pugh,Stefani Nelson</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Case.NSP_Category_Picklist__c</column>
+            <column>Case.NSP_Category__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Time and Attendance</value>
+            <value>Time &amp; Attendance</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>

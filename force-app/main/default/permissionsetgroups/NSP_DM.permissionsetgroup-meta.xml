@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>DM</label>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
+    <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>

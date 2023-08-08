@@ -473,6 +473,7 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>NSP_Status__c</fields>
         <fields>NSP_Start_Date__c</fields>

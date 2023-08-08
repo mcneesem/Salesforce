@@ -300,6 +300,10 @@
                 <field>NSP_WetSignature__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Non_docupay__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Has_Primary_Quote__c</field>
             </layoutItems>

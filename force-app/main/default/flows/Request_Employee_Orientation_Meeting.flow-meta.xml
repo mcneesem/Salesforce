@@ -261,7 +261,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Retrieve_Related_EOM_Task.Id</leftValueReference>
+                <leftValueReference>Retrieve_Related_NCO_Task.Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -286,14 +286,14 @@
             <name>Already_requested</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Retrieve_Related_EOM_Task.Id</leftValueReference>
+                <leftValueReference>Retrieve_Related_NCO_Task.Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Retrieve_Related_EOM_Task.Subject</leftValueReference>
+                <leftValueReference>Retrieve_Related_NCO_Task.Subject</leftValueReference>
                 <operator>StartsWith</operator>
                 <rightValue>
                     <stringValue>New Client Orientation</stringValue>
@@ -1026,7 +1026,7 @@
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Retrieve_Related_EOM_Task</targetReference>
+            <targetReference>Retrieve_Related_NCO_Task</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1364,8 +1364,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Retrieve_Related_EOM_Task</name>
-        <label>Retrieve Related EOM Task</label>
+        <name>Retrieve_Related_NCO_Task</name>
+        <label>Retrieve Related New Client Orientation Task</label>
         <locationX>388</locationX>
         <locationY>1106</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -1392,6 +1392,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subject</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>New Client Orientation</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

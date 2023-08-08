@@ -1,0 +1,11 @@
+<apex:component access="global" controller="NSP_RelatedAssetsController" >
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />    
+    <apex:outputPanel rendered="{!leviesEmpList.size > 0}">    
+        <p>List of Employees:</p>
+        <ul>
+            <apex:repeat value="{!leviesEmpList}" var="lvEmp" id="leviesEmpList">
+                <li><apex:outputText value="{!lvEmp}" id="lvData" /></li> 
+            </apex:repeat>
+        </ul>
+    </apex:outputPanel>
+</apex:component>

@@ -871,6 +871,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMNA Prospect</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>PREVEER %28UFG franchise%29</fullName>
             <default>false</default>
         </values>
@@ -3369,6 +3373,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Harris Northwest Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Heritage Companies%2C Inc</fullName>
             <default>false</default>
         </values>
@@ -3860,35 +3868,15 @@
     <picklistValues>
         <picklist>NSP_Sub_Product__c</picklist>
         <values>
-            <fullName>Abra Migration</fullName>
+            <fullName>Choice Customized</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Add On Software</fullName>
+            <fullName>Choice Merger</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CompuPayTime</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Descriptions Now</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dotcoms</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ExpenseAble Corporate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ExpenseAble Express</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hardware</fullName>
+            <fullName>Choice Startup</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3896,43 +3884,51 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Insperity 401k Plan</fullName>
+            <fullName>NSPK Association</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Insperity Customized Plan</fullName>
+            <fullName>NSPK Association w%2F merger</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>OPRT</fullName>
+            <fullName>NSPK MM Merger %3C150</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>OPRT Express</fullName>
+            <fullName>NSPK MM Merger %3E501 Ees</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>OPRT Renewal</fullName>
+            <fullName>NSPK MM Merger 150-300 Ees</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>OrgPlus Desktop</fullName>
+            <fullName>NSPK MM Merger 301-500 Ees</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PerformSmart</fullName>
+            <fullName>NSPK MM Startup %3C150</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PerformSmart Renewal</fullName>
+            <fullName>NSPK MM Startup %3E501 Ees</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Now</fullName>
+            <fullName>NSPK MM Startup 150-300 Ees</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pro Services</fullName>
+            <fullName>NSPK MM Startup 301-500 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK Merger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK Startup</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3940,43 +3936,35 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sage OrgPlus</fullName>
+            <fullName>Tier 1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sage Time</fullName>
+            <fullName>Tier 2</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TFW Migration</fullName>
+            <fullName>Tier 3</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TimeStar Mgd Hosted</fullName>
+            <fullName>Tier 4</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TimeStar On Prem</fullName>
+            <fullName>Tier 5</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Timestar SaaS</fullName>
+            <fullName>Tier 6</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>UED Bundle</fullName>
+            <fullName>WO Customized</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WX Choice Custom</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Choice Customized Plan</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Choice Plan</fullName>
+            <fullName>WO Customized MM</fullName>
             <default>false</default>
         </values>
     </picklistValues>

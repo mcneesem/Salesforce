@@ -53,6 +53,10 @@
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Sales_Service_Account_Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -734,6 +738,17 @@
         <fields>OPPORTUNITY.TYPE</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>NSP_Record_ID__c</fields>
+        <fields>NSP_Opportunity__c</fields>
+        <fields>NSP_Status__c</fields>
+        <fields>NSP_Status_Date__c</fields>
+        <fields>NSP_Sales_Consultant__c</fields>
+        <relatedList>NSP_Sales_to_Implementation__c.NSP_Client__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>

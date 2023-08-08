@@ -6,6 +6,6 @@
   <c:NSP_dunningInvoicesList caseId="{!relatedTo.Id}" caseAccId="{!relatedTo.AccountId}"> </c:NSP_dunningInvoicesList> 
 </p>
 <p>Thank you for your prompt attention to this matter.</p>
-
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
 </messaging:htmlEmailBody>
 </messaging:emailTemplate>

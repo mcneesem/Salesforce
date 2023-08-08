@@ -16797,6 +16797,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Most_Recent_Activity_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.NSP_Account_Segment__c</field>
         <readable>true</readable>
@@ -19981,6 +19986,11 @@
         <field>NSP_ChecklistIPMapping__mdt.NSP_Target_Object__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.Existing_Payroll_Provider__c</field>

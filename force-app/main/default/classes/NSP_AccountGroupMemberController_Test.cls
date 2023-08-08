@@ -172,18 +172,18 @@ public with sharing class NSP_AccountGroupMemberController_Test {
     }
     
     //test method to verify Self Account Group 
-    //Testing scenario for negative testing
+    //Testing scenario for positive testing
     @IsTest
     static void testIsSelfAccountGroup() {
         Test.startTest();
         
-        List<String> groupFields = new List<String>{'Id','Name', 'NSP_Account__c'};
-        String accQuery = new NSP_QueryBuilder('NSP_Account_Group__c', groupFields)
-                        .addFilter('NSP_Type__c','Account Health').build();
-        NSP_Account_Group__c groupRecord = Database.query(accQuery);        
-		Boolean isSelfGroup = NSP_AccountGroupMemberController.isSelfAccountGroup(groupRecord.id, 'account2');
-      
-        System.assertEquals(isSelfGroup, false);        
+        List<String> groupFields = new List<String>{'Id','Name'};
+        String accQuery = new NSP_QueryBuilder('NSP_Account_Group_Member__c', groupFields)
+                        .addFilter('NSP_Primary__c', true).addLimit(1).build();
+        NSP_Account_Group_Member__c groupRecord = Database.query(accQuery);        
+		Boolean isSelfGroup = NSP_AccountGroupMemberController.isSelfAccountGroup(groupRecord.id);
+        
+        System.assertEquals(isSelfGroup, true);   
         Test.stopTest();
     }
 }

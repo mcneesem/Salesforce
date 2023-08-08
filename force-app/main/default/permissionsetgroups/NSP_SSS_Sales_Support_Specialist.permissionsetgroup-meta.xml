@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>SSS (Sales Support Specialist)</label>
     <permissionSets>Assets_Edit</permissionSets>
+    <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>

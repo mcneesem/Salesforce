@@ -17780,6 +17780,16 @@
         <name>FSL__Service_List_Unscheduled</name>
     </customPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.NSP_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.NSP_Segment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Sub_Client__c</field>
         <readable>true</readable>
@@ -22736,6 +22746,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.NSP_NiceCx_Original_Assigned_Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.NSP_NiceCX_ContactID_Leg__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.NSP_NiceCx_Contact_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

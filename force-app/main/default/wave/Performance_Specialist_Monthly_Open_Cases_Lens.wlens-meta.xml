@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>COEs</application>
     <datasets>Case_with_CaseHistory_with_Notes_and_Account_DS</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Performance Specialist Monthly Open Cases Lens</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

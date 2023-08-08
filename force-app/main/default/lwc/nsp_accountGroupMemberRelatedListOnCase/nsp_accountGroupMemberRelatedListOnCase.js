@@ -124,7 +124,7 @@ export default class Nsp_accountGroupMemberRelatedListOnCase extends NavigationM
       this.accountName = row.NSP_Account_Name__c;
       this.groupMemberId = row.Id;
 
-      isSelfAccountGroup({ groupRecordId : this.recordId, groupMemberAccName : this.accountName})
+      isSelfAccountGroup({ groupMemberRecordId : this.groupMemberId})
       .then((result) => {
         if(result) {
           //prevent to delete self group record

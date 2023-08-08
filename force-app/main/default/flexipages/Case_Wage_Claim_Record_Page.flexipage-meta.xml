@@ -975,6 +975,36 @@
                 <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_First_Assigned_Queue__c</fieldItem>
+                <identifier>RecordNSP_First_Assigned_Queue_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_NiceCx_Contact_ID__c</fieldItem>
+                <identifier>RecordNSP_NiceCx_Contact_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_NiceCX_ContactID_Leg__c</fieldItem>
+                <identifier>RecordNSP_NiceCX_ContactID_Leg_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-a12fa79f-d309-4134-bb0d-714fb7333e1d</name>
         <type>Facet</type>
     </flexiPageRegions>

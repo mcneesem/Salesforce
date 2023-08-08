@@ -150,7 +150,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LOOKUP",
+        "joinType" : "RIGHT_OUTER",
         "leftKeys" : [ "NSP_Group__c" ],
         "rightQualifier" : "NSP_Accoun",
         "rightKeys" : [ "Id" ]
@@ -168,7 +168,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "INNER",
+        "joinType" : "LEFT_OUTER",
         "leftKeys" : [ "Account.Id" ],
         "rightQualifier" : "Join1",
         "rightKeys" : [ "NSP_Member_Account__c" ]
@@ -239,7 +239,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LEFT_OUTER",
+        "joinType" : "RIGHT_OUTER",
         "leftKeys" : [ "NSP_Account_Group__c" ],
         "rightQualifier" : "Accountwit",
         "rightKeys" : [ "Join1.NSP_Group__c" ]
@@ -274,7 +274,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LEFT_OUTER",
+        "joinType" : "RIGHT_OUTER",
         "leftKeys" : [ "Accountwit.Account.Id" ],
         "rightQualifier" : "NSP_Accoun",
         "rightKeys" : [ "NSP_Account__c" ]
@@ -290,7 +290,8 @@
           "label" : "Account, Account Team, Account Group, Focus Item, Asset DS",
           "name" : "Account_with_AT_AG_FocusItem_and_Asset_Dataset",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET14" : {
@@ -556,7 +557,8 @@
           "label" : "Project, Project Task, Account Team DS",
           "name" : "Project_Project_Task_Account_Team_DataSet",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "FORMULA3" : {
@@ -649,7 +651,8 @@
           "label" : "Case, User, Account Team, Dataset DS",
           "name" : "Case_User_AccountTeam_Dataset",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "FORMULA4" : {
@@ -723,7 +726,8 @@
           "label" : "Case, Account, Account Team, User DS",
           "name" : "Cases_Assigned_to_My_Employees_DataSet",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "JOIN19" : {
@@ -754,7 +758,8 @@
           "label" : "Asset, Account, User, Account Team DS",
           "name" : "Asset_AT_User_Account",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "JOIN20" : {
@@ -916,7 +921,8 @@
           "label" : "Project, Project Task, Account DS",
           "name" : "Project_Tasks_Assigned_to_My_Employees_DataSet",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     }
   },

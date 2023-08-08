@@ -229,7 +229,8 @@
           "label" : "Task DS",
           "name" : "Task",
           "folderName" : "RET"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET7" : {
@@ -300,7 +301,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "Status", "Subject", "OwnerId", "CreatedDate", "NSP_Due_Date__c", "NSP_Owner_Assign_Date__c", "NSP_Case_Contact_Name__c", "NSP_Case_Account_Name__c", "NSP_RET_Time_Category__c", "NSP_RET_Time_Entry__c" ],
+        "fields" : [ "NSP_Case_Account_Name__c", "NSP_Case_Contact_Name__c", "CaseNumber", "Id", "Status", "Subject", "OwnerId", "CreatedDate", "NSP_Due_Date__c", "NSP_Owner_Assign_Date__c", "NSP_RET_Time_Entry__c", "NSP_RET_Time_Category__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Case",
@@ -315,7 +316,7 @@
     },
     "JOIN4" : {
       "action" : "join",
-      "sources" : [ "JOIN5", "FILTER0" ],
+      "sources" : [ "JOIN10", "FILTER0" ],
       "schema" : {
         "fields" : [ ],
         "slice" : {
@@ -467,7 +468,8 @@
           "label" : "Event DS",
           "name" : "Event",
           "folderName" : "RET"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "FORMULA8" : {
@@ -571,6 +573,24 @@
         "rightQualifier" : "UserManager",
         "rightKeys" : [ "Id" ]
       }
+    },
+    "JOIN10" : {
+      "action" : "join",
+      "sources" : [ "JOIN5", "LOAD_DATASET9" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "User.ManagerId" ],
+        "rightQualifier" : "CaseOwnerManager",
+        "rightKeys" : [ "Id" ]
+      }
     }
   },
   "ui" : {
@@ -578,8 +598,8 @@
       "LOAD_DATASET1" : {
         "label" : "Case",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 252,
+        "top" : 390.2,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -588,14 +608,14 @@
         "label" : "Task with Case",
         "description" : "Join Task associated to Case with Related to ID",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 392
       },
       "LOAD_DATASET2" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 392,
+        "top" : 390.2,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -604,14 +624,14 @@
         "label" : "Case with Account",
         "description" : "Join Account lookup with Case",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 532
       },
       "LOAD_DATASET3" : {
         "label" : "Task",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 112,
+        "top" : 390.2,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -620,14 +640,14 @@
         "label" : "Task with Case Dataset",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 952
       },
       "LOAD_DATASET4" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 532,
+        "top" : 251.89999999999998,
+        "left" : 671.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -667,7 +687,7 @@
       "LOAD_DATASET5" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 112,
+        "top" : 390.2,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -677,14 +697,14 @@
         "label" : "Task with Record Type",
         "description" : "Joined Lookup Task and Record Type  to get the record type name",
         "type" : "JOIN",
-        "top" : 112,
+        "top" : 250.2,
         "left" : 252
       },
       "LOAD_DATASET6" : {
         "label" : "Task",
         "type" : "LOAD_DATASET",
-        "top" : 812.2,
-        "left" : 812.1,
+        "top" : 1090.2,
+        "left" : 952,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -693,14 +713,14 @@
         "label" : "Task DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 672.4,
-        "left" : 1373.8
+        "top" : 950.2,
+        "left" : 1372
       },
       "LOAD_DATASET7" : {
         "label" : "NSP_Note__c",
         "type" : "LOAD_DATASET",
-        "top" : 392,
-        "left" : 112,
+        "top" : 252.10000000000002,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -710,7 +730,7 @@
         "description" : "",
         "type" : "TRANSFORM",
         "top" : 392,
-        "left" : 252,
+        "left" : 1092,
         "graph" : {
           "FORMULA2" : {
             "label" : "Formula"
@@ -731,14 +751,14 @@
         "label" : "Filter Latest Note",
         "description" : "",
         "type" : "FILTER",
-        "top" : 392,
-        "left" : 392
+        "top" : 531.8,
+        "left" : 1092
       },
       "LOAD_DATASET8" : {
         "label" : "Case",
         "type" : "LOAD_DATASET",
-        "top" : 532,
-        "left" : 532,
+        "top" : 530.2,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -747,14 +767,14 @@
         "label" : "lookup Latest Note",
         "description" : "",
         "type" : "JOIN",
-        "top" : 532,
-        "left" : 952
+        "top" : 672,
+        "left" : 1092
       },
       "TRANSFORM2" : {
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 532,
+        "top" : 670.2,
         "left" : 672,
         "graph" : {
           "FORMULA4" : {
@@ -779,20 +799,20 @@
         "label" : "Case, Latest Note DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 532,
-        "left" : 1092
+        "top" : 672,
+        "left" : 1373.2
       },
       "JOIN5" : {
         "label" : "Lookup user to get Owner Name",
         "description" : "",
         "type" : "JOIN",
-        "top" : 532,
+        "top" : 670.2,
         "left" : 812
       },
       "LOAD_DATASET9" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 672,
+        "top" : 810.2,
         "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
@@ -802,7 +822,7 @@
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 672.5,
+        "top" : 950.2,
         "left" : 1232,
         "graph" : {
           "FORMULA6" : {
@@ -826,8 +846,8 @@
       "LOAD_DATASET10" : {
         "label" : "Event",
         "type" : "LOAD_DATASET",
-        "top" : 811.7,
-        "left" : 112.69999999999999,
+        "top" : 950.2,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -836,14 +856,14 @@
         "label" : "Event DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 811.7,
+        "top" : 950.2,
         "left" : 672
       },
       "TRANSFORM4" : {
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 812,
+        "top" : 950.2,
         "left" : 252,
         "graph" : {
           "FORMULA8" : {
@@ -868,29 +888,36 @@
         "label" : "Task Owner lookup to User Manger field",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812.1,
-        "left" : 952.1
+        "top" : 950.2,
+        "left" : 952
       },
       "JOIN7" : {
         "label" : "Manager Id lookup to user",
         "description" : "",
         "type" : "JOIN",
-        "top" : 810.8,
-        "left" : 1091.8
+        "top" : 950.2,
+        "left" : 1092
       },
       "JOIN8" : {
         "label" : "Event Lookup to Owner Id",
         "description" : "",
         "type" : "JOIN",
-        "top" : 810.5,
-        "left" : 391.7
+        "top" : 950.2,
+        "left" : 392
       },
       "JOIN9" : {
         "label" : "Event Manger Id lookup to Manager Name",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812.6,
+        "top" : 950.2,
         "left" : 532
+      },
+      "JOIN10" : {
+        "label" : "Lookup User to get ManagerName",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 670.2,
+        "left" : 952
       }
     },
     "connectors" : [ {
@@ -933,7 +960,7 @@
       "source" : "TRANSFORM1",
       "target" : "FILTER0"
     }, {
-      "source" : "JOIN5",
+      "source" : "JOIN10",
       "target" : "JOIN4"
     }, {
       "source" : "FILTER0",
@@ -983,6 +1010,12 @@
     }, {
       "source" : "LOAD_DATASET9",
       "target" : "JOIN9"
+    }, {
+      "source" : "JOIN5",
+      "target" : "JOIN10"
+    }, {
+      "source" : "LOAD_DATASET9",
+      "target" : "JOIN10"
     } ],
     "hiddenColumns" : [ ]
   },

@@ -1,0 +1,11 @@
+<apex:component access="global" controller="NSP_RelatedAssetsController" >
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />    
+    <apex:outputPanel rendered="{!garnishmentEmpList.size > 0}">    
+        <p>List of Employees:</p>
+        <ul>
+            <apex:repeat value="{!garnishmentEmpList}" var="grEmp" id="garnishmentEmpList">
+                <li><apex:outputText value="{!grEmp}" id="grData" /></li> 
+            </apex:repeat>
+        </ul>
+    </apex:outputPanel>
+</apex:component>
