@@ -51,7 +51,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>,NSP_Accrual_Profile__c.AIMS,NSP_Accrual_Profile__c.ITA</value>
+            <value>NSP_Accrual_Profile__c.AIMS,NSP_Accrual_Profile__c.ITA</value>
         </criteriaItems>
         <criteriaItems>
             <column>NSP_Accrual_Profile__c$NSP_NewExisting_Client_or_Change_order__c</column>
