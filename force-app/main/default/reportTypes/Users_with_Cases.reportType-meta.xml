@@ -2028,16 +2028,6 @@
             <field>NSP_Show_Confidential_PopUp__c</field>
             <table>User.Case$OwnerId</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Owner_Service_Region__c</field>
-            <table>User.Case$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Owner_Sales_Office__c</field>
-            <table>User.Case$OwnerId</table>
-        </columns>
         <masterLabel>Cases (Case Owner)</masterLabel>
     </sections>
 </ReportType>

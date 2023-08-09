@@ -4950,11 +4950,6 @@
             <field>contactUpdateDate6sense__c</field>
             <table>User.Account$OwnerId.Contacts</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HasUnmaskedEmail__c</field>
-            <table>User.Account$OwnerId.Contacts</table>
-        </columns>
         <masterLabel>Contacts</masterLabel>
     </sections>
 </ReportType>

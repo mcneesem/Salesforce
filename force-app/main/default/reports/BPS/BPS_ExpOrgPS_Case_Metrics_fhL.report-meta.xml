@@ -22,9 +22,6 @@
         <field>Account.Cases$NSP_First_Reply_Date__c</field>
     </columns>
     <columns>
-        <field>Account.Cases$NSP_First_Assigned_Date__c</field>
-    </columns>
-    <columns>
         <field>Account.Cases$NSP_Opened_Date__c</field>
     </columns>
     <columns>
