@@ -73,7 +73,7 @@ public with sharing class NSP_ReportRequestWizardController {
             String userId,financeLevel,segment,region;
             List <String> accountTeamFields = new List <String> {'Id', 'NSP_Primary__c', 'NSP_User__r.Name',
                 												'NSP_User__c', 'NSP_Role__c','NSP_Account__c'};
-            List <String> assetFields       = new List <String> {'Id', 'AccountId','NSP_Service_Region__c',
+            List <String> assetFields       = new List <String> {'Id', 'AccountId','NSP_Service_Region__c', 'NSP_Account_Status__c',
                 												'toLabel(NSP_Financial_Guidelines__c)','NSP_Client_Segment_type__c'};
             //fetch Primary HR specialist from Account team associated with the accountid
             List<NSP_Account_Team__c> accountTeam = [SELECT Id,NSP_Primary__c,NSP_User__r.Name,NSP_User__c,NSP_Role__c,NSP_Account__c
@@ -100,6 +100,7 @@ public with sharing class NSP_ReportRequestWizardController {
                  				 assetFields)
                                  .addFilter('RecordTypeId', WO_ASSET)
                                  .addFilter('AccountId', accountID)
+                                 .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
                                  .setSecurityEnforce(false)
                                  .build();
             assetQuery += ' AND (NSP_Financial_Guidelines__c!=NULL OR NSP_Client_Segment_type__c!=null OR NSP_Service_Region__c!=null) ' ;
