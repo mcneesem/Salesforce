@@ -57,6 +57,11 @@
                 <default>false</default>
                 <label>NSP_RollupWXCondition__c</label>
             </value>
+            <value>
+                <fullName>NSP_Support_ProductCode__c</fullName>
+                <default>false</default>
+                <label>NSP_Support_ProductCode__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
