@@ -9,6 +9,7 @@ import ACC_FIELD from '@salesforce/schema/NSP_ReportRequest__c.NSP_ClientName__c
 import REPORT_REQ_OBJ from "@salesforce/schema/NSP_ReportRequest__c";
 import retrieveContactRecords from '@salesforce/apex/NSP_ReportRequestWizardController.retrieveContactRecords';
 import retrieveSurveyRegion from '@salesforce/apex/NSP_ReportRequestWizardController.getHRspecialistAndFinanceLevel';
+const SEPARATOR = ' : ';
 export default class WizardSurveyPageInfo extends LightningElement {
     @api reReqId ;
     @api recordObj;
@@ -416,7 +417,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 if (tempStr == '' ||  tempStr.endsWith('\r\n')) {
                     tempStr = tempStr + this.mergeObjectList[i][key];
                 } else {
-                    tempStr = tempStr + " : " + this.mergeObjectList[i][key];
+                    tempStr = tempStr + SEPARATOR + this.mergeObjectList[i][key];
                     if(i<this.mergeObjectList.length-1){
                         tempStr=tempStr+',';
                     }
@@ -432,7 +433,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
         let splitStrArray = textArea.split('\r\n');
         splitStrArray.forEach( key_val =>{
                 this.attrs = key_val;
-                let values = this.attrs.split(":");
+                let values = this.attrs.split(SEPARATOR);
                 let obj = {};
                 if(values != null && values != "" && values != " " && values[0] != null && values[1] != null ){
                     obj['name'] = values[0].trim();
