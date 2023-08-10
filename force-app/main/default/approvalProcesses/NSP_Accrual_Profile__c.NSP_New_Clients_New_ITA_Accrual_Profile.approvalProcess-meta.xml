@@ -12,33 +12,7 @@
     <approvalPageFields>
         <field>Name</field>
         <field>Owner</field>
-        <field>NSP_Account_HRS__c</field>
-        <field>NSP_Accrual_Levels__c</field>
-        <field>NSP_Accrual_Period_Limit__c</field>
-        <field>NSP_Accrual_Profile_Plan_Name__c</field>
-        <field>NSP_Compliance_Locations__c</field>
-        <field>NSP_Contact__c</field>
-        <field>NSP_Contact_email__c</field>
-        <field>CreatedBy</field>
-        <field>CurrencyIsoCode</field>
-        <field>NSP_Does_this_plan_replace_other_plans__c</field>
-        <field>NSP_Effective_date__c</field>
-        <field>NSP_Employee_Status_check_all_that_apply__c</field>
-        <field>NSP_Hours_paid_for_earning_accruals__c</field>
-        <field>NSP_Is_a_prorated_accrual_earned__c</field>
-        <field>NSP_Is_there_a_frontloaded_proration__c</field>
-        <field>LastModifiedBy</field>
-        <field>NSP_List_pay_codes__c</field>
-        <field>NSP_NewExisting_Client_or_Change_order__c</field>
-        <field>NSP_New_Implementation_or_Change_Order__c</field>
-        <field>NSP_Policy_Type_Provide_Details__c</field>
-        <field>RecordType</field>
-        <field>NSP_Select_Pay_Frequency__c</field>
         <field>NSP_Status__c</field>
-        <field>NSP_Submitted_by__c</field>
-        <field>NSP_Submitted_to_satisfy_compliance_need__c</field>
-        <field>NSP_Type_of_Policy__c</field>
-        <field>NSP_What_is_the_plan_year__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>

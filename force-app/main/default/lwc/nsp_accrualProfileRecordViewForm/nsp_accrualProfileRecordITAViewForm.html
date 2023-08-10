@@ -198,10 +198,10 @@
               </lightning-input-field>
 
             <lightning-input-field disabled
-                if:true={visibility.NSP_Compliance_Locations__c}
-                field-name="NSP_Compliance_Locations__c"
-                value={fieldValue.NSP_Compliance_Locations__c}
-                data-name="NSP_Compliance_Locations__c"
+                if:true={visibility.NSP_Compliance_Location__c}
+                field-name="NSP_Compliance_Location__c"
+                value={fieldValue.NSP_Compliance_Location__c}
+                data-name="NSP_Compliance_Location__c"
                 >
               </lightning-input-field>
 
@@ -281,7 +281,7 @@
                   </lightning-input-field>
 
                   <lightning-formatted-text
-                    if:true={visibility.frontLoad}
+                    if:true={visibility.frontLoadITACalendar}
                     value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved."
                     class="slds-show slds-text-heading_small slds-var-m-around_medium">
                   </lightning-formatted-text>
@@ -467,7 +467,8 @@
 
               <lightning-formatted-text
                 if:true={visibility.frontLoad}
-                value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved.">
+                value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved."
+                class="slds-show slds-text-heading_small slds-var-m-around_medium">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
@@ -482,14 +483,9 @@
                 
                 <div class="slds-show slds-var-m-around_xx-small slds-text-body_small">
                   <label> Accrual rates are based on every 
-                    <input disabled
-                      lwc:if={visibility.Accrual_rates_are_based_Input_Number__c_ITA_FISCAL}
-                      maxlength="5"
-                      type = "number" 
-                      data-visibility-name="Accrual_rates_are_based_Input_Number__c_ITA_FISCAL"
-                      class="input-place-holder"
-                      data-name="Accrual_rates_are_based_Input_Number__c" 
-                      value={fieldValue.Accrual_rates_are_based_Input_Number__c}></input> 
+                    <span if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_FISCAL}>
+                      <strong>&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
+                    </span>
                       hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals</label>
                   <c-nsp_selection-box disabled
                     if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_FISCAL}

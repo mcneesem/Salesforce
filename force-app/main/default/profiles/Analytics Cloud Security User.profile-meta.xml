@@ -18453,7 +18453,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Accrual_Profile__c.NSP_Compliance_Locations__c</field>
+        <field>NSP_Accrual_Profile__c.NSP_Compliance_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
