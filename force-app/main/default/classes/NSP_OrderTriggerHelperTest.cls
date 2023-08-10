@@ -730,5 +730,15 @@ public class NSP_OrderTriggerHelperTest{
         System.assert(updatedACR.size()>0, 'Account contact relation Records are present.');
 
     }
-
+    @isTest
+    static void testUpdateStartDateOnTerm(){
+        List<Order> orderList = [Select Id,Status,SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c,NSP_Billing_Address__c,NSP_Shipping_Address__c,NSP_Billing_Account__c From Order WHERE Id!=null LIMIT 10]; 
+        orderList[0].Status = NSP_CPQConstants.ORDER_DRAFT ;
+        orderList[0].Type = NSP_CPQConstants.QUOTE_TYPE_TERMINATION;
+        orderList[0].NSP_TerminationDate__c = Date.today()-20;
+        update orderList[0];
+        orderList[0].NSP_TerminationDate__c = Date.today();
+        update orderList[0];
+        System.assert(orderList[0].id!=null, true);
+    }
 }

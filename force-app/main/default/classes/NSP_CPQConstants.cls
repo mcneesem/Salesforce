@@ -175,4 +175,10 @@ public class NSP_CPQConstants {
      public static final String ACCOUNTGROUP_NAME1 = 'OrgPlus Support Group - Test Grp 2';
      public static final String ACCOUNTGROUP_NAME2 = 'Account Health - Test Grp 1';
      public static final String ACCOUNTGROUP_APINAME = 'NSP_Account_Group__c';
+
+     //InvoiceBatch
+     public static final String RETSERVICES = 'Retirement Services';
+     public static final String RETINVBATCHWO = 'Retirement Services Recurring - WO';
+     public static final String RETINVBATCHNONWO = 'Retirement Services Recurring - Non WO';
+
 }
