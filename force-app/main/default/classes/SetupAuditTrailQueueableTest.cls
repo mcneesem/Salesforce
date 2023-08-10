@@ -4,6 +4,17 @@
     private static final Boolean ENABLE_testSetupAuditTrailQueueableEnqueueJob = True;
     private static final Boolean ENABLE_testSetupAuditTrailQueueable = True;
 
+    @testSetup private static void prepareData() {
+        SetupAuditTrailReporting__c settings = SetupAuditTrailReporting__c.getOrgDefaults();
+        settings.IsEnabled__c = True;
+        settings.SoqlHoursLimit__c = 1;
+        settings.SoqlUserLimit__c = 5;
+        settings.AuditorEmailAddresses__c = 'test@test.com.invalid';
+        settings.NonCriticalTranslatedSections__c = 'Login-As Access';
+        upsert settings;
+        Set<String> testCoverage = SetupAuditTrailQueueable.nonCriticalTranslatedSections;
+    }
+
     @isTest private static void testSetupAuditTrailQueueable() {
         String METHOD_NAME = ' ~ testSetupAuditTrailQueueable';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
