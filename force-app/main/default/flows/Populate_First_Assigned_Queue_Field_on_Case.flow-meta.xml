@@ -4,7 +4,7 @@
     <decisions>
         <name>Is_triggering_Case_a_NiceCx_Case</name>
         <label>Is triggering Case a NiceCx Case?</label>
-        <locationX>374</locationX>
+        <locationX>440</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Populate_First_Assigned_Queue_with_Original_Assigned_Queue</targetReference>
@@ -21,7 +21,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Populate_First_Assigned_Queue_with_NiceCx_Original_Assigned_Queue</targetReference>
+                <targetReference>get_Queue_Name</targetReference>
             </connector>
             <label>NiceCx Case</label>
         </rules>
@@ -98,15 +98,47 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>get Queue Name with API Name</description>
+        <name>get_Queue_Name</name>
+        <label>get Queue Name</label>
+        <locationX>176</locationX>
+        <locationY>647</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Populate_First_Assigned_Queue_with_NiceCx_Original_Assigned_Queue</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Update_with_same_value_as_api_name</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_NiceCx_Original_Assigned_Queue__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Populate_First_Assigned_Queue_with_NiceCx_Original_Assigned_Queue</name>
         <label>Populate First Assigned Queue with NiceCx Original Assigned Queue</label>
-        <locationX>242</locationX>
-        <locationY>647</locationY>
+        <locationX>176</locationX>
+        <locationY>755</locationY>
         <inputAssignments>
             <field>NSP_First_Assigned_Queue__c</field>
             <value>
-                <elementReference>$Record.NSP_NiceCx_Original_Assigned_Queue__c</elementReference>
+                <elementReference>get_Queue_Name.Name</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
@@ -114,12 +146,26 @@
     <recordUpdates>
         <name>Populate_First_Assigned_Queue_with_Original_Assigned_Queue</name>
         <label>Populate First Assigned Queue with Original Assigned Queue</label>
-        <locationX>506</locationX>
+        <locationX>704</locationX>
         <locationY>647</locationY>
         <inputAssignments>
             <field>NSP_First_Assigned_Queue__c</field>
             <value>
                 <elementReference>$Record.NSP_Assigned_Queue__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update with same name if queue with given API name not available</description>
+        <name>Update_with_same_value_as_api_name</name>
+        <label>Update with same value as api name</label>
+        <locationX>440</locationX>
+        <locationY>755</locationY>
+        <inputAssignments>
+            <field>NSP_First_Assigned_Queue__c</field>
+            <value>
+                <elementReference>$Record.NSP_NiceCx_Original_Assigned_Queue__c</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
