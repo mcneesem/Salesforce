@@ -11,12 +11,12 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
     
     //default constructor
     public NSP_InvoiceNotificationBatch(){
-        stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
+        stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND NSP_InvBatch_Processed_Internal__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
     }
     //Constructor where invoice run id as param
     public NSP_InvoiceNotificationBatch(List<Id> invoiceRunIds){
         if(invoiceRunIds!=null){
-            stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE blng__InvoiceRunCreatedBy__c IN: invoiceRunIds AND NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
+            stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE blng__InvoiceRunCreatedBy__c IN: invoiceRunIds AND NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND NSP_InvBatch_Processed_Internal__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
         }
     }
     //Constructor where List of invoices as param
@@ -24,7 +24,7 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
         if(invoices!=null){ 
             Set<Id> invIds = new Set<Id> (new Map<Id,SObject>(invoices).keySet());
             String invoicesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( invIds , '\',\'') });
-            stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE Id IN'+invoicesString +' AND NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
+            stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE Id IN'+invoicesString +' AND NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND NSP_InvBatch_Processed_Internal__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
 
         }
     }
