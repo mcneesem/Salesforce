@@ -4,7 +4,7 @@
 * @date 02/16/2023
 * Name : NSP_DocuSignInvoiceDocumentBatch
 */
-public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts {
+public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts, Schedulable {
 
     public Integer recordsProcessed = 0;
     public String query;
@@ -71,4 +71,8 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObj
  
     }
     
+    public void execute(SchedulableContext ctx) {
+        NSP_DocuSignInvoiceDocumentBatch batchObject = new NSP_DocuSignInvoiceDocumentBatch();
+          Database.executeBatch(batchObject, Integer.valueOf(Label.NSP_BATCH_SIZE) );   
+      }
 }
