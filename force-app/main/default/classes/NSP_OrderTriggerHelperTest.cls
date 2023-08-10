@@ -644,7 +644,7 @@ public class NSP_OrderTriggerHelperTest{
 
     @isTest
      public static void createInvoiceMethod4(){
-     List<Order> orderList = [Select Id,Status,SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c,NSP_Billing_Address__c,NSP_Shipping_Address__c,NSP_Billing_Account__c From Order WHERE Id!=null LIMIT 10]; 
+     List<Order> orderList = [Select Id,Status,SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_Project_Complete_Date__c,NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c,NSP_Billing_Address__c,NSP_Shipping_Address__c,NSP_Billing_Account__c From Order WHERE Id!=null LIMIT 10]; 
      orderList[0].Type = NSP_CPQConstants.QUOTE_TYPE_NEW;
      orderList[0].NSP_Project_Go_Live_Date__c = System.today()+5;
      update orderList;
@@ -652,6 +652,7 @@ public class NSP_OrderTriggerHelperTest{
      orderList[0].Status = NSP_CPQConstants.ORDER_REVIEWED;
      orderList[0].Type = NSP_CPQConstants.ORDER_TYPE_NEW;
      orderList[0].NSP_Project_Go_Live_Date__c = System.today()+20;
+     orderList[0].NSP_Project_Complete_Date__c = System.today();
      update orderList;
      Test.stopTest();
 

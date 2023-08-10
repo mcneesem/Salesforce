@@ -55,32 +55,6 @@ public class NSP_OrderItemTriggerHelper {
     }
     
     
-    
-    /**
-    * Iterates throught the list of new OrderItem and activates on criteria match.
-    * @param newList List of New OrderItems.  
-    * @return void             
-    *                
-    */
-        
-        public void autoActivateOrderLines(Map<Id, OrderItem> OrderItemNewMap)  {
-            
-            List<String> actionTypeValues = new List<String>{'Upsell','Downgrade'};
-            List<OrderItem> orderLinesToActivate = new List<OrderItem> ();   
-                
-            for (OrderItem op : [Select Id, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c FROM OrderItem WHERE Id IN:OrderItemNewMap.keyset()]) {
-              
-                if(  !(actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c ) && op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE)	
-                      && op.NSP_ReCalculation_Status_Internal__c == 'Not Applicable' && op.SBQQ__Activated__c == false) {
-                        op.SBQQ__Activated__c = true;
-                    orderLinesToActivate.add(op);   
-                }
-            }
-            //if(orderLinesToActivate.size()>0)
-           //update orderLinesToActivate;
-        }
-    
-    
     /**
     * Iterates throught the list of new OrderItem and passes the required attributes to other methods.
     * @param newList List of New OrderItems.  
@@ -274,7 +248,7 @@ public class NSP_OrderItemTriggerHelper {
                     opTerminationMap.put(op.Id,OrderItemNewMap.get(op.Id).SBQQ__TerminatedDate__c);
                 }
                 //Update Bill through override date for anniversay billing products when invoice is cancelled and rebilled
-                if(OrderItemNewMap.get(op.Id).blng__InvoiceRunProcessingStatus__c == NSP_CPQConstants.INVRUN_PENDING && OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c == null && (op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW || op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_RENEWAL) &&
+                if(OrderItemNewMap.get(op.Id).blng__InvoiceRunProcessingStatus__c == NSP_CPQConstants.INVRUN_PENDING && OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c == null &&
                   OrderItemNewMap.get(op.Id).NSP_AnniversaryBlngApplicable__c == true && OrderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL && op.Order.Status != NSP_CPQConstants.ORDER_DRAFT){
                   OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c = OrderItemNewMap.get(op.Id).EndDate;
               }
