@@ -1999,7 +1999,10 @@ return type : void
         BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
         for(Case newCase : caseList){
             newCase.NSP_Case_In_Progress_Hours__c = newCase.NSP_Case_In_Progress_Hours__c == null ? 0 : newCase.NSP_Case_In_Progress_Hours__c;
+            //Added as part of DF-05644 to avoid Null pointer exception when  NSP_Case_In_Progress_Modified_Date__c is null 
+            if(newCase.NSP_Case_In_Progress_Modified_Date__c != null){
             newCase.NSP_Case_In_Progress_Hours__c = newCase.NSP_Case_In_Progress_Hours__c+calculateTimeDifference(defaultBusinessHours.Id, newCase.NSP_Case_In_Progress_Modified_Date__c, DateTime.now());
+            }
         }
     }
     
