@@ -17,16 +17,16 @@ public class NSP_CreateProjFromFlow {
         Map<Id,pse__Proj__c> projOwnerMap = new Map<Id,pse__Proj__c>();
         pse__Proj__c projObj = new pse__Proj__c();
         List<Order> orderList = [SELECT Id,NSP_Project_Name__c,AccountId,NSP_Project_Key__c,NSP_Project__c,Name FROM Order WHERE Id IN :records];
-        List<Template_Key_and_Id_Mapping__mdt> keyWithTemplateId = Template_Key_and_Id_Mapping__mdt.getAll().values();
-        for(Template_Key_and_Id_Mapping__mdt projectMdt: keyWithTemplateId){
-            projectIdMap.put(projectMdt.Key__c,projectMdt.Template_ID__c);
+        List<NSP_ProjectTemplateMapping__mdt> keyWithTemplateId = NSP_ProjectTemplateMapping__mdt.getAll().values();
+        for(NSP_ProjectTemplateMapping__mdt projectMdt: keyWithTemplateId){
+            projectIdMap.put(projectMdt.Key__c+projectMdt.Template_Name__c,projectMdt.Template_ID__c);
         }
         for (Order orderObj : orderList) {
-            if(projectIdMap.containsKey(orderObj.NSP_Project_Key__c)) {
+            if(projectIdMap.containsKey(orderObj.NSP_Project_Key__c+orderObj.NSP_Project_Name__c)) {
                 orderIdSet.add(orderObj.Id);
                 if(orderObj.NSP_Project_Name__c != null && orderObj.NSP_Project__c == null){
                     pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest =
-                        new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(orderObj.AccountId,projectIdMap.get(orderObj.NSP_Project_Key__c), System.today());
+                        new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(orderObj.AccountId,projectIdMap.get(orderObj.NSP_Project_Key__c+orderObj.NSP_Project_Name__c), System.today());
                     
                     //Set Order Id as Project Name in the request which helps while constructing the Map out of Create Project Response
                     projRequest.ProjectName = orderObj.Id;
@@ -108,9 +108,9 @@ public class NSP_CreateProjFromFlow {
     public static Boolean validateUserRole(){
         Boolean isValidUser = false;
         Id userId = userinfo.getUserId();
+        Set<String> validRoles = new Set<String>(System.Label.NSP_FinanceAccesstoCreateProject.split(','));
         User userDetails =[SELECT Id, Name, Email, Profile.Name, UserRole.Name FROM User where Id=:userId];
-        if(userDetails.UserRole.Name == 'Finance Manager' || userDetails.UserRole.Name == 'Finance Supervisor' ||
-           userDetails.UserRole.Name == 'Finance Users' || userDetails.Profile.Name == 'System Administrator'){
+        if(validRoles.contains(userDetails.UserRole.Name) || userDetails.Profile.Name == 'System Administrator'){
             isValidUser = true;
         }
         else{
