@@ -13,6 +13,9 @@
         <field>NSP_ReportRequest__c.NSP_End_Date__c</field>
     </columns>
     <columns>
+        <field>FK_CASE_OWNER_NAME</field>
+    </columns>
+    <columns>
         <field>NSP_ReportRequest__c.NSP_HRSpeciallist__c</field>
     </columns>
     <columns>
@@ -50,8 +53,8 @@
             <column>FK_$Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>Employee Surveys</value>
+            <operator>contains</operator>
+            <value>Employee Surveys,Exit Interview</value>
         </criteriaItems>
         <criteriaItems>
             <column>CUST_RECORDTYPE</column>
@@ -67,6 +70,13 @@
             <operator>equals</operator>
             <value>Closed,Cancelled</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>NSP_ReportRequest__c.NSP_Segment__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Middle Market</value>
+        </criteriaItems>
     </filter>
     <format>Tabular</format>
     <name>HR Survey Closed Requests</name>
@@ -79,6 +89,8 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
+    <sortColumn>NSP_ReportRequest__c.NSP_Date_Requested__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
     <timeFrameFilter>
         <dateColumn>NSP_ReportRequest__c.NSP_Begin_Date__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

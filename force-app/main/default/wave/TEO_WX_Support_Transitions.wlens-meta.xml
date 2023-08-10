@@ -4,6 +4,7 @@
     <application>TES</application>
     <datasets>Project_Task_with_Project_and_Account_and_Account_Team</datasets>
     <dateVersion>1</dateVersion>
-    <masterLabel>TEO WX Support Transitions</masterLabel>
+    <description>iSolved HCM Projects that are Active, Go-Live Approved and the &quot;Transfer to Support&quot; task is either In Progress or Not Started. Includes CSS and Engagement Level</description>
+    <masterLabel>TES – HCM Support Transition Status w/ CSS</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

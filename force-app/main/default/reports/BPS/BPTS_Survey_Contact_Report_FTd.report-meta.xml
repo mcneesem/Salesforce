@@ -40,30 +40,16 @@
         <field>Contact.AccountContactRelations*AccountContactRelation$NSP_Support_Role__c</field>
     </columns>
     <currency>USD</currency>
-    <description>STY-03911: BPTS - Survey Contact Report.  Need to add a filter for Service Role so that we are just pulling contacts the send survey&apos;s.</description>
-    <!--<filter>
-        <criteriaItems>
-            <column>Contact.AccountContactRelations.Assets$RecordType</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value>Asset.Employment_Screening,Asset.Organizational_Planning,Asset.Performance_Management,Asset.Recruiting_Services,Asset.Time_Attendance</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>Contact.AccountContactRelations.Assets$Status</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value>Active</value>
-        </criteriaItems>
+    <description>STY-03911: BPTS - Survey Contact Report.  Need to add a filter for Service Role equal to Survey Contact so that we are just pulling contacts the send survey&apos;s.</description>
+    <filter>
         <criteriaItems>
             <column>Contact.AccountContactRelations*AccountContactRelation$NSP_Service_Roles__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Survey Contact</value>
         </criteriaItems>
-    </filter>-->
+    </filter>
     <format>Tabular</format>
     <name>BPTS - Survey Contact Report</name>
     <params>

@@ -59,9 +59,16 @@
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>iSolved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>pse__Proj__c.pse__Project_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>New</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>

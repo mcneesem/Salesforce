@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>Account.NSP_AIMS_Client__c</field>
+        <field>NSP_Sub_Client__c.NSP_Account_Status_Date__c</field>
     </columns>
     <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>CUST_NAME</field>
+        <field>Account.NSP_AIMS_Client__c</field>
+    </columns>
+    <columns>
+        <field>Account.NSP_Account_Id__c</field>
     </columns>
     <columns>
         <field>ADDRESS1_CITY</field>
@@ -16,7 +19,13 @@
         <field>ADDRESS1_STATE_CODE</field>
     </columns>
     <columns>
-        <field>NSP_Sub_Client__c.NSP_Account_Status_Date__c</field>
+        <field>Account.NSP_AIMS_Service_Package__c</field>
+    </columns>
+    <columns>
+        <field>Account.NSP_Active_Assets__c</field>
+    </columns>
+    <columns>
+        <field>NSP_Sub_Client__c.NSP_Account_Status__c</field>
     </columns>
     <currency>USD</currency>
     <description>STY-04461: Previous Week Terminations. Built this report for Recruiting Services based on the OBIEE Report built from OneVoice data.</description>
@@ -24,13 +33,13 @@
         <criteriaItems>
             <column>NSP_Sub_Client__c.NSP_Account_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Terminated</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>Previous Week Terminations</name>
+    <name>Recruiting - Previous Week NSP Terms</name>
     <params>
         <name>co</name>
         <value>1</value>

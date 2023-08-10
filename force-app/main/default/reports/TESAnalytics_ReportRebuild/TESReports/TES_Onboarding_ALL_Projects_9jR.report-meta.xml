@@ -55,7 +55,7 @@ all status</description>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>iSolved HCM,iSolved Benefits,iSolved Time</value>
         </criteriaItems>

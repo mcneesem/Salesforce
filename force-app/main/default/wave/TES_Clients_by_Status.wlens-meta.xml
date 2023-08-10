@@ -6,6 +6,6 @@
     <dateVersion>1</dateVersion>
     <description>test 1
 using TES_Accounts with Account Team dataset</description>
-    <masterLabel>TES - Clients by Status</masterLabel>
-    <visualizationType>vbar</visualizationType>
+    <masterLabel>TES - Clients by Status (Visual)</masterLabel>
+    <visualizationType>pie</visualizationType>
 </WaveLens>

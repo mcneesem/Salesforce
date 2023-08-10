@@ -23,35 +23,35 @@
         <criteriaItems>
             <column>pse__Proj__c.Invoice_Ready__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.Go_Live_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterThan</operator>
             <value>9/1/2023</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
-            <value>Complete,Close/Lost</value>
+            <value>Close/Lost,Complete</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.NSP_Change_Order_Classification__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>ITA-Other</value>
         </criteriaItems>

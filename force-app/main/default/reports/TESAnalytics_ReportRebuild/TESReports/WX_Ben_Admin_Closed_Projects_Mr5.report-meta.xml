@@ -18,27 +18,37 @@
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Complete</value>
         </criteriaItems>
         <criteriaItems>
-            <column>pse__Proj__c.NSP_BPS_Project_Template__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value>iSolved Benefits</value>
-        </criteriaItems>
-        <criteriaItems>
             <column>pse__Proj__c.pse__End_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>THIS_YEAR</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>pse__Proj__c.NSP_BPS_Project_Template__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>iSolved Benefits</value>
+        </criteriaItems>
     </filter>
-    <format>Tabular</format>
-    <name>WX Ben Admin Closed Projects</name>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>pse__Proj__c.pse__End_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c.Project_Implementer__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>TES - HCM Benefits Admin Closed Projects</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -47,7 +57,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Proj__c.pse__Actuals_Last_Recalc_Date__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

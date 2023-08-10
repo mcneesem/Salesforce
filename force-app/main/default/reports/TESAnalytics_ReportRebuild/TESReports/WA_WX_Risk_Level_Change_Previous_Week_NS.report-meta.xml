@@ -27,22 +27,16 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
-        <field>ACCOUNT_ID</field>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.NSP_Account_Id__c</field>
     </columns>
     <columns>
         <field>Asset.NSP_iSolved_ID__c</field>
     </columns>
     <columns>
-        <field>ACCOUNT.NAME</field>
-    </columns>
-    <columns>
-        <field>ASSET_RECORDTYPE</field>
-    </columns>
-    <columns>
         <field>Asset.NSP_ProductBundle__c</field>
-    </columns>
-    <columns>
-        <field>Asset.NSP_Product_Line__c</field>
     </columns>
     <columns>
         <field>Asset.NSP_Product_Segment__c</field>
@@ -51,7 +45,23 @@
         <field>Account.NSP_Engagement_Level__c</field>
     </columns>
     <columns>
+        <field>Account.NSP_Risk_Assessment__c</field>
+    </columns>
+    <columns>
         <field>STATUS</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Asset.NSP_Actual_of_Employee_at_Signature__c</field>
+    </columns>
+    <columns>
+        <field>Asset.NSP_Current_SaaS_Seats__c</field>
+    </columns>
+    <columns>
+        <field>Asset.NSP_Signature_Date__c</field>
+    </columns>
+    <columns>
+        <field>Asset.NSP_First_Pay_Date__c</field>
     </columns>
     <columns>
         <field>ASSET.LAST_UPDATE</field>
@@ -74,7 +84,14 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Onboarding,Active</value>
+            <value>Active</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ACCOUNT.NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>PwC,PWC,UAT,FIN</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>

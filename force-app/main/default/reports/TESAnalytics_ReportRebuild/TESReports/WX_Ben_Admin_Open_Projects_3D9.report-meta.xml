@@ -18,20 +18,30 @@
         <criteriaItems>
             <column>pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>iSolved Benefits</value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
-    <name>TES - WX Ben Admin Open Projects</name>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>pse__Proj__c.pse__Start_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c.Project_Implementer__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>TES - HCM Benefits Admin Open Projects</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -40,7 +50,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Proj__c.pse__Actuals_Last_Recalc_Date__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

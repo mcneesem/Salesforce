@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>Account.pse__Projects__r$TemplateName__c</field>
+        <field>Account.pse__Projects__r$pse__Project_ID__c</field>
     </columns>
     <columns>
         <field>Account$Name</field>
     </columns>
     <columns>
-        <field>Account.pse__Projects__r$pse__Project_ID__c</field>
+        <field>Account$NSP_Account_Id__c</field>
     </columns>
     <columns>
-        <field>Account.pse__Projects__r$pse__Project_Status__c</field>
+        <field>Account$NSP_AIMS_Client__c</field>
     </columns>
     <columns>
-        <field>Account.pse__Projects__r.pse__Project_Tasks__r$Name</field>
-    </columns>
-    <columns>
-        <field>Account.pse__Projects__r.pse__Project_Tasks__r$pse__Status__c</field>
-    </columns>
-    <columns>
-        <field>Account.pse__Projects__r$Product_Line__c</field>
-    </columns>
-    <columns>
-        <field>Account.pse__Projects__r$Go_Live_Date__c</field>
-    </columns>
-    <columns>
-        <field>Account.pse__Projects__r$Invoice_Ready__c</field>
-    </columns>
-    <columns>
-        <field>Account.pse__Projects__r$pse__Project_Manager__c</field>
+        <field>Account.pse__Projects__r$pse__Project_Type__c</field>
     </columns>
     <columns>
         <field>Account.pse__Projects__r$Project_Coordinator__c</field>
@@ -39,10 +24,27 @@
     <columns>
         <field>Account.pse__Projects__r$pse__Start_Date__c</field>
     </columns>
+    <columns>
+        <field>Account.pse__Projects__r$First_Contact_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.pse__Projects__r$Go_Live_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.pse__Projects__r$Invoice_Ready__c</field>
+    </columns>
+    <columns>
+        <field>Account.pse__Projects__r$LastModifiedDate</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Account_Segment__c</field>
+    </columns>
+    <columns>
+        <field>Account$NSP_Engagement_Level__c</field>
+    </columns>
     <currency>USD</currency>
-    <description>STY-04095</description>
+    <description>STY-04095 - Projects with Go-Live Dates Before Today</description>
     <filter>
-        <booleanFilter>(5 AND 1 AND 2) OR (5 AND 3 AND 4)</booleanFilter>
         <criteriaItems>
             <column>Account.pse__Projects__r$Go_Live_Date__c</column>
             <columnToColumn>false</columnToColumn>
@@ -58,29 +60,25 @@
             <value>0</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Account.pse__Projects__r$Go_Live_Date__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>greaterThan</operator>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>Account.pse__Projects__r$Invoice_Ready__c</column>
+            <column>Account.pse__Projects__r$Product_Line__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>1</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>Account.pse__Projects__r$Template_Name__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>contains</operator>
-            <value>iSolved</value>
+            <value>TimeStar SaaS WA,WA,iSolved Time</value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
-    <name>TES - Project Report (Go Live Review</name>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.pse__Projects__r$pse__Project_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.pse__Projects__r$TemplateName__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>TES -Project Report (Go Live Review)</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -88,7 +86,7 @@
     <reportType>NSP_Accounts_with_projects_with_project_tasks__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
-    <showGrandTotal>true</showGrandTotal>
+    <showGrandTotal>false</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Account$CreatedDate</dateColumn>
