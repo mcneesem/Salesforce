@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>Benefits</application>
     <datasets>Task_with_Case_Dataset</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Benefits Rep Open Task Report</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

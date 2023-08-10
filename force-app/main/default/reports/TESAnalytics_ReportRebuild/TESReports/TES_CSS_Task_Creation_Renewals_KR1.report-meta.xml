@@ -21,21 +21,21 @@
         <criteriaItems>
             <column>NSP_Account_Team__c.NSP_Role__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Customer Success Specialist</value>
         </criteriaItems>
         <criteriaItems>
             <column>Account.NSP_Sales_Service_Account_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active</value>
         </criteriaItems>
         <criteriaItems>
             <column>Account.NSP_CSS_Renewal_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>

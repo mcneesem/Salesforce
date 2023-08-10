@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>FK_$pse__Proj__c.pse__Project_Type__c</field>
-    </columns>
-    <columns>
         <field>pse__Project_Task__c.NSP_Account__c</field>
     </columns>
     <columns>
-        <field>FK_$pse__Proj__c.NSP_Client_Size__c</field>
+        <field>FK_$pse__Proj__c.pse__Project_Status__c</field>
     </columns>
     <columns>
-        <field>FK_$pse__Proj__c.pse__Project_Status__c</field>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>pse__Project_Task__c.pse__Status__c</field>
     </columns>
     <columns>
         <field>FK_$pse__Proj__c.Go_Live_Date__c</field>
@@ -35,12 +35,6 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>FK_$pse__Proj__c.Days_on_Hold__c</field>
     </columns>
-    <columns>
-        <field>CUST_NAME</field>
-    </columns>
-    <columns>
-        <field>pse__Project_Task__c.pse__Status__c</field>
-    </columns>
     <currency>USD</currency>
     <description>STY-04097: BPS - Project Report (Closed w Open Milestone).  Currently have filter for Project: End Date set to THIS YEAR instead of THIS MONTH as that filter doesn&apos;t return results.</description>
     <filter>
@@ -48,56 +42,56 @@
         <criteriaItems>
             <column>FK_$pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Complete</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Project_Task__c.pse__Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Not Started,In Progress</value>
+            <value>In Progress,Not Started</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>ITA-Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>OPRT Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>PerformSmart Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>XML Utility - Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Integra - Implementation</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.Template_Name__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>RS TalentConnect Implementation</value>
         </criteriaItems>
@@ -128,7 +122,7 @@
     <name>BPS - Closed Projects w/ Open Milestones</name>
     <params>
         <name>co</name>
-        <value>1</value>
+        <value>0</value>
     </params>
     <reportType>CustomEntity$pse__Project_Task__c@pse__Project_Task__c.pse__Project__c</reportType>
     <scope>organization</scope>

@@ -29,25 +29,19 @@
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>CASE_NUMBER</field>
+        <field>ACCOUNT_NUMBER</field>
     </columns>
     <columns>
-        <field>CASE_ID</field>
+        <field>Account.NSP_Account_Segment__c</field>
+    </columns>
+    <columns>
+        <field>CASE_NUMBER</field>
     </columns>
     <columns>
         <field>STATUS</field>
     </columns>
     <columns>
         <field>Case.NSP_Case_Sub_Status__c</field>
-    </columns>
-    <columns>
-        <field>Case.NSP_Last_Message_Date__c</field>
-    </columns>
-    <columns>
-        <field>Case.NSP_First_Assigned_Date__c</field>
-    </columns>
-    <columns>
-        <field>CLOSED_DATEONLY</field>
     </columns>
     <columns>
         <field>PRIORITY</field>
@@ -59,32 +53,35 @@
         <field>Case.NSP_SubCategory__c</field>
     </columns>
     <columns>
-        <field>Case.NSP_Responsible_Party_for_Penalty__c</field>
-    </columns>
-    <columns>
         <field>Case.NSP_Detail__c</field>
     </columns>
     <columns>
-        <field>ACCOUNT_NUMBER</field>
+        <field>Case.NSP_First_Assigned_Date__c</field>
+    </columns>
+    <columns>
+        <field>Case.NSP_Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>CLOSED_DATEONLY</field>
+    </columns>
+    <columns>
+        <field>Case.NSP_Last_Message_Date__c</field>
+    </columns>
+    <columns>
+        <field>Case.NSP_Responsible_Party_for_Penalty__c</field>
     </columns>
     <columns>
         <field>CREATED</field>
     </columns>
     <columns>
-        <field>Account.NSP_Account_Segment__c</field>
-    </columns>
-    <columns>
         <field>Case.NSP_Root_Cause__c</field>
-    </columns>
-    <columns>
-        <aggregateTypes>Sum</aggregateTypes>
-        <field>AGE</field>
     </columns>
     <columns>
         <field>ORIGIN</field>
     </columns>
     <columns>
-        <field>Case.NSP_Due_Date__c</field>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AGE</field>
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
@@ -95,8 +92,7 @@
         <field>Case.NSP_Open_to_Closed_Hours__c</field>
     </columns>
     <currency>USD</currency>
-    <description>Report for All Cases, All Statuses assigned to Tax Team in TES
-STY-03524</description>
+    <description>STY-03524 Report for All Cases, All Statuses assigned to Tax Team in TES</description>
     <filter>
         <criteriaItems>
             <column>STATUS</column>

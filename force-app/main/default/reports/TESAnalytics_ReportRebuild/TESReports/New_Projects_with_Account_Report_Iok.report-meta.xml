@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
+        <field>FK_$Account.NSP_Account_Id__c</field>
+    </columns>
+    <columns>
+        <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
+    </columns>
+    <columns>
         <field>FK_NAME</field>
     </columns>
     <columns>
-        <field>CUST_NAME</field>
+        <field>pse__Proj__c.pse__Project_ID__c</field>
+    </columns>
+    <columns>
+        <field>pse__Proj__c.TemplateName__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.pse__Start_Date__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c.Go_Live_Date__c</field>
+    </columns>
+    <columns>
+        <field>pse__Proj__c.pse__End_Date__c</field>
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
@@ -20,7 +32,8 @@
         <field>pse__Proj__c.pse__Project_Status__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
+        <aggregateTypes>Average</aggregateTypes>
+        <aggregateTypes>Minimum</aggregateTypes>
         <field>CDF1</field>
     </columns>
     <columns>
@@ -33,7 +46,8 @@
         <field>FK_ACC_INDUSTRY</field>
     </columns>
     <columns>
-        <field>FK_ACC_ID</field>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>pse__Proj__c.Fee_Inclusive__c</field>
     </columns>
     <currency>USD</currency>
     <customDetailFormulas>
@@ -42,7 +56,7 @@
         <description>Year that Project was Started</description>
         <developerName>CDF1</developerName>
         <label>Project Start Year</label>
-        <scale>2</scale>
+        <scale>0</scale>
     </customDetailFormulas>
     <description>STY-03920</description>
     <filter>
@@ -67,20 +81,15 @@
         <field>pse__Proj__c.Project_Implementer__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>pse__Proj__c.pse__Project_ID__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
     <name>TES - HR Team - Salary Survey Projects</name>
     <params>
         <name>co</name>
-        <value>0</value>
+        <value>1</value>
     </params>
     <reportType>CustomEntity$pse__Proj__c@pse__Proj__c.pse__Account__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
-    <showGrandTotal>true</showGrandTotal>
+    <showGrandTotal>false</showGrandTotal>
     <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Proj__c.pse__Start_Date__c</dateColumn>

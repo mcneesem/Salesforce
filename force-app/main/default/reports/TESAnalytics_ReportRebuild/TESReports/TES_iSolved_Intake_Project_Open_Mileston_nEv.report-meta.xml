@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>FK_$pse__Proj__c.pse__Project_ID__c</field>
-    </columns>
-    <columns>
         <field>FK_NAME</field>
     </columns>
     <columns>
-        <field>pse__Project_Task__c.NSP_AccountId__c</field>
+        <field>FK_$pse__Proj__c.pse__Project_ID__c</field>
     </columns>
     <columns>
         <field>pse__Project_Task__c.NSP_Account__c</field>
     </columns>
     <columns>
-        <field>FK_$pse__Proj__c.TemplateName__c</field>
+        <field>FK_$pse__Proj__c.NSP_Client_Size__c</field>
     </columns>
     <columns>
         <field>FK_$pse__Proj__c.pse__Project_Status__c</field>
@@ -26,13 +23,10 @@
         <field>FK_$pse__Proj__c.Invoice_Ready__c</field>
     </columns>
     <columns>
-        <field>FK_$pse__Proj__c.Project_Implementer__c</field>
-    </columns>
-    <columns>
         <field>FK_$pse__Proj__c.Project_Coordinator__c</field>
     </columns>
     <columns>
-        <field>FK_$pse__Proj__c.pse__Project_Manager__c</field>
+        <field>FK_$pse__Proj__c.Project_Implementer__c</field>
     </columns>
     <columns>
         <field>FK_$pse__Proj__c.Assignment_Date__c</field>
@@ -49,9 +43,6 @@
     </columns>
     <columns>
         <field>CUST_NAME</field>
-    </columns>
-    <columns>
-        <field>CUST_ID</field>
     </columns>
     <currency>USD</currency>
     <description>STY-03687: TES iSolved Intake Project Open Milestone</description>
@@ -73,9 +64,9 @@
         <criteriaItems>
             <column>CUST_NAME</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
-            <value>iSolved HCM</value>
+            <value>iSolved</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.Assignment_Date__c</column>
@@ -85,17 +76,22 @@
             <value></value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
-    <name>TES - HCM Intake Project Open Milestones</name>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_$pse__Proj__c.TemplateName__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>TES - Intake Project w/ Open Milestones</name>
     <params>
         <name>co</name>
-        <value>1</value>
+        <value>0</value>
     </params>
     <reportType>CustomEntity$pse__Project_Task__c@pse__Project_Task__c.pse__Project__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Project_Task__c.pse__Actual_End_Date__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

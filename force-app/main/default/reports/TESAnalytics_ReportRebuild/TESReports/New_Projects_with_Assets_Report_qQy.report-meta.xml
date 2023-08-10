@@ -4,25 +4,13 @@
         <field>pse__Proj__c$NSP_Account__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c$Id</field>
-    </columns>
-    <columns>
         <field>pse__Proj__c$pse__Project_ID__c</field>
     </columns>
     <columns>
-        <field>pse__Proj__c$Name</field>
+        <field>pse__Proj__c$TemplateName__c</field>
     </columns>
     <columns>
         <field>pse__Proj__c$pse__Start_Date__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$pse__Project_Status__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$Project_Implementer__c</field>
-    </columns>
-    <columns>
-        <field>pse__Proj__c$TemplateName__c</field>
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
@@ -33,33 +21,43 @@
         <criteriaItems>
             <column>pse__Proj__c$TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>Benefits Renewal</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active,Complete,Intake,Not Started,Not Yet Active,On Hold</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$RecordType</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>pse__Proj__c.TES_BPS</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Proj__c$NSP_Account__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notContain</operator>
-            <value>PwC</value>
+            <value>PwC,PWC,UAT,FIN</value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c$pse__Project_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c$Project_Implementer__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>TES - WX Benefits Renewals (Annual)</name>
     <params>
         <name>co</name>
@@ -69,7 +67,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>pse__Proj__c$CreatedDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

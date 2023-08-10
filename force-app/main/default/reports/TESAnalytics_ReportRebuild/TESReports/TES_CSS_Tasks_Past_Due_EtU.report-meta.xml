@@ -68,14 +68,14 @@
         <criteriaItems>
             <column>STATUS</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Open,In Progress,Not Started</value>
+            <value>In Progress,Not Started,Open</value>
         </criteriaItems>
         <criteriaItems>
             <column>DUE_DATE</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>lessOrEqual</operator>
             <value>TODAY</value>
         </criteriaItems>

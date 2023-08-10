@@ -45,7 +45,7 @@
         <criteriaItems>
             <column>SUBJECT</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>Salary Survey</value>
         </criteriaItems>

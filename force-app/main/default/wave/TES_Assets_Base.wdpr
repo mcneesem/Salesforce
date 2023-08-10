@@ -22,7 +22,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Name", "NSP_Account__c", "Id", "NSP_Role__c", "NSP_User__c" ],
+        "fields" : [ "Id", "Name", "NSP_Account__c", "NSP_Email__c", "NSP_First_Name__c", "NSP_Last_Name__c", "NSP_Role__c", "NSP_User__c", "NSP_Assignment_Queue__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "NSP_Account_Team__c",
@@ -56,7 +56,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_WA_WX_Payroll_Specialist__c", "NSP_WX_WA_Benefits_Specialist__c", "NSP_Product_Term_Reason__c", "NSP_WX_WA_Parent_ID__c", "NSP_WX_WA_Funding_Type__c", "NSP_WOSS_Type__c", "NSP_Benefits_Agency__c", "NSP_Termination_Date__c", "NSP_ProductBundle__c", "NSP_Product_Bundle__c", "NSP_Product_Line__c", "NSP_Product_Risk_Level__c", "NSP_Product_Segment__c", "NSP_First_Pay_Date__c", "SBQQ__SubscriptionStartDate__c", "NSP_Signature_Date__c", "NSP_Actual_of_Employee_at_Signature__c", "NSP_ActivationDate__c", "NSP_Billing_Active__c", "NSP_Current_SaaS_Seats__c", "NSP_Inactive__c", "AccountId", "NSP_AccountName__c", "NSP_Client__c", "Id", "Name", "Status", "RecordTypeId", "NSP_Status__c", "NSP_Comments__c", "NSP_iSolved_ID__c", "Project_Template__c" ],
+        "fields" : [ "NSP_Reference_Able__c", "Id", "AccountId", "Name", "UsageEndDate", "Status", "RecordTypeId", "SBQQ__SubscriptionEndDate__c", "SBQQ__SubscriptionStartDate__c", "NSP_Client__c", "NSP_First_Pay_Date__c", "NSP_ProductBundle__c", "NSP_Product_Bundle__c", "NSP_Signature_Date__c", "NSP_Termination_Date__c", "NSP_Status__c", "NSP_AccountName__c", "NSP_ActivationDate__c", "NSP_Actual_of_Employee_at_Signature__c", "NSP_Benefits_Agency__c", "NSP_Billing_Active__c", "NSP_Comments__c", "NSP_Current_SaaS_Seats__c", "NSP_Date_Last_Service__c", "NSP_End_Date__c", "NSP_Inactive__c", "NSP_Next_Pay_Date__c", "NSP_Product_Line__c", "NSP_Product_Risk_Level__c", "NSP_Product_Segment__c", "NSP_Product_Term_Reason__c", "NSP_Start_Date__c", "NSP_WA_WX_Payroll_Specialist__c", "NSP_WOSS_Type__c", "NSP_WX_WA_Benefits_Specialist__c", "NSP_WX_WA_Funding_Type__c", "NSP_WX_WA_Parent_ID__c", "NSP_WX_WA_Policy_End_Date__c", "NSP_iSolved_ID__c", "Project_Template__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
@@ -73,7 +73,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "BillingState", "NSP_Address_Line_1__c", "NSP_Address_Line_2__c", "Industry", "NSP_Engagement_Level__c", "NSP_CSS_Renewal_Date__c", "NSP_CSS_Start_Date__c", "NSP_Partner_Involvement__c", "NSP_Referring_Partner__c", "NSP_Partner__c", "Id", "Name" ],
+        "fields" : [ "NSP_Risk_Assessment__c", "NSP_Risk_Status_Date__c", "NSP_Risk_Assessment_Level__c", "Id", "Name", "BillingState", "Industry", "LastModifiedDate", "NSP_Account_Status__c", "NSP_Active_Date__c", "NSP_Address_Line_1__c", "NSP_Address_Line_2__c", "NSP_FEIN__c", "NSP_First_Pay_Date__c", "NSP_Partner__c", "NSP_Reference_Able__c", "NSP_Time_Zone__c", "NSP_SalesRegion__c", "NSP_CSS_Renewal_Date__c", "NSP_CSS_Start_Date__c", "NSP_Engagement_Level__c", "NSP_Partner_Involvement__c", "NSP_Referring_Partner__c", "NSP_Sales_Service_Account_Status__c", "NSP_Active_Assets__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
@@ -98,7 +98,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LOOKUP",
+        "joinType" : "RIGHT_OUTER",
         "leftKeys" : [ "AccountId" ],
         "rightQualifier" : "Account",
         "rightKeys" : [ "Id" ]
@@ -134,7 +134,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "INNER",
+        "joinType" : "LEFT_OUTER",
         "leftKeys" : [ "Account.Id" ],
         "rightQualifier" : "NSP_Accoun",
         "rightKeys" : [ "NSP_Account__c" ]
@@ -142,7 +142,7 @@
     },
     "OUTPUT1" : {
       "action" : "save",
-      "sources" : [ "JOIN14" ],
+      "sources" : [ "EDIT_ATTRIBUTES0" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -166,10 +166,98 @@
         }
       },
       "parameters" : {
-        "joinType" : "LOOKUP",
+        "joinType" : "LEFT_OUTER",
         "leftKeys" : [ "NSP_Accoun.NSP_User__c" ],
         "rightQualifier" : "User",
         "rightKeys" : [ "Id" ]
+      }
+    },
+    "FORMULA0" : {
+      "action" : "formula",
+      "sources" : [ "JOIN14" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "CLIENT_TENURE_DAYS",
+          "label" : "Client Tenure (Days)",
+          "formulaExpression" : "case \r\n\twhen Status = 'Terminated'\r\n\tthen datediff(NSP_Termination_Date__c, NSP_First_Pay_Date__c)\r\n\telse\r\n    datediff(current_date(), NSP_First_Pay_Date__c)\r\nend",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "BUCKET0" : {
+      "action" : "bucket",
+      "sources" : [ "FORMULA0" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "CLIENT_TENURE_bucket",
+          "label" : "Client Tenure Bucket",
+          "type" : "TEXT",
+          "bucketsSetup" : {
+            "nullBucketValue" : "Null",
+            "isPassthroughEnabled" : false,
+            "sourceField" : {
+              "name" : "CLIENT_TENURE_DAYS",
+              "type" : "NUMBER"
+            },
+            "buckets" : [ {
+              "value" : "0-30 days",
+              "rangeEnd" : 31.0
+            }, {
+              "value" : "31-60 days",
+              "rangeStart" : 31.0,
+              "rangeEnd" : 60.0
+            }, {
+              "value" : "61-90 days",
+              "rangeStart" : 60.0,
+              "rangeEnd" : 90.0
+            }, {
+              "value" : "91 to 180 days",
+              "rangeStart" : 90.0,
+              "rangeEnd" : 180.0
+            }, {
+              "value" : "181-365 days",
+              "rangeStart" : 180.0,
+              "rangeEnd" : 365.0
+            }, {
+              "value" : "1-2 years",
+              "rangeStart" : 365.0,
+              "rangeEnd" : 730.0
+            }, {
+              "value" : "2-3 years",
+              "rangeStart" : 730.0,
+              "rangeEnd" : 1095.0
+            }, {
+              "value" : "3-4 years",
+              "rangeStart" : 1095.0,
+              "rangeEnd" : 1460.0
+            }, {
+              "value" : "4-5 years",
+              "rangeStart" : 1460.0,
+              "rangeEnd" : 1825.0
+            }, {
+              "value" : "5+ years",
+              "rangeStart" : 1825.0
+            } ]
+          }
+        } ]
+      }
+    },
+    "EDIT_ATTRIBUTES0" : {
+      "action" : "schema",
+      "sources" : [ "BUCKET0" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "RecordType.Name",
+          "newProperties" : {
+            "label" : "Asset Record Type",
+            "name" : "RecordType.Name",
+            "typeProperties" : null
+          }
+        } ]
       }
     }
   },
@@ -246,7 +334,7 @@
         "description" : "Test 2",
         "type" : "OUTPUT",
         "top" : 112,
-        "left" : 812
+        "left" : 952
       },
       "JOIN14" : {
         "label" : "Lookup Join with Account Team with User",
@@ -254,6 +342,34 @@
         "type" : "JOIN",
         "top" : 112,
         "left" : 672
+      },
+      "TRANSFORM0" : {
+        "label" : "formulas",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 112,
+        "left" : 812,
+        "graph" : {
+          "FORMULA0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Client Tenure (Days)"
+          },
+          "BUCKET0" : {
+            "label" : "Client Tenure Bucket"
+          },
+          "EDIT_ATTRIBUTES0" : {
+            "label" : "Edit Attributes"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA0",
+          "target" : "BUCKET0"
+        }, {
+          "source" : "BUCKET0",
+          "target" : "EDIT_ATTRIBUTES0"
+        } ]
       }
     },
     "connectors" : [ {
@@ -275,7 +391,7 @@
       "source" : "LOAD_DATASET4",
       "target" : "JOIN13"
     }, {
-      "source" : "JOIN14",
+      "source" : "TRANSFORM0",
       "target" : "OUTPUT1"
     }, {
       "source" : "JOIN13",
@@ -283,6 +399,9 @@
     }, {
       "source" : "LOAD_DATASET5",
       "target" : "JOIN14"
+    }, {
+      "source" : "JOIN14",
+      "target" : "TRANSFORM0"
     } ],
     "hiddenColumns" : [ ]
   },

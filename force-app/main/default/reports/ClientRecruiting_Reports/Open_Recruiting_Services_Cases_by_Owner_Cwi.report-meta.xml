@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
+        <field>CASE_NUMBER</field>
+    </columns>
+    <columns>
         <field>CREATED_DATEONLY</field>
     </columns>
     <columns>
-        <field>CASE_NUMBER</field>
+        <field>OWNER</field>
     </columns>
     <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
         <field>SUBJECT</field>
-    </columns>
-    <columns>
-        <field>CDF1</field>
     </columns>
     <columns>
         <field>CREATED</field>
@@ -28,13 +28,6 @@
         <field>Case.NSP_SubCategory__c</field>
     </columns>
     <currency>USD</currency>
-    <customDetailFormulas>
-        <calculatedFormula>RIGHT(SUBJECT,8)</calculatedFormula>
-        <dataType>Text</dataType>
-        <developerName>CDF1</developerName>
-        <label>Subject - Job ID</label>
-        <scale>0</scale>
-    </customDetailFormulas>
     <description>STY-04465: Open SR by Owner</description>
     <filter>
         <criteriaItems>
@@ -54,11 +47,11 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>OWNER</field>
+        <dateGranularity>Year</dateGranularity>
+        <field>CREATED_DATE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Recruiting Services- Open Cases by Owner</name>
+    <name>Recruiting - Open Cases by Owner</name>
     <params>
         <name>units</name>
         <value>h</value>
@@ -70,8 +63,8 @@
     <reportType>CaseList</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
-    <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
     <sortColumn>CREATED_DATEONLY</sortColumn>
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>

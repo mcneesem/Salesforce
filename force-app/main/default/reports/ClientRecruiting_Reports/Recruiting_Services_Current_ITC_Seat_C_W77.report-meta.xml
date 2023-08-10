@@ -8,31 +8,34 @@
         <field>Account.NSP_AIMS_Client__c</field>
     </columns>
     <columns>
-        <field>Account.NSP_Account_Segment__c</field>
-    </columns>
-    <columns>
-        <field>INDUSTRY</field>
-    </columns>
-    <columns>
-        <aggregateTypes>Sum</aggregateTypes>
-        <field>EMPLOYEES</field>
-    </columns>
-    <columns>
+        <aggregateTypes>Unique</aggregateTypes>
         <field>FK_NAME</field>
     </columns>
     <columns>
-        <field>FK_$SBQQ__Subscription__c.SBQQ__RequiredByProduct__c</field>
-    </columns>
-    <columns>
-        <field>STATUS</field>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ORDER_ITEM_UNITPRICE</field>
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
-        <field>OrderItem.SBQQ__OrderedQuantity__c</field>
+        <field>ORDER_ITEM_TOTALPRICE</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
-        <field>FK_$SBQQ__Subscription__c.SBQQ__NetPrice__c</field>
+        <field>OrderItem.NSP_AIMS_Billing_Code__c</field>
+    </columns>
+    <columns>
+        <field>FK_$SBQQ__Subscription__c.NSP_Status__c</field>
+    </columns>
+    <columns>
+        <field>FK_$SBQQ__Subscription__c.SBQQ__BillingFrequency__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.blng__NextBillingDate__c</field>
+    </columns>
+    <columns>
+        <field>Account.NSP_Sales_Service_Account_Status__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.blng__LastChargeToDate__c</field>
     </columns>
     <columns>
         <field>FK_$SBQQ__Subscription__c.SBQQ__StartDate__c</field>
@@ -41,43 +44,35 @@
         <field>FK_$SBQQ__Subscription__c.SBQQ__EndDate__c</field>
     </columns>
     <columns>
-        <field>FK_$SBQQ__Subscription__c.SBQQ__BillingFrequency__c</field>
-    </columns>
-    <columns>
-        <field>OrderItem.blng__LastChargeToDate__c</field>
-    </columns>
-    <columns>
-        <field>OrderItem.blng__NextBillingDate__c</field>
-    </columns>
-    <columns>
         <field>FK_$SBQQ__Subscription__c.SBQQ__TerminatedDate__c</field>
     </columns>
     <columns>
-        <field>OrderItem.SBQQ__TerminatedDate__c</field>
-    </columns>
-    <columns>
-        <field>ORDER_STATUS</field>
-    </columns>
-    <columns>
         <aggregateTypes>Sum</aggregateTypes>
-        <field>FK_$SBQQ__Subscription__c.SBQQ__Quantity__c</field>
+        <field>ORDER_ITEM_QUANTITY</field>
     </columns>
     <currency>USD</currency>
     <description>STY-03956: ITC Subscriptions (Active)</description>
     <filter>
         <criteriaItems>
-            <column>ORDER_ITEM_DESCRIPTION</column>
+            <column>FK_$SBQQ__Subscription__c.SBQQ__Product__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
-            <value>ITC</value>
+            <value>Talent</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Account.NSP_Sales_Service_Account_Status__c</column>
+            <column>FK_$SBQQ__Subscription__c.NSP_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_ITEM_CUSTOMER_PROD_ID</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>ITCMgrUserLicenseWO,ITCFullUserLicenseWO</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>
@@ -90,6 +85,8 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
+    <sortColumn>ACCOUNT_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>START_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

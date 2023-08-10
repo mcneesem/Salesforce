@@ -36,28 +36,28 @@
         <criteriaItems>
             <column>Asset.NSP_ProductBundle__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>WA (WO to WA),WX (WO to WX)</value>
         </criteriaItems>
         <criteriaItems>
             <column>STATUS</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active,Onboarding</value>
         </criteriaItems>
         <criteriaItems>
             <column>Asset.NSP_Signature_Date__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterOrEqual</operator>
             <value>1/1/2018</value>
         </criteriaItems>
         <criteriaItems>
             <column>Account.NSP_Active_Assets__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>WX_WA</value>
         </criteriaItems>

@@ -47,9 +47,9 @@
         <criteriaItems>
             <column>STATUS</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
-            <value>Completed,Cancelled</value>
+            <value>Cancelled,Completed</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>

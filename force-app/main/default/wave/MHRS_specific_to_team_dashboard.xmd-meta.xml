@@ -68,9 +68,9 @@
         <sortIndex>10</sortIndex>
     </measures>
     <measures>
-        <field>AC2_Account_Health_T_1.C</field>
+        <field>AC2_Account_Health_T_1.B</field>
         <isDerived>false</isDerived>
-        <label>Payroll Employees</label>
+        <label>Total # of Account Health</label>
         <sortIndex>11</sortIndex>
     </measures>
     <measures>
@@ -80,9 +80,9 @@
         <sortIndex>12</sortIndex>
     </measures>
     <measures>
-        <field>AC2_Account_Health_T_1.B</field>
+        <field>AC2_Account_Health_T_1.C</field>
         <isDerived>false</isDerived>
-        <label>Total # of Account Health</label>
+        <label>Payroll Employees</label>
         <sortIndex>13</sortIndex>
     </measures>
     <type>Asset</type>
