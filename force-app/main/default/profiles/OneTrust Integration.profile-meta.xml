@@ -149,6 +149,11 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <default>true</default>
+        <recordType>Contact.Resource</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Lead.Lead</recordType>
         <visible>true</visible>
