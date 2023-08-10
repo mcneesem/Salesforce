@@ -73,7 +73,9 @@ ISCHANGED(NSP_PenaltiesPaidByNSP__c),
 ISCHANGED(NSP_PenaltiesSavedByClient__c)
 
 ),
-ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;)
+ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;), 
+NOT(ISCHANGED(ContactId)),
+NOT(ISCHANGED(NSP_Total_Case_Contacts__c))
 )</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
     <errorMessage>Case is closed, set the status to Reopened, save, and then edit.</errorMessage>
