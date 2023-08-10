@@ -40,7 +40,7 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
          }
          if(invoiceIds.size()!=0){
              NSP_InvoiceEmailMessageService.sendInvoiceEmail(invoiceIds);
-             processedRecords = invoiceIds.size();
+             processedRecords += invoiceIds.size();
          }
     }
     
