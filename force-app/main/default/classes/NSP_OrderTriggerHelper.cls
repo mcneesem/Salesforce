@@ -2,7 +2,7 @@
 * Represents the Order trigger helper which handles all the logic.
 */
 public class NSP_OrderTriggerHelper {
-    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (??%)
+    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (79%)
 
     static final string STRING_ACCOUNT = 'Account';
     /**
