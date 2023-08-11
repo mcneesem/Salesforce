@@ -54,7 +54,6 @@ ISCHANGED(NSP_ConferenceDate__c),
 ISCHANGED(NSP_Confidential__c),
 ISCHANGED(NSP_Consumer_Privacy_Act_Category__c),
 ISCHANGED(NSP_Consumer_Privacy_Inquiry__c),
-ISCHANGED(ContactId),
 ISCHANGED(NSP_CorporateEmployeeEE__c),
 ISCHANGED(NSP_CorporateEmployeeEE_Formula__c),
 ISCHANGED(NSP_Covid_19__c),
@@ -107,7 +106,9 @@ ISCHANGED(NSP_OPRT_Directory_View_AIMS__c),
 ISCHANGED(NSP_Owner_Assign_Date__c),
 ISCHANGED(NSP_PaidByInsperity__c)
 ),
-ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;)
+ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;),
+NOT(ISCHANGED(ContactId)),
+NOT(ISCHANGED(NSP_Total_Case_Contacts__c))
 )</errorConditionFormula>
     <errorMessage>Case is closed, set the status to Reopened, save, and then edit.</errorMessage>
 </ValidationRule>
