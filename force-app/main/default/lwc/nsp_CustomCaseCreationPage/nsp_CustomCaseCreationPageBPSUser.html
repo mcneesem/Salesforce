@@ -178,16 +178,16 @@
                     <div class="slds-m-top_medium slds-p-around_medium">
                         <lightning-layout multiple-rows="true"> 
                             <lightning-layout-item size="6" class="slds-p-around_small">
-                                <lightning-input-field title = "Subject" field-name='Subject' required> </lightning-input-field>
+                                <lightning-input-field title = "Subject" field-name='Subject' value={fieldValueMap.Subject} required> </lightning-input-field>
                             </lightning-layout-item>
                             <lightning-layout-item size="6" class="slds-p-around_small">
-                                <lightning-input-field title = "Status" field-name='Status' required> </lightning-input-field>
+                                <lightning-input-field title = "Status" field-name='Status' value={fieldValueMap.Status} required> </lightning-input-field>
                             </lightning-layout-item>
                             <lightning-layout-item size="6" class="slds-p-around_small">
                                 <lightning-input-field field-name='Description'> </lightning-input-field>
                             </lightning-layout-item>  
                             <lightning-layout-item size="6" class="slds-p-around_small">
-                                <lightning-input-field title = "Sub Status" field-name='NSP_Case_Sub_Status__c' required> </lightning-input-field>
+                                <lightning-input-field title = "Sub Status" field-name='NSP_Case_Sub_Status__c' value={fieldValueMap.NSP_Case_Sub_Status__c} required> </lightning-input-field>
                             </lightning-layout-item>
                             <lightning-layout-item size="6" class="slds-p-around_small">
                                 <c-nsp_case-custom-look-up
@@ -203,7 +203,7 @@
                                 </c-nsp_case-custom-look-up>
                             </lightning-layout-item> 
                             <lightning-layout-item size="6" class="slds-p-around_small">
-                                <lightning-input-field title = "Case Origin" field-name='Origin' required> </lightning-input-field>
+                                <lightning-input-field title = "Case Origin" field-name='Origin' value={fieldValueMap.Origin} required> </lightning-input-field>
                             </lightning-layout-item>  
                             <lightning-layout-item size="6" class="slds-p-around_small">
                                 <c-nsp_case-custom-look-up
@@ -222,7 +222,7 @@
                                 </template>
                               </lightning-layout-item> 
                               <lightning-layout-item size="6" class="slds-p-around_small">
-                                <lightning-input-field title = "Priority" field-name='Priority' required> </lightning-input-field>
+                                <lightning-input-field title = "Priority" field-name='Priority' value={fieldValueMap.Priority}  required> </lightning-input-field>
                               </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small">
                                 <c-nsp_case-custom-look-up
