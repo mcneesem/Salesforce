@@ -4,7 +4,10 @@
  */
 
 public class NSP_CPQConstants {
-    // test w/ NSP_CPQConstants (100%)
+    // test w/ QuoteExtControllerTests (100%)
+
+    // added for code coverage during RunSpecifiedTests...
+    public static Boolean TEST_CODE_COVERAGE = False;
 
     // To set the Quote Approval status Pending
     public static final String QUOTE_APPROVAL_STATUS_PENDING = 'Pending'; 
