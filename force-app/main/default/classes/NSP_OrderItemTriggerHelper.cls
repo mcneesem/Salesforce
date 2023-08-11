@@ -2,6 +2,7 @@
 * Represents the OrderItem trigger helper which handles all the logic.
 */
 public class NSP_OrderItemTriggerHelper {
+    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (??%)
 
     static final string RENEWABLE = 'Renewable';
     static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
