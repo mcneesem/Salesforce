@@ -6,6 +6,7 @@
 */
 
 public class NSP_InvoiceEmailMessageService {
+    // test w/ NSP_InvoiceEmailMessageServiceTest (83%)
 
     private NSP_InvoiceEmailMessageService(){
         
