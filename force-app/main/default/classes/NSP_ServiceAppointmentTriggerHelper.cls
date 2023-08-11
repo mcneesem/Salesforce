@@ -5,7 +5,8 @@
 * Name : NSP_ServiceAppointmentTriggerHelper
 */
 public class NSP_ServiceAppointmentTriggerHelper {
-    
+    // test w/ NSP_ServiceAppointmentTrigger_Test (??%)
+
     /***********************************************************************************************
     * MethodName: beforeUpdateDirector
     * Description : This Method updated the status checkbox on Service Appointments  
