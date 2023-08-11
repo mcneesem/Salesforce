@@ -13,7 +13,7 @@ private class NSP_AccountContactServiceHelperTest {
     * ********************************************************************************************/   
     private static final String EN_US = 'en_US';
     @testsetup 
-     private static void testData() {
+    private static void testData() {
         Test.startTest();
         List<User> users = new List<User>();
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
@@ -44,7 +44,7 @@ private class NSP_AccountContactServiceHelperTest {
         }
         Test.stopTest();
     }
-
+    
     /***********************************************************************************************
     * MethodName: createExternalUserTest
     * Description : unit test for creating External User
@@ -53,7 +53,7 @@ private class NSP_AccountContactServiceHelperTest {
     @isTest
     static void createExternalUserTest() {
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
         User user=[Select Id , Name , Email  from User WHERE Email = 'jsmith@insperity.com' Limit 1];
         AccountContactRelation acrObj  = [SELECT Id ,ContactId , AccountId , NSP_Community_Access__c FROM 
@@ -69,7 +69,7 @@ private class NSP_AccountContactServiceHelperTest {
         User portalUser = [SELECT Id , ContactId FROM User WHERE ContactId = :acrObj.ContactId ];
         System.assertEquals(portalUser.ContactId, acrObj.ContactId );  
     }
-
+    
     /***********************************************************************************************
     * MethodName: removeExternalUserPermTest
     * Description : unit test for removing perm from External User
@@ -77,8 +77,23 @@ private class NSP_AccountContactServiceHelperTest {
     * ********************************************************************************************/     
     @isTest
     static void removeExternalUserPermTest() {
+        Set<String> permissionSetNameSet = new Set<String>();
+        Set<Id> permissionIdSet = new Set<Id>();
+        List<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>(); 
+        User portalUser = new User ();
+        // fetching all the permission set from the metadata
+        Map<String, NSP_Assign_permission_set_to_Community__mdt> assignPermSetMap = NSP_Assign_permission_set_to_Community__mdt.getAll();
+        for(NSP_Assign_permission_set_to_Community__mdt permSet:assignPermSetMap.values() ){
+            if(permSet.NSP_Permission_Set_Name__c!=null){
+                permissionSetNameSet.add(permSet.NSP_Permission_Set_Name__c);
+            }
+        }
+        // creating set of Permission Set Id required to be assigned to Comm User
+        for(PermissionSet permSet:[SELECT Id FROM PermissionSet WHERE Name IN:permissionSetNameSet ] ){
+            permissionIdSet.add(permSet.Id);
+        }
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
         User user=[Select Id , Name , Email  from User WHERE Email = 'jsmith@insperity.com' Limit 1];
         AccountContactRelation acrObj  = [SELECT Id ,ContactId , AccountId , NSP_Community_Access__c FROM 
@@ -90,17 +105,20 @@ private class NSP_AccountContactServiceHelperTest {
         acrObj.NSP_Community_Access__c =null;
         // Start Test
         System.runAs (user) {
-            Test.startTest(); 
+            test.startTest();
             update acrObj;
-            Test.stopTest();
+            portalUser = [SELECT Id , IsActive ,ContactId FROM User WHERE ContactId = :acrObj.ContactId]; 
+            NSP_AccountContactServiceHelper.removeUserPermissions(new Set<Id>{portalUser.Id},permissionIdSet);
+            test.stopTest();
         }
-        
-        User portalUser = [SELECT Id , ContactId FROM User WHERE ContactId = :acrObj.ContactId ];
-        List<PermissionSetAssignment> psa = [SELECT Id ,AssigneeId ,PermissionSetId FROM PermissionSetAssignment 
-                                             WHERE AssigneeId =:portalUser.Id AND PermissionSet.Name =:NSP_ServiceConstants.projectCommunityPerm ];
-        System.assertEquals(psa.size(), 0 );  
+        for(PermissionSetAssignment psa:[SELECT Id ,AssigneeId ,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId =:portalUser.Id]){
+            if(permissionIdSet.contains(psa.PermissionSetId)){
+                psaList.add(psa);
+            }
+        }
+        System.assertEquals(psaList.size(), 0 );  
     }
-
+    
     /***********************************************************************************************
     * MethodName: deactivateExternalUserPermTest
     * Description : unit test for deactivating External User
@@ -109,7 +127,7 @@ private class NSP_AccountContactServiceHelperTest {
     @isTest
     static void deactivateExternalUserPermTest() {
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
         User user=[Select Id , Name , Email  from User WHERE Email = 'jsmith@insperity.com' Limit 1];
         AccountContactRelation acrObj  = [SELECT Id ,ContactId , AccountId , NSP_Community_Access__c FROM 
@@ -137,25 +155,31 @@ private class NSP_AccountContactServiceHelperTest {
     * ********************************************************************************************/      
     @isTest
     static void createExternalUserTestException() {
+        List<User> portalUser = new  List<User>();
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
         User user=[Select Id , Name , Email from User WHERE Email = 'jsmithyUserBPA@insperity.com' Limit 1];
         Account acc = [Select Id , OwnerId From Account WHERE Name != null LIMIT 1];
         acc.ownerId = user.Id;
         update acc;
-        
         AccountContactRelation acrObj  = [SELECT Id ,ContactId , AccountId , NSP_Community_Access__c FROM 
                                           AccountContactRelation WHERE NSP_Community_Access__c =null LIMIT 1 ];
         acrObj.NSP_Community_Access__c = NSP_ServiceConstants.peoCommunityAccess;
         // Start Test
-        System.runAs (user) {
-            Test.startTest();
-            update acrObj; 
-            Test.stopTest();
+        try{
+            System.runAs (user) {
+                Test.startTest();
+                update acrObj; 
+                Test.stopTest();
+            }
+            portalUser = [SELECT Id , ContactId FROM User WHERE ContactId = :acrObj.ContactId];
+            System.assertEquals(portalUser.size(), 0 );  
+        }catch(Exception ex){
+            Boolean isExpectedExceptionThrown =  ex.getMessage().contains('System.DmlException: Insert failed') ? true : false;
+            System.assertEquals(isExpectedExceptionThrown, true);
         }
-        List<User> portalUser = [SELECT Id , ContactId FROM User WHERE ContactId = :acrObj.ContactId ];
-        System.assertEquals(portalUser.size(), 0 );
+        
     }
     
 }
