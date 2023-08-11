@@ -4,7 +4,11 @@
 *
 */
 public class NSP_BillingConstants {
-	
+    // test w/ NSP_CPQConstants (100%)
+
+    // added for code coverage during RunSpecifiedTests...
+    public static Boolean TEST_CODE_COVERAGE = False;
+
     public static final String GENERIC_BELL_NOTIFICATION = 'Generic_Bell_Notification';
     public static final String LOCKBOX_NOTIF_PART1 = 'Payment Processed for Lock Box File - '; 
     public static final String LOCKBOX_NOTIF_PART2 = 'Please note that process request for Lock Box File - ';
