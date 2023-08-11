@@ -2567,15 +2567,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>NSP_Case_BPS_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.BPS</recordType>
-        <type>Flexipage</type>
-        <profile>Contact Center</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Case_BPS_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BPS</recordType>
