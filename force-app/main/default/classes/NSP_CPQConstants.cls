@@ -4,6 +4,7 @@
  */
 
 public class NSP_CPQConstants {
+    // test w/ NSP_CPQConstants (100%)
 
     // To set the Quote Approval status Pending
     public static final String QUOTE_APPROVAL_STATUS_PENDING = 'Pending'; 
