@@ -2709,6 +2709,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <value>Review CGQ for nondiscrimination testing (both 401(k) and 125 testing),Review of Prior Plan Documents,RMD and QDRO,System Testing &amp; Maintenance - Sungard Products/Compliance Software,Trade/Share Reconciliation &amp; Files,Training - 401k Plan, Compliance, etc.,Transaction Processing - Dividends, Disbursements, etc,Trustee Review/Search,Vendor Management,Vendor Transition,Year-end Activities - Fid,Disbursements &amp; Withdrawal Processing</value>
     </labels>
     <labels>
+        <fullName>NSP_FinanceAccesstoCreateProject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Finance Access to Create Project</shortDescription>
+        <value>Finance Manager,Finance Supervisor,Finance Users</value>
+    </labels>
+    <labels>
         <fullName>NSP_Financial_Analysis_Tool_Url</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6044,12 +6051,5 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
-    </labels>
-    <labels>
-        <fullName>NSP_FinanceAccesstoCreateProject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Finance Access to Create Project</shortDescription>
-        <value>Finance Manager,Finance Supervisor,Finance Users</value>
     </labels>
 </CustomLabels>
