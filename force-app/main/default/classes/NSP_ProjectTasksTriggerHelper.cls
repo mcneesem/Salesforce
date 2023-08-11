@@ -2,7 +2,8 @@
 * Represents the project trigger helper which handles all the logic.
 */
 public class NSP_ProjectTasksTriggerHelper {
-    
+    // test w/ NSP_ProjectTasksTriggerHelperTest (??%)
+
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String NSP_PROJECTTASKSTRIGGERHELPER = 'NSP_ProjectTasksTriggerHelper';
     private static final string SYS_ADMIN = 'System Administrator';
