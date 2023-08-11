@@ -3130,7 +3130,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_Pending_Report_Comments__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3140,7 +3140,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_Projected_First_Pay_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -14864,6 +14864,11 @@
         <default>false</default>
         <recordType>Campaign.Sales_Record_Type</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Contact.Resource</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
