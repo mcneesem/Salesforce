@@ -4,7 +4,7 @@
 *
 */
 public class NSP_BillingConstants {
-    // test w/ NSP_CPQConstants (100%)
+    // test w/ QuoteExtControllerTests (100%)
 
     // added for code coverage during RunSpecifiedTests...
     public static Boolean TEST_CODE_COVERAGE = False;
