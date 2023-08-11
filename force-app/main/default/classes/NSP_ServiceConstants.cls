@@ -79,6 +79,9 @@ public class NSP_ServiceConstants {
   //Service Appointment
   public final static string SA_SOBJECT_NAME   = 'ServiceAppointment';
   public final static string unscheduleStatus   = 'Scheduled';
+  public final Static String OPR_HRS_CST = 'Central Time';
+  public final Static String OPR_HRS_PST = 'Pacific Time';
+  public final Static String OPR_HRS_EST = 'Eastern Time';
 
   // Assigned Resource
   public final static string ASSIGNEDRES_SOBJECT_NAME   = 'AssignedResource';
