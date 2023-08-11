@@ -411,7 +411,6 @@ public static void afterUpdateDirectorMethod(){
     system.assert(usageSumRecs.size()==1,true);
     }
 
-    /*
     @isTest
     public static void autoActivateOrderLinesMethod(){
         NSP_AssetTriggerHandler.TriggerDisabled = true;
@@ -453,11 +452,9 @@ public static void afterUpdateDirectorMethod(){
             orderItemNewStringMap.put(oi.Id,String.valueOf(oi));
         }
         Test.startTest();
-        NSP_OrderItemTriggerHelper activateOrder = new NSP_OrderItemTriggerHelper(); 
-        activateOrder.autoActivateOrderLines(OrderItemNewMap);
         NSP_OrderItemTriggerHelper.updateAsset(orderItemNewStringMap);
         Test.stopTest();
     }
-    */
+
 
 }
