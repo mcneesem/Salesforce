@@ -1,4 +1,6 @@
 public class NSP_BatchProgressIndicatorController {
+    // test w/ NSP_BatchProgressIndicatorControllerTest (88%)
+
     @AuraEnabled
     public static List<AsyncApexJob> getJobDetails(){
         try {
