@@ -5,7 +5,8 @@
 * Name : NSP_InvoiceNotificationBatch
 */
 public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable {
-    
+    // test w/ NSP_InvoiceNotificationBatch_Test (82%)
+
     public String stringQuery;
     public Integer processedRecords = 0;
     
