@@ -5,6 +5,7 @@
 * Name : NSP_DocuSignInvoiceDocumentBatch
 */
 public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts, Schedulable {
+    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (80%)
 
     public Integer recordsProcessed = 0;
     public String query;
