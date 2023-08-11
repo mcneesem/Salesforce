@@ -282,10 +282,6 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
             List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
             NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTaskAssignmentTriggerHelper', 'afterInsertFilter:updateResourceOnInsert', saveResults);
         }
-        //added condition not be called from batch class
-        if(!System.isFuture() && !System.isBatch()){
-            emailNotifications(sContactIds,mAssignmentToContact);
-        }
     }
     
     /**
@@ -304,28 +300,5 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
                 mAssignmentToContact.put(oProjectTaskAssignment.Id,oProjectTaskAssignment.pse__Resource__c);
             }
         }
-        //added condition not be called from batch class
-        if(!System.isFuture() && !System.isBatch()){
-            emailNotifications(sContactIds,mAssignmentToContact);
-        }
-    }
-    
-    @future
-    public static void emailNotifications(Set<Id> sContactIds, Map<Id,Id> mAssignmentToContact){
-        if(sContactIds.size() == 0){
-            return;
-        }
-        Map<Id,Contact> mContacts = new Map<Id,Contact>([SELECT Id,pse__Salesforce_User__c FROM Contact WHERE ID in: sContactIds AND pse__Salesforce_User__c != null AND pse__Salesforce_User__c !=: UserInfo.getUserId()]);
-        if(mContacts.keySet().size() == 0){
-            return;
-        }
-        Map<Id,Id> mTaskAssignmentToUserIds = new Map<Id,Id>();
-        for(Id iProjectTaskAssign : mAssignmentToContact.keySet()){
-            Contact oContact = mContacts.get(mAssignmentToContact.get(iProjectTaskAssign));
-            if(oContact != null){
-                mTaskAssignmentToUserIds.put(iProjectTaskAssign, oContact.pse__Salesforce_User__c);
-            }
-        }
-        NSP_EmailService.sendEmail(mTaskAssignmentToUserIds, NSP_ServiceConstants.ASSIGNMENTNOTIFICATIONTEMPLATE);
     }
 }
