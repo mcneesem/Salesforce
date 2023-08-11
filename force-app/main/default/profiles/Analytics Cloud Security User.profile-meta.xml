@@ -81733,4 +81733,9 @@
         <object>WorkTypeGroup</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Contact.Resource</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </Profile>
