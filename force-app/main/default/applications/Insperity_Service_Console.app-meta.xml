@@ -2362,6 +2362,22 @@
         <type>Flexipage</type>
         <profile>Finance Service</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Asset_Record_Page4</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Asset</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Asset_Record_Page4</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Asset</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
     <setupExperience>service</setupExperience>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
