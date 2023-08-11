@@ -12,6 +12,8 @@ Modification Log     :
 */
 
 public class NSP_QuoteApprovalPreValidation {
+    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (??%)
+
     //constructor
     private NSP_QuoteApprovalPreValidation(){}
     
