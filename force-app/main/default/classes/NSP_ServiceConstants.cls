@@ -1,8 +1,9 @@
 /**
 * Represents the contant class used for service track.
 */
-public class NSP_ServiceConstants {  
-    
+public class NSP_ServiceConstants {
+    // test w/ NSP_ServiceConstantsTest (100%)
+
   public static final string EMPTY_STRING = '';
   public static final string ACCOUNT_OBJECT = 'Account';
   public static final string CONTACT_OBJECT = 'Contact';
