@@ -2808,6 +2808,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_AIMS_First_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.NSP_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15674,6 +15679,11 @@ m   <fieldPermissions>
         <field>NSP_Category_Sub_Category_Mapping__c.NSP_Public_Groups_To_Share__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.NSP_AIMS_Client__c</field>

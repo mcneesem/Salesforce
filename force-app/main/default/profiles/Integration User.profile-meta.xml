@@ -1485,6 +1485,11 @@
         <apexClass>NSP_sObjectOperationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Assign_permission_set_to_Community__mdt.NSP_Permission_Set_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.MidMarket_National_Account__c</field>
@@ -4414,6 +4419,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Client_Sub_Plan_History__c.NSP_RET_Client_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Active_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Start_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14719,6 +14739,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_AIMS_First_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.NSP_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14908,6 +14933,11 @@
         <field>Implementation_Pay_Period__c.Provide_credit_services_detaIls__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Checklist__c.NSP_AIMS_Client__c</field>
@@ -31747,6 +31777,9 @@
         <enabled>true</enabled>
         <flow>Update_Status_to_Resubmitted_when_Submitted_for_Approval_again</flow>
     </flowAccesses>
+    <layoutAssignments>
+        <layout>NSP_Assign_permission_set_to_Community__mdt-Assign permission set to Community Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Onboarding_Meeting_Request__c-Onboarding Meeting Request Layout</layout>
     </layoutAssignments>

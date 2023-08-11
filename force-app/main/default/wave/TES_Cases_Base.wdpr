@@ -105,7 +105,7 @@
     },
     "register_BPS Support Test" : {
       "action" : "save",
-      "sources" : [ "augment_Flatten" ],
+      "sources" : [ "BUCKET0" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -113,14 +113,15 @@
           "label" : "TES Cases Base",
           "name" : "TES_Cases_Base",
           "folderName" : "TES"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET0" : {
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "WhatId", "Subject", "Status", "OwnerId" ],
+        "fields" : [ "Id", "WhatId", "Subject", "ActivityDate", "Status", "Priority", "OwnerId", "Description", "Type", "CreatedDate", "LastModifiedDate", "CompletedDateTime", "Date_Assigned__c", "NSP_Activity_Type_Reporting__c", "NSP_Activity_type__c", "NSP_Completed_Date__c", "NSP_Engagement_Type__c", "NSP_Event_Subtype__c", "NSP_Event_Type__c", "NSP_Priority__c", "NSP_Status__c", "NSP_Sub_Type_BPS__c", "NSP_Task_Subtype__c", "NSP_Task_type__c", "Subject__c", "NSP_Owner__c", "Activity_Category__c", "FSL__Event_Type__c", "NSP_Actual_Start_Date__c", "NSP_CSS_Project__c", "NSP_CSS_Task_Status__c", "NSP_CSS_Task_Type__c", "NSP_Category__c", "NSP_Start_Date__c", "NSP_Sub_Title__c", "NSP_Subcategory__c", "Notes__c", "Title__c", "NSP_Activity_Product__c", "NSP_Outcome__c", "NSP_Sub_Activity__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Task",
@@ -250,7 +251,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LOOKUP",
+        "joinType" : "LEFT_OUTER",
         "leftKeys" : [ "AccountId" ],
         "rightQualifier" : "Account",
         "rightKeys" : [ "Id" ]
@@ -320,7 +321,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LEFT_OUTER",
+        "joinType" : "LOOKUP",
         "leftKeys" : [ "Id" ],
         "rightQualifier" : "NSP_Accoun",
         "rightKeys" : [ "NSP_Account__c" ]
@@ -395,6 +396,115 @@
         "rightQualifier" : "pse__Proje",
         "rightKeys" : [ "pse__Project__c" ]
       }
+    },
+    "FORMULA1" : {
+      "action" : "formula",
+      "sources" : [ "augment_Flatten" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "DAYS_OpenedDate_DateClosed",
+          "label" : "Days Open to Date Closed",
+          "formulaExpression" : "datediff(ClosedDate, NSP_Opened_Date__c)",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA2" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA1" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Case_Age_CreatedDate",
+          "label" : "Case Age (From Created Date)",
+          "formulaExpression" : "case \r\n\twhen Status = 'Closed'\r\n\tthen datediff(ClosedDate, CreatedDate)\r\n\telse\r\n\tdatediff(current_date(),CreatedDate)\r\nend",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA3" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA2" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Days_Created_to_Open",
+          "label" : "Days_Created to Open",
+          "formulaExpression" : "datediff(NSP_Opened_Date__c, CreatedDate)",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA6" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA3" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Client_Age_at_Case_Create_Date",
+          "label" : "Client Age (Days) at Case Create Date",
+          "formulaExpression" : "datediff(CreatedDate, \"Account.Asset.NSP_First_Pay_Date__c\")",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "BUCKET0" : {
+      "action" : "bucket",
+      "sources" : [ "FORMULA6" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "Support_Tenure_Bucket",
+          "label" : "Support Tenure Bucket",
+          "type" : "TEXT",
+          "bucketsSetup" : {
+            "isPassthroughEnabled" : false,
+            "sourceField" : {
+              "name" : "Client_Age_at_Case_Create_Date",
+              "type" : "NUMBER"
+            },
+            "buckets" : [ {
+              "value" : "0- 30 days",
+              "rangeEnd" : 31.0
+            }, {
+              "value" : "31-60 days",
+              "rangeStart" : 31.0,
+              "rangeEnd" : 61.0
+            }, {
+              "value" : "61-90 days",
+              "rangeStart" : 61.0,
+              "rangeEnd" : 91.0
+            }, {
+              "value" : "91- 180 days",
+              "rangeStart" : 91.0,
+              "rangeEnd" : 181.0
+            }, {
+              "value" : "181-365 days",
+              "rangeStart" : 181.0,
+              "rangeEnd" : 366.0
+            }, {
+              "value" : "1+ years",
+              "rangeStart" : 366.0,
+              "rangeEnd" : 730.0
+            }, {
+              "value" : "2+ years",
+              "rangeStart" : 730.0
+            } ]
+          }
+        } ]
+      }
     }
   },
   "ui" : {
@@ -456,7 +566,7 @@
         "description" : "Basic Dataset to build TES reports and dashboards focused on Cases and Case tasks.",
         "type" : "OUTPUT",
         "top" : 112,
-        "left" : 1092
+        "left" : 1232
       },
       "LOAD_DATASET0" : {
         "label" : "Task",
@@ -582,6 +692,55 @@
         "type" : "JOIN",
         "top" : 392,
         "left" : 532
+      },
+      "TRANSFORM1" : {
+        "label" : "Formulas",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 112,
+        "left" : 1092,
+        "graph" : {
+          "FORMULA1" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Days Open to Close"
+          },
+          "FORMULA2" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Case AGE (from Created Date)"
+          },
+          "FORMULA3" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Days_Created to Open"
+          },
+          "FORMULA6" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Client Age (Days) at Case Create Date"
+          },
+          "BUCKET0" : {
+            "label" : "Support Tenure Bucket"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA1",
+          "target" : "FORMULA2"
+        }, {
+          "source" : "FORMULA2",
+          "target" : "FORMULA3"
+        }, {
+          "source" : "FORMULA6",
+          "target" : "BUCKET0"
+        }, {
+          "source" : "FORMULA3",
+          "target" : "FORMULA6"
+        } ]
       }
     },
     "connectors" : [ {
@@ -600,7 +759,7 @@
       "source" : "TRANSFORM0",
       "target" : "augment_Flatten"
     }, {
-      "source" : "augment_Flatten",
+      "source" : "TRANSFORM1",
       "target" : "register_BPS Support Test"
     }, {
       "source" : "sfdcDigest_Case",
@@ -650,6 +809,9 @@
     }, {
       "source" : "LOAD_DATASET7",
       "target" : "JOIN7"
+    }, {
+      "source" : "augment_Flatten",
+      "target" : "TRANSFORM1"
     } ],
     "hiddenColumns" : [ ]
   },

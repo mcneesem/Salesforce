@@ -31,126 +31,126 @@
         <criteriaItems>
             <column>Contact.NSP_Work_email__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notContain</operator>
             <value>Insperity</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1. TimeStar WO</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Client Created XML</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>CMI (Collect All)</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>Express</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Grosvenor (Web Service)</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>HR On-Demand</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>Integra</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Loaner</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>OrgPlus</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Performance Now Desktop</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>PerformSmart</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Policies Now Desktop</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Premier Employee Directory</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Repair</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>RSI (Handlink)</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.NSP_SubCategory__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>SaaS</value>
         </criteriaItems>
         <criteriaItems>
             <column>TYPE</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>Holiday Admin Relief,Outage - WO,WO Termination</value>
         </criteriaItems>

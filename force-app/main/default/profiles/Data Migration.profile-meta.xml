@@ -1490,6 +1490,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Assign_permission_set_to_Community__mdt.NSP_Permission_Set_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Division__c</field>
@@ -7548,6 +7553,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Client_Sub_Plan_History__c.NSP_RET_Original_Plan_Effective_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Client_Sub_Plan_History__c.NSP_Start_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17052,6 +17067,11 @@
         <field>NSP_Contribution__c.NSP_Tier_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Checklist__c.NSP_AIMS_Client__c</field>
@@ -35708,6 +35728,9 @@
         <enabled>true</enabled>
         <flow>Update_Status_to_Resubmitted_when_Submitted_for_Approval_again</flow>
     </flowAccesses>
+    <layoutAssignments>
+        <layout>NSP_Assign_permission_set_to_Community__mdt-Assign permission set to Community Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Onboarding_Meeting_Request__c-Onboarding Meeting Request Layout</layout>
     </layoutAssignments>

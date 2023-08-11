@@ -150,7 +150,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LOOKUP",
+        "joinType" : "RIGHT_OUTER",
         "leftKeys" : [ "NSP_Group__c" ],
         "rightQualifier" : "NSP_Accoun",
         "rightKeys" : [ "Id" ]
@@ -168,7 +168,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "INNER",
+        "joinType" : "LEFT_OUTER",
         "leftKeys" : [ "Account.Id" ],
         "rightQualifier" : "Join1",
         "rightKeys" : [ "NSP_Member_Account__c" ]
@@ -239,50 +239,15 @@
         }
       },
       "parameters" : {
-        "joinType" : "LEFT_OUTER",
+        "joinType" : "RIGHT_OUTER",
         "leftKeys" : [ "NSP_Account_Group__c" ],
         "rightQualifier" : "Accountwit",
         "rightKeys" : [ "Join1.NSP_Group__c" ]
       }
     },
-    "LOAD_DATASET13" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "IsDeleted", "Name", "CurrencyIsoCode", "CreatedDate", "CreatedById", "LastModifiedDate", "LastModifiedById", "SystemModstamp", "NSP_Account__c", "NSP_Integrated_With__c", "NSP_Last_Name__c", "NSP_PER_ID__c", "NSP_Product_Type__c", "NSP_Role__c", "NSP_User_ID__c", "NSP_User__c", "NSP_Primary__c", "NSP_Logged_in_User_check__c", "NSP_Payroll_Specialist__c", "NSP_First_Name__c" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "NSP_Account_Team__c",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "NSP_Account_Team__c"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "JOIN12" : {
-      "action" : "join",
-      "sources" : [ "JOIN11", "JOIN13" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "LEFT_OUTER",
-        "leftKeys" : [ "Accountwit.Account.Id" ],
-        "rightQualifier" : "NSP_Accoun",
-        "rightKeys" : [ "NSP_Account__c" ]
-      }
-    },
     "OUTPUT1" : {
       "action" : "save",
-      "sources" : [ "JOIN12" ],
+      "sources" : [ "JOIN11" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -291,95 +256,6 @@
           "name" : "Account_with_AT_AG_FocusItem_and_Asset_Dataset",
           "folderName" : "PEO"
         }
-      }
-    },
-    "LOAD_DATASET14" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "Name" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "User",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "User"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "JOIN13" : {
-      "action" : "join",
-      "sources" : [ "JOIN14", "LOAD_DATASET14" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "LOOKUP",
-        "leftKeys" : [ "NSP_User__c" ],
-        "rightQualifier" : "User",
-        "rightKeys" : [ "Id" ]
-      }
-    },
-    "LOAD_DATASET15" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "ManagerId", "Id" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "User",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "User"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "FLATTEN0" : {
-      "action" : "flatten",
-      "sources" : [ "LOAD_DATASET15" ],
-      "parameters" : {
-        "selfField" : "Id",
-        "parentField" : "ManagerId",
-        "multiField" : {
-          "name" : "ManagerId_flatten_multiField",
-          "label" : "Manager ID Nodes",
-          "isSystemField" : false
-        },
-        "pathField" : {
-          "name" : "ManagerId_flatten",
-          "label" : "Manager ID Path",
-          "isSystemField" : false
-        },
-        "includeSelfId" : false
-      }
-    },
-    "JOIN14" : {
-      "action" : "join",
-      "sources" : [ "LOAD_DATASET13", "FLATTEN0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "LOOKUP",
-        "leftKeys" : [ "NSP_User__c" ],
-        "rightQualifier" : "FlattenManagerId",
-        "rightKeys" : [ "Id" ]
       }
     },
     "BUCKET0" : {
@@ -556,7 +432,8 @@
           "label" : "Project, Project Task, Account Team DS",
           "name" : "Project_Project_Task_Account_Team_DataSet",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "FORMULA3" : {
@@ -649,7 +526,8 @@
           "label" : "Case, User, Account Team, Dataset DS",
           "name" : "Case_User_AccountTeam_Dataset",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "FORMULA4" : {
@@ -723,7 +601,8 @@
           "label" : "Case, Account, Account Team, User DS",
           "name" : "Cases_Assigned_to_My_Employees_DataSet",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "JOIN19" : {
@@ -754,7 +633,8 @@
           "label" : "Asset, Account, User, Account Team DS",
           "name" : "Asset_AT_User_Account",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "JOIN20" : {
@@ -916,7 +796,8 @@
           "label" : "Project, Project Task, Account DS",
           "name" : "Project_Tasks_Assigned_to_My_Employees_DataSet",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     }
   },
@@ -1036,74 +917,12 @@
         "top" : 531.8,
         "left" : 1232
       },
-      "LOAD_DATASET13" : {
-        "label" : "NSP_Account_Team__c",
-        "type" : "LOAD_DATASET",
-        "top" : 252.3,
-        "left" : 1512.1,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "JOIN12" : {
-        "label" : "Account Group with Account Team",
-        "description" : "Join Account Group and Account Team with Account ID",
-        "type" : "JOIN",
-        "top" : 531.9,
-        "left" : 1652
-      },
       "OUTPUT1" : {
         "label" : "Account, Account Team, Account Group, Focus Item, Asset Output",
         "description" : "",
         "type" : "OUTPUT",
         "top" : 532,
         "left" : 1792.1
-      },
-      "LOAD_DATASET14" : {
-        "label" : "User",
-        "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 1652.1,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "JOIN13" : {
-        "label" : "Account Team with User",
-        "description" : "Join Account Team and User with UserID",
-        "type" : "JOIN",
-        "top" : 392,
-        "left" : 1652
-      },
-      "LOAD_DATASET15" : {
-        "label" : "Manager",
-        "description" : "",
-        "type" : "LOAD_DATASET",
-        "top" : 252.3,
-        "left" : 1372.1,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "TRANSFORM1" : {
-        "label" : "Transformation for flatten",
-        "description" : "",
-        "type" : "TRANSFORM",
-        "top" : 392.1,
-        "left" : 1372.1,
-        "graph" : {
-          "FLATTEN0" : {
-            "label" : "Flatten"
-          }
-        },
-        "connectors" : [ ]
-      },
-      "JOIN14" : {
-        "label" : "Flatten User",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 392.7,
-        "left" : 1512.1
       },
       "TRANSFORM2" : {
         "label" : "Bucket",
@@ -1458,30 +1277,6 @@
       "source" : "JOIN2",
       "target" : "JOIN11"
     }, {
-      "source" : "JOIN11",
-      "target" : "JOIN12"
-    }, {
-      "source" : "JOIN13",
-      "target" : "JOIN12"
-    }, {
-      "source" : "JOIN12",
-      "target" : "OUTPUT1"
-    }, {
-      "source" : "JOIN14",
-      "target" : "JOIN13"
-    }, {
-      "source" : "LOAD_DATASET14",
-      "target" : "JOIN13"
-    }, {
-      "source" : "LOAD_DATASET15",
-      "target" : "TRANSFORM1"
-    }, {
-      "source" : "LOAD_DATASET13",
-      "target" : "JOIN14"
-    }, {
-      "source" : "TRANSFORM1",
-      "target" : "JOIN14"
-    }, {
       "source" : "LOAD_DATASET1",
       "target" : "TRANSFORM2"
     }, {
@@ -1559,6 +1354,9 @@
     }, {
       "source" : "JOIN16",
       "target" : "OUTPUT7"
+    }, {
+      "source" : "JOIN11",
+      "target" : "OUTPUT1"
     } ],
     "hiddenColumns" : [ ]
   },

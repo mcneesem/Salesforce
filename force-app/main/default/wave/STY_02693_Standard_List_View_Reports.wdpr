@@ -347,63 +347,10 @@
         "rightKeys" : [ "Id" ]
       }
     },
-    "LOAD_DATASET25_copy0_copy0" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "Name", "NSP_Account__c", "NSP_Email__c", "NSP_Role__c", "NSP_User_ID__c", "NSP_User__c" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "NSP_Account_Team__c",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "NSP_Account_Team__c"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "LOAD_DATASET28_copy0_copy0" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "ManagerId", "Id", "Name", "Email" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "User",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "User"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "JOIN23_copy0_copy0" : {
-      "action" : "join",
-      "sources" : [ "LOAD_DATASET25_copy0_copy0", "LOAD_DATASET28_copy0_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "User.NSP_Manager_name__c" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "LOOKUP",
-        "leftKeys" : [ "NSP_User__c" ],
-        "rightQualifier" : "User",
-        "rightKeys" : [ "Id" ]
-      }
-    },
     "JOIN29" : {
       "action" : "join",
-      "sources" : [ "JOIN23_copy0_copy0", "JOIN28" ],
+      "sources" : [ "LOAD_DATASET43", "JOIN28" ],
       "schema" : {
-        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -411,9 +358,9 @@
         }
       },
       "parameters" : {
-        "joinType" : "INNER",
-        "leftKeys" : [ "NSP_Account__c" ],
-        "rightQualifier" : "Join28",
+        "joinType" : "RIGHT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "CaseWithAccountTeam",
         "rightKeys" : [ "Account.Id" ]
       }
     },
@@ -869,6 +816,21 @@
         },
         "includeSelfId" : true
       }
+    },
+    "LOAD_DATASET43" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "UserAccess.NSP_Account__c", "UserAccess.UserAcces", "Id", "UserAccess.AllRole", "Name", "UserAccess.count" ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "AccountTeam with Account for All Role",
+          "name" : "Account_Team_with_Account_for_allRole"
+        },
+        "sampleDetails" : {
+          "type" : "TopN"
+        }
+      }
     }
   },
   "ui" : {
@@ -876,7 +838,7 @@
       "LOAD_DATASET20_copy0" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 112,
+        "top" : 250.3,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -886,7 +848,7 @@
         "label" : "Account",
         "type" : "LOAD_DATASET",
         "top" : 252,
-        "left" : 252,
+        "left" : 391.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -894,8 +856,8 @@
       "LOAD_DATASET22_copy0" : {
         "label" : "Product2",
         "type" : "LOAD_DATASET",
-        "top" : 532,
-        "left" : 392,
+        "top" : 252,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -904,7 +866,7 @@
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
         "top" : 252,
-        "left" : 112,
+        "left" : 251.89999999999998,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -912,8 +874,8 @@
       "LOAD_DATASET24_copy0" : {
         "label" : "NSP_Account_Group__c",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 392,
+        "top" : 392,
+        "left" : 532.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -927,8 +889,8 @@
       "JOIN16_copy0" : {
         "label" : "Join_Asset_RecType_Account",
         "type" : "JOIN",
-        "top" : 112,
-        "left" : 392
+        "top" : 112.1,
+        "left" : 392.1
       },
       "JOIN17_copy0" : {
         "label" : "Join_Asset_RecType_Account_Product",
@@ -939,14 +901,14 @@
       "JOIN18_copy0" : {
         "label" : "Join_Asset_RecType_Account_Product_AccGroup_User",
         "type" : "JOIN",
-        "top" : 112,
-        "left" : 672
+        "top" : 112.1,
+        "left" : 672.1
       },
       "LOAD_DATASET25_copy0" : {
         "label" : "NSP_Account_Team__c",
         "type" : "LOAD_DATASET",
-        "top" : 392,
-        "left" : 532,
+        "top" : 532.3,
+        "left" : 672.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -954,27 +916,27 @@
       "JOIN19_copy0" : {
         "label" : "Final Join",
         "type" : "JOIN",
-        "top" : 112,
-        "left" : 812
+        "top" : 112.80000000000001,
+        "left" : 812.1
       },
       "JOIN23_copy0" : {
         "label" : "Join_AccountTeam_User",
         "type" : "JOIN",
-        "top" : 392,
-        "left" : 672
+        "top" : 252.10000000000002,
+        "left" : 812
       },
       "OUTPUT3_copy0" : {
         "label" : "Asset,Account,AccountGroup,AccountGroupMember,AccountTeam,Product",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 112,
+        "top" : 250.3,
         "left" : 952
       },
       "LOAD_DATASET32_copy0" : {
         "label" : "NSP_Account_Group_Member__c",
         "type" : "LOAD_DATASET",
         "top" : 392,
-        "left" : 392,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -983,13 +945,13 @@
         "label" : "Join_Account_Group_Member",
         "type" : "JOIN",
         "top" : 252,
-        "left" : 532
+        "left" : 672
       },
       "LOAD_DATASET33" : {
         "label" : "Case",
         "type" : "LOAD_DATASET",
-        "top" : 1232,
-        "left" : 112,
+        "top" : 1791.8,
+        "left" : 252.2,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -997,8 +959,8 @@
       "LOAD_DATASET34" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1372,
-        "left" : 112,
+        "top" : 1791.8,
+        "left" : 112.19999999999999,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1006,8 +968,8 @@
       "LOAD_DATASET35" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 1652,
-        "left" : 252,
+        "top" : 1511.8,
+        "left" : 392.2,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1016,59 +978,34 @@
         "label" : "Join_case_Account",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1232,
-        "left" : 252
+        "top" : 1651.8,
+        "left" : 252.2
       },
       "JOIN28" : {
         "label" : "Join_case_Account_User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1232,
-        "left" : 392
-      },
-      "LOAD_DATASET25_copy0_copy0" : {
-        "label" : "NSP_Account_Team__c Copy",
-        "type" : "LOAD_DATASET",
-        "top" : 1372,
-        "left" : 252,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "LOAD_DATASET28_copy0_copy0" : {
-        "label" : "User",
-        "type" : "LOAD_DATASET",
-        "top" : 1512,
-        "left" : 252,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "JOIN23_copy0_copy0" : {
-        "label" : "Join_AccountTeam_User",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 392
+        "top" : 1651.9,
+        "left" : 392.2
       },
       "JOIN29" : {
         "label" : "Final_Join2",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1232,
-        "left" : 532
+        "top" : 1651.8,
+        "left" : 532.2
       },
       "OUTPUT4" : {
         "label" : "Case, Account, Account Team, User DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1232,
-        "left" : 672
+        "top" : 1651.8,
+        "left" : 672.2
       },
       "LOAD_DATASET36" : {
         "label" : "pse__Project_Task__c",
         "type" : "LOAD_DATASET",
-        "top" : 672,
+        "top" : 810.3,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1077,7 +1014,7 @@
       "LOAD_DATASET37" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 812,
+        "top" : 950.3,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1086,7 +1023,7 @@
       "LOAD_DATASET38" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 812,
+        "top" : 950.3,
         "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
@@ -1096,20 +1033,20 @@
         "label" : "Join_projectask_user",
         "description" : "",
         "type" : "JOIN",
-        "top" : 672,
+        "top" : 810.3,
         "left" : 252
       },
       "JOIN31" : {
         "label" : "Join_projectask_project_user",
         "type" : "JOIN",
-        "top" : 672,
+        "top" : 811.9,
         "left" : 392
       },
       "LOAD_DATASET39" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1092,
-        "left" : 392,
+        "top" : 952,
+        "left" : 532.3,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1118,14 +1055,14 @@
         "label" : "Join_projectask_project_user_AccTeam_User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 672,
-        "left" : 532
+        "top" : 811.8,
+        "left" : 532.1
       },
       "LOAD_DATASET25_copy0_copy1" : {
         "label" : "NSP_Account_Team__c Copy1",
         "type" : "LOAD_DATASET",
-        "top" : 812,
-        "left" : 392,
+        "top" : 1092,
+        "left" : 671.8,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1134,8 +1071,8 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 952,
-        "left" : 392,
+        "top" : 1091.7,
+        "left" : 812.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1144,35 +1081,35 @@
         "label" : "Join_AccTeam_User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812,
-        "left" : 532
+        "top" : 952,
+        "left" : 812
       },
       "JOIN33" : {
         "label" : "Final Join1",
         "description" : "",
         "type" : "JOIN",
-        "top" : 672,
-        "left" : 672
+        "top" : 812,
+        "left" : 811.8
       },
       "OUTPUT6" : {
         "label" : "Project Task, User, Project, Account, User, Account Team DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 672,
-        "left" : 812
+        "top" : 811.9,
+        "left" : 952.1
       },
       "OUTPUT8" : {
         "label" : "Case, Account, User DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1372,
-        "left" : 532
+        "top" : 1511.8,
+        "left" : 672.2
       },
       "LOAD_DATASET40" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 1792,
-        "left" : 112,
+        "top" : 2350.3,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1180,8 +1117,8 @@
       "LOAD_DATASET41" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1932,
-        "left" : 112,
+        "top" : 2350.3,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1189,8 +1126,8 @@
       "LOAD_DATASET42" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 2212,
-        "left" : 252,
+        "top" : 2350.3,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1199,21 +1136,21 @@
         "label" : "Join_Asset_Account",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 252
+        "top" : 2210.3,
+        "left" : 392
       },
       "JOIN35" : {
         "label" : "Join_Asset_Account_Pse_Proj",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 392
+        "top" : 2210.3,
+        "left" : 532
       },
       "LOAD_DATASET25_copy0_copy0_copy0" : {
         "label" : "NSP_Account_Team__c Copy Copy",
         "type" : "LOAD_DATASET",
-        "top" : 1932,
-        "left" : 252,
+        "top" : 2490.3,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1222,36 +1159,36 @@
         "label" : "Join_AccTeam_User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1932,
-        "left" : 392
+        "top" : 2350.3,
+        "left" : 672
       },
       "JOIN36" : {
         "label" : "Final_Join3",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 532
+        "top" : 2210.3,
+        "left" : 672
       },
       "OUTPUT9" : {
         "label" : "Project, Project Task, User, Account Team, Account DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1792,
-        "left" : 672
+        "top" : 2210.3,
+        "left" : 812
       },
       "OUTPUT10" : {
         "label" : "Project Task, User, Project, Account DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 812,
-        "left" : 672
+        "top" : 672,
+        "left" : 952
       },
       "LOAD_DATASET28_copy0_copy0_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 2072,
-        "left" : 251.8,
+        "top" : 2490.3,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1260,8 +1197,8 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 532.1,
-        "left" : 531.9,
+        "top" : 531.9,
+        "left" : 812.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1269,15 +1206,27 @@
       "TRANSFORM0_copy0" : {
         "label" : "flatten_user",
         "type" : "TRANSFORM",
-        "top" : 532.1,
-        "left" : 671.9,
+        "top" : 391.3,
+        "left" : 812,
         "graph" : {
           "flatten_user_copy0" : null
         },
         "connectors" : [ ]
+      },
+      "LOAD_DATASET43" : {
+        "label" : "AccountTeam with Account for All Role",
+        "type" : "LOAD_DATASET",
+        "top" : 1792.1,
+        "left" : 532,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
       }
     },
     "connectors" : [ {
+      "source" : "LOAD_DATASET43",
+      "target" : "JOIN29"
+    }, {
       "source" : "LOAD_DATASET20_copy0",
       "target" : "JOIN15_copy0"
     }, {
@@ -1331,15 +1280,6 @@
     }, {
       "source" : "LOAD_DATASET35",
       "target" : "JOIN28"
-    }, {
-      "source" : "LOAD_DATASET25_copy0_copy0",
-      "target" : "JOIN23_copy0_copy0"
-    }, {
-      "source" : "LOAD_DATASET28_copy0_copy0",
-      "target" : "JOIN23_copy0_copy0"
-    }, {
-      "source" : "JOIN23_copy0_copy0",
-      "target" : "JOIN29"
     }, {
       "source" : "JOIN28",
       "target" : "JOIN29"

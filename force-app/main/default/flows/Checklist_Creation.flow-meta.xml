@@ -547,6 +547,13 @@
             <stringValue>WS</stringValue>
         </value>
     </constants>
+    <constants>
+        <name>flowName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Checklist Creation</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>ApplyAccess_FromScreenRouting_0</name>
         <label>ApplyAccess&amp;FromScreenRouting</label>
@@ -1422,7 +1429,7 @@
             <label>STP</label>
         </rules>
     </decisions>
-    <description>AZD story 165244</description>
+    <description>AZD story 165244...updated to leverage Fault Handler subflow and to include new STP field (&quot;Are all employees paid under one FEIN&quot;) and remove Broker information from STP checklist creation. Removed &quot;Multiple FEINs&quot; from WX STP Checklist</description>
     <dynamicChoiceSets>
         <name>Addendums_required_before_download1_ChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -1990,7 +1997,7 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_AIMS_Client__c</field>
@@ -2118,7 +2125,7 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_AIMS_Client__c</field>
@@ -2598,6 +2605,9 @@
         <connector>
             <targetReference>FaultScreen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler_subflow2</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>NSP_Class__c</field>
             <value>
@@ -2623,7 +2633,7 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Existing_Payroll_Provider__c</field>
@@ -2844,7 +2854,7 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Additional_Notes__c</field>
@@ -3296,7 +3306,7 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Additional_Notes__c</field>
@@ -3472,8 +3482,14 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>Are_all_employees_paid_under_one_FEIN__c</field>
+            <value>
+                <elementReference>woSTP_Are_all_employees_paid_under_one_FEIN</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>NSP_AIMS_Client__c</field>
             <value>
@@ -3756,7 +3772,7 @@
             <targetReference>CreationSuccess</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Existing_Payroll_Provider__c</field>
@@ -3786,12 +3802,6 @@
             <field>NSP_Are_you_a_qualified_large_employer__c</field>
             <value>
                 <elementReference>Areyoucurrentlyaqualifiedlargeemployerordoyouanticipategrowingtothe50</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Benefits_Broker_Contact_Information__c</field>
-            <value>
-                <elementReference>NSP_Benefits_Broker_Contact_Information.value</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3909,9 +3919,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NSP_Multiple_FEINs__c</field>
+            <field>NSP_Multiple_Companies_or_FEINs__c</field>
             <value>
-                <elementReference>NSP_Multiple_FEINs</elementReference>
+                <elementReference>wxSTP_Multiple_Companies_or_FEINs</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4046,7 +4056,7 @@
             <targetReference>GetContact</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4070,7 +4080,7 @@
             <targetReference>getRecordType_0_0_0_0_0_0_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4098,7 +4108,7 @@
             <targetReference>getOpptyOwnerUser</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4124,7 +4134,7 @@
             <targetReference>GetOppty</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4155,7 +4165,7 @@
             <targetReference>Product_Check</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4178,6 +4188,9 @@
         <connector>
             <targetReference>Assign_New_to_Old</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -4193,14 +4206,14 @@
     <recordLookups>
         <name>getOpptyOwnerUser</name>
         <label>getOpptyOwnerUser</label>
-        <locationX>1490</locationX>
-        <locationY>1429</locationY>
+        <locationX>1493</locationX>
+        <locationY>1380</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>RecTypeIDSet</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4224,7 +4237,7 @@
             <targetReference>ChecklistNullCheck</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -5222,22 +5235,6 @@
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Cannot_Determine_Checklist</name>
-        <label>Cannot Determine Checklist</label>
-        <locationX>50</locationX>
-        <locationY>845</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>UnableToDetermine</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;We are unable to determine what type of checklist your user requires&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;DEBUG&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;BPA? &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!varIsBPA}&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;SE? {!varIsSE}&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;NCS? {!varIsNCS}&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -6565,6 +6562,15 @@
                     <scale>0</scale>
                 </fields>
                 <fields>
+                    <name>woSTP_Are_all_employees_paid_under_one_FEIN</name>
+                    <choiceReferences>Yes</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Are all employees paid under one FEIN?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
                     <name>NSP_Pay_Frequency</name>
                     <choiceReferences>Pay_Frequency2_ChoiceSet</choiceReferences>
                     <dataType>String</dataType>
@@ -6773,10 +6779,11 @@
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <fields>
-                    <name>NSP_Multiple_FEINs</name>
-                    <choiceReferences>Multiple_FEINs1_ChoiceSet</choiceReferences>
+                    <name>wxSTP_Multiple_Companies_or_FEINs</name>
+                    <choiceReferences>Yes</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>Multiple FEINs?</fieldText>
+                    <fieldText>Multiple Companies or FEINs?</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -6971,20 +6978,6 @@
                     <fieldText>Benefits Broker Information</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>NSP_Benefits_Broker_Contact_Information</name>
-                    <extensionName>flowruntime:phone</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Benefits Broker Contact Information</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <fields>
                     <name>Existing_Payroll_Provider</name>
@@ -7394,6 +7387,47 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Fault_Handler_subflow</name>
+        <label>Fault Handler subflow</label>
+        <locationX>1727</locationX>
+        <locationY>1606</locationY>
+        <connector>
+            <targetReference>Create_Error_Log</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <elementReference>flowName</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Fault_Handler_subflow2</name>
+        <label>Fault Handler subflow</label>
+        <locationX>1928</locationX>
+        <locationY>1732</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <elementReference>flowName</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>User_Perm_Check</name>
         <label>User Perm Check</label>

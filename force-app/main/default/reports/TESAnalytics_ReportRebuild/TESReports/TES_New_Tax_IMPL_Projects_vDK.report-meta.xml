@@ -28,11 +28,10 @@
         <field>pse__Proj__c.pse__Project_Tasks__r$pse__Long_Description__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>pse__Proj__c$psaws__Actual_Hours__c</field>
     </columns>
     <currency>USD</currency>
-    <description>TES - New Tax IMPL Projects</description>
+    <description>STY-03618 TES - New Tax IMPL Projects</description>
     <filter>
         <criteriaItems>
             <column>pse__Proj__c$pse__Project_Status__c</column>
@@ -56,8 +55,18 @@
             <value>In Progress</value>
         </criteriaItems>
     </filter>
-    <format>Tabular</format>
-    <name>TES - New Tax IMPL Projects</name>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c$pse__Project_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>pse__Proj__c$NSP_Owner__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>TES - New Tax IMPL Projects w/Milestones</name>
     <params>
         <name>co</name>
         <value>1</value>

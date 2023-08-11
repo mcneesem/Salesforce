@@ -4,7 +4,8 @@
 * @date 02/16/2023
 * Name : NSP_DocuSignInvoiceDocumentBatch
 */
-public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts {
+public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts, Schedulable {
+    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (80%)
 
     public Integer recordsProcessed = 0;
     public String query;
@@ -13,11 +14,11 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObj
     //parameterized constructor
     public NSP_DocuSignInvoiceDocumentBatch(List<String> sfInvIds) {
         invcIdList = sfInvIds; 
-        query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE Id IN:invcIdList AND blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_External_ID__c = null';
+        query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE Id IN:invcIdList AND blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_External_ID__c = null LIMIT 1000';
     }
     //default constructor
     public NSP_DocuSignInvoiceDocumentBatch() {
-       query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE Id blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_Email_Sent__c=FALSE AND NSP_Invoice_External_ID__c = null'; 
+       query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE Id blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_Email_Sent__c=FALSE AND NSP_Invoice_External_ID__c = null LIMIT 1000'; 
     }
     
     //start method of batch class
@@ -71,4 +72,8 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObj
  
     }
     
+    public void execute(SchedulableContext ctx) {
+        NSP_DocuSignInvoiceDocumentBatch batchObject = new NSP_DocuSignInvoiceDocumentBatch();
+          Database.executeBatch(batchObject, Integer.valueOf(Label.NSP_BATCH_SIZE) );   
+      }
 }

@@ -100,6 +100,7 @@ public class NSP_dunningCaseCreationBatchTest {
         update invc;
         // get dinning instances
         NSP_dunningInvoicesListController invListCtrl = new NSP_dunningInvoicesListController();
+        String logoUrl = invListCtrl.getLogoUrl();
         invListCtrl.caseAccountId = (String)objaccount.Id;
         List<blng__Invoice__c> pendingInvs = invListCtrl.getdunningInvoicesList();
         NSP_DunningCaseCreationBatch cbatch = new NSP_DunningCaseCreationBatch();

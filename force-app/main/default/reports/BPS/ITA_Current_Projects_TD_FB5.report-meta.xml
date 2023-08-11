@@ -64,28 +64,28 @@
         <criteriaItems>
             <column>FK_$pse__Proj__c.TemplateName__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>ITA-Implementation,ITA-Other</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.pse__Project_Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Active,On Hold,Intake,Quality Review,Special Extension</value>
+            <value>Active,Intake,On Hold,Quality Review,Special Extension</value>
         </criteriaItems>
         <criteriaItems>
             <column>FK_$pse__Proj__c.Product_Line__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>TimeStar,CompuPayTime,WO,TimeStar SaaS,TimeStar Hosted,Sage Endorsement,WA,CORE</value>
+            <value>CORE,CompuPayTime,Sage Endorsement,TimeStar,TimeStar Hosted,TimeStar SaaS,WA,WO</value>
         </criteriaItems>
         <criteriaItems>
             <column>pse__Project_Task__c.pse__Status__c</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>In Progress</value>
         </criteriaItems>

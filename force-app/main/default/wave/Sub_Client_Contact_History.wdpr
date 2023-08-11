@@ -583,7 +583,7 @@
           "type" : "TEXT",
           "name" : "Queue_Member",
           "label" : "Queue Member",
-          "formulaExpression" : "case\r\nwhen \"Group.DeveloperName\" = 'NSP_Health_Welfare_Products'\r\nthen 'NSP_Health_Welfare_Products_Member'\r\nwhen \"Group.DeveloperName\" = 'NSP_Health_Welfare_Business_Process'\r\nthen 'NSP_Health_Welfare_Business_Proces_Member'\r\nwhen \"Group.DeveloperName\" = 'NSP_Contact_Center_Retirement_Services'\r\nthen 'NSP_Contact_Center_Retirement_Services_Member'\r\nwhen startsWith(\"Group.DeveloperName\", 'NSP_Contact')\r\n    then'Contact_Center_Member'\r\nwhen startsWith(\"Group.DeveloperName\", \t'NSP_Escalations')\r\n    then'Escalations_Member'\r\nelse\r\n'null'\r\nend",
+          "formulaExpression" : "case\r\nwhen \"Group.DeveloperName\" = 'NSP_Health_Welfare_Products'\r\nthen 'NSP_Health_Welfare_Products_Member'\r\nwhen \"Group.DeveloperName\" = 'NSP_Health_Welfare_Business_Process'\r\nthen 'NSP_Health_Welfare_Business_Proces_Member'\r\nwhen \"Group.DeveloperName\" = 'NSP_Health_Welfare_Ed_Assist'\r\nthen 'NSP_Health_Welfare_Ed_Assist_Member'\r\nwhen \"Group.DeveloperName\" = 'NSP_Contact_Center_Retirement_Services'\r\nthen 'NSP_Contact_Center_Retirement_Services_Member'\r\nwhen startsWith(\"Group.DeveloperName\", 'NSP_Contact')\r\n    then'Contact_Center_Member'\r\nwhen startsWith(\"Group.DeveloperName\", \t'NSP_Escalations')\r\n    then'Escalations_Member'\r\nelse\r\n'null'\r\nend",
           "precision" : 255,
           "defaultValue" : ""
         } ]
@@ -1842,8 +1842,8 @@
         "label" : "User, Case, Group, Group Member, Case History DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 670.3,
-        "left" : 1792
+        "top" : 671.9,
+        "left" : 1932.1
       },
       "LOAD_DATASET16" : {
         "label" : "NSP_Sub_Client__c",

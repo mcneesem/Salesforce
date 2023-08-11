@@ -21,4 +21,10 @@
         <label>Project Coordinator</label>
         <sortIndex>1</sortIndex>
     </dimensions>
+    <dimensions>
+        <field>pse__Proj__c.Hold_Start_Date__c_formula</field>
+        <isDerived>false</isDerived>
+        <label>Project Hold Start Date</label>
+        <sortIndex>2</sortIndex>
+    </dimensions>
 </WaveXmd>

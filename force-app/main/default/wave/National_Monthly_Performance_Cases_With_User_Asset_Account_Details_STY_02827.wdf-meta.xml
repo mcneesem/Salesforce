@@ -3,6 +3,6 @@
     <content xsi:nil="true"/>
     <application>WAVE_PUBLIC_DATAFLOWS</application>
     <dataflowType>RecipeV3</dataflowType>
-    <description>Recipe National Monthly Performance_Cases_With_User_Asset_Account_Details_STY_02_recipe</description>
-    <masterLabel>National Monthly Performance_Cases_With_User_Asset_Account_Details_STY_02_recipe</masterLabel>
+    <description>Recipe Case with Account, Asset, User_recipe</description>
+    <masterLabel>Case with Account, Asset, User_recipe</masterLabel>
 </WaveDataflow>

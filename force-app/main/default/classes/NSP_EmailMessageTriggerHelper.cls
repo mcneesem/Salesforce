@@ -2,6 +2,8 @@
 * Represents the EmailMessage trigger helper which handles all the logic.
 */
 public with sharing class NSP_EmailMessageTriggerHelper {
+    // test w/ NSP_EmailMessageTriggerHelperTest (92%)
+
     public static boolean isFirst = false;
     public static final String CLASS_NAME = 'NSP_EmailMessageTriggerHelper';
     
@@ -13,7 +15,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         List<Case> caseToUpdate = new List<Case> ();
         Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
         for(EmailMessage eMessage : newList){
-            if(incomingEmailCheck(eMessage)){
+            if(eMessage.ParentId != null && incomingEmailCheck(eMessage)){
                 setOfCaseId.add(eMessage.ParentId);   
             }
 

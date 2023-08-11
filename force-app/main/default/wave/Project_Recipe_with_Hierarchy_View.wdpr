@@ -62,7 +62,8 @@
           "label" : "Project, User Hierarchy DS",
           "name" : "Project_With_User_Hierarchy",
           "folderName" : "BPS"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET0" : {
@@ -250,7 +251,8 @@
           "label" : "Case, Project, User, Account DS",
           "name" : "Project_With_User_Hierarchy_ChangeOrderProjectMetrics",
           "folderName" : "BPS"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "sfdcDigest_User1_copy0_copy1" : {
@@ -483,7 +485,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "CaseNumber", "Id" ],
+        "fields" : [ "OwnerId", "Id", "CaseNumber" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Case",
