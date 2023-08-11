@@ -5,7 +5,8 @@
 * Name : NSP_portalUserUpdate
 */
 public class NSP_portalUserUpdate implements Queueable  {
-    
+    // test w/ NSP_AccountContactServiceHelperTest (??%)
+
     /***********************************************************************************************
     * Variables --> userIdSet , activeStatus , permIdSet
     * ********************************************************************************************/   
