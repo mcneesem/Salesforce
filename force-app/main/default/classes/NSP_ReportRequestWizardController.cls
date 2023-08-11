@@ -1,5 +1,6 @@
 public with sharing class NSP_ReportRequestWizardController {
-    
+    // test w/ NSP_ReportRequestWizardControllerTest (??%)
+
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     private static final String NOT_FOUND = 'Not Found';
     @AuraEnabled
