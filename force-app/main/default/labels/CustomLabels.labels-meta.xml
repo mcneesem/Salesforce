@@ -2712,7 +2712,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <fullName>NSP_FinanceAccesstoCreateProject</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Finance Access to Create Project</shortDescription>
+        <shortDescription>Finance Roles to Create Project</shortDescription>
         <value>Finance Manager,Finance Supervisor,Finance Users</value>
     </labels>
     <labels>
