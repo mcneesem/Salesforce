@@ -14829,6 +14829,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <recordType>Contact.Resource</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
         <recordType>Event.Core_Sales_Event_RT</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
