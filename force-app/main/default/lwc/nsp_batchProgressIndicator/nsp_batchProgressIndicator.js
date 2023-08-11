@@ -17,8 +17,8 @@ export default class NSP_BatchProgressIndicator extends LightningElement {
 
     get batchOptions() {
         return [
-            { label: 'Invoice Post Batch', value: 'NSP_InvoiceBatch' }
-           // { label: 'DocuSign Document Generation Batch', value: 'NSP_DocuSignInvoiceDocumentBatch' },
+            { label: 'Invoice Post Batch', value: 'NSP_InvoiceBatch' },
+            { label: 'DocuSign Document Generation Batch', value: 'NSP_DocuSignInvoiceDocumentBatch' }
            // { label: 'Invoice Email Batch', value: 'TBD' }
         ];
     }
@@ -28,6 +28,10 @@ export default class NSP_BatchProgressIndicator extends LightningElement {
         this.disableBatchSize = false;
         if (this.batchClassName == 'NSP_InvoiceBatch') {
             this.batchSize = 1;
+            this.disableBatchSize = true;
+        }
+        if (this.batchClassName == 'NSP_DocuSignInvoiceDocumentBatch') {
+            this.batchSize = 20;
             this.disableBatchSize = true;
         }
     }
