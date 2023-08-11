@@ -3394,6 +3394,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__Invoice__c.NSP_InvBatch_Processed_Internal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__Invoice__c.NSP_HasNetSuiteId__c</field>
         <readable>true</readable>
     </fieldPermissions>

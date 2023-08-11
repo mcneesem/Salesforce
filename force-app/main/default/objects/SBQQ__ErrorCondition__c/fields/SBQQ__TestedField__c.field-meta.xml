@@ -278,6 +278,11 @@
                 <default>false</default>
                 <label>NSP_Retention_Payment__c</label>
             </value>
+            <value>
+                <fullName>NSP_Support_ProductCode__c</fullName>
+                <default>false</default>
+                <label>NSP_Support_ProductCode__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -340,6 +345,10 @@
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Product Option</controllingFieldValue>
             <valueName>NSP_Product_Group__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>NSP_Support_ProductCode__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
