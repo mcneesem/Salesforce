@@ -7,7 +7,8 @@
 */
 
 public class NSP_SAEmail_DateTimeController {
-    
+    // test w/ NSP_SAEmail_DateTimeControllerTest (??%)
+
 	public DateTime date_time {get;set;}
     public String defined_format {get;set;}
     public DateTime startDate {get;set;}
