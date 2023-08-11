@@ -6052,4 +6052,11 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
     </labels>
+    <labels>
+        <fullName>NSP_FinanceAccesstoCreateProject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Finance Access to Create Project</shortDescription>
+        <value>Finance Manager,Finance Supervisor,Finance Users</value>
+    </labels>
 </CustomLabels>

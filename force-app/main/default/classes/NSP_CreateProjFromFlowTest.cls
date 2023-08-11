@@ -77,7 +77,7 @@ public class NSP_CreateProjFromFlowTest{
                                  WITH SECURITY_ENFORCED];
         for (Order recId : orderList){
             recordsList.add(recId.Id);
-            //recId.NSP_Project_Name__c = 'OPRT Implementation';
+            recId.NSP_Project_Name__c = 'OPRT Implementation';
             recId.NSP_Project_Key__c = 'IOPRTSU';
             recId.NSP_Project__c = projRecord.Id;
 
