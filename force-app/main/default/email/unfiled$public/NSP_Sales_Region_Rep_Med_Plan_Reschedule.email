@@ -4,7 +4,7 @@
 <body>
 The Orientation Meeting for {!relatedTo.Account.Name} has been RESCHEDULED for:<br/>
 
-<c:NSP_SAEmail_DateTime date_time_value="{!relatedTo.SchedStartTime}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.SchedEndTime}"/> <br/>
+<c:NSP_SAEmail_DateTime currentRecordId="{!relatedTo.Id}" date_time_value="{!relatedTo.SchedStartTime}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.SchedEndTime}"/><br/>
 Address: {!relatedTo.NSP_Orientation_Address__c} <br/>
 
 Orientation Rep: {!relatedTo.Owner.Name} <br/>

@@ -5,17 +5,23 @@
 * Name : NSP_ServiceAppointmentTriggerHelper
 */
 public class NSP_ServiceAppointmentTriggerHelper {
-    
+    // test w/ NSP_ServiceAppointmentTrigger_Test (??%)
+
     /***********************************************************************************************
     * MethodName: beforeUpdateDirector
     * Description : This Method updated the status checkbox on Service Appointments  
     * Params:       Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
     * Author :      Abhishek Kumar
     * ********************************************************************************************/
+    //map of service resource Id and operating hrs name
+    public static Map<Id, String> mapServResOperHrs = new Map<Id, String>();
+    //map of Service Appointment and service resource Ids
+    public static Map<Id, Id> mapSAIdServResId = new Map<Id, Id>();
     public static void beforeUpdateDirector(Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap ){
         List<ServiceAppointment> checkStatusChangeSaList =  new List<ServiceAppointment>();
         Set<Id> saIdToUpdateEvent = new Set<Id>();
         Set<Id> saIdToDeletEvent = new Set<Id>();
+        List<Id> updatingOperHrsSA = new List<Id>();
         try{
             for(ServiceAppointment serApp : newMap.values() ){
                 // added as a part of STY-01091
@@ -37,6 +43,9 @@ public class NSP_ServiceAppointmentTriggerHelper {
                         serApp.NSP_Old_Scheduled_Time__c = oldMap.get(serApp.Id).NSP_StartEndTime__c;
                         serApp.NSP_Old_End_Time__c = oldMap.get(serApp.Id).SchedEndTime;
                         saIdToDeletEvent.add( serApp.Id );
+                        //store all the service appointment Ids where status is updated to Canceled to update Old Operating Hrs field
+                        updatingOperHrsSA.add(serApp.Id);
+                        
                     }
                 }
 
@@ -56,6 +65,11 @@ public class NSP_ServiceAppointmentTriggerHelper {
                 }
 
             }
+            //add as part of STY-04555
+            if(!updatingOperHrsSA.isEmpty()){
+                //update the maps of service appointment and Service res and also Operating hrs name
+                updateOldOperatingHrsSA(updatingOperHrsSA, newMap);
+            }
             //call checkStatusChange
             if(!checkStatusChangeSaList.isEmpty()){
                 checkStatusChange( checkStatusChangeSaList );
@@ -69,6 +83,68 @@ public class NSP_ServiceAppointmentTriggerHelper {
         }catch(Exception ex ){
            NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'beforeUpdateDirector', ex.getMessage());
         }
+    }
+    
+    /***********************************************************************************************
+    * MethodName: updateOldOperatingHrsSA
+    * Description : this method update maps mapSAIdServResId and mapServResOperHrs
+    * 			    to store the operating hrs name and futher update the Field on SA
+    * Params:  List<Id> servAppointRecsId and Map<Id, Sevice Appointment> new map 
+    * ********************************************************************************************/  
+    public static void updateOldOperatingHrsSA(List<Id> servAppointRecsId, Map<Id, ServiceAppointment> servRec ){
+        
+        try{
+         	//map of Service Resource Id and Assigned resource Record
+            Map<Id, AssignedResource> mapServResAssigResRec = new Map<Id, AssignedResource>();
+            //get all the assigned resource for the SA Ids and update the maps
+            for(AssignedResource assignRes: [SELECT Id, ServiceResourceId, 	ServiceAppointmentId FROM AssignedResource 
+                                             WHERE ServiceAppointmentId IN: servAppointRecsId]){
+                     mapServResAssigResRec.put(assignRes.ServiceResourceId, assignRes);
+                     mapSAIdServResId.put(assignRes.ServiceAppointmentId, assignRes.ServiceResourceId);
+            }
+            //update the map of service resource and operating hrs
+            for(Id serviceResId: mapServResAssigResRec.keySet()){
+                mapServResOperHrs.put(serviceResId, getOperatingHrsRec(serviceResId));
+            }
+            for(ServiceAppointment serApp : servRec.values() ){
+                if(mapSAIdServResId.containsKey(serApp.Id)){
+                    //update the old operating hrs name form the map 
+                    serApp.NSP_Old_Operating_Hrs__c =  mapServResOperHrs.get(mapSAIdServResId.get(serApp.Id));
+                }
+            }
+        }catch(Exception exp){
+            NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'updateOldOperatingHrsSA', exp.getMessage());
+        }
+       
+    }
+
+	/***********************************************************************************************
+    * MethodName: getOperatingHrsRec
+    * Description : this method get the operating hrs name from given Service Resource Id
+    * Params:  Id serviceResId
+    * Return: String-->name of operating Hrs
+    * ********************************************************************************************/      
+    public static String getOperatingHrsRec(Id serviceResId){
+         OperatingHours operHrs;
+         try{
+            //get the service Territory record from Service Territory Mem Service Resource Id 
+            ServiceTerritory serviceTerr = [SELECT Id, OperatingHoursId, TopLevelTerritoryId
+                                    FROM ServiceTerritory
+                                    WHERE Id IN (
+                                        SELECT ServiceTerritoryId
+                                        FROM ServiceTerritoryMember
+                                        WHERE ServiceResourceId = :serviceResId
+                                    )];
+            //From Service Territory get Operating Hrs Id and return the name
+            List<String> operHrsFields = new List<String>{'Id','Name'};
+            String query = new NSP_QueryBuilder('OperatingHours', operHrsFields)
+                                    .addFilter('Id', serviceTerr.OperatingHoursId)
+                                    .addLimit(1).build();
+            operHrs = Database.query(query);
+        }catch(Exception exp){
+            NSP_ErrorLogHandler.logSaveException('NSP_AssignedResourceTriggerHelper', 'getOperatingHrsRec', exp.getMessage());
+        }
+        return operHrs.Name;
     }
 
    /**
@@ -216,7 +292,7 @@ public class NSP_ServiceAppointmentTriggerHelper {
                 || oServiceApp.SchedEndTime != oldServiceApp.SchedEndTime
             	);
     }
-
+    
     /***********************************************************************************************
     * MethodName: checkStatusChange
     * Description : This Method updated the status checkbox on Service Appointments  

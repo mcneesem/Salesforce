@@ -2,9 +2,9 @@
 <messaging:htmlEmailBody >
 <html>
 <body>
-An Orientation Meeting has been SCHEDULED for {!relatedTo.Account.Name} with the following details: <br/>
+An Orientation Meeting has been DISPATCHED for {!relatedTo.Account.Name} with the following details: <br/>
 
-<c:NSP_SAEmail_DateTime date_time_value="{!relatedTo.SchedStartTime}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.SchedEndTime}"/> <br/>
+<c:NSP_SAEmail_DateTime currentRecordId="{!relatedTo.Id}" date_time_value="{!relatedTo.SchedStartTime}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.SchedEndTime}"/><br/>
 Address: {!relatedTo.NSP_Orientation_Address__c} <br/>
 Orientation Rep: {!relatedTo.Owner.Name} <br/>
 Comments: {!relatedTo.Description}
