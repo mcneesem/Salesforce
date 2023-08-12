@@ -2043,7 +2043,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * Params: pse__Project_Task__c priorProjectTask
     * ********************************************************************************************/ 
     private static Boolean isStatusChangedToScheduled(pse__Project_Task__c projectTask, pse__Project_Task__c priorProjectTask){
-        return isValueChanged(projectTask, priorProjectTask, 'pse__Status__c') && projectTask.pse__Status__c == 'Scheduled';
+        return isValueChanged(projectTask, priorProjectTask, 'pse__Status__c') && projectTask.pse__Status__c == 'Scheduled' && (projectTask.NSP_Create_Work_Order__c && projectTask.NSP_Dispatch_Region__c != null);
     }
     /***********************************************************************************************
     * MethodName: isStatusChangedToScheduled
