@@ -7,7 +7,7 @@
     @testSetup private static void prepareData() {
         SetupAuditTrailReporting__c settings = SetupAuditTrailReporting__c.getOrgDefaults();
         settings.IsEnabled__c = True;
-        settings.SoqlHoursLimit__c = 1;
+        settings.SoqlHoursLimit__c = 6;
         settings.SoqlUserLimit__c = 5;
         settings.AuditorEmailAddresses__c = 'test@test.com.invalid';
         settings.NonCriticalTranslatedSections__c = 'Login-As Access';
