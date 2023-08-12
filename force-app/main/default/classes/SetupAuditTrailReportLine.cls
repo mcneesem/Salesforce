@@ -1,5 +1,5 @@
 public with sharing class SetupAuditTrailReportLine {
-    // test w/ SetupAuditTrailReportLineTest (94%)
+    // test w/ SetupAuditTrailReportLineTest (93%)
     private static final String CLASS_NAME = ' ~ SetupAuditTrailReportLine';
 
     public SetupAuditTrailReportLine( SetupAuditTrail auditRecord , User auditCreator ) {
@@ -18,8 +18,8 @@ public with sharing class SetupAuditTrailReportLine {
     public Boolean isCritical() {
         Boolean local = True;
         if ( String.isNotBlank( this.translatedSection )
-            && ( this.nonCriticalTranslatedSecions != null )
-            && this.nonCriticalTranslatedSecions.contains( this.translatedSection )
+            && ( this.nonCriticalTranslatedSections != null )
+            && this.nonCriticalTranslatedSections.contains( this.translatedSection )
            )
         {
             local = False;
@@ -199,17 +199,12 @@ public with sharing class SetupAuditTrailReportLine {
     }
 
     // set of non-critical translated audit sections...
-    private Set<String> nonCriticalTranslatedSecions {
+    private Set<String> nonCriticalTranslatedSections {
         private get {
-            if ( nonCriticalTranslatedSecions == null ) {
-                Set<String> local = new Set<String>();
-                // replace with Custom Setting...  NonCriticalTranslatedSecions__c
-                local.add( 'Login-As Access' );
-                local.add( 'Remote Proxy' );
-                local.add( 'Changed Password' );
-                nonCriticalTranslatedSecions = local;
+            if ( nonCriticalTranslatedSections == null ) {
+                nonCriticalTranslatedSections = SetupAuditTrailQueueable.nonCriticalTranslatedSections;
             }
-            return nonCriticalTranslatedSecions;
+            return nonCriticalTranslatedSections;
         }
         private set;
     }
