@@ -211,6 +211,32 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>displayConnections</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayNews</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayRecommendedLeads</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayTopCard</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_linkedin:companyMatchContainer</componentName>
+                <identifier>runtime_sales_linkedin_companyMatchContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f162d168-a66f-4252-94ce-ac8773059cb1</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentName>sixsense:x6sense_Sales_Intelligence</componentName>
                 <identifier>sixsense_x6sense_Sales_Intelligence</identifier>
             </componentInstance>
@@ -259,6 +285,20 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
+                    <value>Facet-f162d168-a66f-4252-94ce-ac8773059cb1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Sales Navigator</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
                     <value>Facet-68dc9019-5dc3-464e-8b6a-878eece3cc1c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -297,6 +337,12 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_implementationGetParentRecord</componentName>
+                <identifier>c_nsp_implementationGetParentRecord</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
