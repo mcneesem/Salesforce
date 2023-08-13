@@ -12,7 +12,7 @@ Modification Log     :
 */
 
 public class NSP_QuoteApprovalPreValidation {
-    // test w/ NSP_QuoteTriggerHelper_Test (80%)
+    // test w/ QuoteExtControllerTests (80%)
 
     //constructor
     private NSP_QuoteApprovalPreValidation(){}
