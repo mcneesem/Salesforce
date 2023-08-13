@@ -1,5 +1,5 @@
 {
-  "version" : "57.0",
+  "version" : "58.0",
   "nodes" : {
     "LOAD_DATASET0" : {
       "action" : "load",
@@ -298,9 +298,175 @@
           "type" : "analyticsDataset",
           "label" : "Attachment Output",
           "name" : "Attachment_Output",
-          "folderName" : "PEO"
+          "folderName" : "SharedApp"
         },
         "measuresToCurrencies" : [ ]
+      }
+    },
+    "LOAD_DATASET14_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "ContentDocumentId", "Title", "CreatedById", "CreatedDate", "FileType", "FileExtension", "FirstPublishLocationId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "ContentVersion",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "ContentVersion"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET15_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "CreatedDate", "LastModifiedDate", "LastActivityDate", "LastViewedDate", "LastReferencedDate", "NSP_Begin_Date__c", "NSP_Date_Requested__c", "Id", "OwnerId", "IsDeleted", "Name", "CurrencyIsoCode", "RecordTypeId", "CreatedById", "LastModifiedById", "SystemModstamp", "NSP_Action__c", "NSP_Active_EEs__c", "NSP_AdditionalClientPreparedDoc_OL_etc__c", "NSP_AdditionalInformation__c", "NSP_Age_Range_Is__c", "NSP_AgreementType__c", "NSP_AmountOfReimbursement__c", "NSP_AnyPreparedDocumentForTermination__c", "NSP_AnyProvisionInPreparedDocRefersStock__c", "NSP_AnyRevisionsDeletionsToStdQuestions__c", "NSP_AreThereAdditionalClients_subAccount__c", "NSP_BargainingUnitEmployeesComplete__c", "NSP_BargainingUnitEmployeesNote__c", "NSP_BonusSelectOne__c", "NSP_Bonus__c", "NSP_COBRASelectOne__c", "NSP_COBRA_Amount__c", "NSP_COBRA__c", "NSP_CSAaddendumForStockEquity__c", "NSP_CSC_matter_for_any_WSEE__c", "NSP_Case__c", "NSP_ClientDepartmentsDivision__c", "NSP_ClientLocation__c", "NSP_ClientName__c", "NSP_ClientWantsToincludeCustomQuestion__c", "NSP_Client_Number__c", "NSP_Client_Reviews__c", "NSP_Client_System__c", "NSP_CommissionAmount__c", "NSP_CommissionsSelectOne__c", "NSP_Commissions__c", "NSP_ConfirmationOfAgreementStatement__c", "NSP_Consideration_Amount_min_2wks_Salary__c", "NSP_Contact__c", "NSP_CreditApproval__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "NSP_ReportRequest__c",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "NSP_ReportRequest__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN6_copy0" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET14_copy0", "LOAD_DATASET15_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "RIGHT_OUTER",
+        "leftKeys" : [ "FirstPublishLocationId" ],
+        "rightQualifier" : "NSP_ReportRequest__c",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "OUTPUT2_copy0" : {
+      "action" : "save",
+      "sources" : [ "JOIN7_copy0" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Wizardoutput_Contentver",
+          "name" : "Wiz_ContentVer",
+          "folderName" : "HR_COE"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "LOAD_DATASET16_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "LastName", "FirstName", "Username" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "User",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN7_copy0" : {
+      "action" : "join",
+      "sources" : [ "JOIN8_copy0", "LOAD_DATASET16_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "CreatedById" ],
+        "rightQualifier" : "User",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET18_copy0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN8_copy0" : {
+      "action" : "join",
+      "sources" : [ "FORMULA3_copy0", "LOAD_DATASET18_copy0" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "NSP_ReportRequest__c.NSP_ClientName__c" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "FORMULA2_copy0" : {
+      "action" : "formula",
+      "sources" : [ "JOIN6_copy0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "NSP_ReportRequest__c.NSP_Date_Requested__c_formula",
+          "label" : "NSP_ReportRequest__c.Date Requested Formula",
+          "formulaExpression" : " \r\n\r\ndate_format(\"NSP_ReportRequest__c.NSP_Date_Requested__c\", 'MM-dd-yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA3_copy0" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA2_copy0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "CreatedDate_formula",
+          "label" : "Created Date Formula",
+          "formulaExpression" : "date_format( \"CreatedDate\", 'MM-dd-yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
       }
     }
   },
@@ -456,6 +622,97 @@
         "type" : "OUTPUT",
         "top" : 672,
         "left" : 532
+      },
+      "LOAD_DATASET14_copy0" : {
+        "label" : "ContentVersion",
+        "type" : "LOAD_DATASET",
+        "top" : 952,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET15_copy0" : {
+        "label" : "NSP_ReportRequest__c",
+        "type" : "LOAD_DATASET",
+        "top" : 1092,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN6_copy0" : {
+        "label" : "ReportRequest with content Version",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 952,
+        "left" : 252
+      },
+      "OUTPUT2_copy0" : {
+        "label" : "WizardOut_ContentVer",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 952,
+        "left" : 812
+      },
+      "LOAD_DATASET16_copy0" : {
+        "label" : "User",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 1092,
+        "left" : 252,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN7_copy0" : {
+        "label" : "Adding User Details",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 952,
+        "left" : 672
+      },
+      "LOAD_DATASET18_copy0" : {
+        "label" : "Account",
+        "description" : "",
+        "type" : "LOAD_DATASET",
+        "top" : 1232,
+        "left" : 112.1,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN8_copy0" : {
+        "label" : "Adding Account",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 952,
+        "left" : 532
+      },
+      "TRANSFORM1_copy0" : {
+        "label" : "Date Format",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 952,
+        "left" : 392,
+        "graph" : {
+          "FORMULA2_copy0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA3_copy0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA2_copy0",
+          "target" : "FORMULA3_copy0"
+        } ]
       }
     },
     "connectors" : [ {
@@ -503,6 +760,30 @@
     }, {
       "source" : "JOIN4",
       "target" : "OUTPUT1"
+    }, {
+      "source" : "LOAD_DATASET14_copy0",
+      "target" : "JOIN6_copy0"
+    }, {
+      "source" : "LOAD_DATASET15_copy0",
+      "target" : "JOIN6_copy0"
+    }, {
+      "source" : "JOIN7_copy0",
+      "target" : "OUTPUT2_copy0"
+    }, {
+      "source" : "JOIN8_copy0",
+      "target" : "JOIN7_copy0"
+    }, {
+      "source" : "LOAD_DATASET16_copy0",
+      "target" : "JOIN7_copy0"
+    }, {
+      "source" : "TRANSFORM1_copy0",
+      "target" : "JOIN8_copy0"
+    }, {
+      "source" : "LOAD_DATASET18_copy0",
+      "target" : "JOIN8_copy0"
+    }, {
+      "source" : "JOIN6_copy0",
+      "target" : "TRANSFORM1_copy0"
     } ],
     "hiddenColumns" : [ ]
   },

@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>Cases_With_Queue</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Selected Services Open Cases</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

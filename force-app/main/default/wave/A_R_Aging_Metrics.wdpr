@@ -5,7 +5,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Account_Status__c", "Id", "Name", "OwnerId" ],
+        "fields" : [ "BillingStreet", "BillingCity", "BillingPostalCode", "BillingStateCode", "BillingCountry", "Id", "Name", "OwnerId", "NSP_Account_Status__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
