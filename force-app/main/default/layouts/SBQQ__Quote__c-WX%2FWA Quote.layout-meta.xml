@@ -102,6 +102,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Budgetary_Quote__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Requested_First_Check_Date__c</field>
             </layoutItems>
             <layoutItems>
