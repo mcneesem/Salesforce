@@ -103,7 +103,7 @@ public class NSP_OpportunityTriggerHelper {
                User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
                List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
                if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
-        validateClosedDate(closedOppList);
+        //validateClosedDate(closedOppList);
         }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -311,9 +311,9 @@ public class NSP_OpportunityTriggerHelper {
                  // Added as part of 195079
                  List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
 
-                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
+                 /*if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
                     validateClosedDate(closedOppList);
-                }
+                }*/
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
@@ -893,7 +893,7 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
 * Params:       List<Opportunity>OpportunityList
 * Defect:       DF-01716
 * ********************************************************************************************/ 
-public static void validateClosedDate(List<Opportunity> OpportunityList){
+/*public static void validateClosedDate(List<Opportunity> OpportunityList){
 
     Id loggedInUserId = UserInfo.getUserId();   
     set<Id> ncsGrpMemIdSet = new set<Id>();
@@ -912,7 +912,7 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         } 
     }
     
-}
+}*/
 
 /* Description: This method sets sales office details from user 
      * 

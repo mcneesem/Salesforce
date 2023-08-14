@@ -481,14 +481,14 @@ public class NSP_OpportunityTriggerHelperTest {
    * @Created date: 04/20/2022.
    * @return void                          
    */
-  @isTest
+  /*@isTest
   static void validateClosedDateTest(){
   List<Opportunity> opportunityList = [SELECT Id,AccountId,OwnerId,StageName,CloseDate FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
       Test.startTest();
       NSP_OpportunityTriggerHelper.validateClosedDate(opportunityList);
       Test.stopTest();
       System.assertEquals(opportunityList[0].CloseDate, date.today());
-  }
+  }*/
  
    @isTest
    static void salesOfficeTest()
