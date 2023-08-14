@@ -1,7 +1,6 @@
 <apex:component access="global" controller="NSP_SAEmail_DateTimeController">
     <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
     Date : {!FormattedDatetime}<br/>
-	Time : {!StartTime} to {!EndTime}&nbsp;{!OperatingHoursName}
 	<apex:attribute assignTo="{!date_time}" description="The DateTime value to be rendered" name="date_time_value" type="DateTime"></apex:attribute>
 	<apex:attribute assignTo="{!endDate}" description="The DateTime value to be rendered" name="end_Date" type="DateTime"></apex:attribute>
 	<apex:attribute assignTo="{!defined_format}" description="The optional format to use for the DateTime value to be rendered" name="date_time_format" type="String"></apex:attribute>
