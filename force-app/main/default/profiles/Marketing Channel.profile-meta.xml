@@ -14495,6 +14495,10 @@
         <recordType>Task.Referral_Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ThreatDetectionFeedback-Threat Detection Feedback Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
