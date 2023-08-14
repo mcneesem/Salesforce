@@ -8,6 +8,9 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>

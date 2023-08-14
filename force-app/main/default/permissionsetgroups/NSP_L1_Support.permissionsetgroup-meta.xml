@@ -9,6 +9,9 @@
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Correspondence</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>New_Client_Sales</permissionSets>
     <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
     <permissionSets>Partner_Access</permissionSets>

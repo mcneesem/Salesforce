@@ -4,6 +4,9 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>DA RA and SSS</label>
     <permissionSets>Checklist_Read_Create</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
