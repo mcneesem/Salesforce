@@ -14420,6 +14420,10 @@
         <recordType>Task.Referral_Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Task-Support Core Sales Task Layout</layout>
         <recordType>Task.Task</recordType>
     </layoutAssignments>
