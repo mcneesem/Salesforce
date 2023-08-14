@@ -12,6 +12,9 @@
     <permissionSets>DOZISF__ZoomInfo_User</permissionSets>
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>LID_Sales_Navigator</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
