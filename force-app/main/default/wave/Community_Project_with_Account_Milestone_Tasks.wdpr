@@ -5,7 +5,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Sub_Category__c", "NSP_Category__c", "Id", "OwnerId", "Name", "pse__End_Date_Time__c", "pse__Milestone__c", "pse__Order__c", "pse__Project__c", "pse__Start_Date_Time__c", "pse__Status__c", "NSP_Owner__c", "NSP_Account_Id__c", "NSP_Project_Attendance__c", "NSP_Visible_to_Client__c" ],
+        "fields" : [ "NSP_Percentage_Complete__c", "Id", "OwnerId", "Name", "pse__End_Date_Time__c", "pse__Milestone__c", "pse__Order__c", "pse__Project__c", "pse__Start_Date_Time__c", "pse__Status__c", "NSP_Owner__c", "NSP_Account_Id__c", "NSP_Category__c", "NSP_Project_Attendance__c", "NSP_Sub_Category__c", "NSP_Visible_to_Client__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "pse__Project_Task__c",
@@ -305,43 +305,9 @@
         } ]
       }
     },
-    "EDIT_ATTRIBUTES0_copy0" : {
-      "action" : "schema",
-      "sources" : [ "JOIN16_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "pse__Start_Date_Time__c",
-          "newProperties" : {
-            "label" : "Start Date & Time",
-            "name" : "pse__Start_Date_Time__c",
-            "typeProperties" : {
-              "type" : "DATETIME",
-              "format" : "MM-dd-yyyy hh:mm:ss a"
-            }
-          }
-        } ]
-      }
-    },
-    "EDIT_ATTRIBUTES1_copy0" : {
-      "action" : "schema",
-      "sources" : [ "EDIT_ATTRIBUTES0_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "pse__End_Date_Time__c",
-          "newProperties" : {
-            "label" : "End Date & Time",
-            "name" : "pse__End_Date_Time__c",
-            "typeProperties" : {
-              "type" : "DATETIME",
-              "format" : "MM-dd-yyyy hh:mm:ss a"
-            }
-          }
-        } ]
-      }
-    },
     "EDIT_ATTRIBUTES2" : {
       "action" : "schema",
-      "sources" : [ "EDIT_ATTRIBUTES1_copy0" ],
+      "sources" : [ "FORMULA3" ],
       "parameters" : {
         "fields" : [ {
           "name" : "ProjectTask.pse__End_Date__c",
@@ -370,6 +336,36 @@
               "format" : "MM-dd-yyyy"
             }
           }
+        } ]
+      }
+    },
+    "FORMULA2" : {
+      "action" : "formula",
+      "sources" : [ "JOIN16_copy0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "End_Date_Time",
+          "label" : "End Date & Time",
+          "formulaExpression" : "date_format(pse__End_Date_Time__c, 'MM-dd-yyyy hh:mm a')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA3" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA2" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Start_Date_Time",
+          "label" : "Start Date & Time",
+          "formulaExpression" : "date_format(pse__Start_Date_Time__c, 'MM-dd-yyyy hh:mm a')",
+          "precision" : 255,
+          "defaultValue" : ""
         } ]
       }
     }
@@ -536,28 +532,34 @@
         "top" : 391.8,
         "left" : 1093.6,
         "graph" : {
-          "EDIT_ATTRIBUTES0_copy0" : {
-            "label" : "Edit Attributes"
-          },
-          "EDIT_ATTRIBUTES1_copy0" : {
-            "label" : "Edit Attributes"
-          },
           "EDIT_ATTRIBUTES2" : {
             "label" : "Edit Attributes"
           },
           "EDIT_ATTRIBUTES3" : {
             "label" : "Edit Attributes"
+          },
+          "FORMULA2" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "End Date & Time"
+          },
+          "FORMULA3" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Start Date & Time"
           }
         },
         "connectors" : [ {
-          "source" : "EDIT_ATTRIBUTES0_copy0",
-          "target" : "EDIT_ATTRIBUTES1_copy0"
-        }, {
-          "source" : "EDIT_ATTRIBUTES1_copy0",
-          "target" : "EDIT_ATTRIBUTES2"
-        }, {
           "source" : "EDIT_ATTRIBUTES2",
           "target" : "EDIT_ATTRIBUTES3"
+        }, {
+          "source" : "FORMULA3",
+          "target" : "EDIT_ATTRIBUTES2"
+        }, {
+          "source" : "FORMULA2",
+          "target" : "FORMULA3"
         } ]
       }
     },

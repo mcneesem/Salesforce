@@ -34,7 +34,7 @@
             <sortIndex>0</sortIndex>
         </recordDisplayFields>
         <recordIdField>Id</recordIdField>
-        <salesforceActionsEnabled>true</salesforceActionsEnabled>
+        <salesforceActionsEnabled>false</salesforceActionsEnabled>
         <sortIndex>2</sortIndex>
     </dimensions>
     <dimensions>

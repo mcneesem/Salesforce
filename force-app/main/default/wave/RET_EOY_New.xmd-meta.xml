@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata">
+<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <dataset>RET_EOY_New</dataset>
+    <dates>
+        <alias>Asset.NSP_EOY_Am.Amendment Sent Date</alias>
+        <firstDayOfWeek>-1</firstDayOfWeek>
+        <fiscalMonthOffset>0</fiscalMonthOffset>
+        <label>Amendment Sent Date</label>
+        <sortIndex>0</sortIndex>
+        <type xsi:nil="true"/>
+    </dates>
+    <dates>
+        <alias>Asset.NSP_EOY_Am.DocuSign Executed Date</alias>
+        <firstDayOfWeek>-1</firstDayOfWeek>
+        <fiscalMonthOffset>0</fiscalMonthOffset>
+        <label>DocuSign Executed Date</label>
+        <sortIndex>1</sortIndex>
+        <type xsi:nil="true"/>
+    </dates>
+    <dates>
+        <alias>Asset.NSP_EOY_Am.Declined Date</alias>
+        <firstDayOfWeek>-1</firstDayOfWeek>
+        <fiscalMonthOffset>0</fiscalMonthOffset>
+        <label>Declined Date</label>
+        <sortIndex>2</sortIndex>
+        <type xsi:nil="true"/>
+    </dates>
     <dimensions>
         <field>Asset.NSP_EOY_Am.UserAB.Name</field>
         <isDerived>false</isDerived>
