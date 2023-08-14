@@ -439,11 +439,11 @@ public class NSP_OrderTriggerHelper {
                         if(orderItemObj.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL && orderItemObj.NSP_AnniversaryBlngApplicable__c == true && (orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW || orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_RENEWAL)){
                             orderItemObj.ServiceDate = System.today();
                             orderItemObj.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
-                            if(orderItemObj.EndDate != null){
-                                orderItemObj.blng__BillThroughDateOverride__c = orderItemObj.EndDate;
-                            }
-                            else if(orderItemObj.SBQQ__SubscriptionTerm__c != null){
+                            if(orderItemObj.SBQQ__SubscriptionTerm__c != null){
                                 orderItemObj.blng__BillThroughDateOverride__c = System.today().addMonths(Integer.valueOf(orderItemObj.SBQQ__SubscriptionTerm__c))-1; 
+                            } 
+                            else if(orderItemObj.EndDate != null){
+                                orderItemObj.blng__BillThroughDateOverride__c = orderItemObj.EndDate;
                             }
                             orderItemListToUpdate.add(orderItemObj);
                         }
@@ -687,7 +687,7 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
            oi.NSP_ReCalculation_Status_Internal__c != 'Processing' && oi.NSP_ReCalculation_Status_Internal__c != 'Staged' &&
            oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE){
                oi.NSP_Project_Completion_Date__c = oi.Order.NSP_Project_Go_Live_Date__c;
-               if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null){
+               if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null && oi.NSP_QL_ActionType__c != 'Amend'){
                 oi.blng__BillThroughDateOverride__c = oi.EndDate;
                }
                orderItemToUpdate.add(oi);
@@ -696,7 +696,7 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
                     oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE){
                         oi.ServiceDate = System.today();
                         oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
-                        if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null){
+                        if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != nullv && oi.NSP_QL_ActionType__c != 'Amend'){
                             oi.blng__BillThroughDateOverride__c = oi.EndDate;
                         }
                         orderItemToUpdate.add(oi);     
