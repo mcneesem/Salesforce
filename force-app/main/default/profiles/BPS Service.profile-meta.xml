@@ -47836,6 +47836,10 @@
         <recordType>Task.Referral_Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Task-Task Layout</layout>
         <recordType>Task.Task</recordType>
     </layoutAssignments>
