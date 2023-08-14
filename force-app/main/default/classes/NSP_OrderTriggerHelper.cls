@@ -696,7 +696,7 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
                     oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE){
                         oi.ServiceDate = System.today();
                         oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
-                        if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != nullv && oi.NSP_QL_ActionType__c != 'Amend'){
+                        if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null && oi.NSP_QL_ActionType__c != 'Amend'){
                             oi.blng__BillThroughDateOverride__c = oi.EndDate;
                         }
                         orderItemToUpdate.add(oi);     
