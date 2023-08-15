@@ -36,4 +36,14 @@ private class NSP_DeleteMergeCaseBatch_Test {
         
     }
 
+    @isTest private static void testDeleteMergeCaseBatchScheduler() {
+        Test.startTest();
+        System.schedule(
+            'testDeleteMergeCaseBatchScheduler' ,
+            '3 3 3 * * ?' ,
+            new NSP_DeleteMergeCaseBatchScheduler()
+        );
+        Test.stopTest();
+    }
+
 }
