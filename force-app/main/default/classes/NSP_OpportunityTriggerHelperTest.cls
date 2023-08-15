@@ -321,8 +321,14 @@ public class NSP_OpportunityTriggerHelperTest {
         oppty.NSP_BPA__c = oppty.OwnerId;
         oppty.StageName = 'Closed Won';
         oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
-       
-        update oppty;  
+        oppty.AVA_SFCLOUD__Sales_Tax__c = 1000;
+        oppty.Type = NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY;
+        update oppty;
+        
+        List<Opportunity> updatedOppoList = new List<Opportunity>();
+        updatedOppoList.add(oppty);
+        NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
+        helper.retirementServicesForNonWOProducts(updatedOppoList);
        Test.stopTest();
         System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
     }
@@ -379,6 +385,55 @@ public class NSP_OpportunityTriggerHelperTest {
        NSP_ChildOpportunitiesHelperFunctions.defaultFieldsOnChildOpportunity(cOppList, pOppIdSet);
         Test.stopTest();
     }
+
+    /**
+* @Description: This test method is used to cover createAsset
+* @Created date: 14/08/2023.
+* @return void            
+* @author :             
+*/
+    
+@isTest
+static void createAssetTest(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id, AccountId, StageName, NSP_PrimaryProduct__c FROM Opportunity
+                                         WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX' LIMIT 1];
+
+    opportunity oppty = opportunityList[0];
+    oppty.NSP_PrimaryProduct__c = 'Insurance Services';
+    oppty.StageName = 'Closed Won';
+    update oppty;
+
+    Test.stopTest();
+}
+
+@isTest
+static void createAssetTest2(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id, AccountId, StageName, NSP_PrimaryProduct__c FROM Opportunity
+                                         WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX' LIMIT 1];
+
+    opportunity oppty = opportunityList[0];
+    oppty.NSP_PrimaryProduct__c = 'Expense Management';
+    oppty.StageName = 'Closed Won';
+    update oppty;
+
+    Test.stopTest();
+}
+
+@isTest
+static void createAssetTest3(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id, AccountId, StageName, NSP_PrimaryProduct__c FROM Opportunity
+                                         WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX' LIMIT 1];
+
+    opportunity oppty = opportunityList[0];
+    oppty.NSP_PrimaryProduct__c = 'WA';
+    oppty.StageName = 'Closed Won';
+    update oppty;
+
+    Test.stopTest();
+}
      
     /**
     * @Description: This test method is used to cover sendClosedWonEmailNotifications for WX method of NSP_EmailWithAttachment
@@ -481,7 +536,8 @@ public class NSP_OpportunityTriggerHelperTest {
    * @Created date: 04/20/2022.
    * @return void                          
    */
-  /*@isTest
+  /*
+  @isTest
   static void validateClosedDateTest(){
   List<Opportunity> opportunityList = [SELECT Id,AccountId,OwnerId,StageName,CloseDate FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
       Test.startTest();
