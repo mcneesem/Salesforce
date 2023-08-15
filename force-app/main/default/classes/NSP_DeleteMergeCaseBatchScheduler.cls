@@ -5,7 +5,8 @@
 * Name : NSP_DeleteMergeCaseBatchScheduler
 */
 public class NSP_DeleteMergeCaseBatchScheduler implements Schedulable{
-    
+    // test w/ NSP_DeleteMergeCaseBatch_Test (??%)
+
     public void execute(SchedulableContext SC){
         Database.executeBatch(new NSP_DeleteMergeCaseBatch());
     }
