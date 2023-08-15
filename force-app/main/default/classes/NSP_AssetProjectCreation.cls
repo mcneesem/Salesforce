@@ -154,6 +154,7 @@ public class NSP_AssetProjectCreation implements Queueable  {
         project.pse__Project_Status__c = NSP_ServiceConstants.ProjectStatus;
         project.pse__Account__c = accountId;
         project.RecordTypeId = recordTypeId;
+        project.pse__Is_Billable__c = False;
         project.NSP_Asset_Implementation_Project__c= True;
         if(assetTemplateType== label.Middle_Market_Implementation_Project){
             project.pse__End_Date__c = System.Today().addDays(180);
