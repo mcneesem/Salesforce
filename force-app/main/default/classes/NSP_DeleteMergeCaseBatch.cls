@@ -6,7 +6,8 @@
 * Story : STY-00861 - Merge Case
 */
 public class NSP_DeleteMergeCaseBatch implements Database.Batchable<SObject> {
-    
+    // test w/ NSP_DeleteMergeCaseBatch_Test (??%)
+
     public static final String CASE_MERGED = 'Merged';
     public Database.QueryLocator start(Database.BatchableContext bc){
         
