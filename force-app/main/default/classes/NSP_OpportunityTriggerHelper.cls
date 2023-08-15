@@ -867,7 +867,7 @@ public class NSP_OpportunityTriggerHelper {
 * Params:       Opportunity opp
 * User-Story:   US-198540
 * ********************************************************************************************/ 
-public static boolean validateByNonProfitAndRole(Opportunity opp){
+/*public static boolean validateByNonProfitAndRole(Opportunity opp){
   
     if(byPassValidationOnRole== null){
         byPassValidationOnRole = new set<Id>();
@@ -884,7 +884,7 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
   
 
   return false;
-}
+}*/
 
 /***********************************************************************************************
 * MethodName: validateClosedDate
