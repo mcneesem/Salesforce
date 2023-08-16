@@ -1,0 +1,49 @@
+<template>
+    
+    <!-- Account Team table-->
+    <div class="c-container">
+        <lightning-layout>
+            <lightning-layout-item size="12" padding="around-small" class="graycolor">
+         <h4 class="slds-text-heading_small slds-hyphenate">
+                <b> Account Team
+                    </b></h4>    
+            </lightning-layout-item>
+    </lightning-layout>    
+    <lightning-card if:true={tableAccountTeam}>
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered slds-table_striped">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    
+                    <th scope="col">
+                        <div title="Key">Member</div>
+                    </th>
+                    <th scope="col">
+                        <div title="Value">Role</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={accountMap} for:item="mapKey">
+                    <tr key={mapKey.key}>
+                        <th scope="col">
+                            <div title={mapKey.key}>{mapKey.key}</div>
+                        </th>
+                        <th scope="col">
+                            <div title={mapKey.value}>{mapKey.value}</div>
+                        </th>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </lightning-card>
+            <template if:false={tableAccountTeam}>
+                <div>     
+                <h4 class="slds-text-heading_small slds-hyphenate slds-text-align_center ">
+                    <br> <b> No Account Team Member associated to this Asset</b><br>
+            </h4>
+            <br>
+            </div>
+            </template>
+    </div>
+    
+    </template>

@@ -1,0 +1,68 @@
+<template>
+    <div class="serviceTeam slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form onsubmit={handleSubmit} record-id={recordId} object-api-name={objectApiName}
+            density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.serviceTeam}>
+            </lightning-formatted-text>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="7">
+                    <template if:true={immediateNeedForWorkersValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" 
+                            value={label.immediateNeedForWorkers}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class= "slds-m-left_xx-small" name="NSP_Immediate_need_for_Workers_Comp_Cert__c"
+                            label={label.immediateNeedForWorkers} variant="label-hidden"
+                            options={immediateNeedForWorkersValues.data.values}
+                            value={fields.NSP_Immediate_need_for_Workers_Comp_Cert__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showCertificationFields}>
+                            <div class="slds-m-left_medium">
+                                <lightning-input-field field-name="When_are_certificates_needed__c"></lightning-input-field>
+                                <lightning-input-field field-name="List_of_certificates_requested__c"></lightning-input-field>
+                                <lightning-input-field field-name="Send_the_certificates_to__c"></lightning-input-field>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:true={clientHaveUrgentHRNeeds.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.clientHaveUrgentHRNeeds}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class="slds-m-left_xx-small" name="Client_have_any_urgent_HR_needs__c"
+                            label={label.clientHaveUrgentHRNeeds} variant="label-hidden"
+                            options={clientHaveUrgentHRNeeds.data.values}
+                            value={fields.Client_have_any_urgent_HR_needs__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showHRNeedField}>
+                            <lightning-input-field class="slds-m-left_medium" field-name="Provide_Urgent_HR_Needs_details__c"></lightning-input-field>
+                        </template>
+                    </template>
+                    <template if:true={anticipatedGrowthPlans.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.anticipatedGrowthPlans}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group class= "slds-m-left_xx-small" name="NSP_Does_Client_have_Growth_Plans__c"
+                            label={label.anticipatedGrowthPlans} variant="label-hidden"
+                            options={anticipatedGrowthPlans.data.values}
+                            value={fields.NSP_Does_Client_have_Growth_Plans__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <template if:true={showAnticipatedPlanDetailsField}>
+                            <lightning-formatted-text class="slds-form-element__label slds-m-left_medium" value={label.checkAllThatApply}>
+                            </lightning-formatted-text>
+                            <lightning-checkbox-group if:true={checAllThatApplyOptions.data} name="Check_all_changes_that_apply__c"
+                                label={label.isThereNeedForTechpack} variant="label-hidden" class="slds-m-left_medium"
+                                options={checAllThatApplyOptions.data.values} value={fields.Check_all_changes_that_apply__c}
+                                onchange={handleChange}>
+                            </lightning-checkbox-group>
+                            <lightning-input-field class="slds-m-left_medium" field-name="NSP_Anticipated_Growth_Plans_details__c"></lightning-input-field>
+                        </template>
+                    </template>
+                    <lightning-input-field field-name="NSP_Service_team_notes__c"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

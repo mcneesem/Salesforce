@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Invoices_Report_Link__c</fullName>
+    <description>Directs to the Invoices Report filtered by Account</description>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(Left($Api.Enterprise_Server_URL_190,(find(&apos;/services&apos;,$Api.Enterprise_Server_URL_190)))+&quot;lightning/r/Report/&quot;+$Label.NSP_DunningReoprtSFId+&quot;/view?queryScope=userFolders&amp;fv1=&quot;+AccountId, &quot;Click Here&quot;, &quot;_blank&quot;)</formula>
+    <label>Invoices Report Link</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

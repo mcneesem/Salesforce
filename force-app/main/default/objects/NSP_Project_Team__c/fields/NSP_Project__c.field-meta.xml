@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Project__c</fullName>
+    <description>This field is created as part of STY-03121 to create the relation of Project with Project Team</description>
+    <externalId>false</externalId>
+    <label>Project</label>
+    <referenceTo>pse__Proj__c</referenceTo>
+    <relationshipLabel>Project Teams</relationshipLabel>
+    <relationshipName>Project_Teams</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

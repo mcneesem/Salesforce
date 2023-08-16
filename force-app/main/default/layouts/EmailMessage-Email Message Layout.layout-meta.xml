@@ -78,6 +78,10 @@
                 <behavior>Edit</behavior>
                 <field>TextBody</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_NetSuite_External_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

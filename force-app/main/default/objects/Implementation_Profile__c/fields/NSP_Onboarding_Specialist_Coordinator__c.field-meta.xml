@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Onboarding_Specialist_Coordinator__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Client Implementation Coordinator</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Implementation Profiles (Onboarding Specialist Coordinator)</relationshipLabel>
+    <relationshipName>Implementation_Profilesiyke</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

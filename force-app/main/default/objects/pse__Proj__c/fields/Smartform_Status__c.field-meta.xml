@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Smartform_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Smartform Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Received (Go LIVE w/out Accruals)</fullName>
+                <default>false</default>
+                <label>Not Received (Go LIVE w/out Accruals)</label>
+            </value>
+            <value>
+                <fullName>Not Received On-Time (Accurate)</fullName>
+                <default>false</default>
+                <label>Not Received On-Time (Accurate)</label>
+            </value>
+            <value>
+                <fullName>Not Received On-Time (Not Accurate)</fullName>
+                <default>false</default>
+                <label>Not Received On-Time (Not Accurate)</label>
+            </value>
+            <value>
+                <fullName>Received On-Time (Accurate)</fullName>
+                <default>false</default>
+                <label>Received On-Time (Accurate)</label>
+            </value>
+            <value>
+                <fullName>Received On-Time (Not Accurate)</fullName>
+                <default>false</default>
+                <label>Received On-Time (Not Accurate)</label>
+            </value>
+            <value>
+                <fullName>TimeStar Accrual Status  (list field)</fullName>
+                <default>false</default>
+                <label>TimeStar Accrual Status  (list field)</label>
+            </value>
+            <value>
+                <fullName>Implemented after Go Live</fullName>
+                <default>false</default>
+                <label>Implemented after Go Live</label>
+            </value>
+            <value>
+                <fullName>Implemented at Go Live</fullName>
+                <default>false</default>
+                <label>Implemented at Go Live</label>
+            </value>
+            <value>
+                <fullName>Not Required</fullName>
+                <default>false</default>
+                <label>Not Required</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

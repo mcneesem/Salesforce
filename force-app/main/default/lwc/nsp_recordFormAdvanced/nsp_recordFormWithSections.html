@@ -1,0 +1,173 @@
+<template>
+  <div if:true={heading} class="slds-modal__header">
+    <div class="slds_modal__header">
+      <h1 class="slds-modal__title slds-hyphenate slds-align_absolute-center">
+        {heading}
+      </h1>
+    </div>
+  </div>
+
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectName}
+    onerror={handleError}
+    onload={handleLoad}
+    onsuccess={handleSuccess}
+    onsubmit={handleSubmit}
+    density="comfy">
+    <lightning-spinner
+      if:true={state.isLoading}
+      alternative-text="Loading"></lightning-spinner>
+    <lightning-accordion
+      active-section-name={firstSectionName}
+      allow-multiple-sections-open>
+      <template for:each={sections} for:item="section">
+        <lightning-accordion-section
+          name={section.name}
+          label={section.name}
+          key={section.name} class="nsp_accordion_section">
+          <!-- Fields with Sub Section -->
+          <lightning-accordion
+            if:true={section.subSections}
+            allow-multiple-sections-open>
+            <template for:each={section.subSections} for:item="subSection">
+              <lightning-accordion-section
+                name={subSection.name}
+                label={subSection.name}
+                key={subSection.name} class="nsp_accordion_subsection">
+                <div class="slds-grid slds-gutters slds-p-top_x-small">
+                  <template
+                    for:each={subSection.fieldsGroup}
+                    for:item="fields">
+                    <div class={colClassName} key={uniqueValue}>
+                      <template for:each={fields} for:item="field">
+                        <div key={field.name} data-container={field.name} class={field.containerClassName}>
+                          <template if:false={field.isCustom}>
+                            <lightning-formatted-text
+                              if:true={field.label}
+                              value={field.label}
+                              class={field.className}>
+                            </lightning-formatted-text>
+                            <div class="slds-var-m-bottom_medium nsp_margin">
+                              <lightning-input-field
+                              field-name={field.name}
+                              data-name={field.name}
+                              variant={field.variant}
+                              class={field.className}
+                              onchange={handleValueChange}
+                              disabled={field.disabled}>
+                            </lightning-input-field>
+                          </div>
+                          </template>
+
+                          <template if:true={field.isCustom}>
+                             
+                            <template if:true={field.isRichText}>
+                              <lightning-formatted-text
+                              if:true={field.label}
+                              value={field.label}
+                              class={field.className}>
+                            </lightning-formatted-text>
+                            <div class="slds-scrollable_y nsp_richTextBox">
+                            <lightning-formatted-rich-text
+                               if:true={field.isRichText}
+                                label={field.label}
+                                type={field.type}
+                                name={field.name}
+                                variant={field.variant}
+                                value={field.value}
+                                class={field.className}
+                                disabled={field.disabled}>
+                            </lightning-formatted-rich-text></div>
+                          </template>
+                          <template if:true={field.isURL}>
+                            <lightning-formatted-text
+                              if:true={field.label}
+                              value={field.label}
+                              class={field.className}>
+                            </lightning-formatted-text>
+                            <div class="nsp_richTextBox">
+                            <lightning-formatted-url 
+                              type={field.type}
+                              label={field.urlLabel}
+                              name={field.name}
+                              variant={field.variant}
+                              value={field.value}
+                              class={field.className}
+                              disabled={field.disabled}>
+                          ` </lightning-formatted-url>
+                            </div>
+                          </template>
+                          <template if:false={field.isURL}>
+                            <lightning-input
+                              if:false={field.isRichText}
+                              type={field.type}
+                              label={field.label}
+                              name={field.name}
+                              variant={field.variant}
+                              value={field.value}
+                              class={field.className}
+                              disabled={field.disabled}
+                              checked={field.isChecked}>
+                            </lightning-input></template>
+                        </template>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+              </lightning-accordion-section>
+            </template>
+          </lightning-accordion>
+
+          <!-- Fields without Sub Section -->
+          <div
+            if:true={section.fieldsGroup}
+            class="slds-grid slds-gutters slds-p-top_x-small ">
+            <template for:each={section.fieldsGroup} for:item="fields">
+              <div class={colClassName} key={uniqueValue}>
+                <template for:each={fields} for:item="field">
+                  <div key={field.name} data-container={field.name} class={field.containerClassName}>
+                    <template if:false={field.isCustom}>
+                       
+                      <lightning-formatted-text
+                        if:true={field.label}
+                        value={field.label}
+                        class={field.className}>
+                      </lightning-formatted-text>
+                      <lightning-input-field
+                        field-name={field.name}
+                        data-name={field.name}
+                        variant={field.variant}
+                        class={field.className}
+                        onchange={handleValueChange}
+                        disabled={field.disabled}>
+                      </lightning-input-field>
+                    </template>
+
+                     
+                    <lightning-input
+                      if:true={field.isCustom}
+                      type={field.type}
+                      label={field.label}
+                      name={field.name}
+                      value={field.value}
+                      variant={field.variant}
+                      class={field.className}
+                      disabled={field.disabled}
+                      checked={field.isChecked}>
+                    </lightning-input>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+        </lightning-accordion-section>
+      </template>
+    </lightning-accordion>
+    <div if:true={showSaveButton} class="slds-var-m-top_medium">
+      <lightning-button variant="brand" type="submit" label="Save">
+      </lightning-button>
+    </div>
+  </lightning-record-edit-form>
+</template>

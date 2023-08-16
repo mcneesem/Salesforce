@@ -3,6 +3,11 @@
     <fullName>BPS_Amend_QLE_FieldSet</fullName>
     <description>Used in QLE for BPS Technology Products Amendment.</description>
     <displayedFields>
+        <field>NSP_Clone_Required__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
         <field>SBQQ__ProductName__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -38,17 +43,17 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>SBQQ__BillingFrequency__c</field>
+        <field>SBQQ__PriorQuantity__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>NSP_QLE_Prior_Quantity__c</field>
+        <field>NSP_Delta_Discount__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>NSP_QLE_Action_Type__c</field>
+        <field>NSP_Delta_Total__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>

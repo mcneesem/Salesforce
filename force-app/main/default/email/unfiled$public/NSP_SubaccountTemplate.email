@@ -1,0 +1,22 @@
+<messaging:emailTemplate subject="NEW Client  {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <table border="0" width="550">
+    <c:InsperityEmailHeader ></c:InsperityEmailHeader>
+<p> Sub-accounts have been added for the following reason(s): </p>
+<p><apex:outputText escape="false" value="<li>{!SUBSTITUTE(relatedTo.Why_is_subaccount_needed__c,';','<li/>')}"/></p>
+<p>Due to classing the sub account will require a new download. Please notify the orientation<br/>
+coordinator and payroll specialist once this has been completed.  </p>
+
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter ></c:InsperityEmailFooter>
+</table>
+</body>
+</html>
+</messaging:HtmlEmailBody>
+
+</messaging:emailTemplate>

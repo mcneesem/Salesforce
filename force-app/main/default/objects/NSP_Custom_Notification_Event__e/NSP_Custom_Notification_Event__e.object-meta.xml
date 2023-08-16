@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Event to publish custom notification using a flow</description>
+    <eventType>HighVolume</eventType>
+    <label>Custom Notification Event</label>
+    <pluralLabel>Custom Notification Event</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
+</CustomObject>

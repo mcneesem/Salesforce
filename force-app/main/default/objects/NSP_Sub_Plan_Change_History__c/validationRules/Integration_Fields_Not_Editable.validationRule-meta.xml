@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Fields_Not_Editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos;,
+$User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos;,
+$User.NSP_Profile_Name__c &lt;&gt;&apos;System Administrator&apos;,
+$Setup.NSP_Trigger_Switch__c.NSP_Sub_Plan_Change_History__c =false,
+
+RecordType.DeveloperName = &apos;WO&apos; ,
+
+OR(
+
+AND(NOT(ISNULL(PRIORVALUE(NSP_Plan_Effective_Date__c))),
+ISCHANGED( NSP_Plan_Effective_Date__c )),
+
+AND(NOT(ISBLANK(PRIORVALUE( NSP_Plan_Subplan_Relationship__c ))),
+ISCHANGED( NSP_Plan_Subplan_Relationship__c )),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Subplan_for_Merge__c ))),
+ISCHANGED(NSP_Subplan_for_Merge__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Plan_ID__c))),
+ISCHANGED(NSP_Plan_ID__c)),
+
+AND(NOT(ISPICKVAL(PRIORVALUE(NSP_Plan_Type__c), &apos;&apos;)),
+ISCHANGED(NSP_Plan_Type__c)),
+
+AND(NOT(ISBLANK(PRIORVALUE(NSP_Auto_Deferral__c))),
+ISCHANGED( NSP_Auto_Deferral__c )),
+
+AND(NOT(ISPICKVAL(PRIORVALUE(NSP_Status__c), &apos;&apos;)),
+ISCHANGED(NSP_Status__c))
+
+))</errorConditionFormula>
+    <errorMessage>Sub Plan Change History integration fields are not editable.</errorMessage>
+</ValidationRule>

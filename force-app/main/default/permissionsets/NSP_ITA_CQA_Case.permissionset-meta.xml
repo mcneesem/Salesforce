@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Only users with this perm set can create,read, edit,delete ITA CQA case record type</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>ITA CQA Case</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Case</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Case.NSP_ITA_CQA</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

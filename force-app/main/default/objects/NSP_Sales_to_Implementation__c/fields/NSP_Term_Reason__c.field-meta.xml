@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Term_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Term Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>2200 ASF Request</fullName>
+                <default>false</default>
+                <label>2200 ASF Request</label>
+            </value>
+            <value>
+                <fullName>2300 Mutual Agreeement</fullName>
+                <default>false</default>
+                <label>2300 Mutual Agreeement</label>
+            </value>
+            <value>
+                <fullName>Acquired</fullName>
+                <default>false</default>
+                <label>Acquired</label>
+            </value>
+            <value>
+                <fullName>Alternate Reasons</fullName>
+                <default>false</default>
+                <label>Alternate Reasons</label>
+            </value>
+            <value>
+                <fullName>ASF Request</fullName>
+                <default>false</default>
+                <label>ASF Request</label>
+            </value>
+            <value>
+                <fullName>ASF Request (60 days)</fullName>
+                <default>false</default>
+                <label>ASF Request (60 days)</label>
+            </value>
+            <value>
+                <fullName>Change in FEIN</fullName>
+                <default>false</default>
+                <label>Change in FEIN</label>
+            </value>
+            <value>
+                <fullName>Closed/sold business</fullName>
+                <default>false</default>
+                <label>Closed/sold business</label>
+            </value>
+            <value>
+                <fullName>Confirmation (0 Emp)</fullName>
+                <default>false</default>
+                <label>Confirmation (0 Emp)</label>
+            </value>
+            <value>
+                <fullName>Cost</fullName>
+                <default>false</default>
+                <label>Cost</label>
+            </value>
+            <value>
+                <fullName>Dissatisfied w/Service/Product</fullName>
+                <default>false</default>
+                <label>Dissatisfied w/Service/Product</label>
+            </value>
+            <value>
+                <fullName>Financial Default</fullName>
+                <default>false</default>
+                <label>Financial Default</label>
+            </value>
+            <value>
+                <fullName>Health Benefits</fullName>
+                <default>false</default>
+                <label>Health Benefits</label>
+            </value>
+            <value>
+                <fullName>Internal Company Reason</fullName>
+                <default>false</default>
+                <label>Internal Company Reason</label>
+            </value>
+            <value>
+                <fullName>Merger w/ASF Client</fullName>
+                <default>false</default>
+                <label>Merger w/ASF Client</label>
+            </value>
+            <value>
+                <fullName>Merger w/non ASF Client</fullName>
+                <default>false</default>
+                <label>Merger w/non ASF Client</label>
+            </value>
+            <value>
+                <fullName>Mutual Agreement</fullName>
+                <default>false</default>
+                <label>Mutual Agreement</label>
+            </value>
+            <value>
+                <fullName>Non renewal</fullName>
+                <default>false</default>
+                <label>Non renewal</label>
+            </value>
+            <value>
+                <fullName>Non renewal (size)</fullName>
+                <default>false</default>
+                <label>Non renewal (size)</label>
+            </value>
+            <value>
+                <fullName>Non-Compliance</fullName>
+                <default>false</default>
+                <label>Non-Compliance</label>
+            </value>
+            <value>
+                <fullName>Poor Customer Service</fullName>
+                <default>false</default>
+                <label>Poor Customer Service</label>
+            </value>
+            <value>
+                <fullName>Sales Rate Breakdown</fullName>
+                <default>false</default>
+                <label>Sales Rate Breakdown</label>
+            </value>
+            <value>
+                <fullName>Void</fullName>
+                <default>false</default>
+                <label>Void</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

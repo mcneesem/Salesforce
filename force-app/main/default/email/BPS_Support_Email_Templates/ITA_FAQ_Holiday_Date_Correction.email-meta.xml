@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Holiday Date Correction</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Holiday Date Correction</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Holiday Date Correction</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+
+Thank you for contacting Insperity Time &amp; Attendance Support. You can correct a holiday date via Company Setup &gt; Holidays. 
+
+Select the appropriate year from the &quot;Calendar Year to View&quot; drop-down menu. 
+
+Click the trashcan icon next to the holiday with the incorrect date. 
+
+Select that same holiday from the &quot;Add Holiday&quot; drop-down menu and click the blue add (+) button to the right. 
+
+The holiday will appear at the bottom of the list, allowing you to enter the correct date. 
+
+Click the SAVE button at the bottom left of the page. 
+
+For your reference, when generating holidays each year, the system will default to the same dates as the previous year. The correct dates of observance for your company can be entered at that time. You can also access our Help Center Holiday page here (https://help.insperity.com/bps/knowledge-base/setting-up-company-holidays/). 
+ 
+If you have questions or need further assistance, please let us know and we will be happy to help. 
+ 
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -32,20 +32,16 @@
                 <field>Opportunity__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Sales_Office__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Sales_Division__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Sales_Region__c</field>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
+                <field>NSP_Pending_Report_Comments__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Netsuite_Hardware_Item__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -63,6 +59,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Projected_First_Pay_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_First_Pay_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -72,14 +72,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Billed_EE_Count_Last_Month__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Pending_Report_Comments__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Projected_First_Pay_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -166,7 +158,18 @@
         <relatedList>SBQQ__SubscribedAsset__c.SBQQ__Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
+        <fields>NAME</fields>
+        <fields>NSP_Start_Date__c</fields>
+        <fields>NSP_Seats__c</fields>
+        <fields>NSP_Term_Date__c</fields>
+        <fields>Comments__c</fields>
+        <relatedList>NSP_Modules_Implemented__c.NSP_Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Note_Type__c</fields>
+        <fields>Note__c</fields>
+        <relatedList>NSP_Note__c.NSP_Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -205,7 +208,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4x000005h6YJ</masterLabel>
+        <masterLabel>00h2D000003ryok</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

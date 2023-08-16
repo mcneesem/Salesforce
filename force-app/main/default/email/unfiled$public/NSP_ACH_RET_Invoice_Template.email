@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="Insperity thanks you for your business!"  relatedToType="blng__Invoice__c">
+<messaging:htmlEmailBody >
+<br/>
+<p>Please find attached a copy of your monthly invoice for Insperity Retirement Services. The invoice will be processed via ACH direct debit on the 8<sup>th</sup> business day of the month to the bank account on file. Please do not process for remittance.</p>
+<p>If this is your first invoice, please ensure Insperity Retirement Services is set up with your bank as authorized to debit via ACH transactions.</p>
+<p><b>Approved Debit ID for Insperity Retirement Services: 2562375265</b></p>
+<p>If you have any questions regarding your billing, please contact the Individual Retirement Plan - Service Team at <a href = "mailto: 401kcspservice@insperity.com">401kcspservice@insperity.com</a> or 281.312.7337</p>
+<br/>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

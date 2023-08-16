@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Updates the orientation address on project task to the value entered in the screen flow.</description>
+    <flowDefinition>Update_orientation_address_on_Project_Task</flowDefinition>
+    <label>Add/Update Address</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

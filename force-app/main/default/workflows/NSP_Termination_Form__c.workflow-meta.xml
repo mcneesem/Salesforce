@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Send_Email_to_Owner_and_Created_By</fullName>
+        <description>Send Email to Owner and Created By</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/Termination_Form_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_Owner_and_Created_By_if_rejected</fullName>
+        <description>Send Email to Owner and Created By if rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/Termination_Form_Rejected</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Mark_Form_Status_PR_Supervisor_Approved</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>PR Supervisor Approved</literalValue>
+        <name>Mark Form Status: PR Supervisor Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mark_Form_Status_PR_Supervisor_Denied</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>PR Supervisor Denied</literalValue>
+        <name>Mark Form Status: PR Supervisor Denied</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mark_Form_Status_Term_Team_Approved</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Term Team Approved</literalValue>
+        <name>Mark Form Status: Term Team Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mark_Form_Status_Term_Team_Denied</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Term Team Denied</literalValue>
+        <name>Mark Form Status: Term Team Denied</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mark_Form_Status_as_Submitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Mark Form Status as Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Status_to_Resubmitted_by_PR_Super</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted by PR Supervisor</literalValue>
+        <name>Set Status to Resubmitted by PR Super</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Status_to_Resubmitted_by_PS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted by PS</literalValue>
+        <name>Set Status to Resubmitted by PS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

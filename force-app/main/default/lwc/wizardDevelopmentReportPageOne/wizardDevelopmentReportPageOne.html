@@ -1,0 +1,88 @@
+<template>
+    <div class="slds-box">
+        <lightning-record-edit-form onsuccess={handleSuccess} onsubmit ={handleSubmit} record-id={reReqId} record-type-id={recordTypeId}	 onload={handleOnload} object-api-name="NSP_ReportRequest__c">
+            <lightning-messages></lightning-messages>
+
+            <lightning-layout>
+            <lightning-layout-item size="6">
+            <div class="slds-m-top_medium slds-p-around_medium">
+            <template if:true={internalClientValues.data}>
+                <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal"> 
+                    <lightning-radio-group name="NSP_InternalClientReport__c" for="internalClient" 
+                    label="Internal / Client Report"
+                    options={internalClientValues.data.values}
+                    value={internalClientReport}
+                    onchange={handleChange}
+                    required
+                    type="radio">
+                    </lightning-radio-group>
+                </div>
+            </template>
+    
+                <div class="slds-var-m-around_medium slds-align_absolute-center clientDiv" style="display:none;">
+                        <lightning-input-field data-fname="clientName"  field-name='NSP_ClientName__c' required value={clientId}	></lightning-input-field>
+                </div> 
+
+            <br/>
+            <template if:true={existingNewReportValues.data}>
+                <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal">
+                    <lightning-radio-group name="NSP_Existing_NewReport__c" 
+                    label="New / Existing Report"
+                    options={existingNewReportValues.data.values}
+                    value={existingNewReport}
+                    onchange={handleChange}
+                    required
+                    type="radio">
+                    </lightning-radio-group>
+                </div>
+            </template>
+
+        <div style='display:none'>
+            <lightning-input-field field-name="Name" value={reportName}></lightning-input-field>
+            <lightning-input-field field-name="NSP_InternalClientReport__c" id="internalClient" value={internalClientReport} required class="slds-hidden"></lightning-input-field>
+            <lightning-input-field field-name="NSP_Existing_NewReport__c" value={existingNewReport} required class="slds-hidden"></lightning-input-field>
+        </div>
+
+        
+
+            <template if:true={isEnablePrev}>
+                <lightning-button variant="brand" label="Previous" onclick={handlePrev}></lightning-button>
+            </template>
+        </div>
+
+        <div style="display:none"> 
+            <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+            </lightning-input-field> 
+        </div>
+        
+    </lightning-layout-item>
+    <lightning-layout-item size="6">
+    </lightning-layout-item>
+   </lightning-layout>
+
+            <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+                <lightning-button
+                class="slds-m-top_small slds-m-left_small"
+                onclick={handleSave}
+                label="Save and Exit"
+                type="submit"
+                >
+              </lightning-button>
+
+                <lightning-button
+                class="slds-m-top_small slds-m-left_small"
+                type="submit"
+                variant="brand" 
+                label="Next">
+              </lightning-button>
+
+
+             <!--    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <lightning-button variant="destructive" name="Close" label="Clear" onclick={handleClear}>
+                </lightning-button> -->
+            </div>
+        </lightning-record-edit-form>
+
+    </div>
+
+</template>

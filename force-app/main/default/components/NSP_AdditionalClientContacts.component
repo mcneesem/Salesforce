@@ -1,0 +1,13 @@
+<apex:component access="global"  controller="NSP_RelatedIPPayPeriodController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    
+    
+    
+    <apex:outputPanel rendered="{!IF(additionalClientContacts.size>0, true, false)}">
+            <apex:repeat value="{!additionalClientContacts}" var="client" id="ipAdditonalClientList" rendered="{!NOT(additionalClientContacts.empty)}">
+                Client Payroll Contact :<apex:outputText value="{!client.Name}" id="compnayName" /> <br/>
+                Payroll Contact Email: <apex:outputText value="{!client.NSP_Email_Address__c}" id="emailAddress" /> <br/>
+            </apex:repeat>
+    </apex:outputPanel>
+
+</apex:component>

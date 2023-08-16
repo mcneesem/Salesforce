@@ -1582,8 +1582,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_SDRLeadSource__c</fieldItem>
-                <identifier>RecordNSP_SDRLeadSource_cField</identifier>
+                <fieldItem>Record.NSP_SDR__c</fieldItem>
+                <identifier>RecordNSP_SDR_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2bd644d7-d846-4059-8f3d-df778ff50b9d</name>
@@ -1986,6 +1986,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
                 <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Most_Recent_Activity_Date__c</fieldItem>
+                <identifier>RecordMost_Recent_Activity_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

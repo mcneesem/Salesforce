@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Implementation_Profile__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Stores related implementation profile Id</description>
+    <externalId>false</externalId>
+    <label>Implementation Profile</label>
+    <referenceTo>Implementation_Profile__c</referenceTo>
+    <relationshipName>Implementation_Profile_Additional_Client</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

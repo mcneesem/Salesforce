@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_User_With_VOC_Perm_Set</fullName>
+    <active>true</active>
+    <description>Created for the Service users with VOC Permission Set</description>
+    <errorConditionFormula>AND($Setup.NSP_Trigger_Switch__c.NSP_CustomSurveyValidations__c != True, $Profile.Name &lt;&gt; &apos;System Administrator&apos;,  $Profile.Name &lt;&gt; &apos;Data Migration&apos;,$Permission.NSP_VOC_Survey,NOT($Permission.NSP_CSAT_Transition_Survey) ,OR(RecordType.Name = &apos;CSAT&apos;, RecordType.Name = &apos;Transition Progress&apos; ))</errorConditionFormula>
+    <errorMessage>You do not have permissions to create/update CSAT/Transition Surveys</errorMessage>
+</ValidationRule>

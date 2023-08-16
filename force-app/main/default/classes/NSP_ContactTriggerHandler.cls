@@ -25,8 +25,16 @@ public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
      *
      */
     public void beforeInsert(List<sObject> newList) {
-        NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
+        NSP_ContactServiceTriggerHelper  contactServiceTriggerHelperObject =  new NSP_ContactServiceTriggerHelper();
+        // added as a part of STY-02659
+        contactServiceTriggerHelperObject.updateSSNField((List<Contact>) newList, null);
+
+        NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();        
         contactTriggerHelperObject.beforeInsertDirector((List<Contact>) newList);
+        
+        contactServiceTriggerHelperObject.beforeInsertDirector((List<Contact>) newList);       
+       // added as a part of STY-02659
+        contactServiceTriggerHelperObject.updateBirthday((List<Contact>) newList, null);
     }
 
     /**
@@ -50,8 +58,16 @@ public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
      */
 
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
+        NSP_ContactServiceTriggerHelper  contactServiceTriggerHelperObject =  new NSP_ContactServiceTriggerHelper();
+        // added as a part of STY-02659
+        contactServiceTriggerHelperObject.updateSSNField((List<Contact>) newMap.values(), (Map<Id, Contact>) oldMap);
+
         NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
         contactTriggerHelperObject.beforeUpdateDirector((Map<Id, Contact>) newMap, (Map<Id, Contact>) oldMap);
+        
+        contactServiceTriggerHelperObject.beforeUpdateDirector((Map<Id, Contact>) newMap, (Map<Id, Contact>) oldMap);
+       // added as a part of STY-02659
+        contactServiceTriggerHelperObject.updateBirthday((List<Contact>) newMap.values(), (Map<Id, Contact>) oldMap);
     }
 
     /**

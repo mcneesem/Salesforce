@@ -202,6 +202,81 @@
             <default>false</default>
         </values>
     </picklistValues>
+    	<picklistValues>
+        <picklist>NSP_Active_Assets__c</picklist>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware Loaner Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning %26 Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX_WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>MidMarket_National_Account__c</picklist>
         <values>
@@ -250,6 +325,10 @@
         </values>
         <values>
             <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMNA Prospect</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4096,6 +4175,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Harris Northwest Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Heritage Companies%2C Inc</fullName>
             <default>false</default>
         </values>
@@ -5135,4 +5218,175 @@
             <default>false</default>
         </values>
     </picklistValues>
-</RecordType>
+    <picklistValues>
+        <picklist>NSP_Competitor_HCM_System__c</picklist>
+        <values>
+            <fullName>ADP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADP Resource</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADP RUN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADP Totalsource</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bamboo HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BrightHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CakeHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ceridian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CheckPointHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Epicor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full sail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Infor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved (third party)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kronos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Local Provider</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Namely</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oracle / Fusion HCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OrangeHRM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayChex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayChex Flex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paycom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayCor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paylocity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PurelyHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quickbooks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAP / Success Factors HCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Silk road</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Simple HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thrive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TriNet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ultimate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UltiPro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VibeHCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workday</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Optimization</fullName>
+            <default>false</default>
+        </values>
+   </picklistValues>
+ </RecordType>

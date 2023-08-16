@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Case_Account_Name__c</fullName>
+    <description>This field is created as part of DF-02823 to display Case Account Name</description>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(
+&quot;/&quot; &amp; NSP_Case__r.AccountId,
+ NSP_Case__r.Account.Name,
+&quot;_self&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Account Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

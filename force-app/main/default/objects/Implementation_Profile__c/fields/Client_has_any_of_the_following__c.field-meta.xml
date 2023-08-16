@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_has_any_of_the_following__c</fullName>
+    <externalId>false</externalId>
+    <label>Client has any of the following:</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Handbook</fullName>
+                <default>false</default>
+                <label>Handbook</label>
+            </value>
+            <value>
+                <fullName>Standard Offer Letter</fullName>
+                <default>false</default>
+                <label>Standard Offer Letter</label>
+            </value>
+            <value>
+                <fullName>Employment Agreement</fullName>
+                <default>false</default>
+                <label>Employment Agreement</label>
+            </value>
+            <value>
+                <fullName>Substance Abuse Policy</fullName>
+                <default>false</default>
+                <label>Substance Abuse Policy</label>
+            </value>
+            <value>
+                <fullName>Severance Agreement</fullName>
+                <default>false</default>
+                <label>Severance Agreement</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

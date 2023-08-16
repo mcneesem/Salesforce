@@ -1,0 +1,8 @@
+<messaging:emailTemplate subject="Case {!relatedTo.CaseNumber} Resolved" recipientType="User" relatedToType="Case" renderUsingSystemContextWithoutSharing="True">
+<messaging:htmlEmailBody >
+<p>Your assistance in resolving CASE {!relatedTo.CaseNumber} related to {!relatedTo.Account.Name} is greatly appreciated.</p>
+<p>This is to notify you the case has been resolved and payment has been received.</p>
+<p>Thank you! </p>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

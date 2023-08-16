@@ -51,7 +51,7 @@ Function             :  This component is called from the 'Manage Order' button
         max-height:unset !important;
         }
     </aura:html>
-    
+    <ltng:require styles="{!$Resource.BillingCustomStyles}" />
     <!--Condition to show the section when section is set to option(default)-->
     <aura:if isTrue="{!(v.section=='Option')}"> 
         <!--Modal Header-->  

@@ -1,0 +1,59 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : Anil
+  @group             : 
+  @last modified on  : 02-10-2023
+  @last modified by  : Anil
+-->
+<template>
+	<lightning-layout class="slds-border_top slds-var-p-top_medium  slds-var-p-bottom_medium" multiple-rows>
+		<lightning-layout-item size="12">
+			<p class="slds-align_absolute-center"><b>Search for the group to which you want to add this account.</b></p>
+		</lightning-layout-item>
+
+		<lightning-layout-item if:true={options} size="3" class="slds-var-p-top_small slds-var-p-right_medium">
+			<label class="slds-form-element__label" for="groupType" id="combobox-label-id-131">
+				<abbr class="slds-required" title="required">* </abbr>Group Type
+			</label>
+			<select class="slds-select" data-name='groupType' id="groupType" onchange={handleSelect}>
+				<template for:each={options} for:item="option">
+					<option key={option.value} value={option.label}>{option.label}</option>
+				</template>
+			</select>
+		</lightning-layout-item>
+
+		<lightning-layout-item size="4" class="slds-var-p-left_medium slds-var-p-top_small">
+			<lightning-input type="text" data-name='account' label="Account" value={account}
+				onchange={handleChange}></lightning-input>
+		</lightning-layout-item>
+
+		<lightning-layout-item size="4" class="slds-p-left_medium slds-var-p-top_small">
+			<lightning-input type="text" data-name='aimsClient' label="AIMS Client #" value={aimsClient}
+				onchange={handleChange}></lightning-input>
+		</lightning-layout-item>
+
+		<lightning-layout-item size="1" class="slds-p-left_large slds-align_absolute-center slds-var-p-top_x-large">
+			<lightning-button variant="Netural" disabled={searchButton} class="slds-var-p-top_xx-small" label="Search" title="Search" onclick={handleSearch}></lightning-button>
+		</lightning-layout-item>
+
+		<lightning-layout-item if:true={isLoaded} size="12" class="slds-var-p-top_large">
+			<div class="slds-is-relative">
+				<lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+			</div>
+		</lightning-layout-item>
+
+		<lightning-layout-item if:true={data.length} size="12" class="slds-var-p-top_large">
+			<lightning-datatable key-field="Id" max-row-selection='1' column-widths-mode="fixed"
+				onrowselection={handleRowSelection} wrap-text-max-lines="3" data={data} columns={columns}>
+			</lightning-datatable>
+		</lightning-layout-item>
+
+		<lightning-layout-item if:true={noResults} size="12" class="slds-align_absolute-center slds-var-p-top_large">
+			{noResults}
+		</lightning-layout-item>
+
+	</lightning-layout>
+
+</template>

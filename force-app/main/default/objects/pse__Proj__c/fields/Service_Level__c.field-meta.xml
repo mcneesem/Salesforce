@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Level__c</fullName>
+    <externalId>false</externalId>
+    <label>Service Level</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Existing PEO Client</fullName>
+                <default>false</default>
+                <label>Existing PEO Client</label>
+            </value>
+            <value>
+                <fullName>Genuine Care &amp; Concern</fullName>
+                <default>false</default>
+                <label>Genuine Care &amp; Concern</label>
+            </value>
+            <value>
+                <fullName>New PEO Client</fullName>
+                <default>false</default>
+                <label>New PEO Client</label>
+            </value>
+            <value>
+                <fullName>STA Cert Program</fullName>
+                <default>false</default>
+                <label>STA Cert Program</label>
+            </value>
+            <value>
+                <fullName>TimeStar Express</fullName>
+                <default>false</default>
+                <label>TimeStar Express</label>
+            </value>
+            <value>
+                <fullName>WO-to-WX</fullName>
+                <default>false</default>
+                <label>WO-to-WX</label>
+            </value>
+            <value>
+                <fullName>WX-to-WO</fullName>
+                <default>false</default>
+                <label>WX-to-WO</label>
+            </value>
+            <value>
+                <fullName>Client Size (list field)</fullName>
+                <default>false</default>
+                <label>Client Size (list field)</label>
+            </value>
+            <value>
+                <fullName>Core (15-49)</fullName>
+                <default>false</default>
+                <label>Core (15-49)</label>
+            </value>
+            <value>
+                <fullName>Emerging (50-149)</fullName>
+                <default>false</default>
+                <label>Emerging (50-149)</label>
+            </value>
+            <value>
+                <fullName>Mid-market (150-999)</fullName>
+                <default>false</default>
+                <label>Mid-market (150-999)</label>
+            </value>
+            <value>
+                <fullName>Enterprise (1,000+)</fullName>
+                <default>false</default>
+                <label>Enterprise (1,000+)</label>
+            </value>
+            <value>
+                <fullName>Hardware Only</fullName>
+                <default>false</default>
+                <label>Hardware Only</label>
+            </value>
+            <value>
+                <fullName>Emerging Growth (50-99 EE&apos;s)</fullName>
+                <default>false</default>
+                <label>Emerging Growth (50-99 EE&apos;s)</label>
+            </value>
+            <value>
+                <fullName>Emerging Growth (100+  EE&apos;s)</fullName>
+                <default>false</default>
+                <label>Emerging Growth (100+  EE&apos;s)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

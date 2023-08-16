@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Mapping135</label>
+    <protected>false</protected>
+    <values>
+        <field>Key__c</field>
+        <value xsi:type="xsd:string">IPMTngEmployee</value>
+    </values>
+    <values>
+        <field>Template_ID__c</field>
+        <value xsi:type="xsd:string">a2oDE00000193pXYAQ</value>
+    </values>
+    <values>
+        <field>Template_Name__c</field>
+        <value xsi:type="xsd:string">Service Hours - PS</value>
+    </values>
+</CustomMetadata>

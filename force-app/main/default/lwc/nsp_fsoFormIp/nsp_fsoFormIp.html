@@ -1,0 +1,321 @@
+<template>
+  <div class="slds-box slds-theme_default slds-scrollable_y">
+    <lightning-spinner
+      if:true={state.isLoading}
+      alternative-text="Loading"></lightning-spinner>
+
+    <!-- HEADER -->
+    <c-nsp_ip-form-header
+      main-title={label.FSOHeader}
+      sub-title={subTitle}
+      read-only={isReadOnly}
+      onbuttonclick={handleButtonClick}>
+    </c-nsp_ip-form-header>
+
+    <!-- Copy Sections Data -->
+    <c-nsp_copy-ip-data-dialog
+      if:true={state.showCopyDialog}
+      sections={copyAbleSections}
+      selected-sections={selectedCopySections}
+      record-type-id={recordTypeId}
+      target-records={relatedRecords.NSP_Implementation_Profile_Copy_Data__c}
+      onclose={handleCopyDialogClose}
+      oncopy={handleCopyDBClick}
+      onsectionchange={handleCopySectionChange}>
+    </c-nsp_copy-ip-data-dialog>
+
+    <!--Show Model popup screen for save and exit-->
+    <c-nsp_modal-dialog
+      heading="Confirm"
+      buttons={saveAndExitButtonConfig}
+      onbuttonclick={handleSaveAndExitDialog}
+      if:true={state.showSaveAndExitDialog}>
+      <p>{label.saveExitPromptMessage}</p>
+    </c-nsp_modal-dialog>
+
+    <!-- Main Body -->
+    <div class="slds-grid slds-gutters">
+      <!-- Vertical Navigation - Sections -->
+      <div class="slds-col slds-size_1-of-4 slds-border_right nsp_box-height">
+        <lightning-vertical-navigation selected-item={state.selectedTab}>
+          <lightning-vertical-navigation-section>
+            <lightning-vertical-navigation-item
+              for:each={sections}
+              for:item="section"
+              key={section.name}
+              label={section.label}
+              name={section.name}
+              data-section={section.name}
+              onclick={handleTabClick}>
+            </lightning-vertical-navigation-item>
+          </lightning-vertical-navigation-section>
+        </lightning-vertical-navigation>
+      </div> 
+
+      <!-- Wrapper of all the sections -->
+      <div
+        class="slds-col slds-size_3-of-4 content nsp_box-height slds-is-relative"
+        onscroll={handleScroll}>
+        <!-- Error Message -->
+        <div
+          if:true={state.errorMessage}
+          role="alert"
+          class="slds-notify slds-notify_alert slds-alert_error">
+          <span class="slds-assistive-text">Error</span>
+          <h1>{state.errorMessage}</h1>
+        </div>
+
+        <!-- Section Starts -->
+
+        <!-- Client Project Information -->
+        <c-nsp_client-project-info-fso
+          record-id={recordId}
+          field-values={fieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="clientProject"
+          disabled-fields={disabledFields}
+          onsyncfields={handleSync}>
+        </c-nsp_client-project-info-fso>
+
+        <c-nsp_assignment-and-meetings-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          sync-field-values={syncFieldValues}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          emp-orientation-records={relatedRecords.Employee_Orientation__c}
+          class="slds-show slds-var-p-top_small"
+          data-id="assignmentMeetings"
+          onformload={handleComponentLoad}
+          onerror={handleComponentError}
+          disabled-fields={disabledFields}>
+        </c-nsp_assignment-and-meetings-fso>
+
+        <c-nsp_client-contacts-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          object-info={objectInfo}
+          field-values={fieldValues}
+          addn-client-contact-records={relatedRecords.NSP_IP_Additional_Client_Contact__c}
+          class="slds-show slds-var-p-top_small"
+          data-id="clientContacts"
+          disabled-fields={disabledFields}>
+        </c-nsp_client-contacts-fso>
+
+        <c-nsp_general-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          ip-client-related-client={relatedRecords.NSP_IP_Related_Client__c}
+          sync-field-values={syncFieldValues}
+          onsyncfields={handleSync}
+          class="slds-show slds-var-p-top_small"
+          data-id="general"
+          disabled-fields={disabledFields}>
+        </c-nsp_general-fso>
+
+        <c-nsp_payroll-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          object-info={objectInfo}
+          field-values={fieldValues}
+          pay-frequencies={relatedRecords.Implementation_Pay_Period__c}
+          class="slds-show slds-var-p-top_small"
+          data-id="payroll"
+          emp-data={relatedRecords}
+          sync-field-values={syncFieldValues}
+          onsyncfields={handleSync}
+          disabled-fields={disabledFields}
+          read-only-mode={isReadOnly}
+          user-data={userData}>
+        </c-nsp_payroll-fso>
+
+        <c-nsp_retirement-services-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          emp-data={relatedRecords}
+          class="slds-show slds-var-p-top_small"
+          data-id="retirementServices"
+          disabled-fields={disabledFields}
+          read-only-mode={isReadOnly}>
+        </c-nsp_retirement-services-fso>
+
+        <c-nsp_service-team-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="serviceTeam"
+          disabled-fields={disabledFields}>
+        </c-nsp_service-team-fso>
+
+        <c-nsp_benefits-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          class="slds-show slds-var-p-top_small"
+          data-id="benefits"
+          emp-data={relatedRecords}
+          sync-field-values={syncFieldValues}
+          onsyncfields={handleSync}
+          disabled-fields={disabledFields}
+          read-only-mode={isReadOnly}>
+        </c-nsp_benefits-fso>
+
+        <c-nsp_orientation-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="orientation"
+          disabled-fields={disabledFields}>
+        </c-nsp_orientation-fso>
+
+        <c-nsp_pay-roll-info-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          dynamic-config={visibiltyConfig}
+          sync-field-values={syncFieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="payRollInfo"
+          disabled-fields={disabledFields}>
+        </c-nsp_pay-roll-info-fso>
+
+        <c-nsp_general-pay-information
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          sync-field-values={syncFieldValues}
+          object-info={objectInfo}
+          class="slds-show slds-var-p-top_small"
+          data-id="generalPayInfo"
+          disabled-fields={disabledFields}>
+        </c-nsp_general-pay-information>
+
+        <c-nsp_additional-pay-codes
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          class="slds-show slds-var-p-top_small"
+          data-id="additionalPayCodes"
+          disabled-fields={disabledFields}>
+        </c-nsp_additional-pay-codes>
+
+        <c-nsp_additional-pay-outs
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          class="slds-show slds-var-p-top_small"
+          data-id="additionalPayOuts"
+          disabled-fields={disabledFields}>
+        </c-nsp_additional-pay-outs>
+
+        <c-nsp_deductions
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="deductions"
+          disabled-fields={disabledFields}>
+        </c-nsp_deductions>
+
+        <c-nsp_check-delivery
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="checkDelivery"
+          disabled-fields={disabledFields}>
+        </c-nsp_check-delivery>
+
+        <c-nsp_reporting
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          class="slds-show slds-var-p-top_small"
+          data-id="reporting"
+          onsyncfields={handleSync}
+          sync-field-values={syncFieldValues}
+          disabled-fields={disabledFields}>
+        </c-nsp_reporting>
+
+        <c-nsp_miscellaneous-fso
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          field-values={fieldValues}
+          object-info={objectInfo}
+          class="slds-show slds-var-p-top_small"
+          data-id="miscellaneous"
+          disabled-fields={disabledFields}>
+        </c-nsp_miscellaneous-fso>
+
+        <!--Added as part of STY-01450 to upload multiple attachments-->
+          <c-nsp_file_upload
+            if:true={recordId}
+            class="section slds-show slds-var-p-top_small"
+            data-id="attachments"
+            record-id={recordId}>
+          </c-nsp_file_upload>
+
+        <lightning-formatted-text
+          class="slds-page-header__title"
+          value="Automation">
+        </lightning-formatted-text>
+
+        <c-nsp_implementation-automations
+          class="slds-show slds-var-p-top_small"
+          data-id="automation"
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          ip-automation-table ={ipAutomationTable}
+          onsuccess={onsuccess}
+          onerror={onerror}>
+        </c-nsp_implementation-automations>
+
+        <c-nsp_history-tracking
+          class="slds-show slds-var-p-top_small"
+          data-id="auditLog"
+          record-id={recordId}>
+        </c-nsp_history-tracking>
+
+        <c-nsp_ip-system-info
+          record-id={recordId}
+          record-type-id={recordTypeId}
+          object-info={objectInfo}
+          field-values={fieldValues}
+          class="slds-show slds-var-p-top_small"
+          data-id="systemInfo"
+          disabled-fields={disabledFields}>
+        </c-nsp_ip-system-info>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div
+      class="slds-grid slds-grid_align-center slds-var-p-top_medium nsp_footer">
+      <lightning-button
+        if:false={isReadOnly}
+        label={label.saveForm}
+        variant="brand"
+        onclick={handleSave}
+        class="slds-col">
+      </lightning-button>
+
+      <lightning-button
+        if:true={isReadOnly}
+        label={label.exit}
+        variant="brand"
+        onclick={handleExit}
+        class="slds-col">
+      </lightning-button>
+    </div>
+  </div>
+</template>

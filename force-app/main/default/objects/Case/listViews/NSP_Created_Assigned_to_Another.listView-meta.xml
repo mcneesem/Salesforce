@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Created_Assigned_to_Another</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_Detail__c</columns>
+    <columns>NSP_Owner__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Open,ReOpened</value>
+    </filters>
+    <filters>
+        <field>NSP_Creator_is_Owner__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>NSP_Logged_In_User_Created_Case__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Created &amp; Assigned to Another</label>
+</ListView>

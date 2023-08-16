@@ -58,10 +58,12 @@ public class NSP_OpportunityTriggerHandler implements NSP_ITriggerHandler{
    */
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         if(NSP_OpportunityTriggerHandler.runOnce){
-        NSP_OpportunityTriggerHelper  opportunityTriggerHelperObject =  new NSP_OpportunityTriggerHelper();        
-        opportunityTriggerHelperObject.beforeUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
-        }
-        
+          NSP_OpportunityTriggerHelper  opportunityTriggerHelperObject =  new NSP_OpportunityTriggerHelper();        
+          opportunityTriggerHelperObject.beforeUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+
+          NSP_OpportunityTriggerServiceHelper oppTriggerServiceHelper = new NSP_OpportunityTriggerServiceHelper();
+          oppTriggerServiceHelper.beforeUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap); 
+        }     
     }
     
 
@@ -75,17 +77,22 @@ public class NSP_OpportunityTriggerHandler implements NSP_ITriggerHandler{
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         if(NSP_OpportunityTriggerHandler.runOnce){
             NSP_OpportunityTriggerHandler.runOnce = false;
-        NSP_OpportunityTriggerHelper  opportunityTriggerHelperObject =  new NSP_OpportunityTriggerHelper();        
-        opportunityTriggerHelperObject.afterUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
-        //Added as part of STY-02066
-        NSP_OpportunityTeamMemberAssignment.updateAndInsertOppTeamMember((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
-        // Share Opportunity with owner Sales office Public groups --STY-02768 
-        NSP_salesOfficeRecordSharing.shareOpportunityonUpdate((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
-       
+            NSP_OpportunityTriggerHelper  opportunityTriggerHelperObject =  new NSP_OpportunityTriggerHelper();
+            NSP_OpportunityTriggerServiceHelper oppTriggerServiceHelper = new NSP_OpportunityTriggerServiceHelper();        
+            opportunityTriggerHelperObject.afterUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+            //Added as part of STY-02066
+            NSP_OpportunityTeamMemberAssignment.updateAndInsertOppTeamMember((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+            // Share Opportunity with owner Sales office Public groups --STY-02768 
+            NSP_salesOfficeRecordSharing.shareOpportunityonUpdate((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+ 
+            //Added as part of STY-01602
+            oppTriggerServiceHelper.afterUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
         }  
         // added below logic as the runOnce was not executing the creteRewardForContactRole logic from event flow. 
         NSP_OpportunityTriggerHelper  opportunityTriggerHObject =  new NSP_OpportunityTriggerHelper(); 
-        opportunityTriggerHObject.creteRewardForContactRole((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap); // added for STY-03287  
+        opportunityTriggerHObject.creteRewardForContactRole((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap); // added for STY-03287 
+        opportunityTriggerHObject.calculateSetUpAndDocupayTax((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);  
+
     }
     
     /**

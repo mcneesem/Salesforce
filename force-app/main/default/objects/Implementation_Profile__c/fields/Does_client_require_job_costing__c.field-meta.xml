@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Does_client_require_job_costing__c</fullName>
+    <externalId>false</externalId>
+    <label>Does client require job costing?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>N/A - no job costing needed</fullName>
+                <default>false</default>
+                <label>N/A - no job costing needed</label>
+            </value>
+            <value>
+                <fullName>EEs punch time</fullName>
+                <default>false</default>
+                <label>EEs punch time</label>
+            </value>
+            <value>
+                <fullName>% based</fullName>
+                <default>false</default>
+                <label>% based</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Supervisor Assignments (WO)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Supervisor Assignments (WO)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Supervisor Assignments (WO)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance Support. I&apos;m happy to help with your supervisor assignments today! The primary supervisor assignment should be made in Insperity Premier, which then imports to the Time &amp; Attendance system. Please see the steps below to make the primary supervisor assignments in Premier:
+
+
+Log into Insperity Premier:
+
+Single Employee Supervisor Assignment:
+
+Navigate to Company &gt; Manage Employees &gt; Overview &gt; Employees &gt; Select the employee name &gt; Job Information &gt; Position
+Select the edit option in the Position section
+Select a Change Reason from the available options in the drop-down menu
+Enter the Effective Date for change using the calendar provided
+Select NEXT
+Select the new Supervisor in the Supervisor drop-down menu
+
+Note: If you don&apos;t see the supervisor in the drop-down menu, please reach out to your Payroll Specialist here at Insperity to ensure they have the appropriate access
+
+
+Select Next
+Review and confirm the requested change, then select SUBMIT
+
+Mass Supervisor Assignment: 
+
+Navigate to Company &gt; Manager Employees &gt; Overview &gt; Employees
+
+Select the company to which the employee belongs (if there is only one account, then no action is needed)
+
+Select Supervisors in the Edit Multiple Employees drop-down menu (on the upper right side of the page)
+
+
+Select the box next to the employee(s) name
+
+Select MAKE EDITS
+
+Select the reason for the change in the Change Reason drop-down menu
+
+Enter the effective date in the Effective Date field
+
+Select the new supervisor in the Supervisor drop-down menu
+
+
+Note: If you don&apos;t see the supervisor in the drop-down menu, please reach out to your Payroll Specialist here at Insperity to ensure they have the appropriate access
+
+
+Click on the SUBMIT button
+
+
+If more than one supervisor should be assigned to an employee, additional supervisor assignments can be made and maintained in the Time &amp; Attendance system. Please reference the link below for those steps:
+
+https://help.insperity.com/bps/knowledge-base/how-do-i-assign-additional-supervisors-for-an-employee/
+
+Please let us know if you have any further questions and we will be happy to help.
+
+Thank you, 
+
+Technical Support Team
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

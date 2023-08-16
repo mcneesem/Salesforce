@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Create_Accrual_Profile_APSR</fullName>
+    <availability>online</availability>
+    <description>Create new Accrual Profile record</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Create Accrual Profile</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <requireRowSelection>false</requireRowSelection>
+    <url>/lightning/o/NSP_Accrual_Profile__c/new?defaultFieldValues=type=sub,sourceId={!CASESAFEID(NSP_Sub_Client__c.Id)},sourceLabel={!NSP_Sub_Client__c.Name},relatedRecId={!CASESAFEID(Account.Id)},relatedRecLabel={!Account.Name}</url>
+</WebLink>

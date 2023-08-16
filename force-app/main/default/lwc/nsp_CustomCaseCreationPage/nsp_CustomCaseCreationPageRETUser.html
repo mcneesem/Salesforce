@@ -1,0 +1,242 @@
+<!--
+Added as a part of STY-04022
+-->
+<template>
+    <lightning-quick-action-panel title="Quick Action Title" header="Create a New RET Case">
+        <template if:false={isMultipleContactsSelected}>
+        <div class="slds-m-top_medium slds-p-around_medium">
+            <lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}
+                density="compact" onload={handleLoad} object-api-name="Case" record-type-id={selectedRecTypeId} data-id="case-record-form">
+                <template if:true={showTypeField}>
+                    <lightning-layout class="typebox" multiple-rows>
+                        <lightning-layout-item size="12" flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">{label.typeHeader}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-align_absolute-center slds-m-vertical_small">
+                            <lightning-input-field class="caseType" field-name="Type" value={selectedType} onchange={handleChange}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size='12' class="slds-align_absolute-center">
+                            <lightning-button label={label.typeButton} onclick={handleTypeChange}></lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+                <template if:true={showCaseForm}>                                      
+
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">Primary Information</div>
+                        </lightning-layout-item>
+                    </lightning-layout>      
+                    <div class="slds-m-top_medium slds-p-around_medium">
+                        <lightning-layout multiple-rows="true"> 
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='Subject' required> </lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                s-object-api-name="User"
+                                label="Owner/Queue"  
+                                icon-name = "standard:user"
+                                default-record-id = {selectedOwnerId}
+                                onlookupupdate={handlelookupRecord}
+                                show-user-or-queue = true
+                                element = "6"
+                                is-required = true
+                                placeholder="Search for Case Owner...">
+                                </c-nsp_case-custom-look-up>
+                            </lightning-layout-item> 
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='Priority' required> </lightning-input-field>
+                              </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='Status' required> </lightning-input-field>
+                            </lightning-layout-item>                            
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='NSP_Case_Sub_Status__c' required> </lightning-input-field>
+                            </lightning-layout-item>                           
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='Origin' required> </lightning-input-field>
+                            </lightning-layout-item>  
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_Internal_Comments__c' > </lightning-input-field>
+                            </lightning-layout-item> 
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_RET_Process_Area__c' > </lightning-input-field>
+                            </lightning-layout-item>                                
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_RET_Time_Entry__c' > </lightning-input-field>
+                            </lightning-layout-item>                               
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_RET_Time_Category__c' required> </lightning-input-field>
+                            </lightning-layout-item>                                                                                           
+                        </lightning-layout>
+                    </div>
+
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">Account,Contact,Asset</div>
+                        </lightning-layout-item>
+                    </lightning-layout>  
+
+                    <div class="slds-m-top_medium slds-p-around_medium">
+                        <lightning-layout multiple-rows="true"> 
+                           
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                data-id = 'accountLookup'
+                                s-object-api-name="Account"
+                                label="Account Name"
+                                icon-name = "standard:account"
+                                default-record-id = {accountID}
+                                parent-id ={parentId}
+                                is-required = true
+                                onlookupupdate={handlelookupRecord}
+                                placeholder="Search Accounts...">
+                                </c-nsp_case-custom-look-up>
+                                <template if:true={isMultipleACRs}>
+                                  <strong class="redFont">{label.multipleAccountsAssociatedWithContact}</strong>
+                                </template>
+                              </lightning-layout-item> 
+
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                s-object-api-name="Contact"
+                                label="Contact Name"
+                                icon-name = "standard:contact"
+                                default-record-id = {parentId}
+                                parent-id ={accountID}
+                                onlookupupdate={handlelookupRecord}
+                                placeholder="Search Contacts...">
+                                </c-nsp_case-custom-look-up>
+                              </lightning-layout-item> 
+                             
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <c-nsp_case-custom-look-up
+                                s-object-api-name="Asset"
+                                label="Asset"
+                                icon-name = "standard:asset_object"
+                                default-record-id = {assetId}
+                                parent-id ={accountID}
+                                onlookupupdate={handlelookupRecord}
+                                placeholder="Search Assets...">
+                                </c-nsp_case-custom-look-up>                                
+                              </lightning-layout-item>                                                         
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_RET_Education__c' value={edID} disabled={disableEd}> </lightning-input-field>
+                            </lightning-layout-item>    
+                              <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='NSP_RET_Plan__c' value={planID}  disabled={disablePlan}> </lightning-input-field>
+                            </lightning-layout-item>                             
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_RET_Subplan__c' value={subplanID} disabled={disableSubPlan}> </lightning-input-field>
+                            </lightning-layout-item>                                                                                                                 
+                        </lightning-layout>
+                    </div>
+
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                            <div class="custom-box">RET Education</div>
+                        </lightning-layout-item>
+                    </lightning-layout>      
+                    <div class="slds-m-top_medium slds-p-around_medium">
+                        <lightning-layout multiple-rows="true">   
+                            <lightning-layout-item size="6" class="slds-p-around_small">                         
+                                <lightning-input-field  field-name='NSP_Education_Activity__c' > </lightning-input-field>
+                            </lightning-layout-item>  
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_RET_Education_Comments__c' > </lightning-input-field>
+                            </lightning-layout-item> 
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field  field-name='NSP_Request_Date__c' > </lightning-input-field>
+                            </lightning-layout-item>                            
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='NSP_Demo_Date__c' reqired> </lightning-input-field>
+                            </lightning-layout-item>
+                          
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name='NSP_Education_Date_Completed_Delivered__c' > </lightning-input-field>
+                            </lightning-layout-item> 
+                            
+                            <lightning-layout-item size="6">
+                                <div class="slds-m-top_medium slds-p-around_medium">
+                                    <div style='display:none'>                                                                           
+                                        <lightning-input-field field-name="AccountId">
+                                            </lightning-input-field>   
+                                        <lightning-input-field field-name="ContactId">
+                                        </lightning-input-field>   
+                                        <lightning-input-field field-name="ParentId">
+                                        </lightning-input-field>                                                                                 
+                                        <lightning-input-field field-name='AssetId' value={assetId}> 
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="NSP_RET_Monthly_Participation__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_EOY_Amendments__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_Compliance__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_CGNDQ__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_Amendment_Checklist__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_5500_Plan_Tracking__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_Sales_to_Implementation__c">
+                                        </lightning-input-field>  
+                                        <lightning-input-field field-name="NSP_RET_Eligibility__c">
+                                        </lightning-input-field> 
+                                        <lightning-input-field field-name="NSP_RET_Deconversion__c">
+                                        </lightning-input-field> 
+                                        <lightning-input-field field-name="NSP_RET_Contribution__c">
+                                        </lightning-input-field> 
+                                        <lightning-input-field field-name="NSP_RET_Client_Sub_Plan_History__c">
+                                        </lightning-input-field> 
+                                        <lightning-input-field field-name="NSP_RET_Client_Change__c">
+                                        </lightning-input-field> 
+                                        <lightning-input-field field-name="NSP_RET_Sub_Plan_Change_History__c">
+                                        </lightning-input-field>   
+                                        <lightning-input-field field-name="NSP_Confidential__c" value={confidential} >
+                                        </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+
+                    <template if:true={showError}>
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                                <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error" variant="inverse"></lightning-icon>
+                              </span>
+                              <h2>{errorMessageToDisplay}</h2>
+                        </div>
+                    </template>
+
+                    <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">                       
+                        <lightning-button class="slds-m-top_small slds-m-right_x-small" onclick={handleCancel} disabled={disableButton}
+                            label="Cancel">
+                        </lightning-button>
+
+                        <lightning-button class="slds-m-top_small slds-m-right_x-small" disabled={disableButton}  onclick={handleButtonClick}
+                            type="submit" variant="brand" label="Save">
+                        </lightning-button>
+                        <lightning-button class="slds-m-top_small" disabled={disableButton} onclick={handleSaveAndAdd}
+                        type="submit" variant="brand" label="Save And Add Contacts">
+                    </lightning-button>                        
+                    </div>
+                    
+                </template>
+
+            </lightning-record-edit-form>
+        </div>
+    </template>
+        <template if:true={isMultipleContactsSelected}>
+            <lightning-card title="Add Contacts">
+                <lightning-flow flow-api-name='NSP_Add_Multiple_Contacts_On_Case'
+                flow-input-variables={inputVariables} >
+            </lightning-flow>
+            </lightning-card>
+        </template>           
+    </lightning-quick-action-panel>
+</template>

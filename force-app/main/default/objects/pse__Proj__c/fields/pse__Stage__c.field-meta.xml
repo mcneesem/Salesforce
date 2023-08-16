@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>pse__Stage__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Stage</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+                <label>On Hold</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+                <label>Canceled</label>
+            </value>
+            <value>
+                <fullName>Risk Assessment</fullName>
+                <default>false</default>
+                <label>Risk Assessment</label>
+            </value>
+            <value>
+                <fullName>Pursuit / Estimation</fullName>
+                <default>true</default>
+                <label>Pursuit / Estimation</label>
+            </value>
+            <value>
+                <fullName>Ready to Staff</fullName>
+                <default>false</default>
+                <label>Ready to Staff</label>
+            </value>
+            <value>
+                <fullName>Mitigate High Risk</fullName>
+                <default>false</default>
+                <label>Mitigate High Risk</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

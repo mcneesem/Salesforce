@@ -1,0 +1,63 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <template if:true={showCaseTemplate}>
+    <lightning-quick-action-panel header={label.createProject}>
+      <div class="slds-is-relative">
+        <template if:true={isLoading}>
+          <lightning-spinner alternative-text="Please Wait.." size="small"></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} density="comfy">
+          <div class="slds-p-around_xx-small">
+            <label class="slds-form-element__label"><abbr title="required"
+                class="slds-required"></abbr>{label.projectName}</label>
+            <lightning-input class="subject" type="text"></lightning-input>
+          <!--  <lightning-input-field class="subject" field-name="Subject" variant="label-hidden"></lightning-input-field>-->
+          </div>
+          <lightning-input-field class="projectTemplateId" field-name="Project_Template__c" required>
+          </lightning-input-field>
+          <div class="slds-p-around_xx-small">
+            <lightning-input class="projectStartDate" label={label.projectStartDate} type="date" required>
+            </lightning-input>
+          </div>
+        </lightning-record-edit-form>
+      </div>
+      <div slot="footer">
+        <lightning-button variant="neutral" label={label.cancel} onclick={closeQuickAction}></lightning-button>
+        <lightning-button variant="brand" label={label.createProject} class="slds-m-left_x-small"
+          onclick={createProjectAction} disabled={isLoading}></lightning-button>
+      </div>
+    </lightning-quick-action-panel>
+  </template>
+  <!-- Asset Template Form -->
+  <template if:true={showAssetTemplate}>
+    <div class="slds-modal__header slds-text-heading_medium">
+      {label.heading}
+    </div>
+    <div class="slds-is-relative">
+      <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Please Wait.." size="small"></lightning-spinner>
+      </template>
+      <lightning-record-edit-form class="slds-m-horizontal_small" record-id={recordId} object-api-name={objectApiName}
+        density="comfy">
+        <div class="slds-p-around_xx-small">
+          <label class="slds-form-element__label"><abbr title="required"
+              class="slds-required">*</abbr>{label.projectName}</label>
+          <lightning-input-field class="projectName" field-name="Name" variant="label-hidden"></lightning-input-field>
+        </div>
+        <lightning-input-field class="projectTemplateId slds-m-top_x-small" field-name="Project_Template__c" required>
+        </lightning-input-field>
+        <div class="slds-p-around_xx-small">
+          <lightning-input class="projectStartDate" label={label.projectStartDate} type="date" required>
+          </lightning-input>
+        </div>
+      </lightning-record-edit-form>
+    </div>
+    <div class="slds-clearfix">
+      <span class="slds-float_right">
+        <lightning-button variant="neutral" label={label.cancel} onclick={closeAssetQuickAction}></lightning-button>
+        <lightning-button variant="brand" label={label.createProject} class="slds-m-left_x-small"
+          onclick={createProjectAction} disabled={isLoading}></lightning-button>
+      </span>
+    </div>
+  </template>
+</template>

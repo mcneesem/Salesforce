@@ -52,9 +52,6 @@
     <columns>
         <field>Account$NSP_Stage__c</field>
     </columns>
-    <columns>
-        <field>Account$NSP_Account_Risk_Level__c</field>
-    </columns>
     <currency>USD</currency>
     <description>MMR-I-001 MM Tracker Summary; NOTE: Service/Finance related fields are not yet in Salesforce;
 based on Accounts (Deluxe) NSP Report Type ;</description>

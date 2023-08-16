@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Free_Periods_Applicable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if a product is eligible for free period functionality.</description>
+    <externalId>false</externalId>
+    <label>Free Months Applicable?</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

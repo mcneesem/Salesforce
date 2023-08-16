@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_EEs_paid_under_same_FEIN_currently__c</fullName>
+    <externalId>false</externalId>
+    <label>All EEs paid under same FEIN currently?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

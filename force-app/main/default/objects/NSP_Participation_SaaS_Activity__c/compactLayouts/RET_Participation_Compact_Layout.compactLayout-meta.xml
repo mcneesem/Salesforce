@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RET_Participation_Compact_Layout</fullName>
+    <fields>NSP_Record_Title_RET__c</fields>
+    <label>RET Participation Compact Layout</label>
+</CompactLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Terminated Clients SSO (WO)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Terminated Clients SSO (WO)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Terminated Clients SSO (WO)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand that you have terminated your services with Insperity Payroll. Employees will not have access to track time and/or accruals in Time &amp; Attendance after the termination date. However, you will still be able to process your payroll as normal, and the link provided below will continue to work for administrators through the next 90 days from your termination date.
+
+https://timestar.insperity.com/SSO/WO.aspx 
+
+They will use the same credentials for this site that they are already using to log in to Insperity Premier.
+
+Thank you,
+
+Insperity Time &amp; Attendance Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

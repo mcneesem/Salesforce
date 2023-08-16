@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Service__c</fullName>
+    <externalId>false</externalId>
+    <label>Customer Service</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Completely Satisfied</fullName>
+                <default>false</default>
+                <label>Completely Satisfied</label>
+            </value>
+            <value>
+                <fullName>Mostly Satisfied</fullName>
+                <default>false</default>
+                <label>Mostly Satisfied</label>
+            </value>
+            <value>
+                <fullName>Somewhat Satisfied</fullName>
+                <default>false</default>
+                <label>Somewhat Satisfied</label>
+            </value>
+            <value>
+                <fullName>Not Satisfied</fullName>
+                <default>false</default>
+                <label>Not Satisfied</label>
+            </value>
+            <value>
+                <fullName>No Opinion</fullName>
+                <default>false</default>
+                <label>No Opinion</label>
+            </value>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+                <label>Not Applicable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

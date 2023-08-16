@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>STY-00861 - Merge case custom permission is used to enable Merge button on Case</description>
+    <isLicensed>false</isLicensed>
+    <label>Merge Case</label>
+</CustomPermission>

@@ -1,0 +1,9 @@
+.verticalAlign{
+    margin:auto 0;
+}
+.requestedField{
+    color: red;
+}
+.emptyField{
+    color: blue;
+}

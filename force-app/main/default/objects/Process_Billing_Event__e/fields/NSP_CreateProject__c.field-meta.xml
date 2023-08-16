@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CreateProject__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is used for creating Projects on click of a button from order</description>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Create Project</label>
+    <type>Checkbox</type>
+</CustomField>

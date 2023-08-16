@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - New Jurisdiction - Template 1</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - New Jurisdiction - Template 1</name>
+    <style>freeForm</style>
+    <subject>ITA - New Jurisdiction - Template 1</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for the email, NAME,
+
+We are not aware of any specific time calculation requirements for employees which differ between OLD RESIDENCE and NEW RESIDENCE. Additionally, we are not aware of any unique paid leave requirements which differ between those two locations.
+
+If you are aware of any compliance requirements which we need to address, or if you&apos;re aware of client-specific policies which we need to accommodate, please let us know. If there are none, then we do not believe this employee move necessitates any system configuration changes.
+
+I have also included HRS on the HR side, in case they are aware of any special considerations which may need to be addressed in Time &amp; Attendance.
+
+ Thank you,
+
+FIRST L.
+Insperity Time &amp; Attendance Support
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

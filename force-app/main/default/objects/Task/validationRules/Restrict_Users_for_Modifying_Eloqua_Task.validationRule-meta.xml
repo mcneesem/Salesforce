@@ -4,7 +4,9 @@
     <active>true</active>
     <description>This rule will prevent users for modifying Eloqua Tasks</description>
     <errorConditionFormula>IF(
-AND( RecordType.Name=&quot;Eloqua Task RT&quot;,
+AND( 
+NOT ($Setup.NSP_Trigger_Switch__c.TaskValidations__c),
+RecordType.Name=&quot;Eloqua Task RT&quot;,
 OR(
 IsChanged(RecordTypeId),
 IsChanged(Subject ),

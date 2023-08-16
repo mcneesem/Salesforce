@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Basis_of_wage_payment_options__c</fullName>
+    <externalId>false</externalId>
+    <label>Basis of wage payment options:</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Min wage</fullName>
+                <default>false</default>
+                <label>Min wage</label>
+            </value>
+            <value>
+                <fullName>Living Wage</fullName>
+                <default>false</default>
+                <label>Living Wage</label>
+            </value>
+            <value>
+                <fullName>Living Wage Exempt</fullName>
+                <default>false</default>
+                <label>Living Wage Exempt</label>
+            </value>
+            <value>
+                <fullName>Employer Wage Rate</fullName>
+                <default>false</default>
+                <label>Employer Wage Rate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

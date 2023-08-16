@@ -1,0 +1,32 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has Employees who work in a SRP State" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<table border="0" width="550">
+<c:InsperityEmailHeader />
+<p>
+{!relatedTo.NSP_AIMS_Client_Name__c} {!relatedTo.NSP_AIMS_ClientNo__c} does not have an existing retirement plan and does not wish to set up an Insperity 401(k) plan.
+ However, the Client has employees who work in a State Retirement Plan State. Employees work in 
+<c:NSP_SRP_States regulatedState="{!relatedTo.Employees_work_in_the_following_states__c}"/>
+<strong> No action is required on your part. </strong> 
+</p>
+
+<apex:outputPanel >
+<c:NSP_RelatedClients currentRecordId="{!relatedTo.Id}"/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.Retirement_services_notes__c))}">
+<p>Onboarding Notes:<br/>{!relatedTo.Retirement_services_notes__c}</p>
+</apex:outputPanel>
+</table>
+
+</body>
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Work_email__c}</p>
+<c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

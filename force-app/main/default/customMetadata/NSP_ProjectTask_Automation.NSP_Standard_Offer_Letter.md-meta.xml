@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Standard Offer Letter</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Category__c</field>
+        <value xsi:type="xsd:string">HR Client Support</value>
+    </values>
+    <values>
+        <field>NSP_Milestone__c</field>
+        <value xsi:type="xsd:string">Human Resources</value>
+    </values>
+    <values>
+        <field>NSP_Sub_Category__c</field>
+        <value xsi:type="xsd:string">Recruiting/Hiring/Offer letter</value>
+    </values>
+    <values>
+        <field>NSP_Task_Name__c</field>
+        <value xsi:type="xsd:string">Offer Letters</value>
+    </values>
+</CustomMetadata>

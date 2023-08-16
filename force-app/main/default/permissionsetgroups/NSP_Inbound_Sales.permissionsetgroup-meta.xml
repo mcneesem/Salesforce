@@ -3,8 +3,12 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Inbound Sales</label>
+    <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__InboxIncluded</permissionSets>

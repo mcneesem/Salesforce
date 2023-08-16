@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Labor Allocations</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Labor Allocations</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Labor Allocations</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance Support. I will be happy to provide instructions for assigning labor allocations within your Time and Attendance system:
+
+Select the desired employee&apos;s name from the employee drop-down menu.
+
+
+Navigate to Employee Maintenance &gt; Employee Assignments &gt; Labor Allocations.
+
+
+To add a new entry, click the ADD button at the bottom of the page.
+
+
+A pop-up window will appear, allowing you to select the desired settings.
+
+
+Once all fields are filled, click the SAVE button in the pop-up window.
+
+
+You will see a line with this information appear in the employee&apos;s Labor Allocations page. Repeat this process for each allocation needed. **Keep in mind that the allocation percentages should always total 100%.**
+
+
+To edit any previous entries, click on the pencil icon to the right of the allocation entry.
+
+
+A pop-up window will appear, allowing you to make the necessary edits to the percentage of time you would like allocated to the desired organization level item.
+
+
+Click the SAVE button to commit the changes.
+
+
+Repeat this process as necessary to adjust the percentage assigned to other organization level items. **Keep in mind that the allocation percentages should always total 100%.**
+
+
+Once you&apos;ve assigned the appropriate labor allocations to the employee, you can navigate to Daily Procedures &gt; Total Hours and change the Display view to &quot;Summary by Org Level &gt; whichever level to which you are allocating&quot;. You will see the hours being divided according to what you&apos;ve assigned.
+
+Please keep in mind that the Labor Allocations feature is enabled for the following pay groups at this time:
+
+PAY GROUP NAME
+
+
+PAY GROUP NAME
+
+
+Therefore, an employee must be assigned to one of the above pay groups in order for the allocations to calculate as expected. Pay groups are assigned via the Employee Maintenance &gt; Employee Assignments &gt; Groups &gt; Pay Group tab. If you need labor allocations to be configured for other pay groups going forward, please let us know and we will be happy to help. 
+
+If you have additional questions or concerns, please let us know and we will be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

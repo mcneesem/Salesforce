@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Accrual_Profile_Record_ID__c</fullName>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(
+  &quot;/&quot; + NSP_Accrual_Profile__r.Id ,
+  NSP_Accrual_Profile__r.Name,
+  &quot;_self&quot;
+)</formula>
+    <label>Record ID</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

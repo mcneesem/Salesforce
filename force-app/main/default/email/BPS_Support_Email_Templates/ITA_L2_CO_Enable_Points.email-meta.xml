@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA L2 - CO - Enable Points</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA L2 - CO - Enable Points</name>
+    <style>freeForm</style>
+    <subject>ITA L2 - CO - Enable Points</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand you are interested in enabling points tracking in your Time &amp; Attendance system. In order to start this process, we will need to know the specifics on how to configure the points rules. Below are all the categories we have available for points. Please let us know the point categories you want and the point values for each.
+
+Early In
+Late In
+Early Out
+Late Out
+Lunch Too Long
+Lunch Too Short
+Break Too Long
+Absent
+Missing Punch
+
+Please be aware that point management can only be done in an open, active pay period. Retroactive adjustments cannot be made. Also, we will need the answers to the below questions:
+
+How many days until the point transaction will expire? (i.e., 30 days, 365 days, etc.)
+Do you wish to enable a perfect attendance award? Perfect attendance would be defined as a certain period of time without any attendance record. (i.e., The employee would earn a point back if 30 days pass without any point record.) If so, how long is the perfect attendance period and how many points do you want to deduct?
+Do you want the supervisor to receive alerts if the point balances reach a certain threshold? If so, please define that threshold.
+To which pay group(s) will this change apply? (Please provide the names of each applicable pay group.)
+
+Thank you in advance for providing this information. Once it is received, a member of our team will determine the next steps and a representative will be in touch as soon as they are able.
+
+Thank you, 
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

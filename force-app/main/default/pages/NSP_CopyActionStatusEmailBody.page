@@ -1,0 +1,64 @@
+<apex:page controller="NSP_IpCopyActionEmailBodyCont">
+    <table width="800" border="0" align="center" cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; background-color: #ffffff;">
+        <thead>
+            <tr>
+                <td style="max-width:500px;">
+                    <!-- <img src="{!insperityLogoLink}" style="margin:10px; max-height:50px;" /> -->
+                </td>
+                <td colspan="10"></td>
+                <td style="max-width:500px;">
+                    <h1 style="color:#006595; text-align:right; float:right; font-size: 20px; margin:10px;">Implementation Profile Copy Results</h1>
+                </td>
+            </tr>
+        </thead>
+
+        <tbody style="font-size:14px;">
+            <apex:outputPanel rendered="{!showFailureSection}">
+                <!-- Fail Results -->
+                <tr height="30"></tr>
+                <tr>
+                    <td style="background-color: #f7aaad;" colspan="12">
+                        <p style="margin:10px;">{!sectionTitle} unsuccessful:</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <ul style="line-height:24px; margin:10px;">
+                            <apex:repeat value="{!failIpRecords}" var="ipRec" id="failIpRec">
+                                <li>{!ipRec.Account__r.Name}</li>
+                            </apex:repeat>
+                        </ul>
+                    </td>
+                </tr>
+            </apex:outputPanel>
+
+            <!-- Success Results -->
+            <apex:outputPanel rendered="{!showSuccessSection}">
+                <tr height="30"></tr>
+                <tr>
+                    <td style="background-color: #cceefa;" colspan="12">
+                        <p style="margin:10px;">{!sectionTitle} successful:</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <ul style="line-height:24px; margin:10px;">
+                            <apex:repeat value="{!successfulIpRecords}" var="ipRec" id="successIpRec">
+                                <li>{!ipRec.Account__r.Name}</li>
+                            </apex:repeat>
+                        </ul>
+                    </td>
+                </tr>
+            </apex:outputPanel>
+        </tbody>
+
+        <!-- Footer -->
+        <tfoot>
+            <tr style="background-color: #006595;">
+                <td align="center" colspan="12">
+                    <!-- <img src="{!insperityLogoLink}" height="50" /> -->
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</apex:page>

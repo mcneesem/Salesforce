@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Order_Activation_Trigger__c</fullName>
+    <description>Captures the order activation trigger</description>
+    <externalId>false</externalId>
+    <label>Order Activation Trigger</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>First Usage Upload</fullName>
+                <default>false</default>
+                <label>First Usage Upload</label>
+            </value>
+            <value>
+                <fullName>Project Go Live</fullName>
+                <default>false</default>
+                <label>Project Go Live</label>
+            </value>
+            <value>
+                <fullName>Plan Activation</fullName>
+                <default>false</default>
+                <label>Plan Activation</label>
+            </value>
+            <value>
+                <fullName>Immediate</fullName>
+                <default>false</default>
+                <label>Immediate</label>
+            </value>
+            <value>
+                <fullName>Milestone Based</fullName>
+                <default>false</default>
+                <label>Milestone Based</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

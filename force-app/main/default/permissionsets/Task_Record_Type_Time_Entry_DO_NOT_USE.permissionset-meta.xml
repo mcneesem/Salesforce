@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assigns the &quot;Time Entry - DO NOT USE&quot; Task Record Type.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Task Record Type: Time Entry - DO NOT USE</label>
+    <recordTypeVisibilities>
+        <recordType>Task.NSP_Time_Entry_DO_NOT_USE</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

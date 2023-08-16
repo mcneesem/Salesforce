@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Service_Plan__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to service plan - this is needed to show docusign docs on service plan</description>
+    <externalId>false</externalId>
+    <label>Service Plan</label>
+    <referenceTo>NSP_Service_Plan__c</referenceTo>
+    <relationshipLabel>CLM Documents</relationshipLabel>
+    <relationshipName>CLM_Documents</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

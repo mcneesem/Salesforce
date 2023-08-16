@@ -34,15 +34,14 @@
                 <b><a class="slds-card__header-link" >{!(v.sobjectLabelPlural) + ' (' + (v.numberOfRecordsForTitle) + ')'}</a></b>
             </aura:set>             
             <aura:if isTrue="{!not(empty(v.records))}">    
-                <p class="slds-p-horizontal_small">                  
+                <div class="slds-scrollable" style="width:100%">                
                     <lightning:datatable class="related-list"
                                          columns="{! v.columnsWithActions }"
                                          data="{! v.records }"
                                          keyField="id"
                                          hideCheckboxColumn="true"
-                                         resizeColumnDisabled="true"
                                          sortedBy="{!v.sortedBy}"/>                     
-                </p>               
+                                        </div>              
             </aura:if>
             
         </lightning:card>

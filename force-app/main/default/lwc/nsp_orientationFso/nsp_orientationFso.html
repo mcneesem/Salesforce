@@ -1,0 +1,115 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.orientation}>
+    </lightning-formatted-text>
+
+    <lightning-input-field value={field.Client_Address__c} disabled={disabledFields.Client_Address__c}
+      field-name="Client_Address__c"
+      data-name="Client_Address__c"
+      onchange={handleValueChange}></lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Are_there_multiple_worksite_locations__c}
+      label={label.multipleWorksitelocationQuestion}
+      field-api-name="Implementation_Profile__c.Are_there_multiple_worksite_locations__c"
+      record-type-id={recordTypeId}
+      value={field.Are_there_multiple_worksite_locations__c}
+      data-name="Are_there_multiple_worksite_locations__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.Provide_multiple_worksite_details__c} disabled={disabledFields.Provide_multiple_worksite_details__c}
+      if:true={visibility.Provide_multiple_worksite_details__c}
+      field-name="Provide_multiple_worksite_details__c"
+      class={styles.Provide_multiple_worksite_details__c}
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Is_a_translator_needed__c}
+      label={label.isTranslatorNeeded}
+      field-api-name="Implementation_Profile__c.NSP_Is_a_translator_needed__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Is_a_translator_needed__c}
+      data-name="NSP_Is_a_translator_needed__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+    <template
+      if:true={visibility.Wht_language_whn_is_translator_needed__c}>
+      <div class="slds-form-element__label">
+      <lightning-formatted-text
+        value={label.wtAndWhnTranslatorNeeded}
+        data-field="Wht_language_whn_is_translator_needed__c"
+        class={styles.Wht_language_whn_is_translator_needed__c}>
+      </lightning-formatted-text>
+      </div>
+      <lightning-input-field value={field.Wht_language_whn_is_translator_needed__c} disabled={disabledFields.Wht_language_whn_is_translator_needed__c}
+        field-name="Wht_language_whn_is_translator_needed__c"
+        data-name="Wht_language_whn_is_translator_needed__c"
+        variant="label-hidden"
+        onchange={handleValueChange}
+        class={styles.Wht_language_whn_is_translator_needed__c}>
+      </lightning-input-field>
+    </template>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Is_there_a_need_for_a_tech_package__c}
+      label={label.isThereNeedForTechpack}
+      field-api-name="Implementation_Profile__c.Is_there_a_need_for_a_tech_package__c"
+      record-type-id={recordTypeId}
+      value={field.Is_there_a_need_for_a_tech_package__c}
+      data-name="Is_there_a_need_for_a_tech_package__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+    <template
+      if:true={visibility.Tech_pack_when_where_quantity_needed__c}>
+      <div class="slds-form-element__label">
+        <lightning-formatted-text
+          value={label.whenWhereQuantityNeeded}
+          data-field="Tech_pack_when_where_quantity_needed__c"
+          class={styles.Tech_pack_when_where_quantity_needed__c}></lightning-formatted-text>
+      </div>
+      <lightning-input-field value={field.Tech_pack_when_where_quantity_needed__c} disabled={disabledFields.Tech_pack_when_where_quantity_needed__c}
+        field-name="Tech_pack_when_where_quantity_needed__c"
+        data-name="Tech_pack_when_where_quantity_needed__c"
+        variant="label-hidden"
+        onchange={handleValueChange}
+        class={styles.Tech_pack_when_where_quantity_needed__c}></lightning-input-field>
+    </template>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Any_special_needs_for_EE_orientation__c}
+      label={label.areThereOtherEEOrientationNeed}
+      field-api-name="Implementation_Profile__c.Any_special_needs_for_EE_orientation__c"
+      record-type-id={recordTypeId}
+      value={field.Any_special_needs_for_EE_orientation__c}
+      data-name="Any_special_needs_for_EE_orientation__c"
+      class={styles.Any_special_needs_for_EE_orientation__c}
+      onchange={handleValueChange}
+      multiple>
+    </c-nsp_selection-box>
+
+    <lightning-formatted-text
+      class="slds-form-element__label"
+      value={label.clientDdlineOeeBbe}
+      data-field="Client_internal_deadline_for_OEE_OBE__c"></lightning-formatted-text>
+    <lightning-input-field value={field.Client_internal_deadline_for_OEE_OBE__c} disabled={disabledFields.Client_internal_deadline_for_OEE_OBE__c}
+      field-name="Client_internal_deadline_for_OEE_OBE__c"
+      data-name="Client_internal_deadline_for_OEE_OBE__c"
+      variant="label-hidden"
+      onchange={handleValueChange}></lightning-input-field>
+
+    <lightning-input-field value={field.NSP_Orientation_Notes__c} disabled={disabledFields.NSP_Orientation_Notes__c}
+      field-name="NSP_Orientation_Notes__c"
+      data-name="NSP_Orientation_Notes__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+  </lightning-record-edit-form>
+</template>

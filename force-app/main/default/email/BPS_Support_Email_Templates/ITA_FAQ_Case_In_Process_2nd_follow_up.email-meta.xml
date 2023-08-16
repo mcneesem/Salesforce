@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Case In Process - 2nd follow up</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Case In Process - 2nd follow up</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Case In Process - 2nd follow up</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+We have a support case {!Case.CaseNumber} open to address your request. Thank you for reaching out! We apologize for the delayed response. I’ve noted your case as time sensitive to try to help expedite a response for you, and a member of our support team will certainly be in touch as soon as they are able. We appreciate your patience.  
+ 
+ 
+Thank you, 
+ 
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Terminate_All__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicate if all the quotelines are terminated</description>
+    <externalId>false</externalId>
+    <label>Terminate All</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -370,6 +370,7 @@
     <rules>
         <fullName>Demo Activity on Opportunity at Analysis stage</fullName>
         <active>false</active>
+        <description>.....</description>
         <formula>ISPICKVAL(StageName  , &apos;Analysis&apos;) &amp;&amp;  NOT(NSP_Has_Demo_Activity__c )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>

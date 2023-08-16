@@ -10,6 +10,11 @@
         <default>false</default>
         <label>No</label>
     </customValue>
+    <customValue>
+        <fullName>Unknown</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
     <masterLabel>Yes or No</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

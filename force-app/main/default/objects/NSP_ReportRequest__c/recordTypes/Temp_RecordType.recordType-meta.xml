@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Temp_RecordType</fullName>
+    <active>true</active>
+    <label>Temp RecordType</label>
+    <picklistValues>
+        <picklist>NSP_AreThereAdditionalClients_subAccount__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Existing_NewReport__c</picklist>
+        <values>
+            <fullName>Change to Existing Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Report</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_InternalClientReport__c</picklist>
+        <values>
+            <fullName>Client Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Report</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_IsReportSeparatedbytheFirstSort__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes on same page</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes on separate page</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_OutputFormatToProduced__c</picklist>
+        <values>
+            <fullName>Excel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDF</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ReportLocation__c</picklist>
+        <values>
+            <fullName>Premier Reporting %28WIRE%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -6,6 +6,7 @@
 */
 @isTest
 public class NSP_TestHelper {
+    static final string STRING_OTHER = 'Other';
     public class TestHelperException extends Exception {
     }
     
@@ -29,7 +30,7 @@ public class NSP_TestHelper {
     public static final String DEFAULT_USERNAME = 'insperity@nsp.com.invalid.testqa';
     public static final String DEFAULT_USER_F_NAME = 'Insperity';
     public static final String DEFAULT_USER_L_NAME = 'Salesforce';
-    public static final String DEFAULT_USER_EMAIL = 'insperity@invalid.nsp.com';
+    public static final String DEFAULT_USER_EMAIL = 'insperity@insperity.com';
     public static final String DEFAULT_USER_PROFILE = 'System Administrator';
 
     /***********************************************************************************************
@@ -68,6 +69,7 @@ public static Contact createContact(Id accountId, Boolean insertRecord) {
         Firstname = DEFAULT_CONTACT_FIRST_NAME,
         Lastname = DEFAULT_CONTACT_LAST_NAME,
         Email = DEFAULT_TEST_EMAIL,
+        NSP_Work_email__c = 'test@test.com',
         MailingCity = DEFAULT_ADDRESS_CITY,
         MailingState = DEFAULT_ADDRESS_STATENAME,
         MailingPostalCode = DEFAULT_ADDRESS_POSTALCODE,
@@ -315,6 +317,7 @@ public static NSP_Employee_Split__c createOpportunityCredit(
     public static NSP_Address__c createCustomAddress(){
         NSP_Address__c addressRecord = new NSP_Address__c();
         addressRecord.Name = 'Test Temporary Address';
+        addressRecord.NSP_Source__c = 'AIMS';
         addressRecord.NSP_Address_Type__c = 'Bill To';
         addressRecord.NSP_Country__c = 'United States';
         addressRecord.NSP_State__c = 'Florida';
@@ -401,7 +404,10 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         Contact con= createContact(acc.Id, true);
         System.assertEquals(con.AccountId, acc.Id);
     }
-    
+                /***********************************************************************************************
+    * MethodName: createBillingRule
+    * Description : Creating Billing Rule
+    * ********************************************************************************************/
     public static blng__BillingRule__c createBillingRule(){
         blng__BillingRule__c bRule= new blng__BillingRule__c();
         bRule.Name='Test Billing Rule';
@@ -410,14 +416,13 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         bRule.blng__InitialBillingTrigger__c='Order Product Activation Date';
         insert bRule;
         return bRule;
-}
-
+    }
     public static blng__RevenueRecognitionRule__c createRevrecRule(String revmodel){
         blng__RevenueRecognitionRule__c rRule= new blng__RevenueRecognitionRule__c();
         rRule.Name='Test RevRec Rule '+revmodel;
         rRule.blng__Active__c=true;
         rRule.blng__CreateRevenueSchedule__c='Yes';
-       // rRule.NSP_Rev_Rec_Model__c=revmodel;
+        rRule.NSP_Rev_Rec_Model__c=revmodel;
         insert rRule;
         return rRule;
     }
@@ -429,6 +434,131 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         insert tRule;
         return tRule;
     }
+        public static blng__UsageSummary__c createUsageSummary(list<OrderItem> orderItemList,Account objaccount){
+        blng__UsageSummary__c uSummary= new blng__UsageSummary__c();
+        uSummary.blng__OrderProduct__c=orderItemList[0].Id;
+        uSummary.blng__Account__c=objaccount.Id;
+        uSummary.blng__Status__c='Queued For Invoice';
+        uSummary.blng__Subtotal__c=500;
+        uSummary.blng__SummaryStartDate__c=system.today();
+        uSummary.blng__SummaryEndDate__c=system.today()+30;
+        uSummary.NSP_Billed_Free__c=TRUE;
+        insert uSummary;
+        return uSummary;
+    }
 
+    public static void switchOffTriggers () {
+   
+         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
+        NSP_AccountTriggerHandler.TriggerDisabled = true;
+        NSP_OrderItemTriggerHandler.TriggerDisabled = true;
+        NSP_OrderTriggerHandler.TriggerDisabled = true;
+        NSP_AccountTriggerHandler.TriggerDisabled = true;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true; 
+        NSP_QuoteTriggerHandler.TriggerDisabled = true;
+      
 
+    }
+    public static blng__RevenueDistributionMethod__c createRevenueDistribution(String name){
+        blng__RevenueDistributionMethod__c dist=new blng__RevenueDistributionMethod__c();
+        dist.Name=name;
+        dist.blng__Active__c=true;
+        dist.blng__MonthlyRecognitionProration__c='Number of Days';
+        dist.blng__DistributionMethod__c='Full Recognition';
+        dist.blng__FullRecognitionDate__c=STRING_OTHER;
+        dist.blng__RevenueTransactionCreationProcess__c='Automatic';
+        dist.blng__Type__c=STRING_OTHER;
+        insert dist;
+        return dist;
+    }
+    public static blng__GLRule__c createGLRule(){
+        blng__GLRule__c glrule= new blng__GLRule__c();
+        glrule.Name='Test GL rule';
+        glrule.blng__Active__c=true;
+        insert glrule;
+        return glrule;
+    }
+    public static blng__FinanceBook__c createFinBook(){
+        blng__FinanceBook__c finbook=new blng__FinanceBook__c();
+        finbook.blng__Active__c=true;
+        finbook.blng__FinancePeriodDuration__c='Monthly';
+        finbook.blng__PeriodType__c='Revenue';
+        finbook.Name='Test FinBook';
+        insert finbook;
+        return finbook;
+    }
+    public static blng__RevenueRecognitionTreatment__c createRevRecTreatment(){
+        blng__RevenueRecognitionTreatment__c treatment= new blng__RevenueRecognitionTreatment__c();
+        treatment.blng__Active__c=true;
+        treatment.Name='Test Treatment';
+        treatment.blng__ProcessingOrder__c=1;
+        treatment.blng__Type__c='Percentage';
+        treatment.blng__RevenueFinanceBook__c=NSP_TestHelper.createFinBook()?.Id;
+        treatment.blng__RevenueGLRule__c=NSP_TestHelper.createGLRule()?.Id;
+        treatment.blng__Percentage__c=100;
+        treatment.blng__RevenueScheduleCreationAction__c=STRING_OTHER;
+        treatment.blng__RevenueScheduleAmount__c=STRING_OTHER;
+        return treatment;
+    }
+    public static Product2 createBillingProduct(String prodName,blng__RevenueRecognitionRule__c rRule,blng__TaxRule__c tRule,blng__BillingRule__c bRule,String freq){
+        Product2 objproduct = NSP_TestHelper.createProduct(prodName,false);
+        objproduct.SBQQ__ChargeType__c = 'Recurring';
+        objproduct.SBQQ__BillingType__c = 'Arrears';
+        objproduct.SBQQ__BillingFrequency__c = freq;
+        objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
+        objproduct.blng__BillingRule__c=bRule.Id;
+        objproduct.blng__RevenueRecognitionRule__c=rRule.Id;
+        objproduct.blng__TaxRule__c=tRule.Id;
+        insert objproduct;
+        return objproduct;
+    }
+                /***********************************************************************************************
+    * MethodName: createOItemConsumptionSchdeule
+    * Description : Creating order item consumption schdule
+    * ********************************************************************************************/
+    public static SBQQ__OrderItemConsumptionSchedule__c createOItemConsumptionSchdeule(list<OrderItem> orderItemList,ConsumptionSchedule cs){
+        SBQQ__OrderItemConsumptionSchedule__c ocsh= new SBQQ__OrderItemConsumptionSchedule__c();
+        ocsh.Name='IWX Consumption schedule';
+        ocsh.SBQQ__BillingTerm__c=1;
+        ocsh.SBQQ__BillingTermUnit__c='Month';
+        ocsh.SBQQ__Category__c='Rates';
+        ocsh.SBQQ__OrderItem__c=orderItemList[0].Id;
+        ocsh.SBQQ__Type__c='Ranger';
+        ocsh.SBQQ__ConsumptionSchedule__c=cs.Id;
+        ocsh.SBQQ__RatingMethod__c='Tier';
+        insert ocsh;
+        return ocsh;
+    }
+            /***********************************************************************************************
+    * MethodName: createOtemConsumptionRate
+    * Description : Creating order item consumption rates
+    * ********************************************************************************************/
+    public static SBQQ__OrderItemConsumptionRate__c createOtemConsumptionRate(SBQQ__OrderItemConsumptionSchedule__c ocsh){
+        SBQQ__OrderItemConsumptionRate__c ocshrate= new SBQQ__OrderItemConsumptionRate__c();
+        ocshrate.SBQQ__LowerBound__c=1;
+        ocshrate.SBQQ__UpperBound__c=9999;
+        ocshrate.SBQQ__ProcessingOrder__c=1;
+        ocshrate.SBQQ__PricingMethod__c='FlatFee';
+        ocshrate.SBQQ__Price__c=10;
+        ocshrate.SBQQ__OrderItemConsumptionSchedule__c=ocsh.id;
+        insert ocshrate;
+        return ocshrate;
+    }
+        /***********************************************************************************************
+    * MethodName: createUsages
+    * Description : Creating billing ugsae reocord
+    * ********************************************************************************************/
+    public static blng__Usage__c createUsages(blng__UsageSummary__c usummary,list<OrderItem> orderItemList){
+        blng__Usage__c usage= new blng__Usage__c();
+        usage.NSP_Combined_partner_usage__c=20;
+       // usage.blng__MatchingId__c=usummary.blng__MatchingId__c;
+        usage.blng__MatchingId__c='usummary.blng__MatchingId__c';
+        usage.blng__StartDateTime__c=orderItemList[0].ServiceDate+1;
+        usage.blng__EndDateTime__c=orderItemList[0].ServiceDate+15;
+        usage.blng__OrderProduct__c=orderItemList[0].Id;
+        usage.blng__Quantity__c=20;
+        usage.blng__UsageSummary__c=usummary.Id;
+        insert usage;
+        return usage;
+    }
 }

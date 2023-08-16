@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Competitor_s_that_won_the_business__c</fullName>
+    <externalId>false</externalId>
+    <label>Competitor(s) that won the business</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADP</fullName>
+                <default>false</default>
+                <label>ADP</label>
+            </value>
+            <value>
+                <fullName>Bamboo</fullName>
+                <default>false</default>
+                <label>Bamboo</label>
+            </value>
+            <value>
+                <fullName>Edge Resourcing</fullName>
+                <default>false</default>
+                <label>Edge Resourcing</label>
+            </value>
+            <value>
+                <fullName>Employer Flexible</fullName>
+                <default>false</default>
+                <label>Employer Flexible</label>
+            </value>
+            <value>
+                <fullName>Engage PEO</fullName>
+                <default>false</default>
+                <label>Engage PEO</label>
+            </value>
+            <value>
+                <fullName>G&amp;A Partners</fullName>
+                <default>false</default>
+                <label>G&amp;A Partners</label>
+            </value>
+            <value>
+                <fullName>Gallagher</fullName>
+                <default>false</default>
+                <label>Gallagher</label>
+            </value>
+            <value>
+                <fullName>HR in-house</fullName>
+                <default>false</default>
+                <label>HR in-house</label>
+            </value>
+            <value>
+                <fullName>Insperity WA/WX</fullName>
+                <default>false</default>
+                <label>Insperity WA/WX</label>
+            </value>
+            <value>
+                <fullName>JustWorks</fullName>
+                <default>false</default>
+                <label>JustWorks</label>
+            </value>
+            <value>
+                <fullName>Paychex</fullName>
+                <default>false</default>
+                <label>Paychex</label>
+            </value>
+            <value>
+                <fullName>Paycom</fullName>
+                <default>false</default>
+                <label>Paycom</label>
+            </value>
+            <value>
+                <fullName>PayDay HR</fullName>
+                <default>false</default>
+                <label>PayDay HR</label>
+            </value>
+            <value>
+                <fullName>PEO - Sequoia</fullName>
+                <default>false</default>
+                <label>PEO - Sequoia</label>
+            </value>
+            <value>
+                <fullName>PEO (undisclosed)</fullName>
+                <default>false</default>
+                <label>PEO (undisclosed)</label>
+            </value>
+            <value>
+                <fullName>TriNet</fullName>
+                <default>false</default>
+                <label>TriNet</label>
+            </value>
+            <value>
+                <fullName>Ultipro</fullName>
+                <default>false</default>
+                <label>Ultipro</label>
+            </value>
+            <value>
+                <fullName>Vensure Employer Services</fullName>
+                <default>false</default>
+                <label>Vensure Employer Services</label>
+            </value>
+            <value>
+                <fullName>Workday</fullName>
+                <default>false</default>
+                <label>Workday</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

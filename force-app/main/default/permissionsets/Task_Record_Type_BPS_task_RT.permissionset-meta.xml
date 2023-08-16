@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assigns the &quot;BPS task RT&quot; Task Record Type.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Task Record Type: BPS task RT</label>
+    <recordTypeVisibilities>
+        <recordType>Task.BPS_task_RT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

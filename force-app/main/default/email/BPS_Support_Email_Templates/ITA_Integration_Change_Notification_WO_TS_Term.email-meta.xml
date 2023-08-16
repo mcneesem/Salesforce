@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - Integration Change Notification (WO &amp; TS Term)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - Integration Change Notification (WO &amp; TS Term)</name>
+    <style>freeForm</style>
+    <subject>ITA - Integration Change Notification (WO &amp; TS Term)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand that you are terminating your services with Insperity Payroll and Time &amp; Attendance as of MM/DD/YYYY.
+
+Existing employees will be able to continue using the Insperity Premier to Time &amp; Attendance single sign-on and mobile features as normal through your payroll term date listed above. After that, administrators will need to use the URL below to access Time &amp; Attendance for reporting and payroll purposes:
+
+https://timestar.insperity.com/SSO/WO.aspx
+
+They will use the same credentials for this site that they are already using to log in to Insperity Premier.
+
+Employees will not have access to track time and/or accruals in Time &amp; Attendance following the date listed above. However, you will still be able to process your payroll as normal, and the link provided above will continue to work for administrators through the next 90 days from your termination date.
+
+You will receive a separate notification prior to your Time and Attendance site being deactivated, after the date listed above. We recommend extracting your time and accrual data prior to the site being deactivated, and I&apos;ve provided a link below which details that process here for you:
+
+https://help.insperity.com/bps/knowledge-base/performing-full-time-and-attendance-data-exports-payroll-and-accrual-data/
+
+Thank you,
+
+Insperity Time &amp; Attendance Support
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

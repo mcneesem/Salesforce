@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Generating Pay Periods -Non WO</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Generating Pay Periods -Non WO</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Generating Pay Periods -Non WO</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. You can generate pay periods by following the steps below: 
+
+Navigate to Company Setup &gt; Pay Periods 
+
+Select the appropriate schedule (bi-weekly, semi-monthly, etc.) from the Select Pay Period drop-down menu 
+
+Select the GENERATE DATES button 
+
+Choose the year from the drop-down menu 
+
+Select the GENERATE DATES button to see a preview of the new year’s dates 
+
+This will automatically fill in the Initial Date field to align with the day after your last pay period of the previous year 
+
+Select the SAVE button 
+
+NOTE: If your company forecasts accruals (meaning employees can see future scheduled accruals) and utilizes the requests feature in Time and Attendance, it is best to generate 2+ years of pay periods in advance. This will ensure employees can request time off at the end of the following year. Time and Attendance will not allow employees to request time off for a pay period that does not exist. 
+ 
+Please let us know if you have any questions, and we would be happy to help. 
+ 
+Thank you, 
+
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

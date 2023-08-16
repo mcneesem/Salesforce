@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Consumption_Rate_Per_Unit__c</fullName>
+    <description>Per unit price from consumption schedule</description>
+    <externalId>false</externalId>
+    <label>Consumption Rate Per Unit</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>7</scale>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

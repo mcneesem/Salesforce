@@ -148,7 +148,7 @@
                         <valueListItems>
                             <value>Opportunity.Financial_Analysis_Tool</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -173,6 +173,11 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Support</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -211,7 +216,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -420,10 +425,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>displayHeader</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>displayNews</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -432,22 +433,11 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>displayTopcard</name>
+                    <name>displayTopCard</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerText</name>
-                    <value>Member Profile</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>minHeight</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>scrolling</name>
-                    <value>auto</value>
-                </componentInstanceProperties>
-                <componentName>LID:SalesNavigatorCompanyProfileComponent</componentName>
-                <identifier>LID_SalesNavigatorCompanyProfileComponent</identifier>
+                <componentName>runtime_sales_linkedin:companyMatchContainer</componentName>
+                <identifier>runtime_sales_linkedin_companyMatchContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-a3aa5c82-e171-4471-895a-e53c4ba0877c</name>
@@ -577,6 +567,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
             </componentInstance>

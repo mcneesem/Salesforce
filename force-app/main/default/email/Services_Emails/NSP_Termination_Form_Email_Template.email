@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="Terminations" recipientType="Contact" relatedToType="NSP_Termination_Form__c">
+    <messaging:htmlEmailBody >
+        <c:NSP_TerminationFormTemplate />
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -56,7 +56,13 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
 
     public void beforeUpdate(Map < Id, sObject > newMap, Map < Id, sObject > oldMap) {
         NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
-        accountTriggerHelperObject.beforeUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
+       
+         if (!this.hasRun() ) {
+            this.markRun();
+            accountTriggerHelperObject.beforeUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
+            accountTriggerHelperObject.accountUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
+			
+        }
     }
 
     /**
@@ -70,14 +76,16 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
     public void afterUpdate(Map < Id, sObject > newMap, Map < Id, sObject > oldMap) {
         NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
 
-        if (!this.hasRun()) {
+        if (!this.hasRun() || this.timesRun() <2 ) {
             this.markRun();
             accountTriggerHelperObject.afterUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
             // Added as a part of STY-02768
             NSP_salesOfficeRecordSharing.shareAccountonUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
 
         }
-
+        //added as part of STY-02846 changes
+        NSP_AccountTriggerHelper.updateAGMPayrollEmployees((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
+        
     }
     
 /**

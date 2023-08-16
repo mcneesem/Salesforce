@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>How_will_emp_deferral_loan_amnt__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>How will employee deferral and loan amounts be entered into payroll?</inlineHelpText>
+    <label>How will emp dfrl &amp; loan amnt entered?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bulk loader tool (excel file required)</fullName>
+                <default>false</default>
+                <label>Bulk loader tool (excel file required)</label>
+            </value>
+            <value>
+                <fullName>EE Manual ORK form</fullName>
+                <default>false</default>
+                <label>EE Manual ORK form</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

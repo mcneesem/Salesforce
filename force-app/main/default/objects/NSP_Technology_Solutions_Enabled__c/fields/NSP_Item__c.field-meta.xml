@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Item__c</fullName>
+    <description>List of Technology solution enabled items</description>
+    <externalId>false</externalId>
+    <label>Item</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Forms in Onboarding</fullName>
+                <default>false</default>
+                <label>Client Forms in Onboarding</label>
+            </value>
+            <value>
+                <fullName>Employee Documents Folder</fullName>
+                <default>false</default>
+                <label>Employee Documents Folder</label>
+            </value>
+            <value>
+                <fullName>Company Logo</fullName>
+                <default>false</default>
+                <label>Company Logo</label>
+            </value>
+            <value>
+                <fullName>CMD (Company Managed Data)</fullName>
+                <default>false</default>
+                <label>CMD (Company Managed Data)</label>
+            </value>
+            <value>
+                <fullName>Client Sponsored links</fullName>
+                <default>false</default>
+                <label>Client Sponsored links</label>
+            </value>
+            <value>
+                <fullName>File Feeds (SFTP)</fullName>
+                <default>false</default>
+                <label>File Feeds (SFTP)</label>
+            </value>
+            <value>
+                <fullName>API Integration</fullName>
+                <default>false</default>
+                <label>API Integration</label>
+            </value>
+            <value>
+                <fullName>Enhanced Employee Directory</fullName>
+                <default>false</default>
+                <label>Enhanced Employee Directory</label>
+            </value>
+            <value>
+                <fullName>Custom Reporting</fullName>
+                <default>false</default>
+                <label>Custom Reporting</label>
+            </value>
+            <value>
+                <fullName>COVID – Terms of Use Agreement/Mobile app enable</fullName>
+                <default>false</default>
+                <label>COVID – Terms of Use Agreement/Mobile app enable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

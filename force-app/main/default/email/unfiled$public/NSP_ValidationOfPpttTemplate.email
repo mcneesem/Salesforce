@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: left;"><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: 115%;"><o:p></o:p></p><p class="MsoNormal">The Install for Conversion Project for the following
+customer has been completed.<o:p></o:p></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: 115%;"><font face="arial"><span style="font-size: 12pt;">Client #:</span></font><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">&nbsp;</span><font face="arial"><o:p></o:p>{!pse__Proj__c.NSP_RET_Client_ID__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><o:p>&nbsp;</o:p></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">To review related project details, please click the
+following link: <a href="{!pse__Proj__c.Link}">View Record</a></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p><br></div>]]></td>
+</tr>
+</table>

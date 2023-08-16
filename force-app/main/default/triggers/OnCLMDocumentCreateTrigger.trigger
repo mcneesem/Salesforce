@@ -5,7 +5,7 @@
 
 trigger OnCLMDocumentCreateTrigger on CLM_Document__c (after insert) {
 
-    CLM_Document__c clmDoc = [SELECT Id, CLM_Document_Id__c, Name, Account__c, Opportunity__c
+    CLM_Document__c clmDoc = [SELECT Id, CLM_Document_Id__c, pse_Project_Task__c, Name, Account__c, Opportunity__c,NSP_Invoice__c,NSP_CreditNote__c,NSP_Service_Plan__c,NSP_Wizard_Output__c
                               FROM CLM_Document__c 
                               WHERE Id IN:Trigger.newMap.keySet()
                               LIMIT 1];
@@ -15,6 +15,16 @@ trigger OnCLMDocumentCreateTrigger on CLM_Document__c (after insert) {
     		CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.Opportunity__c);
     	}else if(clmDoc.Account__c != null){
         	CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.Account__c); 
+    	}else if(clmDoc.NSP_Invoice__c != null){
+        	CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.NSP_Invoice__c); 
+    	}else if(clmDoc.NSP_CreditNote__c != null){
+            CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.NSP_CreditNote__c); 
+        }else if(clmDoc.NSP_Service_Plan__c != null){
+            CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.NSP_Service_Plan__c); 
+    	}else if(clmDoc.NSP_Wizard_Output__c != null){
+            CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.NSP_Wizard_Output__c); 
+    	}else if(clmDoc.pse_Project_Task__c != null){
+            CLMDocumentTransfer.DownloadDocument(clmDoc.CLM_Document_Id__c, clmDoc.pse_Project_Task__c); 
     	}
     }
 }

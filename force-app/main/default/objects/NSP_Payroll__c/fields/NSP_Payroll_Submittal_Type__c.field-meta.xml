@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payroll_Submittal_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Payroll Submittal Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AIMS</fullName>
+                <default>false</default>
+                <label>AIMS</label>
+            </value>
+            <value>
+                <fullName>WebPayroll</fullName>
+                <default>false</default>
+                <label>WebPayroll</label>
+            </value>
+            <value>
+                <fullName>Fax</fullName>
+                <default>false</default>
+                <label>Fax</label>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Simplex</fullName>
+                <default>false</default>
+                <label>Simplex</label>
+            </value>
+            <value>
+                <fullName>Electronic Transmission</fullName>
+                <default>false</default>
+                <label>Electronic Transmission</label>
+            </value>
+            <value>
+                <fullName>E-mail from Payroll Contact</fullName>
+                <default>false</default>
+                <label>E-mail from Payroll Contact</label>
+            </value>
+            <value>
+                <fullName>Overnight Delivery</fullName>
+                <default>false</default>
+                <label>Overnight Delivery</label>
+            </value>
+            <value>
+                <fullName>401K Payroll Projection</fullName>
+                <default>false</default>
+                <label>401K Payroll Projection</label>
+            </value>
+            <value>
+                <fullName>Auto Run</fullName>
+                <default>false</default>
+                <label>Auto Run</label>
+            </value>
+            <value>
+                <fullName>XML Input</fullName>
+                <default>false</default>
+                <label>XML Input</label>
+            </value>
+            <value>
+                <fullName>Web Payroll</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Web Payroll</label>
+            </value>
+            <value>
+                <fullName>XML Import</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>XML Import</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

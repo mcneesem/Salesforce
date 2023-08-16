@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Contractual_Full_time_EE_Count__c</fullName>
     <externalId>false</externalId>
-    <label>Contractual Full Time EE Count</label>
+    <label>Contracted Full Time EE Count</label>
     <precision>8</precision>
     <required>false</required>
     <scale>0</scale>

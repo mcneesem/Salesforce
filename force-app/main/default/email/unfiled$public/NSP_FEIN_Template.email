@@ -1,0 +1,22 @@
+<messaging:emailTemplate subject="NEW Client {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) Multiple FEINs " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <c:InsperityEmailHeader />
+  <p>This NEW Client is onboarding with employees in the same client number with more than one <br/>
+    FEIN number. <br/>
+     Client Name: {!relatedTo.NSP_AIMS_Client_Name__c} <br/>
+     Client Number: {!relatedTo.NSP_AIMS_ClientNo__c}<br/>
+    <apex:outputPanel rendered="{!IF(relatedTo.List_additional_FEIN_s__c !=Null,True,FALSE)}">
+     FEIN Numbers: {!relatedTo.List_additional_FEIN_s__c}
+    </apex:outputPanel>
+     </p>
+  
+  <p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+  </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

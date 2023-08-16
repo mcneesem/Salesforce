@@ -19,4 +19,16 @@
         <label>Cancelled</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+        <label>In Progress</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Started</fullName>
+        <default>false</default>
+        <label>Not Started</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>

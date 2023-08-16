@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indicators__c</fullName>
+    <externalId>false</externalId>
+    <label>Indicators</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account Outlook</fullName>
+                <default>false</default>
+                <label>Account Outlook</label>
+            </value>
+            <value>
+                <fullName>Value Assessment</fullName>
+                <default>false</default>
+                <label>Value Assessment</label>
+            </value>
+            <value>
+                <fullName>New Client Experience</fullName>
+                <default>false</default>
+                <label>New Client Experience</label>
+            </value>
+            <value>
+                <fullName>Client Relationship</fullName>
+                <default>false</default>
+                <label>Client Relationship</label>
+            </value>
+            <value>
+                <fullName>Team</fullName>
+                <default>false</default>
+                <label>Team</label>
+            </value>
+            <value>
+                <fullName>Solutions</fullName>
+                <default>false</default>
+                <label>Solutions</label>
+            </value>
+            <value>
+                <fullName>Sales Experience</fullName>
+                <default>false</default>
+                <label>Sales Experience</label>
+            </value>
+            <value>
+                <fullName>Renewal Experience</fullName>
+                <default>false</default>
+                <label>Renewal Experience</label>
+            </value>
+            <value>
+                <fullName>Technology</fullName>
+                <default>false</default>
+                <label>Technology</label>
+            </value>
+            <value>
+                <fullName>Client Macro Environment</fullName>
+                <default>false</default>
+                <label>Client Macro Environment</label>
+            </value>
+            <value>
+                <fullName>HR Expertise</fullName>
+                <default>false</default>
+                <label>HR Expertise</label>
+            </value>
+            <value>
+                <fullName>Delivery Against Expectations</fullName>
+                <default>false</default>
+                <label>Delivery Against Expectations</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

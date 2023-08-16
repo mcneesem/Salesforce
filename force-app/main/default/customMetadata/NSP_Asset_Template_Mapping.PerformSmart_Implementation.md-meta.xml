@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>PerformSmart Implementation</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Project_Template__c</field>
+        <value xsi:type="xsd:string">PerformSmart Implementation</value>
+    </values>
+    <values>
+        <field>NSP_Service_Asset_Record_Type__c</field>
+        <value xsi:type="xsd:string">Performance_Management</value>
+    </values>
+</CustomMetadata>

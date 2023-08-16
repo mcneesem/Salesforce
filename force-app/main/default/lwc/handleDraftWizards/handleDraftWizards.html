@@ -1,0 +1,79 @@
+<template>
+    <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
+        <template if:true={reportRequest}>
+            <div class="slds-var-m-around_medium">
+                <template for:each={reportRequest} for:item="repReq">
+                    <lightning-layout
+                        key={repReq.Id}
+                        class="slds-var-m-vertical_x-small"
+                    >
+                        <lightning-layout-item class="slds-var-m-vertical_x-small slds-p-horizontal_small" size =6 >
+                         <div class="fdate" style="word-wrap: break-word"> {repReq.AccountName} </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item> 
+                            <lightning-button-group>
+                                <lightning-button label="Edit" icon-name="utility:edit" data-recordid={repReq.Id} onclick={editReportRequest}  icon-position="right" ></lightning-button>
+                                <lightning-button label="Delete" name="deleteRequest" icon-name="utility:delete" data-recordid={repReq.Id} onclick={deleteReportRequest}  icon-position="right" ></lightning-button>
+                            </lightning-button-group>
+                       </lightning-layout-item>
+                       <lightning-layout-item  >
+                        
+                      </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </div>
+        </template>
+
+            <c-confirmation-dialog title='Confirmation Delete ?'
+            message='Do you want to proceed with this delete ?'
+            confirm-label='Yes'
+            cancel-label='No'
+            visible={isDialogVisible}
+            original-message={originalMessage}
+            name="confirmModal"
+            onmodalaction={deleteReportRequest}>
+           </c-confirmation-dialog>
+
+         <c-modal header={header} hide-close-btn data-fname="OpenlastSavedPage" >
+            <div onsaveexit={handleCloseModal}>
+                <template if:true={showDevelopReport}> 
+                    <c-development-report-wizard  re-req-id={recordId} rep-req-obj={repReqObj} current-step={lastSavedPage} >
+                    </c-development-report-wizard>
+                 </template>
+                <template if:true={showSeperation}>
+                    <c-nsp_seperation-wizard re-req-id={recordId} rep-req-obj={repReqObj} current-step={lastSavedPage} >
+                    </c-nsp_seperation-wizard>
+                </template>
+                <template if:true={showSurvey}>
+                    <c-survey-wizard re-req-id={recordId}   rep-req-obj={repReqObj}  current-step={lastSavedPage}  >
+                    </c-survey-wizard>
+                </template>
+
+            </div>
+         </c-modal>
+
+         <c-modal header={header} hide-close-btn data-fname="OpenFirstPage" >
+            <div onsaveexit={handleCloseModal}> 
+                <template if:true={showDevelopReport}> 
+                  <c-development-report-wizard  re-req-id={recordId} rep-req-obj={repReqObj} current-step=1 >
+                  </c-development-report-wizard>
+                </template>
+                <template if:true={showSeperation}>
+                <c-nsp_seperation-wizard re-req-id={recordId} rep-req-obj={repReqObj} current-step=1 >
+                </c-nsp_seperation-wizard>
+                </template>
+                <template if:true={showSurvey}>
+                    <c-survey-wizard re-req-id={recordId} rep-req-obj={repReqObj}  current-step= '-1'>
+                    </c-survey-wizard>
+                </template>
+              </div>
+           </c-modal>
+
+      <c-wizard-resume-prompt onresume={handleResume} onstartover={handleStartOver} >
+
+      </c-wizard-resume-prompt>
+
+        <template if:true={error}>
+            {error}
+        </template>
+</template>

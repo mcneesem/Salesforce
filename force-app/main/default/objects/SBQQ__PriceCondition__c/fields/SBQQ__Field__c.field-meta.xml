@@ -302,6 +302,31 @@
                 <default>false</default>
                 <label>NSP_Has_WOSS_product__c</label>
             </value>
+            <value>
+                <fullName>NSP_Free_Month__c</fullName>
+                <default>false</default>
+                <label>NSP_Free_Month__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Change_Order_Process_Quote__c</fullName>
+                <default>false</default>
+                <label>NSP_Change_Order_Process_Quote__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Original_Line__c</fullName>
+                <default>false</default>
+                <label>NSP_Original_Line__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__EffectiveQuantity__c</fullName>
+                <default>false</default>
+                <label>SBQQ__EffectiveQuantity__c</label>
+            </value>
+            <value>
+                <fullName>NSP_OverrideSubscriptionDate__c</fullName>
+                <default>false</default>
+                <label>NSP_OverrideSubscriptionDate__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

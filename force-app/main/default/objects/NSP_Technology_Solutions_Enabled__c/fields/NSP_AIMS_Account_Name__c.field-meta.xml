@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_AIMS_Account_Name__c</fullName>
+    <description>Value populated from account&apos;s asset when asset&apos;s record type is WO</description>
+    <externalId>false</externalId>
+    <formula>IF( AND(NSP_Asset__r.AccountId =  NSP_Account__c , NSP_Asset__r.RecordType.Name  = &apos;WO&apos;),  NSP_Asset__r.NSP_Company_Name__c   ,&apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>AIMS Account Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

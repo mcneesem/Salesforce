@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>NSP_BPS_Professional_Services</name>
+    </customPermissions>
+    <description>To render the BPS Professional Services Home page</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>BPS Prof Service Home Page</label>
+</PermissionSet>

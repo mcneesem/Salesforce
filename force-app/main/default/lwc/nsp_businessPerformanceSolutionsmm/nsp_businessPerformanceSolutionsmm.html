@@ -1,0 +1,24 @@
+<template>
+    <lightning-record-edit-form
+        onerror={handleError} record-id={recordId} onload={handleLoad}
+        object-api-name={objectApiName} density="comfy">
+        <lightning-formatted-text class="slds-page-header__title" value={title}>
+        </lightning-formatted-text>
+
+        <c-nsp_selection-box disabled={disabledFields.Implementing_biz_Performance_solutions__c} label={label.isClientImplementingAnyOtherBusinessSolutions}
+            field-api-name="Implementation_Profile__c.Implementing_biz_Performance_solutions__c"
+            record-type-id={recordTypeId}
+            data-name="Implementing_biz_Performance_solutions__c"
+            value={field.Implementing_biz_Performance_solutions__c}
+            onchange={handleValueChange}>
+        </c-nsp_selection-box>
+        <c-nsp_selection-box disabled={disabledFields.Select_BPSes__c} if:true={visibility.Select_BPSes__c} class={styles.Select_BPSes__c} label={objFields.Select_BPSes__c.label}
+            field-api-name="Implementation_Profile__c.Select_BPSes__c"
+            record-type-id={recordTypeId}
+            data-name="Select_BPSes__c"
+            value={field.Select_BPSes__c}
+            onchange={handleValueChange} multiple>
+        </c-nsp_selection-box>
+        <lightning-input-field value={field.NSP_BPS_Notes__c} disabled={disabledFields.NSP_BPS_Notes__c} field-name="NSP_BPS_Notes__c" data-name="NSP_BPS_Notes__c" onchange={handleValueChange}></lightning-input-field>
+    </lightning-record-edit-form>
+</template>

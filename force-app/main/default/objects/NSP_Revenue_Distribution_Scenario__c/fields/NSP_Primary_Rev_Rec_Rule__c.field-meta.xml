@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Primary_Rev_Rec_Rule__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Hold Revenue Recognition Rule associated to Product</description>
+    <externalId>false</externalId>
+    <label>Primary Rev Rec Rule</label>
+    <referenceTo>blng__RevenueRecognitionRule__c</referenceTo>
+    <relationshipLabel>Revenue Distribution Scenarios</relationshipLabel>
+    <relationshipName>Revenue_Distribution_Scenarios</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

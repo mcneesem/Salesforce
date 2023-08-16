@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - Case Follow-Up Email - Need Addt&apos;l Info</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - Case Follow-Up Email - Need Addt&apos;l Info</name>
+    <style>freeForm</style>
+    <subject>ITA - Case Follow-Up Email - Need Addt&apos;l Info</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Last week, a member of our support team sent the following email, requesting additional information regarding this support case. Because we have not heard back from you since then, we want to touch base to see if you are still in need of assistance with this. If so, please provide the requested details and we will be happy to proceed with our investigation. 
+ 
+Thank you in advance, 
+ 
+Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

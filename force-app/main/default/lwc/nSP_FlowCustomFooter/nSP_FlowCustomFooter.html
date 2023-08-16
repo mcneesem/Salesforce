@@ -1,0 +1,14 @@
+<template>
+   <div class="slds-clearfix slds-var-p-top_medium slds-border_top">
+      <div class="slds-float_right">
+         <template if:true={previous}>
+            <lightning-button variant="neutral" label={previous} title="Click to save this record and create a new record."
+               onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>
+         </template>
+         <template if:true={next}>
+            <lightning-button variant="brand" label={next} title="Save" onclick={handleSaveClick}
+               class="slds-var-m-right_x-small"></lightning-button>
+         </template>
+      </div>
+   </div>
+</template>

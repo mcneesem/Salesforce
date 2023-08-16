@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>NSP_FLSA</name>
+    </customPermissions>
+    <description>Stores all permissions related to FLSA User.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Note__c.Case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Note__c.NSP_NetSuite_External_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Note__c.NSP_OneVoice_External_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Note__c.NSP_Parent_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Note__c.Note_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Note__c.Note__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_TypeOfDOLAudit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_WageClaim__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_Actual_Minutes_Spent_To_Resolve_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_Employee_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_AgencyCase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.AIMS_Client_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_OtherReasonForTerm__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_AppealedBy__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_AuditPayoutAmount__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_ClaimState__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_ConferenceDate__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_CSAContractDate__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_CSATermDate__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_DateCompleted__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_DateDOLAuditReceived__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_DateReceived__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_DOLInvestigatorName__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_DOLOfficeName__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_Findings__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_HRSpecialistName__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_HandledBy__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_HearingDate__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_HO_Commissioner__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_HRSAttending__c</field>
+    <readable>true</readable></fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_InvestigatorAddress__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_InvestigatorPhone__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_JobTitle__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_LegalHandling__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_Location__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_PaidByInsperity__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_PayrollSpecialistName__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_PenaltiesPaidByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_PenaltiesPaidByNSP__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_PenaltiesSavedByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_PotentialPenalties__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_ReasonForNSPPayment__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_ReasonForTerm__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_ReasonPaidByInsperity__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_SalesOffice__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>false</editable>
+    <field>Case.NSP_Segment__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_StateOfAudit__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_SUBClients__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_ClientNumber__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_TotalClaimed__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>false</editable>
+    <field>Case.NSP_TotalPaidByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>false</editable>
+    <field>Case.NSP_TotalPaidByNSP__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>false</editable>
+    <field>Case.NSP_TotalSavedByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_TotalSavedByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_TypeOfDOLAudit__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_UnknownOutcomeExplainedInNotes__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_WageClaim__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_WageClaimIssues__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_WagesClaimed__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_WagesPaidByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_WagesPaidByNSP__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Case.NSP_WagesSavedByClient__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>NSP_BPA_Mapping__c.NSP_BPA__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>NSP_BPA_Mapping__c.NSP_FLSA_Specialist__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>NSP_BPA_Mapping__c.NSP_Sales_Office__c</field>
+    <readable>true</readable>
+</fieldPermissions>
+<hasActivationRequired>false</hasActivationRequired>
+<label>FLSA Permission Set</label>
+<objectPermissions>
+    <allowCreate>true</allowCreate>
+    <allowDelete>true</allowDelete>
+    <allowEdit>true</allowEdit>
+    <allowRead>true</allowRead>
+    <modifyAllRecords>true</modifyAllRecords>
+    <object>NSP_BPA_Mapping__c</object>
+    <viewAllRecords>true</viewAllRecords>
+</objectPermissions>
+<recordTypeVisibilities>
+    <recordType>Task.NSP_Time_Entry_DO_NOT_USE</recordType>
+    <visible>true</visible>
+</recordTypeVisibilities>
+<tabSettings>
+    <tab>NSP_BPA_Mapping__c</tab>
+    <visibility>Visible</visibility>
+</tabSettings>
+</PermissionSet>

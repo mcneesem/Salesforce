@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Requests Anniversary Date</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Requests Anniversary Date</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Requests Anniversary Date</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+
+
+
+Thank you for contacting Insperity Time &amp; Attendance Support. Some accrual plans are configured to forecast accruals, meaning they will show all scheduled accruals for the year in advance, while others are configured to simply populate the employees’ accrual transactions as they go. Your system is currently not programmed to forecast accruals and your accrual calendar year is based on the employee’s anniversary. Accruals for the next anniversary year will not populate for employees until the ‘current pay period’ in your Time &amp; Attendance system includes the employees’ anniversary date. At that time, employees will be able to request time off.
+
+If you have additional questions or concerns or would like to update your configuration to allow forecasting, please let us know and we will be happy to help.
+
+
+Thank you,
+
+Technical Support Team
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

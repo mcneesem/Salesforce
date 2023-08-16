@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Generate_Document</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Generate Document</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen?aid={!$Label.NSP_Docusign_Account_Id}&amp;config={!blng__CreditNote__c.NSP_Template__c}&amp;eos[0].Id={!blng__CreditNote__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=blng__CreditNote__c&amp;eos[0].Name={!blng__CreditNote__c.Name}&amp;eos[0].ScmPath=/Salesforce/Account/{!Account.Name}/Credit Note/</url>
+</WebLink>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_IsDispatched__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is added as a part of STY-01091</description>
+    <externalId>false</externalId>
+    <label>IsDispatched</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

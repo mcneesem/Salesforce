@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>International Time - Non-Insperity Employee (with Premier)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>International Time - Non-Insperity Employee (with Premier)</name>
+    <style>freeForm</style>
+    <subject>International Time - Non-Insperity Employee (with Premier)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for providing this information. This user has been approved through our Data Privacy Team and can be set up in Insperity Premier and Time &amp; Attendance. 
+ 
+The employee can set up their Premier account by following the linked guide below: 
+ 
+https://help.insperity.com/bps/wp-content/uploads/sites/3/2021/11/Creating-a-Insperity-Premier-user-account.pdf 
+ 
+They will use these credentials during that setup: 
+ 
+Last name: {!Contact.LastName}
+DOB: {!Contact.NSP_Date_of_Birth__c} 
+Identifier:  {!Contact.NSP_Per_ID__c}
+
+For security purposes, Insperity will no longer store the DOB (date of birth) for international non-paid users. A generic DOB has been provided. Please advise the user to keep these credentials. If they ever need to go through Forgot Username or Forgot Password, they will need this information. 
+ 
+I&apos;ve also provided a link to an article in our Help Center that details the steps for setting up their Time &amp; Attendance profile: 
+ 
+https://help.insperity.com/bps/knowledge-base/how-to-add-a-new-employee-in-time-and-attendance/ 
+ 
+Any system administrator can complete these steps. The identifier noted above should be added in the Employee Number field during setup and the user should be assigned to a non-Insperity/non-exporting Client ID. This will ensure they are not included in your payroll export. 
+ 
+Once their setup is complete, the user will be able to log in directly to Time &amp; Attendance via this URL, with the credentials you assigned during setup: 
+ 
+https://timestar.insperity.com/XXX/ 
+ 
+Since they are a non-Insperity employee, they will not have access to the single sign-on feature through Insperity Premier. 
+ 
+If you have any additional questions or concerns about the Time &amp; Attendance setup, please feel free to contact our Time &amp; Attendance Support Team for assistance. 
+  
+Phone: 800-314-8223 (live support is available Monday - Friday 7am - 7pm Central Time) 
+ 
+Email: time.support@insperity.com 
+
+Please reference this case number {Case Number} so they know the approval has been completed for this user. 
+ 
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

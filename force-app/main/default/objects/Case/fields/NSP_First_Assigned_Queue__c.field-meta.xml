@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_First_Assigned_Queue__c</fullName>
+    <description>Will be populated with value in NSP_NiceCx_Original_Assigned_Queue__c if NSP_NiceCx_Case__c = TRUE. Will be populated with value in NSP_Assigned_Queue__c if NSP_NiceCx_Case__c = FALSE.</description>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
+    <label>NiceCX First Assigned Queue</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

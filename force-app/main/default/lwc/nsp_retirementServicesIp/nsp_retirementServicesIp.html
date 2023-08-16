@@ -1,0 +1,115 @@
+<template>
+    <div class="retirementServices slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form onsubmit={handleSubmit} record-id={recordId} object-api-name={objectApiName}
+            density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.retirementServices}>
+            </lightning-formatted-text>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="7">
+                    <template if:true={existingRetirementPlan.data}>
+                        <lightning-formatted-text class="slds-form-element__label"
+                            value={label.existingRetirementPlanQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_has_existing_retirement_plan__c"
+                            label={label.existingRetirementPlanQuestion} variant="label-hidden"
+                            options={existingRetirementPlan.data.values}
+                            value={fields.Client_has_existing_retirement_plan__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </template>
+                    <template if:true={clientDoHaveRetirementPlan}>
+                        <lightning-formatted-text class="slds-form-element__label"
+                            value="What kind of retirement plan does client have today?">
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Type_of_retirement_plan_client_has_today__c"
+                            label={label.likeToSetupWithNSPQuestion} variant="label-hidden"
+                            options={typeOfRetirementPlan.data.values}
+                            value={fields.Type_of_retirement_plan_client_has_today__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={isCSP401K}>
+                            <lightning-formatted-text class="slds-form-element__label"
+                                value="How will employee deferral and loan amounts be entered into payroll?">
+                            </lightning-formatted-text>
+                            <lightning-radio-group name="Emp_deferral_loan_amount__c"
+                                label="" variant="label-hidden"
+                                options={deferralLoanAmountOptions.data.values}
+                                value={fields.Emp_deferral_loan_amount__c} onchange={handleChange}
+                                type="radio">
+                            </lightning-radio-group>
+                        </template>
+                        <lightning-formatted-text class="slds-form-element__label"
+                            value={label.isClientWorkingwithNSPRSrep}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_working_with_an_NSP_RS_rep__c"
+                            label={label.isClientWorkingwithNSPRSrep} variant="label-hidden"
+                            options={isClientWorkingWithNSP.data.values}
+                            value={fields.Client_working_with_an_NSP_RS_rep__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+
+                        <template if:true={showNSPRSContact}>
+                            <lightning-formatted-text class="slds-form-element__label NSP_RS_Contact__c"
+                                value={label.rsContactQuestion}>
+                            </lightning-formatted-text>
+                            <lightning-input-field field-name="NSP_RS_Contact__c"
+                                variant="label-hidden" onchange={handleInputChange}>
+                            </lightning-input-field>
+                        </template>
+                    </template>
+                    <template if:true={showSetupPlanQuestion}>
+                        <div class="slds-m-left_medium">
+                            <template if:true={likeToSetupWithNSP.data}>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.likeToSetupWithNSPQuestion}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Client_want_to_begin_401k_w_NSP_setup__c"
+                                    label={label.likeToSetupWithNSPQuestion} variant="label-hidden"
+                                    options={likeToSetupWithNSP.data.values}
+                                    value={fields.Client_want_to_begin_401k_w_NSP_setup__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                            </template>
+                            <template if:true={showIsClientWorkingWithNSPQuestion}>
+                                <div class="slds-m-left_medium">
+                                    <template if:true={showIsClientWorkingWithNSPRep}>
+                                        <template if:true={isClientWorkingWithNSP.data}>
+                                        <lightning-formatted-text class="slds-form-element__label"
+                                            value={label.isClientWorkingwithNSPRSrep}>
+                                        </lightning-formatted-text>
+                                        <lightning-radio-group name="Client_working_with_an_NSP_RS_rep__c"
+                                            label={label.isClientWorkingwithNSPRSrep} variant="label-hidden"
+                                            options={isClientWorkingWithNSP.data.values}
+                                            value={fields.Client_working_with_an_NSP_RS_rep__c} onchange={handleChange}
+                                            type="radio">
+                                        </lightning-radio-group>
+                                        <template if:true={showNSPRSContact}>
+                                            <lightning-formatted-text class="slds-form-element__label NSP_RS_Contact__c"
+                                                value={label.rsContactQuestion}>
+                                            </lightning-formatted-text>
+                                            <lightning-input-field field-name="NSP_RS_Contact__c"
+                                                variant="label-hidden" onchange={handleInputChange}>
+                                            </lightning-input-field>
+
+                                        <lightning-formatted-text class="slds-form-element__label NSP_RS_Doc_Contact_Info__c"
+                                            value="Which client contact will sign NSP RS documentation?">
+                                        </lightning-formatted-text>
+                                        <lightning-input-field field-name="NSP_RS_Doc_Contact_Info__c"
+                                            variant="label-hidden" onchange={handleInputChange}>
+                                        </lightning-input-field>
+                                        </template>
+                                    </template>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <lightning-input-field field-name="Retirement_services_notes__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

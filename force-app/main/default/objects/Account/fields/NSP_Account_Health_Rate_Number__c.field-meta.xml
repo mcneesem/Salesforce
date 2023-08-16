@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Account_Health_Rate_Number__c</fullName>
+    <description>This is the numeric rating value that corresponds to the users selection in the Account Health picklist field</description>
+    <externalId>false</externalId>
+    <formula>CASE(NSP_Account_Health__c,
+&quot;Unfavorable&quot;, -2 ,
+&quot;Somewhat unfavorable&quot;, -1 ,
+&quot;Neutral&quot;,0 ,
+&quot;Somewhat favorable&quot;, 1,
+&quot;Favorable&quot;, 2 , null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Account Health Rate Number</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

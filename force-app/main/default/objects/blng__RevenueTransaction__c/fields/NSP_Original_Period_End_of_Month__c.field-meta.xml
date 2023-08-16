@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Original_Period_End_of_Month__c</fullName>
+    <description>Captures Original Period End Of Month</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK( blng__InvoiceLine__c), blng__CreditNoteLine__r.NSP_Credit_Note_Line_Date_End_of_Month__c, blng__InvoiceLine__r.NSP_Invoice_Date_End_Of_Month__c  )</formula>
+    <label>Original Period End of Month</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

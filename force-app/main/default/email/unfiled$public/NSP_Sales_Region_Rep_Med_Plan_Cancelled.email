@@ -1,0 +1,17 @@
+<messaging:emailTemplate subject="Onboarding Meeting Information" recipientType="User" relatedToType="ServiceAppointment">
+<messaging:htmlEmailBody >
+<html>
+<body>
+The Orientation Meeting for {!relatedTo.Account.Name} scheduled for the Date and Time below has been CANCELLED or POSTPONED. <br/>
+
+<c:NSP_SAEmail_DateTime  currentRecordId="{!relatedTo.Id}" date_time_value="{!relatedTo.NSP_Old_Date__c}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.NSP_Old_End_Time__c}"/> <br/>
+Address: {!relatedTo.NSP_Orientation_Address__c} <br/>
+
+Orientation Rep: {!relatedTo.Owner.Name} <br/>
+
+Comments: {!relatedTo.Description} <br/>
+
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

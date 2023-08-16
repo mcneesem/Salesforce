@@ -1481,6 +1481,11 @@
         <label>Hanna Global Solutions</label>
     </customValue>
     <customValue>
+        <fullName>Harris Northwest Advisors</fullName>
+        <default>false</default>
+        <label>Harris Northwest Advisors</label>
+    </customValue>
+    <customValue>
         <fullName>Heritage Companies, Inc</fullName>
         <default>false</default>
         <label>Heritage Companies, Inc</label>

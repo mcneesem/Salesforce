@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Deliverable__c</fullName>
+    <description>Stores the type of the deliverable.</description>
+    <externalId>false</externalId>
+    <label>Deliverable</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Advanced Liability Training</fullName>
+                <default>false</default>
+                <label>Advanced Liability Training</label>
+            </value>
+            <value>
+                <fullName>All-Company Team Building</fullName>
+                <default>false</default>
+                <label>All-Company Team Building</label>
+            </value>
+            <value>
+                <fullName>Analyze Company Culture</fullName>
+                <default>false</default>
+                <label>Analyze Company Culture</label>
+            </value>
+            <value>
+                <fullName>Analyze Company Data</fullName>
+                <default>false</default>
+                <label>Analyze Company Data</label>
+            </value>
+            <value>
+                <fullName>Benefits Education Meeting</fullName>
+                <default>false</default>
+                <label>Benefits Education Meeting</label>
+            </value>
+            <value>
+                <fullName>Check-in meetings</fullName>
+                <default>false</default>
+                <label>Check-in meetings</label>
+            </value>
+            <value>
+                <fullName>Coaching</fullName>
+                <default>false</default>
+                <label>Coaching</label>
+            </value>
+            <value>
+                <fullName>Compensation Strategy</fullName>
+                <default>false</default>
+                <label>Compensation Strategy</label>
+            </value>
+            <value>
+                <fullName>Conflict Management</fullName>
+                <default>false</default>
+                <label>Conflict Management</label>
+            </value>
+            <value>
+                <fullName>Culture Strategy</fullName>
+                <default>false</default>
+                <label>Culture Strategy</label>
+            </value>
+            <value>
+                <fullName>Department Team Building</fullName>
+                <default>false</default>
+                <label>Department Team Building</label>
+            </value>
+            <value>
+                <fullName>Emerging Leadership</fullName>
+                <default>false</default>
+                <label>Emerging Leadership</label>
+            </value>
+            <value>
+                <fullName>Employee Development</fullName>
+                <default>false</default>
+                <label>Employee Development</label>
+            </value>
+            <value>
+                <fullName>Employee Handbook</fullName>
+                <default>false</default>
+                <label>Employee Handbook</label>
+            </value>
+            <value>
+                <fullName>Employee Relations Guidance</fullName>
+                <default>false</default>
+                <label>Employee Relations Guidance</label>
+            </value>
+            <value>
+                <fullName>FLSA Review</fullName>
+                <default>false</default>
+                <label>FLSA Review</label>
+            </value>
+            <value>
+                <fullName>Hiring Strategy</fullName>
+                <default>false</default>
+                <label>Hiring Strategy</label>
+            </value>
+            <value>
+                <fullName>HR Fundamentals</fullName>
+                <default>false</default>
+                <label>HR Fundamentals</label>
+            </value>
+            <value>
+                <fullName>Human Capital Infrastructure</fullName>
+                <default>false</default>
+                <label>Human Capital Infrastructure</label>
+            </value>
+            <value>
+                <fullName>Human Capital Strategy</fullName>
+                <default>false</default>
+                <label>Human Capital Strategy</label>
+            </value>
+            <value>
+                <fullName>Insperity Premier Training</fullName>
+                <default>false</default>
+                <label>Insperity Premier Training</label>
+            </value>
+            <value>
+                <fullName>Job Descriptions</fullName>
+                <default>false</default>
+                <label>Job Descriptions</label>
+            </value>
+            <value>
+                <fullName>Leadership Development</fullName>
+                <default>false</default>
+                <label>Leadership Development</label>
+            </value>
+            <value>
+                <fullName>Liability Training</fullName>
+                <default>false</default>
+                <label>Liability Training</label>
+            </value>
+            <value>
+                <fullName>Manager Development</fullName>
+                <default>false</default>
+                <label>Manager Development</label>
+            </value>
+            <value>
+                <fullName>New OSS or KDM Introduction &amp; Resources</fullName>
+                <default>false</default>
+                <label>New OSS or KDM Introduction &amp; Resources</label>
+            </value>
+            <value>
+                <fullName>Offsite Leadership Meetings</fullName>
+                <default>false</default>
+                <label>Offsite Leadership Meetings</label>
+            </value>
+            <value>
+                <fullName>Onboarding new Employees</fullName>
+                <default>false</default>
+                <label>Onboarding new Employees</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Policy/Procedures</fullName>
+                <default>false</default>
+                <label>Policy/Procedures</label>
+            </value>
+            <value>
+                <fullName>Recruiting Support</fullName>
+                <default>false</default>
+                <label>Recruiting Support</label>
+            </value>
+            <value>
+                <fullName>Retention Strategy</fullName>
+                <default>false</default>
+                <label>Retention Strategy</label>
+            </value>
+            <value>
+                <fullName>Rewards &amp; Recognition Strategy</fullName>
+                <default>false</default>
+                <label>Rewards &amp; Recognition Strategy</label>
+            </value>
+            <value>
+                <fullName>Safety Review</fullName>
+                <default>false</default>
+                <label>Safety Review</label>
+            </value>
+            <value>
+                <fullName>Service Strategy Review</fullName>
+                <default>false</default>
+                <label>Service Strategy Review</label>
+            </value>
+            <value>
+                <fullName>Strategic Consulting</fullName>
+                <default>false</default>
+                <label>Strategic Consulting</label>
+            </value>
+            <value>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+                <label>Succession Planning</label>
+            </value>
+            <value>
+                <fullName>Training Administration</fullName>
+                <default>false</default>
+                <label>Training Administration</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

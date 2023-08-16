@@ -1,0 +1,51 @@
+<template>
+    <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
+    <div class="slds-p-left_large" >
+        <div class="slds-p-around_medium lgc-bg">
+            <div class="demo-only" style="max-width:320px">
+            <div class="slds-form-element">
+            <span class="slds-form-element__label" id="file-selector-primary-label"></span>
+            <div class="slds-form-element__control">
+            <div class="slds-file-selector slds-file-selector_images">
+            <div class="slds-file-selector__dropzone slds-has-drag-over">
+        <lightning-file-upload name="fileUploader" record-id={reReqId} onuploadfinished={handleUploadFinished} multiple>
+        </lightning-file-upload>
+     </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<br/>
+</div> 
+
+<template if:true={relatedfile}>
+    <template if:false={showSpinner}>
+    <div class="slds-var-m-around_medium">
+        <template for:each={relatedfile} for:item="repReq">
+            <lightning-layout
+                key={repReq.Id}
+                class="slds-var-m-vertical_x-small slds-border_bottom">
+                <lightning-layout-item class="filename slds-var-m-vertical_x-small">
+                    {repReq.PathOnClient}
+                </lightning-layout-item>
+                <lightning-layout-item data-fname="createdDate" class="filedate slds-var-m-vertical_x-small slds-p-horizontal_small" >
+                    <lightning-formatted-date-time value={repReq.CreatedDate}></lightning-formatted-date-time>
+                </lightning-layout-item>
+                <lightning-layout-item> 
+                    <lightning-button  icon-name="action:download" data-recordid={repReq.ContentDocumentId} onclick={downloadFile} ></lightning-button>
+                 </lightning-layout-item>
+                <lightning-layout-item> 
+                   <lightning-button  icon-name="utility:delete" data-recordid={repReq.ContentDocumentId} onclick={deleteRelatedFile} ></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </div>
+</template>
+</template>
+<div if:true={showSpinner} class="slds-is-relative">
+	<lightning-spinner variant="brand"></lightning-spinner>
+</div>
+</template>

@@ -102,6 +102,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Budgetary_Quote__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Requested_First_Check_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -111,6 +115,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Description_Of_Services__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Ordered__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -226,6 +234,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Bypass_DocuSign_Signature__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_TerminationDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -507,7 +519,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2D000003VMQ3</masterLabel>
+        <masterLabel>00h4x000005h6Z6</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

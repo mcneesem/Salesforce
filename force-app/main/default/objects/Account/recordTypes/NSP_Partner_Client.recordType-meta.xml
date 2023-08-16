@@ -202,6 +202,81 @@
             <default>false</default>
         </values>
     </picklistValues>
+    	<picklistValues>
+        <picklist>NSP_Active_Assets__c</picklist>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware Loaner Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning %26 Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX_WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>MidMarket_National_Account__c</picklist>
         <values>
@@ -250,6 +325,10 @@
         </values>
         <values>
             <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMNA Prospect</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4101,6 +4180,10 @@
         </values>
         <values>
             <fullName>Hanna Global Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Harris Northwest Advisors</fullName>
             <default>false</default>
         </values>
         <values>

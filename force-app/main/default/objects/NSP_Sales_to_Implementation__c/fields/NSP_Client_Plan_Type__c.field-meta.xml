@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Client_Plan_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Plan Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Association</fullName>
+                <default>false</default>
+                <label>Association</label>
+            </value>
+            <value>
+                <fullName>Association w/ Prior Plan Merge</fullName>
+                <default>false</default>
+                <label>Association w/ Prior Plan Merge</label>
+            </value>
+            <value>
+                <fullName>Choice</fullName>
+                <default>false</default>
+                <label>Choice</label>
+            </value>
+            <value>
+                <fullName>Custom to NSP</fullName>
+                <default>false</default>
+                <label>Custom to NSP</label>
+            </value>
+            <value>
+                <fullName>Freeze</fullName>
+                <default>false</default>
+                <label>Freeze</label>
+            </value>
+            <value>
+                <fullName>IRA to NSP</fullName>
+                <default>false</default>
+                <label>IRA to NSP</label>
+            </value>
+            <value>
+                <fullName>MEP to Choice</fullName>
+                <default>false</default>
+                <label>MEP to Choice</label>
+            </value>
+            <value>
+                <fullName>MEP to WO</fullName>
+                <default>false</default>
+                <label>MEP to WO</label>
+            </value>
+            <value>
+                <fullName>Merger</fullName>
+                <default>false</default>
+                <label>Merger</label>
+            </value>
+            <value>
+                <fullName>Merger - Trailing</fullName>
+                <default>false</default>
+                <label>Merger - Trailing</label>
+            </value>
+            <value>
+                <fullName>ORK to NSP</fullName>
+                <default>false</default>
+                <label>ORK to NSP</label>
+            </value>
+            <value>
+                <fullName>Startup</fullName>
+                <default>false</default>
+                <label>Startup</label>
+            </value>
+            <value>
+                <fullName>White Label</fullName>
+                <default>false</default>
+                <label>White Label</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>WO</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

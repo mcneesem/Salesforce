@@ -117,6 +117,31 @@
                 <default>false</default>
                 <label>NSP_Secoundry_Scholarship_Minimum_Fee__c</label>
             </value>
+            <value>
+                <fullName>NSP_Check_For_Early_Termination_Fee__c</fullName>
+                <default>false</default>
+                <label>NSP_Check_For_Early_Termination_Fee__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__Quantity__c</fullName>
+                <default>false</default>
+                <label>SBQQ__Quantity__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Effective_Renewed_Quantity__c</fullName>
+                <default>false</default>
+                <label>NSP_Effective_Renewed_Quantity__c</label>
+            </value>
+            <value>
+                <fullName>NSP_NetTotalForTemplate__c</fullName>
+                <default>false</default>
+                <label>NSP_NetTotalForTemplate__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Template_Billing_Type__c</fullName>
+                <default>false</default>
+                <label>NSP_Template_Billing_Type__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

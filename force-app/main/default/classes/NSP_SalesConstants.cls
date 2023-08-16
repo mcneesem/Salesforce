@@ -29,6 +29,7 @@ public class NSP_SalesConstants {
     // To set primary product as WX
     public static final String WX ='WX';
     public static final String WA ='WA';
+    public static final String WOSS ='WOSS';
     // To set opportunity type as CAMS
     public static final String OPPORTUNITY_TYPE_CAMS ='CAMS';
     // To set primary product as Retirement services
@@ -132,6 +133,67 @@ public class NSP_SalesConstants {
     public static final String SalesManager = 'Sales Manager';
     public static final String Account_View_All_Modify_All ='Account_View_All_Modify_All';
     public static final String userId = '005';
+        //Case related constants
+    public static final String HR_SERVICES = 'HR Services';
+    public static final String Discuss_Paid_Sick_Leave = 'Discuss Paid Sick Leave';
+    //Account related Constants
+    public static final String CUSTOMER = 'Customer';
+    //Account Team member constants
+    public static final String MANAGERHRSERVICE = 'Manager, HR Services'; 
+    public static final String ClientLiaison = 'Client Liaison';
+    public static final String HRSpecialist = 'HR Specialist';
+    public static final String BPSUser = 'BPS User';
+    // QuoteLine related constants
+    public static final String ACTION_TYPE = 'Add Product';
+    // Project related constants
+    public static final String WO_PROJECT_TEMPLATE_KEY = 'Workforce Optimization/Synchronization';
+    //PTO Smartforms constants
+    public static final String AIMS = 'NSP_AIMS';
+    public static final String ITA = 'NSP_ITA';
+    public static final String Queue = 'Queue';
+    public static final String NSP_AIMS_form = 'NSP_AIMS_form';
+    public static final String NSP_ITA_form = 'NSP_ITA_form';
+    public static final String NSP_Middle_Market_PTO = 'NSP_Middle_Market_PTO';
+    public static final String Submitted = 'Submitted';
+    public static final String NSP_National_PTO = 'NSP_National_PTO';
+    public static final String HRInfrastructure = 'HR Infrastructure';
+    public static final String PTOPlanAnalysisDevelopmentandtracking = 'PTO Plan Analysis, Development and tracking';
+    public static final String PTOSmartformSetup = 'PTO Smartform Setup';
+    public static final String Resubmit = 'Resubmit';
+    public static final String Draft = 'Draft';
+    public static final String Closed = 'Closed';
+    public static final String Cancelled = 'Cancelled';
+    public static final String PTOSmartformresubmitted = 'PTO Smartform resubmitted';
+    public static final String CaseSubject = 'Case sub-status has been updated to PTO Smartform resubmitted';
+    public static final String Reopened = 'Reopened';
+    public static final String Yes = 'Yes';
+    public static final String No = 'No';
+    public static final String FLSACategory = 'HR Admin Compliance – FLSA';
+    public static final String FLSASubCategory = 'FLSA Full Service';
+    public static final String midMarket = '4499 MidMarket';
+    public static final String FLSASubCategory1 = 'FLSA Basic Service';
+    public static final String FLSASubCategory2 = 'FLSA Quick Check Service';
+    public static final String PayrollSpecialist = 'Payroll Specialist';
+    public static final String InProgress = 'In Progress';
+    public static final String Resolved = 'Resolved';
+    //Asset related constants
+    public static final String ONDEMAND_STATUS = 'On Demand';
+    public static final String PROD_RECRUITING = 'Recruiting Services';
+    public static final String PROD_EMPSCREENING = 'Employment Screening';
+    public static final String PROD_EXPENSEMANAGEMENT = 'Expense Management';
+    public static final String PROD_INSURANCE = 'Insurance Services';
+    public static final String ASSETRECTYPE_INSURANCE = 'Insurance Service';
+    public static final String ASSETRECTYPE_CERTIFY = 'Certify';
+    public static final String BACKOUT_STATUS = 'Backout';
+    public static final String TERMINATED_STATUS = 'Terminated';
+    public static final String ACTIVE_STATUS = 'Active';
+    public static final String ACTIVATED_STATUS = 'Activated';
+    public static final String PROD_WX = 'Workforce Acceleration';
+    public static final String PROD_WA = 'Workforce Administration';
+    public static final String RET_Plan_Activation = 'Plan Activation';
+    public static final String PEOTOWX = 'PEO to WX';
+    public static final String WOTOWX = 'WX (WO to WX)';
+    public static final String WOTOWA = 'WA (WO to WA)';
     //Added as part of user story 128436
     public static final String Task_Type ='Core Sales';
     public static final String Task_SubType = 'WX Quote';

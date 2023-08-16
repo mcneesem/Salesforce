@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Termination_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Termination Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client termed in Implementation</fullName>
+                <default>false</default>
+                <label>Client termed in Implementation</label>
+            </value>
+            <value>
+                <fullName>Cost</fullName>
+                <default>false</default>
+                <label>Cost</label>
+            </value>
+            <value>
+                <fullName>Covid-19</fullName>
+                <default>false</default>
+                <label>Covid-19</label>
+            </value>
+            <value>
+                <fullName>Financial - Bankruptcy</fullName>
+                <default>false</default>
+                <label>Financial - Bankruptcy</label>
+            </value>
+            <value>
+                <fullName>Financial - Deliquency</fullName>
+                <default>false</default>
+                <label>Financial - Deliquency</label>
+            </value>
+            <value>
+                <fullName>Financial - NSF</fullName>
+                <default>false</default>
+                <label>Financial - NSF</label>
+            </value>
+            <value>
+                <fullName>Financial - Other</fullName>
+                <default>false</default>
+                <label>Financial - Other</label>
+            </value>
+            <value>
+                <fullName>Insperity Terminated</fullName>
+                <default>false</default>
+                <label>Insperity Terminated</label>
+            </value>
+            <value>
+                <fullName>Never Onboarded</fullName>
+                <default>false</default>
+                <label>Never Onboarded</label>
+            </value>
+            <value>
+                <fullName>Other - Do not need</fullName>
+                <default>false</default>
+                <label>Other - Do not need</label>
+            </value>
+            <value>
+                <fullName>Other - FEIN Change</fullName>
+                <default>false</default>
+                <label>Other - FEIN Change</label>
+            </value>
+            <value>
+                <fullName>Other - Loss to Competitor</fullName>
+                <default>false</default>
+                <label>Other - Loss to Competitor</label>
+            </value>
+            <value>
+                <fullName>Other - Moved to WO</fullName>
+                <default>false</default>
+                <label>Other - Moved to WO</label>
+            </value>
+            <value>
+                <fullName>Other - Never Used</fullName>
+                <default>false</default>
+                <label>Other - Never Used</label>
+            </value>
+            <value>
+                <fullName>Other - No Response</fullName>
+                <default>false</default>
+                <label>Other - No Response</label>
+            </value>
+            <value>
+                <fullName>Other - Other</fullName>
+                <default>false</default>
+                <label>Other - Other</label>
+            </value>
+            <value>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+                <label>Out of Business</label>
+            </value>
+            <value>
+                <fullName>Service Issues</fullName>
+                <default>false</default>
+                <label>Service Issues</label>
+            </value>
+            <value>
+                <fullName>Sold Business</fullName>
+                <default>false</default>
+                <label>Sold Business</label>
+            </value>
+            <value>
+                <fullName>Technology - iSovled</fullName>
+                <default>false</default>
+                <label>Technology - iSovled</label>
+            </value>
+            <value>
+                <fullName>Technology - OrgPlus</fullName>
+                <default>false</default>
+                <label>Technology - OrgPlus</label>
+            </value>
+            <value>
+                <fullName>Technology - Other</fullName>
+                <default>false</default>
+                <label>Technology - Other</label>
+            </value>
+            <value>
+                <fullName>Technology - PerformSmart</fullName>
+                <default>false</default>
+                <label>Technology - PerformSmart</label>
+            </value>
+            <value>
+                <fullName>Technology - TimeStar</fullName>
+                <default>false</default>
+                <label>Technology - TimeStar</label>
+            </value>
+            <value>
+                <fullName>WO Support Ended</fullName>
+                <default>false</default>
+                <label>WO Support Ended</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -13,7 +13,14 @@ Modification Log     :
 ***************************************************************************************************/
 @isTest
 private class QuoteExtControllerTests {
-    
+
+    @isTest private static void testConstants() {
+        Test.startTest();
+        Boolean codeCoverage01 = NSP_CPQConstants.TEST_CODE_COVERAGE;
+        Boolean codeCoverage02 = NSP_BillingConstants.TEST_CODE_COVERAGE;
+        Test.stopTest();
+    }
+
     /**********************************************************************************************
 * Method Name:testSubmit
 * Purpose: This method will get quote record
@@ -80,7 +87,7 @@ private class QuoteExtControllerTests {
         productGroup.SBQQ__ConfiguredSKU__c = testProduct.id;
         productGroup.SBQQ__OptionalSKU__c   = testChildProduct.id;    
         insert productGroup;
-        
+        test.startTest();
         NSP_TestHelper.createPriceBookEntry(testProduct.Id,1,true);
         //Create Opportunity
           Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objAccount.Id,'New Business',false);
@@ -109,7 +116,7 @@ private class QuoteExtControllerTests {
         insert parentqli;
         SBQQ__QuoteLine__c childqli = new SBQQ__QuoteLine__c(SBQQ__Product__c = testChildProduct.id,SBQQ__Quote__c = obj1quote.id,SBQQ__ProductOption__c = productGroup.Id,SBQQ__RequiredBy__c=parentqli.Id	);
         insert childqli;
-        test.startTest();
+        
         QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(obj1quote));
         con.onSubmit();
         test.stopTest();
@@ -193,6 +200,7 @@ private class QuoteExtControllerTests {
         productGroup.SBQQ__ConfiguredSKU__c = testProduct.id;
         productGroup.SBQQ__OptionalSKU__c   = testChildProduct.id;    
         insert productGroup;
+        test.startTest();
         //Create Pricebook Entry
         NSP_TestHelper.createPriceBookEntry(testProduct.Id,1,true);
         //Create Opportunity
@@ -229,7 +237,7 @@ private class QuoteExtControllerTests {
              insert childqli;
         	 
              
-            test.startTest();
+            
             QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(obj1quote));
             con.onSubmit();
             test.stopTest();

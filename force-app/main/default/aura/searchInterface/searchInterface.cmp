@@ -1,0 +1,12 @@
+<aura:component implements="forceCommunity:searchInterface" access="global">
+    <div class="search">
+        <div class="nsp-input">
+            <form class="search-form">
+                    <input class="search-input" type="text" placeholder="Search..."/>
+                     
+                <lightning:icon iconName="utility:search" class="icon_white_bg" size="x-small" alternativeText="search" title="search" />
+                <input type="hidden" name="language" value="en" />
+            </form>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,29 @@
+<messaging:emailTemplate subject=": EPLI Information for {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+
+<html>
+  <body>
+  <table border="0" width="550">
+  <c:InsperityEmailHeader />
+  <p>AIMS Client Name: {!relatedTo.NSP_AIMS_Client_Name__c} </p>
+  <p>Client Number: {!relatedTo.NSP_AIMS_ClientNo__c} </p>
+  <p>Client Effective Date: &nbsp;<apex:outputText value="{0,date,MM/dd/yy}">
+    <apex:param value="{!relatedTo.Effective_Date_Payroll_Worker_comp_EPLI__c}" />
+    </apex:outputText></p>
+  <apex:outputPanel rendered="{!IF(relatedTo.Wnt_cpy_of_Insperity_EPLI_policy_cert__c=='Yes',TRUE,FALSE)}">
+<p><strong>This client has requested a copy of Insperity’s EPLI policy and/or certificate. Please contact the client to determine appropriate recipient.</strong>  </p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!IF(relatedTo.Client_maintaining_existing_EPLI_policy__c=='Yes',TRUE,FALSE)}">
+<p><strong>This client plans to maintain their own EPLI insurance after joining Inpserity.</strong>  </p>
+</apex:outputPanel>
+
+
+<p><span>Regards,</span><br/>
+<span>{!relatedTo.NSP_Project_Manager__r.Name}</span><br/>
+<span>{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</span></p>
+<c:InsperityEmailFooter />
+</table>
+</body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

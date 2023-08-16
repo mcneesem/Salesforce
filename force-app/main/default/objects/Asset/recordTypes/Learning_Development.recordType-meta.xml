@@ -1,0 +1,1328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Learning_Development</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>NSP_Custom_Compact_Layout</compactLayoutAssignment>
+    <label>Learning &amp; Development</label>
+    <picklistValues>
+        <picklist>ConsequenceOfFailure</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insignificant</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Major</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moderate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DigitalAssetStatus</picklist>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Off</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Warning</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Account_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Acquisition_Customer__c</picklist>
+        <values>
+            <fullName>Sage Endorsement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeSheet</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Benefits_Agency__c</picklist>
+        <values>
+            <fullName>Insperity Insurance Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mylo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Client_Retained_Workers_Comp__c</picklist>
+        <values>
+            <fullName>100%25 Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client %26 Insperity</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Client_Segment_type__c</picklist>
+        <values>
+            <fullName>Business Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %28100%2B EEs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %2850 - 99 EEs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Yet Defined</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Current_Client_Segment_type__c</picklist>
+        <values>
+            <fullName>Business Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %28100%2B EEs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %2850 - 99 EEs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Yet Defined</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Handbook_Status__c</picklist>
+        <values>
+            <fullName>Client Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Discussed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work in Progress</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_IES_Region__c</picklist>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Houston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Southeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Minor_Job_Position__c</picklist>
+        <values>
+            <fullName>ASSOC-FULFILLMENT CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIFEGUARD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer Clerk (14 – 17) Unsupervised</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aquatics Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistant Unit Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kitchen Aide</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_National_Account_Group__c</picklist>
+        <values>
+            <fullName>22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>33</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>34</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>35</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>36</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>37</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>38</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>39</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>43</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>44</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Price_Level__c</picklist>
+        <values>
+            <fullName>Item%3F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lasso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List Price</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Bundled Plus %232</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Bundled Plus %233</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Choice Fee Schedule %234</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Choice Fee Schedule %235</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Mid-Market %231</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Mid-Market %232</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Mid-Market %233</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - Participant Fee Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - WO no Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET - WO with Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- Bundled Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- Choice Fee Schedule %231</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- Choice Fee Schedule %232</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- Choice Fee Schedule %233</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- Legacy Non Revenue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- Legacy Revenue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- NQDC Fee Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- White Label FBT Fee Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET-WA Choice ER RK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET-WA Choice ER RK%2FPPT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO%2FWS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX%2FWA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ProductBundle__c</picklist>
+        <values>
+            <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expensable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stand Alone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA %28WO to WA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO%2FWS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WOSS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX %28WO to WX%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_RET_Auto_Enroll__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Product_Risk_Level__c</picklist>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termination Pending</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Product_Segment__c</picklist>
+        <values>
+            <fullName>Business Team %281-30 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core %2831-49 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %28100%2B EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %2850-99 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket %28150 - 749 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise %28750 %2B EEs%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
+        <picklist>NSP_Product_Term_Reason__c</picklist>
+        <values>
+            <fullName>Client termed in Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Covid-19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial - Bankruptcy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial - Delinquency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial - NSF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Terminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Never Onboarded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Do not need</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - FEIN Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Loss to Competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Moved to WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Never Used</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - No Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Out of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sold Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - OrgPlus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - PerformSmart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - TimeStar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - iSovled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Support Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled During Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERP has module</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Trouble</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termed WO</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
+        <picklist>NSP_Product_Line__c</picklist>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning %26 Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Acceleration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Optimization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Synchronization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Segment_Exception_Reason__c</picklist>
+        <values>
+            <fullName>Client growth in 90 days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Could jeopardize relationship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Future Trans Planned - Core%2FEG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Future Transition Planned - BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Future Transition Planned - MM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linked to other accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multiple service transitions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Utilization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Term notice received</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Service_Package__c</picklist>
+        <values>
+            <fullName>WO - AS Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Prop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Support_Allowance__c</picklist>
+        <values>
+            <fullName>Disallow Child Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallow Support</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Time_and_Attendance_Offering__c</picklist>
+        <values>
+            <fullName>Premier Time and Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier TimeSheet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar License</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar License - Cloud Hosted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar SaaS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar for Windows</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved TimeStar</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_WOSS_Type__c</picklist>
+        <values>
+            <fullName>1099</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred Compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expats</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense Reimbursement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>K-1 Distributions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Severance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stock Awards</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_WX_WA_Funding_Type__c</picklist>
+        <values>
+            <fullName>ACH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reverse Wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wire</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_WX_WA_Modules_Elected__c</picklist>
+        <values>
+            <fullName>401k - Ubiquity Payroll Export</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACA Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Integrations -Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Integrations 401K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSA%2C HSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Resource Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity TimeStar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leave Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OrgPlus Employee Directory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Share %26 Perform</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training and Development %28Non-SSO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training and Development %28SSO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Amtrust</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Erie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Guard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Hartford</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Insurelinx</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eLearning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Hire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Performance Mgmt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time Advanced Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time Virtual Clock</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_WX_WA_Modules_Implemented__c</picklist>
+        <values>
+            <fullName>401k - Ubiquity Payroll Export</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACA Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Integrations -Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Integrations 401K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSA%2C HSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Resource Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity TimeStar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leave Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OrgPlus Employee Directory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Share %26 Perform</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training and Development %28Non-SSO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training and Development %28SSO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Amtrust</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Erie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Guard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Hartford</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC - Insurelinx</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eLearning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Hire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Performance Mgmt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time Advanced Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time Virtual Clock</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Workers_Comp_Agency__c</picklist>
+        <values>
+            <fullName>Insperity Insurance Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mylo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_XML_Upload_Methods__c</picklist>
+        <values>
+            <fullName>Adeptia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Build their own</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kronos%2FNSP Utility%2FPayroll Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_iSolved_Medical_Lead__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_iSolved_Workers_Comp_Lead__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__BillingFrequency__c</picklist>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__BillingType__c</picklist>
+        <values>
+            <fullName>Advance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arrears</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__ChargeType__c</picklist>
+        <values>
+            <fullName>One-Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recurring</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Usage</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__DiscountScheduleType__c</picklist>
+        <values>
+            <fullName>Range</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Slab</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__OptionType__c</picklist>
+        <values>
+            <fullName>Accessory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Component</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Related Product</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__PricingMethod__c</picklist>
+        <values>
+            <fullName>Block</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Percent Of Total</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Demand</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>StatusReason</picklist>
+        <values>
+            <fullName>Not Ready</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Off</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paused</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standby</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

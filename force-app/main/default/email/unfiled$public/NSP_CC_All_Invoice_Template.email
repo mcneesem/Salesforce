@@ -1,0 +1,10 @@
+<messaging:emailTemplate subject="Insperity thanks you for your business!"  relatedToType="blng__Invoice__c">
+<messaging:htmlEmailBody >
+<br/>
+<p>Please find attached a copy of your invoice. Payment has been processed to the authorized credit card on file. </p>
+<p>If you have any questions regarding your billing, please contact us at <a href = "mailto: orders@insperity.com">orders@insperity.com</a>.</p>
+<p>Thank you for choosing Insperity!</p>
+<br/>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

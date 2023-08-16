@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_FSO_Project_Team</fullName>
+    <active>true</active>
+    <description>FSO Project Teams</description>
+    <label>FSO Project Team</label>
+    <picklistValues>
+        <picklist>NSP_Role__c</picklist>
+        <values>
+            <fullName>OS Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OT Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OT Planner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orientation Rep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Manager</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

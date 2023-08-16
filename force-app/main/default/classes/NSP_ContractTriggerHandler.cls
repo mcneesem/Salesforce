@@ -52,8 +52,8 @@ public class NSP_ContractTriggerHandler implements NSP_ITriggerHandler{
    */
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         
-      //  NSP_ContractTriggerHelper  contractTriggerHelperObject =  new NSP_ContractTriggerHelper();        
-      //  contractTriggerHelperObject.beforeUpdateDirector((Map<Id, Contract>) newMap,(Map<Id, Contract>) oldMap);
+        NSP_ContractTriggerHelper  contractTriggerHelperObject =  new NSP_ContractTriggerHelper();        
+        contractTriggerHelperObject.beforeUpdateDirector((Map<Id, Contract>) newMap,(Map<Id, Contract>) oldMap);
        
  
     }

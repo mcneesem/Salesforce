@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Report_Type_Actual__c</fullName>
+    <description>Actual report Type based on sty-02802</description>
+    <externalId>false</externalId>
+    <label>Report Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401(k)</fullName>
+                <default>false</default>
+                <label>401(k)</label>
+            </value>
+            <value>
+                <fullName>Benefits</fullName>
+                <default>false</default>
+                <label>Benefits</label>
+            </value>
+            <value>
+                <fullName>Compensation Statement</fullName>
+                <default>false</default>
+                <label>Compensation Statement</label>
+            </value>
+            <value>
+                <fullName>Employee Info</fullName>
+                <default>false</default>
+                <label>Employee Info</label>
+            </value>
+            <value>
+                <fullName>Fee Breakout</fullName>
+                <default>false</default>
+                <label>Fee Breakout</label>
+            </value>
+            <value>
+                <fullName>General Account/General Ledger</fullName>
+                <default>false</default>
+                <label>General Account/General Ledger</label>
+            </value>
+            <value>
+                <fullName>Government Form</fullName>
+                <default>false</default>
+                <label>Government Form</label>
+            </value>
+            <value>
+                <fullName>Headcount / Turnover</fullName>
+                <default>false</default>
+                <label>Headcount / Turnover</label>
+            </value>
+            <value>
+                <fullName>Internal – Not for Client</fullName>
+                <default>false</default>
+                <label>Internal – Not for Client</label>
+            </value>
+            <value>
+                <fullName>PTO / Vacation</fullName>
+                <default>false</default>
+                <label>PTO / Vacation</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Terminated Clients</fullName>
+                <default>false</default>
+                <label>Terminated Clients</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

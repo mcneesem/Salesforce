@@ -26,6 +26,8 @@ public class NSP_SubClientTriggerHandler implements NSP_ITriggerHandler{
 *                
 */
     public void beforeInsert(List<sObject> newList) {
+        NSP_SubClientTriggerHelper subClientTriggerObj = new NSP_SubClientTriggerHelper();
+        subClientTriggerObj.updatePaperlessBatchDateBeforeInsertOrUpdate((List<NSP_Sub_Client__c>)newList, null);
     }
     
     /**
@@ -48,9 +50,8 @@ public class NSP_SubClientTriggerHandler implements NSP_ITriggerHandler{
 *                
 */
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        
-        
-        
+        NSP_SubClientTriggerHelper subClientTriggerObj = new NSP_SubClientTriggerHelper();
+        subClientTriggerObj.updatePaperlessBatchDateBeforeInsertOrUpdate((List<NSP_Sub_Client__c>)newMap.Values(), (Map<Id, NSP_Sub_Client__c>)oldMap);
     }
     
     
@@ -64,6 +65,8 @@ public class NSP_SubClientTriggerHandler implements NSP_ITriggerHandler{
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         NSP_SubClientTriggerHelper subClientTriggerObj = new NSP_SubClientTriggerHelper();
         subClientTriggerObj.afterUpdateDirector((Map<Id, NSP_Sub_Client__c>)newMap,(Map<Id, NSP_Sub_Client__c>)oldMap);
+        //added as part of STY-03529 changes
+        subClientTriggerObj.updateAssetTerminationForm((List<NSP_Sub_Client__c>)newMap.Values(),(Map<Id, NSP_Sub_Client__c>)oldMap);
         
     }
     

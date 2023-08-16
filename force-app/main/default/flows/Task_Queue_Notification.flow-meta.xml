@@ -95,11 +95,21 @@
                 <stringValue>OR (
    AND(
         ISNEW() = TRUE, 
-	LEFT([Task].OwnerId ,3) &lt;&gt; &apos;005&apos;
+	LEFT([Task].OwnerId ,3) &lt;&gt; &apos;005&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;BPS CSS Task&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;BPS task RT&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;PEO Service Task&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;RET Task RT&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;TES CSS Task&apos;
      ),
     AND(
 	  ISCHANGED ([Task].OwnerId),
-	  LEFT([Task].OwnerId,3) &lt;&gt; &apos;005&apos;
+	  LEFT([Task].OwnerId,3) &lt;&gt; &apos;005&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;BPS CSS Task&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;BPS task RT&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;PEO Service Task&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;RET Task RT&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;TES CSS Task&apos;
 	)
 )</stringValue>
             </value>
@@ -109,11 +119,21 @@
         <expression>OR (
    AND(
         ISNEW() = TRUE, 
-	LEFT({!myVariable_current.OwnerId} ,3) &lt;&gt; &apos;005&apos;
+	LEFT({!myVariable_current.OwnerId} ,3) &lt;&gt; &apos;005&apos;,
+        {!myVariable_current.RecordType.Name}&lt;&gt;&apos;BPS CSS Task&apos;,
+        {!myVariable_current.RecordType.Name}&lt;&gt;&apos;BPS task RT&apos;,
+        {!myVariable_current.RecordType.Name}&lt;&gt;&apos;PEO Service Task&apos;,
+        {!myVariable_current.RecordType.Name}&lt;&gt;&apos;RET Task RT&apos;,
+        {!myVariable_current.RecordType.Name}&lt;&gt;&apos;TES CSS Task&apos;
      ),
     AND(
 	  ISCHANGED ({!myVariable_current.OwnerId}),
-	  LEFT({!myVariable_current.OwnerId},3) &lt;&gt; &apos;005&apos;
+	  LEFT({!myVariable_current.OwnerId},3) &lt;&gt; &apos;005&apos;,
+          {!myVariable_current.RecordType.Name}&lt;&gt;&apos;BPS CSS Task&apos;,
+          {!myVariable_current.RecordType.Name}&lt;&gt;&apos;BPS task RT&apos;,
+          {!myVariable_current.RecordType.Name}&lt;&gt;&apos;PEO Service Task&apos;,
+          {!myVariable_current.RecordType.Name}&lt;&gt;&apos;RET Task RT&apos;,
+          {!myVariable_current.RecordType.Name}&lt;&gt;&apos;TES CSS Task&apos;
 	)
 )</expression>
     </formulas>
@@ -124,11 +144,21 @@
                 <stringValue>OR (
    AND(
         ISNEW() = TRUE, 
-	LEFT([Task].OwnerId ,3) &lt;&gt; &apos;005&apos;
+	LEFT([Task].OwnerId ,3) &lt;&gt; &apos;005&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;BPS CSS Task&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;BPS task RT&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;PEO Service Task&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;RET Task RT&apos;,
+        [Task].RecordType.Name&lt;&gt;&apos;TES CSS Task&apos;
      ),
     AND(
 	  ISCHANGED ([Task].OwnerId),
-	  LEFT([Task].OwnerId,3) &lt;&gt; &apos;005&apos;
+	  LEFT([Task].OwnerId,3) &lt;&gt; &apos;005&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;BPS CSS Task&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;BPS task RT&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;PEO Service Task&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;RET Task RT&apos;,
+          [Task].RecordType.Name&lt;&gt;&apos;TES CSS Task&apos;
 	)
 )</stringValue>
             </value>
@@ -138,15 +168,25 @@
         <expression>OR (
    AND(
         ISNEW() = TRUE, 
-	LEFT({!myVariable_old.OwnerId} ,3) &lt;&gt; &apos;005&apos;
+	LEFT({!myVariable_old.OwnerId} ,3) &lt;&gt; &apos;005&apos;,
+        {!myVariable_old.RecordType.Name}&lt;&gt;&apos;BPS CSS Task&apos;,
+        {!myVariable_old.RecordType.Name}&lt;&gt;&apos;BPS task RT&apos;,
+        {!myVariable_old.RecordType.Name}&lt;&gt;&apos;PEO Service Task&apos;,
+        {!myVariable_old.RecordType.Name}&lt;&gt;&apos;RET Task RT&apos;,
+        {!myVariable_old.RecordType.Name}&lt;&gt;&apos;TES CSS Task&apos;
      ),
     AND(
 	  ISCHANGED ({!myVariable_old.OwnerId}),
-	  LEFT({!myVariable_old.OwnerId},3) &lt;&gt; &apos;005&apos;
+	  LEFT({!myVariable_old.OwnerId},3) &lt;&gt; &apos;005&apos;,
+          {!myVariable_old.RecordType.Name}&lt;&gt;&apos;BPS CSS Task&apos;,
+          {!myVariable_old.RecordType.Name}&lt;&gt;&apos;BPS task RT&apos;,
+          {!myVariable_old.RecordType.Name}&lt;&gt;&apos;PEO Service Task&apos;,
+          {!myVariable_old.RecordType.Name}&lt;&gt;&apos;RET Task RT&apos;,
+          {!myVariable_old.RecordType.Name}&lt;&gt;&apos;TES CSS Task&apos;
 	)
 )</expression>
     </formulas>
-    <interviewLabel>Task_Queue_Notification-12_InterviewLabel</interviewLabel>
+    <interviewLabel>Task_Queue_Notification-4_InterviewLabel</interviewLabel>
     <label>Task Queue Notification</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -174,7 +214,7 @@
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>myDecision</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payroll_Specialist__c</fullName>
+    <externalId>false</externalId>
+    <formula>if( ispickval(NSP_Role__c,&quot;Payroll Specialist&quot;)  , NSP_User__r.FirstName &amp; &quot; &quot; &amp; NSP_User__r.LastName , &quot;&quot;)</formula>
+    <label>Payroll Specialist</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Requested_by__c</fullName>
+    <externalId>false</externalId>
+    <label>Requested by</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BPA</fullName>
+                <default>false</default>
+                <label>BPA</label>
+            </value>
+            <value>
+                <fullName>A Cowan</fullName>
+                <default>false</default>
+                <label>A Cowan</label>
+            </value>
+            <value>
+                <fullName>A Stidham</fullName>
+                <default>false</default>
+                <label>A Stidham</label>
+            </value>
+            <value>
+                <fullName>C Gonzales</fullName>
+                <default>false</default>
+                <label>C Gonzales</label>
+            </value>
+            <value>
+                <fullName>M Johnson</fullName>
+                <default>false</default>
+                <label>M Johnson</label>
+            </value>
+            <value>
+                <fullName>K Nezat</fullName>
+                <default>false</default>
+                <label>K Nezat</label>
+            </value>
+            <value>
+                <fullName>Client Renewal</fullName>
+                <default>false</default>
+                <label>Client Renewal</label>
+            </value>
+            <value>
+                <fullName>2014 Sales Convention</fullName>
+                <default>false</default>
+                <label>2014 Sales Convention</label>
+            </value>
+            <value>
+                <fullName>Outbound ORK Activity</fullName>
+                <default>false</default>
+                <label>Outbound ORK Activity</label>
+            </value>
+            <value>
+                <fullName>NIRP Estimate</fullName>
+                <default>false</default>
+                <label>NIRP Estimate</label>
+            </value>
+            <value>
+                <fullName>Mason Dickerson</fullName>
+                <default>false</default>
+                <label>Mason Dickerson</label>
+            </value>
+            <value>
+                <fullName>Dustin Braud</fullName>
+                <default>false</default>
+                <label>Dustin Braud</label>
+            </value>
+            <value>
+                <fullName>Isaiah Aguilar</fullName>
+                <default>false</default>
+                <label>Isaiah Aguilar</label>
+            </value>
+            <value>
+                <fullName>Lizette Torres</fullName>
+                <default>false</default>
+                <label>Lizette Torres</label>
+            </value>
+            <value>
+                <fullName>Byron Echeverria</fullName>
+                <default>false</default>
+                <label>Byron Echeverria</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

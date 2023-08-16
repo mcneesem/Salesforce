@@ -6,6 +6,7 @@
     <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.LeadValidations__c != true,OR(
    ISBLANK( FirstName ),
    AND(
+    NOT(RecordType.Name='Service Referral Lead'),
    ISBLANK( Phone ),
    ISBLANK( Email )
    )

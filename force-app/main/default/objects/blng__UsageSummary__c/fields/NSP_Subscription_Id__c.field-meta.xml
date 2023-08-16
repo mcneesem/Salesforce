@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Subscription_Id__c</fullName>
+    <description>Interal: To reduce Number of relationship queries</description>
+    <externalId>false</externalId>
+    <formula>CASESAFEID(blng__OrderProduct__r.SBQQ__Subscription__c)</formula>
+    <label>Subscription Id</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

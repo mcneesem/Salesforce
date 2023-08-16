@@ -10,6 +10,13 @@
 * 
 */
 public class NSP_AccountContactRelationTriggerHelper {
+    private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
+    private static final String NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER = 'NSP_AccountContactRelationTriggerHelper';
+    private static final String BEFORE_UPSERT_DIRECTOR = 'beforeUpsertDirector';
+    private static final String UPDATE_JOB_TITLE_OF_CONTACT = 'updateJobTitleofContact';
+    private static final String RESTRICT_DELETING_ACR = 'restrictDeletingACR';
+    private static final String UPDATE_WORK_PHONE_EMAIL_ON_CONTACT = 'updateWorkPhoneEmailOnContact';
+    public static final List<String> INT_DM_PROFILES = new List<String>{NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
 	
     /**
      * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
@@ -20,16 +27,37 @@ public class NSP_AccountContactRelationTriggerHelper {
      */
 
     public void afterInsertDirector(List<AccountContactRelation> newList, Map<Id, AccountContactRelation> newMap) {
+        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
         try{
-            Set<Id> accountIdSet = new Set<Id>();
-            for(AccountContactRelation accConObj : newList){
-                if(accConObj.NSP_Is_Primary__c && accConObj.IsActive){
-                    accountIdSet.add(accConObj.AccountId);
+           if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+                Set<Id> accountIdSet = new Set<Id>();
+                Map<Id, AccountContactRelation> ConIdACRMap = new Map<Id, AccountContactRelation>();
+                Set<Id> accountsWithCommunityAccess =new Set<Id>();
+            
+                for(AccountContactRelation accConObj : newList){
+                  if(accConObj.NSP_Is_Primary__c && accConObj.IsActive){
+                     accountIdSet.add(accConObj.AccountId);
                 }
-            }
+                if(accConObj.isDirect){
+                    ConIdACRMap.put(accConObj.contactId, accConObj);
+                }        
+                //added as part of STY-03866
+                //fetch all the ACR where community access is peo project
+                if(accConObj.NSP_Community_Access__c!=null && accConObj.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)){
+                    accountsWithCommunityAccess.add(accConObj.AccountId);
+                }
+              }
             
             createContactRole(newList,newMap);
-            
+            if(!ConIdACRMap.isEmpty()){
+                updateWorkPhoneEmailOnContact(ConIdACRMap);
+            }
+            //added as part of STY-03866
+            if(!accountsWithCommunityAccess.isEmpty()){
+                NSP_AccountContactRelationSharing.projectRecordSharing(accountsWithCommunityAccess);
+                NSP_AccountContactRelationSharing.projectTaskRecordSharing(accountsWithCommunityAccess,null);
+                NSP_AccountContactRelationSharing.milestoneRecordSharing(accountsWithCommunityAccess,null);
+            }       
             if(accountIdSet.size() > 0){
                 List<Account> accountList = new List<Account>();
                 for(ID accountId : accountIdSet){
@@ -43,7 +71,7 @@ public class NSP_AccountContactRelationTriggerHelper {
                     update accountList;
                 }
             }
-            
+           }  
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
@@ -58,18 +86,59 @@ public class NSP_AccountContactRelationTriggerHelper {
      */
 
     public void afterUpdateDirector(Map<Id, AccountContactRelation> newMap,Map<Id, AccountContactRelation> oldMap) {
+        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
         try{
+          if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+                
             Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
             Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
             Set<Id> accountIdSet = new Set<Id>();
-            
-            for(AccountContactRelation conObj : newMap.values()){ 
-                if((conObj.NSP_Is_Primary__c && oldMap.get(conObj.Id).NSP_Is_Primary__c != conObj.NSP_Is_Primary__c) || 
-                    (conObj.IsActive && oldMap.get(conObj.Id).IsActive != conObj.IsActive)
+            Map<Id, AccountContactRelation> ConIdACRMap = new Map<Id,AccountContactRelation>(); 
+            Set<Id> ceAccIdSet = new Set<Id>();
+            Set<Id> ceConIdSet = new Set<Id>();
+            List<Case> ceCaseList = new List<Case>();
+            //added as part of STY-03866
+            Set<Id> newAccountIdSet = new Set<Id>();
+        	Set<Id> oldAccountIdSet = new Set<Id>();
+            AccountContactRelation oldACR;
+            for(AccountContactRelation acr : newMap.values()){
+                oldACR = oldMap.get(acr.Id);
+                if((acr.NSP_Is_Primary__c && oldMap.get(acr.Id).NSP_Is_Primary__c != acr.NSP_Is_Primary__c) || 
+                    (acr.IsActive && oldMap.get(acr.Id).IsActive != acr.IsActive)
                   ){
-                    accountIdSet.add(conObj.AccountId);
-                    contactOldMap.put(conObj.Id,oldMap.get(conObj.Id));
-                    contactNewMap.put(conObj.Id,newMap.get(conObj.Id));
+                    accountIdSet.add(acr.AccountId);
+                    contactOldMap.put(acr.Id,oldMap.get(acr.Id));
+                    contactNewMap.put(acr.Id,newMap.get(acr.Id));
+                }
+                // Added as part of STY-02840
+                if((acr.isDirect == true && (acr.NSP_Work_Phone__c != null && oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c || 
+                    acr.NSP_Work_Email__c != null && oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c)) ||
+                    (acr.isDirect == true && oldACR.isDirect != acr.isDirect) ||
+                    oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c ||
+                    oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c ||
+                    oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c){
+                       ConIdACRMap.put(acr.ContactId, acr);
+                   }
+                
+                if(acr.NSP_Employee_Status__c != oldMap.get(acr.Id).NSP_Employee_Status__c){
+                    ceAccIdSet.add(acr.AccountId);
+                    ceConIdSet.add(acr.ContactId);
+                }
+                //added as part of STY-03866
+                ////fetch all the ACR where community access is peo project
+                if(acr.NSP_Community_Access__c!=null && acr.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess) 
+                   && (oldMap.get(acr.Id).NSP_Community_Access__c == null ||
+                   (oldMap.get(acr.Id).NSP_Community_Access__c!=null &&
+                    !oldMap.get(acr.Id).NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)))){
+                        newAccountIdSet.add(acr.AccountId);
+                }
+                //Store old ACR records where community access - peo project is removed
+                // changed If Condition as part of DF-03544.
+                // Changed If Condition as part of DF-03828
+                if((acr.NSP_Community_Access__c == null && oldMap.get(acr.Id).NSP_Community_Access__c != null 
+                    && oldMap.get(acr.Id).NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)) ||
+                   (acr.NSP_Community_Access__c != null && !acr.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess))){
+                    	oldAccountIdSet.add(acr.AccountId);
                 }
             }
             
@@ -92,6 +161,30 @@ public class NSP_AccountContactRelationTriggerHelper {
                     update accountList;
                 }
             }
+            if(!ConIdACRMap.isEmpty()){
+                updateWorkPhoneEmailOnContact(ConIdACRMap);
+            }
+            
+            if(!ceAccIdSet.isEmpty() && !ceConIdSet.isEmpty()){
+                for (Case cse : [SELECT Id, contactId, NSP_CorporateEmployeeEE__c, AccountId, (SELECT Id FROM Case_Contact_Roles__r) FROM Case WHERE contactId IN: ceConIdSet
+                    AND recordTypeId =: PEO_RECORDTYPEID]){
+                    if(cse.Case_Contact_Roles__r.size() <= 1){
+                        ceCaseList.add(cse);
+                    }
+                } 
+            }
+            //added as part of STY-03866
+            if(!newAccountIdSet.isEmpty()){
+                NSP_AccountContactRelationSharing.projectRecordSharing(newAccountIdSet);
+                NSP_AccountContactRelationSharing.projectTaskRecordSharing(newAccountIdSet,null);
+                NSP_AccountContactRelationSharing.milestoneRecordSharing(newAccountIdSet,null);
+            }
+            if(!oldAccountIdSet.isEmpty()){
+                NSP_AccountContactRelationSharing.projectRemoveSharing(oldAccountIdSet);
+                NSP_AccountContactRelationSharing.projectTaskRecordSharing(null,oldAccountIdSet);
+                NSP_AccountContactRelationSharing.milestoneRecordSharing(null,oldAccountIdSet);
+            }
+          }
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         } 
@@ -100,28 +193,34 @@ public class NSP_AccountContactRelationTriggerHelper {
     * MethodName: beforeUpsertDirector
     * Description : This method will add the validation to not to create more than One ACR for an Account 
     * Params:       List<AccountContactRelation> newList
-    *Author : Nischay Jindal
+    * Author : Nischay Jindal
     * ********************************************************************************************/   
-
+ 
     public static void beforeUpsertDirector(List<AccountContactRelation> newList) {
+        Id profileId = userinfo.getProfileId();
+        String profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
         try{
-            Set<Id> accountIdSet = new Set<Id>();
-            for(AccountContactRelation accConObj : newList){
-                if(accConObj.NSP_Is_Primary__c){
-                    accountIdSet.add(accConObj.AccountId);
+            if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+                Set<Id> accountIdSet = new Set<Id>();
+                for(AccountContactRelation accConObj : newList){
+                   if(accConObj.NSP_Is_Primary__c){
+                       accountIdSet.add(accConObj.AccountId);
+                   }
                 }
-            }
-            Map<Id,AccountContactRelation> accountContactRelationMap= new Map<Id,AccountContactRelation>([Select Id ,ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE AccountId IN:accountIdSet AND NSP_Is_Primary__c = True ]);
-            for(AccountContactRelation accConObj : newList){
-                if(accountContactRelationMap.size() > 0 && !accountContactRelationMap.containsKey(accConObj.Id)  ){
-                         accConObj.NSP_Is_Primary__c.addError(System.label.NSP_PrimaryContactValidation);
+            
+                Map<Id,AccountContactRelation> accountContactRelationMap= new Map<Id,AccountContactRelation>([Select Id ,ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE AccountId IN:accountIdSet AND NSP_Is_Primary__c = True ]);
+            
+                for(AccountContactRelation accConObj : newList){
+                    if(accountContactRelationMap.size() > 0 && !accountContactRelationMap.containsKey(accConObj.Id)  ){
+                           accConObj.NSP_Is_Primary__c.addError(System.label.NSP_PrimaryContactValidation);
+                    }
                 }
-            }
-            }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountContactRelationTriggerHelper','beforeUpsertDirector',ex.getMessage()); 
+             }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, BEFORE_UPSERT_DIRECTOR, ex.getMessage()); 
         }
      }
-    
+
  /***********************************************************************************************
     * MethodName: createContactRole
     * Description : This method will create OCR
@@ -132,19 +231,15 @@ public class NSP_AccountContactRelationTriggerHelper {
     * ********************************************************************************************/   
     
    
-      public void createContactRole(List<AccountContactRelation> newList,Map<Id, AccountContactRelation> oldMap)
-    {
-        map<Id,Id> accAndCon = new map<Id,Id>();
+      public void createContactRole(List<AccountContactRelation> newList,Map<Id, AccountContactRelation> oldMap){
         map<Id,Id> oppAndAcc = new map<Id,Id>();
         map<id,AccountContactRelation> acrMap = new map<id,AccountContactRelation>();
         map<id,OpportunityContactRole> ocrMap = new map<id,OpportunityContactRole>();
         list<OpportunityContactRole> ocrInsertList = new list<OpportunityContactRole>();
         list<OpportunityContactRole> ocrUpdateList = new list<OpportunityContactRole>(); 
-        for(AccountContactRelation newAcr: newList)
-        {
+        for(AccountContactRelation newAcr: newList){
            AccountContactRelation oldAcr = oldMap != null ? oldMap.get(newAcr.Id):null;
-            if((Trigger.isInsert&& newAcr.AccountId != null && newAcr.NSP_Is_Primary__c == TRUE) ||(Trigger.isUpdate && newAcr.NSP_Is_Primary__c != oldAcr.NSP_Is_Primary__c)  ) 
-            {
+            if((Trigger.isInsert&& newAcr.AccountId != null && newAcr.NSP_Is_Primary__c == TRUE) ||(Trigger.isUpdate && newAcr.NSP_Is_Primary__c != oldAcr.NSP_Is_Primary__c)  ){
                
                 acrMap.put(newAcr.AccountId,newAcr);
                 
@@ -152,23 +247,18 @@ public class NSP_AccountContactRelationTriggerHelper {
             
             
         }
-        if(acrMap.Size() >0)
-        {   
+        if(acrMap.Size() >0){   
         
-         for(Opportunity oppList: [Select Id, AccountId from opportunity where AccountId in : acrMap.keyset()])
-        {
+         for(Opportunity oppList: [SELECT Id, AccountId FROM opportunity WHERE AccountId in : acrMap.keyset()]){
            oppAndAcc.put(oppList.Id,oppList.AccountId);
         }
         }
         
-        if(oppAndAcc.Size() > 0)
-        {   
+        if(oppAndAcc.Size() > 0){   
          for(OpportunityContactRole eachOCR : [SELECT Id, OpportunityId, ContactId
-                                               FROM OpportunityContactRole WHERE opportunityId in : oppAndAcc.keySet()])
-            {
+                                               FROM OpportunityContactRole WHERE opportunityId in : oppAndAcc.keySet()]){
               
-                if (eachOCR.ContactId == acrMap.get(oppAndAcc.get(eachOCR.OpportunityId)).ContactId )
-                {
+                if (eachOCR.ContactId == acrMap.get(oppAndAcc.get(eachOCR.OpportunityId)).ContactId ){
                   ocrMap.put(eachOCR.OpportunityId,eachOCR);   
                  
                 }
@@ -207,9 +297,7 @@ public class NSP_AccountContactRelationTriggerHelper {
         }
         
         try{
-		if((ocrInsertList.Size() > 0 || ocrUpdateList.Size() >0))
-                
-        {  
+		if((ocrInsertList.Size() > 0 || ocrUpdateList.Size() >0)){  
             update ocrUpdateList;
             insert ocrInsertList;
             
@@ -220,5 +308,249 @@ public class NSP_AccountContactRelationTriggerHelper {
         } 
 
 
+    }
+    
+    
+     /***********************************************************************************************
+    * MethodName: updateJobTitleofContact
+    * Description : This method will update the contact job title from ACR 
+    * Params:      AccountContactRelation newMap and oldMap
+    * Author : Nischay Jindal
+    * ********************************************************************************************/   
+
+    public  void afterInsertJobTitle(List<AccountContactRelation> newList, Map<Id, AccountContactRelation> newMap) { 
+        Set<Id> contactIdSet = new Set<Id>();
+        for(AccountContactRelation accConObj : newList){
+                if(accConObj.NSP_Job_Title__c!=null ){
+                    contactIdSet.add(accConObj.ContactId);
+                }
+        }
+        updateJobTitleofContact(contactIdSet);
+        
+    } 
+
+    /**
+     * 
+     * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
+     * @param newList List of New AccountContactRelation.
+     * @param newMap List of New AccountContactRelation.
+     * @return void
+     *                
+     */
+
+    public void afterUpdateJobTitle(Map<Id, AccountContactRelation> newMap, Map<Id, AccountContactRelation> oldMap) { 
+        Set<Id> contactIdSet = new Set<Id>();
+        for(AccountContactRelation accConObj : newMap.values()){
+                if(accConObj.NSP_Job_Title__c!=oldMap.get(accConObj.Id).NSP_Job_Title__c ){
+                    contactIdSet.add(accConObj.ContactId);
+                }
+        }
+        updateJobTitleofContact(contactIdSet);
+    }
+
+    public void updateJobTitleofContact(Set<Id> contactIdset) {
+        Map<Id, String> mapOfcontactJobTitles = new Map<Id,String>();
+        List<Contact> contactList = new List<Contact>();
+        try{
+            if(!contactIdSet.isEmpty()){
+            for(AccountContactRelation accConObj : [SELECT Id,ContactId, NSP_Job_Title__c FROM AccountContactRelation WHERE ContactId in:contactIdSet and NSP_Job_Title__c!=null ]){
+                mapOfcontactJobTitles.put(accConObj.ContactId,accConObj.NSP_Job_Title__c);
+            }
+        }
+        if(!mapOfcontactJobTitles.isEmpty()){
+            for(Contact con: [SELECT Id, NSP_Job_Title__c FROM Contact WHERE Id in:contactIdset]){
+                con.NSP_Job_Title__c=mapOfcontactJobTitles.get(con.Id);
+                contactList.add(con);
+            }
+        }
+        if(!contactList.isEmpty()){
+            update contactList;
+        }
+    }catch(Exception ex){
+        NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, UPDATE_JOB_TITLE_OF_CONTACT, ex.getMessage()); 
+    }
+    }
+
+    /**
+     * @description getUserIdProfileNames description
+     * @param  userIds created or Updated userids
+     * @return         mapofuserids with the Profileid and ProfileName
+     */
+    private static Map < Id, User > getUserIdProfileNames(Set < Id > userIds) {
+        return new Map < Id, User > ([SELECT Id, Name, ProfileId, Profile.Name FROM User WHERE Id IN: userIds]);
+    }
+
+    /**
+     * @description as Service user restrict ACR deletion if it is createdby IntegrationUser and as CommunityAccess value.
+     * @param  lstAccConRelations trigger.Old values of AccountContactRelationshipRecords
+     */
+    public static void restrictDeletingACR(List < AccountContactRelation > lstAccConRelations) {
+        try {
+            
+            Set < Id > userIds = new Set < Id > {
+                UserInfo.getUserId()
+            };
+            List < String > lstServiceProfiles = new List < String > {
+                NSP_ServiceConstants.PEOSERVICE,
+                NSP_ServiceConstants.RT,
+                NSP_ServiceConstants.CONTACTCENTER,
+                NSP_ServiceConstants.BPSSERVICE,
+                NSP_ServiceConstants.SYSTEM_ADMINISTRATOR
+            };
+
+            for (AccountContactRelation acr: lstAccConRelations) {
+                userIds.add(acr.CreatedbyId);
+                userIds.add(acr.LastModifiedById);
+            } 
+
+            //throw a validation when service user tries to delete ACR with has not createdBy or UpdatedBy Integration user
+            Map < Id, User > mapOfusers = getUserIdProfileNames(userIds);
+
+            for (AccountContactRelation acr: lstAccConRelations) {
+                User currentUser = mapOfusers.get(UserInfo.getUserId());
+
+                if (String.isNotBlank(acr.NSP_Community_Access__c) && lstServiceProfiles.contains(currentUser.Profile.Name) &&
+                        (mapOfusers.get(acr.CreatedById)?.Profile?.Name != NSP_ServiceConstants.INTEGRATION_USER || mapOfusers.get(acr.LastModifiedById)?.Profile?.Name != NSP_ServiceConstants.INTEGRATION_USER)) {
+                    acr.addError(label.NSP_ACR_DeleteValidation);
+                }else if(String.isBlank(acr.NSP_Community_Access__c) && lstServiceProfiles.contains(currentUser.Profile.Name) && 
+                        (mapOfusers.get(acr.CreatedById)?.Profile?.Name == NSP_ServiceConstants.INTEGRATION_USER  || mapOfusers.get(acr.LastModifiedById)?.Profile?.Name == NSP_ServiceConstants.INTEGRATION_USER)){
+                    acr.addError(label.NSP_No_Access);
+                }
+            }
+            
+        } catch (Exception ex) {
+            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, RESTRICT_DELETING_ACR, ex.getMessage());
+        }
+    }
+
+    
+    /**
+    * @MethodName: updateWorkPhoneEmailOnContact
+    * @Description: This method describes to update the Contact when ever Contact's Email and Work Phone.
+    * @param : Map<Id, AccountContactRelation> ConIdACRMap
+    * @createdDate : 12/14/2022
+    * @Story : STY-02840
+    * @return void                          
+    */
+    public static void updateWorkPhoneEmailOnContact(Map<Id, AccountContactRelation> ConIdACRMap){
+        List<Contact> conList = new List<Contact>();
+        List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
+        AccountContactRelation acr;
+        try{
+            for(Contact con : [SELECT Id, NSP_Work_email__c, NSP_Work_Phone__c, createdById, NSP_Employee_Status__c,
+                               NSP_Status_Date__c, NSP_Job_Title__c, CreatedBy.ProfileId 
+                               FROM Contact 
+                               WHERE Id IN: ConIdACRMap.keySet()
+                               AND CreatedBy.ProfileId !=: integrationUser[0].Id
+                               AND NSP_isContactInsertion__c != true]){
+                                   acr = ConIdACRMap.get(con.Id);
+                                   con.NSP_Work_email__c = acr.NSP_Work_Email__c;
+                                   con.NSP_Work_Phone__c = acr.NSP_Work_Phone__c;
+                                   con.NSP_Employee_Status__c = acr.NSP_Employee_Status__c;
+                                   con.NSP_Status_Date__c = acr.NSP_Status_Date__c;
+                                   con.NSP_Job_Title__c = acr.NSP_Job_Title__c;
+                                   conList.add(con);
+                               }
+            if(!conList.isEmpty()){
+                update conList ;  // Don't chnage to Database.update
+            }
+        }catch(exception ex){
+            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, UPDATE_WORK_PHONE_EMAIL_ON_CONTACT, ex.getMessage());
+        }
+    }
+    
+    /**
+    * @MethodName: createPlatformEventForACR
+    * @Description: This method is used to Create Platform Event on after Insert Or Update
+    * @param :List<AccountContactRelation> newList, Map<Id, AccountContactRelation> oldMap
+    * @createdDate : 12/12/2022
+    * @Defect : STY-03783 AND STY-03782
+    * @return void                          
+    */
+    
+   public static void createPlatformEventForACR(List<AccountContactRelation> newList, Map<Id, AccountContactRelation> oldMap) { 
+        List<NSP_Community_Access_Event__e> communityEventToBeInserted = new  List<NSP_Community_Access_Event__e>();
+        List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
+        
+        List<AccountContactRelation> updatedList = [SELECT Id, Account.NSP_AIMS_Client__c, AccountId, ContactId, Contact.NSP_PER_ID__c,NSP_Community_Access__c FROM AccountContactRelation
+                                                    WHERE Id IN: newList];
+        
+        // get exist ACR Ids 
+        for(AccountContactRelation acr : updatedList) {
+            //After Insert and Community Access is PEO Projects
+            if( (oldMap == null && (acr.NSP_Community_Access__c == NSP_ServiceConstants.peoCommunityAccess)) || 
+               (oldMap != null && acr.NSP_Community_Access__c != oldMap.get(acr.Id).NSP_Community_Access__c && acr.NSP_Community_Access__c == NSP_ServiceConstants.peoCommunityAccess)) {
+                    NSP_Community_Access_Event__e communityEvent = New NSP_Community_Access_Event__e();  
+                    communityEvent.NSP_AIMS_Client__c = acr.Account.NSP_AIMS_Client__c;
+                    communityEvent.NSP_Community_Access__c = acr.NSP_Community_Access__c;
+                    communityEvent.NSP_PER_ID__c = acr.Contact.NSP_PER_ID__c;
+                    communityEvent.NSP_Operation__c = 'Add';
+                    communityEventToBeInserted.add(communityEvent);
+               }
+            
+            if((oldMap != null && oldMap.get(acr.Id).NSP_Community_Access__c == NSP_ServiceConstants.peoCommunityAccess && acr.NSP_Community_Access__c != NSP_ServiceConstants.peoCommunityAccess)) {
+                NSP_Community_Access_Event__e communityEvent = New NSP_Community_Access_Event__e();  
+                communityEvent.NSP_AIMS_Client__c = acr.Account.NSP_AIMS_Client__c;
+                communityEvent.NSP_Community_Access__c = acr.NSP_Community_Access__c;
+                communityEvent.NSP_PER_ID__c = acr.Contact.NSP_PER_ID__c;
+                communityEvent.NSP_Operation__c = 'Remove';
+                communityEventToBeInserted.add(communityEvent);
+            }
+        }
+        
+        // Community Access Event to be insertade
+        if(!communityEventToBeInserted.isEmpty()) {
+            List<Database.SaveResult> results = EventBus.publish(communityEventToBeInserted);
+            
+            for (Database.SaveResult sr : results) {
+                if (!sr.isSuccess()) {
+                    for(Database.Error err : sr.getErrors()) {
+                        NSP_Error_Log__c log = new NSP_Error_Log__c();
+                        log.NSP_Class__c = 'NSP_AccountContactRelationTriggerHelper';
+                        log.NSP_Method__c = 'createPlatFormEventForACR';                
+                        log.NSP_Description__c = String.valueOf(err.getMessage()) + '  '+String.valueOf(err.getStatusCode());
+                        log.NSP_Record_Id__c = sr.getId();
+                        logList.add(log); 
+                    }
+                } 
+            }
+        }
+        if(!logList.isEmpty()){
+            insert logList;
+        }
+    }
+    
+    /**
+    * Iterates throught the list of old AccountContactRelation and passes the required attributes to other methods.
+    * @param lstAccConRelations List of  AccountContactRelation.
+    * @return void
+    *                
+    */
+    public static void afterDeleteDirector(List < AccountContactRelation > lstAccConRelations) {
+        //Store old ACR records where community access - peo project is removed
+        Set<Id> oldAccountIdSet = new Set<Id>();
+        for(AccountContactRelation acr : lstAccConRelations){ 
+            if(acr.NSP_Community_Access__c != null && acr.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)){
+            	oldAccountIdSet.add(acr.AccountId);
+            }
+          
+        }
+        if(!oldAccountIdSet.isEmpty()){
+             NSP_AccountContactRelationSharing.projectRemoveSharing(oldAccountIdSet);
+        }
+    }
+    
+    /**
+	* Method Name : getLoggedInUserProfile 
+	* Description : STY-02849/DF-05013 Method to get loggedin user profile
+	* Author : Prakash       Date : 21/06/2023
+	* @param   
+	* @return List<Profile> 
+	*/    
+    public List<Profile> getLoggedInUserProfile() {
+        List<String> profileFields = new List<String>{'Id','Name'};        
+        String queryProfile = new NSP_QueryBuilder('Profile', profileFields)
+                .addFilter('Id', UserInfo.getProfileId()).setSecurityEnforce(false).build();
+        return Database.query(queryProfile);
     }
 }

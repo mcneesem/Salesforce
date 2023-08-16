@@ -3,7 +3,7 @@
     <fullName>NSP_Change_In_Qty_Internal__c</fullName>
     <description>Internal field used in Price Rule.</description>
     <externalId>false</externalId>
-    <formula>IF( (ISBLANK(SBQQ__RenewedSubscription__c) &amp;&amp;  ISBLANK(SBQQ__UpgradedSubscription__c))    , 
+    <formula>IF( (ISBLANK(SBQQ__RenewedSubscription__c) &amp;&amp;  ISBLANK(SBQQ__UpgradedSubscription__c) &amp;&amp; ISBLANK(SBQQ__Source__c))    , 
 1, 0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Change_In_Qty_Internal</label>

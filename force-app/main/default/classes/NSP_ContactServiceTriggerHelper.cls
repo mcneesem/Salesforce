@@ -1,0 +1,166 @@
+/* 
+*    Class Name  : NSP_ContactServiceTriggerHelper
+*    @Description: Represents the Contact trigger helper of Service Stream which handles all the logic.
+*    @Date       : 05/11/2022
+*/
+
+public with sharing class NSP_ContactServiceTriggerHelper {
+    
+    /**
+    * Iterates throught the list of new Contact and passes the required attributes to other methods.
+    * @param newList List of New Contact.
+    * @return void
+    *                
+    */
+    
+    public void beforeInsertDirector(List<Contact> newList) {
+        try{
+            For(Contact conObj : newList){
+                // Populating Preferred First Name if Pref First Name is left blank
+                if(conObj.NSP_Preferred_First_Name__c == null && conObj.FirstName != null){
+                    conObj.NSP_Preferred_First_Name__c = conObj.FirstName;
+                }
+            }
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        }
+    }
+    
+    /**
+    * Iterates throught the list of new Contact and passes the required attributes to other methods.
+    * @param oldMap List of New Contact.
+    * @param newMap List of New Contact.
+    * @return void
+    *                
+    */
+    
+    public void beforeUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
+        try{
+            for(Contact conObj : newMap.values()){
+                // Populating Preferred First Name if Pref First Name is left blank
+                if(newMap.get(conObj.id).NSP_Preferred_First_Name__c != oldMap.get(conObj.id).NSP_Preferred_First_Name__c 
+                   && conObj.NSP_Preferred_First_Name__c == null 
+                   && conObj.FirstName != null){
+                       conObj.NSP_Preferred_First_Name__c = conObj.FirstName;  
+                   }
+                   //Updating Pin Validated to false, when Service Request Channel changes from Phone to null - DF-03665
+                if(conObj.NSP_Service_Request_Channel__c != oldMap.get(conObj.id).NSP_Service_Request_Channel__c 
+                && conObj.NSP_Service_Request_Channel__c == null && oldMap.get(conObj.id).NSP_Service_Request_Channel__c == 'Phone'){
+                    conObj.NSP_Pin_Validated__c = false;  
+                }
+            }
+             
+        }catch(Exception ex){
+            NSP_CustomException.LogException(ex);
+        }
+    }
+    /**
+    * @MethodName: updateSSNField
+    * @Description: This method is used to update Contact SSN Fields on before Insert or update
+    * @param : List<Contact> newList, Map<Id, Contact> oldMap
+    * @createdDate : 01/02/2023
+    * @Defect : STY-02659
+    * @return void                          
+    */
+    public void updateSSNField(List<Contact> newList, Map<Id, Contact> oldMap){
+        for(Contact con : newList) {
+            //When Service User is creating the contact
+            if( con.NSP_SSN_Unmasked__c != null) {
+                //Update SSN as per Unmasked SSN, in case on Service profiles
+                con.NSP_SSN__c = con.NSP_SSN_Unmasked__c;
+                
+                if(con.NSP_SSN_Unmasked__c.length() >= 9  && (oldMap == null || (oldMap != null && con.NSP_SSN_Unmasked__c != oldMap.get(con.Id).NSP_SSN_Unmasked__c))) {          
+                    
+                    con.NSP_SSN_Unmasked__c = con.NSP_SSN_Unmasked__c.contains('-')? con.NSP_SSN_Unmasked__c.replaceAll('-', '') : con.NSP_SSN_Unmasked__c;
+                    
+                    con.NSP_SSN_Masked__c = null;
+                    for(Integer ints = 0; ints < con.NSP_SSN_Unmasked__c.length(); ints++) {
+                        if(ints == 3 || ints == 5 ) {
+                            con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c + '-X';
+                        } else{
+                            con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c != null ?  con.NSP_SSN_Masked__c +'X' : 'X';
+                        }
+                    }
+                    con.NSP_SSN_Unmasked__c = '';
+                }
+            }else if(con.NSP_SSN__c != null && (oldMap == null || (oldMap != null && con.NSP_SSN__c != oldMap.get(con.Id).NSP_SSN__c))) {
+                String ssn = con.NSP_SSN__c.contains('-')? con.NSP_SSN__c.replaceAll('-', '') : con.NSP_SSN__c;
+                //When Other than Service User is creating the contact
+                con.NSP_SSN_Masked__c = null;
+                for(Integer ints = 0; ints < ssn.length(); ints++) {
+                    if(ints == 3 || ints == 5) {
+                        con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c +'-X';
+                    }else {
+                        con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c != null ?  con.NSP_SSN_Masked__c +'X' : 'X';
+                    }
+                }
+                con.NSP_SSN_Unmasked__c = '';
+            }
+        }
+    }
+    
+    /**
+    * @MethodName: updateDateofbirthfield
+    * @Description: This method is used to update Contact Birthday, SSN, DOB Fields on before Insert or update
+    * @param : List<Contact> newList, Map<Id, Contact> oldMap
+    * @createdDate : 05/02/2023
+    * @Defect : STY-02659
+    * @return void                          
+    */
+    
+    public void updateBirthday(List<Contact> newList, Map<Id, Contact> oldMap) {
+        for(Contact con : newList) {
+            //When Service User is creating the contact
+            if(con.NSP_Date_Of_Birth_Unmasked__c != null && (oldMap == null || (oldMap != null && con.NSP_Date_Of_Birth_Unmasked__c != oldMap.get(con.Id).NSP_Date_Of_Birth_Unmasked__c ))){
+                con.NSP_Date_of_Birth__c = con.NSP_Date_Of_Birth_Unmasked__c;
+                con.NSP_Date_Of_Birth_Masked__c = 'XX/XX/XXXX';
+                con.NSP_Is_Masked__c = true;
+                con.NSP_Is_Unmasked__c = true;
+                con.NSP_Date_Of_Birth_Unmasked__c = null;
+                //Update Birthday field
+                updateBirthdayBasedOnDOB(con); 
+                
+            } else if(con.NSP_Date_of_Birth__c != null && (oldMap == null || (oldMap != null && con.NSP_Date_of_Birth__c != oldMap.get(con.Id).NSP_Date_of_Birth__c ))) {                
+                //When Other than Service User is creating the contact
+                con.NSP_Date_Of_Birth_Masked__c = 'XX/XX/XXXX';
+                con.NSP_Is_Masked__c = true;
+                con.NSP_Is_Unmasked__c = true;
+                con.NSP_Date_Of_Birth_Unmasked__c = null;
+                //Update Birthday field
+                updateBirthdayBasedOnDOB(con); 
+            }
+        }
+    }
+    
+    private static void updateBirthdayBasedOnDOB(Contact con){
+        Date dt = con.NSP_Date_of_Birth__c;
+        Integer day = dt.Day(); 
+        Integer month = dt.Month();
+        
+        if( month == 1 ) {
+            con.NSP_Birthday__c = 'JAN ' + day;
+        }  else if( month == 2 ) {
+            con.NSP_Birthday__c = 'FEB ' + day;
+        }  else if( month == 3 ) {
+            con.NSP_Birthday__c = 'MAR ' + day;
+        }  else if( month == 4 ) {
+            con.NSP_Birthday__c = 'APR ' + day;
+        } else if( month == 5 ) {
+            con.NSP_Birthday__c = 'MAY ' + day;
+        } else if( month == 6 ) {
+            con.NSP_Birthday__c = 'JUN ' + day;
+        }  else if( month == 7 ) {
+            con.NSP_Birthday__c = 'JUL ' + day;
+        }  else if( month == 8 ) {
+            con.NSP_Birthday__c = 'AUG ' + day;
+        } else if( month == 9 ) {
+            con.NSP_Birthday__c = 'SEP ' + day;
+        }  else if( month == 10 ) {
+            con.NSP_Birthday__c = 'OCT ' + day;
+        }  else if( month == 11 ) {
+            con.NSP_Birthday__c = 'NOV ' + day;
+        }  else if( month == 12 ) {
+            con.NSP_Birthday__c = 'DEC ' + day;
+        }
+    }
+}

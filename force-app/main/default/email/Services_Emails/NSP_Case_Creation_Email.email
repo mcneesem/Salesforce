@@ -1,0 +1,6 @@
+A Case titled {!Case.Subject} has been assigned to the you.
+
+
+You can access it by clicking here:
+
+<a href="{!Case.Link}">{!Case.Subject}</a>

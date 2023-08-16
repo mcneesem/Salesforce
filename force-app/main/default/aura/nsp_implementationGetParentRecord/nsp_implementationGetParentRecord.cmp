@@ -1,0 +1,10 @@
+<!-- 
+@Name: nsp_implementationGetParentRecord.cmp
+@createddate: 8/9/2022
+@Description: This component is created as part of STY-03114, To store parent recordId on load of a component and used on implementation profile
+				record to navigate to the parent record from where it is originated. It is placed on Account, Asset, Project Flexipages
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:attribute name="recordId" type="String"/>
+     <aura:handler value="{!this}" name="init" action="{!c.doInit}" access="global"/>
+</aura:component>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Change_Order_Classification__c</fullName>
+    <externalId>false</externalId>
+    <label>Change Order Classification</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Audit</fullName>
+                <default>false</default>
+                <label>Audit</label>
+            </value>
+            <value>
+                <fullName>CAM Changes</fullName>
+                <default>false</default>
+                <label>CAM Changes</label>
+            </value>
+            <value>
+                <fullName>Config - Accruals</fullName>
+                <default>false</default>
+                <label>Config - Accruals</label>
+            </value>
+            <value>
+                <fullName>Config - Other</fullName>
+                <default>false</default>
+                <label>Config - Other</label>
+            </value>
+            <value>
+                <fullName>Config - Pay Group</fullName>
+                <default>false</default>
+                <label>Config - Pay Group</label>
+            </value>
+            <value>
+                <fullName>Data Import</fullName>
+                <default>false</default>
+                <label>Data Import</label>
+            </value>
+            <value>
+                <fullName>Hardware</fullName>
+                <default>false</default>
+                <label>Hardware</label>
+            </value>
+            <value>
+                <fullName>ITA Termination</fullName>
+                <default>false</default>
+                <label>ITA Termination</label>
+            </value>
+            <value>
+                <fullName>Special Projects</fullName>
+                <default>false</default>
+                <label>Special Projects</label>
+            </value>
+            <value>
+                <fullName>System Optimization &amp; Review</fullName>
+                <default>false</default>
+                <label>System Optimization &amp; Review</label>
+            </value>
+            <value>
+                <fullName>TED</fullName>
+                <default>false</default>
+                <label>TED</label>
+            </value>
+            <value>
+                <fullName>Training</fullName>
+                <default>false</default>
+                <label>Training</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

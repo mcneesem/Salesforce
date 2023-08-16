@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RecordType__c</fullName>
+    <externalId>false</externalId>
+    <label>Record Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BPS</fullName>
+                <default>false</default>
+                <label>BPS</label>
+            </value>
+            <value>
+                <fullName>DOL Audits</fullName>
+                <default>false</default>
+                <label>DOL Audits</label>
+            </value>
+            <value>
+                <fullName>ITA CQA</fullName>
+                <default>false</default>
+                <label>ITA CQA</label>
+            </value>
+            <value>
+                <fullName>PEO</fullName>
+                <default>false</default>
+                <label>PEO</label>
+            </value>
+            <value>
+                <fullName>Wage Claims</fullName>
+                <default>false</default>
+                <label>Wage Claims</label>
+            </value>
+            <value>
+                <fullName>WX IMPL</fullName>
+                <default>false</default>
+                <label>WX IMPL</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

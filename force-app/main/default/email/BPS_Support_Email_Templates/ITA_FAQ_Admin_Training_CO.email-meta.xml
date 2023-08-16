@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Admin Training CO</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Admin Training CO</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Admin Training CO</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for reaching out! We’ve advanced this request to our Professional Services team, and they will be in touch to schedule a training session as soon as they are able. These trainings are generally assigned within one week of the team receiving the order. In the meantime, feel free to access our Help Center here:
+
+https://help.insperity.com/bps/categories/ita/
+
+We have also confirmed your administrative access in the Time &amp; Attendance system and have added you to our list of authorized support contacts, so feel free to call (800-314-8223) or email (time.support@insperity.com) for assistance if you have questions in the meantime.
+
+We look forward to working with you!
+
+Thank you,
+
+Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OrgPlus RealTime – Default Field Error</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OrgPlus RealTime – Default Field Error</name>
+    <style>freeForm</style>
+    <subject>OrgPlus RealTime – Default Field Error</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+To resolve the error &quot;Error in saving fields. Please contact administrator,&quot; please follow the below steps:
+
+Go into the Administration Tab
+Click the Edit Organization Icon
+Select Edit Default Field
+Add any field
+Save
+
+
+Once this process is completed, you will be able to map fields.
+
+
+
+Please let us know if we can be of further assistance.  Thank you for allowing Insperity to serve you.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

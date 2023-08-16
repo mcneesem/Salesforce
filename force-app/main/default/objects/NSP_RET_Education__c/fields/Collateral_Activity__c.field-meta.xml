@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Collateral_Activity__c</fullName>
+    <externalId>false</externalId>
+    <label>Activity</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sample Announcement</fullName>
+                <default>false</default>
+                <label>Sample Announcement</label>
+            </value>
+            <value>
+                <fullName>Plan Outline</fullName>
+                <default>false</default>
+                <label>Plan Outline</label>
+            </value>
+            <value>
+                <fullName>Flyer</fullName>
+                <default>false</default>
+                <label>Flyer</label>
+            </value>
+            <value>
+                <fullName>Open Webinar Invitation</fullName>
+                <default>false</default>
+                <label>Open Webinar Invitation</label>
+            </value>
+            <value>
+                <fullName>Investing Guide</fullName>
+                <default>false</default>
+                <label>Investing Guide</label>
+            </value>
+            <value>
+                <fullName>Investment Summary</fullName>
+                <default>false</default>
+                <label>Investment Summary</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

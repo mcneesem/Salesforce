@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CLM_Document_Received__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to denote that CLM document is received from Docusign CLM</description>
+    <externalId>false</externalId>
+    <label>CLM Document Received ?</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Waived_Amount__c</fullName>
+    <description>Aggregates the amount that is given for Free as part of Free Month/Partial Period.</description>
+    <externalId>false</externalId>
+    <label>Waived Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

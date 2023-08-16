@@ -1,0 +1,24 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has Ministers or Teachers " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <c:InsperityEmailHeader />
+  <p>{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) employs Minister and/or Teachers. See below for <br/>
+ more information for AIMS setup.  <br/>
+ <apex:outputPanel rendered="{!CONTAINS(relatedTo.Check_all_tht_apply_ministers_teachers__c ,'Client has Teacher retirement plan which is exempt from social security')}">
+      •Client has Teacher retirement plan which is exempt from social security<br/>
+ </apex:outputPanel>
+ <apex:outputPanel rendered="{!CONTAINS(relatedTo.Check_all_tht_apply_ministers_teachers__c ,'Client is a religious organization with minister(s) exempt from FICA')}">
+      •Client is a religious organization with minister(s) exempt from FICA<br/>
+ </apex:outputPanel></p>
+
+  
+<p>Regards,<br/>
+{!relatedTo.NSP_Onboarding_Specialist_Coordinator__r.Name}<br/>
+{!relatedTo.NSP_Onboarding_Specialist_Coordinator__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</body>
+</html>
+</messaging:HtmlEmailBody>
+  
+</messaging:emailTemplate>

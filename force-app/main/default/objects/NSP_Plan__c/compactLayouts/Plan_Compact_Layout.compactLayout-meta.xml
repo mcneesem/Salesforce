@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Plan_Compact_Layout</fullName>
+    <fields>NSP_Plan_Id__c</fields>
+    <fields>NSP_Plan_Set_Up_Type__c</fields>
+    <fields>NSP_Original_Plan_Effective_Date__c</fields>
+    <fields>Name</fields>
+    <fields>NSP_Plan_Name__c</fields>
+    <label>Plan Compact Layout</label>
+</CompactLayout>

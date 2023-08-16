@@ -1,0 +1,80 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<table class="MsoNormalTable" border="0" cellspacing="3" cellpadding="0" width="100%" style="width:100.0%;mso-cellspacing:1.5pt;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0in 0in 0in 0in">
+ <tbody><tr>
+  <td colspan="3" valign="top" style="padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><font face="Verdana, Helvetica, sans-serif">All issues
+  associated with this case have been resolved, and the case has been
+  closed.&nbsp;The details regarding this case are listed below.</font></p><p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><font face="Verdana, Helvetica, sans-serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="19%" nowrap="" valign="top" style="width:19.02%;background:white;
+  padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Case Number</b><o:p></o:p></font></p>
+  </td>
+  <td width="79%" valign="top" style="width:79.02%;background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!Case.CaseNumber}<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Case Subject</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!Case.Subject}<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Customer</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!Case.Account}<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Contact</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!Case.Account} : {!Case.Contact}<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Creation Date</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!DATETIMEVALUE(Case.CreatedDate)}{!User.TimeZoneSidKey}</font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Case Priority</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!Case.Priority}<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Case Status</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!Case.Status}<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td nowrap="" valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif"><b>Date Closed</b><o:p></o:p></font></p>
+  </td>
+  <td valign="top" style="background:white;padding:1.2pt 1.2pt 1.2pt 1.2pt">
+  <p class="MsoNormal" style="margin-bottom:0in;line-height:18.0pt"><font face="Verdana, Helvetica, sans-serif">{!DATETIMEVALUE(Case.ClosedDate)}{!User.TimeZoneSidKey}</font></p>
+  </td>
+ </tr>
+</tbody></table><p class="MsoNormal" style="font-size: 12pt; font-family: arial; line-height: normal;"><br></p>]]></td>
+</tr>
+</table>

@@ -1,0 +1,35 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoBodyText3" align="left" style="margin-right: 45.4pt; text-align: left;"><font face="Arial, sans-serif" style="font-family: arial; font-size: 12pt;"><font style="">Hi</font><font color="rgba(0, 0, 0, 0)" style="color: rgb(0, 0, 0);"> </font><span style="color: red; font-weight: bold;">[</span><font color="rgba(0, 0, 0, 0)" style="color: rgb(0, 0, 0);">&nbsp;</font></font><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"><font face="Arial, sans-serif" style=""><font color="#181818">&lt;insert contact name&gt; </font><span style="color: red; font-weight: bold;">]</span></font></span><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="background-color: rgb(255, 255, 255);">,</span></font></p>
+
+<p class="MsoBodyText3" align="left" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt; text-align: left;"><span style="color: windowtext;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></span></p>
+
+<p class="MsoBodyText3" align="left" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt; text-align: left;"><font face="Arial, sans-serif"><span style="color: windowtext;">Thank
+you for sharing an update about&nbsp;</span>{!Asset.Account}.<span style="color: red;">&nbsp;</span><span style="color: windowtext;">As we discussed, my
+role is to routinely touch base with you to learn about any new developments
+that may impact the level and quality of service that you receive from
+Insperity. Your service team is always available to assist you with your human
+resources needs, and I welcome your phone calls or emails alerting me to
+changes in your business objectives that you feel may require additional
+assistance from us.</span></font></p>
+
+<p class="MsoBodyText3" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt;"><span style="color: windowtext;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></span></p>
+
+<p class="MsoBodyText3" align="left" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt; text-align: left;"><font face="Arial, sans-serif"><span style="color: windowtext;">In
+the meantime, if you have any questions or concerns, please contact me by
+calling my office at&nbsp;</span>{!User.Phone}<span style="color: windowtext;">. I
+will contact you periodically to ensure you are receiving the caliber of
+service from Insperity that you expect and to learn if any additional resources
+may be of benefit to your company at that time.</span></font></p>
+
+<p class="MsoBodyText3" align="left" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt; text-align: left;"><span style="color: red;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></span></p>
+
+<p class="MsoBodyText3" align="left" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt; text-align: left;"><font face="Arial, sans-serif" style=""><span style="background: rgb(255, 255, 255);"><span style="color: red; font-weight: bold;">[</span> I have attached your updated Service Team Contact
+Sheet for your records <span style="color: red; font-weight: bold;">]</span>.</span></font></p>
+
+<p class="MsoBodyText3" align="left" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 45.4pt; text-align: left;"><b><span style="color: red;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="line-height: 107%;"><font face="Arial, sans-serif" style="">Thank you,</font><span style="font-size: 12pt; font-family: arial;"><o:p></o:p></span></span></p>]]></td>
+</tr>
+</table>

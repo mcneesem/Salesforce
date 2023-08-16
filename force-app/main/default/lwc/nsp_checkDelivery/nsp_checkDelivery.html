@@ -1,0 +1,63 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title slds-var-p-bottom_small"
+      value={label.checkDelivery}>
+    </lightning-formatted-text>
+
+    <lightning-input-field value={field.NSP_Office_Address__c} 
+      disabled={disabledFields.NSP_Office_Address__c}
+      data-name="NSP_Office_Address__c"
+      field-name="NSP_Office_Address__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <div class="slds-var-p-left_x-small">
+      <lightning-formatted-text
+        class={styles.Addressee_for_each_worksite_location__c}
+        data-field="Addressee_for_each_worksite_location__c"
+        value={label.NSP_AddresseeWorksiteLocation}>
+      </lightning-formatted-text>
+      <lightning-input-field value={field.Addressee_for_each_worksite_location__c} 
+        disabled={disabledFields.Addressee_for_each_worksite_location__c}
+        variant="label-hidden"
+        data-name="Addressee_for_each_worksite_location__c"
+        field-name="Addressee_for_each_worksite_location__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_DoAIMSMatchAboveWorksite_information__c}
+      label={label.NSP_DoAIMSMatchAboveWorksiteInfo}
+      class={styles.NSP_DoAIMSMatchAboveWorksite_information__c}
+      field-api-name="Implementation_Profile__c.NSP_DoAIMSMatchAboveWorksite_information__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_DoAIMSMatchAboveWorksite_information__c}
+      data-name="NSP_DoAIMSMatchAboveWorksite_information__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <div class="slds-var-p-left_x-small">
+      <lightning-formatted-text
+        class={styles.NSP_CheckOnceYouDiscussEPAY_with_client__c}
+        data-field="NSP_CheckOnceYouDiscussEPAY_with_client__c"
+        value={label.NSP_CheckOnceYouDiscussEPAYWithClient}>
+      </lightning-formatted-text>
+      <div class="slds-var-p-left_small">
+        <lightning-input-field value={field.NSP_CheckOnceYouDiscussEPAY_with_client__c} 
+          disabled={disabledFields.NSP_CheckOnceYouDiscussEPAY_with_client__c}
+          variant="label-hidden"
+          data-name="NSP_CheckOnceYouDiscussEPAY_with_client__c"
+          field-name="NSP_CheckOnceYouDiscussEPAY_with_client__c"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </div>
+    </div>
+  </lightning-record-edit-form>
+</template>

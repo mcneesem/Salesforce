@@ -4,16 +4,28 @@
 public class NSP_EventTriggerHelper {
     
     public static String DISCOVERY_CALL = 'Discovery Call';
+    private static final String EMPTY_STRING = '';
+    private static final String WORD_SEPARATOR =  ' : ';
     /* Iterates throught the list of new Event and passes the required attributes to other methods.
     * @param newList List of New Event.  
     * @return void             
     *                
     */
-        public void beforeInsertDirector(List<Event> newList){
-            
-             updateEventSales(newList,null);
-        }
-        
+        public void beforeInsertDirector(List<Event> newList){  
+            List<Event> eventList = new List<Event>();
+            for(Event evt : newList){
+                evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
+                //Added as part of STY-03437
+                if(evt.WhatId != null || evt.WhoId != null){
+                    eventList.add(evt);
+                }
+            }     
+            updateEventSales(newList,null);
+            if(!eventList.isEmpty()){
+                populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
+            }
+    }
+     
         /**
     * Iterates throught the map of new Event and passes the required attributes to other methods.
     * @param newList List of New Event.  
@@ -23,7 +35,7 @@ public class NSP_EventTriggerHelper {
     */
         
         public void afterInsertDirector(List<Event> newList, Map<Id, Event> eventNewMap){ 
-            
+
             updateOpportunitiesWithDiscoverCalls(newList);
             updateActivityDate(newList,null);  
         }
@@ -38,7 +50,17 @@ public class NSP_EventTriggerHelper {
         
         public void beforeUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
             updateEventSales(eventNewMap.values(),eventOldMap);
-            
+        //Added as part of STY-03437
+        List<Event> eligibleEvents = new List<Event>();
+        for(Event newEventRecord : eventNewMap.values()) {
+            Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
+            if(oldEventRecord.WhatId != newEventRecord.WhatId || oldEventRecord.WhoId != newEventRecord.WhoId) {
+                eligibleEvents.add(newEventRecord);
+            }
+        }
+        if(!eligibleEvents.isEmpty()) {
+            populateWhatAndWhoNamesEvent(eligibleEvents);//Update of NSP_What_Name__c and NSP_Who_Name__c before Update
+        } 
         }    
         
         /**
@@ -58,30 +80,33 @@ public class NSP_EventTriggerHelper {
         
     public void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
 
-        String opportunity_prefix = Schema.SObjectType.Opportunity.getKeyPrefix();
-
         Set<ID> updateOpportunityIDList = new Set<ID>();
         List<Opportunity> updateOpportunityList = new List<Opportunity>();
-        for(Event event : newList){
-            if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
-                if(event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL) && 
-                   ((String)event.WhatId).startsWith(opportunity_prefix)){
-                    updateOpportunityIDList.add(event.WhatId);
-                }           
-            }  
-        }
-        List<Opportunity> listOpportunity = [SELECT ID, NSP_Ready_for_Integration_Sync__c FROM Opportunity 
-                                             WHERE ID IN: updateOpportunityIDList]; //Capitalized WHERE Condition as part of code fix
-        for(Opportunity oppty : listOpportunity){
-            Opportunity opp = new Opportunity();
-            opp.Id = oppty.Id;
-            opp.NSP_Ready_for_Integration_Sync__c = true;
-            updateOpportunityList.add(opp);
-        }
-        if(!updateOpportunityList.isEmpty()){
-            Database.update(updateOpportunityList);
-        }
-        
+        try{
+            String opportunity_prefix = Schema.SObjectType.Opportunity.getKeyPrefix();
+
+            for(Event event : newList){
+                if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
+                    if(event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL) && 
+                       ((String)event.WhatId).startsWith(opportunity_prefix)){
+                        updateOpportunityIDList.add(event.WhatId);
+                    }           
+                }  
+            }
+            List<Opportunity> listOpportunity = [SELECT ID, NSP_Ready_for_Integration_Sync__c FROM Opportunity 
+                                                 WHERE ID IN: updateOpportunityIDList]; //Capitalized WHERE Condition as part of code fix
+            for(Opportunity oppty : listOpportunity){
+                Opportunity opp = new Opportunity();
+                opp.Id = oppty.Id;
+                opp.NSP_Ready_for_Integration_Sync__c = true;
+                updateOpportunityList.add(opp);
+            }
+            if(!updateOpportunityList.isEmpty()){
+                Database.update(updateOpportunityList);
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateOpportunitiesWithDiscoverCalls', ex.getMessage());
+        }  
     }
   /**
 * Method Name : updateActivityDate 
@@ -99,8 +124,9 @@ public class NSP_EventTriggerHelper {
             List < Lead > leadToUpdate = new List<Lead> ();
             for(Event event : newList){
                 Event oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
-                if((Trigger.isInsert || event.StartDateTime != oldEvent.StartDateTime) && event.StartDateTime != null && event.WhoId!= null)
+                if((Trigger.isInsert || event.StartDateTime != oldEvent.StartDateTime) && event.StartDateTime != null && event.WhoId!= null){
                 leadIdSet.add(event.WhoId);
+            }
             }
             if(!leadIdSet.isEmpty()){
                 leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
@@ -144,36 +170,87 @@ public class NSP_EventTriggerHelper {
     public void updateEventSales(List<Event> newList,Map<Id,Event> OldEventMap){
     
     set<Id> ownerIdSet = new set<Id>();
-    for(Event newEvent : newList)
-    {
+    for(Event newEvent : newList){
         Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
         
-        if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId )
-        {
+        if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId ){
             ownerIdSet.add(newEvent.ownerId);    
         }
     }
     
-    if(ownerIdSet.Size() > 0)
-    {
-        Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
+    if(ownerIdSet.Size() > 0){
+        Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
         
-        for(Event newEvent : newList)
-        {
+        for(Event newEvent : newList){
             Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
             
-            if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId )
-            {
-                if(userIdMap.containsKey(newEvent.ownerId))
-                {
-                    user eachUser = userIdMap.get(newEvent.OwnerId);
-                    newEvent.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                    newEvent.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                    newEvent.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                }                   
+            if((Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId) && userIdMap.containsKey(newEvent.ownerId) ){
+                user eachUser = userIdMap.get(newEvent.OwnerId);
+                newEvent.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                newEvent.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                newEvent.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
             }
         }    
     }
   }  
+     
+    /**
+* Method Name : populateWhatAndWhoNamesEvent 
+* Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
+* Date : 25/05/2023
+* @param newEventList List of new Events 
+* @return void  	
+*/
+    private void populateWhatAndWhoNamesEvent(List<Event> newEventList) {
+        List<String> fieldApiNamesList = new List<String>{ 'WhatId', 'WhoId' };
+            Map<String, Set<String>> targetRecordIdsByObjectApiNameMap = new Map<String, Set<String>>();
+        
+        //Code to populate What and Who records by their Object Type
+        for(Event taskToBeUpdateRecord : newEventList) {
+            for(String fieldApiName : fieldApiNamesList) {
+                Id targetRecordId = (Id)taskToBeUpdateRecord.get(fieldApiName);
+                if(String.isNotBlank(targetRecordId)) {
+                    String whatObjectName = String.valueOf(targetRecordId.getSObjectType());
+                    if(!targetRecordIdsByObjectApiNameMap.containsKey(whatObjectName)) {
+                        targetRecordIdsByObjectApiNameMap.put(whatObjectName, new Set<String>());
+                    }
+                    targetRecordIdsByObjectApiNameMap.get(whatObjectName).add(targetRecordId);
+                }
+            }
+        }
+        
+        //Code to fetch target object details (Id, Name) using dynamic SOQL query.
+        Map<Id, String> targetRelatedObjectsMap = new Map<Id, String>();
+        List<Schema.DescribeSObjectResult> describeSObjectResults = Schema.describeSObjects(new List<String>(targetRecordIdsByObjectApiNameMap.keySet()));
+        Map<String, String> objectApiNameLabelMap = new Map<String, String>();
+        for(Schema.DescribeSObjectResult sObjResult : describeSObjectResults){
+            objectApiNameLabelMap.put(sObjResult.getName(), sObjResult.getLabel());
+        }
+        Map<String, String>	fieldNameByObjectMap = new Map<String, String>{'Case' => 'CaseNumber', 'ServiceAppointment' => 'AppointmentNumber',
+                	                                                                   'ResourceAbsence' => 'AbsenceNumber'};
+        for(String objectApiName : targetRecordIdsByObjectApiNameMap.keySet()) {
+                String targetFieldApiName = fieldNameByObjectMap.containsKey(objectApiName) ? fieldNameByObjectMap.get(objectApiName) : 'Name';
+            	Map<Id, String> relatedRecordDetailsMap = getRelatedRecordDetails(objectApiName,
+                                                                              	 targetFieldApiName,
+                                                                                 targetRecordIdsByObjectApiNameMap.get(objectApiName),
+                                                                                 objectApiNameLabelMap.get(objectApiName));
+            targetRelatedObjectsMap.putAll(relatedRecordDetailsMap);
+        }
+        
+        for(Event eventToBeUpdateRecord : newEventList) {
+            eventToBeUpdateRecord.NSP_What_Name__c = String.isNotBlank(eventToBeUpdateRecord.WhatId) ? targetRelatedObjectsMap.get(eventToBeUpdateRecord.WhatId) : EMPTY_STRING;
+            eventToBeUpdateRecord.NSP_Who_Name__c  = String.isNotBlank(eventToBeUpdateRecord.WhoId) ? targetRelatedObjectsMap.get(eventToBeUpdateRecord.WhoId) : EMPTY_STRING;
+        }
+    }
+    
+    private Map<Id, String> getRelatedRecordDetails(String objectName, String fieldName, Set<String> recordIds, String objectLabel) {
+        Map<Id, String> relatedRecordDetailsMap = new Map<Id, String>();
+        List<String> fieldList = new List<String>{fieldName};
+        NSP_sObjectSelector sObjectSelector = new NSP_sObjectSelector(objectName, fieldList);
+        for(sObject record: sObjectSelector.selectById(new List<String>(recordIds))) {
+            relatedRecordDetailsMap.put(record.Id, objectLabel + WORD_SEPARATOR + record.get(fieldName));
+        }
+        return relatedRecordDetailsMap;
+    }
     
     }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_BargainingUnitEmployeesNote__c</fullName>
+    <description>Used in Hr Separation Wizard</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(NSP_BargainingUnitEmployeesComplete__c, &apos;Yes&apos;), &apos;An HR Advisor will be contacting you once the survey closes to discuss the best approach for implementing action plans for union employees&apos;, &apos;&apos;)</formula>
+    <label>Note</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

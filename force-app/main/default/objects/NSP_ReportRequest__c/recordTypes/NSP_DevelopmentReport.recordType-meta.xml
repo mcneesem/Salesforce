@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DevelopmentReport</fullName>
+    <active>true</active>
+    <label>Development Report</label>
+    <picklistValues>
+        <picklist>NSP_Action__c</picklist>
+        <values>
+            <fullName>Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maintenance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_AreThereAdditionalClients_subAccount__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Delay__c</picklist>
+        <values>
+            <fullName>Developer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Client%2F1st Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Provider</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System %2F Outside Dept</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Existing_NewReport__c</picklist>
+        <values>
+            <fullName>Change to Existing Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Report</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Integration__c</picklist>
+        <values>
+            <fullName>Batch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_InternalClientReport__c</picklist>
+        <values>
+            <fullName>Client Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Report</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_IsReportSeparatedbytheFirstSort__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes on same page</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes on separate page</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Misc__c</picklist>
+        <values>
+            <fullName>Non WIRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WIRE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_OutputFormatToProduced__c</picklist>
+        <values>
+            <fullName>Excel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDF</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ReportLocation__c</picklist>
+        <values>
+            <fullName>Premier Reporting %28WIRE%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WebFocus %28MRE%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ReportType__c</picklist>
+        <values>
+            <fullName>401%28k%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fee Breakout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Account%2FGeneral Ledger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Headcount %2F Turnover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal %E2%80%93 Not for Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PTO %2F Vacation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated Clients</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Survey_Filters__c</picklist>
+        <values>
+            <fullName>Client Departments or Divisions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Locations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Role Options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Length</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Status</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

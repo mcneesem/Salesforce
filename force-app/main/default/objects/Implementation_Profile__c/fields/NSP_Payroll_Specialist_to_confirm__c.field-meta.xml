@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payroll_Specialist_to_confirm__c</fullName>
+    <externalId>false</externalId>
+    <label>Payroll Specialist to confirm</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Confirm RRP calculation is used to determine overtime</fullName>
+                <default>false</default>
+                <label>Confirm RRP calculation is used to determine overtime</label>
+            </value>
+            <value>
+                <fullName>Confirm complies with sate/federal requirements</fullName>
+                <default>false</default>
+                <label>Confirm complies with state/federal requirements</label>
+            </value>
+            <value>
+                <fullName>Provide DOL regulations to client</fullName>
+                <default>false</default>
+                <label>Provide DOL regulations to client</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

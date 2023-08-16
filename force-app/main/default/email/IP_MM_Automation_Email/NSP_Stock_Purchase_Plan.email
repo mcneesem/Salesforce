@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has an ESPP" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<c:InsperityEmailHeader />
+<p>Client {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has indicated that they have an ESPP plan. Please work with the PS and Client to configure the Client for ESPP.</p>
+</body>
+<br/>
+<p><span>Regards,</span><br/>
+<span>{!relatedTo.NSP_Payroll_Specialist__r.Name}</span><br/>
+<span>{!relatedTo.NSP_Payroll_Specialist__r.NSP_Job_Title__c}</span><br/>
+<span>{!relatedTo.NSP_Payroll_Specialist__r.NSP_Work_email__c}</span></p>
+<c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

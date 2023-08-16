@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Education_Activity__c</fullName>
+    <externalId>false</externalId>
+    <label>Education Activity</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_RET_Process_Area__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pre-setup email sent</fullName>
+                <default>false</default>
+                <label>Pre-setup email sent</label>
+            </value>
+            <value>
+                <fullName>Client notified setup complete</fullName>
+                <default>false</default>
+                <label>Client notified setup complete</label>
+            </value>
+            <value>
+                <fullName>Onboarding materials provided</fullName>
+                <default>false</default>
+                <label>Onboarding materials provided</label>
+            </value>
+            <value>
+                <fullName>Follow-up sent</fullName>
+                <default>false</default>
+                <label>Follow-up sent</label>
+            </value>
+            <value>
+                <fullName>Demo call held</fullName>
+                <default>false</default>
+                <label>Demo call held</label>
+            </value>
+            <value>
+                <fullName>Education session held</fullName>
+                <default>false</default>
+                <label>Education session held</label>
+            </value>
+            <value>
+                <fullName>Handoff to Plan Consulting completed</fullName>
+                <default>false</default>
+                <label>Handoff to Plan Consulting completed</label>
+            </value>
+            <value>
+                <fullName>Demo call</fullName>
+                <default>false</default>
+                <label>Demo call</label>
+            </value>
+            <value>
+                <fullName>Education session</fullName>
+                <default>false</default>
+                <label>Education session</label>
+            </value>
+            <value>
+                <fullName>Education request</fullName>
+                <default>false</default>
+                <label>Education request</label>
+            </value>
+            <value>
+                <fullName>Amendment education Materials request</fullName>
+                <default>false</default>
+                <label>Amendment education Materials request</label>
+            </value>
+            <value>
+                <fullName>Education outreach</fullName>
+                <default>false</default>
+                <label>Education outreach</label>
+            </value>
+            <value>
+                <fullName>Client inquiry</fullName>
+                <default>false</default>
+                <label>Client inquiry</label>
+            </value>
+            <value>
+                <fullName>Sample Announcement</fullName>
+                <default>false</default>
+                <label>Sample Announcement</label>
+            </value>
+            <value>
+                <fullName>Plan Outline</fullName>
+                <default>false</default>
+                <label>Plan Outline</label>
+            </value>
+            <value>
+                <fullName>Flyer</fullName>
+                <default>false</default>
+                <label>Flyer</label>
+            </value>
+            <value>
+                <fullName>Open Webinar Invitation</fullName>
+                <default>false</default>
+                <label>Open Webinar Invitation</label>
+            </value>
+            <value>
+                <fullName>Investing Guide</fullName>
+                <default>false</default>
+                <label>Investing Guide</label>
+            </value>
+            <value>
+                <fullName>Investment Summary</fullName>
+                <default>false</default>
+                <label>Investment Summary</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Pre-setup email sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Client notified setup complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Onboarding materials provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Follow-up sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Demo call held</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Education session held</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Onboarding</controllingFieldValue>
+            <valueName>Handoff to Plan Consulting completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Ongoing Activity</controllingFieldValue>
+            <valueName>Demo call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Ongoing Activity</controllingFieldValue>
+            <valueName>Education session</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Ongoing Activity</controllingFieldValue>
+            <valueName>Education request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Ongoing Activity</controllingFieldValue>
+            <valueName>Amendment education Materials request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Ongoing Activity</controllingFieldValue>
+            <valueName>Education outreach</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Ongoing Activity</controllingFieldValue>
+            <valueName>Client inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Collateral</controllingFieldValue>
+            <valueName>Sample Announcement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Collateral</controllingFieldValue>
+            <valueName>Plan Outline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Collateral</controllingFieldValue>
+            <valueName>Flyer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Collateral</controllingFieldValue>
+            <valueName>Open Webinar Invitation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Collateral</controllingFieldValue>
+            <valueName>Investing Guide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Education Collateral</controllingFieldValue>
+            <valueName>Investment Summary</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

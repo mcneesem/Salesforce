@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Selected_Day_of_Week_Number__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( TEXT(On__c),&quot;Monday&quot;,1,&quot;Tuesday&quot;,2,&quot;Wednesday&quot;,3,&quot;Thursday&quot;,4,5)</formula>
+    <label>Selected Day of Week Number</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

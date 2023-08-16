@@ -1,0 +1,113 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.serviceTeam}>
+    </lightning-formatted-text>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Immediate_need_for_Workers_Comp_Cert__c}
+      label={label.immediateNeedForWorkers}
+      field-api-name="Implementation_Profile__c.NSP_Immediate_need_for_Workers_Comp_Cert__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_Immediate_need_for_Workers_Comp_Cert__c}
+      data-name="NSP_Immediate_need_for_Workers_Comp_Cert__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <div
+      if:true={visibility.When_are_certificates_needed__c}
+      class={styles.When_are_certificates_needed__c}>
+      <lightning-input-field value={field.When_are_certificates_needed__c} 
+        disabled={disabledFields.When_are_certificates_needed__c}
+        field-name="When_are_certificates_needed__c"
+        data-name="When_are_certificates_needed__c"
+        class={styles.When_are_certificates_needed__c}
+        onchange={handleValueChange}></lightning-input-field>
+      <lightning-input-field value={field.List_of_certificates_requested__c}
+        disabled={disabledFields.List_of_certificates_requested__c}
+        field-name="List_of_certificates_requested__c"
+        data-name="List_of_certificates_requested__c"
+        class={styles.List_of_certificates_requested__c}
+        onchange={handleValueChange}></lightning-input-field>
+      <lightning-input-field value={field.Send_the_certificates_to__c} 
+        disabled={disabledFields.Send_the_certificates_to__c}
+        field-name="Send_the_certificates_to__c"
+        data-name="Send_the_certificates_to__c"
+        class={styles.Send_the_certificates_to__c}
+        onchange={handleValueChange}></lightning-input-field>
+    </div>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Client_have_any_urgent_HR_needs__c}
+      label={label.clientHaveUrgentHRNeeds}
+      field-api-name="Implementation_Profile__c.Client_have_any_urgent_HR_needs__c"
+      record-type-id={recordTypeId}
+      value={field.Client_have_any_urgent_HR_needs__c}
+      data-name="Client_have_any_urgent_HR_needs__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field value={field.Provide_Urgent_HR_Needs_details__c} 
+      disabled={disabledFields.Provide_Urgent_HR_Needs_details__c}
+      if:true={visibility.Provide_Urgent_HR_Needs_details__c}
+      field-name="Provide_Urgent_HR_Needs_details__c"
+      data-name="Provide_Urgent_HR_Needs_details__c"
+      class={styles.Provide_Urgent_HR_Needs_details__c}
+      onchange={handleValueChange}></lightning-input-field>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Client_expect_chnges_in_the_organization__c}
+      label={label.ClntExpChng}
+      field-api-name="Implementation_Profile__c.Client_expect_chnges_in_the_organization__c"
+      record-type-id={recordTypeId}
+      value={field.Client_expect_chnges_in_the_organization__c}
+      data-name="Client_expect_chnges_in_the_organization__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Check_all_changes_that_apply__c}
+      if:true={visibility.Check_all_changes_that_apply__c}
+      label={label.checkAllThatApply}
+      field-api-name="Implementation_Profile__c.Check_all_changes_that_apply__c"
+      record-type-id={recordTypeId}
+      value={field.Check_all_changes_that_apply__c}
+      data-name="Check_all_changes_that_apply__c"
+      class={styles.Check_all_changes_that_apply__c}
+      onchange={handleValueChange}
+      multiple>
+    </c-nsp_selection-box>
+    <template if:true={visibility.Provide_organization_change_details__c}>
+      <div class="slds-form-element__label">
+        <lightning-formatted-text
+          value={label.provideDetails}
+          data-field="Provide_organization_change_details__c"
+          class={styles.Provide_organization_change_details__c}>
+        </lightning-formatted-text>
+      </div>
+
+      <lightning-input-field
+        disabled={disabledFields.Provide_organization_change_details__c}
+        field-name="Provide_organization_change_details__c"
+        data-name="Provide_organization_change_details__c"
+        onchange={handleValueChange}
+        value={field.Provide_organization_change_details__c}
+        variant="label-hidden"
+        class={styles.Provide_organization_change_details__c}>
+      </lightning-input-field>
+    </template>
+
+    <lightning-input-field value={field.NSP_Service_team_notes__c} 
+      disabled={disabledFields.NSP_Service_team_notes__c}
+      field-name="NSP_Service_team_notes__c"
+      data-name="NSP_Service_team_notes__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+  </lightning-record-edit-form>
+</template>

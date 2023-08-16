@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <available>true</available>
+    <description>Template for Email to CSS on Dunning Case Resolution</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Template for CSS - Dunning Case Resolved</name>
+    <style>none</style>
+    <subject>Insperity Past Due Invoice(s)</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

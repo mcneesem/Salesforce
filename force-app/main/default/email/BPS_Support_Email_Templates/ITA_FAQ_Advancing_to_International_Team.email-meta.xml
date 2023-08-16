@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Advancing to International Team</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Advancing to International Team</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Advancing to International Team</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for providing this information. Because this user is outside of the United States, we&apos;ve advanced this request to a specialized team for review. A member of that team will be in touch to assist you as soon as they are able. We appreciate your patience. 
+ 
+Thank you in advance, 
+ 
+Insperity Time &amp; Attendance Technical Support Team
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ASF_or_Prototype__c</fullName>
+    <externalId>false</externalId>
+    <label>NSP or Customized</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>M (ASF)</fullName>
+                <default>false</default>
+                <label>M (ASF)</label>
+            </value>
+            <value>
+                <fullName>P (Prototype)</fullName>
+                <default>false</default>
+                <label>P (Prototype)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

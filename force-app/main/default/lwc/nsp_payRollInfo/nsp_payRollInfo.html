@@ -1,0 +1,181 @@
+<template>
+    <div class="slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} onsuccess={handleSuccess} onsubmit={handleSubmit}
+            onerror={handleError} object-api-name={objectApiName} density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title slds-var-p-bottom_xx-small"
+                value={label.payRollInfo}>
+            </lightning-formatted-text>
+
+            <lightning-layout multiple-rows class="slds-m-left_xx-small">
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.Have_the_user_roles_been_updated_in_AIMS__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.Have_the_user_roles_been_updated_in_AIMS__c.apiName}
+                        field-info={objectInfo.fields.Have_the_user_roles_been_updated_in_AIMS__c}
+                        value={fields.Have_the_user_roles_been_updated_in_AIMS__c}>
+                    </c-nsp_radio-group>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        data-id={objectInfo.fields.Are_there_any_non_paid_users__c.apiName}
+                        field-api-name={objectInfo.fields.Are_there_any_non_paid_users__c.apiName}
+                        onselected={handleselected} field-info={objectInfo.fields.Are_there_any_non_paid_users__c}
+                        value={fields.Are_there_any_non_paid_users__c}></c-nsp_radio-group>
+
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isNonPaidUser}>
+                            <lightning-input-field field-name="NSP_Non_paid_users_Enter_User_Names__c">
+                            </lightning-input-field>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.Payroll_submitted_frm_multiple_contacts__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.Payroll_submitted_frm_multiple_contacts__c.apiName}
+                        field-info={objectInfo.fields.Payroll_submitted_frm_multiple_contacts__c}
+                        value={fields.Payroll_submitted_frm_multiple_contacts__c}></c-nsp_radio-group>
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isMultipleContacts}>
+                            <lightning-input-field field-name="Provide_multiple_contact_details__c">
+                            </lightning-input-field>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        data-id={objectInfo.fields.Any_users_who_cannot_see_salary__c.apiName}
+                        field-api-name={objectInfo.fields.Any_users_who_cannot_see_salary__c.apiName}
+                        onselected={handleselected} field-info={objectInfo.fields.Any_users_who_cannot_see_salary__c}
+                        value={fields.Any_users_who_cannot_see_salary__c}></c-nsp_radio-group>
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isUserCannotSeeSalary}>
+                            <lightning-input-field field-name="Enter_user_names_that_can_t_see_salary__c">
+                            </lightning-input-field>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_checkbox-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        data-id={objectInfo.fields.NSP_TimeZone__c.apiName}
+                        field-api-name={objectInfo.fields.NSP_TimeZone__c.apiName} onselected={handleselected}
+                        field-info={objectInfo.fields.NSP_TimeZone__c} value={fields.NSP_TimeZone__c}>
+                    </c-nsp_checkbox-group>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <lightning-input-field field-name="NSP_Work_Hours__c"></lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8" if:true={isSubAccount}>
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.NSP_Are_the_subaccounts_set_up__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.NSP_Are_the_subaccounts_set_up__c.apiName}
+                        field-info={objectInfo.fields.NSP_Are_the_subaccounts_set_up__c}
+                        value={fields.NSP_Are_the_subaccounts_set_up__c}></c-nsp_radio-group>
+                </lightning-layout-item>
+
+
+
+                <lightning-layout-item size="8" if:true={isSubAccount}>
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.NSP_Different_contact_for_subaccounts__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.NSP_Different_contact_for_subaccounts__c.apiName}
+                        field-info={objectInfo.fields.NSP_Different_contact_for_subaccounts__c}
+                        value={fields.NSP_Different_contact_for_subaccounts__c}></c-nsp_radio-group>
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isDifferentSubContacts}>
+                            <lightning-layout-item size="8">
+                                <lightning-input-field data-id="NSP_PD_different_contact_for_subaccount__c"
+                                    field-name="NSP_PD_different_contact_for_subaccount__c">
+                                </lightning-input-field>
+                            </lightning-layout-item>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <lightning-formatted-text class="slds-form-element__label" value='List any states that may have been
+                    added/missed since the Service Kickoff Meeting.'>
+                    </lightning-formatted-text>
+                    <lightning-input-field data-id="NSP_States_added_since_Kickoff_Meeting__c"
+                        field-name="NSP_States_added_since_Kickoff_Meeting__c" variant="label-hidden"
+                        onchange={handleChange}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.NSP_ArrearageInComplianceWithEachState__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.NSP_ArrearageInComplianceWithEachState__c.apiName}
+                        field-info={objectInfo.fields.NSP_ArrearageInComplianceWithEachState__c}
+                        value={fields.NSP_ArrearageInComplianceWithEachState__c}></c-nsp_radio-group>
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isArrearageInComplianceWithEachState}>
+                            <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                                field-api-name={objectInfo.fields.NSP_SubaccountNeededDifferentPayPeriod__c.apiName}
+                                data-id={objectInfo.fields.NSP_SubaccountNeededDifferentPayPeriod__c.apiName}
+                                onselected={handleselected}
+                                field-info={objectInfo.fields.NSP_SubaccountNeededDifferentPayPeriod__c}
+                                value={fields.NSP_SubaccountNeededDifferentPayPeriod__c}></c-nsp_radio-group>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8" if:true={isSubAccount}>
+                    <lightning-layout-item size="8">
+                        <lightning-input-field field-name="NSP_Enter_Time_Entry_for_all_subaccounts__c">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.NSP_Did_you_verify_Calendar_in_AIMS__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.NSP_Did_you_verify_Calendar_in_AIMS__c.apiName}
+                        field-info={objectInfo.fields.NSP_Did_you_verify_Calendar_in_AIMS__c}
+                        value={fields.NSP_Did_you_verify_Calendar_in_AIMS__c}></c-nsp_radio-group>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <lightning-input-field field-name="NSP_What_is_the_Live_Payroll_Call_Date__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8">
+                    <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                        field-api-name={objectInfo.fields.NSP_ClientInterestedHavingAutoApproval__c.apiName}
+                        onselected={handleselected}
+                        data-id={objectInfo.fields.NSP_ClientInterestedHavingAutoApproval__c.apiName}
+                        field-info={objectInfo.fields.NSP_ClientInterestedHavingAutoApproval__c}
+                        value={fields.NSP_ClientInterestedHavingAutoApproval__c}></c-nsp_radio-group>
+                    <div class="slds-var-p-left_medium">
+                        <template if:true={isClientAutoApproval}>
+                            <c-nsp_radio-group object-api-name={objectApiName} record-type-id={recordTypeId}
+                                field-api-name={objectInfo.fields.NSP_Has_the_addendum_been_collected__c.apiName}
+                                onselected={handleselected}
+                                data-id={objectInfo.fields.NSP_Has_the_addendum_been_collected__c.apiName}
+                                field-info={objectInfo.fields.NSP_Has_the_addendum_been_collected__c}
+                                value={fields.NSP_Has_the_addendum_been_collected__c}></c-nsp_radio-group>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

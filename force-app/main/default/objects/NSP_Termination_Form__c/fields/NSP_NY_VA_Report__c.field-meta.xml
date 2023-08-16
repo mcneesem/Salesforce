@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_NY_VA_Report__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>created as part of DF-03179</description>
+    <externalId>false</externalId>
+    <inlineHelpText>WebFocus Report: Client Services: FOR INTERNAL USE ONLY: Payroll Specialist Reports: EE Worksite History by VA or NY</inlineHelpText>
+    <label>NY/VA Report</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

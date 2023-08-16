@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Time_Category__c</fullName>
+    <externalId>false</externalId>
+    <label>Time Category</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_Time_Entry__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Settlor</fullName>
+                <default>false</default>
+                <label>Settlor</label>
+            </value>
+            <value>
+                <fullName>Fiduciary</fullName>
+                <default>false</default>
+                <label>Fiduciary</label>
+            </value>
+            <value>
+                <fullName>Non Reimbursable</fullName>
+                <default>false</default>
+                <label>Non Reimbursable</label>
+            </value>
+            <value>
+                <fullName>General Business</fullName>
+                <default>false</default>
+                <label>General Business</label>
+            </value>
+            <value>
+                <fullName>PTO</fullName>
+                <default>false</default>
+                <label>PTO</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Quality Assurance Review</controllingFieldValue>
+            <controllingFieldValue>Quarterly Statements</controllingFieldValue>
+            <controllingFieldValue>Trade/Share Reconciliation &amp; Files</controllingFieldValue>
+            <controllingFieldValue>Training - 401k Plan, Compliance, etc.</controllingFieldValue>
+            <controllingFieldValue>Transaction Processing - Dividends, Disbursements, etc</controllingFieldValue>
+            <controllingFieldValue>Trustee Review/Search</controllingFieldValue>
+            <controllingFieldValue>Vendor Management</controllingFieldValue>
+            <controllingFieldValue>Vendor Transition</controllingFieldValue>
+            <controllingFieldValue>Year-end Activities - Fid</controllingFieldValue>
+            <controllingFieldValue>Research - Related to a plan or set of plans</controllingFieldValue>
+            <controllingFieldValue>Revenue - pmts, research, recon, ppt counts</controllingFieldValue>
+            <controllingFieldValue>Review CGQ for client implementing a 401(k) Plan</controllingFieldValue>
+            <controllingFieldValue>Review CGQ for nondiscrimination testing (both 401(k) and 125 testing)</controllingFieldValue>
+            <controllingFieldValue>Review of Prior Plan Documents</controllingFieldValue>
+            <controllingFieldValue>RMD and QDRO</controllingFieldValue>
+            <controllingFieldValue>Client Changes</controllingFieldValue>
+            <controllingFieldValue>Client Management Database-Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Client/Participant Communication - Admin</controllingFieldValue>
+            <controllingFieldValue>Communications to clients to collect data for testing (both 401(k) and 125 Testing)</controllingFieldValue>
+            <controllingFieldValue>Contributions Processing</controllingFieldValue>
+            <controllingFieldValue>Controlled Group(CGQ)/FEIN or Client Change &amp; Related Research</controllingFieldValue>
+            <controllingFieldValue>Annual Contributions-PS, QNEC, THM, SIMPLE</controllingFieldValue>
+            <controllingFieldValue>Annual Employer</controllingFieldValue>
+            <controllingFieldValue>Application Development - Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Application Support - Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Balancing Plan Accounts - SDA, Regions, etc.</controllingFieldValue>
+            <controllingFieldValue>Conversion Process</controllingFieldValue>
+            <controllingFieldValue>Deconversions</controllingFieldValue>
+            <controllingFieldValue>DefCon (Projects, Meetings Testing, Troubleshooting)</controllingFieldValue>
+            <controllingFieldValue>DefCon Operational Issue - Administrative</controllingFieldValue>
+            <controllingFieldValue>Disbursements &amp; Withdrawal Processing</controllingFieldValue>
+            <controllingFieldValue>ERISA Testing-ADP/ACP, TH, 410b</controllingFieldValue>
+            <controllingFieldValue>Folder Processing</controllingFieldValue>
+            <controllingFieldValue>General Questions from WOS clients</controllingFieldValue>
+            <controllingFieldValue>Improving online CGQ – benefits both 401K and 125</controllingFieldValue>
+            <controllingFieldValue>IRS Forms-5500, 5330, audit</controllingFieldValue>
+            <controllingFieldValue>Loan Processing &amp; Maint.</controllingFieldValue>
+            <controllingFieldValue>Manage Team In Boxes (One Voice/Email) - Specific to a Plan</controllingFieldValue>
+            <controllingFieldValue>Meeting - Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Meeting - Project Related - Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Mutual Fund Corrections - Pricing, Manual Trades, etc</controllingFieldValue>
+            <controllingFieldValue>Mutual Fund Related - Notices, Prospectus&apos;,Changes</controllingFieldValue>
+            <controllingFieldValue>NetSuite Support - Fiduciary</controllingFieldValue>
+            <controllingFieldValue>New plan implementation (all processes/all systems)</controllingFieldValue>
+            <controllingFieldValue>New Plan Set Up activities</controllingFieldValue>
+            <controllingFieldValue>Newkirk - Administrative</controllingFieldValue>
+            <controllingFieldValue>OmniPlus Reporting - Ppt Valuation/Deferral Matching/1099</controllingFieldValue>
+            <controllingFieldValue>Operational Issues - Administrative</controllingFieldValue>
+            <controllingFieldValue>Participant Education</controllingFieldValue>
+            <controllingFieldValue>Participant Forms Processing (Beneficiary, enrollment, etc.)</controllingFieldValue>
+            <controllingFieldValue>Plan Related Admin: making folders/filing, records, printing</controllingFieldValue>
+            <controllingFieldValue>Plan Review (Document Collection for Legal Analysis)</controllingFieldValue>
+            <controllingFieldValue>Plan Valuations &amp; Trust Statements</controllingFieldValue>
+            <controllingFieldValue>Plan/Participant Maintenance &amp; Corrections</controllingFieldValue>
+            <controllingFieldValue>Preparing/implementing required plan documents &amp; amendments</controllingFieldValue>
+            <controllingFieldValue>Procedure (Creation, Review, Update) - Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Process automation/Textfile Maintenance</controllingFieldValue>
+            <controllingFieldValue>System Testing &amp; Maintenance - Sungard Products/Compliance Software</controllingFieldValue>
+            <controllingFieldValue>Projects - Working on Specific Project(s) - Chargeable</controllingFieldValue>
+            <valueName>Fiduciary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Training - Non-401k</controllingFieldValue>
+            <controllingFieldValue>Daily Business Duties - Filing, Email, Phone, Timesheet, etc</controllingFieldValue>
+            <controllingFieldValue>Disaster Recovery Planning</controllingFieldValue>
+            <controllingFieldValue>Finance - Budget Process &amp; Review</controllingFieldValue>
+            <controllingFieldValue>HR Activities - Reviews, Training, etc</controllingFieldValue>
+            <controllingFieldValue>Managerial Activities - Approve timesheets, job descrip., etc</controllingFieldValue>
+            <controllingFieldValue>Meeting - Company/Town Hall</controllingFieldValue>
+            <controllingFieldValue>Meeting - One on One, Goals, HR</controllingFieldValue>
+            <controllingFieldValue>Meeting - Staff/Inter-Team Meetings</controllingFieldValue>
+            <controllingFieldValue>Metrics compilation and review</controllingFieldValue>
+            <controllingFieldValue>System Maintenance (Insperity)</controllingFieldValue>
+            <valueName>General Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Research - Non Reimbursable</controllingFieldValue>
+            <controllingFieldValue>Review CGQ for nondiscrimination testing (125 testing only)</controllingFieldValue>
+            <controllingFieldValue>CGQ review for ALE</controllingFieldValue>
+            <controllingFieldValue>RSO Development &amp; Training</controllingFieldValue>
+            <controllingFieldValue>RSO Implementation/Conversion</controllingFieldValue>
+            <controllingFieldValue>Client Management Database</controllingFieldValue>
+            <controllingFieldValue>Client Touch Call</controllingFieldValue>
+            <controllingFieldValue>Client/Participant Communication - Non-Admin</controllingFieldValue>
+            <controllingFieldValue>Application Maintenance - Non Reimbursable</controllingFieldValue>
+            <controllingFieldValue>Attorney/Client – Priv Data Collection</controllingFieldValue>
+            <controllingFieldValue>BPA - Prospect Call</controllingFieldValue>
+            <controllingFieldValue>DefCon Operational Issue - Non reimbursable</controllingFieldValue>
+            <controllingFieldValue>DOL Investigation</controllingFieldValue>
+            <controllingFieldValue>Fee Disclosure Analysis-Sales</controllingFieldValue>
+            <controllingFieldValue>Finance - Expense Submission &amp; Account Recon</controllingFieldValue>
+            <controllingFieldValue>Invoicing Clients</controllingFieldValue>
+            <controllingFieldValue>Marketing Activities</controllingFieldValue>
+            <controllingFieldValue>Meeting - Non-Fiduciary</controllingFieldValue>
+            <controllingFieldValue>Meeting - Project Related - Non-Fiduciary</controllingFieldValue>
+            <controllingFieldValue>NQDC - Consulting</controllingFieldValue>
+            <controllingFieldValue>NQDC - Plan Administration</controllingFieldValue>
+            <controllingFieldValue>ORK - Expanded Services</controllingFieldValue>
+            <controllingFieldValue>ORK Match Service</controllingFieldValue>
+            <controllingFieldValue>ORK Related Duties</controllingFieldValue>
+            <controllingFieldValue>ORK to RS Campaign</controllingFieldValue>
+            <controllingFieldValue>Other - Meetings, Section 125 Specific Tasks</controllingFieldValue>
+            <controllingFieldValue>Other - Non Reimbursable</controllingFieldValue>
+            <controllingFieldValue>Outside Record Keeper (ORK) Form 5500</controllingFieldValue>
+            <controllingFieldValue>Outside Record Keeper (ORKs)</controllingFieldValue>
+            <controllingFieldValue>RSO Project - Non Reimbursable</controllingFieldValue>
+            <controllingFieldValue>RSO Suitability/Plan Design</controllingFieldValue>
+            <controllingFieldValue>Sales - Calls, Conferences, etc</controllingFieldValue>
+            <controllingFieldValue>Sales - RSO</controllingFieldValue>
+            <controllingFieldValue>Sales - WOS</controllingFieldValue>
+            <controllingFieldValue>SOC-1</controllingFieldValue>
+            <controllingFieldValue>SRP Facilitation</controllingFieldValue>
+            <controllingFieldValue>Suitablity/New Plan Design</controllingFieldValue>
+            <controllingFieldValue>Product Development</controllingFieldValue>
+            <controllingFieldValue>Project 1 - Trustee</controllingFieldValue>
+            <controllingFieldValue>Projects - Management/Maintenance of Project List</controllingFieldValue>
+            <controllingFieldValue>Projects - Working on Specific Project(s) - Non Chargeable</controllingFieldValue>
+            <valueName>Non Reimbursable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Administrative tasks related to CGQ processing</controllingFieldValue>
+            <controllingFieldValue>Implementation/Plan Sponsor Guides - call/walk through</controllingFieldValue>
+            <controllingFieldValue>Meeting - Settlor</controllingFieldValue>
+            <controllingFieldValue>Other - Settlor</controllingFieldValue>
+            <controllingFieldValue>Plan Amendments - Settlor</controllingFieldValue>
+            <valueName>Settlor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PTO/Community Service/Holiday</controllingFieldValue>
+            <valueName>PTO</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

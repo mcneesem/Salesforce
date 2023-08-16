@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OPRT - Add or Edit Views</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OPRT - Add or Edit Views</name>
+    <style>freeForm</style>
+    <subject>OPRT - Add or Edit Views</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Insperity Organizational Planning allows administrators to create different views of their chart. Views display different information on the boxes, different colors of the boxes, and highlights to call out different data points.
+
+You can view our job aid here for instructions on creating and editing Views.  If you have any additional questions or if I can be of further assistance, please let me know.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

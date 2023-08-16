@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Future_Eligibility__c</fullName>
+    <externalId>false</externalId>
+    <label>Future Eligibility</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Immediate</fullName>
+                <default>false</default>
+                <label>Immediate</label>
+            </value>
+            <value>
+                <fullName>Age 21 &amp; 1,000 hours</fullName>
+                <default>false</default>
+                <label>Age 21 &amp; 1,000 hours</label>
+            </value>
+            <value>
+                <fullName>Age 21 &amp; 3 MOS</fullName>
+                <default>false</default>
+                <label>Age 21 &amp; 3 MOS</label>
+            </value>
+            <value>
+                <fullName>Age 21 &amp; 1 YOS</fullName>
+                <default>false</default>
+                <label>Age 21 &amp; 1 YOS</label>
+            </value>
+            <value>
+                <fullName>Undecided</fullName>
+                <default>false</default>
+                <label>Undecided</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

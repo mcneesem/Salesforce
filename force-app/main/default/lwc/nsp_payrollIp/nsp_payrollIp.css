@@ -1,0 +1,12 @@
+.requestedField{
+    color:red;
+}
+.emptyField{
+    color:blue;
+}
+.payPeriodBox{
+    position: relative;
+    background-color: #f4f4f4;
+    border: solid 0.2rem white;
+    border-radius: 0.2rem;
+}

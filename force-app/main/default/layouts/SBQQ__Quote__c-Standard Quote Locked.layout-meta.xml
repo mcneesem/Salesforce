@@ -79,6 +79,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Price_Book__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Ordered__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -159,6 +163,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Bypass_DocuSign_Signature__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_TerminationDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

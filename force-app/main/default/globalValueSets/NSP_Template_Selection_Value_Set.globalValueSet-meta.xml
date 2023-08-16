@@ -155,6 +155,11 @@
         <default>false</default>
         <label>RenewalBPSWithDiscount</label>
     </customValue>
+    <customValue>
+        <fullName>Estimate</fullName>
+        <default>false</default>
+        <label>Estimate</label>
+    </customValue>
     <description>Used in Docusign template selection process.</description>
     <masterLabel>Template Selection Value Set</masterLabel>
     <sorted>false</sorted>

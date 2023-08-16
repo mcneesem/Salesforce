@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hold_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Hold Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account Under Review</fullName>
+                <default>false</default>
+                <label>Account Under Review</label>
+            </value>
+            <value>
+                <fullName>Client Request</fullName>
+                <default>false</default>
+                <label>Client Request</label>
+            </value>
+            <value>
+                <fullName>COVID-19</fullName>
+                <default>false</default>
+                <label>COVID-19</label>
+            </value>
+            <value>
+                <fullName>No Client Involvement</fullName>
+                <default>false</default>
+                <label>No Client Involvement</label>
+            </value>
+            <value>
+                <fullName>Waiting on Order Documents</fullName>
+                <default>false</default>
+                <label>Waiting on Order Documents</label>
+            </value>
+            <value>
+                <fullName>Waiting on other Product Implementations</fullName>
+                <default>false</default>
+                <label>Waiting on other Product Implementations</label>
+            </value>
+            <value>
+                <fullName>Waiting on Payment</fullName>
+                <default>false</default>
+                <label>Waiting on Payment</label>
+            </value>
+            <value>
+                <fullName>Waiting on SKO</fullName>
+                <default>false</default>
+                <label>Waiting on SKO</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

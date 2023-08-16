@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_StatusComplete_ActualAttendance</fullName>
+    <active>true</active>
+    <description>If Status is updated to Complete then Actual Attendance field should not be null</description>
+    <errorConditionFormula>AND(
+ NOT($Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c),
+ ISPICKVAL( pse__Status__c , &apos;Complete&apos;) ,
+ RecordType.Name = &apos;PEO Project Task&apos;,
+ NSP_Category__c = &apos;Client Implementation&apos;,
+ NSP_Sub_Category__c = &apos;New Client - EE OT Meeting&apos;,
+ ISBLANK( NSP_Actual_Attendance__c)
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Actual_Attendance__c</errorDisplayField>
+    <errorMessage>Actual Attendance must be entered before setting the task status to Complete</errorMessage>
+</ValidationRule>

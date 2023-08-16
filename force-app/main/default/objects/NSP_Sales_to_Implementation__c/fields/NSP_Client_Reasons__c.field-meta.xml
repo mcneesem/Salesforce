@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Client_Reasons__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Reasons</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BPA Lost WO/WA Prospect</fullName>
+                <default>false</default>
+                <label>BPA Lost WO/WA Prospect</label>
+            </value>
+            <value>
+                <fullName>CGQ frustrations</fullName>
+                <default>false</default>
+                <label>CGQ frustrations</label>
+            </value>
+            <value>
+                <fullName>Client Stayed on WO</fullName>
+                <default>false</default>
+                <label>Client Stayed on WO</label>
+            </value>
+            <value>
+                <fullName>Competition</fullName>
+                <default>false</default>
+                <label>Competition</label>
+            </value>
+            <value>
+                <fullName>Cost</fullName>
+                <default>false</default>
+                <label>Cost</label>
+            </value>
+            <value>
+                <fullName>Currently Under DOL Audit</fullName>
+                <default>false</default>
+                <label>Currently Under DOL Audit</label>
+            </value>
+            <value>
+                <fullName>Doesn&apos;t like NSPK funds</fullName>
+                <default>false</default>
+                <label>Doesn&apos;t like NSPK funds</label>
+            </value>
+            <value>
+                <fullName>Dual eligibility</fullName>
+                <default>false</default>
+                <label>Dual eligibility</label>
+            </value>
+            <value>
+                <fullName>Happy with current vendor</fullName>
+                <default>false</default>
+                <label>Happy with current vendor</label>
+            </value>
+            <value>
+                <fullName>Match formula restrictions</fullName>
+                <default>false</default>
+                <label>Match formula restrictions</label>
+            </value>
+            <value>
+                <fullName>Needs a financial advisor</fullName>
+                <default>false</default>
+                <label>Needs a financial advisor</label>
+            </value>
+            <value>
+                <fullName>New Comparability Profit sharing</fullName>
+                <default>false</default>
+                <label>New Comparability Profit sharing</label>
+            </value>
+            <value>
+                <fullName>No Interest from employees</fullName>
+                <default>false</default>
+                <label>No Interest from employees</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Safe Harbor Annual/QACA</fullName>
+                <default>false</default>
+                <label>Safe Harbor Annual/QACA</label>
+            </value>
+            <value>
+                <fullName>Setup Fee(s)</fullName>
+                <default>false</default>
+                <label>Setup Fee(s)</label>
+            </value>
+            <value>
+                <fullName>Terming PEO</fullName>
+                <default>false</default>
+                <label>Terming PEO</label>
+            </value>
+            <value>
+                <fullName>Testing Concerns</fullName>
+                <default>false</default>
+                <label>Testing Concerns</label>
+            </value>
+            <value>
+                <fullName>Timing</fullName>
+                <default>false</default>
+                <label>Timing</label>
+            </value>
+            <value>
+                <fullName>Unresponsive</fullName>
+                <default>false</default>
+                <label>Unresponsive</label>
+            </value>
+            <value>
+                <fullName>Vesting</fullName>
+                <default>false</default>
+                <label>Vesting</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

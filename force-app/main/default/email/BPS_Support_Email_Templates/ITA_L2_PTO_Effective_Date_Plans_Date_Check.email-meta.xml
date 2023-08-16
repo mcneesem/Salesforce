@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA L2 - PTO Effective Date Plans - Date Check</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA L2 - PTO Effective Date Plans - Date Check</name>
+    <style>freeForm</style>
+    <subject>ITA L2 - PTO Effective Date Plans - Date Check</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance Support. We understand you would like your accrual plans to allow for negotiated eligibility, to allow an employee or group of employees to accrue at a different rate than would be calculated by their current Hire Date. This can be accomplished by updating your accrual plans to reference the employee&apos;s PTO Effective Date for eligibility rather than their Hire Date, and we will be happy to make that change for you.
+ 
+For employees that should still accrue at the normal eligibility schedule, their PTO Effective Date can be set to match their Hire Date. This will ensure they follow the same schedule that you see now while the plan references the Hire Date field to determine eligibility.
+ 
+For employees that should accrue at a negotiated eligibility schedule, their PTO Effective Date can be backdated from their Hire Date, far enough to match the desired eligibility level. For example, if you have an employee that is hired today and you would like them to accrue as if they&apos;ve been here for 5 years, you would set their Hire Date to today and their PTO Effective Date to the same month/day and backdate the year 5 years.
+ 
+In preparation for this change, we&apos;ve audited your system for any active employees that have a Hire Date and PTO Effective Date that do not currently match, which would result in their accrual eligibility changing once the plan changes are made. Please review this list and make adjustments to the PTO Effective Dates if/as needed. Once that&apos;s done, please let us know and we will be happy to adjust your current accrual plans accordingly.
+
+Thank you, 
+
+Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

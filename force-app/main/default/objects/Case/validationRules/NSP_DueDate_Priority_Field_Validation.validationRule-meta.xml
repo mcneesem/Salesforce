@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_DueDate_Priority_Field_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+$Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
+NOT( $Profile.Name = &apos;Integration User&apos;),
+RecordType.DeveloperName = &apos;PEO&apos;,
+NSP_Category__c = &apos;HR Employee Relations&apos;,
+NSP_SubCategory__c = &apos;Separation Agreement Request&apos;,
+OR(
+ISCHANGED(NSP_Due_Date__c),
+ISCHANGED(Priority)),
+NOT($Permission.NSP_Edit_Acess_for_DueDate_and_Priority))</errorConditionFormula>
+    <errorMessage>You do not have permission to change this field for Separation Agreement Requests.</errorMessage>
+</ValidationRule>

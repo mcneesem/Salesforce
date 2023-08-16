@@ -24,7 +24,7 @@ public class NSP_salesOfficeRecordSharingTest {
         UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
         UserRole SalesLeaderRole = [SELECT Id FROM UserRole WHERE Name='Sales Leader'];
         // Adding BPA User
-        User BpaUser = new User(alias = 'jsmit', email='BPAUSER@Test.com', 
+        User BpaUser = new User(alias = 'jsmit', email='BPAUSER@insperity.com', 
                                 emailencodingkey=emailencodingkey, lastname='Smith', 
                                 languagelocalekey=languagekey, 
                                 localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
@@ -32,7 +32,7 @@ public class NSP_salesOfficeRecordSharingTest {
                                 username='insperitytestadminuser@insperity.com.testUsr');
         users.add(BpaUser);
         // Adding second BPA User
-        User BpaUser2 = new User(alias = 'jBPA', email='BPAUSER2@Test.com', 
+        User BpaUser2 = new User(alias = 'jBPA', email='BPAUSER2@insperity.com', 
                                  emailencodingkey=emailencodingkey, lastname='Smith', 
                                  languagelocalekey=languagekey, 
                                  localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
@@ -40,7 +40,7 @@ public class NSP_salesOfficeRecordSharingTest {
                                  username='insperitytestadminuser@insperity.com.testBPA');
         users.add(BpaUser2);
         // Adding Account Team User
-        User accountTeamUser = new User(alias = 'jhnATM', email='AccounTeaMUser@aTM.com', 
+        User accountTeamUser = new User(alias = 'jhnATM', email='AccounTeaMUser@insperity.com', 
                                         emailencodingkey=emailencodingkey, lastname='Smit', 
                                         languagelocalekey=languagekey, 
                                         localesidkey=languagekey, profileid = profileobj.Id, userroleid = SalesLeaderRole.Id,
@@ -92,11 +92,11 @@ public class NSP_salesOfficeRecordSharingTest {
     @isTest
     static void recordShareNonBPAUser(){
             // quering BPA user 
-            User BpaUser=[Select Id , Name ,UserRole.Name, Email , TOLabel(NSP_Sales_Office_Membership__c) from User WHERE Email = 'BPAUSER@Test.com' Limit 1];
+            User BpaUser=[Select Id , Name ,UserRole.Name, Email , TOLabel(NSP_Sales_Office_Membership__c) from User WHERE Email = 'BPAUSER@insperity.com' Limit 1];
             // quering another BPA user for update the record owner 
-            User BpaUser2=[Select Id , Name ,UserRole.Name, Email , TOLabel(NSP_Sales_Office_Membership__c)  from User WHERE Email = 'BPAUSER2@Test.com' Limit 1];
+            User BpaUser2=[Select Id , Name ,UserRole.Name, Email , TOLabel(NSP_Sales_Office_Membership__c)  from User WHERE Email = 'BPAUSER2@insperity.com' Limit 1];
             // quering Account team user user for account team sharing
-            User ATMuser=[Select Id , Name , UserRole.Name,Email , NSP_Sales_Office_Membership__c  from User WHERE Email = 'AccounTeaMUser@aTM.com' Limit 1];     
+            User ATMuser=[Select Id , Name , UserRole.Name,Email , NSP_Sales_Office_Membership__c  from User WHERE Email = 'AccounTeaMUser@insperity.com' Limit 1];     
 			Account acc1 = [Select Id , Name ,OwnerId,Owner.UserRole.Name,TOLabel(Owner.NSP_Sales_Office_Membership__c) FROM Account WHERE Name ='ABCTest Co' ];
            	// querying Lead record
             Lead ld=[Select Id , FirstName, OwnerId from Lead WHERE FirstName = 'Insperity' LIMIT 1];
@@ -139,7 +139,7 @@ public class NSP_salesOfficeRecordSharingTest {
      @isTest
     static void userSalesOfficeUpdate(){
         // quering BPA user 
-        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@Test.com' Limit 1];
+        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@insperity.com' Limit 1];
 		BpaUser.NSP_Sales_Office_Membership__c='503';
         Test.startTest();
        		update BpaUser;      
@@ -152,7 +152,7 @@ public class NSP_salesOfficeRecordSharingTest {
     * ********************************************************************************************/
      @isTest
     static void opportunityOwnerUpdate(){
-        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@Test.com' Limit 1];
+        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@insperity.com' Limit 1];
         Account acc1 = [Select Id , Name ,OwnerId,Owner.UserRole.Name,TOLabel(Owner.NSP_Sales_Office_Membership__c) FROM Account WHERE Name ='ABCTest Co' ];   	
         Opportunity opp=[Select Id ,Name, StageName,AccountId, OwnerId,Owner.UserRole.Name,TOLabel(Owner.NSP_Sales_Office_Membership__c) from Opportunity WHERE AccountId =: acc1.Id LIMIT 1];
         Map<String,Set<String>> mapNewSalesOfficeSetUserId = new Map<String,Set<String>>();
@@ -175,7 +175,7 @@ public class NSP_salesOfficeRecordSharingTest {
     * ********************************************************************************************/
      @isTest
     static void leadOwnerUpdate(){
-        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@Test.com' Limit 1];
+        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@insperity.com' Limit 1];
 		Lead ld=[Select Id , FirstName, OwnerId from Lead WHERE FirstName = 'Insperity' LIMIT 1];
         Map<String,Set<String>> mapNewSalesOfficeSetUserId = new Map<String,Set<String>>();
         Map<String,Set<String>> mapUserIdSetOldSalesOffice = new Map<String,Set<String>>();
@@ -198,7 +198,7 @@ public class NSP_salesOfficeRecordSharingTest {
     * ********************************************************************************************/
      @isTest
     static void ATMOwnerUpdate(){
-        User ATMUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'AccounTeaMUser@aTM.com' Limit 1];
+        User ATMUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'AccounTeaMUser@insperity.com' Limit 1];
 		Account acc1 = [Select Id , Name,TOLabel(Owner.NSP_Sales_Office_Membership__c), OwnerId from Account WHERE Name = 'ABCTest Co' LIMIT 1];
         NSP_Account_Team__c ATM =[Select Id ,NSP_Role__c,NSP_Account__c,NSP_User__c,TOLabel(NSP_User__r.NSP_Sales_Office_Membership__c)
                                       from NSP_Account_Team__c WHERE  NSP_Account__c =:acc1.Id LIMIT 1 ]; 

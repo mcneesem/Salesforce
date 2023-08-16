@@ -21,6 +21,7 @@ public class NSP_MultipleContractFutureClassTest {
     @testSetup
     static void setupTestData(){
         // NSP_TestHelper th = new NSP_TestHelper();
+        NSP_TestHelper.switchOffTriggers();
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
         
@@ -50,8 +51,8 @@ public class NSP_MultipleContractFutureClassTest {
         product3.NSP_Product_Category__c = ORGANIZATIONAL_PLANNING;
         Product2 product4 = NSP_TestHelper.createProduct('Test Product4',false);
         product4.NSP_Product_Category__c = 'Performance Management';
+        
         List<Product2> allproducts = new List<Product2>{product1,product2,product3,product4};
-
         for ( Product2 prd : allproducts) {
                 prd.SBQQ__ChargeType__c = 'Recurring';
                 prd.SBQQ__BillingType__c = 'Arrears';
@@ -60,8 +61,8 @@ public class NSP_MultipleContractFutureClassTest {
                 prd.blng__RevenueRecognitionRule__c = rrObj.Id;
                 prd.blng__TaxRule__c = taxRuleObj.Id;
         }
-
         insert allproducts;
+
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',false);
         opp1.NSP_Client_For_Life__c = 'Stand Alone';
         opp1.NSP_PrimaryProduct__c = ORGANIZATIONAL_PLANNING;

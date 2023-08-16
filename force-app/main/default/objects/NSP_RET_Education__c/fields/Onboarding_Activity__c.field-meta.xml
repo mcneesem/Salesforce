@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Onboarding_Activity__c</fullName>
+    <externalId>false</externalId>
+    <label>Activity</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pre-setup email sent</fullName>
+                <default>false</default>
+                <label>Pre-setup email sent</label>
+            </value>
+            <value>
+                <fullName>Client notified setup complete</fullName>
+                <default>false</default>
+                <label>Client notified setup complete</label>
+            </value>
+            <value>
+                <fullName>Onboarding materials provided</fullName>
+                <default>false</default>
+                <label>Onboarding materials provided</label>
+            </value>
+            <value>
+                <fullName>Follow-up sent</fullName>
+                <default>false</default>
+                <label>Follow-up sent</label>
+            </value>
+            <value>
+                <fullName>Demo call held</fullName>
+                <default>false</default>
+                <label>Demo call held</label>
+            </value>
+            <value>
+                <fullName>Education session held</fullName>
+                <default>false</default>
+                <label>Education session held</label>
+            </value>
+            <value>
+                <fullName>Handoff to Plan Consulting completed</fullName>
+                <default>false</default>
+                <label>Handoff to Plan Consulting completed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

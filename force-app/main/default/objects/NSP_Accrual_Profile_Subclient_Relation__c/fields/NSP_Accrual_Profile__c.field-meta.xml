@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Accrual_Profile__c</fullName>
+    <externalId>false</externalId>
+    <label>Accrual Profile</label>
+    <referenceTo>NSP_Accrual_Profile__c</referenceTo>
+    <relationshipLabel>Accrual Profile Subclient Relationship</relationshipLabel>
+    <relationshipName>Accrual_Profile_Subclient_Relationship</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

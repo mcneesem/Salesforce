@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>WO</fullName>
     <active>true</active>
+    <compactLayoutAssignment>WO_Asset_Compact_Layout</compactLayoutAssignment>
     <label>WO</label>
     <picklistValues>
         <picklist>DigitalAssetStatus</picklist>
@@ -19,6 +20,47 @@
         </values>
         <values>
             <fullName>Warning</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_RET_Auto_Enroll__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+<picklistValues>
+        <picklist>NSP_Product_Risk_Level__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+<picklistValues>
+        <picklist>NSP_Product_Term_Reason__c</picklist>
+        <values>
+            <fullName>Cancelled During Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERP has module</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Trouble</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termed WO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -111,111 +153,175 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_Financial_Guidelines__c</picklist>
+        <picklist>NSP_Minor_Job_Position__c</picklist>
         <values>
-            <fullName>6301</fullName>
+            <fullName>ASSOC-FULFILLMENT CENTER</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>6302</fullName>
+            <fullName>LIFEGUARD</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>6303</fullName>
+            <fullName>Summer Clerk %2814 %E2%80%93 17%29 Unsupervised</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>6304</fullName>
+            <fullName>Aquatics Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistant Unit Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kitchen Aide</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_National_Account_Group__c</picklist>
+        <picklist>NSP_Price_Level__c</picklist>
         <values>
-            <fullName>22</fullName>
+            <fullName>Item%3F</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>23</fullName>
+            <fullName>Lasso</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>24</fullName>
+            <fullName>List Price</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>25</fullName>
+            <fullName>RET - Bundled Plus %232</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>26</fullName>
+            <fullName>RET - Bundled Plus %233</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>31</fullName>
+            <fullName>RET - Choice Fee Schedule %234</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>32</fullName>
+            <fullName>RET - Choice Fee Schedule %235</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>33</fullName>
+            <fullName>RET - Mid-Market %231</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>34</fullName>
+            <fullName>RET - Mid-Market %232</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>35</fullName>
+            <fullName>RET - Mid-Market %233</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>36</fullName>
+            <fullName>RET - Participant Fee Only</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>37</fullName>
+            <fullName>RET - WO no Admin</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>38</fullName>
+            <fullName>RET - WO with Admin</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>39</fullName>
+            <fullName>RET- Bundled Plus</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>43</fullName>
+            <fullName>RET- Choice Fee Schedule %231</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>44</fullName>
+            <fullName>RET- Choice Fee Schedule %232</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>45</fullName>
+            <fullName>RET- Choice Fee Schedule %233</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>46</fullName>
+            <fullName>RET- Legacy Non Revenue</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>47</fullName>
+            <fullName>RET- Legacy Revenue</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>48</fullName>
+            <fullName>RET- NQDC Fee Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET- White Label FBT Fee Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET-WA Choice ER RK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET-WA Choice ER RK%2FPPT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO%2FWS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX%2FWA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ProductBundle__c</picklist>
         <values>
+            <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expensable</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Payroll Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stand Alone</fullName>
             <default>false</default>
         </values>
         <values>
@@ -224,6 +330,10 @@
         </values>
         <values>
             <fullName>WA %28WO to WA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO%2FWS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -236,69 +346,6 @@
         </values>
         <values>
             <fullName>WX %28WO to WX%29</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Product_Bundle__c</picklist>
-        <values>
-            <fullName>Applicant Tracking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employment Screening</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Expense Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HR Consulting Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Insurance Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Learning %26 Development</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Organizational Planning</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Performance Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recruiting Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retirement Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Time %26 Attendance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -365,6 +412,10 @@
         </values>
         <values>
             <fullName>1104</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1400</fullName>
             <default>false</default>
         </values>
         <values>
@@ -513,6 +564,10 @@
         </values>
         <values>
             <fullName>3601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3621</fullName>
             <default>false</default>
         </values>
         <values>
@@ -873,11 +928,15 @@
     <picklistValues>
         <picklist>Status</picklist>
         <values>
-            <fullName>Installed</fullName>
+            <fullName>Active</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Obsolete</fullName>
+            <fullName>Backout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding</fullName>
             <default>false</default>
         </values>
         <values>
@@ -885,11 +944,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Registered</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Shipped</fullName>
+            <fullName>Terminated</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -917,6 +972,29 @@
         </values>
         <values>
             <fullName>Standby</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Handbook_Status__c</picklist>
+        <values>
+            <fullName>Client Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Client</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Not Discussed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work in Progress</fullName>
             <default>false</default>
         </values>
     </picklistValues>

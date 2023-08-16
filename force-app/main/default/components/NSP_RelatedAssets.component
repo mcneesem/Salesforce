@@ -1,0 +1,20 @@
+<apex:component access="global" controller="NSP_RelatedAssetsController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    <apex:attribute name="regulatedState" description="States" type="String" assignTo="{!state}" /> 
+    
+    <apex:outputPanel rendered="{!IF(regulatedAreaStates.size>0, true, false)}">
+        <p> 
+            Note: Client has employees in a State Retirement Plan State. Employees work in {!regulatedAreaStates}
+            If the lead ends up Closed/Lost, alert stateretprograms@insperity.com to determine if Asset is required to participate in SRP.
+        </p>
+    </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!IF(ipRelatedClients.size>0, true, false)}">
+       <p>Related Accounts:
+    
+            <apex:repeat value="{!ipRelatedClients}" var="client" id="ipRelatedClientList" rendered="{!NOT(ipRelatedClients.empty)}">
+                <apex:outputText value="{!client.NSP_Related_Client__r.Name}" id="compnayName" /> <br/>
+            </apex:repeat>
+        </p>
+    </apex:outputPanel>
+</apex:component>

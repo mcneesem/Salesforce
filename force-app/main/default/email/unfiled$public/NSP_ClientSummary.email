@@ -1,0 +1,160 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) - Payroll Summary  " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<c:InsperityEmailHeader ></c:InsperityEmailHeader>
+
+<p style="color: #FF0000">INSTRUCTIONS: Please read through the email summary and edit as needed for this client. Create a new <br/>
+ email to the Payroll Contact. Copy and paste everything below the red line from this email into the new <br/>
+ email to the Payroll Contact.</p>
+<p style="color: #FF0000">--------------------------------------------------------------------------</p>
+ 
+<p> Dear {!relatedTo.NSP_PC_Client_Name__c},</p>
+
+<p>Thank you for your time today. As we discussed, there are a few items we need to take care of <br/>
+in order to ensure your payroll is in compliance and that your employees’ paychecks are accurate.</p>
+
+<apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Client_have_any_EEs_on_F1_or_J1_Visa_s__c,'Yes'),
+                             OR(IF(relatedTo.NSP_EE_Name__c!=Null,True,FALSE),
+                             IF(relatedTo.EE_Visa_Type__c!=Null,True,FALSE)))}">
+<p>You have indicated the following employees are on a F1 or J1 visa. Please send copies of the <br/>
+visa(s) to me so we can exempt them from withholding taxes. I will need the copies prior to <br/>
+running your first payroll to ensure their taxes are correct on their first paycheck from Insperity. </p>
+<c:NSP_EmployeeVisaCmp currentRecordId="{!relatedTo.Id}"/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_garnishments__c,'Yes'),
+                             IF(relatedTo.NSP_Employee_Names_List_garnishments__c!=Null,True,FALSE))}">
+<p>Please provide the most recent copy of the garnishments for the following employees. I will need the copies <br/>
+prior to running your first payroll to ensure the garnishments are properly deducted. </p>
+<c:NSP_EmployeeGarnishmentCmp currentRecordId="{!relatedTo.Id}"/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_tax_levies__c,'Yes'),
+                             IF(relatedTo.NSP_List_Employee_Names_Levies__c!=Null,True,FALSE))}">
+<p>The following employees have Tax Levies that will need to be transferred to Insperity’s <br/>
+name so that we can process them. Please complete the page/form provided by the levying agency <br/>
+that shows you are no longer paying wages to the employee. Give Insperity’s corporate office information <br/>
+listed below and return it to the agency.</p>
+
+<p>Revised levy needs to be sent to:
+Insperity
+Attn: Garnishment Department
+19001 Crescent Springs Dr.
+Kingwood, TX 77339
+Fax Number: 866-309-1267</p>
+
+<p>Once we receive the levy in Insperity’s name we will begin processing it.
+<c:NSP_EmployeeLeviesCmp currentRecordId="{!relatedTo.Id}"/>
+</p>
+
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!OR(CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'CT'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'DE'),
+CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IL'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IA'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'KY'),
+CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ME'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MA'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MS'),
+CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'NV'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ND'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'OH'),
+CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'RI'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'SD'),CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'VT'))}">
+<p><b>State Unemployment Taxes</b> </p>
+
+<p> You indicated there are employees working in the following states that have specific <br/>
+rules on filing state unemployment taxes. Please review the section State <br/>
+Unemployment Taxes on the <apex:outputLink value="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fportal.insperity.com%2Fcs%2Fnsp%2FSitePage%2Fpayroll_tax_guidelines&data=04%7C01%7COneVoice_Dev%40insperity.com%7C4eb7f194f9724cac244d08d90b1d7731%7C895d9ea7ce114131829f33f878d784b2%7C0%7C0%7C637553043444463305%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=YsgHRUhL5J8qAa3hFerFtIzlTIqQQSUldxFXRpK939w%3D&reserved=0" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier
+for additional details.</p>
+
+
+ <ul>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'CT')}">
+<li>Connecticut</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'DE')}">
+<li>Delaware</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IL')}">
+<li>Illinois</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'IA')}">
+<li>Iowa</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'KY')}">
+<li>Kentucky</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ME')}">
+<li>Maine</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MA')}">
+<li>Massachusetts</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'MS')}">
+<li>Mississippi</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'NV')}">
+<li>Nevada</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'ND')}">
+<li>North Dakota</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'OH')}">
+<li>Ohio</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'RI')}">
+<li>Rhode Island</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'SD')}">
+<li>South Dakota</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'VT')}">
+<li>Vermont</li>
+</apex:outputPanel>
+</ul>
+</apex:outputPanel>
+<p><b>State Employment Tax Accounts Information</b></p>
+
+<p>Closure of a client’s state payroll tax account is solely a client decision. As a client of <br/>
+Insperity, you may choose to leave your employment tax accounts open. If you do leave <br/>
+your accounts open, you are required to timely file all reports for as long as the accounts <br/>
+are active – even if they are zero reports.</p>
+
+<p>For more information visit the Closing State Employment Tax Accounts section on the <br/>
+<apex:outputLink value="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fportal.insperity.com%2Fcs%2Fnsp%2FSitePage%2Fpayroll_tax_guidelines&data=04%7C01%7COneVoice_Dev%40insperity.com%7C4eb7f194f9724cac244d08d90b1d7731%7C895d9ea7ce114131829f33f878d784b2%7C0%7C0%7C637553043444463305%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=YsgHRUhL5J8qAa3hFerFtIzlTIqQQSUldxFXRpK939w%3D&reserved=0" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier.</p>
+
+<p><b>Regular Rate of Pay Resources</b></p>
+
+<p>At Insperity, one of our main goals is to provide clients with the necessary information to <br/>
+make informed decisions regarding compliance. Most companies are aware of the portion of the <br/>
+Fair Labor Standards Act (FLSA), that addresses exempt/non-exempt employees and the overtime <br/>
+requirements associated with these employees. It has been my experience that few businesses <br/>
+understand their responsibility or how to calculate RRP for non-exempt employees. Regular rate <br/>
+of pay calculation may be required if an employee classified as hourly or salary non-exempt, <br/>
+who works overtime and receives additional compensation during the same pay period.</p>
+
+<p>I have attached the following information for your review:</p>
+
+<p>* A Fact Sheet from the Department of Labor (DOL) website explaining Regular Rate of Pay</p>
+
+<p>Please review this information and if you have questions after reviewing the information provided, <br/>
+please do not hesitate to reach out to me.</p>
+
+<p>Please note: As stated in the Client Service Agreement (CSA), compliance with the FLSA and any similar <br/>
+state law is the client’s responsibility. By providing the information and suggestions contained in <br/>
+this communication, Insperity is not assuming any liability or responsibility for FLSA compliance and <br/>
+is not intending to amend or alter in any way the terms of the CSA. The suggestions and feedback we <br/>
+provide are based on the information that you, the client, provide to us such as current job titles and <br/>
+duties of the employees working at your business as well as the payroll information you submit. <br/>
+Insperity does not warrant or guaranty the accuracy of the information or suggestions contained herein. <br/>
+We recommend that you periodically (at least once a year) review your classifications to confirm that <br/>
+they remain appropriate, especially concerning exempt positions. FLSA classification can be a difficult <br/> 
+and inexact process. You may wish to consult with legal counsel experienced in wage and hour law to assist <br/>
+you in fulfilling your responsibilities under the FLSA and CSA.</p>
+
+<p>Please let me know if you have any questions.</p>
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.Name}<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.NSP_Job_Title__c}<br/>
+{!relatedTo.NSP_Payroll_Specialist__r.NSP_Work_email__c}</p>
+ <c:InsperityEmailFooter ></c:InsperityEmailFooter> 
+ </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

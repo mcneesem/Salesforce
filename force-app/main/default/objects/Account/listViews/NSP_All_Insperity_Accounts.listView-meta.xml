@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_All_Insperity_Accounts</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NSP_Sales_Service_Account_Status__c</columns>
+    <columns>NSP_AIMS_Client__c</columns>
+    <columns>NSP_Account_Health__c</columns>
+    <columns>NSP_Renewal_Probability__c</columns>
+    <columns>NSP_Product_First_Pay_Date__c</columns>
+    <columns>NSP_Customer_Since__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Insperity Accounts</label>
+    <sharedTo>
+        <group>NSP_Service_Profile_Group_Members</group>
+    </sharedTo>
+</ListView>

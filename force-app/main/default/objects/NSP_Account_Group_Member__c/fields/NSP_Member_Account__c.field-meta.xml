@@ -7,7 +7,7 @@
     <relationshipLabel>Account Group Members</relationshipLabel>
     <relationshipName>Account_Group_Members</relationshipName>
     <relationshipOrder>0</relationshipOrder>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MasterDetail</type>

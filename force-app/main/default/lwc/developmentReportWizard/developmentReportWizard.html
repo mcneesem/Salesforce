@@ -1,0 +1,22 @@
+<template>
+    <template if:true={showProgress}>
+    <c-progress-bar steps={steps} type="indicator" current-step={currentStep} ></c-progress-bar>
+    
+    <div onsaveexit={handleSave} class="slds-p-around_medium"> 
+    <template if:true={step1}   > 
+        <c-wizard-development-report-page-one  re-req-id={reReqId} record-obj={repReqObj} onnext={handleNext} onprev={handlePrev} ></c-wizard-development-report-page-one>
+    </template>
+    <template if:true={step2}>
+        <c-wizard-development-report-page-two re-req-id={reReqId} onnext={handleNext} onprev={handlePrev}></c-wizard-development-report-page-two>
+    </template>
+    <template if:true={step3}>
+        <c-wizard-development-report-page-three re-req-id={reReqId} onnext={handleNext} onprev={handlePrev}></c-wizard-development-report-page-three>
+    </template>
+    </div>
+    </template>
+    <template if:false={showProgress}>
+        <div onsaveexit={handleSave} > 
+           <c-wizard-case-creation re-req-obj={repReqObj}  record-input={recordInputForCreate} oncreatedcase={handleSummery} ></c-wizard-case-creation>
+        </div>
+    </template>
+</template>

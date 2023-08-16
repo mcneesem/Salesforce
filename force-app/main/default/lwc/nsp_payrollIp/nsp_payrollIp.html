@@ -1,0 +1,792 @@
+<template>
+    <div class="payroll slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} onsuccess={handleSuccess} onsubmit={handleSubmit}
+            onerror={handleError} object-api-name={objectApiName} density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.payroll}></lightning-formatted-text>
+
+            <lightning-layout class="ipProfile" multiple-rows>
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="Effective_Date_Payroll_Worker_comp_EPLI__c">
+                    </lightning-input-field>
+                    <lightning-input-field data-id="Insperity_benefits_effective_date__c"  onchange={handleSyncChange} value={fields.Insperity_benefits_effective_date__c}
+                         field-name="Insperity_benefits_effective_date__c">
+                    </lightning-input-field>
+                    <lightning-input-field field-name="First_Pay_Date__c"></lightning-input-field>
+
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.payFrequency}>
+                    </lightning-formatted-text>
+                    <!-- PayRoll Frequency Valeus -->
+                    <lightning-input type="checkbox" class="slds-m-left_xx-small" name="Insperity_pay_frequency__c" label={label.weeklyPicklistLabel}
+                        value={label.weeklyPicklistValue} checked={weeklyPay} onchange={handleCustomCheckboxChange}>
+                    </lightning-input>
+                    <template if:true={weeklyPay}>
+                        <template if:true={payPeriodValues.data}>
+                            <lightning-radio-group class="slds-m-left_medium" name="NSP_Weekly_Pay_Period__c"
+                                variant="label-hidden" label='' options={payPeriodValues.data.values}
+                                value={fields.NSP_Weekly_Pay_Period__c} onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                        </template>
+                    </template>
+
+                    <lightning-input type="checkbox" class="slds-m-left_xx-small" name="Insperity_pay_frequency__c"
+                        label={label.biWeeklyPicklistLabel}  value={label.biWeeklyPicklistValue} checked={biWeeklyPay}
+                        onchange={handleCustomCheckboxChange}></lightning-input>
+                    <template if:true={biWeeklyPay}>
+                        <template if:true={payPeriodValues.data}>
+                            <lightning-radio-group class="slds-m-left_medium" name="NSP_Biweekly_Pay_Period__c"
+                                variant="label-hidden" label='' options={payPeriodValues.data.values}
+                                value={fields.NSP_Biweekly_Pay_Period__c} onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                        </template>
+                    </template>
+
+                    <lightning-input type="checkbox" class="slds-m-left_xx-small" name="Insperity_pay_frequency__c"
+                        label={label.semiMonthlyPicklistLabel} value={label.semiMonthlyPicklistValue}
+                        checked={semiMonthlyPay} onchange={handleCustomCheckboxChange}></lightning-input>
+                    <template if:true={semiMonthlyPay}>
+                        <div class="slds-m-left_medium">
+                            <template if:true={payPeriodValues.data}>
+                                <lightning-radio-group name="NSP_Semimonthly_Pay_Period__c" variant="label-hidden"
+                                    label='' options={payPeriodValues.data.values}
+                                    value={fields.NSP_Semimonthly_Pay_Period__c} onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </template>
+                            <template if:true={nonExemptEESemiMonthlyValues.data}>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.nonExemptEESemiMonthlyPayFrequencyLabel}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Non_exempt_EEs_on_semi_monthly_pay_freq__c"
+                                    label={label.nonExemptEESemiMonthlyPayFrequencyLabel} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.Non_exempt_EEs_on_semi_monthly_pay_freq__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <template if:true={noExemptEEYes}>
+                                    <lightning-input-field field-name="Current_hours_tracking_method_infolet__c" class="slds-m-left_medium"></lightning-input-field>
+                                    <lightning-input-field field-name="NSP_Provide_Tracking_details__c" class="slds-m-left_medium"></lightning-input-field>
+                                </template>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.semiMonthlyPayComplyStatelawsLabel}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Semi_monthly_pay_freq_comply_w_state_law__c"
+                                    label={label.semiMonthlyPayComplyStatelawsLabel} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.Semi_monthly_pay_freq_comply_w_state_law__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <template if:true={showSemiMonthlyPayProvideDetails}>
+                                    <div class="slds-m-left_medium">
+                                        <lightning-formatted-text class="slds-form-element__label"
+                                            value={label.provideDetails}>
+                                        </lightning-formatted-text>
+                                        <lightning-input-field variant="label-hidden"
+                                            field-name="Semi_monthly_pay_st_law_provide_details__c">
+                                        </lightning-input-field>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </template>
+
+                    <lightning-input type="checkbox" class="slds-m-left_xx-small" name="Insperity_pay_frequency__c"
+                        label={label.monthlyPicklistLabel} value={label.monthlyPicklistValue} checked={monthlyPay}
+                        onchange={handleCustomCheckboxChange}></lightning-input>
+                    <template if:true={monthlyPay}>
+                        <div class="slds-m-left_medium">
+                            <template if:true={payPeriodValues.data}>
+                                <lightning-radio-group name="NSP_Monthly_Pay_Period__c" variant="label-hidden" label=''
+                                    options={payPeriodValues.data.values} value={fields.NSP_Monthly_Pay_Period__c}
+                                    onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </template>
+                            <template if:true={nonExemptEESemiMonthlyValues.data}>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.monthlyPayComplyStatelawsLabel}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Monthly_pay_freq_comply_w_state_laws__c"
+                                    label={label.monthlyPayComplyStatelawsLabel} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.Monthly_pay_freq_comply_w_state_laws__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <template if:true={showMonthlyPayProvideDetails}>
+                                    <div class="slds-m-left_medium">
+                                        <lightning-formatted-text class="slds-form-element__label"
+                                            value={label.provideDetails}>
+                                        </lightning-formatted-text>
+                                        <lightning-input-field variant="label-hidden"
+                                            field-name="NSP_Provide_Monthly_pay_frequency_detail__c">
+                                        </lightning-input-field>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:true={nonExemptEESemiMonthlyValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small slds-m-bottom_xx-small"
+                            value={label.isThereANeedForASubAccount}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Is_there_a_need_for_a_subaccount__c" class="slds-m-left_xx-small"
+                            label={label.isThereANeedForASubAccount} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Is_there_a_need_for_a_subaccount__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showSubaccountReason}>
+                            <div class="slds-m-left_medium">
+                                <template if:true={whyIsSubaccountNeededValues}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.whyIsSubaccountNeeded}>
+                                    </lightning-formatted-text>
+                                    <lightning-checkbox-group name="Why_is_subaccount_needed__c"
+                                        label={label.whyIsSubaccountNeeded} variant="label-hidden"
+                                        options={whyIsSubaccountNeededValues.data.values} value={whySubaccountNeeded}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-checkbox-group>
+                                </template>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.requireNewDownloadQuestion}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="classing_req_a_new_download_for_Subacc__c"
+                                    label={label.requireNewDownloadQuestion} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.classing_req_a_new_download_for_Subacc__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                            </div>
+                        </template>
+                    </template>
+                </lightning-layout-item>
+
+            </lightning-layout>
+
+            <lightning-layout multiple-rows>
+                <!-- Pay Frequency Details Section -->
+                <lightning-layout-item class="slds-p-around_xx-small" size="12">
+                    <lightning-formatted-text class="slds-text-heading_medium" value={label.payFrequencyDetails}>
+                    </lightning-formatted-text>
+                    <lightning-layout class="slds-scrollable">
+                        <template for:each={lPayPeriodDetails} for:item="oPayPeriod" for:index="index">
+                            <lightning-layout-item key={oPayPeriod.Id} size="4" class="payPeriodBox">
+                                <lightning-record-edit-form object-api-name={payPeriodObjectName}
+                                    record-id={oPayPeriod.Id} density="comfy">
+                                    <lightning-input-field field-name="Client_number__c" data-index={index}
+                                        onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Frequency__c" data-index={index}
+                                        onchange={handlePPChange} value={oPayPeriod.Frequency__c}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Insperity_first_day_of_1st_pay_period__c"
+                                        data-index={index} onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Insperity_last_day_of_1st_pay_period__c"
+                                        data-index={index} onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Insperity_1st_pay_date__c" data-index={index}
+                                        onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Insperity_first_day_of_2nd_pay_period__c"
+                                        data-index={index} onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Insperity_last_day_of_2nd_pay_period__c"
+                                        data-index={index} onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Insperity_2nd_pay_date__c" data-index={index}
+                                        onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Is_arrearage_7_days__c" data-index={index}
+                                        onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <template if:true={oPayPeriod.ifArrerageIsGreater}>
+                                        <lightning-input-field field-name="Have_credit_services_approved__c"
+                                            data-index={index} onchange={handlePPChange}>
+                                        </lightning-input-field>
+                                        <lightning-input-field if:true={oPayPeriod.haveCreditServicesApproved}
+                                            field-name="Provide_credit_services_detaIls__c" data-index={index}
+                                            onchange={handlePPChange}>
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Does_arrearage_comply_with_state_laws__c"
+                                            data-index={index} onchange={handlePPChange}>
+                                        </lightning-input-field>
+                                        <lightning-input-field if:true={oPayPeriod.complyWithStateLaw}
+                                            field-name="Provide_arrearage_details__c" data-index={index}
+                                            onchange={handlePPChange}>
+                                        </lightning-input-field>
+                                    </template>
+                                    <lightning-input-field field-name="Does_the_client_have_prior_wages__c"
+                                        data-index={index} onchange={handlePPChange}>
+                                    </lightning-input-field>
+                                    <template if:true={oPayPeriod.havePriorWages}>
+                                        <lightning-input-field field-name="Final_pay_period_prior_to_Insperity__c"
+                                            data-index={index} onchange={handlePPChange}>
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Final_pay_date_prior_to_Insperity__c"
+                                            data-index={index} onchange={handlePPChange}>
+                                        </lightning-input-field>
+                                    </template>
+                                </lightning-record-edit-form>
+                                <lightning-button-icon icon-name="utility:delete" variant="border-filled"
+                                    alternative-text="Delete" data-id={oPayPeriod.Id} data-index={index}
+                                    onclick={deletePayPeriodRow}>
+                                </lightning-button-icon>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                    <div class="slds-m-top_small">
+                        <lightning-button label={label.add} variant="brand" onclick={handleAddMoreClick}>
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-layout class="ipProfile" multiple-rows>
+                <lightning-layout-item size="7">
+                    <template if:true={workWeekValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.workWeek}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Work_week__c" class="slds-m-left_xx-small" label={label.workWeek} variant="label-hidden"
+                            options={workWeekValues.data.values} value={fields.Work_week__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                    </template>
+                    <template if:true={holidayOrWeekendValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.holidayOrWeekendRule}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Holiday_or_weekend_rule__c" class="slds-m-left_xx-small" label={label.holidayOrWeekendRule}
+                            variant="label-hidden" options={holidayOrWeekendValues.data.values}
+                            value={fields.Holiday_or_weekend_rule__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </template>
+                    <template if:true={eeLiveCheckMailValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.eeLiveCheckMailQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Where_to_mail_EE__c" class="slds-m-left_xx-small" label={label.eeLiveCheckMailQuestion}
+                            variant="label-hidden" options={eeLiveCheckMailValues.data.values}
+                            value={fields.Where_to_mail_EE__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </template>
+                    <lightning-input-field if:true={showLiveCheckDetailsField} class="slds-m-left_medium"  field-name="Provide_live_check_details__c"></lightning-input-field>
+                    <template if:true={nonExemptEESemiMonthlyValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.nspCoEmployWorkforceQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="NSP_co_employ_100_of_client_workforce__c" class="slds-m-left_xx-small" 
+                            label={label.nspCoEmployWorkforceQuestion} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.NSP_co_employ_100_of_client_workforce__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.clientNonInsperityEmployeeQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="NSP_non_Insperity_paid_emps_contractors__c" class="slds-m-left_xx-small"
+                            label={label.clientNonInsperityEmployeeQuestion} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.NSP_non_Insperity_paid_emps_contractors__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <lightning-input-field if:true={showNonInsperityEmplDetailsField} class="slds-m-left_medium" field-name="Provide_non_insperity_worker_details__c"></lightning-input-field>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.clientHaveF1orJ1Question}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_have_any_EEs_on_F1_or_J1_Visa_s__c" class="slds-m-left_xx-small"
+                            label={label.clientHaveF1orJ1Question} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_have_any_EEs_on_F1_or_J1_Visa_s__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <c-nsp_employee-data if:true={showEEVisaDetailsForm}
+                            title="Provide EE name and details" 
+                            records={empData.Client_have_any_EEs_on_F1_or_J1_Visa_s__c}
+                            fields={childAnswerFields.Client_have_any_EEs_on_F1_or_J1_Visa_s__c}
+                            parent-field="Client_have_any_EEs_on_F1_or_J1_Visa_s__c">
+                        </c-nsp_employee-data>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.clientHaveEEsCommissionQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_have_any_Commission_only_EEs__c" class="slds-m-left_xx-small"
+                            label={label.clientHaveEEsCommissionQuestion} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_have_any_Commission_only_EEs__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showFLSAApprovedField}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.hasFLSATeamApproved}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Has_FLSA_team_approved__c"
+                                    label={label.hasFLSATeamApproved} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.Has_FLSA_team_approved__c} onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.doesClientHaveMinorEEs}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Does_client_have_any_Minor_EEs__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveMinorEEs} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Does_client_have_any_Minor_EEs__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesClientHaveSeasonalEEs}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_have_will_have_any_Seasonal_EEs__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveSeasonalEEs} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_have_will_have_any_Seasonal_EEs__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small "
+                            value={label.doesClientEmployMinistersOrTeachers}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Does_client_employ_ministers_or_teachers__c" class="slds-m-left_xx-small"
+                            label={label.doesClientEmployMinistersOrTeachers} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Does_client_employ_ministers_or_teachers__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={isMinisterTeachEmployeeFlag}>
+                            <lightning-formatted-text class="slds-form-element__label slds-m-left_medium" value="Check all that apply:">
+                            </lightning-formatted-text>
+                            <lightning-checkbox-group name="Check_all_tht_apply_ministers_teachers__c" class="slds-m-left_medium" label={label.allowances}
+                                variant="label-hidden" options={checkAllThatApplyMinistersTeachers.data.values}
+                                value={ministerTeacherCheckbox}
+                                onchange={handleCheckboxChange}>
+                            </lightning-checkbox-group>
+                        </template>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.doesClientHaveUnionEEs}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Does_the_client_have_any_union_EEs__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveUnionEEs} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Does_the_client_have_any_union_EEs__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <div if:true={hasAnyEEUnionFalg} class="slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label" value="Check all that apply:">
+                            </lightning-formatted-text>
+                            <lightning-checkbox-group name="Client_union_EE_Check_all_that_Apply__c"  label={label.allowances}
+                                variant="label-hidden" options={checkAllThatApplyUnionEE.data.values}
+                                value={unionEECheckbox}
+                                onchange={handleCheckboxChange}>
+                            </lightning-checkbox-group>
+                        </div>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.isClientaFederalContractor}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Is_the_client_a_federal_contractor__c" class="slds-m-left_xx-small"
+                            label={label.isClientaFederalContractor} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Is_the_client_a_federal_contractor__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <div if:true={hasSCA_EE} class="slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label"
+                                value="Does the client have Service Contract Act (SCA) EEs?">
+                            </lightning-formatted-text>
+                            <lightning-radio-group if:true={scaEEOptions.data} name="Client_has_Service_Contract_Act_SCA_EEs__c"
+                                label={label.isClientaFederalContractor} variant="label-hidden"
+                                options={scaEEOptions.data.values}
+                                value={fields.Client_has_Service_Contract_Act_SCA_EEs__c} onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                            <div if:true={hasSCA_approved} class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value="Have the SCA EEs been approved?">
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Have_the_SCA_EEs_been_approved__c"
+                                    label={label.isClientaFederalContractor} variant="label-hidden"
+                                    options={scaEEOptions.data.values}
+                                    value={fields.Have_the_SCA_EEs_been_approved__c} onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value="Do the SCA EEs receive wages in lieu of benefits?">
+                                </lightning-formatted-text>
+                                <lightning-radio-group if:true={scaEEOptions.data} name="SCA_EEs_get_wages_in_lieu_of_benefits__c"
+                                    label={label.isClientaFederalContractor} variant="label-hidden"
+                                    options={scaEEOptions.data.values}
+                                    value={fields.SCA_EEs_get_wages_in_lieu_of_benefits__c} onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </div>
+                        </div>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesClientHaveEEONumber}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_have_EEO_filing_under__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveEEONumber} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_have_EEO_filing_under__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <div if:true={isFillingUnderEEO} class="slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label slds-m-left_medium"
+                                value="Can client provide EEO # &amp; filing address?">
+                            </lightning-formatted-text>
+                            <lightning-radio-group name="Can_client_provide_EEO_filing_address__c" class="slds-m-left_medium"
+                                label={label.doesClientHaveEEONumber} variant="label-hidden"
+                                options={nonExemptEESemiMonthlyValues.data.values}
+                                value={fields.Can_client_provide_EEO_filing_address__c} onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                            <div if:true={isEEOAndFillingAddressProvided} class="slds-m-left_medium">
+                                <lightning-input-field field-name="EEO__c" class="slds-m-left_medium"></lightning-input-field>
+                                <lightning-input-field field-name="Filing_address__c"  class="slds-m-left_medium" ></lightning-input-field>
+                            </div>
+                            <lightning-input-field if:true={isEEOAndFillingAddressNotProvided} class="slds-m-left_large" field-name="EEO_name_phone_contact_email_for_info__c"></lightning-input-field>
+                        </div>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doAnyEEsHaveGarnishments}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Do_any_EEs_have_garnishments__c" class="slds-m-left_xx-small"
+                            label={label.doAnyEEsHaveGarnishments} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Do_any_EEs_have_garnishments__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <c-nsp_employee-data if:true={showEEsGarnishmentDetails}
+                            title="Employee Name(s):"
+                            records={empData.Do_any_EEs_have_garnishments__c}
+                            fields={childAnswerFields.Do_any_EEs_have_garnishments__c}
+                            parent-field="Do_any_EEs_have_garnishments__c">
+                        </c-nsp_employee-data>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.doAnyEEsHaveTaxLevies}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Do_any_EEs_have_tax_levies__c" label={label.doAnyEEsHaveTaxLevies} class="slds-m-left_xx-small"
+                            variant="label-hidden" options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Do_any_EEs_have_tax_levies__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <c-nsp_employee-data if:true={showEEsTaxLeviesDetails}
+                            title="Employee Name(s):"
+                            records={empData.Do_any_EEs_have_tax_levies__c}
+                            fields={childAnswerFields.Do_any_EEs_have_tax_levies__c}
+                            parent-field="Do_any_EEs_have_tax_levies__c">
+                        </c-nsp_employee-data>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value="Are there prior employees currently receiving severance payments?">
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Past_employees_crntly_getting_severance__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveExpenseOrAllowance} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Past_employees_crntly_getting_severance__c} onchange={handleChange}
+                            type="radio"> 
+                        </lightning-radio-group>
+                        <div class="slds-m-left_medium">
+                        <template if:true={isPastEmployeesGettingSeverance}>
+                            <lightning-formatted-text class="slds-form-element__label"
+                            value="How will future payments be made?"></lightning-formatted-text>
+                            <lightning-input-field variant="label-hidden" field-name="NSP_how_future_payment_will_be_done__c"></lightning-input-field>
+                        </template>
+                    </div>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesClientHaveExpenseOrAllowance}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Has_expenses_allowances_through_payroll__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveExpenseOrAllowance} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Has_expenses_allowances_through_payroll__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showAllowanceAndExpenses}>
+                            <!-- <lightning-input-field class="slds-m-left_medium" field-name="Allowances__c"></lightning-input-field> -->
+                            <template if:true={allowancesValues.data}>
+                                <div class="slds-m-left_medium">
+                                    <lightning-formatted-text class="slds-form-element__label" value={label.allowances}>
+                                    </lightning-formatted-text>
+                                    <lightning-checkbox-group name="Allowances__c" label={label.allowances}
+                                        variant="label-hidden" options={allowancesValues.data.values} value={allowances}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-checkbox-group>
+                                    <template if:true={showProviderAllowanceDetails}>
+                                    <lightning-input-field class="slds-m-left_medium"
+                                        field-name="Provide_allowance_details__c">
+                                    </lightning-input-field>
+                                </template>
+                                </div>
+                            </template>
+                            <template if:true={expensesValues.data}>
+                                <div class="slds-m-left_medium">
+                                    <lightning-formatted-text class="slds-form-element__label" value={label.expenses}>
+                                    </lightning-formatted-text>
+                                    <lightning-checkbox-group name="Expenses__c" label={label.expenses}
+                                        variant="label-hidden" options={expensesValues.data.values} value={expenses}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-checkbox-group>
+                                    <template if:true={showOtherExpenseDetails}>
+                                        <lightning-input-field 
+                                        field-name="Other_expense_details__c">
+                                        </lightning-input-field>
+                                    <lightning-input-field class="slds-m-left_medium"
+                                        field-name="NSP_How_will_client_reimburse_expenses__c">
+                                    </lightning-input-field>
+                                    <lightning-input-field class="slds-m-left_medium"
+                                        field-name="Provide_expense_details__c">
+                                    </lightning-input-field>
+                                </template>
+                                </div>
+                            </template>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesClientHavePostTaxDeductions}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_has_any_post_tax_deductions__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHavePostTaxDeductions} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_has_any_post_tax_deductions__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <div if:true={showPostTaxExpensefields} class="slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label" value={label.expenses}>
+                            </lightning-formatted-text>
+                            <lightning-checkbox-group if:true={expensesValues.data} name="Expenses__c"
+                                label={label.expenses} value={expenses}
+                                variant="label-hidden" options={expensesValues.data.values}
+                                onchange={handleCheckboxChange}></lightning-checkbox-group>
+                                <lightning-input-field if:true={showOtherPostTaxDetails} class="slds-m-left_medium"
+                                    field-name="Other_Post_Tax_Deduction_Details__c"></lightning-input-field>
+                        </div>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.doesClientHaveSpecialPayrollNeeds}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_has_any_special_payroll_needs__c" class="slds-m-left_xx-small"
+                            label={label.doesClientHaveSpecialPayrollNeeds} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_has_any_special_payroll_needs__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <!-- OTHER PAYROLL NEEDS -->
+                        <lightning-input-field if:true={showPayrollNeedDetails} data-id="Select_all_payroll_needs_that_apply__c" onchange={handleSyncChange} class="slds-m-left_medium"
+                            field-name="Select_all_payroll_needs_that_apply__c">
+                        </lightning-input-field>
+                    </template>
+                </lightning-layout-item>
+                <!-- COUNTRY PICKLIST -->
+                <lightning-layout-item size="12">
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small "
+                        value={label.employeesWorkinFollowingStates}>
+                    </lightning-formatted-text>
+                    <lightning-layout multiple-rows class="slds-m-left_xx-small">
+                        <template for:each={stateCheckboxes} for:item="state">
+                            <lightning-layout-item key={state.value} size="3">
+                                <lightning-input type="checkbox" name="Employees_work_in_the_following_states__c"
+                                    label={state.label} value={state.value} checked={state.checked}
+                                    onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size="7">
+                    <template if:true={nonExemptEESemiMonthlyValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.clientBusinessMeetingQuestion}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_does_business_in_MA_NY_or_VA__c"  class="slds-m-left_xx-small"
+                            label={label.clientBusinessMeetingQuestion} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_does_business_in_MA_NY_or_VA__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <div if:true={showBusinessStateField} class="slds-m-left_medium">
+                            <!-- MA, NY, VA field -->
+                            <template if:true={businessMeetingStatesValues}>
+                                <div class="slds-m-left_medium">
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.clientBusinessMeeting}>
+                                    </lightning-formatted-text>
+                                    <lightning-checkbox-group name="NSP_Business_Meeting_States__c"
+                                        label={label.clientBusinessMeeting} variant="label-hidden"
+                                        options={businessMeetingStatesValues.data.values} value={businessMeetingStates}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-checkbox-group>
+                                </div>
+                            </template>
+                        </div>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small "
+                            value={label.doEETravelInternationally}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Any_EEs_travel_internationally_for_work__c" class="slds-m-left_xx-small"
+                            label={label.doEETravelInternationally} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Any_EEs_travel_internationally_for_work__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <div if:true={anyEEsTravelInternationallyForWork} class="slds-m-left_medium">
+                            <lightning-formatted-rich-text value="<i>The International Travel Notification form will need to be completed prior to each trip regardless of duration.</i>"></lightning-formatted-rich-text>
+                            <lightning-input-field field-name="Provide_EE_travel_details__c"></lightning-input-field>
+                        </div>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.isClientInsterestedTrackingPTO}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_interested_in_NSP_tracking_PTO__c" class="slds-m-left_xx-small"
+                            label={label.isClientInsterestedTrackingPTO} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_interested_in_NSP_tracking_PTO__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showTimestarAIMSField}>
+                            <template if:true={ptoTrackValues.data}>
+                                <div class="slds-m-left_medium">
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.whereWillPTOBeTracked}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="NSP_Where_will_PTO_be_tracked__c"
+                                        label={label.whereWillPTOBeTracked} variant="label-hidden"
+                                        options={ptoTrackValues.data.values}
+                                        value={fields.NSP_Where_will_PTO_be_tracked__c} onchange={handleChange}
+                                        type="radio">
+                                    </lightning-radio-group>
+                                    <!-- Blue Provide Details fields -->
+                                    <lightning-formatted-text
+                                        class="slds-form-element__label NSP_Provide_Tracking_details__c"
+                                        value={label.provideDetails}>
+                                    </lightning-formatted-text>
+                                    <lightning-input-field variant="label-hidden"
+                                        field-name="NSP_Provide_Tracking_details__c" onchange={handleInputChange}>
+                                    </lightning-input-field>
+                                </div>
+                            </template>
+                        </template>
+                    </template>
+
+                    <template if:true={clientGaveCopyOfPoliciesValues.data}>
+                        <lightning-formatted-text
+                            class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.didClientProvidedCopyOfHandbook}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Gave_copy_of_PTO_sick_leave_other_policy__c" class="slds-m-left_xx-small"
+                            label={label.didClientProvidedCopyOfHandbook} variant="label-hidden"
+                            options={clientGaveCopyOfPoliciesValues.data.values}
+                            value={fields.Gave_copy_of_PTO_sick_leave_other_policy__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                    </template>
+
+                    <template if:true={nonExemptEESemiMonthlyValues.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                            value={label.willClientUtilizingTimestar}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Client_utilizing_Insperity_s_TimeStar__c" class="slds-m-left_xx-small"
+                            label={label.willClientUtilizingTimestar} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Client_utilizing_Insperity_s_TimeStar__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <template if:true={showAllTimestarField}>
+                            <div class="slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value="Day one start?">
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Day_one_start__c"
+                                    label={label.doesClientJobPosting} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.Day_one_start__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <template if:true={timezoneValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.whatTimezoneEEWorkQuestion}>
+                                    </lightning-formatted-text>
+                                    <lightning-checkbox-group name="What_time_zone_do_EEs_work__c"
+                                        label={label.whatTimezoneEEWorkQuestion} variant="label-hidden"
+                                        options={timezoneValues.data.values} value={timezones}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-checkbox-group>
+                                </template>
+                                <lightning-input-field field-name="Exempt_EEs_normal_of_hours_per_day__c">
+                                </lightning-input-field>
+
+                                <template if:true={userEntringValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.whoWillEnterTimeWorked}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="Who_will_enter_time_worked__c"
+                                        label={label.whoWillEnterTimeWorked} variant="label-hidden"
+                                        options={userEntringValues.data.values}
+                                        value={fields.Who_will_enter_time_worked__c} onchange={handleChange}
+                                        type="radio">
+                                    </lightning-radio-group>
+                                </template>
+
+                                <template if:true={punchInOutValues.data}>
+                                    <lightning-formatted-text class="slds-form-element__label"
+                                        value={label.willClientwantEEsToPunchIn}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="EEs_to_punch_in_out_or_use_timesheet__c"
+                                        label={label.willClientwantEEsToPunchIn} variant="label-hidden"
+                                        options={punchInOutValues.data.values}
+                                        value={fields.EEs_to_punch_in_out_or_use_timesheet__c} onchange={handleChange}
+                                        type="radio">
+                                    </lightning-radio-group>
+                                </template>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.willNSPPrepopulateTimecards}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="NSP_Prepop_Timecards_w_Stndrd_hrs__c"
+                                    label={label.willNSPPrepopulateTimecards} variant="label-hidden"
+                                    options={nonExemptEESemiMonthlyValues.data.values}
+                                    value={fields.NSP_Prepop_Timecards_w_Stndrd_hrs__c} onchange={handleChange}
+                                    type="radio">
+                                </lightning-radio-group>
+                                <lightning-formatted-text class="slds-form-element__label"
+                                 value={label.WhoWillBeTheTimeAndAttendanceAdmin}>
+                                </lightning-formatted-text>
+                                <lightning-input-field variant="label-hidden" field-name="Who_will_be_the_TimeStar_admin__c">
+                                </lightning-input-field>
+                                <template if:true={clientHolidayCalendarQuestion.data}>
+                                    <lightning-formatted-text
+                                        class="slds-form-element__label NSP_Client_s_holiday_calendar__c"
+                                        value={label.hasClientProvidedHolidayCalendar}>
+                                    </lightning-formatted-text>
+                                    <lightning-radio-group name="NSP_Client_s_holiday_calendar__c"
+                                        label={label.hasClientProvidedHolidayCalendar} variant="label-hidden"
+                                        options={clientHolidayCalendarQuestion.data.values}
+                                        value={fields.NSP_Client_s_holiday_calendar__c} onchange={handleChange}
+                                        type="radio">
+                                    </lightning-radio-group>
+                                </template>
+                            </div>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small slds-m-bottom_xx-small" value={label.hasForm8973Discussed}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Has_form_8973_been_discussed__c" class="slds-m-left_xx-small" label={label.hasForm8973Discussed}
+                            variant="label-hidden" options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Has_form_8973_been_discussed__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <template if:true={show8973fields}>
+                            <lightning-input-field class="slds-m-left_medium" field-name="Form_8973_Contact__c">
+                            </lightning-input-field>
+                            <lightning-input-field class="slds-m-left_medium" field-name="Contact_Information__c">
+                            </lightning-input-field>
+                        </template>
+
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small slds-m-bottom_xx-small"
+                            value={label.hasArbitrationDiscussed}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Arbitration_Agreement_been_discussed__c" class="slds-m-left_xx-small"
+                            label={label.hasArbitrationDiscussed} variant="label-hidden"
+                            options={nonExemptEESemiMonthlyValues.data.values}
+                            value={fields.Arbitration_Agreement_been_discussed__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                    </template>
+
+                    <lightning-input-field class="slds-m-left_xx-small" field-name="Payroll_Notes__c"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>           
+        </lightning-record-edit-form>
+    </div>
+</template>

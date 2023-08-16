@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Future_Contribution__c</fullName>
+    <externalId>false</externalId>
+    <label>Future Contribution</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Safe Harbor Basic</fullName>
+                <default>false</default>
+                <label>Safe Harbor Basic</label>
+            </value>
+            <value>
+                <fullName>Safe Harbor Enhanced 4%</fullName>
+                <default>false</default>
+                <label>Safe Harbor Enhanced 4%</label>
+            </value>
+            <value>
+                <fullName>Safe Harbor Enhanced 5%</fullName>
+                <default>false</default>
+                <label>Safe Harbor Enhanced 5%</label>
+            </value>
+            <value>
+                <fullName>Safe Harbor Enhanced 6%</fullName>
+                <default>false</default>
+                <label>Safe Harbor Enhanced 6%</label>
+            </value>
+            <value>
+                <fullName>3% SH NEC</fullName>
+                <default>false</default>
+                <label>3% SH NEC</label>
+            </value>
+            <value>
+                <fullName>4% SH NEC</fullName>
+                <default>false</default>
+                <label>4% SH NEC</label>
+            </value>
+            <value>
+                <fullName>5% SH NEC</fullName>
+                <default>false</default>
+                <label>5% SH NEC</label>
+            </value>
+            <value>
+                <fullName>6% SH NEC</fullName>
+                <default>false</default>
+                <label>6% SH NEC</label>
+            </value>
+            <value>
+                <fullName>25% of 1% ER</fullName>
+                <default>false</default>
+                <label>25% of 1% ER</label>
+            </value>
+            <value>
+                <fullName>25% of 2% ER</fullName>
+                <default>false</default>
+                <label>25% of 2% ER</label>
+            </value>
+            <value>
+                <fullName>25% of 3% ER</fullName>
+                <default>false</default>
+                <label>25% of 3% ER</label>
+            </value>
+            <value>
+                <fullName>25% of 4% ER</fullName>
+                <default>false</default>
+                <label>25% of 4% ER</label>
+            </value>
+            <value>
+                <fullName>25% of 5% ER</fullName>
+                <default>false</default>
+                <label>25% of 5% ER</label>
+            </value>
+            <value>
+                <fullName>25% of 6% ER</fullName>
+                <default>false</default>
+                <label>25% of 6% ER</label>
+            </value>
+            <value>
+                <fullName>50% of 1% ER</fullName>
+                <default>false</default>
+                <label>50% of 1% ER</label>
+            </value>
+            <value>
+                <fullName>50% of 2% ER</fullName>
+                <default>false</default>
+                <label>50% of 2% ER</label>
+            </value>
+            <value>
+                <fullName>50% of 3% ER</fullName>
+                <default>false</default>
+                <label>50% of 3% ER</label>
+            </value>
+            <value>
+                <fullName>50% of 4% ER</fullName>
+                <default>false</default>
+                <label>50% of 4% ER</label>
+            </value>
+            <value>
+                <fullName>50% of 5% ER</fullName>
+                <default>false</default>
+                <label>50% of 5% ER</label>
+            </value>
+            <value>
+                <fullName>50% of 6% ER</fullName>
+                <default>false</default>
+                <label>50% of 6% ER</label>
+            </value>
+            <value>
+                <fullName>75% of 1% ER</fullName>
+                <default>false</default>
+                <label>75% of 1% ER</label>
+            </value>
+            <value>
+                <fullName>75% of 2% ER</fullName>
+                <default>false</default>
+                <label>75% of 2% ER</label>
+            </value>
+            <value>
+                <fullName>75% of 3% ER</fullName>
+                <default>false</default>
+                <label>75% of 3% ER</label>
+            </value>
+            <value>
+                <fullName>75% of 4% ER</fullName>
+                <default>false</default>
+                <label>75% of 4% ER</label>
+            </value>
+            <value>
+                <fullName>75% of 5% ER</fullName>
+                <default>false</default>
+                <label>75% of 5% ER</label>
+            </value>
+            <value>
+                <fullName>75% of 6% ER</fullName>
+                <default>false</default>
+                <label>75% of 6% ER</label>
+            </value>
+            <value>
+                <fullName>100% of 1% ER</fullName>
+                <default>false</default>
+                <label>100% of 1% ER</label>
+            </value>
+            <value>
+                <fullName>100% of 2% ER</fullName>
+                <default>false</default>
+                <label>100% of 2% ER</label>
+            </value>
+            <value>
+                <fullName>100% of 3% ER</fullName>
+                <default>false</default>
+                <label>100% of 3% ER</label>
+            </value>
+            <value>
+                <fullName>100% of 4% ER</fullName>
+                <default>false</default>
+                <label>100% of 4% ER</label>
+            </value>
+            <value>
+                <fullName>100% of 5% ER</fullName>
+                <default>false</default>
+                <label>100% of 5% ER</label>
+            </value>
+            <value>
+                <fullName>100% of 6% ER</fullName>
+                <default>false</default>
+                <label>100% of 6% ER</label>
+            </value>
+            <value>
+                <fullName>No Match</fullName>
+                <default>false</default>
+                <label>No Match</label>
+            </value>
+            <value>
+                <fullName>Undecided</fullName>
+                <default>false</default>
+                <label>Undecided</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Profit Sharing</fullName>
+                <default>false</default>
+                <label>Profit Sharing</label>
+            </value>
+            <value>
+                <fullName>Discretionary QNEC</fullName>
+                <default>false</default>
+                <label>Discretionary QNEC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

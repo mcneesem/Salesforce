@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PEO_Project_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>NSP_Account__c</fields>
+    <fields>pse__Project_Status__c</fields>
+    <fields>pse__Start_Date__c</fields>
+    <fields>pse__End_Date__c</fields>
+    <fields>NSP_Project_Complete__c</fields>
+    <fields>NSP_Rating_Color__c</fields>
+    <label>PEO Project Compact Layout</label>
+</CompactLayout>

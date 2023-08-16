@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Survey_Filters__c</fullName>
+    <externalId>false</externalId>
+    <label>Survey Filters</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Locations</fullName>
+                <default>false</default>
+                <label>Client Locations</label>
+            </value>
+            <value>
+                <fullName>Client Departments or Divisions</fullName>
+                <default>false</default>
+                <label>Client Departments or Divisions</label>
+            </value>
+            <value>
+                <fullName>Role Options</fullName>
+                <default>false</default>
+                <label>Role Options</label>
+            </value>
+            <value>
+                <fullName>Service Length</fullName>
+                <default>false</default>
+                <label>Service Length</label>
+            </value>
+            <value>
+                <fullName>Status</fullName>
+                <default>false</default>
+                <label>Status</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

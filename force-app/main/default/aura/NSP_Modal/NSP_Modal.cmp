@@ -1,0 +1,6 @@
+<aura:component >
+    <aura:attribute name="inputVariables" type="List"/>
+    <aura:attribute name="flowName" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <lightning:flow aura:id="flowData" />
+</aura:component>

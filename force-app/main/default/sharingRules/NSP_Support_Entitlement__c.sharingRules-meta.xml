@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>NSP_Share_to_Finance_Manager_Node</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share to Finance Manager Node</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Finance_Manager</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

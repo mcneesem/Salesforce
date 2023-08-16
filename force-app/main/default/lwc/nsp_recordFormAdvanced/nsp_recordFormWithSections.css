@@ -1,0 +1,25 @@
+.nsp_accordion_section{
+  --slds-c-accordion-summary-color-background:#f4f4f4;
+}
+  
+.nsp_accordion_subsection{
+  --slds-c-accordion-summary-color-background:#ffffff;
+}
+
+lightning-formatted-text{
+  font-size: 12px;
+}
+
+.nsp_richTextBox{
+  padding: 10px; 
+  border: 1px solid lightgray; 
+  margin-right: 10px;
+  margin-left: 3px;
+  height:auto;
+  max-height:100px;
+  width:100% ; 
+}
+
+.nsp_margin{
+  margin-left: 3px;
+}

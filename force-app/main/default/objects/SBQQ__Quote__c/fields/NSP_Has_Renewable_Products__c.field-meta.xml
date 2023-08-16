@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Has_Renewable_Products__c</fullName>
+    <description>This field is used in deciding whether the product is eligible to clone or not during amendment</description>
+    <externalId>false</externalId>
+    <label>Has Renewable Products</label>
+    <summaryFilterItems>
+        <field>SBQQ__QuoteLine__c.NSP_Lock_On_QLI__c</field>
+        <operation>equals</operation>
+        <value>False</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>SBQQ__QuoteLine__c.SBQQ__SubscriptionType__c</field>
+        <operation>equals</operation>
+        <value>Evergreen</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>SBQQ__QuoteLine__c.SBQQ__ChargeType__c</field>
+        <operation>notEqual</operation>
+        <value>One-Time</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>SBQQ__QuoteLine__c.NSP_Action_Type__c</field>
+        <operation>notEqual</operation>
+        <value>Add Product</value>
+    </summaryFilterItems>
+    <summaryForeignKey>SBQQ__QuoteLine__c.SBQQ__Quote__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>
