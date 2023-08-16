@@ -183,6 +183,13 @@ public class NSP_ImplementationHelper {
                 }
                 return feinString;
             }
+
+            when 'NSP_Pay_Frequency__c'{
+                if(value==null){
+                	return value;
+                }
+                return value == 'Biweekly' ? 'Bi-Weekly' : value;  
+            }
             
             when else {
             	return value;
