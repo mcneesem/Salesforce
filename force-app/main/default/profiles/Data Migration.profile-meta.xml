@@ -1490,6 +1490,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Assign_permission_set_to_Community__mdt.NSP_Permission_Set_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Division__c</field>
@@ -34152,6 +34157,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServiceAppointment.NSP_Old_Operating_Hrs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServiceAppointment.NSP_Old_End_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35723,6 +35733,9 @@
         <enabled>true</enabled>
         <flow>Update_Status_to_Resubmitted_when_Submitted_for_Approval_again</flow>
     </flowAccesses>
+    <layoutAssignments>
+        <layout>NSP_Assign_permission_set_to_Community__mdt-Assign permission set to Community Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Onboarding_Meeting_Request__c-Onboarding Meeting Request Layout</layout>
     </layoutAssignments>

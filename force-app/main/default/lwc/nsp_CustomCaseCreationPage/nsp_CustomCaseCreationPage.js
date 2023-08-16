@@ -158,6 +158,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     disableSubPlan;
     getAllInputFields = [];
     objectNameKeyPrefixMap = new Map();
+    fieldValueMap = {};
 
     @wire(getObjectInfo, { objectApiName: CASE_OBJ })
     wireObjectInfo(result) {
@@ -250,11 +251,19 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 this.selectedSubCategory = this.oCase.NSP_SubCategory__c;
                 this.selectedDetail = this.oCase.NSP_Detail__c;
                 this.selectedVersion = this.oCase.NSP_Version__c;
+                if(this.selectedSubCategory && this.selectedDetail ){   
+                    this.showDetail = true;
+                }
+                
                 this.ownerId = this.oCase.OwnerId;
+                this.selectedOwnerId = this.oCase.OwnerId != undefined ? this.oCase.OwnerId : this.selectedOwnerId;
+                this.getCatDependenciesMap();
+                this.fieldValueMap = {}; // Reset object
                 this.caseFields = this.caseFields.map(obj => {
                     let tempObj = { ...obj };
                     if (tempObj.apiName in this.oCase) {
                         tempObj.value = this.oCase[tempObj.apiName];
+                        this.fieldValueMap[tempObj.apiName] = tempObj.value;
                     }
                     return tempObj;
                 });
@@ -263,6 +272,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                     let tempObj = { ...obj };
                     if (tempObj.apiName in this.oCase) {
                         tempObj.value = this.oCase[tempObj.apiName];
+                        this.fieldValueMap[tempObj.apiName] = tempObj.value;
                     }
                     return tempObj;
                 });

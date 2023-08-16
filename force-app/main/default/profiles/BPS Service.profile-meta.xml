@@ -36798,7 +36798,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>pse__Proj__c.Invoice_Ready__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37531,12 +37531,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>pse__Proj__c.pse__Is_Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>pse__Proj__c.pse__Is_Billable__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37666,7 +37666,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>pse__Proj__c.pse__Planned_Hours__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37891,7 +37891,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>pse__Proj__c.pse__Time_Zone__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -44812,6 +44812,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServiceAppointment.NSP_Old_Operating_Hrs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ServiceAppointment.NSP_Old_End_Time__c</field>
         <readable>true</readable>
@@ -47829,6 +47834,10 @@
     <layoutAssignments>
         <layout>Task-Referral Task Layout</layout>
         <recordType>Task.Referral_Task</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Task Layout</layout>

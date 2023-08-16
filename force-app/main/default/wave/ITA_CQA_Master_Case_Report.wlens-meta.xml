@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>BPS</application>
     <datasets>BPS_ITA_CQA_Case_Dataset</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>ITA - CQA Master Case Report</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

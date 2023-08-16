@@ -6,6 +6,9 @@
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Opportunity_Credit_Read_Access</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>

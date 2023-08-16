@@ -2,6 +2,6 @@
 <WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
     <application>BPS</application>
     <description>Created from the Project with Cases and User recipe.</description>
-    <masterLabel>Project with Cases and User</masterLabel>
+    <masterLabel>Project, Case, User DS</masterLabel>
     <type>default</type>
 </WaveDataset>

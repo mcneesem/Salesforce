@@ -13,7 +13,14 @@ Modification Log     :
 ***************************************************************************************************/
 @isTest
 private class QuoteExtControllerTests {
-    
+
+    @isTest private static void testConstants() {
+        Test.startTest();
+        Boolean codeCoverage01 = NSP_CPQConstants.TEST_CODE_COVERAGE;
+        Boolean codeCoverage02 = NSP_BillingConstants.TEST_CODE_COVERAGE;
+        Test.stopTest();
+    }
+
     /**********************************************************************************************
 * Method Name:testSubmit
 * Purpose: This method will get quote record

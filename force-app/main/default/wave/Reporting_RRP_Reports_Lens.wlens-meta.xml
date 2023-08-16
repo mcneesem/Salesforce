@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>SubClient_User_AccountTeamMember_Payroll_Output</datasets>
+    <dateVersion>1</dateVersion>
     <description>This is created to view RRP payroll Reports - STY-04084 Sprint 31</description>
     <masterLabel>Reporting-RRP Reports Lens</masterLabel>
     <visualizationType>valuestable</visualizationType>

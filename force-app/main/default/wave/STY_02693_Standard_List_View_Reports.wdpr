@@ -351,6 +351,7 @@
       "action" : "join",
       "sources" : [ "LOAD_DATASET43", "JOIN28" ],
       "schema" : {
+        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -572,7 +573,7 @@
     },
     "OUTPUT6" : {
       "action" : "save",
-      "sources" : [ "JOIN33" ],
+      "sources" : [ "FORMULA3" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -754,7 +755,7 @@
     },
     "OUTPUT10" : {
       "action" : "save",
-      "sources" : [ "JOIN32" ],
+      "sources" : [ "FORMULA1" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -828,8 +829,69 @@
           "name" : "Account_Team_with_Account_for_allRole"
         },
         "sampleDetails" : {
-          "type" : "TopN"
+          "type" : "TopN",
+          "sortBy" : [ ]
         }
+      }
+    },
+    "FORMULA0" : {
+      "action" : "formula",
+      "sources" : [ "JOIN32" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Start_Date",
+          "label" : "Start Date",
+          "formulaExpression" : "date_format(\"pse__Start_Date_Time__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA1" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "End_Date",
+          "label" : "End Date",
+          "formulaExpression" : "date_format(\"pse__End_Date_Time__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA2" : {
+      "action" : "formula",
+      "sources" : [ "JOIN33" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Start_Date",
+          "label" : "Start Date",
+          "formulaExpression" : "date_format(\"Join32.pse__Start_Date_Time__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA3" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA2" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "End_Date",
+          "label" : "End Date",
+          "formulaExpression" : "date_format(\"Join32.pse__End_Date_Time__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
       }
     }
   },
@@ -1095,8 +1157,8 @@
         "label" : "Project Task, User, Project, Account, User, Account Team DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 811.9,
-        "left" : 952.1
+        "top" : 812,
+        "left" : 1092
       },
       "OUTPUT8" : {
         "label" : "Case, Account, User DS",
@@ -1221,6 +1283,55 @@
         "parameters" : {
           "sampleSize" : 2000
         }
+      },
+      "TRANSFORM1" : {
+        "label" : "Date Format",
+        "type" : "TRANSFORM",
+        "top" : 671.9,
+        "left" : 672,
+        "graph" : {
+          "FORMULA0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA1" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA0",
+          "target" : "FORMULA1"
+        } ]
+      },
+      "TRANSFORM2" : {
+        "label" : "Date Format",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 812.1,
+        "left" : 952,
+        "graph" : {
+          "FORMULA2" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA3" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA2",
+          "target" : "FORMULA3"
+        } ]
       }
     },
     "connectors" : [ {
@@ -1317,7 +1428,7 @@
       "source" : "JOIN32",
       "target" : "JOIN33"
     }, {
-      "source" : "JOIN33",
+      "source" : "TRANSFORM2",
       "target" : "OUTPUT6"
     }, {
       "source" : "JOIN28",
@@ -1347,7 +1458,7 @@
       "source" : "JOIN36",
       "target" : "OUTPUT9"
     }, {
-      "source" : "JOIN32",
+      "source" : "TRANSFORM1",
       "target" : "OUTPUT10"
     }, {
       "source" : "LOAD_DATASET28_copy0_copy0_copy0_copy0",
@@ -1358,6 +1469,12 @@
     }, {
       "source" : "TRANSFORM0_copy0",
       "target" : "JOIN23_copy0"
+    }, {
+      "source" : "JOIN32",
+      "target" : "TRANSFORM1"
+    }, {
+      "source" : "JOIN33",
+      "target" : "TRANSFORM2"
     } ],
     "hiddenColumns" : [ ]
   },

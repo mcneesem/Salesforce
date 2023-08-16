@@ -6,7 +6,8 @@
      NOT($Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c),
      ISCHANGED( pse__Status__c  ),
      ISPICKVAL(PRIORVALUE(pse__Status__c ),&apos;Canceled&apos;),
-     
+     NSP_Create_Work_Order__c = True,
+     NOT( ISPICKVAL( NSP_Dispatch_Region__c ,&quot;&quot; ) ) ,
       AND(
           NOT(ISPICKVAL( pse__Status__c , &apos;Unscheduled&apos;) ) ,
           NOT(ISPICKVAL( pse__Status__c , &apos;Scheduled&apos;) )

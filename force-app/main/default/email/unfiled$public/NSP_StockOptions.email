@@ -5,7 +5,13 @@
 <c:InsperityEmailHeader />
 <p>This client has stated they have Equity Based Compensation. The payroll contact is:</p>
 
-<p>{!relatedTo.NSP_PC_Client_Name__c}, {!relatedTo.PC_Client_Contact_Method__c} : {!relatedTo.NSP_PC_Client_Cell_Phone__c}  {!relatedTo.NSP_PC_Client_Email__c} </p>
+<p>{!relatedTo.NSP_PC_Client_Name__c}, {!relatedTo.PC_Client_Contact_Method__c} :
+{!
+IF(relatedTo.PC_Client_Contact_Method__c = "Cell Phone",relatedTo.NSP_PC_Client_Cell_Phone__c
+,
+IF(relatedTo.PC_Client_Contact_Method__c = "Office Phone",relatedTo.NSP_PC_Client_Office_Phone__c,relatedTo.NSP_PC_Client_Email__c)
+)
+}</p>
 
 <c:NSP_FSOEmails currentRecordId="{!relatedTo.Id}"  />
 

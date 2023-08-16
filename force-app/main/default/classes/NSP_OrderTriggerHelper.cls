@@ -2,7 +2,8 @@
 * Represents the Order trigger helper which handles all the logic.
 */
 public class NSP_OrderTriggerHelper {
-   
+    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (79%)
+
     static final string STRING_ACCOUNT = 'Account';
     /**
 * Iterates throught the list of new Order and passes the required attributes to other methods.
@@ -440,6 +441,9 @@ public class NSP_OrderTriggerHelper {
                             orderItemObj.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                             if(orderItemObj.SBQQ__SubscriptionTerm__c != null){
                                 orderItemObj.blng__BillThroughDateOverride__c = System.today().addMonths(Integer.valueOf(orderItemObj.SBQQ__SubscriptionTerm__c))-1; 
+                            } 
+                            else if(orderItemObj.EndDate != null){
+                                orderItemObj.blng__BillThroughDateOverride__c = orderItemObj.EndDate;
                             }
                             orderItemListToUpdate.add(orderItemObj);
                         }
@@ -647,8 +651,8 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
     Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
     List<OrderItem> orderItemToUpdate = new List<OrderItem>();
     //Map<Id,Order> orderUpdateMap = new Map<Id,Order>();
-    List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c,Product2.NSP_Partial_Period_Free_Treatment__c,SBQQ__BillingFrequency__c,Order.EffectiveDate,OrderId,NSP_OrderProductStartDate__c,SBQQ__SubscriptionType__c,
-                                      NSP_Order_Activation_Trigger_Amend__c,NSP_QL_ActionType__c,SBQQ__QuoteLine__r.NSP_ActionType__c,NSP_ReCalculation_Status_Internal__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c,NSP_Project_Completion_Date__c,Order.NSP_Usage_Products_Count__c,ServiceDate,SBQQ__RequiredBy__c
+    List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c,Product2.NSP_Partial_Period_Free_Treatment__c,SBQQ__BillingFrequency__c,Order.EffectiveDate,OrderId,NSP_OrderProductStartDate__c,SBQQ__SubscriptionType__c,NSP_AnniversaryBlngApplicable__c,
+                                      NSP_Order_Activation_Trigger_Amend__c,NSP_QL_ActionType__c,SBQQ__QuoteLine__r.NSP_ActionType__c,NSP_ReCalculation_Status_Internal__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c,NSP_Project_Completion_Date__c,Order.NSP_Usage_Products_Count__c,ServiceDate,SBQQ__RequiredBy__c,EndDate
                                       FROM OrderItem WHERE OrderId IN :projCompletedIdSet AND SBQQ__Status__c = 'Draft'];
     for(OrderItem oi: orderProductList){
         if((oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW && oi.NSP_Order_Activation_Trigger__c == NSP_CPQConstants.PROJGOLIVEDATE) || 
@@ -683,12 +687,18 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
            oi.NSP_ReCalculation_Status_Internal__c != 'Processing' && oi.NSP_ReCalculation_Status_Internal__c != 'Staged' &&
            oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE){
                oi.NSP_Project_Completion_Date__c = oi.Order.NSP_Project_Go_Live_Date__c;
+               if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null && oi.NSP_QL_ActionType__c != 'Amend'){
+                oi.blng__BillThroughDateOverride__c = oi.EndDate;
+               }
                orderItemToUpdate.add(oi);
            }
            else if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE && 
                     oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE){
                         oi.ServiceDate = System.today();
                         oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+                        if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null && oi.NSP_QL_ActionType__c != 'Amend'){
+                            oi.blng__BillThroughDateOverride__c = oi.EndDate;
+                        }
                         orderItemToUpdate.add(oi);     
            }
     }
@@ -760,6 +770,13 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
             for(Order orderOb : newList){
                 if(invoiceBatchMap.containsKey(orderOb.NSP_Order_Product_Type__c)){
                     orderOb.blng__InvoiceBatch__c = invoiceBatchMap.get(orderOb.NSP_Order_Product_Type__c);
+                }
+                else if(orderOb.NSP_Order_Product_Type__c	== NSP_CPQConstants.RETSERVICES){
+                    if(orderOb.NSP_Billing_Account_Name__c != null && orderOb.NSP_Billing_Account_Name__c == 'Insperity WO Billing Account'){
+                        orderOb.blng__InvoiceBatch__c = NSP_CPQConstants.RETINVBATCHWO;
+                            } else{
+                               orderOb.blng__InvoiceBatch__c = NSP_CPQConstants.RETINVBATCHNONWO; 
+                            }
                 }
                 /*Commented out as part of DF-04797
                 else if(orderOb.NSP_Order_Product_Type__c == 'HR Services' || orderOb.NSP_Order_Product_Type__c == 'Recruiting Services' || orderOb.NSP_Order_Product_Type__c == 'WS Services'){
@@ -960,6 +977,7 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
 public static void checkProjectGoLiveChanged(List<Order> newList,Map<Id, Order> OrderOldMap){
     Set<String> backoutOrders = new Set<String>();
     Set<Id> createProjectIds = new Set<Id>();
+    Set<ID> projCompletedIdSet = new Set<Id>();
     List<Process_Billing_Event__e> billingEvents= new List<Process_Billing_Event__e>();
     for(Order newOrder :newList){
         Order oldOrder=OrderOldMap.get(newOrder.Id);
@@ -974,11 +992,21 @@ public static void checkProjectGoLiveChanged(List<Order> newList,Map<Id, Order> 
             event.NSP_CreateProject__c = newOrder.NSP_CreateProject__c;
             billingEvents.add(event);
         }
+        //Added as part of DF-05544
+        if(newOrder.NSP_Project_Complete_Date__c != null && oldOrder.NSP_Project_Complete_Date__c != newOrder.NSP_Project_Complete_Date__c){
+            projCompletedIdSet.add(newOrder.Id);
+        }
     }
     if(backoutOrders.size() > 0) {
         NSP_AssetUpdate.assetBackoutUpdate(backoutOrders,NSP_SalesConstants.BACKOUT_STATUS);
         updateRevisedOrderProd(backoutOrders);
     }
+    if(projCompletedIdSet != null && projCompletedIdSet.size() > 0){
+        //Queuable job which queries the billing transactions associated with the order products and update the override next billing date on Billing transaction
+        NSP_UpdateProjMilestone updateJob = new NSP_UpdateProjMilestone(projCompletedIdSet);
+       // enqueue the job for processing , updates Override Next Billing Date on Billing transaction
+       ID jobID = System.enqueueJob(updateJob);
+   }
     //Platform event to trigger Project creation, when Create Project field is checked
     if(billingEvents.size()>0){
         List<NSP_Error_Log__c> erlogs= new List<NSP_Error_Log__c>();

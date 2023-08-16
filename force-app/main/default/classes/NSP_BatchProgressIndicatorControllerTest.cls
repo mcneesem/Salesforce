@@ -87,6 +87,7 @@ public class NSP_BatchProgressIndicatorControllerTest {
 		NSP_BatchProgressIndicatorController.getUserAccess();
 		NSP_BatchProgressIndicatorController.getJobDetails();
 		NSP_BatchProgressIndicatorController.executeBatch('NSP_InvoiceBatch', 1, invRunObj.Id);
+        NSP_BatchProgressIndicatorController.executeBatch('NSP_DocuSignInvoiceDocumentBatch', 20, invRunObj.Id);
         Test.stopTest();
         System.assert(orderList.size()==1,true);
     }  

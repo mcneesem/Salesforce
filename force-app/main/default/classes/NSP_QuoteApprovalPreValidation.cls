@@ -12,6 +12,8 @@ Modification Log     :
 */
 
 public class NSP_QuoteApprovalPreValidation {
+    // test w/ QuoteExtControllerTests (80%)
+
     //constructor
     private NSP_QuoteApprovalPreValidation(){}
     
@@ -163,15 +165,6 @@ public class NSP_QuoteApprovalPreValidation {
         
         for(SBQQ__Quote__c quoteRec: quoteRecord) {
             //sequential execution of validations conditions for that specific quote
-             if(quoteRec.NSP_Requested_First_Check_Date__c != null && 
-               (quoteRec.NSP_Has_WA_product__c || quoteRec.NSP_Has_WX_product__c || quoteRec.NSP_Has_WOSS_product__c) 
-               && (quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW || quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)
-               && quoteRec.NSP_Requested_First_Check_Date__c < system.today()) {
-                   errorMessageList.add(REQ_DATE_ERR_MESSAGE);
-               }
-            if(quoteRec.NSP_Requested_First_Check_Date__c == null && (quoteRec.NSP_Has_WA_product__c || quoteRec.NSP_Has_WX_product__c || quoteRec.NSP_Has_WOSS_product__c) && (quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW || quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)){
-                errorMessageList.add(REQ_DATE_ERR_MESSAGE);
-            }
             if(quoteRec.NSP_Invoice_To_Email__c == null){
                 errorMessageList.add(INVOICE_EMAIL_ERR_MESSAGE);
             }   

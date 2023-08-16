@@ -45472,6 +45472,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServiceAppointment.NSP_Old_Operating_Hrs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ServiceAppointment.NSP_Old_End_Time__c</field>
         <readable>true</readable>
@@ -47226,6 +47231,10 @@
     <layoutAssignments>
         <layout>Task-Referral Task Layout</layout>
         <recordType>Task.Referral_Task</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Task Layout</layout>

@@ -3,7 +3,7 @@
     <content xsi:nil="true"/>
     <application>HR_COE</application>
     <datasets>Wiz_ContentVer</datasets>
-    <dateVersion>2</dateVersion>
+    <dateVersion>1</dateVersion>
     <masterLabel>Separation Agreement Attachments for last month_Summary2</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

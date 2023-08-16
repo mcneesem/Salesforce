@@ -1,13 +1,12 @@
 public with sharing class SetupAuditTrailQueueable implements Queueable {
-    // test w/ SetupAuditTrailQueueableTest (94%)
+    // test w/ SetupAuditTrailQueueableTest (90%)
     private static final String CLASS_NAME = ' ~ SetupAuditTrailQueueable';
 
     //
     // examples...
     //
 
-    // 0058G000001URZzQAO Paul McCluskey
-    // SetupAuditTrailQueueable.enqueueJob( new List<Id>{ '0058G000001URZzQAO' } );
+    // SetupAuditTrailQueueable.enqueueJob( new List<Id>{ '005XXXXXXXXXXXXXXX' } );
     // SetupAuditTrailQueueable.enqueueJob( SetupAuditTrailQueueable.getSetupAuditTrailCreatedByIds() );
     // SetupAuditTrailQueueable.startReport();
 
@@ -97,12 +96,24 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
     // ~ intentionlly static to allow Custom Settings to modify the attributes a running Queueable chain...
     //
 
+    private static SetupAuditTrailReporting__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = SetupAuditTrailReporting__c.getOrgDefaults();
+            }
+            return settings;
+        }
+        private set;
+    }
+
     // is the Queueable enabled for execution???
     private static Boolean isEnabled {
         private get {
             if ( isEnabled == null ) {
                 Boolean local = False;
-                local = True; // replace with Custom Setting...  IsEnabled__c
+                if ( SetupAuditTrailQueueable.settings != null ) {
+                    local = SetupAuditTrailQueueable.settings.IsEnabled__c;
+                }
                 isEnabled = local;
             }
             return isEnabled;
@@ -130,7 +141,9 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
         public get {
             if ( soqlHoursLimit == null ) {
                 Integer local = 0;
-                local = 24; // replace with Custom Setting...  SoqlHoursLimit__c
+                if ( ( SetupAuditTrailQueueable.settings != null ) && ( SetupAuditTrailQueueable.settings.SoqlHoursLimit__c != null ) ) {
+                    local = SetupAuditTrailQueueable.settings.SoqlHoursLimit__c.intValue();
+                }
                 // limit must be non-negative...
                 if ( local < 0 ) {
                     local = 0;
@@ -147,9 +160,8 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
         public get {
             if ( soqlUserLimit == null ) {
                 Integer local = 0;
-                local = 75; // replace with Custom Setting...  SoqlUserLimit__c
-                if ( Test.isRunningTest() ) {
-                    local = 5; // replace with Custom Setting...  SoqlUserLimit__c
+                if ( ( SetupAuditTrailQueueable.settings != null ) && ( SetupAuditTrailQueueable.settings.SoqlUserLimit__c != null ) ) {
+                    local = SetupAuditTrailQueueable.settings.SoqlUserLimit__c.intValue();
                 }
                 // limit must be non-negative...
                 if ( local < 0 ) {
@@ -158,6 +170,27 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
                 soqlUserLimit = local;
             }
             return soqlUserLimit;
+        }
+        private set;
+    }
+
+    // set of non-critical translated audit sections...
+    public static Set<String> nonCriticalTranslatedSections {
+        public get {
+            if ( nonCriticalTranslatedSections == null ) {
+                Set<String> local = new Set<String>();
+                if ( SetupAuditTrailQueueable.settings != null ) {
+                    String rawNonCriticalTranslatedSecions = SetupAuditTrailQueueable.settings.NonCriticalTranslatedSections__c;
+                    if ( String.isNotBlank( rawNonCriticalTranslatedSecions ) ) {
+                        List<String> splitNonCriticalTranslatedSecions = rawNonCriticalTranslatedSecions.split( '\r\n' );
+                        if ( ( splitNonCriticalTranslatedSecions != null ) && ( splitNonCriticalTranslatedSecions.size() > 0 ) ) {
+                            local.addAll( splitNonCriticalTranslatedSecions );
+                        }
+                    }
+                }
+                nonCriticalTranslatedSections = local;
+            }
+            return nonCriticalTranslatedSections;
         }
         private set;
     }
@@ -258,7 +291,15 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
         get {
             if ( auditorEmailAddresses == null ) {
                 List<String> local = new List<String>();
-                local.add( 'paul.mccluskey@insperity.com' ); // replace with Custom Setting...  AuditorEmailAddresses__c
+                if ( SetupAuditTrailQueueable.settings != null ) {
+                    String rawAuditorEmailAddresses = SetupAuditTrailQueueable.settings.AuditorEmailAddresses__c;
+                    if ( String.isNotBlank( rawAuditorEmailAddresses ) ) {
+                        List<String> splitAuditorEmailAddresses = rawAuditorEmailAddresses.split( '\r\n' );
+                        if ( ( splitAuditorEmailAddresses != null ) && ( splitAuditorEmailAddresses.size() > 0 ) ) {
+                            local = splitAuditorEmailAddresses;
+                        }
+                    }
+                }
                 auditorEmailAddresses = local;
             }
             return auditorEmailAddresses;

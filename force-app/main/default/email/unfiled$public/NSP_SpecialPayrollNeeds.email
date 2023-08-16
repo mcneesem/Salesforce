@@ -7,7 +7,7 @@
  reporting.<br/>
   Please review Implementation Profile and EDC for additional information. </p>
  
-<p> {!relatedTo.Select_all_payroll_needs_that_apply__c}</p>
+<p><apex:outputText escape="false" value="<li>{!SUBSTITUTE(relatedTo.Select_all_payroll_needs_that_apply__c,';','<li/>')}"/></p>
   
   
 <p>Regards,<br/>

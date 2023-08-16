@@ -37,4 +37,10 @@
         <salesforceActionsEnabled>false</salesforceActionsEnabled>
         <sortIndex>4</sortIndex>
     </dimensions>
+    <dimensions>
+        <field>Case.Case_Owner_s_Manager__c</field>
+        <isDerived>false</isDerived>
+        <label>Case Owners Manager</label>
+        <sortIndex>5</sortIndex>
+    </dimensions>
 </WaveXmd>

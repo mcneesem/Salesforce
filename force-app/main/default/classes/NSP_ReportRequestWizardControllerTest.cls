@@ -167,6 +167,8 @@ private class NSP_ReportRequestWizardControllerTest {
         Account acc = Database.query(accQuery); 
         String assetQuery = new NSP_QueryBuilder('Asset', accFields).addLimit(1).build();
         Asset oAsset = Database.query(assetQuery);
+        oAsset.NSP_Account_Status__c = NSP_ServiceConstants.ASSET_ACTIVE_STATUS;
+        update oAsset;
 
         Test.startTest();
         Map<String,String> financeHRSpecialist = NSP_ReportRequestWizardController.getHRspecialistAndFinanceLevel(acc.Id);

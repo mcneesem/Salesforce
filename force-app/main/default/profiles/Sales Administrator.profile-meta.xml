@@ -2980,7 +2980,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_Pending_Report_Comments__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14420,6 +14420,10 @@
         <recordType>Task.Referral_Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Task-Support Core Sales Task Layout</layout>
         <recordType>Task.Task</recordType>
     </layoutAssignments>
@@ -14693,6 +14697,11 @@
         <default>false</default>
         <recordType>Campaign.Sales_Record_Type</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Contact.Resource</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

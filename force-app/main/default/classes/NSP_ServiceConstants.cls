@@ -1,8 +1,9 @@
 /**
 * Represents the contant class used for service track.
 */
-public class NSP_ServiceConstants {  
-    
+public class NSP_ServiceConstants {
+    // test w/ NSP_ServiceConstantsTest (100%)
+
   public static final string EMPTY_STRING = '';
   public static final string ACCOUNT_OBJECT = 'Account';
   public static final string CONTACT_OBJECT = 'Contact';
@@ -79,6 +80,9 @@ public class NSP_ServiceConstants {
   //Service Appointment
   public final static string SA_SOBJECT_NAME   = 'ServiceAppointment';
   public final static string unscheduleStatus   = 'Scheduled';
+  public final Static String OPR_HRS_CST = 'Central Time';
+  public final Static String OPR_HRS_PST = 'Pacific Time';
+  public final Static String OPR_HRS_EST = 'Eastern Time';
 
   // Assigned Resource
   public final static string ASSIGNEDRES_SOBJECT_NAME   = 'AssignedResource';

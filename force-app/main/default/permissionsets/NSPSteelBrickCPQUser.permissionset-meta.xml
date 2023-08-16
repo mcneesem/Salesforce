@@ -5136,6 +5136,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NSP_Support_ProductCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductOption__c.NSP_Active_W2_Employees__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7020,7 +7025,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_Is_Inside_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>

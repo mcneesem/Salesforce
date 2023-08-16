@@ -1697,6 +1697,11 @@
     </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Assign_permission_set_to_Community__mdt.NSP_Permission_Set_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Onboarding_Meeting_Request__c.NSP_Date_Valid_Formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34600,6 +34605,11 @@ m   <fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServiceAppointment.NSP_Old_Operating_Hrs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServiceAppointment.NSP_Old_End_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37017,6 +37027,9 @@ m   <fieldPermissions>
         <flow>Update_Final_OMR_Meeting_Information</flow>
     </flowAccesses>
     <layoutAssignments>
+        <layout>NSP_Assign_permission_set_to_Community__mdt-Assign permission set to Community Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Case_Assignment_Email_Queue_Mapping__mdt-Case Assignment Email_Queue Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -37931,6 +37944,10 @@ m   <fieldPermissions>
     <layoutAssignments>
         <layout>Task-Referral Task Layout</layout>
         <recordType>Task.Referral_Task</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Retirement Services Task</layout>
+        <recordType>Task.RET_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Task Layout</layout>

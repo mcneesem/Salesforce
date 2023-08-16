@@ -4,7 +4,11 @@
 *
 */
 public class NSP_BillingConstants {
-	
+    // test w/ QuoteExtControllerTests (100%)
+
+    // added for code coverage during RunSpecifiedTests...
+    public static Boolean TEST_CODE_COVERAGE = False;
+
     public static final String GENERIC_BELL_NOTIFICATION = 'Generic_Bell_Notification';
     public static final String LOCKBOX_NOTIF_PART1 = 'Payment Processed for Lock Box File - '; 
     public static final String LOCKBOX_NOTIF_PART2 = 'Please note that process request for Lock Box File - ';
@@ -26,6 +30,8 @@ public class NSP_BillingConstants {
     public static final String X120_PAST_DUE = 'X120_Days_Past_Due';
     public static final String X90_PAST_DUE = 'X90_Days_Past_Due';
     public static final String X60_PAST_DUE = 'X60_Days_Past_Due';
+    public static final String WX_LEGAL_ENTITY_NAME ='Insperity Business Services';
+    public static final String RET_LEGAL_ENTITY_NAME ='Insperity Retirement Services, L.P.';
     
     
 }

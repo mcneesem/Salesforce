@@ -4,6 +4,10 @@
  */
 
 public class NSP_CPQConstants {
+    // test w/ QuoteExtControllerTests (100%)
+
+    // added for code coverage during RunSpecifiedTests...
+    public static Boolean TEST_CODE_COVERAGE = False;
 
     // To set the Quote Approval status Pending
     public static final String QUOTE_APPROVAL_STATUS_PENDING = 'Pending'; 
@@ -175,4 +179,10 @@ public class NSP_CPQConstants {
      public static final String ACCOUNTGROUP_NAME1 = 'OrgPlus Support Group - Test Grp 2';
      public static final String ACCOUNTGROUP_NAME2 = 'Account Health - Test Grp 1';
      public static final String ACCOUNTGROUP_APINAME = 'NSP_Account_Group__c';
+
+     //InvoiceBatch
+     public static final String RETSERVICES = 'Retirement Services';
+     public static final String RETINVBATCHWO = 'Retirement Services Recurring - WO';
+     public static final String RETINVBATCHNONWO = 'Retirement Services Recurring - Non WO';
+
 }

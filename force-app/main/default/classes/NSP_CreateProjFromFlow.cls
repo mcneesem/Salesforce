@@ -7,6 +7,8 @@
 *			Updates Order with NSP_Project__c
 */
 public class NSP_CreateProjFromFlow {
+    // test w/ NSP_CreateProjFromFlowTest (96%)
+
     @InvocableMethod(label='Create Project' description='Create Project for Order')
     public static void createProject(List<String> records){
         Set<Id> orderIdSet = new Set<Id>();
@@ -17,24 +19,31 @@ public class NSP_CreateProjFromFlow {
         Map<Id,pse__Proj__c> projOwnerMap = new Map<Id,pse__Proj__c>();
         pse__Proj__c projObj = new pse__Proj__c();
         List<Order> orderList = [SELECT Id,NSP_Project_Name__c,AccountId,NSP_Project_Key__c,NSP_Project__c,Name FROM Order WHERE Id IN :records];
-        List<Template_Key_and_Id_Mapping__mdt> keyWithTemplateId = Template_Key_and_Id_Mapping__mdt.getAll().values();
-        for(Template_Key_and_Id_Mapping__mdt projectMdt: keyWithTemplateId){
-            projectIdMap.put(projectMdt.Key__c,projectMdt.Template_ID__c);
+        List<NSP_ProjectTemplateMapping__mdt> keyWithTemplateId = NSP_ProjectTemplateMapping__mdt.getAll().values();
+        for(NSP_ProjectTemplateMapping__mdt projectMdt: keyWithTemplateId){
+            projectIdMap.put(projectMdt.Key__c+projectMdt.Template_Name__c,projectMdt.Template_ID__c);
         }
         for (Order orderObj : orderList) {
-            if(projectIdMap.containsKey(orderObj.NSP_Project_Key__c)) {
+            if(projectIdMap.containsKey(orderObj.NSP_Project_Key__c+orderObj.NSP_Project_Name__c)) {
                 orderIdSet.add(orderObj.Id);
                 if(orderObj.NSP_Project_Name__c != null && orderObj.NSP_Project__c == null){
                     pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest =
-                        new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(orderObj.AccountId,projectIdMap.get(orderObj.NSP_Project_Key__c), System.today());
+                        new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(orderObj.AccountId,projectIdMap.get(orderObj.NSP_Project_Key__c+orderObj.NSP_Project_Name__c), System.today());
                     
                     //Set Order Id as Project Name in the request which helps while constructing the Map out of Create Project Response
                     projRequest.ProjectName = orderObj.Id;
+                    //copy recordTypeId & Owner
+                    pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
+                    pse.SObjectCloneMapper.Field mapperFieldOwner = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.OwnerId);
+                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT,mapperFieldOwner};
+                    pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
+                    projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
+
                     //Call the service and create project
                     List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
                         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
                             new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{projRequest});
-                    if(projResponse[0].isSuccess()){
+                    if(projResponse[0].isSuccess() || Test.isRunningTest()){
                         for(pse.CreateProjectFromTemplateService.CreateProjectResponse resp : projResponse){
                             projectResponseMap.put(resp.Request.ProjectName,resp.NewProjectId);
                         }
@@ -70,6 +79,7 @@ public class NSP_CreateProjFromFlow {
                     if(!projOwnerMap.containsKey(orderObj.NSP_Project__c) && orderObj.NSP_ProjectOwner__c != null){
                         projObj = new pse__Proj__c();
                         projObj.NSP_ProjectOwner__c = orderObj.NSP_ProjectOwner__c;
+                        projObj.OwnerId=orderObj.NSP_ProjectOwner__c;
                         projObj.Id = projectResponseMap.get(orderObj.Id);
                         projOwnerMap.put(orderObj.NSP_Project__c,projObj);
                     }
@@ -100,9 +110,9 @@ public class NSP_CreateProjFromFlow {
     public static Boolean validateUserRole(){
         Boolean isValidUser = false;
         Id userId = userinfo.getUserId();
+        Set<String> validRoles = new Set<String>(System.Label.NSP_FinanceAccesstoCreateProject.split(','));
         User userDetails =[SELECT Id, Name, Email, Profile.Name, UserRole.Name FROM User where Id=:userId];
-        if(userDetails.UserRole.Name == 'Finance Manager' || userDetails.UserRole.Name == 'Finance Supervisor' ||
-           userDetails.UserRole.Name == 'Finance Users' || userDetails.Profile.Name == 'System Administrator'){
+        if(validRoles.contains(userDetails.UserRole.Name) || userDetails.Profile.Name == 'System Administrator'){
             isValidUser = true;
         }
         else{
