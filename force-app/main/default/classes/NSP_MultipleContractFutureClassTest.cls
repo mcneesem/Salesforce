@@ -42,7 +42,7 @@ public class NSP_MultipleContractFutureClassTest {
         taxRuleObj.blng__Active__c = true;
         taxRuleObj.blng__TaxableYesNo__c = 'No';
         insert taxRuleObj;
-        
+
         Product2 product1 = NSP_TestHelper.createProduct('Test Product1',false);
         product1.NSP_Product_Category__c =  ORGANIZATIONAL_PLANNING;
         Product2 product2 = NSP_TestHelper.createProduct('Test Product2',false);
@@ -61,10 +61,8 @@ public class NSP_MultipleContractFutureClassTest {
                 prd.blng__RevenueRecognitionRule__c = rrObj.Id;
                 prd.blng__TaxRule__c = taxRuleObj.Id;
         }
-        
-            insert allproducts;
-            
-        
+        insert allproducts;
+
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',false);
         opp1.NSP_Client_For_Life__c = 'Stand Alone';
         opp1.NSP_PrimaryProduct__c = ORGANIZATIONAL_PLANNING;

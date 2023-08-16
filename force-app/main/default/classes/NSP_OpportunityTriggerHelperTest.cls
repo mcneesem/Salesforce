@@ -74,7 +74,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject.Type ='CAMS';
         opportuniytObject.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         oppList1.add(opportuniytObject);
-       
+
         Opportunity opportuniytObject2 = new Opportunity();
         opportuniytObject2.Name = 'Test Oppty Email';
         opportuniytObject2.AccountId = accoutObject1.id;
@@ -104,8 +104,9 @@ public class NSP_OpportunityTriggerHelperTest {
             NSP_Status__c='Completed'
         );
         taskList.add(taskRec);
-       Test.startTest();
-        List<Opportunity> oppList2 = new List<Opportunity>();
+
+        Test.startTest();
+        List<Opportunity> oppList2 = new List<Opportunity>();       
         Opportunity opportuniytObject3 = new Opportunity();
         opportuniytObject3.Name = 'Test Oppty Email';
         opportuniytObject3.AccountId = accoutObject1.id;
@@ -118,8 +119,8 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject3.Type ='CAMS';
         opportuniytObject3.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject3.NSP_Mid_Market_Sales_Email__c='test2@insperity.com';
-		oppList2.add(opportuniytObject3);
-        
+        oppList2.add(opportuniytObject3);
+
         Opportunity opportuniytObject4 = new Opportunity();
         opportuniytObject4.Name = 'Test Oppty Email';
         opportuniytObject4.AccountId = accoutObject1.id;
@@ -146,7 +147,7 @@ public class NSP_OpportunityTriggerHelperTest {
         insert quoteRec;
        
         insert taskList;
-       List<Opportunity> childOppList = new List<Opportunity>();
+        List<Opportunity> childOppList = new List<Opportunity>();
         //Create child opportunity for Retirement Service
         Opportunity childopportuniytObject = new Opportunity();
         childopportuniytObject.Name = 'Child Oppty Retirement Service';
@@ -176,7 +177,7 @@ public class NSP_OpportunityTriggerHelperTest {
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
         insert pricebook;
         
-       Test.stopTest();
+        Test.stopTest();
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject.Id,true);
 
     }

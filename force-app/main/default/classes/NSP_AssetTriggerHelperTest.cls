@@ -171,8 +171,6 @@ public class NSP_AssetTriggerHelperTest {
         }
         
         Test.stopTest();
-        
-        
     }
     
     /**
