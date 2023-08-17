@@ -87,12 +87,18 @@ public class NSP_OpportunityTriggerHandler implements NSP_ITriggerHandler{
  
             //Added as part of STY-01602
             oppTriggerServiceHelper.afterUpdateDirector((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledCalculateSetUp__c){
+                opportunityTriggerHelperObject.calculateSetUpAndDocupayTax((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+            }
         }  
         // added below logic as the runOnce was not executing the creteRewardForContactRole logic from event flow. 
         NSP_OpportunityTriggerHelper  opportunityTriggerHObject =  new NSP_OpportunityTriggerHelper(); 
         opportunityTriggerHObject.creteRewardForContactRole((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap); // added for STY-03287 
-        opportunityTriggerHObject.calculateSetUpAndDocupayTax((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);  
-
+        
+        if(!NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledCalculateSetUp__c){
+            opportunityTriggerHObject.calculateSetUpAndDocupayTax((Map<Id, Opportunity>) newMap,(Map<Id, Opportunity>) oldMap);
+        }   
     }
     
     /**

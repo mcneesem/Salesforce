@@ -2,7 +2,7 @@
  * Represents the AcccountContactRelation trigger handler.
  */
 
-public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHandler {
+public class NSP_AccountContactRelationTriggerHandler  extends NSP_TriggerAction  implements NSP_ITriggerHandler {
     
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
@@ -53,7 +53,12 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
      */
 
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_AccountContactRelationTriggerHelper.beforeUpsertDirector((List<AccountContactRelation>) newMap.Values());
+        if (!this.hasRun() ) {
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledMarkRun__c){
+                this.markRun();
+            }
+            NSP_AccountContactRelationTriggerHelper.beforeUpsertDirector((List<AccountContactRelation>) newMap.Values());
+        }
     }
 
     /**
@@ -66,14 +71,18 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
 
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         
-        NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
-        accContactTriggerHelperObject.afterUpdateDirector((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
-        accContactTriggerHelperObject.afterUpdateJobTitle((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
-        //added as a part of STY-03658
-        NSP_AccountContactServiceHelper.createExternalUser((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+        if (!this.hasRun()  || this.timesRun() <2) {
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledMarkRun__c){
+                this.markRun();
+            }
+            NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
+            accContactTriggerHelperObject.afterUpdateDirector((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+            accContactTriggerHelperObject.afterUpdateJobTitle((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+            //added as a part of STY-03658
+            NSP_AccountContactServiceHelper.createExternalUser((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
     
-        NSP_AccountContactRelationTriggerHelper.createPlatformEventForACR((List<AccountContactRelation>) newMap.Values(), (Map<Id, AccountContactRelation>) oldMap);
-      
+            NSP_AccountContactRelationTriggerHelper.createPlatformEventForACR((List<AccountContactRelation>) newMap.Values(), (Map<Id, AccountContactRelation>) oldMap);
+        }
     }
     
     /**
