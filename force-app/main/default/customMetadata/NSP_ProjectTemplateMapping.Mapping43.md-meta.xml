@@ -8,10 +8,10 @@
     </values>
     <values>
         <field>Template_ID__c</field>
-        <value xsi:type="xsd:string">a2oDE00000193phYAA</value>
+        <value xsi:type="xsd:string">a2o4x0000012Qf2AAE</value>
     </values>
     <values>
         <field>Template_Name__c</field>
-        <value xsi:type="xsd:string">iSolved-Other</value>
+        <value xsi:type="xsd:string">iSolved - Other</value>
     </values>
 </CustomMetadata>

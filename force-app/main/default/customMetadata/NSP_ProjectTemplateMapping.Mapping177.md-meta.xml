@@ -8,10 +8,10 @@
     </values>
     <values>
         <field>Template_ID__c</field>
-        <value xsi:type="xsd:string">a2oDE00000193phYAA</value>
+        <value xsi:type="xsd:string">a2o4x0000012QdYAAU</value>
     </values>
     <values>
         <field>Template_Name__c</field>
-        <value xsi:type="xsd:string">TES HR Compliance Review</value>
+        <value xsi:type="xsd:string">HR Compliance Review</value>
     </values>
 </CustomMetadata>
