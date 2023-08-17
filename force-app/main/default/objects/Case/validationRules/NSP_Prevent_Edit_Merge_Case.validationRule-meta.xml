@@ -61,8 +61,8 @@ ISCHANGED(ParentId),
 ISCHANGED(NSP_PayrollSpecialistName__c),
 ISCHANGED(NSP_PenaltiesPaidByClient__c),
 ISCHANGED(NSP_PenaltiesPaidByNSP__c),
-ISCHANGED(NSP_PenaltiesSavedByClient__c)
-
+ISCHANGED(NSP_PenaltiesSavedByClient__c),
+ISCHANGED(Status)
 ),
 ISPICKVAL(PRIORVALUE(Status),&apos;Merged&apos;)
 )</errorConditionFormula>
