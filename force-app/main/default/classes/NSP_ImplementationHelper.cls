@@ -185,9 +185,6 @@ public class NSP_ImplementationHelper {
             }
 
             when 'NSP_Pay_Frequency__c'{
-                if(value==null){
-                	return value;
-                }
                 return value == 'Biweekly' ? 'Bi-Weekly' : value;  
             }
             
