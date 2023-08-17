@@ -16,7 +16,8 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    
+    // test w/ NSP_OpportunityTriggerHelperTest (??%)
+
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static final List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
