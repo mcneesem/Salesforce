@@ -28,7 +28,7 @@
     <applicationVisibilities>
         <application>NSP_Field_Service</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Relationship_Management</application>

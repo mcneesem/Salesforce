@@ -14,11 +14,11 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>FSL__FieldService</application>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>FSL__FieldService_Admin</application>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Insperity</application>
@@ -50,7 +50,7 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>NSP_Field_Service</application>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Relationship_Management</application>
