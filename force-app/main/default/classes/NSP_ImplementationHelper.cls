@@ -5,6 +5,8 @@
 * Name : NSP_ImplementationHelper
 */
 public class NSP_ImplementationHelper {
+    // test w/ NSP_ImplementationHelperTest (??%)
+
     // URL Params for Copy Action
     private static final String SOURCE_PARAM = 'source';
     private static final String REC_TYPE_PARAM = 'recType';
@@ -182,6 +184,10 @@ public class NSP_ImplementationHelper {
                     return feinString.substring(0, 2)+'-'+feinString.substring(2);
                 }
                 return feinString;
+            }
+
+            when 'NSP_Pay_Frequency__c'{
+                return value == 'Biweekly' ? 'Bi-Weekly' : value;  
             }
             
             when else {
