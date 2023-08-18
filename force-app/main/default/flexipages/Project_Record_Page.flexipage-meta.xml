@@ -1593,6 +1593,16 @@
                 <identifier>forceChatter_publisher</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-d08c38dc-14c6-464f-b031-1ee398727584</name>
         <type>Facet</type>
     </flexiPageRegions>
