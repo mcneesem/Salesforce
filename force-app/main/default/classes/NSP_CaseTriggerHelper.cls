@@ -553,8 +553,7 @@ Date        : 30/09/2021
         Map<Id,Boolean> isBlockCaseId = new Map<Id,Boolean>();
         for(Task eachTask : [SELECT Id, WhatId,Subject,Status,IsClosed,TaskSubtype,NSP_Minutes_spent_on_task__c  
                              FROM Task 
-                             WHERE (status != 'Completed' OR 
-                                    IsClosed = false) AND 
+                             WHERE (IsClosed = false) AND 
                              WhatId IN: caseList]){
                                  isBlockCaseId.put(eachTask.WhatId,true);
                              }
