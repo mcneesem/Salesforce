@@ -496,7 +496,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 if(templateUsed.contains('{') || templateUsed.contains('}')){
                     String tempRemovedSingleBrances = templateUsed.remove('{');
                     String tempRemovedSecondBraces  = tempRemovedSingleBrances.remove('}');
-                    project.Templates_Used__c =tempRemovedSecondBraces;
+                    project.Templates_Used__c = tempRemovedSecondBraces.length()>255? tempRemovedSecondBraces.substring(0, 255):tempRemovedSecondBraces;
                 }
 
                 listOfProject.add(project);
