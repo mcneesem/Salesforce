@@ -5,7 +5,7 @@
 * Name : NSP_ImplementationHelper
 */
 public class NSP_ImplementationHelper {
-    // test w/ NSP_ImplementationHelperTest (??%)
+    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (80%)
 
     // URL Params for Copy Action
     private static final String SOURCE_PARAM = 'source';
