@@ -94,7 +94,7 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id,pse__Project_Task__c> mCompletedTasks = new Map<Id,pse__Project_Task__c>();
         for(pse__Project_Task__c oProjectTask: lProjectTasks){
             String oldStatus = mOldProjecTasks.get(oProjectTask.Id).pse__Status__c;
-                        if(oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && oProjectTask.pse__Status__c != oldStatus){
+            if(oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && oProjectTask.pse__Status__c != oldStatus){
                 oProjectTask.pse__Actual_End_Date_Time__c = Datetime.now();
                 oProjectTask.pse__Completed__c = true;
                 mCompletedTasks.put(oProjectTask.Id,oProjectTask);
@@ -1462,7 +1462,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         Id recordTypeIdWxImpl = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.WX_IMPL);
         //Get email template
         EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_First_Live_Payroll_Case_Creation_Email');
-        OrgWideEmailAddress orgWideAddress;
+OrgWideEmailAddress orgWideAddress;
         if(Label.NSP_Report_Dev_OrgWideEmail != null && !Test.isRunningTest()){
             List<String> orgWideEmailFields = new List<String>{'Id'};
                 String query = new NSP_QueryBuilder(NSP_ServiceConstants.ORG_WIDE_EMAIL_SOBJECT_TYPE, orgWideEmailFields)
@@ -1502,7 +1502,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             email.setWhatId(eachCase.Id);
             email.setSaveAsActivity(false);
             if(orgWideAddress != null && orgWideAddress.Id != null && !Test.isRunningTest()){
-                    email.setOrgWideEmailAddressId(orgWideAddress.Id);
+                email.setOrgWideEmailAddressId(orgWideAddress.Id);
             }
             lstEmailMessages.add(email);
         }
