@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_Department_list__c</fullName>
+    <externalId>false</externalId>
+    <label>RET Department list</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PRES : RETSVC : 2620 : 2620001</fullName>
+                <default>false</default>
+                <label>PRES : RETSVC : 2620 : 2620001</label>
+            </value>
+            <value>
+                <fullName>PRES : RETSVC : 2640 : 2640001</fullName>
+                <default>false</default>
+                <label>PRES : RETSVC : 2640 : 2640001</label>
+            </value>
+            <value>
+                <fullName>PRES : RETSVC : 2641 : 2641001</fullName>
+                <default>false</default>
+                <label>PRES : RETSVC : 2641 : 2641001</label>
+            </value>
+            <value>
+                <fullName>PRES : RETSVC : 2644 : 2644001</fullName>
+                <default>false</default>
+                <label>PRES : RETSVC : 2644 : 2644001</label>
+            </value>
+            <value>
+                <fullName>PRES : RETSVC : 2648 : 2648001</fullName>
+                <default>false</default>
+                <label>PRES : RETSVC : 2648 : 2648001</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

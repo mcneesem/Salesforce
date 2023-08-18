@@ -48,6 +48,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_RET_Department_list__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_RET_Groups__c</field>
             </layoutItems>
             <layoutItems>
