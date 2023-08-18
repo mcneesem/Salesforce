@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_iSolved_Time_Support_Case</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NSP_Case_Created_date__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>NSP_Due_Date__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CREATEDBY_USER.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <label>iSolved Time Support</label>
+    <queue>NSP_iSolved_Time_Support</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
