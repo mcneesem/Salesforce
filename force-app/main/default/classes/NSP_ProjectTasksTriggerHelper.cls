@@ -94,6 +94,7 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id,pse__Project_Task__c> mCompletedTasks = new Map<Id,pse__Project_Task__c>();
         for(pse__Project_Task__c oProjectTask: lProjectTasks){
             String oldStatus = mOldProjecTasks.get(oProjectTask.Id).pse__Status__c;
+            oProjectTask.pse__Actual_End_Date_Time__c = oldStatus != oProjectTask.pse__Status__c && oldStatus == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED ? null : oProjectTask.pse__Actual_End_Date_Time__c;
             if(oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && oProjectTask.pse__Status__c != oldStatus){
                 oProjectTask.pse__Actual_End_Date_Time__c = Datetime.now();
                 oProjectTask.pse__Completed__c = true;
