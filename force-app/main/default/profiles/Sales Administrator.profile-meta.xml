@@ -2184,6 +2184,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.NSP_Sales_Division__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.NSP_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2195,6 +2200,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.NSP_Sales_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.NSP_SalesRegion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
