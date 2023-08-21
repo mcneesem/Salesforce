@@ -16,7 +16,8 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    
+    // test w/ NSP_OpportunityTriggerHelperTest (??%)
+
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static final List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
@@ -103,7 +104,7 @@ public class NSP_OpportunityTriggerHelper {
                User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
                List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
                if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
-        validateClosedDate(closedOppList);
+        //validateClosedDate(closedOppList);
         }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -311,9 +312,9 @@ public class NSP_OpportunityTriggerHelper {
                  // Added as part of 195079
                  List<String> userRolesToByPass = Label.NSP_Bypass_Roles_from_Validation.split(',');
 
-                 if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
+                 /*if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
                     validateClosedDate(closedOppList);
-                }
+                }*/
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
@@ -867,7 +868,7 @@ public class NSP_OpportunityTriggerHelper {
 * Params:       Opportunity opp
 * User-Story:   US-198540
 * ********************************************************************************************/ 
-public static boolean validateByNonProfitAndRole(Opportunity opp){
+/*public static boolean validateByNonProfitAndRole(Opportunity opp){
   
     if(byPassValidationOnRole== null){
         byPassValidationOnRole = new set<Id>();
@@ -884,7 +885,7 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
   
 
   return false;
-}
+}*/
 
 /***********************************************************************************************
 * MethodName: validateClosedDate
@@ -893,7 +894,7 @@ public static boolean validateByNonProfitAndRole(Opportunity opp){
 * Params:       List<Opportunity>OpportunityList
 * Defect:       DF-01716
 * ********************************************************************************************/ 
-public static void validateClosedDate(List<Opportunity> OpportunityList){
+/*public static void validateClosedDate(List<Opportunity> OpportunityList){
 
     Id loggedInUserId = UserInfo.getUserId();   
     set<Id> ncsGrpMemIdSet = new set<Id>();
@@ -912,7 +913,7 @@ public static void validateClosedDate(List<Opportunity> OpportunityList){
         } 
     }
     
-}
+}*/
 
 /* Description: This method sets sales office details from user 
      * 
