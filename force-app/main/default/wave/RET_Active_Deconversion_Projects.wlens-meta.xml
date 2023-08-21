@@ -3,7 +3,7 @@
     <content xsi:nil="true"/>
     <application>RET</application>
     <datasets>Project_with_Project_Task_and_Assignment</datasets>
-    <dateVersion>2</dateVersion>
+    <dateVersion>1</dateVersion>
     <description>RET Ops Processing monitors key project tasks in RET Deconversion projects for follow on activities.</description>
     <masterLabel>RET - Active Deconversion Projects</masterLabel>
     <visualizationType>valuestable</visualizationType>
