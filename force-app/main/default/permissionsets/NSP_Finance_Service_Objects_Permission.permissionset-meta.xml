@@ -2556,7 +2556,6 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-   
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_compensation_structu_Provide_Details__c</field>
@@ -11512,7 +11511,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Case</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
