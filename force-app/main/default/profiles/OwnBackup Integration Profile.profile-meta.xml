@@ -35,7 +35,12 @@
         <editable>true</editable>
         <field>Lead.Do_Not_Contact__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.NSP_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>   
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Due_to_OneTrust_Opt_Out_on_File__c</field>
