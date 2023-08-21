@@ -153,42 +153,49 @@ const APG_COLUMNS = {
     fieldName: 'NSP_Completed_Months_of_Service__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   accrualRate: {
     label: 'Accrual Rate',
     fieldName: 'NSP_Accrual_Rate__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   annualAccrualLimit: {
     label: 'Annual Accrual limit/Cap(hours)',
     fieldName: 'NSP_Annual_Accrual_Limit_Cap_Hours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maximumBalanceCapHours: {
     label: 'Maximum Balance Cap(hours)',
     fieldName: 'NSP_Maximum_Balance_Cap_Hours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   accrualPeriodLimitsHours: {
     label: 'Accrual Period limits(hours)',
     fieldName: 'NSP_Accrual_Period_limits_Hours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverHours: {
     label: 'Max Carryover Amount Hours',
     fieldName: 'NSP_Max_Carryoverhours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverPercent: {
     label: 'Max Carryover Amount %',
     fieldName: 'NSP_Max_Carryoverhours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   carryoverExpiresDaysDate: {
     label: 'Carryover Expires on (# of days or date)',
@@ -204,12 +211,14 @@ const APG_COLUMNS_AIMS = {
     fieldName: 'NSP_From__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   through: {
     label: 'Through',
     fieldName: 'NSP_Through__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   unit: {
     label: 'Unit',
@@ -222,48 +231,56 @@ const APG_COLUMNS_AIMS = {
     fieldName: 'NSP_Accrual_Rate__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maximumBalanceCapHours: {
     label: 'Max Balance Cap(days or hours)',
     fieldName: 'NSP_Maximum_Balance_Cap_Hours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverHours: {
     label: 'Max Carry Over Amount Hours',
     fieldName: 'NSP_Max_Carryoverhours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverPercent: {
     label: 'Max Carry Over Amount %',
     fieldName: 'NSP_Max_Carryoverhours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   }, 
   maxInLieuOfPayoutHours: {
     label: 'Max in Lieu of Payout Hours',
     fieldName: 'NSP_Max_in_Lieu_of_Payout_Hours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxInLieuOfPayoutPercent: {
     label: 'Max in Lieu of Payout %',
     fieldName: 'NSP_Max_in_Lieu_of_Payout_Hours__c',
     type: 'number',
-    cellAttributes: { alignment: 'left' },
+    cellAttributes: { alignment: 'left' },    
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   carryoverExpiresDaysDate: {
     label: 'Carryover Expires on (Number of days or date)',
     fieldName: 'NSP_Carryover_Expires_on_of_days_or_date__c',
     type: 'text',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxAmountThatExpires: {
     label: 'Max Amount that Expires (days or hours)',
     fieldName: 'NSP_Max_Amount_Expires_days_or_hours__c',
     type: 'number',
     cellAttributes: { alignment: 'left' },
+    typeAttributes: { maximumFractionDigits: '5' }
   }
 };
 

@@ -168,6 +168,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   accrualRate: {
     label: 'Accrual Rate',
@@ -175,6 +176,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   annualAccrualLimit: {
     label: 'Annual Accrual limit/Cap(hours)',
@@ -182,6 +184,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maximumBalanceCapHours: {
     label: 'Maximum Balance Cap(hours)',
@@ -189,6 +192,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   accrualPeriodLimitsHours: {
     label: 'Accrual Period limits(hours)',
@@ -196,6 +200,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverHours: {
     label: 'Max Carryover Hours',
@@ -203,6 +208,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverPercent: {
     label: 'Max Carryover %',
@@ -210,6 +216,7 @@ const APG_COLUMNS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   carryoverExpiresDaysDate: {
     label: 'Carryover Expires on (# of days or date)',
@@ -231,6 +238,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   through: {
     label: 'Through',
@@ -238,6 +246,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   unit: {
     label: 'Unit',
@@ -252,6 +261,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maximumBalanceCapHours: {
     label: 'Max Balance Cap(days or hours)',
@@ -259,6 +269,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverHours: {
     label: 'Max Carry Over Amount Hours',
@@ -266,6 +277,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxCarryOverPercent: {
     label: 'Max Carry Over Amount %',
@@ -273,6 +285,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   }, 
   maxInLieuOfPayoutHours: {
     label: 'Max in Lieu of Payout Hours',
@@ -280,6 +293,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   maxInLieuOfPayoutPercent: {
     label: 'Max in Lieu of Payout %',
@@ -287,6 +301,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   carryoverExpiresDaysDate: {
     label: 'Carryover Expires on (Number of days or date)',
@@ -301,6 +316,7 @@ const APG_COLUMNS_AIMS = {
     editable: true,
     type: 'number',
     cellAttributes: { alignment: 'left' }, wrapText: true,
+    typeAttributes: { maximumFractionDigits: '5' }
   },
   action: {
     type: 'action',
