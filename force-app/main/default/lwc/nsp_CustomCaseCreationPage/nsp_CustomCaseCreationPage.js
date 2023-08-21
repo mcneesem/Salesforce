@@ -1055,7 +1055,7 @@ if(this.isMultipleContactsSelected === false){
             for(let i=0; i<fileSize; i++){
                 let filesName = '';
                 let file = event.target.files[i];
-                filesName = filesName + file.name + ',';
+                filesName = filesName + file.name;
                 let freader = new FileReader();
                 this.attachmentFilesName.push(filesName);
                 freader.onload = f => {

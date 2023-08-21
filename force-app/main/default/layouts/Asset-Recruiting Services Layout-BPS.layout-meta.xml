@@ -210,7 +210,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NSP_Client__c</field>
+                <field>NSP_WO_AIMS_Client_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
