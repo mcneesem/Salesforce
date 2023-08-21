@@ -2647,7 +2647,11 @@
         <relatedList>NSP_Accrual_Profile_Account_Relationship__c.NSP_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
+        <fields>NAME</fields>
+        <fields>Note_Type__c</fields>
+        <fields>Note__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>NSP_Note__c.NSP_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
