@@ -38696,6 +38696,14 @@ m   <fieldPermissions>
         <default>false</default>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>NSP_Client_Sub_Plan_History__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>NSP_Sub_Plan_Change_History__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>AssetRETEducationAssociation__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
