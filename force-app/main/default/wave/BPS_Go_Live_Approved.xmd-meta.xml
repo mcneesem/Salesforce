@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata">
     <dataset>BPS_Go_Live_Approved</dataset>
-    <dates>
-        <alias>pse__Proj__c.Go Live Date</alias>
-        <firstDayOfWeek>-1</firstDayOfWeek>
-        <fiscalMonthOffset>0</fiscalMonthOffset>
-        <label>Go Live Date</label>
-        <sortIndex>0</sortIndex>
-        <type xsi:nil="true"/>
-    </dates>
     <dimensions>
         <field>Account.NSP_Status__c</field>
         <isDerived>false</isDerived>
@@ -37,9 +29,15 @@
         <sortIndex>2</sortIndex>
     </dimensions>
     <dimensions>
-        <field>NSP_Addres.Id</field>
+        <field>pse__Proj__c.Accountname.AccountPartner.Name</field>
         <isDerived>false</isDerived>
-        <label>Record ID</label>
+        <label>Partner</label>
         <sortIndex>3</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>pse__Proj__c.Accountname.AccountReferringPartner.Name</field>
+        <isDerived>false</isDerived>
+        <label>Referring Partner</label>
+        <sortIndex>4</sortIndex>
     </dimensions>
 </WaveXmd>

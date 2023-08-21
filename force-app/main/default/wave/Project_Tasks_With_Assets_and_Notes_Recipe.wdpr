@@ -672,7 +672,6 @@
       "action" : "join",
       "sources" : [ "JOIN33", "LOAD_DATASET22" ],
       "schema" : {
-        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -680,7 +679,7 @@
         }
       },
       "parameters" : {
-        "joinType" : "LEFT_OUTER",
+        "joinType" : "LOOKUP",
         "leftKeys" : [ "Asset.RecordTypeId" ],
         "rightQualifier" : "RecordType",
         "rightKeys" : [ "Id" ]
@@ -2615,8 +2614,8 @@
         "label" : "User to get project task owners Manager",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1092,
-        "left" : 1092.1,
+        "top" : 1232.7,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
