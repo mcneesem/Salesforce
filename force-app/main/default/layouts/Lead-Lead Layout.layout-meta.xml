@@ -212,11 +212,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_SDR__c</field>
             </layoutItems>
-            <fieldPermissions>
-                <editable>true</editable>
-                <field>Lead.NSP_Notes__c</field>
-                <readable>true</readable>
-            </fieldPermissions>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Notes__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
