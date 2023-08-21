@@ -52,6 +52,21 @@
                 <default>false</default>
                 <label>Finance Support Visibility</label>
             </value>
+            <value>
+                <fullName>Finance Funding Confidential</fullName>
+                <default>false</default>
+                <label>Finance Funding Confidential</label>
+            </value>
+            <value>
+                <fullName>Finance Garnishments Confidential</fullName>
+                <default>false</default>
+                <label>Finance Garnishments Confidential</label>
+            </value>
+            <value>
+                <fullName>Finance Client Equity Confidential</fullName>
+                <default>false</default>
+                <label>Finance Client Equity Confidential</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
