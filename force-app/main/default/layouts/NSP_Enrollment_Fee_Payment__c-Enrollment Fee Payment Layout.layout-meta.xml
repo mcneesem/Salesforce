@@ -74,10 +74,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Docupay_Upfront_fee__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Payment_Detail__c</field>
             </layoutItems>
         </layoutColumns>
@@ -102,10 +98,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Transaction_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Enrollment_Fee_Inc_Tax__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
