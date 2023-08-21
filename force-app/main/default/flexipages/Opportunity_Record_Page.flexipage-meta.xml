@@ -38,7 +38,7 @@
                         <valueListItems>
                             <value>Opportunity.NSP_GenerateDoc</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
@@ -53,6 +53,16 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>New_Client_Sales</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>BPS Service</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -109,7 +119,7 @@
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Send_for_Signature_CPQ</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -124,6 +134,11 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>BPS Service</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
