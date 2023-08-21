@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
-    <description>Calls the &quot;Account - loop over related assets&quot; subflow. 
+    <description>Updated to remove &quot;Not Equal to Hardware Asset&quot; entry criteria
+Calls the &quot;Account - loop over related assets&quot; subflow. 
 Current entry criteria requires AccountId not null and RT not Hardware_Asset</description>
     <environments>Default</environments>
     <interviewLabel>Asset - On Delete {!$Flow.CurrentDateTime}</interviewLabel>
@@ -32,13 +33,6 @@ Current entry criteria requires AccountId not null and RT not Hardware_Asset</de
             <targetReference>Account_loop_over_related_Assets_subflow</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
-        <filters>
-            <field>RecordTypeName__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Hardware_Asset</stringValue>
-            </value>
-        </filters>
         <filters>
             <field>AccountId</field>
             <operator>IsNull</operator>

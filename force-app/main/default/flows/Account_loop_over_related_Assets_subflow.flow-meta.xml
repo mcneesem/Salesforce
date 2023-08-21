@@ -65,7 +65,7 @@
             <label>Yes - a related Asset was deleted</label>
         </rules>
     </decisions>
-    <description>Autolaunched to loop over all non-Hardware_Asset records related to the Account, initially to update the &quot;Total Asset&quot; field as needed.</description>
+    <description>Updated to lock Account Name and FEIN. Autolaunched to loop over all non-Hardware_Asset records related to the Account, initially to update the &quot;Total Asset&quot; field as needed.</description>
     <environments>Default</environments>
     <interviewLabel>Account - loop over related Assets subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account - loop over related Assets subflow</label>
@@ -175,6 +175,12 @@
                 <elementReference>accountRecordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Account_Name_and_FEIN_Locked__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Total_Assets__c</field>
             <value>
