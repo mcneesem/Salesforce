@@ -17107,7 +17107,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Lead.NSP_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
