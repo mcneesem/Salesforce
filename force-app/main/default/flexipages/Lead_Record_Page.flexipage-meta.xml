@@ -1596,6 +1596,7 @@
                 <identifier>RecordNSP_Notes_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
         <name>Facet-2bd644d7-d846-4059-8f3d-df778ff50b9d</name>
         <type>Facet</type>
     </flexiPageRegions>
