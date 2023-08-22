@@ -209,6 +209,7 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
     public static void updatePrimaryForLastGroupMember(List<NSP_Account_Group_Member__c> oldList, Map<Id, NSP_Account_Group_Member__c> oldMap){
         
         try{
+            Map<String,String> wxGrpIdWithAccountId = new Map<String,String>();
             Map<String,String> mapAccIdGrp = new Map<String,String>();
             List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
             List<NSP_Account_Group__c> lstOfAccGrpsToUpdate = new List<NSP_Account_Group__c>();
@@ -216,9 +217,15 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             List<NSP_Account_Group_Member__c> lstOfNonPrimaryAccGrpMembrs = new List<NSP_Account_Group_Member__c>();
             
             for(NSP_Account_Group_Member__c accGrpM: oldList){
-                if(oldMap!=null && accGrpM.NSP_Primary__c == true){ 
+                if(oldMap != null && accGrpM.NSP_Primary__c == true && accGrpM.NSP_Type__c != NSP_ServiceConstants.ISOLVED){ 
                     mapAccIdGrp.put(accGrpM.NSP_Group__c, accGrpM.NSP_Member_Account__c);
+                } else if(accGrpM.NSP_Primary__c == true && accGrpM.NSP_Type__c == NSP_ServiceConstants.ISOLVED){
+                    wxGrpIdWithAccountId.put(accGrpM.NSP_Group__c, accGrpM.NSP_Member_Account__c);
                 }
+            }
+
+            if(!wxGrpIdWithAccountId.isEmpty()){
+                updatePrimaryAccountForWxAccountGroup(wxGrpIdWithAccountId);
             }
             
             //Setting Account Group Name to update with Primary Account Group Member Name
@@ -258,6 +265,80 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             }
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper', 'updatePrimaryForLastGroupMember', ex.getMessage());
+        }
+    }
+
+    /***********************************************************************
+    * @MethodName : updatePrimaryAccountForWxAccountGroup
+    * @Description: This method for testing WX Account Group 
+        if primary account is deleted from Account Group Member then Assign the Primary
+        Account i.e from Asset WX child lowest Number as Primary Group Member
+    * @param      : wxGrpIdWithAccountId
+    * @Story      : DF-05135
+    * @return     : void                          
+    **************************************************************************/
+    private static void updatePrimaryAccountForWxAccountGroup(Map<String, String> wxGrpIdWithAccountId){
+        Map<String, Id> wxParentIdWithAccountId = new Map<String, Id>();
+        List<NSP_Account_Group_Member__c> lstGrpMembers= new List<NSP_Account_Group_Member__c>();
+        Map<Id, Set<Id>> grpIdWithAccounts = new Map<Id, Set<Id>>();
+        Map<String, NSP_Account_Group_Member__c> acctWithGrpMember = new Map<String, NSP_Account_Group_Member__c>();
+        Map<Id, Id> grpIdWithAccId = new Map<Id, Id>();
+
+        if(!wxGrpIdWithAccountId.isEmpty()){
+            for(NSP_Account_Group__c accGrp : [SELECT Id, (SELECT Id, NSP_Group__c, NSP_Member_Account__c FROM Account_Group_Members__r) 
+                                               FROM NSP_Account_Group__c 
+                                               WHERE Id IN: wxGrpIdWithAccountId.keySet()])
+            {
+                if(!grpIdWithAccounts.containsKey(accGrp.Id)) {
+                    grpIdWithAccounts.put(accGrp.Id, new Set<Id>());
+                }
+                for(NSP_Account_Group_Member__c accGrpMber : accGrp.Account_Group_Members__r) {
+                    grpIdWithAccounts.get(accGrp.Id).add(accGrpMber.NSP_Member_Account__c);
+                    acctWithGrpMember.put(accGrpMber.NSP_Group__c+'_'+accGrpMber.NSP_Member_Account__c, accGrpMber);
+                }
+            }
+        }
+        
+        if(!wxGrpIdWithAccountId.isEmpty()) {
+            for(Asset asset: [SELECT AccountId, NSP_WX_WA_Parent_ID__c, NSP_WX_WA_CHILD_ID__c FROM Asset
+                               WHERE AccountId IN (SELECT NSP_Member_Account__c FROM NSP_Account_Group_Member__c WHERE NSP_Group__c IN: wxGrpIdWithAccountId.keySet())
+                               AND NSP_WX_WA_Parent_ID__c != NULL 
+                               AND NSP_WX_WA_CHILD_ID__c != NULL
+                               AND RecordTypeId =: NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WX_WA)
+                               AND AccountId NOT IN: wxGrpIdWithAccountId.values()
+                               AND (status !=: NSP_ServiceConstants.ASSETBLACKOUT OR status !=: NSP_ServiceConstants.TERMINATED)
+                               ORDER BY NSP_WX_WA_Parent_ID__c, NSP_WX_WA_CHILD_ID__c ASC NULLS LAST
+                              ]) {
+                                  if(!wxParentIdWithAccountId.containsKey(asset.NSP_WX_WA_Parent_ID__c)){
+                                      wxParentIdWithAccountId.put(asset.NSP_WX_WA_Parent_ID__c, asset.AccountId);
+                                  }
+                              }
+        }
+        
+        if(!grpIdWithAccounts.isEmpty()) {
+            for(Id grpId : grpIdWithAccounts.keySet()) {
+                for(String parentId : wxParentIdWithAccountId.keySet()) {
+                    Set<Id> accts = grpIdWithAccounts.get(grpId);
+                    if(accts.retainAll(new Set<Id>{ wxParentIdWithAccountId.get(parentId) })) {
+                        grpIdWithAccId.put(grpId, wxParentIdWithAccountId.get(parentId));
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(!grpIdWithAccId.isEmpty()) {
+            for(String grpId : grpIdWithAccId.keySet()) {
+                Id accountId = grpIdWithAccId.get(grpId);
+                NSP_Account_Group_Member__c accGrpMbr = acctWithGrpMember.get(grpId+'_'+accountId);
+                accGrpMbr.NSP_Primary__c = true;
+                lstGrpMembers.add(accGrpMbr);
+            }
+        }
+        
+        if(!lstGrpMembers.isEmpty()) {
+            Database.SaveResult[] accGrpMemberUpdateList = Database.update(lstGrpMembers,false);
+            NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'updatePrimaryAccountForWxAccountGroup:WXAccountGroupMemberUpdate', accGrpMemberUpdateList);
         }
     }
 
