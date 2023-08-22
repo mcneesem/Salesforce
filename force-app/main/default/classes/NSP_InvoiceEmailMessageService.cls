@@ -192,10 +192,7 @@ public class NSP_InvoiceEmailMessageService {
         else if (isCreditCard){
             templateId = CREDITCARD_TEMPLATEID;
         }
-        //No Payment Method Link and Preferred payment is ACH
-        else if(invLine!=null && invLine.NSP_Payment_Method__c==null && inv.NSP_Payment_Method_Count__c > 0){
-            templateId=ACHTEMPLATEID;
-        }
+        //No Payment Method Link
         else{
             templateId=PAYMENTTEMPLATEID;
         }
