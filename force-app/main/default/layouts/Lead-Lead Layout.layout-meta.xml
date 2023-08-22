@@ -212,6 +212,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_SDR__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Notes__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
