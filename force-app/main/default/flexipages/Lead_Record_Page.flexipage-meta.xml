@@ -1585,16 +1585,6 @@
                 <fieldItem>Record.NSP_SDR__c</fieldItem>
                 <identifier>RecordNSP_SDR_cField2</identifier>
             </fieldInstance>
-            <itemInstances>
-                <fieldInstance>
-                    <fieldInstanceProperties>
-                        <name>uiBehavior</name>
-                        <value>none</value>
-                    </fieldInstanceProperties>
-                    <fieldItem>Record.NSP_Notes__c</fieldItem>
-                    <identifier>RecordNSP_Notes_cField</identifier>
-                </fieldInstance>
-            </itemInstances>
         </itemInstances>
         <name>Facet-2bd644d7-d846-4059-8f3d-df778ff50b9d</name>
         <type>Facet</type>
