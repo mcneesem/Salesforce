@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Provides the permissions to update an Account&apos;s Name and FEIN when an Asset is associated to the Account</description>
+    <isLicensed>false</isLicensed>
+    <label>Account - Name and FEIN Edit Permission</label>
+</CustomPermission>

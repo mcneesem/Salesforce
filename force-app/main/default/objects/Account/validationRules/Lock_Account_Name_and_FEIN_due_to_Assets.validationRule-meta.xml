@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_Account_Name_and_FEIN_due_to_Assets</fullName>
+    <active>true</active>
+    <description>The Account Name and FEIN fields should be locked to all users except those with the Account_Name_and_FEIN_Edit_Permission custom permission when there is at least one Asset record associated with the Account</description>
+    <errorConditionFormula>AND( Account_Name_and_FEIN_Locked__c ,
+NOT( $Permission.Account_Name_and_FEIN_Edit_Permission ),
+OR(ISCHANGED( Name ),
+ISCHANGED( NSP_FEIN__c ))
+)</errorConditionFormula>
+    <errorMessage>Because there is an Asset related to this Account, you do not have permission to change the Account Name or FEIN.</errorMessage>
+</ValidationRule>
