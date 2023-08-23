@@ -26,7 +26,7 @@ const LABEL = {
   NSP_SEO_wht_benefits_enrolled_in_coverge__c:
     "SEO - what benefits are they enrolled in and their coverage level",
   NSP_usng_third_pary_timekeeping_system__c:
-    "Is the client using a third pary (non-Insperity) timekeeping system?",
+    "Is the client using a third party (non-Insperity) timekeeping system?",
   NSP_Wht_custom_fields_they_hv_in_Premier__c:
     "What custom fields do they have in Premier?",
   NSP_Any_APIs_or_File_Feeds_frm_Insperity__c:
