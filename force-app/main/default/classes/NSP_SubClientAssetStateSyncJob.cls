@@ -21,8 +21,7 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
         return Database.getqueryLocator(
             [
                 SELECT Id , OldValue , NewValue , Field , ParentId , Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c , DataType
-                FROM NSP_Sub_Client_Contact_Address__History
-                WHERE ( Field = 'NSP_Address_State_Changed_Date__c' )
+                FROM NSP_Sub_Client_Contact_Address__History WHERE CreatedDate >=: last4Hours AND ( Field = 'NSP_Address_State_Changed_Date__c' )
             ]
         );
         
@@ -72,7 +71,7 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
     
     public void execute(SchedulableContext scon) {
         //Executes Batch
-        Database.executeBatch(new NSP_SubClientAssetSyncJob(),200);
+        Database.executeBatch(new NSP_SubClientAssetStateSyncJob(),200);
     }
     
     // ********************************************************************************************
@@ -107,14 +106,10 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
             Id , NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c , NSP_Address_Type__c ,
             NSP_State__c , NSP_Sub_Client_Contact__c , NSP_Sub_Client_Contact__r.NSP_Sub_Client__c
             FROM NSP_Sub_Client_Contact_Address__c 
-            WHERE (
-                ( NSP_Sub_Client_Contact__r.NSP_Paid_Non_Paid__c = 'Paid WSEE' )
-                AND ( NSP_Sub_Client_Contact__r.NSP_Employee_Status__c != 'TERMINATED' )
-                AND ( NSP_Sub_Client_Contact__c =:subClientContact )
-                AND ( NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null )
-                AND ( NSP_State__c != null )
-            )
+            WHERE NSP_Sub_Client_Contact__c =:subClientContact AND  NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null AND NSP_State__c != null
+            AND NSP_Sub_Client_Contact__r.NSP_Paid_Non_Paid__c = 'Paid WSEE' AND  NSP_Sub_Client_Contact__r.NSP_Employee_Status__c != 'TERMINATED' 
         ];
+        
         for(NSP_Sub_Client_Contact_Address__c subClientConAddress : subClientConAddresses ) {
             if(subClientByStates.containsKey(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c)) {
                 String states = subClientByStates.get(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c);
@@ -164,4 +159,3 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
     }  
     
 }
-//

@@ -18,7 +18,7 @@ global class NSP_SubClientAssetSyncJob implements Database.Batchable<sObject>, S
         DateTime last4Hours = system.now().addHours(-4);
         //Get sub client contact history records
         Return Database.getqueryLocator([SELECT Id, OldValue, NewValue, Field, ParentId, DataType FROM NSP_Sub_Client_Contact__History 
-                                         WHERE (Field = 'NSP_Employee_Status__c' OR Field = 'NSP_Paid_Non_Paid__c' OR Field = 'NSP_Union_Employee__c')]);
+                                        WHERE CreatedDate >=: last4Hours AND (Field = 'NSP_Employee_Status__c' OR Field = 'NSP_Paid_Non_Paid__c' OR Field = 'NSP_Union_Employee__c')]);
         
     }
     
@@ -46,17 +46,10 @@ global class NSP_SubClientAssetSyncJob implements Database.Batchable<sObject>, S
         List<NSP_Sub_Client_Contact__c> subClientContact = [SELECT Id, NSP_Sub_Client__c, NSP_Paid_Non_Paid__c, NSP_Employee_Status__c, NSP_Union_Employee__c FROM 
                                                             NSP_Sub_Client_Contact__c WHERE Id =:setOfParentIds AND NSP_Sub_Client__c != null];
         
-        system.debug('subClientContact' + subClientContact);
-        
         
         //Collect all sub client 
         for(NSP_Sub_Client_Contact__c subClientCon : subClientContact) {
             setSubClient.add(subClientCon.NSP_Sub_Client__c);
-            
-            system.debug('subClientCon' + subClientCon);
-            
-            system.debug('setSubClient' + setSubClient);
-            
             
         }
         
@@ -91,7 +84,6 @@ global class NSP_SubClientAssetSyncJob implements Database.Batchable<sObject>, S
             }
             
             //Logic to update State of Operation
-            system.debug('subClientContact' + subClientContact);
             /*if(subClientContact.size() > 0){
                 updateStateOfOperation(subClientContact);
             }*/
