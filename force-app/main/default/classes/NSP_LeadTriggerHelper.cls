@@ -153,7 +153,10 @@ public class NSP_LeadTriggerHelper {
       Boolean isOwnerAssignment = true;
       Boolean isZipCodeUpdate = false;
       /* Added as part of DF-01846*/
-        User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+       //228901 - Added Trigger Switch for SOQL issue
+       if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+           User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
+       }
         /* Added as part of STY-01725 */
         //iterating over trigger.newmap
         for (Id leadId: leadNewMap.keySet()) {

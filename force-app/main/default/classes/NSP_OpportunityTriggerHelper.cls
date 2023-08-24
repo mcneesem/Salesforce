@@ -16,8 +16,7 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    // test w/ NSP_OpportunityTriggerHelperTest (??%)
-
+    
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static final List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
@@ -28,7 +27,7 @@ public class NSP_OpportunityTriggerHelper {
     public static boolean valueAssignedFromUser = false;
     public static boolean createRewardsOnce = false;
     private static final string ClosedWonErrorMessage = System.Label.NSP_ClosedWonChecklistValidation;
-	private static set<Id>  byPassValidationOnRole = null;
+    private static set<Id>  byPassValidationOnRole = null;
     private List<UserRole> notAllowedCloseWonRoles = null;
     private String userRole = UserInfo.getUserRoleId();
     
@@ -99,13 +98,16 @@ public class NSP_OpportunityTriggerHelper {
             closedOppList.add(opportunityObject);
             }
         }      
-        
+        //228901 -- Added Trigger Switch as validateClosedDate was not needed
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c || Test.isRunningTest()){
                // Added as part of DF-01716
                User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
                List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
                if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name)){
         //validateClosedDate(closedOppList);
-        }
+               }
+        
+		}
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         //Setting direct assignments to opportunity records
@@ -178,7 +180,13 @@ public class NSP_OpportunityTriggerHelper {
         createContactRole(newList,opportunityNewMap);
         // Send the list to publish event bus
         Id profileId=userinfo.getProfileId();
-        String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+        //228901 - For fixing SOQL changed to metadata query
+        String profileName;
+        if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+            profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;            
+        } else {
+            profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+        }
         /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
         if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
             publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);       
@@ -305,7 +313,8 @@ public class NSP_OpportunityTriggerHelper {
             }
 
         }
-
+        //228901 -- Added Trigger Switch as validateClosedDate was not needed
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c || Test.isRunningTest()){
                  // Added as part of DF-01716
                  User userDetails =[ SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id =: userinfo.getUserId() ];
                  List<String> profilesToByPass = Label.NSP_Profile_To_Skip_OLI_Validation.split(',');
@@ -315,6 +324,7 @@ public class NSP_OpportunityTriggerHelper {
                  /*if(!closedOppList.isEmpty() && !profilesToByPass.contains(userDetails.Profile.Name) && !userRolesToByPass.contains(userDetails.UserRole.Name)){
                     validateClosedDate(closedOppList);
                 }*/
+        }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
@@ -482,7 +492,13 @@ public class NSP_OpportunityTriggerHelper {
         if(updateResyncFlagOpportunityList.size() > 0){
             /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
             Id profileId = userinfo.getProfileId();
-            String profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+            //228901 - For fixing SOQL changed to metadata query
+            String profileName;
+            if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+                profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
+            } else {
+                profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
+            }
             if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
             }
@@ -1168,8 +1184,8 @@ public class NSP_OpportunityTriggerHelper {
     * Description : This method will create OCR
     * Params:       List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap
     * Author : Rahul Singh
-	* Created Date:10/26/22
-	* Created as part of User story - 128223
+    * Created Date:10/26/22
+    * Created as part of User story - 128223
     * ********************************************************************************************/   
     
     public void createContactRole(List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap)
