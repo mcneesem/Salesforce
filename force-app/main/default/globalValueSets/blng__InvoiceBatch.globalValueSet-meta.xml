@@ -106,16 +106,6 @@
         <isActive>false</isActive>
         <label>Not Invoice Ready</label>
     </customValue>
-    <customValue>
-        <fullName>Retirement Services Recurring - WO</fullName>
-        <default>false</default>
-        <label>Retirement Services Recurring - WO</label>
-    </customValue>
-    <customValue>
-        <fullName>Retirement Services Recurring - Non WO</fullName>
-        <default>false</default>
-        <label>Retirement Services Recurring - Non WO</label>
-    </customValue>
     <masterLabel>Invoice Batch</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
