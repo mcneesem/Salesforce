@@ -25913,6 +25913,11 @@ m   <fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>User.NSP_RET_Department_list__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>dfsle__EnvelopeConfiguration__c.NSP_CustomExternalId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -38690,6 +38695,14 @@ m   <fieldPermissions>
         <visible>false</visible>
         <default>false</default>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>NSP_Client_Sub_Plan_History__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>NSP_Sub_Plan_Change_History__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>AssetRETEducationAssociation__c</tab>
         <visibility>Hidden</visibility>

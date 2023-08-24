@@ -2,8 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Asset__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>DF-05706 - Update Asset__c  to &quot;Asset (Not Used)&quot;</description>
     <externalId>false</externalId>
-    <label>Asset</label>
+    <label>Asset (Not Used)</label>
     <referenceTo>Asset</referenceTo>
     <relationshipLabel>RET-Educations (Asset)</relationshipLabel>
     <relationshipName>AssetRETEducations</relationshipName>

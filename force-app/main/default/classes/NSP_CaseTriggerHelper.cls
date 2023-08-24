@@ -34,6 +34,7 @@ public class NSP_CaseTriggerHelper {
     private static final Id dolAuditsRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.DO_AUDITS_RECORDTYPE);
     private static final Id wageClaimsRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE);
     private static final String CASE_SUB_STATUS_IN_PROGRESS = 'In Progress';
+    public static final String CASE_REASON_COMPLETE = 'Complete';
     
     
     /**
@@ -522,6 +523,8 @@ Date        : 30/09/2021
                    eachCase.OwnerId = getAccountTeamMember(eachCase.AccountId);
                    eachCase.NSP_Case_Sub_Status__c = NSP_SalesConstants.Resolved;
                    eachCase.Status = NSP_SalesConstants.Closed;
+                   //STY-04507 - When update the sub category of the case from null to FLSA Quick Check Service then Resolution is Complete
+                   eachCase.Reason = CASE_REASON_COMPLETE;
                }
            } 
         return eachCase;
@@ -553,8 +556,7 @@ Date        : 30/09/2021
         Map<Id,Boolean> isBlockCaseId = new Map<Id,Boolean>();
         for(Task eachTask : [SELECT Id, WhatId,Subject,Status,IsClosed,TaskSubtype,NSP_Minutes_spent_on_task__c  
                              FROM Task 
-                             WHERE (status != 'Completed' OR 
-                                    IsClosed = false) AND 
+                             WHERE (IsClosed = false) AND 
                              WhatId IN: caseList]){
                                  isBlockCaseId.put(eachTask.WhatId,true);
                              }

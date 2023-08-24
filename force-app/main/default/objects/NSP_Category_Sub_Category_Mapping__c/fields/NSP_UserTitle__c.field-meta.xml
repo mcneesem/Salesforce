@@ -81,9 +81,9 @@
                 <label>EEO</label>
             </value>
             <value>
-                <fullName>Finance Operations</fullName>
+                <fullName>Finance Service User</fullName>
                 <default>false</default>
-                <label>Finance Operations</label>
+                <label>Finance Service User</label>
             </value>
             <value>
                 <fullName>FLSA</fullName>
@@ -94,6 +94,11 @@
                 <fullName>HR Specialist</fullName>
                 <default>false</default>
                 <label>HR Specialist</label>
+            </value>
+            <value>
+                <fullName>HR COE</fullName>
+                <default>false</default>
+                <label>HR COE</label>
             </value>
             <value>
                 <fullName>Health &amp; Welfare</fullName>
@@ -229,6 +234,11 @@
                 <fullName>TES Support</fullName>
                 <default>false</default>
                 <label>TES Support</label>
+            </value>
+            <value>
+                <fullName>Finance Leader</fullName>
+                <default>false</default>
+                <label>Finance Leader</label>
             </value>
         </valueSetDefinition>
     </valueSet>

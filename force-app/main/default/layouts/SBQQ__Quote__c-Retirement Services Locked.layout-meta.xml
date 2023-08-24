@@ -93,6 +93,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>NSP_Pricing_Model__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>SBQQ__ExpirationDate__c</field>
             </layoutItems>
         </layoutColumns>

@@ -54,7 +54,7 @@ get findAge(){
 	 	 
 	let  ageDate = new Date(difference); 
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        if(age > 40)
+        if(age >= 40)
         {
         this.template.querySelector('div.AgeOverForty')!=null?
         ( this.template.querySelector('div.AgeOverForty').style.display='',this.NSP_WSEE_SameUnit_as_Others_Last_90_days = true ) : ''; 

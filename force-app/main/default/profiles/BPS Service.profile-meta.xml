@@ -28,7 +28,7 @@
     <applicationVisibilities>
         <application>NSP_Field_Service</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Relationship_Management</application>
@@ -35210,6 +35210,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.dfsle__Username__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.NSP_RET_Department_list__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

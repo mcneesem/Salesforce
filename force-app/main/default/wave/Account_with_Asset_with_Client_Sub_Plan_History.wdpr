@@ -424,7 +424,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_NS_External_ID__c", "Id", "RecordTypeId", "NSP_Account_Status_Date__c", "NSP_Account_Status__c", "NSP_Company_Name__c", "NSP_Price_Level__c", "NSP_Client_is_Lead_Parent__c", "NSP_RET_lead_parent__c", "NSP_RET_Client_ID__c", "NSP_RET_Client_Type__c" ],
+        "fields" : [ "NSP_RET_Client_ID__c", "NSP_RET_Client_Type__c", "NSP_RET_lead_parent__c", "NSP_RET_Plan_and_Sub_Plan__c", "Id", "RecordTypeId", "NSP_Account_Status_Date__c", "NSP_Account_Status__c", "NSP_Company_Name__c", "NSP_NS_External_ID__c", "NSP_Client_is_Lead_Parent__c", "NSP_Price_Level__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
@@ -668,7 +668,6 @@
       "action" : "join",
       "sources" : [ "JOIN11", "LOAD_DATASET12" ],
       "schema" : {
-        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -677,9 +676,9 @@
       },
       "parameters" : {
         "joinType" : "LOOKUP",
-        "leftKeys" : [ "NSP_Subplan_Lead_Parent__c" ],
+        "leftKeys" : [ "Id" ],
         "rightQualifier" : "Asset",
-        "rightKeys" : [ "Id" ]
+        "rightKeys" : [ "NSP_RET_Plan_and_Sub_Plan__c" ]
       }
     },
     "OUTPUT4" : {
@@ -690,7 +689,8 @@
         "dataset" : {
           "type" : "analyticsDataset",
           "label" : "Plan, Plan Subplan, Asset DS",
-          "name" : "RET_Client_Count_by_Price_Level_DataSet"
+          "name" : "RET_Client_Count_by_Price_Level_DataSet",
+          "folderName" : "RET"
         },
         "measuresToCurrencies" : [ ]
       }
