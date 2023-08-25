@@ -36673,7 +36673,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>pse__Proj__c.Assignment_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
