@@ -1393,7 +1393,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         List<String> stateCodes=new List<String>{'NH','WY','ND','WA','NY','MA','VA','OH','RI'};
         List<String> businessStates=new List<String>{'MA','NY','RI','VA'};    
         if(((newIp.RecordTypeId == ipFSORecordTypeId && newIp.NSP_Business_Meeting_States__c!= null && findSharedValue(businessStates,newIp.NSP_Business_Meeting_States__c) )|| 
-		(newIp.RecordTypeId == ipMMRecordTypeId && newIp.NSP_Asset__c!=null &&  newIp.NSP_Business_Meeting_States__c!= null && findSharedValue(businessStates,newIp.Client_business_in_MA_NY_or_VA__c) )) && 
+		(newIp.RecordTypeId == ipMMRecordTypeId && newIp.NSP_Asset__c!=null &&  newIp.Client_business_in_MA_NY_or_VA__c!= null && findSharedValue(businessStates,newIp.Client_business_in_MA_NY_or_VA__c) )) && 
         newIp.Employees_work_in_the_following_states__c!=null && newIp.Client_does_business_in_MA_NY_or_VA__c!=null && 
         newIp.Effective_Date_Payroll_Worker_comp_EPLI__c!=null && findSharedValue(stateCodes,newIp.Employees_work_in_the_following_states__c)){
                    
