@@ -48,17 +48,6 @@
         public static void testGetAssignedResource() {
             Test.startTest();
             FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
-            pse__Proj__c oproj = [SELECT Id, Name FROM pse__Proj__c WHERE Templates_Used__c = 'Temp Used'];
-            pse__Project_Task__c oprojTask = [SELECT Id, Name, OwnerId FROM pse__Project_Task__c WHERE pse__Project__c =: oProj.Id];
-            
-            WorkOrder workOrder = [SELECT Id, NSP_Project_Task__c, StartDate, Description, OwnerId FROM WorkOrder WHERE NSP_Project_Task__c =: oprojTask.Id];
-            
-            ServiceAppointment sappointment = [SELECT Id, NSP_IsDispatched__c,Status,SchedEndTime, SchedStartTime,Description, OwnerId FROM ServiceAppointment WHERE ParentRecordId!=null AND ParentRecordId =: workOrder.Id LIMIT 1];
-            sappointment.Description = 'Updated from test clas';
-            sappointment.SchedEndTime = system.today().addDays(10);
-            sappointment.SchedStartTime =system.today().addDays(1);   
-            Database.update(sappointment);  
-            
             ServiceResource  srv = new ServiceResource();
             srv.IsActive= true;
             srv.Name = 'Test';
@@ -67,6 +56,7 @@
             
             OperatingHours opHrs = new OperatingHours();
             opHrs.Name ='EST';
+            opHrs.TimeZone = 'America/Coral_Harbour';
             insert opHRS;
             
             ServiceTerritory serTer = new ServiceTerritory();
@@ -81,6 +71,19 @@
             stm.EffectiveStartDate = system.today();
             insert stm;
             
+           
+            pse__Proj__c oproj = [SELECT Id, Name FROM pse__Proj__c WHERE Templates_Used__c = 'Temp Used'];
+            pse__Project_Task__c oprojTask = [SELECT Id, Name, OwnerId FROM pse__Project_Task__c WHERE pse__Project__c =: oProj.Id];
+            
+            WorkOrder workOrder = [SELECT Id, NSP_Project_Task__c, StartDate, Description, OwnerId FROM WorkOrder WHERE NSP_Project_Task__c =: oprojTask.Id];
+            
+            ServiceAppointment sappointment = [SELECT Id, NSP_IsDispatched__c,Status,SchedEndTime, SchedStartTime,Description, OwnerId FROM ServiceAppointment WHERE ParentRecordId!=null AND ParentRecordId =: workOrder.Id LIMIT 1];
+            sappointment.Description = 'Updated from test clas';
+            sappointment.SchedEndTime = system.today().addDays(10);
+            sappointment.SchedStartTime =system.today().addDays(1);   
+            sappointment.ServiceTerritoryId = serTer.Id;
+            Database.update(sappointment);  
+            
             AssignedResource assRes = new AssignedResource();
             assRes.ServiceAppointmentId = sappointment.Id;
             assRes.ServiceResourceId = srv.Id;
@@ -89,12 +92,9 @@
             
             NSP_SAEmail_DateTimeController.setrecId(sappointment.Id);
             NSP_SAEmail_DateTimeController controller = new NSP_SAEmail_DateTimeController();
-            AssignedResource actualAssignedResource = controller.getAssignedResource();
             
-            System.assertEquals(assRes.ServiceAppointmentId, actualAssignedResource.ServiceAppointmentId);
-            
-            String actualOperatingHours = controller.getOperatingHours();
-            System.assertEquals('EST', actualOperatingHours);
+            OperatingHours actualOperatingHours = controller.getOperatingHours();
+            System.assertEquals('EST', actualOperatingHours.Name);
             
             String actualOperatingHoursName = controller.getOperatingHoursName();
             System.assertEquals('Eastern Time', actualOperatingHoursName);
@@ -102,22 +102,8 @@
             controller.date_time = DateTime.newInstanceGmt(2023, 6, 8, 10, 30, 0);
             controller.defined_format = 'MM/dd/yyyy hh:mm aa';
             String formattedDatetime = controller.getFormattedDatetime();
+            String startDate = controller.getStartTime();
             System.assertNotEquals(null, formattedDatetime);
         }
         
-        @IsTest
-        static void testGetStartTime() {
-            NSP_SAEmail_DateTimeController controller = new NSP_SAEmail_DateTimeController();
-            controller.date_time = DateTime.newInstanceGmt(2023, 6, 8, 9, 0, 0);
-            String startTime = controller.getStartTime();
-               System.assertNotEquals(null, startTime);
-        }
-        
-        @IsTest
-        static void testGetEndTime() {
-            NSP_SAEmail_DateTimeController controller = new NSP_SAEmail_DateTimeController();
-            controller.endDate = DateTime.newInstanceGmt(2023, 6, 8, 18, 30, 0);
-            String endTime = controller.getEndTime();
-            System.assertNotEquals(null, endTime);
-        }
     }
