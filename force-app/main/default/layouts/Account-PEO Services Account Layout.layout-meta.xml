@@ -652,6 +652,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>blng__Account__c</fields>
+        <fields>blng__InvoiceDate__c</fields>
+        <fields>blng__TotalAmount__c</fields>
+        <fields>blng__Balance__c</fields>
+        <fields>blng__ARStatus__c</fields>
+        <fields>blng__StatusFlag__c</fields>
+        <relatedList>blng__Invoice__c.NSP_Primary_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>blng__PaymentDate__c</fields>
         <fields>blng__PaymentType__c</fields>
         <fields>blng__Amount__c</fields>
@@ -685,7 +695,7 @@
         <fields>blng__Unallocations__c</fields>
         <fields>blng__Balance__c</fields>
         <fields>blng__Status__c</fields>
-        <relatedList>blng__CreditNote__c.blng__BillToAccount__c</relatedList>
+        <relatedList>blng__CreditNote__c.NSP_Primary_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
