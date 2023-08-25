@@ -17273,6 +17273,11 @@ m   <fieldPermissions>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_Docupay_Upfront_fee_Inc_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Enrollment_Fee_Notes__c</field>
         <readable>true</readable>
@@ -17325,6 +17330,11 @@ m   <fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Transaction_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+     <field>NSP_Enrollment_Fee_Payment__c.NSP_WX_WA_Enrollment_Fee_Received__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37517,7 +37527,7 @@ m   <fieldPermissions>
         <layout>NSP_Engagement_Path__c-Engagement Path Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NSP_Enrollment_Fee_Payment__c-Enrollment Fee Payment Layout</layout>
+        <layout>NSP_Enrollment_Fee_Payment__c-Enrollment Fee Admin</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_Error_Log__c-Error Log Layout</layout>
