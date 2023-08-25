@@ -49643,11 +49643,11 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Report</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
    <tabVisibilities>
         <tab>standard-Dashboard</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>NSP_EOY_Amendment__c</tab>
