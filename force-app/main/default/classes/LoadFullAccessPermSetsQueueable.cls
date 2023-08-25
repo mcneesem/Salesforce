@@ -88,7 +88,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             	'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','Name','CurrencyIsoCode',
            		'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
 
-        List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName
+        List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName, IsCalculated
             FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName = :currObjName AND IsNameField=false AND QualifiedApiName NOT IN :skipFields];
 
         List<FieldPermissions> fpList = new List<FieldPermissions>();
@@ -109,7 +109,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 					fp.SobjectType = currObjName;
 					fp.Field = fName;
 				}
-                fp.PermissionsEdit = psMap.get(key);
+                fp.PermissionsEdit = (field.IsCalculated) ? false : psMap.get(key);
                 fp.PermissionsRead = true;
                 fpList.add(fp);
             }
@@ -117,14 +117,14 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
         Database.UpsertResult[] fprList = Database.upsert(fpList, false); // field perms results
 
-        for (Database.UpsertResult fpr : fprList) {
-            if (!fpr.isSuccess()) {
-                // retrieve errors for failed record upserts
-                for(Database.Error err : fpr.getErrors()) {
-                    System.debug(' ~ FieldPermissions error occurred: ' + err.getStatusCode() + ': ' + err.getMessage());
-                }
-            }
-        }
+        // for (Database.UpsertResult fpr : fprList) {
+        //     if (!fpr.isSuccess()) {
+        //         // retrieve errors for failed record upserts
+        //         for(Database.Error err : fpr.getErrors()) {
+        //             System.debug(' ~ FieldPermissions error occurred: ' + err.getStatusCode() + ': ' + err.getMessage());
+        //         }
+        //     }
+        // }
 
 		// chain new job for next object
         if (objectApiNames.size() > 0) {
