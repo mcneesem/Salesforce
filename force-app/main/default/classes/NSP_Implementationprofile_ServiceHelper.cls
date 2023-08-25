@@ -1391,10 +1391,11 @@ public class NSP_Implementationprofile_ServiceHelper {
     private void checkforWCNotification(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
         
         List<String> stateCodes=new List<String>{'NH','WY','ND','WA','NY','MA','VA','OH','RI'};
-            
-        if((newIp.RecordTypeId == ipFSORecordTypeId || (newIp.RecordTypeId == ipMMRecordTypeId && newIp.NSP_Asset__c!=null )) && 
+        List<String> businessStates=new List<String>{'MA','NY','RI','VA'};    
+        if(((newIp.RecordTypeId == ipFSORecordTypeId && newIp.NSP_Business_Meeting_States__c!= null && findSharedValue(businessStates,newIp.NSP_Business_Meeting_States__c) )|| 
+		(newIp.RecordTypeId == ipMMRecordTypeId && newIp.NSP_Asset__c!=null &&  newIp.NSP_Business_Meeting_States__c!= null && findSharedValue(businessStates,newIp.Client_business_in_MA_NY_or_VA__c) )) && 
         newIp.Employees_work_in_the_following_states__c!=null && newIp.Client_does_business_in_MA_NY_or_VA__c!=null && 
-        newIp.Effective_Date_Payroll_Worker_comp_EPLI__c!=null){
+        newIp.Effective_Date_Payroll_Worker_comp_EPLI__c!=null && findSharedValue(stateCodes,newIp.Employees_work_in_the_following_states__c)){
                    
                    if(existingRec == null || newIp.NSP_Form_Completed__c || newIp.Client_does_business_in_MA_NY_or_VA__c != existingRec.Client_does_business_in_MA_NY_or_VA__c
                       ||newIp.Effective_Date_Payroll_Worker_comp_EPLI__c != existingRec.Effective_Date_Payroll_Worker_comp_EPLI__c
@@ -1402,8 +1403,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                           updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, WC_NOTIFICATION_FN);
                       }
                }
-    }
-    
+    }  
     private  void emailNotifyforWCNotification(){
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(WC_NOTIFICATION_FN);
