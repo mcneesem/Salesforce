@@ -44882,6 +44882,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.NSP_WO_AIMS_Client_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.NSP_Service_Package__c</field>
         <readable>true</readable>
     </fieldPermissions>
