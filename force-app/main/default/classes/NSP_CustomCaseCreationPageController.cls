@@ -1,5 +1,6 @@
 public with sharing class NSP_CustomCaseCreationPageController {
     public static final String NOCONFIGERROR = 'No Case Type Configuration Found';
+    public static final String NSP_CUSTOMCASECREATIONPAGECONTROLLER = 'NSP_CustomCaseCreationPageController';
     
     @AuraEnabled(cacheable = true)
     public static List < NSP_Category_Sub_Category_Mapping__c > getCategoryList(String recordTypeId, Boolean isCatViewAll) {
@@ -111,32 +112,80 @@ public with sharing class NSP_CustomCaseCreationPageController {
     
     //Attachment part by Sruthi - Start
     /** @method saveFiles() 
-       * @desc Creates a content version from a given file's base64 and name
+       * @desc Creates a content version from a given file's base64 and name and Converting attachments to Content Versions(Files) as part of DF-05467
        * @param {String} recordId - Id of the record you want to attach this file to
        * @param {list<Object>} filesToInsert - content type you want to attach this file to
        * @return {Id} - returns the created attachment  if the
-       *   upload was successful, otherwise returns null*/
+       *   upload was successful, otherwise returns null
+		*Modified Date : 8/21/2023 */
        
     @AuraEnabled
-    public static List<Attachment> saveFiles(list<Object> filesToInsert, String recordId) {
+    public static void saveFiles(list<Object> filesToInsert, String recordId) {
         try {
-            List<Attachment> attList = new List<Attachment>();
+            List<ContentVersion> contVersionList = new List<ContentVersion>();
+            List<ContentDocumentLink> contDocumentLinkList = new List<ContentDocumentLink>();
+            ContentVersion cVersion ;
+            ContentDocumentLink cDocLink ;
+            
+            //Getting files from nsp_customcasecreation lwc component
             for (Object file : filesToInsert) {
                 FileInfo fileData = (FileInfo)JSON.deserialize(JSON.serialize(file), FileInfo.class);
-            Attachment attachRec = new Attachment();
-            attachRec.parentId = recordId;
-            attachRec.Body = fileData.FileContent;
-            attachRec.Name = fileData.Title;
-            attachRec.ContentType = fileData.FileType; 
-            attList.add(attachRec);   
+                cVersion = createContVersion(fileData.Title, fileData.FileContent);
+                contVersionList.add(cVersion);// Adding each ContentVersion to the ContentVersionList
             }
-            if(attList.size() >0){
-                insert attList;
+            
+            if(!contVersionList.isEmpty()){
+                List<Database.SaveResult> conVersionResults = Database.insert(contVersionList, false);
+                NSP_ErrorLogHandler.logSaveResult(NSP_CUSTOMCASECREATIONPAGECONTROLLER, 'saveFiles', conVersionResults );
+                
+                //Iterate over ContentVersion List to create ContentDocumentLink Object.
+                for(ContentVersion contVersion : [SELECT ContentDocumentId FROM ContentVersion
+                                                  WHERE Id IN:contVersionList]){  
+                                                      cDocLink = createContDocLink(contVersion.ContentDocumentId, recordId);
+                                                      contDocumentLinkList.add(cDocLink);// Adding each ContentDocumentLink to the ContentDocumentLink List
             }
-            return attList;
+                
+                if(!contDocumentLinkList.isEmpty()){
+                    List<Database.SaveResult> contDocResults = Database.insert(contDocumentLinkList, false);
+                    NSP_ErrorLogHandler.logSaveResult(NSP_CUSTOMCASECREATIONPAGECONTROLLER, 'saveFiles', contDocResults );
+                }
+            }
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         } 
+        
+    }
+    /*
+     * Method Name : createContVersion
+     * Description : This is a method creates a ContentVersion for the files 
+     * Return Type : ContentVersion
+     * Params : String Title, Blob Content
+     * Date : 8/22/2023
+     * */
+    public static ContentVersion createContVersion(String Title, Blob Content){
+        ContentVersion contVers = new ContentVersion();
+        contVers.ContentLocation = 'S'; 
+        contVers.PathOnClient = Title;
+        contVers.Origin = 'H';
+        contVers.OwnerId = userinfo.getUserId();
+        contVers.Title = Title;
+        contVers.VersionData = Content;
+        return contVers;
+    }
+    /*
+     * Method Name : createContDocLink
+     * Description : This is a method creates a ContentDocumentLink for the ContentVersions 
+     * Return Type : ContentDocumentLink
+     * Params : Id ContDocId, Id recId
+     * Date : 8/22/2023
+     * */
+    public static ContentDocumentLink createContDocLink(Id ContDocId, Id recId){
+        ContentDocumentLink contDocLink = new ContentDocumentLink();
+        contDocLink.ContentDocumentId = ContDocId;
+        contDocLink.LinkedEntityId = recId;
+        contDocLink.ShareType = 'V';
+        contDocLink.Visibility = 'AllUsers';
+        return contDocLink;
     }
     public class FileInfo {
         public String Title;
