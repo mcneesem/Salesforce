@@ -926,6 +926,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Service_Region__c</picklist>
+        <values>
+            <fullName>FSO - Southwest</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Status</picklist>
         <values>
             <fullName>Active</fullName>
