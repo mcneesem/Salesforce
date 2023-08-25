@@ -771,14 +771,7 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
                 if(invoiceBatchMap.containsKey(orderOb.NSP_Order_Product_Type__c)){
                     orderOb.blng__InvoiceBatch__c = invoiceBatchMap.get(orderOb.NSP_Order_Product_Type__c);
                 }
-                else if(orderOb.NSP_Order_Product_Type__c	== NSP_CPQConstants.RETSERVICES){
-                    if(orderOb.NSP_Billing_Account_Name__c != null && orderOb.NSP_Billing_Account_Name__c == 'Insperity WO Billing Account'){
-                        orderOb.blng__InvoiceBatch__c = NSP_CPQConstants.RETINVBATCHWO;
-                            } else{
-                               orderOb.blng__InvoiceBatch__c = NSP_CPQConstants.RETINVBATCHNONWO; 
-                            }
-                }
-                /*Commented out as part of DF-04797
+               /*Commented out as part of DF-04797
                 else if(orderOb.NSP_Order_Product_Type__c == 'HR Services' || orderOb.NSP_Order_Product_Type__c == 'Recruiting Services' || orderOb.NSP_Order_Product_Type__c == 'WS Services'){
                     orderOb.blng__InvoiceBatch__c = null;
                 } */

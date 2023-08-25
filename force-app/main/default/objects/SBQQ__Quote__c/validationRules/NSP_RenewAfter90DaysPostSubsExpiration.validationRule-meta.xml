@@ -2,6 +2,6 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_RenewAfter90DaysPostSubsExpiration</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(ISPICKVAL(SBQQ__Type__c , &apos;Renewal&apos;) ,SBQQ__Opportunity2__r.SBQQ__RenewedContract__c != null,NOT(ISNEW()),  SBQQ__Opportunity2__r.SBQQ__RenewedContract__r.EndDate &lt; TODAY())</errorConditionFormula>
+    <errorConditionFormula>AND(ISPICKVAL(SBQQ__Type__c , &apos;Renewal&apos;) ,SBQQ__Opportunity2__r.SBQQ__RenewedContract__c != null,NOT(ISNEW()),  SBQQ__Opportunity2__r.SBQQ__RenewedContract__r.EndDate + 90 &lt; TODAY())</errorConditionFormula>
     <errorMessage>The related subscriptions cannot be reactivated since it has passed the 90 day period</errorMessage>
 </ValidationRule>
