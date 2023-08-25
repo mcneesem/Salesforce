@@ -18,7 +18,7 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObj
     }
     //default constructor
     public NSP_DocuSignInvoiceDocumentBatch() {
-       query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_Email_Sent__c=FALSE AND NSP_Invoice_External_ID__c = null LIMIT 10000'; 
+       query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE Id blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_Email_Sent__c=FALSE AND NSP_Invoice_External_ID__c = null LIMIT 10000'; 
     }
     
     //start method of batch class

@@ -7,7 +7,7 @@ public class NSP_BatchProgressIndicatorController {
             List<String> applicableStatus = new List<String>{'Queued','Processing'};
             List<String> applicableClasses = new List<String>{'NSP_InvoiceBatch','NSP_DocuSignInvoiceDocumentBatch'};
             List<AsyncApexJob> asyncJobList = [SELECT Id, Status, JobItemsProcessed, TotalJobItems,
-                                                NumberOfErrors, ApexClass.Name FROM AsyncApexJob WHERE Status IN :applicableStatus AND ApexClass.Name IN:applicableClasses AND JobType!='ScheduledApex' LIMIT 2 ]; //where Status IN :applicableStatus AND ApexClass.Name IN:applicableClasses
+                                                NumberOfErrors, ApexClass.Name FROM AsyncApexJob WHERE Status IN :applicableStatus AND ApexClass.Name IN:applicableClasses LIMIT 2 ]; //where Status IN :applicableStatus AND ApexClass.Name IN:applicableClasses
             return asyncJobList;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
