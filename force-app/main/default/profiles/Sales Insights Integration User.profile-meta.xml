@@ -7021,6 +7021,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_Docupay_Upfront_fee_Inc_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Enrollment_Fee_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7073,6 +7078,11 @@
         <editable>false</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Transaction_ID__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_WX_WA_Enrollment_Fee_Received__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
