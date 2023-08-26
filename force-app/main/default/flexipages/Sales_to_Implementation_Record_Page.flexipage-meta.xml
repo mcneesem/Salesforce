@@ -2409,6 +2409,31 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_NSPk_SubPlan__c</fieldItem>
+                <identifier>RecordNSP_NSPk_SubPlan_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Client_Effective_Date__c</fieldItem>
+                <identifier>RecordNSP_Client_Effective_Date_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-e4d715fe-8f43-49a6-9ac3-c79012c43651</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
