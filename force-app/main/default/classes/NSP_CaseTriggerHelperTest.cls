@@ -1284,4 +1284,20 @@ private class NSP_CaseTriggerHelperTest {
         System.assertEquals(assertCase.NSP_Show_Confidential_Checkbox__c, false);
         
     }
+    /**
+    * @Description: This test method is used to test the case origin value when case created from inbox 
+    * @return void             
+    ***********************************/
+    @isTest
+    public static void checkInboxEmailOriginTest(){
+        Account newAccount = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
+        Case caseRecord = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
+        caseRecord.AccountId = newAccount.Id;
+        caseRecord.NSP_Topic__c = 'Benefits/H&W';
+        
+        Test.startTest();
+        insert caseRecord;
+        Test.stopTest();
+        Assert.areNotEqual(caseRecord.Origin, null);
+    }
 }

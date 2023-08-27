@@ -91,4 +91,9 @@
         <default>false</default>
         <label>Implementation</label>
     </standardValue>
+    <standardValue>
+        <fullName>Inbox Email</fullName>
+        <default>false</default>
+        <label>Inbox Email</label>
+    </standardValue>
 </StandardValueSet>

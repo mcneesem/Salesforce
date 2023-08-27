@@ -1413,6 +1413,10 @@
             <fullName>Year End Follow up</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Inbox Email</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Priority</picklist>
