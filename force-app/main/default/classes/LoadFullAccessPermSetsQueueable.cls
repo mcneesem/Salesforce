@@ -13,17 +13,17 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public void execute(QueueableContext context) {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in the chain
+        
+        loadFieldPermissions(psMap, currObjName); // upsert Field Permissions for first object in list
 
-        // In first few passes, upsert object permissions for all the objects to resolve any dependencies;
-		// once all upserts are successful, flag will be disabled
+        // in first few jobs, upsert object permissions for entire objects list to resolve any dependencies;
+		// once all obj perm upserts are successful, flag will be disabled
         if (oUpsertFlag) {
             List<String> objUpsertList = new List<String>();
             objUpsertList.add(currObjName);
             objUpsertList.addAll(objectApiNames);
             oUpsertFlag = loadObjectPermissions(psMap, objectApiNames, objUpsertList, oUpsertFlag);
 		}
-        
-        loadFieldPermissions(psMap, currObjName); // upsert Field Permissions for first object in list
 
 		// chain new job for next object
         if (objectApiNames.size() > 0) {
