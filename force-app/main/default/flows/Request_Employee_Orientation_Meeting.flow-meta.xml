@@ -440,6 +440,16 @@
         <scale>0</scale>
     </formulas>
     <formulas>
+        <name>first_available_block</name>
+        <dataType>Date</dataType>
+        <expression>CASE(WEEKDAY({!SKO_Meeting_Date}), 1, {!SKO_Meeting_Date} + 2, 2, {!SKO_Meeting_Date} + 2, 3, {!SKO_Meeting_Date} + 2, 4, {!SKO_Meeting_Date} + 2, 5, {!SKO_Meeting_Date} + 4, 6, {!SKO_Meeting_Date} + 4, 7, {!SKO_Meeting_Date} + 3, {!SKO_Meeting_Date} + 2)</expression>
+    </formulas>
+    <formulas>
+        <name>last_available_block</name>
+        <dataType>Date</dataType>
+        <expression>{!SKO_Meeting_Date} + 183</expression>
+    </formulas>
+    <formulas>
         <name>num_eom_requested_number_format</name>
         <dataType>Number</dataType>
         <expression>CASE({!Number_of_Employee_Orientation_Meetings_Required}, &quot;1&quot;, 1, &quot;2&quot;, 2, &quot;3&quot;, 3, &quot;4&quot;, 4, 0)</expression>
@@ -449,16 +459,6 @@
         <name>OMR_task_subject</name>
         <dataType>String</dataType>
         <expression>{!Meeting_Type_initial_screen} + &quot; Request | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
-    </formulas>
-    <formulas>
-        <name>SKO_date_plus_15</name>
-        <dataType>Date</dataType>
-        <expression>{!SKO_Meeting_Date} + 15</expression>
-    </formulas>
-    <formulas>
-        <name>SKO_date_plus_3</name>
-        <dataType>Date</dataType>
-        <expression>{!SKO_Meeting_Date} + 3</expression>
     </formulas>
     <interviewLabel>Request Employee Orientation Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -829,14 +829,14 @@
             <field>Date_Valid__c</field>
             <operator>GreaterThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_3</elementReference>
+                <elementReference>first_available_block</elementReference>
             </value>
         </filters>
         <filters>
             <field>Date_Valid__c</field>
             <operator>LessThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_15</elementReference>
+                <elementReference>last_available_block</elementReference>
             </value>
         </filters>
         <filters>
@@ -880,14 +880,14 @@
             <field>Date_Valid__c</field>
             <operator>GreaterThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_3</elementReference>
+                <elementReference>first_available_block</elementReference>
             </value>
         </filters>
         <filters>
             <field>Date_Valid__c</field>
             <operator>LessThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_15</elementReference>
+                <elementReference>last_available_block</elementReference>
             </value>
         </filters>
         <filters>
@@ -931,14 +931,14 @@
             <field>Date_Valid__c</field>
             <operator>GreaterThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_3</elementReference>
+                <elementReference>first_available_block</elementReference>
             </value>
         </filters>
         <filters>
             <field>Date_Valid__c</field>
             <operator>LessThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_15</elementReference>
+                <elementReference>last_available_block</elementReference>
             </value>
         </filters>
         <filters>
@@ -982,14 +982,14 @@
             <field>Date_Valid__c</field>
             <operator>GreaterThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_3</elementReference>
+                <elementReference>first_available_block</elementReference>
             </value>
         </filters>
         <filters>
             <field>Date_Valid__c</field>
             <operator>LessThanOrEqualTo</operator>
             <value>
-                <elementReference>SKO_date_plus_15</elementReference>
+                <elementReference>last_available_block</elementReference>
             </value>
         </filters>
         <filters>
