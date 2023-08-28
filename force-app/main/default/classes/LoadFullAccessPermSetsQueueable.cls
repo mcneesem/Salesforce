@@ -12,18 +12,18 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     
     public void execute(QueueableContext context) {
 
-        String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in the chain; upsert Field Permissions for this object
+        String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in the chain
 
-        // In first few passes, upsert object permissions for all the objects at once to resolve any dependencies;
-		// after that, continue upserting field permissions in one chain link per object
-		List<String> objUpsertList = new List<String>();
+        // In first few passes, upsert object permissions for all the objects to resolve any dependencies;
+		// once all upserts are successful, flag will be disabled
         if (oUpsertFlag) {
+            List<String> objUpsertList = new List<String>();
             objUpsertList.add(currObjName);
             objUpsertList.addAll(objectApiNames);
             oUpsertFlag = loadObjectPermissions(psMap, objectApiNames, objUpsertList, oUpsertFlag);
 		}
         
-        loadFieldPermissions(psMap, currObjName);
+        loadFieldPermissions(psMap, currObjName); // upsert Field Permissions for first object in list
 
 		// chain new job for next object
         if (objectApiNames.size() > 0) {
@@ -127,15 +127,6 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
                 fpList.add(fp);
             }
         }
-        Database.UpsertResult[] fprList = Database.upsert(fpList, false); // field perms results
-
-        // for (Database.UpsertResult fpr : fprList) {
-        //     if (!fpr.isSuccess()) {
-        //         // retrieve errors for failed record upserts
-        //         for(Database.Error err : fpr.getErrors()) {
-        //             System.debug(' ~ FieldPermissions error occurred: ' + err.getStatusCode() + ': ' + err.getMessage());
-        //         }
-        //     }
-        // }
+        Database.upsert(fpList, false);
     }
 }
