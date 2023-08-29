@@ -56,7 +56,7 @@
                 <lightning-layout-item size="4">
                     <div class="slds-var-m-around_medium ">
                         <lightning-input name="cemail" data-fname="emailAddress" class='emailAddress' type="email" label="Email address" value={cemail} 
-                        pattern="[A-Za-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$" message-when-pattern-mismatch="Please enter a valid email" disabled={disableContact} >
+                        pattern="[A-Za-z0-9._\-]+@[a-z0-9.\-]+\.[a-zA-Z]{2,6}" message-when-pattern-mismatch="Please enter a valid email" disabled={disableContact} >
                         </lightning-input>
                     </div>
                 </lightning-layout-item>
