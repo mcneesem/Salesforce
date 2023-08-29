@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>nobuhr@insperity.com.invalid</email>
     <name>Nobu Atlanta HR Team</name>
     <queueMembers>
         <users>

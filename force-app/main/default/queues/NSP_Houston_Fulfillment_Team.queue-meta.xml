@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>houbusinessoperations@insperity.com.invalid</email>
-    <name>Houston Fulfillment Team</name><queueSobject>
+    <email>houston_fulfillment@insperity.com.invalid</email>
+    <name>Houston Fulfillment Team</name>
+    <queueMembers>
+        <users>
+            <user>delwin.crutchfield@insperity.com</user>
+            <user>jason.ash@insperity.com</user>
+            <user>kyle.trimm@insperity.com</user>
+            <user>logan.keys@insperity.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
     <queueSobject>

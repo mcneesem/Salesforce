@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <email>changeorders.wo@insperity.com.invalid</email>
     <name>ITA Accrual Profile Team</name>
     <queueSobject>
         <sobjectType>NSP_Accrual_Profile__c</sobjectType>
