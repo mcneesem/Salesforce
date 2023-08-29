@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>https://{!$Setup.NSP_Environment_Details__c.NSP_Detailed_Data__c}wsmqap.insperity.com/SymbolicURLMVC/contact?primedAccount=none&amp;clientMachine=DUMMY&amp;perId={!Contact.NSP_Per_ID__c}</url>
+    <url>https://{!$Setup.NSP_Environment_Details__c.NSP_Detailed_Data__c}wsmqap.insperity.com/SymbolicURLMVC/contact?primedAccount={!Contact.NSP_AIMS_Client__c}&amp;clientMachine=DUMMY&amp;perId={!Contact.NSP_Per_ID__c}</url>
 </WebLink>

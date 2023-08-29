@@ -19910,6 +19910,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.NSP_WO_AIMS_Client_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.NSP_Client_Service_Agreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26419,6 +26424,16 @@
         <editable>false</editable>
         <field>NSP_Detailed_Data__mdt.Account_Url__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_Docupay_Upfront_fee_Inc_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+     <field>NSP_Enrollment_Fee_Payment__c.NSP_WX_WA_Enrollment_Fee_Received__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -36673,7 +36688,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>pse__Proj__c.Assignment_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -45843,11 +45858,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Asset.NSP_Client_Segment_type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Asset.NSP_Service_Package__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -47648,6 +47658,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_Detailed_Data__mdt-NSP Detailed Data Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Enrollment_Fee_Payment__c-Enrollment Fee Payment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_EOY_Amendment__c-EOY Amendment Layout</layout>
@@ -50366,7 +50379,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Dashboard</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>pse__Time_Entry</tab>
@@ -50382,7 +50395,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Report</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Chatter</tab>

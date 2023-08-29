@@ -7201,6 +7201,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_Docupay_Upfront_fee_Inc_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Enrollment_Fee_Notes__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -7253,6 +7258,11 @@
         <editable>false</editable>
         <field>NSP_Enrollment_Fee_Payment__c.NSP_Transaction_ID__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_WX_WA_Enrollment_Fee_Received__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14323,6 +14333,9 @@
         <recordType>NSP_Exception_Log__c.NSP_ApexException</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>NSP_Note__c-Note Community Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Office_Assignment__c-Office Assignment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -14411,7 +14424,6 @@
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
-    
     <layoutAssignments>
         <layout>OpportunityTeamMember-Opportunity Team Member Layout</layout>
     </layoutAssignments>

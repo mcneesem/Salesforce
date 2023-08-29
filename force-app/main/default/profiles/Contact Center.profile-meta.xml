@@ -27599,6 +27599,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_Docupay_Upfront_fee_Inc_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+     <field>NSP_Enrollment_Fee_Payment__c.NSP_WX_WA_Enrollment_Fee_Received__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_EOY_Amendment__c.NSP_Added_By__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -47056,6 +47066,9 @@
         <layout>NSP_Engagement_Path__c-Engagement Path Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>NSP_Enrollment_Fee_Payment__c-Enrollment Fee Payment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Error_Log__c-Error Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -49643,11 +49656,11 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Report</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
    <tabVisibilities>
         <tab>standard-Dashboard</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>NSP_EOY_Amendment__c</tab>

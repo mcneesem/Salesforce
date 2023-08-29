@@ -7,8 +7,9 @@
   NOT(ISNEW()),
  $Profile.Name != &quot;Integration User&quot; ,
  $Profile.Name != &quot;System Administrator&quot; ,
- CreatedBy.Profile.Name =&quot;Integration User&quot;
-)</errorConditionFormula>
-    <errorDisplayField>NSP_Account_Name__c</errorDisplayField>
+ OR(CreatedBy.Profile.Name =&quot;Integration User&quot;,
+  ISPICKVAL( NSP_Source__c ,&quot;AIMS&quot;)
+  ))</errorConditionFormula>
     <errorMessage>Address Created by Integration users can only be updated by Integration users.</errorMessage>
 </ValidationRule>
+

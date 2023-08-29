@@ -215,6 +215,11 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningService</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
     <pageAccesses>
         <apexPage>pse__AboutForecastsHelp</apexPage>
         <enabled>true</enabled>
@@ -16922,6 +16927,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Eligibility__c.NSP_External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+    <field>NSP_Enrollment_Fee_Payment__c.NSP_Docupay_Upfront_fee_Inc_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+     <field>NSP_Enrollment_Fee_Payment__c.NSP_WX_WA_Enrollment_Fee_Received__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -44882,6 +44897,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.NSP_WO_AIMS_Client_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.NSP_Service_Package__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -46716,6 +46736,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_Engagement_Path__c-Engagement Path Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Enrollment_Fee_Payment__c-Enrollment Fee Payment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_Error_Log__c-Error Log Layout</layout>
@@ -49432,7 +49455,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Dashboard</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>pse__Time_Entry</tab>
@@ -49440,7 +49463,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Report</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Chatter</tab>

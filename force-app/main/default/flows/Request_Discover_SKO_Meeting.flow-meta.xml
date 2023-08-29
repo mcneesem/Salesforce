@@ -309,6 +309,11 @@
         <scale>0</scale>
     </formulas>
     <formulas>
+        <name>first_available_block</name>
+        <dataType>Date</dataType>
+        <expression>CASE(WEEKDAY(TODAY()), 1, TODAY()+4, 2, TODAY()+4, 3, TODAY()+6, 4, TODAY()+6, 5, TODAY()+6, 6, TODAY()+6, 7, TODAY()+5, TODAY()+4)</expression>
+    </formulas>
+    <formulas>
         <name>first_pay_period_formula</name>
         <dataType>String</dataType>
         <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(MONTH({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(MONTH({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(DAY({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(DAY({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(YEAR({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(YEAR({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot; - &quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(MONTH({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(MONTH({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(DAY({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(DAY({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(YEAR({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(YEAR({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null))</expression>
@@ -323,6 +328,11 @@
         <dataType>Number</dataType>
         <expression>{!OMRdatatable.firstSelectedRow.Available_Reps__c}-1</expression>
         <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>last_available_block</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()+183</expression>
     </formulas>
     <formulas>
         <name>medical_plan_formula</name>
@@ -353,16 +363,6 @@
         <name>selectedblockdatetotext</name>
         <dataType>String</dataType>
         <expression>TEXT(YEAR({!OMRdatatable.firstSelectedRow.Date_Valid__c})) + IF(MONTH({!OMRdatatable.firstSelectedRow.Date_Valid__c}) &gt; 9, TEXT(MONTH({!OMRdatatable.firstSelectedRow.Date_Valid__c})), &apos;0&apos;+ TEXT(MONTH({!OMRdatatable.firstSelectedRow.Date_Valid__c}))) + IF(DAY({!OMRdatatable.firstSelectedRow.Date_Valid__c}) &gt; 9, TEXT(DAY({!OMRdatatable.firstSelectedRow.Date_Valid__c})),&apos;0&apos;+TEXT(DAY({!OMRdatatable.firstSelectedRow.Date_Valid__c})))</expression>
-    </formulas>
-    <formulas>
-        <name>todayplusfifteen</name>
-        <dataType>Date</dataType>
-        <expression>TODAY()+15</expression>
-    </formulas>
-    <formulas>
-        <name>todayplusfour</name>
-        <dataType>Date</dataType>
-        <expression>TODAY()+4</expression>
     </formulas>
     <formulas>
         <name>triggering_User</name>
@@ -775,14 +775,14 @@
             <field>Date_Valid__c</field>
             <operator>GreaterThanOrEqualTo</operator>
             <value>
-                <elementReference>todayplusfour</elementReference>
+                <elementReference>first_available_block</elementReference>
             </value>
         </filters>
         <filters>
             <field>Date_Valid__c</field>
             <operator>LessThanOrEqualTo</operator>
             <value>
-                <elementReference>todayplusfifteen</elementReference>
+                <elementReference>last_available_block</elementReference>
             </value>
         </filters>
         <filters>

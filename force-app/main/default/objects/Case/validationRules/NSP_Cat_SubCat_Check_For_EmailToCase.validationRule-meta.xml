@@ -9,6 +9,7 @@ NSP_Case_Created_From_Email_To_Case__c == true ,
      RecordType.DeveloperName = &apos;PEO&apos;
     ),
 !ISNEW(), 
+ NSP_IsJunkMail__c = false,
  OR( ISBLANK(NSP_Category__c) , 
    ISBLANK(NSP_SubCategory__c)
   ),

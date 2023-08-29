@@ -672,7 +672,7 @@
                     <criteria>
                         <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Insperity-Prepared</rightValue>
+                        <rightValue>Client-Prepared</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_ReviewType__c}</leftValue>
@@ -2419,11 +2419,11 @@
                 <fieldItem>Record.NSP_ReviewStatus__c</fieldItem>
                 <identifier>RecordNSP_ReviewStatus__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Insperity-Prepared</rightValue>
+                        <rightValue>Client-Prepared</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_ReviewType__c}</leftValue>
