@@ -82,7 +82,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         Implementation_Profile__c fsoIp = new Implementation_Profile__c();
         fsoIp.RecordTypeId = fsoRecordTypeId;
         fsoIp.Client_s_previous_payroll_provider__c='test abc';
-        fsoIp.Client_does_business_in_MA_NY_or_VA__c=NSP_ServiceConstants.NO;
+        fsoIp.Client_does_business_in_MA_NY_or_VA__c=NSP_ServiceConstants.YES;
         fsoIp.Employees_work_in_the_following_states__c = 'NH';
         fsoIp.Effective_Date_Payroll_Worker_comp_EPLI__c=System.today();
         fsoIp.Client_maintaining_existing_EPLI_policy__c=NSP_ServiceConstants.YES;
@@ -105,6 +105,8 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIp.NSP_Onboarding_Specialist_Coordinator__c=con.id;
         fsoIp.NSP_Payroll_Specialist__c=con.id;
         fsoIp.NSP_Project_Manager__c=con.id;
+        fsoIp.Client_business_in_MA_NY_or_VA__c = 'MA';
+        fsoIp.NSP_Business_Meeting_States__c = 'MA';
         
         insert fsoIp;
         
