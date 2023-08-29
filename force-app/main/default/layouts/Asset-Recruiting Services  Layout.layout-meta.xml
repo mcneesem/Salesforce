@@ -248,27 +248,32 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <platformActionList>
+        <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
             <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Asset.Time_Entry</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>pse__NewEvent</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>2</sortOrder>
+            <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
+            <sortOrder>5</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
@@ -289,7 +294,6 @@
         <relatedList>Project_Asset__c.Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>Title__c</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
@@ -338,7 +342,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8G000000NT2v</masterLabel>
+        <masterLabel>00h3C0000018ASN</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
