@@ -70,6 +70,10 @@ private class NSP_ProjectTriggerHelperTest {
             reg.name = NSP_ServiceConstants.UnitedStatesRegion;
             insert reg;
         
+        Case oCase=(Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
+        oCase.NSP_Category__c = NSP_ServiceConstants.INFRASTRUCTURE;
+        insert oCase;
+        
         Test.startTest();
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProject.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
