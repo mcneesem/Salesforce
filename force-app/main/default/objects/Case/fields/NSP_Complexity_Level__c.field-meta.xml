@@ -20,7 +20,7 @@
             <value>
                 <fullName>Level 2 – Non-Standard (NSP)</fullName>
                 <default>false</default>
-                <label>Level 2 – Non-Standard (NSP)</label>
+                <label>Level 2 – Non-Standard (NSP) / HRS Reviews and Non-Complex (CP)</label>
             </value>
             <value>
                 <fullName>Level 3 – Legal Escalation (CP)</fullName>
@@ -30,12 +30,12 @@
             <value>
                 <fullName>Level 4 – Equity/Deferred Comp (CP)</fullName>
                 <default>false</default>
-                <label>Level 4 – Equity/Deferred Comp (CP)</label>
+                <label>Level 4 - Equity/Deferred Comp Escalation (CP)</label>
             </value>
             <value>
                 <fullName>Level 5 – ATP (CP)</fullName>
                 <default>false</default>
-                <label>Level 5 – ATP (CP)</label>
+                <label>Level 5 – Agreement to Process (CP)</label>
             </value>
             <value>
                 <fullName>Level 6 – Settlement (CP)</fullName>

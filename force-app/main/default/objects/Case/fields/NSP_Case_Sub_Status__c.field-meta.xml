@@ -209,6 +209,21 @@
                 <label>WSEE Terminated</label>
             </value>
             <value>
+                <fullName>SAT - Intake Complete</fullName>
+                <default>false</default>
+                <label>SAT - Intake Complete</label>
+            </value>
+            <value>
+                <fullName>SAT - Pending</fullName>
+                <default>false</default>
+                <label>SAT - Pending</label>
+            </value>
+            <value>
+                <fullName>SAT - Review Complete</fullName>
+                <default>false</default>
+                <label>SAT - Review Complete</label>
+            </value>
+            <value>
                 <fullName>Can not Confirm</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -373,6 +388,21 @@
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>With Internal/External Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Intake Complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Pending</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Review Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>
