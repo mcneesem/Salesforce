@@ -94,7 +94,7 @@ export default class Nsp_casecategorycmp extends LightningElement {
     
 
     editCase(){
-                    this.view = false;
+            this.view = false;
             this.showingAllCategories = false;
             this.showingAllSubCategories = true;
             this.showingResetSubCategories = false;
@@ -102,15 +102,8 @@ export default class Nsp_casecategorycmp extends LightningElement {
             this.handleReloadOfCase(this.caseDetails);            
             this.getCatDependenciesMap();
             this.getAllCatSubDetValues();
-            this.isLoading = true;
-             getRelatedDetail({selectedSubCategory: this.oCase.NSP_SubCategory__c,selectedCategory : this.oCase.NSP_Category__c, recordTypeId: this.recordTypeId}).then((response) => {    
-                this.detailOptions = this.createOptions(response);
-                this.isLoading = false;
-            }).catch((error) => {
-            }) 
-        
-    }       
-         //LIFECYCLE - HOOKS
+    }   
+     //LIFECYCLE - HOOKS
      @wire(getRecord, { recordId: '$recordId', fields: CASEFIELDS })
      getCaseDetails(value){
          this.caseDetails = value;
@@ -228,7 +221,7 @@ export default class Nsp_casecategorycmp extends LightningElement {
         let versionValues = this.categoryWrapper.mCatSubDetailToVersions[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c + '-' + this.oCase.NSP_Detail__c];
         this.clearIfNotPresent(versionValues,"NSP_Version__c");
         this.versionOptions = this.createOptions(versionValues);
-            getRelatedDetail({selectedSubCategory: this.oCase.NSP_SubCategory__c,selectedCategory : this.oCase.NSP_Category__c, recordTypeId: this.recordTypeId}).then((response) => {
+            getRelatedDetail({selectedSubCategory: this.oCase.NSP_SubCategory__c, selectedCategory : this.oCase.NSP_Category__c, recordTypeId: this.recordTypeId}).then((response) => {
                 this.detailOptions = this.createOptions(response);
             }).catch((error) => {
             })
@@ -373,6 +366,6 @@ export default class Nsp_casecategorycmp extends LightningElement {
     }
 
     get showCaseDetail(){
-        return (this.oCase.NSP_Detail__c || this.detailOptions.length > 0 || this.oCase.NSP_Category__c == 'Service Operations') ? true : false ;
+        return (this.oCase.NSP_Detail__c || this.detailOptions.length > 0) ? true : false ;
     }
 }

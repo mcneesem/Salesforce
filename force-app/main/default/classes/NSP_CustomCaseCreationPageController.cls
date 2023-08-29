@@ -1,22 +1,19 @@
 public with sharing class NSP_CustomCaseCreationPageController {
     public static final String NOCONFIGERROR = 'No Case Type Configuration Found';
-    public static final String NSP_CUSTOMCASECREATIONPAGECONTROLLER = 'NSP_CustomCaseCreationPageController';   
-    public static final String SERVICE_OPERATIONS = 'Service Operations';
+    public static final String NSP_CUSTOMCASECREATIONPAGECONTROLLER = 'NSP_CustomCaseCreationPageController';
     
     @AuraEnabled(cacheable = true)
     public static List < NSP_Category_Sub_Category_Mapping__c > getCategoryList(String recordTypeId, Boolean isCatViewAll) {
         try {
             List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping;
             String userTitle = getUserTitle();
-            String userProfile = getProfileName();
-            Boolean isAdmin = userProfile == NSP_ServiceConstants.SYSTEM_ADMINISTRATOR ? true : false;
             String caseRecType = getCaseRecordType(recordTypeId);
             if(String.isNotBlank(caseRecType) && caseRecType.contains(NSP_ServiceConstants.PEO)){
                 caseRecType = NSP_ServiceConstants.PEO;
             }else if(String.isNotBlank(caseRecType) && caseRecType.contains(NSP_ServiceConstants.BPS)){
                 caseRecType = NSP_ServiceConstants.BPS;
             }
-            if (userTitle != null && isCatViewAll == false  && isAdmin) {
+            if (userTitle != null && isCatViewAll == false) {
                 lstCatMapping = [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
                     NSP_Subcategory__c, NSP_Display_confidential_popup__c,
                     NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
@@ -24,26 +21,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                     FROM NSP_Category_Sub_Category_Mapping__c
                     WHERE NSP_RecordType__c =: caseRecType AND NSP_UserTitle__c includes(: userTitle) AND NSP_isActive__c = True AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ORDER BY NSP_Category__c, NSP_Subcategory__c
                 ];
-            }
-            else if(userTitle != null && isCatViewAll == false && !isAdmin) {
-                lstCatMapping = [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
-                    NSP_DetailDescription__c, NSP_UserTitle__c, NSP_RecordType__c
-                    FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND NSP_UserTitle__c includes(: userTitle) AND NSP_isActive__c = True AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI AND NSP_Category__c != :SERVICE_OPERATIONS ORDER BY NSP_Category__c, NSP_Subcategory__c
-                ];
-            }
-            else if(!isAdmin) {
-                lstCatMapping =  [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
-                    NSP_DetailDescription__c, NSP_UserTitle__c, NSP_RecordType__c
-                    FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND NSP_isActive__c = True AND NSP_Category__c != :SERVICE_OPERATIONS AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ORDER BY NSP_Category__c, NSP_Subcategory__c
-                ];
-            } 
-            else {
+            } else {
                 lstCatMapping =  [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
                     NSP_Subcategory__c, NSP_Display_confidential_popup__c,
                     NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
@@ -86,19 +64,19 @@ public with sharing class NSP_CustomCaseCreationPageController {
 
     @AuraEnabled
     public static list<Contact> getContactParent(String idParent){
-        try {
-            return [SELECT Id, AccountId ,Account.NSP_AIMS_Client__c FROM Contact WHERE Id = :idParent WITH SECURITY_ENFORCED ];
+    	try {
+        	return [SELECT Id, AccountId ,Account.NSP_AIMS_Client__c FROM Contact WHERE Id = :idParent WITH SECURITY_ENFORCED ];
         } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
-        }
+        	throw new AuraHandledException(excep.getMessage());
+    	}
     }
     @AuraEnabled
     public static list<Asset> getAssetParent(String idParent){
-        try {
-            return [SELECT Id, AccountId, NSP_RET_Education__c FROM Asset WHERE Id = :idParent WITH SECURITY_ENFORCED ];
+    	try {
+        	return [SELECT Id, AccountId, NSP_RET_Education__c FROM Asset WHERE Id = :idParent WITH SECURITY_ENFORCED ];
         } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
-        }
+        	throw new AuraHandledException(excep.getMessage());
+    	}
     }
 
     @AuraEnabled
@@ -152,8 +130,8 @@ public with sharing class NSP_CustomCaseCreationPageController {
             //Getting files from nsp_customcasecreation lwc component
             for (Object file : filesToInsert) {
                 FileInfo fileData = (FileInfo)JSON.deserialize(JSON.serialize(file), FileInfo.class);
-            cVersion = createContVersion(fileData.Title, fileData.FileContent);
-                contVersionList.add(cVersion);// Adding each ContentVersion to the ContentVersionList   
+                cVersion = createContVersion(fileData.Title, fileData.FileContent);
+                contVersionList.add(cVersion);// Adding each ContentVersion to the ContentVersionList
             }
             
             if(!contVersionList.isEmpty()){
@@ -166,7 +144,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                                                       cDocLink = createContDocLink(contVersion.ContentDocumentId, recordId);
                                                       contDocumentLinkList.add(cDocLink);// Adding each ContentDocumentLink to the ContentDocumentLink List
             }
-            
+                
                 if(!contDocumentLinkList.isEmpty()){
                     List<Database.SaveResult> contDocResults = Database.insert(contDocumentLinkList, false);
                     NSP_ErrorLogHandler.logSaveResult(NSP_CUSTOMCASECREATIONPAGECONTROLLER, 'saveFiles', contDocResults );
@@ -175,7 +153,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         } 
-
+        
     }
     /*
      * Method Name : createContVersion
@@ -426,23 +404,23 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
     }
 }
     
-    @AuraEnabled(cacheable=true)
-    public static List<String> getRelatedDetail(String selectedSubCategory, String selectedCategory, String recordTypeId) {
-        try{
-            List<String> filteredDetails = new List<String>();
-            Set<String> filteredDetailsSet = new Set<String>();
-            for(NSP_Category_Sub_Category_Mapping__c relatedRecord : getAllCategoryList(recordTypeId, '')){
-                                if(relatedRecord.NSP_Category__c + '-' + relatedRecord.NSP_Subcategory__c == selectedCategory + '-' +selectedSubCategory){
-                    filteredDetailsSet.add(relatedRecord.NSP_Detail__c);
-                }
+@AuraEnabled(cacheable=true)
+public static List<String> getRelatedDetail(String selectedSubCategory, String selectedCategory, String recordTypeId) {
+    try{
+        List<String> filteredDetails = new List<String>();
+        Set<String> filteredDetailsSet = new Set<String>();
+        for(NSP_Category_Sub_Category_Mapping__c relatedRecord : getAllCategoryList(recordTypeId, '')){
+            if(relatedRecord.NSP_Category__c + '-' + relatedRecord.NSP_Subcategory__c == selectedCategory + '-' +selectedSubCategory){
+                filteredDetailsSet.add(relatedRecord.NSP_Detail__c);
             }
-            filteredDetails = new List<String>(filteredDetailsSet);
-            filteredDetails.sort();
-            return filteredDetails;
+        }
+        filteredDetails = new List<String>(filteredDetailsSet);
+        filteredDetails.sort();
+        return filteredDetails;
         }catch(Exception excep){
             throw new AuraHandledException(excep.getMessage());
         }
-    }
+}
     
     @AuraEnabled(cacheable=true)
     public static List<String> getRelatedVersion(String selectedDetail, String recordTypeId) {
@@ -560,7 +538,7 @@ public static String getProfileName() {
     String profileName = '';
     List<String> FIELDS = new List<String>{'Id','ProfileId', 'Profile.Name'};                                      
         try{
-         User getLoggedInUser = (User) new NSP_sObjectSelector(NSP_ServiceConstants.USER_OBJECT,FIELDS).setSecurityEnforce(false).selectById(UserInfo.getUserId());
+		 User getLoggedInUser = (User) new NSP_sObjectSelector(NSP_ServiceConstants.USER_OBJECT,FIELDS).setSecurityEnforce(false).selectById(UserInfo.getUserId());
             profileName = getLoggedInUser.Profile.Name;
             return profileName;
         }catch (Exception excep) {
