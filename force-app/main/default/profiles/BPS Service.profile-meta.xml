@@ -37076,7 +37076,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>pse__Proj__c.Total_Days_on_Hold__c</field>
         <readable>true</readable>
     </fieldPermissions>
