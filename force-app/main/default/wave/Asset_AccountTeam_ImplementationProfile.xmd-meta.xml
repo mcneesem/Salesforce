@@ -13,4 +13,28 @@
         <salesforceActionsEnabled>false</salesforceActionsEnabled>
         <sortIndex>0</sortIndex>
     </dimensions>
+    <dimensions>
+        <field>Join10.MHRS.MHRS_Final</field>
+        <isDerived>false</isDerived>
+        <label>MHRS</label>
+        <sortIndex>1</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Join10.BusTeamHRCL.Bus_Team_HRSp_CL_Final</field>
+        <isDerived>false</isDerived>
+        <label>BTHRS</label>
+        <sortIndex>2</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Join10.CL.Client_Liaison_Final</field>
+        <isDerived>false</isDerived>
+        <label>CL</label>
+        <sortIndex>3</sortIndex>
+    </dimensions>
+    <dimensions>
+        <field>Join10.MMAE.MidMarket_AE_Final</field>
+        <isDerived>false</isDerived>
+        <label>AE</label>
+        <sortIndex>4</sortIndex>
+    </dimensions>
 </WaveXmd>
