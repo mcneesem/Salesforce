@@ -103,6 +103,86 @@
     <navType>Console</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>BPS Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Service_Note_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Note__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>BPS Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Choice_RT_Plan_Record_Page1</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
