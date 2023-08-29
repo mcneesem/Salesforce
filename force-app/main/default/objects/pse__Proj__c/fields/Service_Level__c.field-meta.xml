@@ -86,6 +86,11 @@
                 <default>false</default>
                 <label>Emerging Growth (100+  EE&apos;s)</label>
             </value>
+            <value>
+                <fullName>Quickstart</fullName>
+                <default>false</default>
+                <label>Quickstart</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
