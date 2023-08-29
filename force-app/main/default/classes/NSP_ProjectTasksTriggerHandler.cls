@@ -126,7 +126,8 @@ public class NSP_ProjectTasksTriggerHandler implements NSP_ITriggerHandler {
     }
 
     public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
-        NSP_ProjectTasksTriggerHelper projectTaskTriggerHelperObject = new NSP_ProjectTasksTriggerHelper();
-        projectTaskTriggerHelperObject.restrictProjectTaskDelete((List < pse__Project_Task__c >) oldList, (Map < Id, pse__Project_Task__c > ) oldMap);
+      NSP_ProjectTasksTriggerHelper oProjectTaskHelper =  new NSP_ProjectTasksTriggerHelper(); 
+      // Added as part of STY-04554
+      oProjectTaskHelper.handleBeforeDeleteOfProjTemp((List<pse__Project_Task__c>)oldList);
     }
 }

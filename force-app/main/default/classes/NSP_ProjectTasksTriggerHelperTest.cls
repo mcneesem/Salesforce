@@ -73,6 +73,15 @@ public class NSP_ProjectTasksTriggerHelperTest {
         hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
         hcmProject.Project_Implementer__c = UserInfo.getUserId();        
         nProjectList.add(hcmProject);
+
+        pse__Proj__c projTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        projTemplate.Name = 'Test Template';
+        projTemplate.pse__Project_Status__c = 'Active';
+        projTemplate.pse__Is_Active__c = true; 
+        projTemplate.pse__Is_Template__c = true;
+        projTemplate.pse__Start_Date__c = System.today();
+        nProjectList.add(projTemplate);
+        
         test.startTest();
         insert nProjectList;
         
@@ -116,6 +125,12 @@ public class NSP_ProjectTasksTriggerHelperTest {
         itaTask.NSP_Template_Generated__c = true;
         itaTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
  		nProjectTaskList.add(itaTask);
+
+        pse__Project_Task__c oProjectTaskRec = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTaskRec.pse__Project__c = projTemplate.Id;
+        oProjectTaskRec.Name = 'Project Task Template';
+        oProjectTaskRec.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(oProjectTaskRec);
 
         insert nProjectTaskList;
         
@@ -773,4 +788,41 @@ public class NSP_ProjectTasksTriggerHelperTest {
         
         Test.stopTest();
     }  
+
+    @isTest
+    private static void testHandleBeforeDeleteOfProjTaskTemp() {
+        pse__Project_Task__c projectTaskRec;
+        User sysAdminUser = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+            LastName = 'SystemAdmin',
+            Email = 'sysadmin@test.com',
+            Username = 'sysadmin@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+        insert sysAdminUser;
+        List<String> accFields = new List<String>{'Id','Name'};
+        String accQuery = new NSP_QueryBuilder('Account', accFields)
+            .addFilter('Name', 'Test Account 2').addLimit(1).build();
+        Account acc = Database.query(accQuery);
+        List<String> projTaskFields = new List<String>{'Id','pse__Project__c'};
+            String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
+                              .addFilter('Name', 'Project Task Template').addLimit(1).build();
+            projectTaskRec = Database.query(query);
+        system.runAs(sysAdminUser){
+            try{
+                if(projectTaskRec!=null){
+                    Database.delete(projectTaskRec);
+                }
+            }catch (DmlException ex) {
+                System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
+            } 
+                       
+        } 
+    }
 }

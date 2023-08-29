@@ -1609,4 +1609,28 @@ public class NSP_ProjectTriggerHelper{
              }           
          }                                                      
      }
+     
+    /***********************************************************************************************
+    * MethodName: handleBeforeDeleteOfProjTemp
+    * Description : Helper method to check before deleting a project
+    * Params:       List<pse__Proj__c> projects
+    * Created as part of STY-04554
+    * ********************************************************************************************/
+    public void handleBeforeDeleteOfProjTemp(List<pse__Proj__c> projects) {
+        
+        try{
+            List<String> userList = new List<String>{'Id','Name','NSP_Service_Stakeholder__c'};
+                String query = new NSP_QueryBuilder('User', userList)
+                                  .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();            				
+            User userDetails = Database.query(query);
+            
+            for (pse__Proj__c project : projects) {
+                if (project.pse__Is_Template__c && !userDetails.Name.contains('Deployment') && !userDetails.NSP_Service_Stakeholder__c) {
+                    project.addError(System.Label.NSP_ProjTemplateDeleteError);
+                }
+            }
+        }catch(Exception exp ){
+                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
+        }
+    }
 }

@@ -2056,22 +2056,6 @@ OrgWideEmailAddress orgWideAddress;
     private static Boolean isValueChanged(SObject newObj, SObject oldObj, String fieldName){
         return newObj != null && oldObj != null && String.isNotBlank(fieldName) ? newObj.get(fieldName) != oldObj.get(fieldName) : false;
     }
-
-    /**********************************************************************************************
-     * MethodName: restrictProjectTaskDelete
-     * Description : Restricts Delete if the Users didn't create a Project Task
-     * Params: List<pse__Project_Task__c> projectTaskList
-     * Params: Map < Id, pse__Project_Task__c > projectTaskMap
-     * ********************************************************************************************/
-    public void restrictProjectTaskDelete(List<pse__Project_Task__c> projectTaskList, Map < Id, pse__Project_Task__c > projectTaskMap) {
-        User userDetails = [SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id = : userinfo.getUserId()];
-        Id PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-        for (pse__Project_Task__c ptObject: projectTaskList) {
-            if (userDetails.Id != ptObject.createdById && ptObject.recordtypeId == PEOProjectTaskRecordTypeId && userDetails.Profile.Name != SYS_ADMIN) {
-                ptObject.addError(System.Label.NSP_Cannot_Delete_Project_Task);
-            }
-        }
-    }
     
     /***********************************************************************************************
     * MethodName: createPTAIfOwnerIsChanged
@@ -2150,4 +2134,38 @@ OrgWideEmailAddress orgWideAddress;
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createPTAIfOwnerIsChanged', ex.getMessage());
         }
     }
+
+    /***********************************************************************************************
+    * MethodName: handleBeforeDeleteOfProjTemp
+    * Description : Helper method to check before deleting a project Task  
+    * Params:       List<pse__Project_Task__c> projTasks
+    * Created as part of STY-04554
+    * ********************************************************************************************/
+    public void handleBeforeDeleteOfProjTemp(List<pse__Project_Task__c> projTasks) {
+        
+        try{
+            List<String> userList = new List<String>{'Id','Name','NSP_Service_Stakeholder__c'};
+            Map<Id, Boolean> projIdTempValMap = new Map<Id, Boolean>();
+                String query = new NSP_QueryBuilder('User', userList)
+                                  .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();            				
+            User userDetails = Database.query(query);
+            
+            if(!userDetails.Name.contains('Deployment') && !userDetails.NSP_Service_Stakeholder__c){
+                for (pse__Project_Task__c task : [Select Id, pse__Project__c,pse__Project__r.pse__Is_Template__c 
+                                                  FROM pse__Project_Task__c
+                                                  WHERE Id IN: projTasks]) {
+                    if (task.pse__Project__r.pse__Is_Template__c ) {
+                        projIdTempValMap.put(task.Id, task.pse__Project__r.pse__Is_Template__c);
+                    }
+                }
+                for (pse__Project_Task__c task : projTasks) {
+                    if (projIdTempValMap.containsKey(task.Id)) {
+                        task.addError(System.Label.NSP_ProjTemplateDeleteError);
+                    }
+                }
+            }
+        }catch(Exception exp ){
+                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
+        }
     }
+}

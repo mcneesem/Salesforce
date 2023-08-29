@@ -98,6 +98,15 @@ private class NSP_ProjectTriggerHelperTest {
         projectObj.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
         bpsProject.pse__Is_Active__c = true; 
 
+        pse__Proj__c projTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        projTemplate.Name = 'Test Template';
+        projTemplate.RecordTypeId = bpsProjectRecordTypeId;
+        projTemplate.pse__Project_Status__c = 'Active';
+        projTemplate.pse__Is_Active__c = true; 
+        projTemplate.pse__Is_Template__c = true;
+        projTemplate.pse__Start_Date__c = System.today();
+        insert projTemplate;
+
         List<pse__Proj__c> listProject = new List<pse__Proj__c>();
         listProject.add(oProject);
         listProject.add(oProject2);
@@ -788,5 +797,21 @@ private class NSP_ProjectTriggerHelperTest {
         test.stopTest();
         
         System.assertEquals(project.pse__Project_Status__c, 'Complete');
+    }
+
+    @isTest
+    private static void testHandleBeforeDeleteOfProjTemp() {
+        List<String> projFields = new List<String>{'Id',NAME, 'pse__Is_Template__c'};
+        String projQuery = new NSP_QueryBuilder('pse__Proj__c', projFields)
+            .addFilter(NAME, 'Test Template').addLimit(1).build();
+        pse__Proj__c proj = Database.query(projQuery);
+        try{
+            if(proj!=null){
+                Database.delete(proj);
+            }
+        }catch (DmlException ex) {
+            System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
+        } 
+        
     }
 }
