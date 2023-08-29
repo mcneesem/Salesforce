@@ -14106,6 +14106,14 @@
         <recordType>Asset.NSP_CPQ_Asset</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Asset-RET Choice Asset</layout>
+        <recordType>Asset.RET_Choice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-RET WO Asset</layout>
+        <recordType>Asset.RET_WO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Asset-WO Asset Layout</layout>
         <recordType>Asset.WO</recordType>
     </layoutAssignments>
