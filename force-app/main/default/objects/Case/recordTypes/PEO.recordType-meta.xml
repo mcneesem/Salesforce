@@ -400,6 +400,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAT - Intake Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAT - Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAT - Review Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Scheduled</fullName>
             <default>false</default>
         </values>
