@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>3 Step Sports HR Team</name>
+    <email>3stephr@insperity.com.invalid</email>
+    <name>NSP_3_Step_Sports_HR_Team</name>
     <queueMembers>
         <users>
             <user>sfdc.admin@insperity.com</user>
