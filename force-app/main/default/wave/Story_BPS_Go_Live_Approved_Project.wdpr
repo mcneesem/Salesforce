@@ -211,7 +211,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "AccountId", "RecordTypeId", "NSP_Actual_of_Employee_at_Signature__c", "NSP_WX_WA_Policy_End_Date__c" ],
+        "fields" : [ "NSP_Actual_of_Employee_at_Signature__c", "Id", "AccountId", "RecordTypeId", "NSP_Client__c", "NSP_WX_WA_Policy_End_Date__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
@@ -1335,7 +1335,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_AIMS_Client__c", "Id", "Name" ],
+        "fields" : [ "Name", "Id" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
@@ -1492,7 +1492,6 @@
       "action" : "join",
       "sources" : [ "LOAD_DATASET5", "LOAD_DATASET5_copy0" ],
       "schema" : {
-        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -1510,7 +1509,6 @@
       "action" : "join",
       "sources" : [ "JOIN69", "LOAD_DATASET5_copy0" ],
       "schema" : {
-        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,

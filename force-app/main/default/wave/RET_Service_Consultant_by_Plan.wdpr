@@ -89,7 +89,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Account_Status__c", "NSP_RET_AIMS_Original_Empl_Date__c", "Id", "AccountId", "RecordTypeId", "NSP_Client_Segment_type__c", "NSP_Company_Name__c", "NSP_Status__c", "NSP_Client_is_Lead_Parent__c", "NSP_Price_Level__c", "NSP_RET_Employee_Count__c", "NSP_RET_NAICS_Description__c", "NSP_RET_Plan_and_Sub_Plan__c", "NSP_Start_Date__c", "NSP_WA_WX_Payroll_Specialist__c" ],
+        "fields" : [ "NSP_Client_Segment_type__c", "NSP_Client__c", "NSP_Client_is_Lead_Parent__c", "Id", "AccountId", "RecordTypeId", "NSP_Account_Status__c", "NSP_Company_Name__c", "NSP_Start_Date__c", "NSP_WA_WX_Payroll_Specialist__c", "NSP_Price_Level__c", "NSP_Status__c", "NSP_RET_Plan_and_Sub_Plan__c", "NSP_RET_AIMS_Original_Empl_Date__c", "NSP_RET_Employee_Count__c", "NSP_RET_NAICS_Description__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
@@ -106,7 +106,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_AIMS_Client__c", "Id", "Name" ],
+        "fields" : [ "Id", "Name" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
@@ -1200,13 +1200,13 @@
         "label" : "User, Plan, Asset, Plan Subplan, Account Team, Account Group Member",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 392.1,
-        "left" : 1372.1
+        "top" : 250.2,
+        "left" : 1092
       },
       "LOAD_DATASET11" : {
         "label" : "NSP_Sales_to_Implementation__c",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
+        "top" : 1092,
         "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
@@ -1216,21 +1216,21 @@
         "label" : "Join S2I with Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 532
       },
       "JOIN11" : {
         "label" : "Join Subplan with ID",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 812
       },
       "LOAD_DATASET15" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1232,
-        "left" : 252,
+        "top" : 950.2,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1238,8 +1238,8 @@
       "LOAD_DATASET0_copy0" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 672.1,
-        "left" : 672.3,
+        "top" : 390.2,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1247,8 +1247,8 @@
       "LOAD_DATASET1_copy0" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 1092.1,
+        "top" : 812.3,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1256,8 +1256,8 @@
       "LOAD_DATASET2_copy0" : {
         "label" : "NSP_Plan_SubPlan__c",
         "type" : "LOAD_DATASET",
-        "top" : 111.9,
-        "left" : 672,
+        "top" : 670.2,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1266,22 +1266,22 @@
         "label" : "Asset with PlanSubPlan",
         "description" : "Join Asset and PlanSubPlan with PlanSubPlan ID",
         "type" : "JOIN",
-        "top" : 252,
-        "left" : 952.1
+        "top" : 110.69999999999999,
+        "left" : 672
       },
       "JOIN1_copy0" : {
         "label" : "Asset with Account",
         "description" : "Join Asset and Account with Account ID",
         "type" : "JOIN",
-        "top" : 252.10000000000002,
-        "left" : 1092.1
+        "top" : 250.2,
+        "left" : 812
       },
       "LOAD_DATASET3_copy0" : {
         "label" : "NSP_Plan__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 111.9,
-        "left" : 392,
+        "top" : 669.8,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1290,14 +1290,14 @@
         "label" : "Plan with PlanSubPlan",
         "description" : "Join Plan and PlanSubPlan with Plan ID",
         "type" : "JOIN",
-        "top" : 251.89999999999998,
-        "left" : 672
+        "top" : 112,
+        "left" : 392
       },
       "LOAD_DATASET4_copy0" : {
         "label" : "NSP_Account_Team__c",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 952.1,
+        "top" : 530.2,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1306,14 +1306,14 @@
         "label" : "Account with Account Team",
         "description" : "Join Account and Account Team with Account ID",
         "type" : "JOIN",
-        "top" : 532,
-        "left" : 1092.1
+        "top" : 530.2,
+        "left" : 672
       },
       "LOAD_DATASET5_copy0" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 391.9,
-        "left" : 812,
+        "top" : 250.2,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1322,14 +1322,14 @@
         "label" : "Account Team with User",
         "description" : "Join Account Team and User with User ID",
         "type" : "JOIN",
-        "top" : 532,
-        "left" : 952.1
+        "top" : 391.2,
+        "left" : 532
       },
       "LOAD_DATASET8_copy0_copy0" : {
         "label" : "NSP_Account_Group_Member__c",
         "type" : "LOAD_DATASET",
-        "top" : 672.1,
-        "left" : 1232.1,
+        "top" : 250.7,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1337,8 +1337,8 @@
       "LOAD_DATASET9_copy0_copy0" : {
         "label" : "NSP_Account_Group__c",
         "type" : "LOAD_DATASET",
-        "top" : 672.1,
-        "left" : 1372.1,
+        "top" : 670.2,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1347,14 +1347,14 @@
         "label" : "Account Group with Account Group Member",
         "description" : "Join Account Group and Account Group Member with Group ID",
         "type" : "JOIN",
-        "top" : 532,
-        "left" : 1232.1
+        "top" : 390.2,
+        "left" : 812
       },
       "LOAD_DATASET10_copy0" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 812.3,
+        "top" : 670.2,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1363,20 +1363,20 @@
         "label" : "Asset with Record Type",
         "description" : "Join Asset and Record Type with Record Type ID",
         "type" : "JOIN",
-        "top" : 532,
-        "left" : 812.3
+        "top" : 251.2,
+        "left" : 532
       },
       "JOIN16" : {
         "label" : "Account with Account Group Member",
         "description" : "Join Account and Account Group Member with Member Account",
         "type" : "JOIN",
-        "top" : 392,
-        "left" : 1232
+        "top" : 250.2,
+        "left" : 952
       },
       "LOAD_DATASET20" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 1230.3,
+        "top" : 1090.2,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1385,7 +1385,7 @@
       "LOAD_DATASET21" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
+        "top" : 1090.2,
         "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
@@ -1395,7 +1395,7 @@
         "label" : "Transform",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 672,
         "graph" : {
           "FORMULA1" : {
@@ -1446,7 +1446,7 @@
       "LOAD_DATASET22" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
+        "top" : 1092,
         "left" : 952,
         "parameters" : {
           "sampleSize" : 2000
@@ -1456,7 +1456,7 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
+        "top" : 1091.9,
         "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
@@ -1466,28 +1466,28 @@
         "label" : "Join Subplan IMPL with User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952.1,
         "left" : 952
       },
       "JOIN21" : {
         "label" : "Join Subplan Merger With User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 1092
       },
       "OUTPUT2" : {
         "label" : "User, Plan, Subplan, Asset, Account, Account Team DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 252.10000000000002,
-        "left" : 1372.1
+        "top" : 390.2,
+        "left" : 1092
       },
       "LOAD_DATASET23" : {
         "label" : "NSP_Plan_SubPlan__c",
         "type" : "LOAD_DATASET",
-        "top" : 1370.2,
-        "left" : 812,
+        "top" : 1092,
+        "left" : 672.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1495,7 +1495,7 @@
       "LOAD_DATASET24" : {
         "label" : "NSP_Plan__c",
         "type" : "LOAD_DATASET",
-        "top" : 1370.2,
+        "top" : 1231.9,
         "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
@@ -1505,15 +1505,15 @@
         "label" : "Join Plan with Sub Plan",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1230.2,
+        "top" : 1092,
         "left" : 812
       },
       "LOAD_DATASET5_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 672.3,
-        "left" : 532.2,
+        "top" : 530.2,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1522,14 +1522,14 @@
         "label" : "Asset with User",
         "description" : "Join Asset and User with User ID",
         "type" : "JOIN",
-        "top" : 532.1,
-        "left" : 672.2
+        "top" : 252,
+        "left" : 392
       },
       "TRANSFORM1" : {
         "label" : "Date Format",
         "type" : "TRANSFORM",
-        "top" : 252.10000000000002,
-        "left" : 1232.1,
+        "top" : 390.2,
+        "left" : 952,
         "graph" : {
           "FORMULA6" : {
             "parameters" : {
@@ -1571,28 +1571,28 @@
         "label" : "Plan, Subplan, Asset DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 112.1,
-        "left" : 1372.1
+        "top" : 530.2,
+        "left" : 1092
       },
       "JOIN25" : {
         "label" : "Plan with Compliance member",
         "description" : "Join Plan and Compliance member with UserID",
         "type" : "JOIN",
-        "top" : 251.89999999999998,
-        "left" : 532
+        "top" : 250.2,
+        "left" : 252
       },
       "JOIN26" : {
         "label" : "User with IPT Service Consultant",
         "description" : "Join User and IPT Service Consultant with UserID",
         "type" : "JOIN",
-        "top" : 251.89999999999998,
-        "left" : 812
+        "top" : 111.19999999999999,
+        "left" : 532
       },
       "TRANSFORM2" : {
         "label" : "Transform 2",
         "type" : "TRANSFORM",
-        "top" : 251.89999999999998,
-        "left" : 392,
+        "top" : 390.2,
+        "left" : 112,
         "graph" : {
           "FORMULA10" : {
             "parameters" : {
@@ -1624,7 +1624,7 @@
       "LOAD_DATASET25" : {
         "label" : "NSP_Client_Sub_Plan_History__c",
         "type" : "LOAD_DATASET",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
@@ -1633,8 +1633,8 @@
       "LOAD_DATASET26" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 1650.2,
-        "left" : 392,
+        "top" : 1372.2,
+        "left" : 252.5,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1642,7 +1642,7 @@
       "LOAD_DATASET27" : {
         "label" : "NSP_Sales_to_Implementation__c",
         "type" : "LOAD_DATASET",
-        "top" : 1650.2,
+        "top" : 1511.9,
         "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
@@ -1651,8 +1651,8 @@
       "LOAD_DATASET28" : {
         "label" : "NSP_Plan_SubPlan__c",
         "type" : "LOAD_DATASET",
-        "top" : 1650.2,
-        "left" : 532,
+        "top" : 1512.2,
+        "left" : 531.7,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1661,20 +1661,20 @@
         "label" : "Asset S2I lookup With PlanSubplan",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1510.2,
-        "left" : 532
+        "top" : 1372.2,
+        "left" : 532.2
       },
       "JOIN29" : {
         "label" : "PlanSubplan Lookup with ClientSubplanHistory",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1510.2,
+        "top" : 1372,
         "left" : 672
       },
       "LOAD_DATASET29" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
@@ -1684,21 +1684,21 @@
         "label" : "Asset lookup with recordType",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1510.2,
-        "left" : 812
+        "top" : 1372,
+        "left" : 812.2
       },
       "OUTPUT4" : {
         "label" : "Asset, S2I, Plan Subplan, Subplan History, Account DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1510.2,
+        "top" : 1372.1,
         "left" : 1232
       },
       "TRANSFORM3" : {
         "label" : "Date Format Change",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1510.3,
+        "top" : 1372,
         "left" : 1092,
         "graph" : {
           "FORMULA13" : {
@@ -1741,13 +1741,13 @@
         "label" : "S2I lookup with Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1510.2,
+        "top" : 1372,
         "left" : 392
       },
       "LOAD_DATASET30" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1650.3,
+        "top" : 1512,
         "left" : 952,
         "parameters" : {
           "sampleSize" : 2000
@@ -1757,35 +1757,35 @@
         "label" : "Asset lookup with Account",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1510.3,
+        "top" : 1372.1,
         "left" : 952
       },
       "JOIN33" : {
         "label" : "Join Account With Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1090.3,
+        "top" : 952,
         "left" : 252
       },
       "JOIN34" : {
         "label" : "Join Account With Project",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1090.2,
-        "left" : 392
+        "top" : 952,
+        "left" : 391.9
       },
       "OUTPUT5" : {
         "label" : "Account, Asset, Project Asset, Project, S2I, Plan Subplan,Plan,User DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 1372
       },
       "TRANSFORM4" : {
         "label" : "Date Format Change",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 1232,
         "graph" : {
           "FORMULA17" : {
