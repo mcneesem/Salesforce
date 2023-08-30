@@ -5,8 +5,10 @@
     <description>If a quote on an open opportunity is marked as &quot;Primary&quot; and was created prior to Aug 14th, 2023 then the opportunity cannot be moved to &quot;Closed/Won&quot;.</description>
     <errorConditionFormula>AND(
 ISCHANGED( StageName ),
-ISPICKVAL( StageName, &quot;Closed Won&quot;),
-SBQQ__PrimaryQuote__r.CreatedDate &lt; DATETIMEVALUE(&quot;2023-08-14 00:00:00&quot;)
-)</errorConditionFormula>
+ISPICKVAL( StageName, "Closed Won"),
+SBQQ__PrimaryQuote__r.CreatedDate < DATETIMEVALUE(&quot;2023-08-14 00:00:00&quot;),NOT( ISPICKVAL( SBQQ__PrimaryQuote__r.SBQQ__Status__c, &quot;Submitted To Order&quot;) )
+)
+
+</errorConditionFormula>
     <errorMessage>Please create a new quote and mark it as primary</errorMessage>
 </ValidationRule>
