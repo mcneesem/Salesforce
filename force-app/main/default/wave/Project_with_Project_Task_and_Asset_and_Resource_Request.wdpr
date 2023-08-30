@@ -292,7 +292,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Account_Status__c", "NSP_WO_AIMS_Client_Number__c", "Id", "AccountId", "Name", "RecordTypeId", "NSP_Company_Name__c", "NSP_First_Pay_Date__c", "Total_Employees__c", "NSP_Actual_of_Employee_at_Signature__c", "NSP_Product_Line__c", "NSP_Product_Segment__c", "NSP_SaaS_URL__c", "NSP_Service_Region__c" ],
+        "fields" : [ "Id", "Name", "RecordTypeId", "NSP_Account_Status__c", "NSP_Client__c", "NSP_Company_Name__c", "NSP_First_Pay_Date__c", "NSP_Actual_of_Employee_at_Signature__c", "NSP_SaaS_URL__c", "NSP_WO_AIMS_Client_Number__c", "NSP_Product_Line__c", "NSP_Product_Segment__c", "NSP_Service_Region__c", "Total_Employees__c", "AccountId" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
@@ -2025,7 +2025,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Engagement_Level__c", "Id", "Name" ],
+        "fields" : [ "Id", "Name" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
@@ -2293,7 +2293,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_AIMS_Client__c", "Id", "Name" ],
+        "fields" : [ "Id", "Name" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
@@ -2354,7 +2354,7 @@
       },
       "JOIN13_copy0" : {
         "label" : "Join Project Task with User",
-        "description" : "To get the owner name",
+        "description" : "",
         "type" : "JOIN",
         "top" : 531.8,
         "left" : 813.1
@@ -2370,7 +2370,7 @@
       },
       "JOIN18_copy0" : {
         "label" : "Join Project with Project Task",
-        "description" : "To get all the related fields",
+        "description" : "",
         "type" : "JOIN",
         "top" : 812.1,
         "left" : 1232.3
@@ -2384,7 +2384,7 @@
       },
       "JOIN22" : {
         "label" : "Join Resource Request with Project",
-        "description" : "To get the required fields",
+        "description" : "",
         "type" : "JOIN",
         "top" : 532.2,
         "left" : 1791.9
@@ -2399,8 +2399,8 @@
         }
       },
       "JOIN23" : {
-        "label" : "Join Record Type with Asset",
-        "description" : "To get Asset RecordType name",
+        "label" : "Join Record Type",
+        "description" : "",
         "type" : "JOIN",
         "top" : 531.5,
         "left" : 1930.8
@@ -2423,7 +2423,7 @@
       },
       "JOIN36" : {
         "label" : "Join Resource Request with Contact",
-        "description" : "To get the contact name on Resource Request",
+        "description" : "",
         "type" : "JOIN",
         "top" : 532.1,
         "left" : 1512.5
@@ -2436,8 +2436,8 @@
         "left" : 1933
       },
       "JOIN37" : {
-        "label" : "Join Project with Project Task",
-        "description" : "To get all the related fields",
+        "label" : "Join Project Asset with Project Task",
+        "description" : "",
         "type" : "JOIN",
         "top" : 812.4,
         "left" : 812.3
@@ -2461,15 +2461,15 @@
         }
       },
       "JOIN38" : {
-        "label" : "Join Account with Asset",
-        "description" : "To get Assets on Account",
+        "label" : "Join ProjectAsset with Asset",
+        "description" : "",
         "type" : "JOIN",
         "top" : 1092.2,
         "left" : 533.3
       },
       "JOIN39" : {
-        "label" : "Join Account with Project",
-        "description" : "To get Projects on Account",
+        "label" : "Join ProjectAsset with Project",
+        "description" : "",
         "type" : "JOIN",
         "top" : 1092.1,
         "left" : 813.3
@@ -3074,7 +3074,7 @@
         "connectors" : [ ]
       },
       "JOIN55" : {
-        "label" : "Project Task Lookup to Project",
+        "label" : "Lookup to Project",
         "description" : "Get Required column from Project",
         "type" : "JOIN",
         "top" : 531.8,
@@ -3528,7 +3528,7 @@
         "left" : 532
       },
       "LOAD_DATASET15_copy0_copy0_copy0_copy0" : {
-        "label" : "Account",
+        "label" : "Account Copy",
         "type" : "LOAD_DATASET",
         "top" : 952.2,
         "left" : 391.9,
