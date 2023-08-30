@@ -68,7 +68,7 @@ public class NSP_CustomCaseCreationPageControllerTest {
         
         User bpsUser = new User(
             Alias = 'random',
-            Email='random@salesforce.com',
+            Email='random@insperity.com',
             EmailEncodingKey = 'UTF-8',
             LastName = 'random',
             LocaleSidKey = 'en_US',
@@ -85,7 +85,7 @@ public class NSP_CustomCaseCreationPageControllerTest {
         
         User noTitleUser = new User(
             Alias = 'random',
-            Email='noTitle@salesforce.com',
+            Email='noTitle@insperity.com',
             EmailEncodingKey = 'UTF-8',
             LastName = 'random',
             LocaleSidKey = 'en_US',
@@ -102,7 +102,7 @@ public class NSP_CustomCaseCreationPageControllerTest {
         
         User adminUser = new User(
             Alias = 'SystAdm',
-            Email='admin@salesforce.com',
+            Email='admin@insperity.com',
             EmailEncodingKey = 'UTF-8',
             LastName = 'SysAd',
             LocaleSidKey = 'en_US',
@@ -119,16 +119,16 @@ public class NSP_CustomCaseCreationPageControllerTest {
     Static testMethod void testMethod1() {  
         User bpsUser = [SELECT Id, Title
                        FROM User
-                       WHERE Email = 'random@salesforce.com' LIMIT 1];
+                       WHERE Email = 'random@insperity.com' LIMIT 1];
         User adminUser = [SELECT Id, Title
                        FROM User
-                       WHERE Email = 'admin@salesforce.com' LIMIT 1];
+                       WHERE Email = 'admin@insperity.com' LIMIT 1];
         User noTitleUser = [SELECT Id, Title
                        FROM User
-                       WHERE Email = 'noTitle@salesforce.com' LIMIT 1];
+                       WHERE Email = 'noTitle@insperity.com' LIMIT 1];
 
-                       String peoRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
-                       String bpsRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
+        String peoRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+        String bpsRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
         Test.startTest();
         	Contact con = [SELECT Id, AccountId FROM Contact WHERE Account.Name =: System.Label.NSP_InternalAccountName LIMIT 1];
         //Getting Category Records
