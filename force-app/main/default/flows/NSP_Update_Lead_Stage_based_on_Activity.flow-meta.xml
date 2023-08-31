@@ -2,48 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>Notify_Lead_Owner_for_Lead_from_Website</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_13_A1</name>
-        <label>Send Email to Lead Owner</label>
-        <locationX>1300</locationX>
-        <locationY>200</locationY>
-        <actionName>Task.Notify_Lead_Owner_for_Lead_from_Website</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>NSP_Notify_Account_Owner_for_Contact_from_Website</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_15_A2</name>
-        <label>Send Email to Account owner</label>
-        <locationX>1500</locationX>
-        <locationY>300</locationY>
-        <actionName>Task.NSP_Notify_Account_Owner_for_Contact_from_Website</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
             <name>apexSelection</name>
             <value>
                 <stringValue>NSP_DO_NOTHING</stringValue>
@@ -314,7 +272,7 @@
             <connector>
                 <targetReference>myRule_13_A1</targetReference>
             </connector>
-            <label>Notify Account Owner for Form Task creation</label>
+            <label>Trigger Platform Event for discovery call</label>
         </rules>
     </decisions>
     <decisions>
@@ -328,9 +286,6 @@
         <label>myDecision14</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision16</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_15</name>
@@ -344,65 +299,6 @@
             </conditions>
             <connector>
                 <targetReference>myRule_15_A1</targetReference>
-            </connector>
-            <label>Notify Account Owner for Task creation of web</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>8.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision16</name>
-        <label>myDecision16</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision18</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_17</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_17</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_17_A1</targetReference>
-            </connector>
-            <label>Trigger Platform Event for discovery call</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>9.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision18</name>
-        <label>myDecision18</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_19</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_19</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_19_A1</targetReference>
             </connector>
             <label>On update Publish Platform Event for discovery call</label>
         </rules>
@@ -638,84 +534,10 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISNEW(),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c,
-OR(
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityLearnMoreForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityWOLearnMoreForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperitySalesChatbot&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityRSLearnMoreForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityRecruitingGetAQuoteForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityBPSForm&quot;)
-),
-ISPICKVAL([Task].NSP_Task_type__c, &quot;Form Submission&quot;),
-
- BEGINS([Task].WhoId, &quot;00Q&quot;)
-
-)</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_13</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(ISNEW(),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c},
-OR(
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityLearnMoreForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityWOLearnMoreForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperitySalesChatbot&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityRSLearnMoreForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityRecruitingGetAQuoteForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityBPSForm&quot;)
-),
-ISPICKVAL({!myVariable_current.NSP_Task_type__c}, &quot;Form Submission&quot;),
-
- BEGINS({!myVariable_current.WhoId}, &quot;00Q&quot;)
-
-)</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(ISNEW(),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c,
-OR(
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityLearnMoreForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityWOLearnMoreForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperitySalesChatbot&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityRSLearnMoreForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityRecruitingGetAQuoteForm&quot;),
-ISPICKVAL([Task].NSP_Form_Name__c, &quot;InsperityBPSForm&quot;)
-),
-ISPICKVAL([Task].NSP_Task_type__c, &quot;Form Submission&quot;),
-
- BEGINS([Task].WhoId, &quot;003&quot;)
-
-)</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_15</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(ISNEW(),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c},
-OR(
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityLearnMoreForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityWOLearnMoreForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperitySalesChatbot&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityRSLearnMoreForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityRecruitingGetAQuoteForm&quot;),
-ISPICKVAL({!myVariable_current.NSP_Form_Name__c}, &quot;InsperityBPSForm&quot;)
-),
-ISPICKVAL({!myVariable_current.NSP_Task_type__c}, &quot;Form Submission&quot;),
-
- BEGINS({!myVariable_current.WhoId}, &quot;003&quot;)
-
-)</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
                 <stringValue>AND(ISNEW(),BEGINS( [Task].WhatId, &quot;006&quot;), ISPICKVAL([Task].NSP_Task_Subtype__c, &quot;Discovery Call&quot;),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_17</name>
+        <name>formula_myRule_13</name>
         <dataType>Boolean</dataType>
         <expression>AND(ISNEW(),BEGINS( {!myVariable_current.WhatId}, &quot;006&quot;), ISPICKVAL({!myVariable_current.NSP_Task_Subtype__c}, &quot;Discovery Call&quot;),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c} )</expression>
     </formulas>
@@ -729,7 +551,7 @@ AND(ISCHANGED([Task].NSP_Task_Subtype__c ),[Task].NSP_Opportunity__r.Id != NULL,
 )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_19</name>
+        <name>formula_myRule_15</name>
         <dataType>Boolean</dataType>
         <expression> OR(
 AND(ISCHANGED({!myVariable_current.ActivityDate}) ,{!myVariable_current.NSP_Opportunity__r.Id} != NULL,!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c} ),
@@ -752,27 +574,27 @@ AND(ISCHANGED({!myVariable_current.NSP_Task_Subtype__c} ),{!myVariable_current.N
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND (OR (AND (ISNEW(),ISPICKVAL( [Task].NSP_Submission_type__c ,&apos;Sales ready&apos;) ,ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)),
-AND (OR(ISCHANGED([Task].Status),ISCHANGED([Task].NSP_Submission_type__c),ISCHANGED([Task].NSP_Task_type__c)),ISPICKVAL( [Task].NSP_Submission_type__c ,&apos;Sales ready&apos;) ,ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)) ),  BEGINS( [Task].WhoId , &quot;00Q&quot;),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c)</stringValue>
+                <stringValue>AND (OR (AND (ISNEW(),ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)),
+AND (OR(ISCHANGED([Task].Status),ISCHANGED([Task].NSP_Task_type__c)),ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)) ),  BEGINS( [Task].WhoId , &quot;00Q&quot;),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5</name>
         <dataType>Boolean</dataType>
-        <expression>AND (OR (AND (ISNEW(),ISPICKVAL( {!myVariable_current.NSP_Submission_type__c} ,&apos;Sales ready&apos;) ,ISPICKVAL( {!myVariable_current.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_current.NSP_Task_type__c} ,&apos;Form Submission&apos;)),
-AND (OR(ISCHANGED({!myVariable_current.Status}),ISCHANGED({!myVariable_current.NSP_Submission_type__c}),ISCHANGED({!myVariable_current.NSP_Task_type__c})),ISPICKVAL( {!myVariable_current.NSP_Submission_type__c} ,&apos;Sales ready&apos;) ,ISPICKVAL( {!myVariable_current.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_current.NSP_Task_type__c} ,&apos;Form Submission&apos;)) ),  BEGINS( {!myVariable_current.WhoId} , &quot;00Q&quot;),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c})</expression>
+        <expression>AND (OR (AND (ISNEW(),ISPICKVAL( {!myVariable_current.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_current.NSP_Task_type__c} ,&apos;Form Submission&apos;)),
+AND (OR(ISCHANGED({!myVariable_current.Status}),ISCHANGED({!myVariable_current.NSP_Task_type__c})),ISPICKVAL( {!myVariable_current.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_current.NSP_Task_type__c} ,&apos;Form Submission&apos;)) ),  BEGINS( {!myVariable_current.WhoId} , &quot;00Q&quot;),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c})</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND (OR (AND (ISNEW(),ISPICKVAL( [Task].NSP_Submission_type__c ,&apos;Sales ready&apos;) ,ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)),
-AND (OR(ISCHANGED([Task].Status),ISCHANGED([Task].NSP_Submission_type__c),ISCHANGED([Task].NSP_Task_type__c)),ISPICKVAL( [Task].NSP_Submission_type__c ,&apos;Sales ready&apos;) ,ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)) ),  BEGINS( [Task].WhoId , &quot;00Q&quot;),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c)</stringValue>
+                <stringValue>AND (OR (AND (ISNEW(),ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)),
+AND (OR(ISCHANGED([Task].Status),ISCHANGED([Task].NSP_Task_type__c)),ISPICKVAL( [Task].Status ,&apos;Completed&apos;),ISPICKVAL( [Task].NSP_Task_type__c ,&apos;Form Submission&apos;)) ),  BEGINS( [Task].WhoId , &quot;00Q&quot;),!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5_pmetrule</name>
         <dataType>Boolean</dataType>
-        <expression>AND (OR (AND (ISNEW(),ISPICKVAL( {!myVariable_old.NSP_Submission_type__c} ,&apos;Sales ready&apos;) ,ISPICKVAL( {!myVariable_old.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_old.NSP_Task_type__c} ,&apos;Form Submission&apos;)),
-AND (OR(ISCHANGED({!myVariable_old.Status}),ISCHANGED({!myVariable_old.NSP_Submission_type__c}),ISCHANGED({!myVariable_old.NSP_Task_type__c})),ISPICKVAL( {!myVariable_old.NSP_Submission_type__c} ,&apos;Sales ready&apos;) ,ISPICKVAL( {!myVariable_old.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_old.NSP_Task_type__c} ,&apos;Form Submission&apos;)) ),  BEGINS( {!myVariable_old.WhoId} , &quot;00Q&quot;),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c})</expression>
+        <expression>AND (OR (AND (ISNEW(),ISPICKVAL( {!myVariable_old.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_old.NSP_Task_type__c} ,&apos;Form Submission&apos;)),
+AND (OR(ISCHANGED({!myVariable_old.Status}),ISCHANGED({!myVariable_old.NSP_Task_type__c})),ISPICKVAL( {!myVariable_old.Status} ,&apos;Completed&apos;),ISPICKVAL( {!myVariable_old.NSP_Task_type__c} ,&apos;Form Submission&apos;)) ),  BEGINS( {!myVariable_old.WhoId} , &quot;00Q&quot;),!{!$Setup.NSP_Trigger_Switch__c.LeadTrigger__c})</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -986,99 +808,15 @@ AND (OR(ISCHANGED({!myVariable_old.Status}),ISCHANGED({!myVariable_old.NSP_Submi
         <processMetadataValues>
             <name>reference</name>
             <value>
-                <stringValue>[Task]</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>referenceTargetField</name>
-        </processMetadataValues>
-        <name>myRule_15_A1</name>
-        <label>Update Account owner</label>
-        <locationX>1500</locationX>
-        <locationY>200</locationY>
-        <connector>
-            <targetReference>myRule_15_A2</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Account Owner Email</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>NSP_Account_Owner_Email__c</field>
-            <value>
-                <elementReference>myVariable_current.Account.Owner.Email</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <processMetadataValues>
-            <name>evaluationType</name>
-            <value>
-                <stringValue>always</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>extraTypeInfo</name>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>isChildRelationship</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>reference</name>
-            <value>
                 <stringValue>[Task].Opportunity</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_17_A1</name>
+        <name>myRule_13_A1</name>
         <label>update Opp ready for integration flag</label>
-        <locationX>1700</locationX>
+        <locationX>1300</locationX>
         <locationY>200</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1157,9 +895,9 @@ AND (OR(ISCHANGED({!myVariable_old.Status}),ISCHANGED({!myVariable_old.NSP_Submi
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_19_A1</name>
+        <name>myRule_15_A1</name>
         <label>update ready for integration flag in opp</label>
-        <locationX>1900</locationX>
+        <locationX>1500</locationX>
         <locationY>200</locationY>
         <filterLogic>and</filterLogic>
         <filters>
