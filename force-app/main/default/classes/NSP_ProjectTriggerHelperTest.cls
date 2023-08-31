@@ -461,7 +461,6 @@ private class NSP_ProjectTriggerHelperTest {
         
         oProject.NSP_Client_Size__c = 'Middle Market Enterprise (750 + EEs)';
        
-        
         	update oProject;
         Test.stopTest();
         Asset ast = [Select Id , NSP_Product_Segment__c FROM Asset WHERE Id =: prjAsset.Asset__c];
