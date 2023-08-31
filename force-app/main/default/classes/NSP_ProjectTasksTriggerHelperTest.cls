@@ -935,19 +935,19 @@ public class NSP_ProjectTasksTriggerHelperTest {
         pse__Region__c oRegion = new pse__Region__c();
         oRegion.Name = 'United States';
         Database.insert(oRegion);
+
+        User newUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
+        newUser.UserName =  Integer.valueOf(math.rint(math.random() * 1000000))+ '@test' + UserInfo.getOrganizationId()+ '.org';
+        newUser.Email = 'test@insperity.com';
+        Database.insert(newUser);
         
         //creating a permission control record so that the user can insert a resource request record
         pse__Permission_Control__c permControl = (pse__Permission_Control__c)NSP_TestExtendedDataFactory.createSObject(new pse__Permission_Control__c(), false);
-        permControl.pse__User__c = userinfo.getUserId() ;
+        permControl.pse__User__c = newUser.Id;
         permControl.pse__Resource_Request_Entry__c = true;
         permControl.pse__Region__c = oRegion.Id;
         permControl.pse__Staffing__c = true;
         Database.insert(permControl);
-        
-        User newUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
-        newUser.UserName =  Integer.valueOf(math.rint(math.random() * 1000000))+ '@test' + UserInfo.getOrganizationId()+ '.org';
-        newUser.Email = 'test@insperity.com';
-        
         
         System.runAs(newUser){
             Test.startTest();
@@ -1057,13 +1057,18 @@ public class NSP_ProjectTasksTriggerHelperTest {
     @isTest
     private static void serviceAppointmentTest(){
         List<String> projTaskFields = new List<String>{'Id', 'pse__Status__c'};
-        String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
-            .addFilter('Name', 'Test SA').addLimit(1).build();
-        pse__Project_Task__c projectTask = Database.query(projTaskQuery);
-        Test.startTest();
-        projectTask.pse__Status__c = 'Scheduled';
-        Database.update(projectTask);
-        Test.stopTest();
-    }
-    
+        User currentUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), false);
+        currentUser.NSP_Salesforce_Field_Service__c = 'Dispatcher';
+        currentUser.NSP_Dispatch_Region__c = 'MM National';
+        Database.insert(currentUser);
+        System.runAs(currentUser){
+            String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
+                .addFilter('Name', 'Test SA').addLimit(1).build();
+            pse__Project_Task__c projectTask = Database.query(projTaskQuery);
+            Test.startTest();
+            projectTask.pse__Status__c = 'Scheduled';
+            Database.update(projectTask);
+            Test.stopTest();
+        }
+    }   
 }
