@@ -200,7 +200,8 @@ public class NSP_CaseTriggerHelper {
     
     // when a new case is created with Owner and code will assign date & time.
     public case recordOwnerAssingedDateTime(Case eachCase , Map<Id, Case> caseOldMap){
-        if( eachCase.OwnerId != null && String.valueOf(eachCase.OwnerId).startsWith(STARTSWITHUSER) && ( caseOldMap == null || caseOldMap.get(eachCase.Id).OwnerId != eachCase.OwnerId )){
+        //DF-05853 - Update the "Owner Assign Date" whenever there is change in Owner
+        if( eachCase.OwnerId != null && ( caseOldMap == null || caseOldMap.get(eachCase.Id).OwnerId != eachCase.OwnerId )){
             eachCase.NSP_Owner_Assign_Date__c = System.now();
         }
         return eachCase;
