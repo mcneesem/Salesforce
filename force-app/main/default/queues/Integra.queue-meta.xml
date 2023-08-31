@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>National APS</name>
+    <email>integraoperations@insperity.com.invalid</email>
+    <name>Integra</name>
     <queueMembers>
         <users>
-            <user>sfdc.admin@insperity.com</user>
+            <user>heather.rzany@insperity.com</user>
         </users>
     </queueMembers>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Task</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>pse__Project_Task__c</sobjectType>
     </queueSobject>
 </Queue>

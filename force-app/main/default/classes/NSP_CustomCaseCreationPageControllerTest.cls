@@ -62,9 +62,71 @@ public class NSP_CustomCaseCreationPageControllerTest {
         newGroup.Type ='Queue';
         newGroup.Name='test group';
         insert newGroup;
+        
+        ////Rob Inserting non Admin User
+        Profile prof = [SELECT id from profile where name =: NSP_ServiceConstants.BPSSERVICE];
+        
+        User bpsUser = new User(
+            Alias = 'random',
+            Email='random@insperity.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'random',
+            LocaleSidKey = 'en_US',
+            LanguageLocaleKey = 'en_US',
+            ProfileId = prof.Id,
+            TimeZoneSidKey ='America/Los_Angeles',
+            UserName ='testuser_@test.com' + System.currentTimeMillis(),
+            Title = 'EEO',
+            NSP_Curated_Picklist_Role__c = 'EEO'
+        );
+        insert bpsUser;
+        
+        Profile bpsProf = [SELECT id from profile where name =: NSP_ServiceConstants.BPSSERVICE];
+        
+        User noTitleUser = new User(
+            Alias = 'random',
+            Email='noTitle@insperity.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'random',
+            LocaleSidKey = 'en_US',
+            LanguageLocaleKey = 'en_US',
+            ProfileId = bpsProf.Id,
+            TimeZoneSidKey ='America/Los_Angeles',
+            UserName ='testuser_@test.com' + System.currentTimeMillis(),
+            Title = '',
+            NSP_Curated_Picklist_Role__c = ''
+        );
+        insert noTitleUser;
+        
+        Profile adminprof = [SELECT id from profile where name =: NSP_ServiceConstants.SYSTEM_ADMINISTRATOR];
+        
+        User adminUser = new User(
+            Alias = 'SystAdm',
+            Email='admin@insperity.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'SysAd',
+            LocaleSidKey = 'en_US',
+            LanguageLocaleKey = 'en_US',
+            ProfileId = adminprof.Id,
+            TimeZoneSidKey ='America/Los_Angeles',
+            UserName ='testuser_@test.com' + System.currentTimeMillis(),
+            Title = 'EEO',
+            NSP_Curated_Picklist_Role__c = 'EEO'
+        );
+        insert adminUser;
     }
     
     Static testMethod void testMethod1() {  
+        User bpsUser = [SELECT Id, Title
+                       FROM User
+                       WHERE Email = 'random@insperity.com' LIMIT 1];
+        User adminUser = [SELECT Id, Title
+                       FROM User
+                       WHERE Email = 'admin@insperity.com' LIMIT 1];
+        User noTitleUser = [SELECT Id, Title
+                       FROM User
+                       WHERE Email = 'noTitle@insperity.com' LIMIT 1];
+
         String peoRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
         String bpsRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
         Test.startTest();
@@ -108,6 +170,18 @@ public class NSP_CustomCaseCreationPageControllerTest {
         //coverage changes
        	NSP_CustomCaseCreationPageController.getCategoryList(bpsRecordtypeId, false);
         NSP_CustomCaseCreationPageController.getCaseFromConfig('nulls', con.AccountId);
+        
+        //Rob run as non Admin
+        System.runAs(bpsUser){
+            NSP_CustomCaseCreationPageController.getCategoryList(bpsRecordtypeId, false);
+        }
+        
+        System.runAs(adminUser){
+            NSP_CustomCaseCreationPageController.getCategoryList(bpsRecordtypeId, false);
+        }
+        System.runAs(noTitleUser){
+            NSP_CustomCaseCreationPageController.getCategoryList(bpsRecordtypeId, false);
+        }
 
         Test.stopTest();
     }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_CaseFormInbox_CanAccessInboxEmail</fullName>
+    <active>true</active>
+    <description>Cases created from inbox can access the &apos;Inbox Email&apos; Value.</description>
+    <errorConditionFormula>AND(
+  $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
+  ISPICKVAL( Origin , &apos;Inbox Email&apos;) ,
+  ISPICKVAL(NSP_Topic__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Origin</errorDisplayField>
+    <errorMessage>Value is only used on Cases created from Inbox.</errorMessage>
+</ValidationRule>

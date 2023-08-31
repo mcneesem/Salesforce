@@ -761,6 +761,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Quickstart</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>STA Cert Program</fullName>
             <default>false</default>
         </values>

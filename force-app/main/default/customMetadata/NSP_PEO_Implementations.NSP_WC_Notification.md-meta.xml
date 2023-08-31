@@ -8,11 +8,11 @@
 Automation Section: Payroll
 Automation Name: Workers’ Comp Notification
 Automation icon: envelope
-Email: WC_EE_Notification@insperity.com</value>
+Email: state.compliance@insperity.com</value>
     </values>
     <values>
         <field>NSP_Email_Address__c</field>
-        <value xsi:type="xsd:string">wc_ee_notification@insperity.com</value>
+        <value xsi:type="xsd:string">state.compliance@insperity.com</value>
     </values>
     <values>
         <field>NSP_Name__c</field>
