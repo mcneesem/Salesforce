@@ -213,7 +213,13 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             // Send the list to publish event bus
             if (accountEventList.size() > 0) {
                 Id profileId = userinfo.getProfileId();
-                String profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
+                //228901 - For fixing SOQL changed to metadata query
+                String profileName;
+                if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+                    profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
+                } else{
+                    profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
+                }
                 /* Adding AND Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
                 if (!profileName.containsIgnoreCase(System.label.NSP_Data_Migration_Profile_Name) && 
                     !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)) {
@@ -274,7 +280,13 @@ if(accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycl
             if (updateAccountList.size() > 0) {
                 /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
                 Id profileId = userinfo.getProfileId();
-                String profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
+                //228901 - For fixing SOQL changed to metadata query
+                String profileName;
+                if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+                    profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
+                } else{
+                    profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
+                }
                 if (String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)) {
                     publishEventBus(accountEvent, updateAccountList);
                 }
