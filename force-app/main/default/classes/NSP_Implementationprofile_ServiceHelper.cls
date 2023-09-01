@@ -4,6 +4,7 @@ public class NSP_Implementationprofile_ServiceHelper {
     private String impMethodName;
     private String  impAutomationRecordType;
     private String  impAutomationSection;
+    @testVisible
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
     private Map<Id, Implementation_Profile__c> newIPs = null; 
@@ -1391,10 +1392,11 @@ public class NSP_Implementationprofile_ServiceHelper {
     private void checkforWCNotification(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
         
         List<String> stateCodes=new List<String>{'NH','WY','ND','WA','NY','MA','VA','OH','RI'};
-            
-        if((newIp.RecordTypeId == ipFSORecordTypeId || (newIp.RecordTypeId == ipMMRecordTypeId && newIp.NSP_Asset__c!=null )) && 
+        List<String> businessStates=new List<String>{'MA','NY','RI','VA'};    
+        if(((newIp.RecordTypeId == ipFSORecordTypeId && newIp.NSP_Business_Meeting_States__c!= null && findSharedValue(businessStates,newIp.NSP_Business_Meeting_States__c) )|| 
+		(newIp.RecordTypeId == ipMMRecordTypeId && newIp.NSP_Asset__c!=null &&  newIp.Client_business_in_MA_NY_or_VA__c!= null && findSharedValue(businessStates,newIp.Client_business_in_MA_NY_or_VA__c) )) && 
         newIp.Employees_work_in_the_following_states__c!=null && newIp.Client_does_business_in_MA_NY_or_VA__c!=null && 
-        newIp.Effective_Date_Payroll_Worker_comp_EPLI__c!=null){
+        newIp.Effective_Date_Payroll_Worker_comp_EPLI__c!=null && findSharedValue(stateCodes,newIp.Employees_work_in_the_following_states__c)){
                    
                    if(existingRec == null || newIp.NSP_Form_Completed__c || newIp.Client_does_business_in_MA_NY_or_VA__c != existingRec.Client_does_business_in_MA_NY_or_VA__c
                       ||newIp.Effective_Date_Payroll_Worker_comp_EPLI__c != existingRec.Effective_Date_Payroll_Worker_comp_EPLI__c
@@ -2290,15 +2292,9 @@ public class NSP_Implementationprofile_ServiceHelper {
     */
 
     private void checkforClientSummary(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        List<String> stateCodes = new List<String>{'CT','DE','IL','ME','NV','RI','IA','MA','ND','SD','MS','KY','OH','VT'};
-            if( newIp.RecordTypeId == ipFSORecordTypeId  &&  newIp.NSP_CheckToSendTheClient_Summary_email__c &&
-               (newIp.Client_have_any_EEs_on_F1_or_J1_Visa_s__c == NSP_ServiceConstants.YES
-                || newIp.Do_any_EEs_have_garnishments__c == NSP_ServiceConstants.YES
-                ||newIp.Do_any_EEs_have_tax_levies__c == NSP_ServiceConstants.YES 
-                || (newIp.Employees_work_in_the_following_states__c != null && findSharedValue(stateCodes,newIp.Employees_work_in_the_following_states__c)))){
-                    updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, CLIENT_SUMMARY_FN);
-                    
-                }
+        if( newIp.RecordTypeId == ipFSORecordTypeId  &&  newIp.NSP_CheckToSendTheClient_Summary_email__c ){
+            updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, CLIENT_SUMMARY_FN);
+        }
     }
     
     private  void emailNotifyforClientSummary(){
