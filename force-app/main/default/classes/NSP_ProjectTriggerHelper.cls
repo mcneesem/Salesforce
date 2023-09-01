@@ -20,6 +20,7 @@ public class NSP_ProjectTriggerHelper{
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
 	private static final Id peoProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE);
+    private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     private Static final String SERVICEPLANPROJECTTYPE = 'Service Plan';
 
     /*****************************************************************
@@ -577,7 +578,8 @@ public class NSP_ProjectTriggerHelper{
     public void linkAssignmentToProjectTask(String objectName, String relationField, List<pse__Assignment__c> relatedAssignmentList, Map<Id, pse__Proj__c> changedProjectMap){
         SET<ID> projectKeys = changedProjectMap.keyset();
         Map<Id,pse__Assignment__c> resourceWithAssignment = new Map<Id, pse__Assignment__c>(); 
-        List<sObject> childRecordList = Database.query('SELECT Id, pse__Project__c FROM '+ String.escapeSingleQuotes(objectName) +' WHERE '+ String.escapeSingleQuotes(relationField) +' IN: projectKeys');List<pse__Project_Task_Assignment__c> PTAList = new List<pse__Project_Task_Assignment__c>();
+        List<sObject> childRecordList = Database.query('SELECT Id, pse__Project__c FROM '+ String.escapeSingleQuotes(objectName) +' WHERE '+ String.escapeSingleQuotes(relationField) +' IN: projectKeys AND pse__Project__r.RecordTypeId !='+ '\''+bpsProjectRecordTypeId+'\'');
+        List<pse__Project_Task_Assignment__c> PTAList = new List<pse__Project_Task_Assignment__c>();
         for(pse__Assignment__c assignment : relatedAssignmentList){
             resourceWithAssignment.put(assignment.pse__Resource__c, assignment);
         }
