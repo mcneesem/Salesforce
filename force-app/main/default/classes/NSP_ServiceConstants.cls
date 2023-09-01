@@ -129,6 +129,7 @@ public class NSP_ServiceConstants {
   public final static string CASE_CLOSED_STATUS   = 'Closed';
   public static final string HCM_CASE_SUBJECT = 'iSolved HCM Audit Task | ';   
   public static final string CASE_SUB_STATUS_NOT_STARTED = 'Not Started';
+  public static final string CASE_STATUS_NOT_STARTED = 'Not Started';
   public static final string CASE_CATEGORY_WX_WA = 'WX/WA';
   public static final string CASE_SUB_CATEGORY_PROJECTS = 'Projects';
   public static final string CASE_DETAIL_HCM_AUDIT = 'HCM Audit';

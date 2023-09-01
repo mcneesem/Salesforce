@@ -1680,7 +1680,8 @@ Story:        STY-01785
             if(!parentIdChildStatusMap.isEmpty()){
                 for(Case cse : [SELECT Id, Status FROM Case WHERE Id IN: parentIdChildStatusMap.keySet()]){
                     if(!parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.CASE_OPEN_STATUS) &&
-                       !parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.REOPENED)){
+                       !parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.REOPENED) && 
+                       !parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.CASE_STATUS_NOT_STARTED)){
                            cse.Status = NSP_ServiceConstants.CASE_CLOSED_STATUS;
                            cseListToUpdate.add(cse);
                        }
