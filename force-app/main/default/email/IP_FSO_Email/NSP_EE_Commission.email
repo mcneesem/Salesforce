@@ -18,8 +18,7 @@ If the employees are not commission only then you will need to update the Schedu
 
 <p>Regards,<br/>
 {!relatedTo.NSP_Project_Manager__r.Name}<br/>
-{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}<br/>
-{!relatedTo.NSP_Project_Manager__r.NSP_Work_email__c}</p>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
 <c:InsperityEmailFooter />
 </table>
 </body>
