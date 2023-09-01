@@ -664,7 +664,7 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+<fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Report_Type_Actual__c</field>
         <readable>true</readable>
@@ -830,7 +830,7 @@
         <field>NSP_ReportRequest__c.NSP_Report_Developer__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_RequestingMultipleEmployees__c</field>
         <readable>true</readable>
@@ -905,7 +905,7 @@
         <field>NSP_ReportRequest__c.NSP_StatusOfAgreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Survey_Filters__c</field>
         <readable>true</readable>
@@ -1000,12 +1000,12 @@
         <field>NSP_ReportRequest__c.NSP_columsToBeTotaled__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.SR__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <hasActivationRequired>false</hasActivationRequired>
+        <hasActivationRequired>false</hasActivationRequired>
     <label>Separation Agreement Group</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>

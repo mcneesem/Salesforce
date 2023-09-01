@@ -18,21 +18,16 @@ NSP_CommissionsSelectOne__c;
 NSP_EquipmentSelection__c;
 NSP_OutplacementServicesValue__c;
 NSP_TransitionOfDutiesValue__c;
-NSP_Termination_Date__c;
 NSP_ReferenceTospecificClientDocument__c;
 NSP_TransitionDate__c;
 NSP_Installments__c;
 filesize = 0;
 preparedFields=['NSP_BonusSelectOne__c','NSP_TransitionDate__c','NSP_ReferenceTospecificClientDocument__c','NSP_COBRASelectOne__c','NSP_CommissionsSelectOne__c','NSP_EquipmentSelection__c',
-'NSP_OutplacementServicesValue__c','NSP_TransitionOfDutiesValue__c','NSP_Termination_Date__c','NSP_Installments__c'];
+'NSP_OutplacementServicesValue__c','NSP_TransitionOfDutiesValue__c','NSP_Installments__c'];
 preparedFormLoad=false; 
 
 /** disable field */
-NSP_RemoveNoRehireClause = false;
-NSP_KeepNorehireParagraphForcompany =false;
-NSP_NonSolicitationofCustomers_Company= false ;
 
-NSP_MutualNonDisparagement =false;
 NSP_MutualConfidentiality =false;
 isPrevClick=false;
 isSaveClick=false;
@@ -142,12 +137,11 @@ radioRequiredFields=['NSP_SpecialItems','NSP_TransitionOfDuties','NSP_SignatureB
 'NSP_IncludeTerminationDate','NSP_Equipment','NSP_Commissions','NSP_COBRA','NSP_Bonus','NSP_Installments_Check'];
 
 
-checkBoxField = ["NSP_COBRA__c","NSP_Bonus__c","NSP_RemoveNotaryRequirement__c",
-"NSP_RemoveNoRehireClause__c","NSP_KeepNorehireParagraphForcompany__c","NSP_Commissions__c",
-"NSP_RemoveNotaryRequirement__c","NSP_MutualNonDisparagement__c","NSP_OutplacementServices__c",
+checkBoxField = ["NSP_COBRA__c","NSP_Bonus__c","Is_Notary_Required__c",
+"Is_Rehire_Clause_Required__c","NSP_Commissions__c","NSP_OutplacementServices__c",
 "NSP_SignatureBlockforClientRequired__c","NSP_VerificationOfEmploymentHotline__c",
 "NSP_DontContestUnemployment__c","NSP_ReferenceTospecificClientDocument__c","NSP_TransitionOfDuties__c",
-"NSP_MutualConfidentiality__c","NSP_Equipment__c","NSP_IncludeTerminationDate__c","NSP_Installments_Check__c"];
+"NSP_MutualConfidentiality__c","NSP_Equipment__c","NSP_Installments_Check__c"];
 
 
 recordTypeId = '012000000000000AAA';
@@ -162,10 +156,10 @@ pickValueYesNo = [
 userID;
 financeLevel;
 isclicked;
-currentPageFields=['NSP_RemoveNoRehireClause__c','NSP_KeepNorehireParagraphForcompany__c','NSP_RemoveNotaryRequirement__c','NSP_Installments__c','NSP_NumberOfpayments__c','NSP_Installments_Check__c',
+currentPageFields=['Is_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_Installments__c','NSP_NumberOfpayments__c','NSP_Installments_Check__c',
 'NSP_Bonus__c','NSP_BonusSelectOne__c','NSP_Installments_Check__c','NSP_EnterBonusAmmount__c','NSP_NumberOfpayments__c','NSP_COBRA__c','NSP_COBRASelectOne__c','NSP_COBRA_Amount__c','NSP_NumberOfMonthsCOBRA__c','NSP_Commissions__c',
-'NSP_CommissionsSelectOne__c','NSP_CommissionAmount__c','NSP_Equipment__c','NSP_EquipmentSelection__c','NSP_ManufacturerNameandModel__c','NS_FairMarketValue__c','NSP_MutualNonDisparagement__c',
-'NSP_MutualConfidentiality__c','NSP_NonSolicitationofCustomers_Company__c','NSP_IncludeTerminationDate__c','NSP_Termination_Date__c','NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
+'NSP_CommissionsSelectOne__c','NSP_CommissionAmount__c','NSP_Equipment__c','NSP_EquipmentSelection__c','NSP_ManufacturerNameandModel__c','NS_FairMarketValue__c',
+'NSP_MutualConfidentiality__c','NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
 'NSP_NumberOfMonthsOfOutplacement_Service__c','NSP_AmountOfReimbursement__c','NSP_ExpirationDate__c','NSP_SignatureBlockforClientRequired__c','NSP_NameOnSignature__c','NSP_SignatureTitle__c',
 'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionOfDutiesValue__c','NSP_TransitionDate__c','NSP_Mid_Market_or_Mid_Market_Enterprise__c'];
 fieldValue =  { currentTarget : { name :'', value :''} };
@@ -275,7 +269,7 @@ radioOnChange(event){
         });
     }
 
-    if(event.currentTarget.fieldName != null && ( event.currentTarget.fieldName == 'NSP_RemoveNoRehireClause__c'|| event.currentTarget.fieldName == 'NSP_KeepNorehireParagraphForcompany__c' )){
+    if(event.currentTarget.fieldName != null && ( event.currentTarget.fieldName == 'Is_Rehire_Clause_Required__c' )){
         if(event.currentTarget.value == true){
             this[event.currentTarget.fieldName.slice(0,-3)] = true;
         }else{
@@ -512,13 +506,7 @@ handleOnload(event){
             if(this.fieldsData.NSP_RequestingMultipleEmployees__c != null  && this.fieldsData.NSP_RequestingMultipleEmployees__c.value != null){
             if(this.fieldsData.NSP_RequestingMultipleEmployees__c.value = 'No'){
                 if(this.fieldsData.NSP_WorkState__c != null  && this.fieldsData.NSP_WorkState__c.value != null && this.fieldsData.NSP_WorkState__c.value !='') 
-                    if( this.fieldsData.NSP_WorkState__c.value  == 'CA'){	
-                        this.NSP_RemoveNoRehireClause = true;
-                        this.NSP_KeepNorehireParagraphForcompany =true;
-                        this.NSP_NonSolicitationofCustomers_Company= true ;
-                    }
                     if( this.fieldsData.NSP_WorkState__c.value  == 'IL'){	
-                        this.NSP_MutualNonDisparagement =true;
                         this.NSP_MutualConfidentiality =true;
                     }
                    if (this.fieldsData.NSP_WorkState__c.value  != 'IL' && this.fieldsData.NSP_WorkState__c.value  != 'CA'){
@@ -701,22 +689,6 @@ handleOnload(event){
                 }
                }
               }
-
-              if((this.fieldsData.NSP_RemoveNoRehireClause__c && this.fieldsData.NSP_RemoveNoRehireClause__c.value != null) ||
-                (this.fieldsData.NSP_KeepNorehireParagraphForcompany__c && this.fieldsData.NSP_KeepNorehireParagraphForcompany__c.value != null))
-                {
-                     if(this.fieldsData.NSP_RemoveNoRehireClause__c.value == true){
-                    this.NSP_RemoveNoRehireClause = true;
-                    }else{
-                        this.NSP_RemoveNoRehireClause = false;
-                    }
-
-                    if(this.fieldsData.NSP_KeepNorehireParagraphForcompany__c.value == true){
-                        this.NSP_KeepNorehireParagraphForcompany = true;
-                     }else{
-                            this.NSP_KeepNorehireParagraphForcompany = false;
-                    }
-                }
             }
             if(this.isOnloaded){
             if(this.transitionOption.data != null && this.equipmentOption.data != null && this.outplacementOption.data != null && this.enableInsperityPrepared && this.instalmentOption.data !=null
