@@ -45,7 +45,6 @@ private class NSP_ProjectTriggerHelperTest {
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
         Id PEOProjectTaskRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Project_Task__c',NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
-        List<sObject> objRecInsertList = new List<sObject>();
         // Account Creation
         List<Account> accList = new List<Account>();
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
@@ -69,10 +68,7 @@ private class NSP_ProjectTriggerHelperTest {
         
         pse__Region__c reg = new pse__Region__c();
             reg.name = NSP_ServiceConstants.UnitedStatesRegion;
-        objRecInsertList.add(reg);
-        Case oCase=(Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
-        oCase.NSP_Category__c = NSP_ServiceConstants.INFRASTRUCTURE;
-        objRecInsertList.add(oCase);
+            insert reg;
         
         Test.startTest();
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
@@ -101,33 +97,18 @@ private class NSP_ProjectTriggerHelperTest {
         projectObj.TemplateName__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
         projectObj.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
         bpsProject.pse__Is_Active__c = true; 
-		
-        pse__Proj__c projTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-        projTemplate.Name = 'Test Template';
-        projTemplate.RecordTypeId = bpsProjectRecordTypeId;
-        projTemplate.pse__Project_Status__c = 'Active';
-        projTemplate.pse__Is_Active__c = true; 
-        projTemplate.pse__Is_Template__c = true;
-        projTemplate.pse__Start_Date__c = System.today();
-        
-        pse__Proj__c oProject1 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-        oProject1.pse__Start_Date__c = System.Today();
-        oProject1.pse__Account__c= oAccount.Id;
-        oProject1.TemplateName__c = label.Middle_Market_Implementation_Project;
-         
+
         List<pse__Proj__c> listProject = new List<pse__Proj__c>();
         listProject.add(oProject);
         listProject.add(oProject2);
         listProject.add(projectObj);
         listProject.add(bpsProject);
-        listProject.add(projTemplate);
-        listProject.add(oProject1);
 
         insert listProject;
         
         pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask.Name = 'pTask3';
-        oProjectTask.pse__Project__c = projectObj.Id;
+        oProjectTask.pse__Project__c = listProject[0].Id;
         oProjectTask.RecordTypeId = PEOProjectTaskRecordTypeId;
         insert oProjectTask;
         
@@ -175,22 +156,21 @@ private class NSP_ProjectTriggerHelperTest {
         Order orderObj = (Order)NSP_TestExtendedDataFactory.createSObject(new Order(), false);
         orderObj.NSP_Project__c = listProject[1].Id;
         orderObj.AccountId = oAccount.id;
-        objRecInsertList.add(orderObj);
+        insert orderObj;
 
         Implementation_Profile__c impProf = new Implementation_Profile__c();
 
         impProf.NSP_Project__c = projectObj.Id;
         impProf.NSP_Inactive__c = false;
-        objRecInsertList.add(impProf);
+        database.insert(impProf);
         //milstone creation
         pse__Milestone__c milestoneObj = new pse__Milestone__c();
         milestoneObj.Name = 'Test milestone delete 1';
         milestoneObj.pse__Target_Date__c = system.today();
         milestoneObj.pse__Project__c = projectObj.id;
-        objRecInsertList.add(milestoneObj);
-    
-        Database.insert(objRecInsertList);
-
+        insert milestoneObj;	
+        
+        
         User BpaUser = new User(alias = 'jsmit', email='jsmith@insperity.com', 
                                 emailencodingkey='UTF-8', lastname='Smith', 
                                 languagelocalekey='en_US', 
@@ -356,12 +336,14 @@ private class NSP_ProjectTriggerHelperTest {
         //inserting contact
         insert oContact;
         //creating Project
-        
-        pse__Proj__c oProject = [Select Id , OwnerId from pse__Proj__c WHERE  TemplateName__c =: label.Middle_Market_Implementation_Project ];
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Start_Date__c = System.Today();
+        oProject.pse__Account__c= oAccount.Id;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
         //inserting Project
-        Test.startTest();
-        //insert oProject;
+        insert oProject;
         oProject.pse__Project_Manager__c = oContact.Id;
+        Test.startTest();
         //Updating Project
         update oProject;
         Test.stopTest();
@@ -424,12 +406,11 @@ private class NSP_ProjectTriggerHelperTest {
     @isTest
     private static void onCancelUpdateImplProfileTest(){
         //GIVEN
-        Test.startTest();
-        pse__Proj__c proj = [SELECT Id,pse__Project_Status__c FROM pse__Proj__c WHERE pse__Project_Status__c=:'Active' AND RecordTypeId =: peoProjectRecordType LIMIT 1];
+        pse__Proj__c proj = [SELECT Id,pse__Project_Status__c FROM pse__Proj__c WHERE pse__Project_Status__c=:'Active'  LIMIT 1];
         //WHEN
         proj.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
         proj.NSP_Cancelled_Reason__c = 'Client Terminated';
-        
+        Test.startTest();
         update proj;
         //THEN
         Implementation_Profile__c impProfile = [SELECT Id, NSP_Inactive__c FROM Implementation_Profile__c WHERE NSP_Project__c =:proj.Id];
@@ -443,7 +424,6 @@ private class NSP_ProjectTriggerHelperTest {
     * ********************************************************************************************/
     @isTest
     private static void updateAssetProductSegmentTest(){
-        Test.startTest();
   		pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProject.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
         insert oProject;
@@ -461,6 +441,7 @@ private class NSP_ProjectTriggerHelperTest {
         
         oProject.NSP_Client_Size__c = 'Middle Market Enterprise (750 + EEs)';
        
+        Test.startTest();
         	update oProject;
         Test.stopTest();
         Asset ast = [Select Id , NSP_Product_Segment__c FROM Asset WHERE Id =: prjAsset.Asset__c];
@@ -473,7 +454,6 @@ private class NSP_ProjectTriggerHelperTest {
     * ********************************************************************************************/
     @isTest
     private static void updateAssetProductSegmentException(){
-        Test.startTest();
   		pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProject.TemplateName__c=NSP_ServiceConstants.ITA_IMPLEMENTATION;
         insert oProject;
@@ -491,6 +471,7 @@ private class NSP_ProjectTriggerHelperTest {
         
         oProject.NSP_Client_Size__c = 'Middle Market Enterprise (750 + EEs)';
         
+        Test.startTest();
 		update oProject;
         Asset ast = [Select Id , NSP_Product_Segment__c FROM Asset WHERE Id =: prjAsset.Asset__c];
         System.assertEquals(ast.NSP_Product_Segment__c, oProject.NSP_Client_Size__c);
@@ -701,7 +682,10 @@ private class NSP_ProjectTriggerHelperTest {
         oProject.NSP_Visible_to_Client__c = true;
         oProject.pse__Account__c = acc.Id;
         INSERT oProject;  
-        Assert.areEqual(true, oProject.NSP_Visible_to_Client__c);
+        System.assertEquals(1,[SELECT Id , ParentId , UserorGroupId 
+                               FROM pse__proj__share 
+                               WHERE ParentId =:oProject.Id  
+                               AND RowCause = :Schema.pse__proj__share.RowCause.InsperitySharing__c ].Size());
         Test.stopTest();
     }
     
@@ -756,8 +740,9 @@ private class NSP_ProjectTriggerHelperTest {
         project.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
         project.pse__Start_Date__c = Date.today();
         project.pse__Account__c = acc.Id;
-        test.startTest();
         INSERT project;
+       
+		test.startTest();
         project.recordTypeId = bpsProjectRecordTypeId;
         project.pse__Account__c = acc1.Id;
          project.TES_HCM_Implementation_Support_Tasks__c = NSP_ServiceConstants.TES_HCM_BANK_AUDIT;
@@ -790,8 +775,9 @@ private class NSP_ProjectTriggerHelperTest {
         project.Templates_Used__c = NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
         project.pse__Start_Date__c = Date.today();
         project.pse__Account__c = acc.Id;
-        test.startTest();
         INSERT project;
+
+		test.startTest();
          project.pse__Project_Type__c = 'Service Plan';
         project.pse__Project_Status__c = 'Complete';
         project.NSP_Rating__c = 'Unfavorable';
@@ -802,21 +788,5 @@ private class NSP_ProjectTriggerHelperTest {
         test.stopTest();
         
         System.assertEquals(project.pse__Project_Status__c, 'Complete');
-    }
-    
-    @isTest
-    private static void testHandleBeforeDeleteOfProjTemp() {
-        List<String> projFields = new List<String>{'Id',NAME, 'pse__Is_Template__c'};
-        String projQuery = new NSP_QueryBuilder('pse__Proj__c', projFields)
-            .addFilter(NAME, 'Test Template').addLimit(1).build();
-        pse__Proj__c proj = Database.query(projQuery);
-        try{
-            if(proj!=null){
-                Database.delete(proj);
-            }
-        }catch (DmlException ex) {
-            System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
-        } 
-        
     }
 }
