@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Block_Cloning</fullName>
+    <active>true</active>
+    <description>This is built as part of DF-05918-- to stop cloning records created before 08.14</description>
+    <errorConditionFormula>ISCLONE() &amp;&amp; SBQQ__Source__c!=null &amp;&amp; DATEVALUE( SBQQ__Source__r.CreatedDate ) &lt; Date(2023,08,14)</errorConditionFormula>
+    <errorMessage>This quote is not available to be cloned.</errorMessage>
+</ValidationRule>
