@@ -32,7 +32,6 @@ public class NSP_TaskServiceUtilTest {
         tsk.CurrencyIsoCode ='USD';
         tsk.Priority='Normal';
         tsk.Status='Completed';
-        tsk.NSP_Submission_type__c ='Sales ready';
         tsk.WhoId = ld.id;
         
         Task tsk1 =  new Task();
@@ -40,7 +39,6 @@ public class NSP_TaskServiceUtilTest {
         tsk1.CurrencyIsoCode ='USD';
         tsk1.Priority='Normal';
         tsk1.Status='Open';
-        tsk1.NSP_Submission_type__c ='Sales ready';
         tsk1.WhoId = ld.id;
         
         taskList.add(tsk1);
