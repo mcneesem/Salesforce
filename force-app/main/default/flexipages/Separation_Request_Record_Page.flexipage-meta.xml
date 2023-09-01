@@ -841,8 +841,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_SpecialItems__c</fieldItem>
-                <identifier>RecordNSP_SpecialItems_cField</identifier>
+                <fieldItem>Record.NSP_SpecialItemsNote__c</fieldItem>
+                <identifier>RecordNSP_SpecialItemsNote__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5efcc1c5-1856-4a2e-a2de-b8938d4da167</name>
