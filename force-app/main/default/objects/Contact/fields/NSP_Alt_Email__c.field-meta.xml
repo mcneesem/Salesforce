@@ -3,7 +3,7 @@
     <fullName>NSP_Alt_Email__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Referral Email</label>
+    <label>Alt Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
