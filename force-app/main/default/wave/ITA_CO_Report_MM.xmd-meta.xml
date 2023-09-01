@@ -3,13 +3,13 @@
     <dataset xsi:nil="true"/>
     <dimensions>
         <defaultAction>openSfdcRecord</defaultAction>
-        <field>Project_Project_Asse_1.Asset.Name</field>
+        <field>Project_Project_Asse_1.pse__Proj__c.pse__Project_ID__c</field>
         <isDerived>false</isDerived>
         <sortIndex>0</sortIndex>
     </dimensions>
     <dimensions>
         <defaultAction>openSfdcRecord</defaultAction>
-        <field>Project_Project_Asse_1.pse__Proj__c.pse__Project_ID__c</field>
+        <field>Project_Project_Asse_1.Asset.Name</field>
         <isDerived>false</isDerived>
         <sortIndex>1</sortIndex>
     </dimensions>

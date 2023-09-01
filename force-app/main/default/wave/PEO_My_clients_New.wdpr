@@ -133,7 +133,8 @@
           "label" : "Account, Opportunity, User, Account Team DS",
           "name" : "Closed_Opportunities_PEO_My_clients",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET11" : {
@@ -304,7 +305,8 @@
           "label" : "User, Account Team, Account, Asset DS",
           "name" : "Handbook_PEO_My_clients",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET18" : {
@@ -386,7 +388,8 @@
           "label" : "User, Project Task, Project DS",
           "name" : "Project_Task_PEO_My_clients",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET23" : {
@@ -486,7 +489,8 @@
           "label" : "Account, Project, Account Team, User DS",
           "name" : "Engagement_Plans_Due_for_Revision_PEO_My_clients",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET30" : {
@@ -603,14 +607,15 @@
           "label" : "Case DS",
           "name" : "AC9_Cases_I_Created_and_Assigned_to_Another",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "LOAD_DATASET20_copy0" : {
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "ContactId", "AccountId", "Product2Id", "CreatedDate", "CreatedById", "Name", "SerialNumber", "ExternalIdentifier", "Status", "DigitalAssetStatus", "AverageUptimePerDay", "Price", "Quantity", "OwnerId", "RecordTypeId", "LocationId", "AssetLevel", "StockKeepingUnit", "HasLifecycleManagement", "CurrentMrr", "CurrentLifecycleEndDate", "CurrentQuantity", "CurrentAmount", "TotalLifecycleAmount", "ConsequenceOfFailure", "NSP_Account_Status__c", "NSP_Client_Segment_type__c", "NSP_Client__c", "NSP_Company_Name__c", "NSP_Renewal_Date__c", "NSP_Unique_Active_Employee__c", "NSP_Support_Account_Group__c", "NSP_Renewal_within_next_30__c" ],
+        "fields" : [ "NSP_AIMS_Original_First_Pay_Date__c", "Id", "ContactId", "AccountId", "Product2Id", "CreatedDate", "CreatedById", "Name", "SerialNumber", "ExternalIdentifier", "Status", "DigitalAssetStatus", "AverageUptimePerDay", "Price", "Quantity", "OwnerId", "RecordTypeId", "LocationId", "AssetLevel", "StockKeepingUnit", "HasLifecycleManagement", "CurrentMrr", "CurrentLifecycleEndDate", "CurrentQuantity", "CurrentAmount", "TotalLifecycleAmount", "ConsequenceOfFailure", "NSP_Account_Status__c", "NSP_Client_Segment_type__c", "NSP_Client__c", "NSP_Company_Name__c", "NSP_Renewal_Date__c", "NSP_Unique_Active_Employee__c", "NSP_Renewal_within_next_30__c", "NSP_Support_Account_Group__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
@@ -627,7 +632,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "Name", "Industry" ],
+        "fields" : [ "NSP_AIMS_Renewal_Date__c", "Id", "Name", "Industry" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Account",
@@ -783,7 +788,7 @@
     },
     "OUTPUT3_copy0" : {
       "action" : "save",
-      "sources" : [ "FORMULA0" ],
+      "sources" : [ "FORMULA12" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -1283,6 +1288,36 @@
         } ]
       }
     },
+    "FORMULA11" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Ft_AIMS_Original_First_Pay_Date",
+          "label" : "AIMS Original First Pay Date",
+          "formulaExpression" : "date_format(\"Join18.NSP_AIMS_Original_First_Pay_Date__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA12" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA11" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Ft_AIMS_Renewal_Date",
+          "label" : "AIMS Renewal Date",
+          "formulaExpression" : "date_format(\"Join18.Account.NSP_AIMS_Renewal_Date__c\",'MM/dd/yyyy')",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
     "LOAD_DATASET36" : {
       "action" : "load",
       "sources" : [ ],
@@ -1310,7 +1345,8 @@
           "label" : "Account Group Member, Account Group, Account DS",
           "name" : "Account_Health_Review_PEO_My_clients",
           "folderName" : "PEO"
-        }
+        },
+        "measuresToCurrencies" : [ ]
       }
     },
     "FORMULA3" : {
@@ -1608,8 +1644,8 @@
       "LOAD_DATASET6" : {
         "label" : "Opportunity",
         "type" : "LOAD_DATASET",
-        "top" : 111.9,
-        "left" : 952,
+        "top" : 2491.9,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1617,8 +1653,8 @@
       "LOAD_DATASET7" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 251.89999999999998,
-        "left" : 952,
+        "top" : 2632.9,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1627,14 +1663,14 @@
         "label" : "Join Account with Opportunity",
         "description" : "",
         "type" : "JOIN",
-        "top" : 251.89999999999998,
-        "left" : 1092.1
+        "top" : 2352.5,
+        "left" : 392.3
       },
       "LOAD_DATASET8" : {
         "label" : "NSP_Account_Team__c",
         "type" : "LOAD_DATASET",
-        "top" : 391.9,
-        "left" : 1092,
+        "top" : 2632.5,
+        "left" : 532.8,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1642,8 +1678,8 @@
       "LOAD_DATASET10" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 531.8,
-        "left" : 952,
+        "top" : 2632.6,
+        "left" : 392.6,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1652,28 +1688,28 @@
         "label" : "Join Account Team with User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 531.9,
-        "left" : 1092
+        "top" : 2492.5,
+        "left" : 532.6
       },
       "JOIN7" : {
         "label" : "Join Account With Account Team",
         "description" : "",
         "type" : "JOIN",
-        "top" : 251.89999999999998,
-        "left" : 1232.1
+        "top" : 2352.5,
+        "left" : 532.4
       },
       "OUTPUT0" : {
         "label" : "Account, Opportunity, User, Account Team DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 391.9,
-        "left" : 1372
+        "top" : 2353.6,
+        "left" : 812.5
       },
       "LOAD_DATASET11" : {
         "label" : "NSP_Account_Group_Member__c",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 250.2,
+        "top" : 3052,
+        "left" : 111.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1681,8 +1717,8 @@
       "LOAD_DATASET12" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 530.2,
+        "top" : 3052,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1691,21 +1727,21 @@
         "label" : "Join Account Group with Group Member",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812,
-        "left" : 390.2
+        "top" : 2912,
+        "left" : 252
       },
       "JOIN9" : {
         "label" : "Join Account with Group Member",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812,
-        "left" : 530.2
+        "top" : 2912,
+        "left" : 392
       },
       "LOAD_DATASET15" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 251.8,
-        "left" : 112.5,
+        "top" : 1651.6,
+        "left" : 112.30000000000001,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1714,14 +1750,14 @@
         "label" : "Join Account with Asset",
         "description" : "",
         "type" : "JOIN",
-        "top" : 251.8,
-        "left" : 252.5
+        "top" : 1512,
+        "left" : 252
       },
       "LOAD_DATASET17" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 391.8,
-        "left" : 112.5,
+        "top" : 1932,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1730,28 +1766,28 @@
         "label" : "Join Account Team with User",
         "description" : "",
         "type" : "JOIN",
-        "top" : 392,
-        "left" : 391.9
+        "top" : 1792,
+        "left" : 392
       },
       "JOIN12" : {
         "label" : "Join Account With Account Team",
         "description" : "",
         "type" : "JOIN",
-        "top" : 251.8,
-        "left" : 392.5
+        "top" : 1512,
+        "left" : 392
       },
       "OUTPUT2" : {
         "label" : "User, Account Team, Account, Asset DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 391.7,
-        "left" : 672.4
+        "top" : 1512,
+        "left" : 812
       },
       "LOAD_DATASET18" : {
         "label" : "Case",
         "type" : "LOAD_DATASET",
-        "top" : 252,
-        "left" : 1790.2,
+        "top" : 3472,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1759,8 +1795,8 @@
       "LOAD_DATASET19" : {
         "label" : "pse__Project_Task__c",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 1090.2,
+        "top" : 3332,
+        "left" : 112.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1768,8 +1804,8 @@
       "LOAD_DATASET20" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 812,
-        "left" : 950.2,
+        "top" : 3332,
+        "left" : 251.89999999999998,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1778,21 +1814,21 @@
         "label" : "Join user with Project task",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812,
-        "left" : 1090.2
+        "top" : 3192,
+        "left" : 252
       },
       "OUTPUT4" : {
         "label" : "User, Project Task, Project DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1092,
-        "left" : 1230.2
+        "top" : 3192,
+        "left" : 672
       },
       "LOAD_DATASET23" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 111.80000000000001,
-        "left" : 532.5,
+        "top" : 1652,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1801,14 +1837,14 @@
         "label" : "Join Record Type ID",
         "description" : "",
         "type" : "JOIN",
-        "top" : 252,
+        "top" : 1512,
         "left" : 532
       },
       "LOAD_DATASET26" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 671.3,
-        "left" : 1511.9,
+        "top" : 2072,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1816,8 +1852,8 @@
       "LOAD_DATASET28" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 812,
-        "left" : 1371.9,
+        "top" : 2212,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1826,21 +1862,21 @@
         "label" : "Join Account with Project",
         "description" : "",
         "type" : "JOIN",
-        "top" : 811.3,
-        "left" : 1511.9
+        "top" : 2072,
+        "left" : 252
       },
       "OUTPUT5" : {
         "label" : "Account, Project, Account Team, User DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 952,
-        "left" : 2071.9
+        "top" : 2072,
+        "left" : 952
       },
       "LOAD_DATASET30" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 671.3,
-        "left" : 1651.9,
+        "top" : 2212,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1849,14 +1885,14 @@
         "label" : "Join Record Type ID",
         "description" : "",
         "type" : "JOIN",
-        "top" : 811.3,
-        "left" : 1651.9
+        "top" : 2072,
+        "left" : 392
       },
       "LOAD_DATASET32" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 1230.2,
+        "top" : 3332,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1865,14 +1901,14 @@
         "label" : "Join Project with Project Task",
         "description" : "",
         "type" : "JOIN",
-        "top" : 812,
-        "left" : 1230.2
+        "top" : 3192,
+        "left" : 392
       },
       "LOAD_DATASET33" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 111.80000000000001,
-        "left" : 252.5,
+        "top" : 1651.9,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1880,8 +1916,8 @@
       "LOAD_DATASET34" : {
         "label" : "NSP_Account_Team__c",
         "type" : "LOAD_DATASET",
-        "top" : 391.7,
-        "left" : 252,
+        "top" : 1931.9,
+        "left" : 391.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1890,15 +1926,15 @@
         "label" : "Case DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 252,
-        "left" : 1930.2
+        "top" : 3472,
+        "left" : 252
       },
       "LOAD_DATASET20_copy0" : {
         "label" : "Asset",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1372,
-        "left" : 390.2,
+        "top" : 252,
+        "left" : 1372,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1907,8 +1943,8 @@
         "label" : "Account",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1372,
-        "left" : 530.2,
+        "top" : 532,
+        "left" : 1512,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1916,8 +1952,8 @@
       "LOAD_DATASET22_copy0" : {
         "label" : "Product2",
         "type" : "LOAD_DATASET",
-        "top" : 1372,
-        "left" : 670.2,
+        "top" : 952,
+        "left" : 1652,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1926,8 +1962,8 @@
         "label" : "RecordType",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1512,
-        "left" : 250.2,
+        "top" : 392,
+        "left" : 1372,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1936,8 +1972,8 @@
         "label" : "NSP_Account_Group__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1232,
-        "left" : 810.2,
+        "top" : 672,
+        "left" : 1652,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1946,50 +1982,50 @@
         "label" : "Join Asset With Record Type",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1512,
-        "left" : 390.2
+        "top" : 252,
+        "left" : 1512
       },
       "JOIN16_copy0" : {
         "label" : "Join Account With Assets",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1512,
-        "left" : 530.2
+        "top" : 252,
+        "left" : 1652
       },
       "JOIN17_copy0" : {
         "label" : "Join Assets With Product",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1512,
-        "left" : 670.2
+        "top" : 252,
+        "left" : 1792
       },
       "JOIN18_copy0" : {
         "label" : "Join Account Group members with Account",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1512,
-        "left" : 810.2
+        "top" : 252,
+        "left" : 1932
       },
       "JOIN19_copy0" : {
         "label" : "Join Account with Account Team",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1512,
-        "left" : 950.2
+        "top" : 112,
+        "left" : 2072
       },
       "OUTPUT3_copy0" : {
         "label" : "Asset, Account, Product, Account Group, Account Group Member DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1512,
-        "left" : 1230.2
+        "top" : 112,
+        "left" : 2352
       },
       "LOAD_DATASET32_copy0" : {
         "label" : "NSP_Account_Group_Member__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1372,
-        "left" : 950.2,
+        "top" : 812,
+        "left" : 1652,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1998,15 +2034,15 @@
         "label" : "Join Account Group member with Account Group",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1372,
-        "left" : 810.2
+        "top" : 672,
+        "left" : 1792
       },
       "LOAD_DATASET0_copy0_copy0_copy0_copy0" : {
         "label" : "NSP_Account_Team__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1792,
-        "left" : 250.2,
+        "top" : 252,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2015,15 +2051,15 @@
         "label" : "Lookup user",
         "description" : "Based on key column to get user name",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 390.2
+        "top" : 112,
+        "left" : 252
       },
       "LOAD_DATASET1_copy0_copy0_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1652,
-        "left" : 390.2,
+        "top" : 252,
+        "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2032,15 +2068,15 @@
         "label" : "Lookup Account",
         "description" : "to get Account Name",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 530.2
+        "top" : 112,
+        "left" : 392
       },
       "LOAD_DATASET2_copy0_copy0_copy0_copy0" : {
         "label" : "Account",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1652,
-        "left" : 530.2,
+        "top" : 392,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2049,29 +2085,29 @@
         "label" : "Bus. Team-HRSp/CL",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1792,
-        "left" : 670.2
+        "top" : 112,
+        "left" : 532
       },
       "FILTER1_copy0_copy0_copy0_copy0" : {
         "label" : "Client Liaison",
         "description" : "",
         "type" : "FILTER",
-        "top" : 1932,
-        "left" : 670.2
+        "top" : 252,
+        "left" : 672
       },
       "FILTER2_copy0_copy0_copy0_copy0" : {
         "label" : "MidMarket Account Exec",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2072,
-        "left" : 670.2
+        "top" : 392,
+        "left" : 812
       },
       "TRANSFORM0_copy0_copy0_copy0_copy0" : {
         "label" : "Transform Bus Team HRSp/CL",
         "description" : "Rename full Name to Business",
         "type" : "TRANSFORM",
-        "top" : 1792,
-        "left" : 810.2,
+        "top" : 112,
+        "left" : 672,
         "graph" : {
           "EDIT_ATTRIBUTES0_copy0_copy0_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2083,8 +2119,8 @@
         "label" : "Transform Client Liaison",
         "description" : "Rename full Name to Client",
         "type" : "TRANSFORM",
-        "top" : 1932,
-        "left" : 810.2,
+        "top" : 252,
+        "left" : 812,
         "graph" : {
           "EDIT_ATTRIBUTES1_copy0_copy0_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2096,8 +2132,8 @@
         "label" : "Transform MidMarket",
         "description" : "Rename full Name to Midmarket",
         "type" : "TRANSFORM",
-        "top" : 2072,
-        "left" : 810.2,
+        "top" : 392,
+        "left" : 952,
         "graph" : {
           "EDIT_ATTRIBUTES2_copy0_copy0_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2109,22 +2145,22 @@
         "label" : "HR Specialist",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2212,
-        "left" : 670.2
+        "top" : 532,
+        "left" : 952
       },
       "FILTER4_copy0_copy0_copy0_copy0" : {
         "label" : "Payroll Specialist",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2352,
-        "left" : 670.2
+        "top" : 672,
+        "left" : 1092
       },
       "TRANSFORM3_copy0_copy0_copy0_copy0" : {
         "label" : "Transform HR Specialist",
         "description" : "Rename full Name to MHRS Team",
         "type" : "TRANSFORM",
-        "top" : 2212,
-        "left" : 810.2,
+        "top" : 532,
+        "left" : 1092,
         "graph" : {
           "EDIT_ATTRIBUTES3_copy0_copy0_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2136,8 +2172,8 @@
         "label" : "Transform Payroll Specialist",
         "description" : "Rename full Name to Renewal Team",
         "type" : "TRANSFORM",
-        "top" : 2352,
-        "left" : 810.2,
+        "top" : 672,
+        "left" : 1232,
         "graph" : {
           "EDIT_ATTRIBUTES4_copy0_copy0_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2149,8 +2185,8 @@
         "label" : "Aggregate",
         "description" : "",
         "type" : "AGGREGATE",
-        "top" : 3052,
-        "left" : 670.2,
+        "top" : 1092,
+        "left" : 532,
         "graph" : {
           "EXTRACT0_copy0_copy0" : null,
           "AGGREGATE1_copy0_copy0" : null
@@ -2164,36 +2200,36 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 950.2
+        "top" : 112,
+        "left" : 812
       },
       "JOIN16_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1090.2
+        "top" : 112,
+        "left" : 952
       },
       "FILTER5_copy0_copy0" : {
         "label" : "Payroll Supervisor",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2492,
-        "left" : 670.2
+        "top" : 812,
+        "left" : 1232
       },
       "JOIN17_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1230.2
+        "top" : 112,
+        "left" : 1092
       },
       "TRANSFORM5_copy0_copy0" : {
         "label" : "Transform Payroll Supervisor",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 2492,
-        "left" : 810.2,
+        "top" : 812,
+        "left" : 1372,
         "graph" : {
           "EDIT_ATTRIBUTES5_copy0_copy0" : {
             "label" : "Edit Attributes"
@@ -2205,36 +2241,36 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1370.2
+        "top" : 112,
+        "left" : 1232
       },
       "JOIN19_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1510.2
+        "top" : 112,
+        "left" : 1372
       },
       "JOIN20_copy0_copy0" : {
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1650.2
+        "top" : 112,
+        "left" : 1512
       },
       "FILTER6" : {
         "label" : "Manager HR Services",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2632,
-        "left" : 670.2
+        "top" : 952,
+        "left" : 1372
       },
       "TRANSFORM6" : {
         "label" : "Manager HR Services",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 2632,
-        "left" : 810.2,
+        "top" : 952,
+        "left" : 1512,
         "graph" : {
           "EDIT_ATTRIBUTES6" : {
             "label" : "Edit Attributes"
@@ -2246,30 +2282,48 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1790.2
+        "top" : 112,
+        "left" : 1652
       },
       "TRANSFORM7" : {
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1512,
-        "left" : 1090.2,
+        "top" : 112,
+        "left" : 2212,
         "graph" : {
           "FORMULA0" : {
             "parameters" : {
               "type" : "BASE_FORMULA_UI"
             },
             "label" : "Formula"
+          },
+          "FORMULA11" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA12" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
           }
         },
-        "connectors" : [ ]
+        "connectors" : [ {
+          "source" : "FORMULA0",
+          "target" : "FORMULA11"
+        }, {
+          "source" : "FORMULA11",
+          "target" : "FORMULA12"
+        } ]
       },
       "LOAD_DATASET36" : {
         "label" : "NSP_Account_Group__c",
         "type" : "LOAD_DATASET",
-        "top" : 812,
-        "left" : 250.2,
+        "top" : 3052,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2278,15 +2332,15 @@
         "label" : "Account Group Member, Account Group, Account DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 952,
-        "left" : 670.2
+        "top" : 2912,
+        "left" : 672
       },
       "TRANSFORM8" : {
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 812,
-        "left" : 670.2,
+        "top" : 2912,
+        "left" : 532,
         "graph" : {
           "FORMULA3" : {
             "parameters" : {
@@ -2301,7 +2355,7 @@
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 252,
+        "top" : 1512,
         "left" : 672,
         "graph" : {
           "FORMULA4" : {
@@ -2317,8 +2371,8 @@
         "label" : "Transform API to Label and Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 251.89999999999998,
-        "left" : 1372.1,
+        "top" : 2352.5,
+        "left" : 672.5,
         "graph" : {
           "FORMULA5" : {
             "parameters" : {
@@ -2342,15 +2396,15 @@
         "label" : "Performance specialist",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2772,
-        "left" : 670.2
+        "top" : 392,
+        "left" : 1512
       },
       "TRANSFORM11" : {
         "label" : "Transform Performance specialist",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 2772,
-        "left" : 810.2,
+        "top" : 392,
+        "left" : 1652,
         "graph" : {
           "EDIT_ATTRIBUTES7" : {
             "label" : "Edit Attributes"
@@ -2362,22 +2416,22 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1930.2
+        "top" : 112,
+        "left" : 1792
       },
       "FILTER8" : {
         "label" : "safety consultant",
         "description" : "",
         "type" : "FILTER",
-        "top" : 2912,
-        "left" : 670.2
+        "top" : 532,
+        "left" : 1652
       },
       "TRANSFORM12" : {
         "label" : "Transform safety consultant",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 2912,
-        "left" : 810.2,
+        "top" : 532,
+        "left" : 1792,
         "graph" : {
           "EDIT_ATTRIBUTES8" : {
             "label" : "Edit Attributes"
@@ -2389,15 +2443,15 @@
         "label" : "Adding role as column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 2070.2
+        "top" : 112,
+        "left" : 1932
       },
       "TRANSFORM13" : {
         "label" : "Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 952,
-        "left" : 1230.2,
+        "top" : 3192,
+        "left" : 532,
         "graph" : {
           "FORMULA7" : {
             "parameters" : {
@@ -2420,8 +2474,8 @@
       "LOAD_DATASET37" : {
         "label" : "NSP_Account_Team__c",
         "type" : "LOAD_DATASET",
-        "top" : 671.3,
-        "left" : 1791.9,
+        "top" : 2212,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2430,14 +2484,14 @@
         "label" : "Join Account With Account Team",
         "description" : "",
         "type" : "JOIN",
-        "top" : 811.3,
-        "left" : 1791.9
+        "top" : 2072,
+        "left" : 532
       },
       "LOAD_DATASET38" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 672,
-        "left" : 1932,
+        "top" : 2212,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2446,15 +2500,15 @@
         "label" : "Join Project Owner with User ID",
         "description" : "",
         "type" : "JOIN",
-        "top" : 811.3,
-        "left" : 1931.9
+        "top" : 2072,
+        "left" : 672
       },
       "TRANSFORM14" : {
         "label" : "Field Attributes and Date Format",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 812,
-        "left" : 2072,
+        "top" : 2072,
+        "left" : 812,
         "graph" : {
           "EDIT_ATTRIBUTES9" : {
             "label" : "Edit Attributes"

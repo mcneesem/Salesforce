@@ -846,7 +846,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Level_2__c", "Id", "CaseNumber", "ContactId", "AccountId", "RecordTypeId", "Status", "ClosedDate", "OwnerId", "CreatedDate", "NSP_Case_Contact_Name__c", "NSP_Case_Created_date__c", "NSP_Open_to_Closed_Hours__c", "NSP_CQA_Issue_Type__c", "NSP_Category__c", "NSP_ClientNumber__c", "NSP_Detail__c", "NSP_Original_Assigned_Queue_Date__c", "NSP_Owner_Assign_Date__c", "NSP_SS_Check__c", "NSP_SubCategory__c", "NSP_WebToCase_PerID__c", "Project__c", "NSP_Assigned_to_Close_Hours__c", "NSP_Case_Sub_Status__c", "NSP_Open_to_Assigned_Hours__c", "NSP_PerID__c" ],
+        "fields" : [ "NSP_WebToCase_PerID__c", "Id", "CaseNumber", "ContactId", "AccountId", "RecordTypeId", "Status", "ClosedDate", "OwnerId", "CreatedDate", "NSP_Case_Contact_Name__c", "NSP_Case_Created_date__c", "NSP_Open_to_Closed_Hours__c", "NSP_CQA_Issue_Type__c", "NSP_Category__c", "NSP_ClientNumber__c", "NSP_Detail__c", "NSP_Level_2__c", "NSP_Original_Assigned_Queue_Date__c", "NSP_Owner_Assign_Date__c", "NSP_SS_Check__c", "NSP_SubCategory__c", "Project__c", "NSP_Assigned_to_Close_Hours__c", "NSP_Case_Sub_Status__c", "NSP_Open_to_Assigned_Hours__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Case",
@@ -1323,7 +1323,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "Name" ],
+        "fields" : [ "NSP_Per_ID__c", "Id", "Name" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Contact",

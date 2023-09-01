@@ -2,79 +2,57 @@
 <WaveXmd xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <dataset>NBI_Onboarding_Data_Dataset</dataset>
     <dates>
-        <alias>Assetlooku.NSP_Sales_.Date Received</alias>
+        <alias>NSP_Sales_.DEFCON Set Up Date</alias>
         <firstDayOfWeek>-1</firstDayOfWeek>
         <fiscalMonthOffset>0</fiscalMonthOffset>
-        <label>Date Received</label>
+        <label>Defcon Setup Date</label>
         <sortIndex>0</sortIndex>
         <type xsi:nil="true"/>
     </dates>
     <dates>
-        <alias>Assetlooku.NSP_Sales_.DEFCON Set Up Date</alias>
-        <firstDayOfWeek>-1</firstDayOfWeek>
-        <fiscalMonthOffset>0</fiscalMonthOffset>
-        <label>DEFCON Set Up Date</label>
-        <sortIndex>1</sortIndex>
-        <type xsi:nil="true"/>
-    </dates>
-    <dates>
-        <alias>Assetlooku.RET-AIMS Original Empl Date</alias>
+        <alias>CH_Asset_Plan_Subplan.RET-AIMS Original Empl Date</alias>
         <firstDayOfWeek>-1</firstDayOfWeek>
         <fiscalMonthOffset>0</fiscalMonthOffset>
         <label>AIMS Original Empl Date</label>
-        <sortIndex>2</sortIndex>
+        <sortIndex>1</sortIndex>
         <type xsi:nil="true"/>
     </dates>
     <dates>
-        <alias>Assetlooku.NSP_Sales_.Target Transfer Date</alias>
+        <alias>NSP_Sales_.Target Transfer Date</alias>
         <firstDayOfWeek>-1</firstDayOfWeek>
         <fiscalMonthOffset>0</fiscalMonthOffset>
         <label>Target Transfer Date</label>
-        <sortIndex>3</sortIndex>
-        <type xsi:nil="true"/>
-    </dates>
-    <dates>
-        <alias>Assetlooku.NSP_Client.Start Date</alias>
-        <firstDayOfWeek>-1</firstDayOfWeek>
-        <fiscalMonthOffset>0</fiscalMonthOffset>
-        <label>Start Date</label>
-        <sortIndex>4</sortIndex>
+        <sortIndex>2</sortIndex>
         <type xsi:nil="true"/>
     </dates>
     <dimensions>
-        <field>Assetlooku.NSP_Addres.NSP_State__c</field>
+        <field>NSP_Sales_.UserIMPL.Name</field>
         <isDerived>false</isDerived>
-        <label>Billing State</label>
+        <label>NBI Impl Resource</label>
         <sortIndex>0</sortIndex>
     </dimensions>
     <dimensions>
-        <field>Assetlooku.NSP_Addres.NSP_City__c</field>
+        <field>NSP_Sales_.UserMerger.Name</field>
         <isDerived>false</isDerived>
-        <label>Billing City</label>
+        <label>NBI Merger Resource</label>
         <sortIndex>1</sortIndex>
     </dimensions>
     <dimensions>
-        <field>NSP_Accoun2.Name</field>
+        <field>UserSalesconsultant.Name</field>
         <isDerived>false</isDerived>
-        <label>Controlled Group #</label>
+        <label>Sales Consultant</label>
         <sortIndex>2</sortIndex>
     </dimensions>
     <dimensions>
-        <field>Assetlooku.NSP_Sales_.UserIMPL.Name</field>
+        <field>AccountGroupDetails.AGM_WITH_AG.Name</field>
         <isDerived>false</isDerived>
-        <label>NBI IMPL Resource</label>
+        <label>Controlled Group #</label>
         <sortIndex>3</sortIndex>
     </dimensions>
     <dimensions>
-        <field>Assetlooku.NSP_Sales_.UserMerger.Name</field>
+        <field>CH_Asset_Plan_Subplan.Plan.Name</field>
         <isDerived>false</isDerived>
-        <label>NBI Merger Resource</label>
+        <label>Plan ID</label>
         <sortIndex>4</sortIndex>
-    </dimensions>
-    <dimensions>
-        <field>UserMerger1.Name</field>
-        <isDerived>false</isDerived>
-        <label>Sales Consultant</label>
-        <sortIndex>5</sortIndex>
     </dimensions>
 </WaveXmd>
