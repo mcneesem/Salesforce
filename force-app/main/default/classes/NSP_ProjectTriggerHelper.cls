@@ -341,9 +341,10 @@ public class NSP_ProjectTriggerHelper{
 
         if(!projectSharedIdSet.isEmpty()){
             NSP_ProjectRecordSharing.projectRemoveSharing(projectSharedIdSet);
+            NSP_ProjectRecordSharing.removeRelatedProjectSharing(projectSharedIdSet); 
         }
 
-        if(!sentToReviewPrjctIdSet.isEmpty()){
+        if(!sentToReviewPrjcgtIdSet.isEmpty()){
             createItaCqaCaseAndSendEmail(sentToReviewPrjctIdSet); // STY-01785
         }
         if(!updateAssetProductSegmentPrjIdSet.isEmpty()){
@@ -354,6 +355,12 @@ public class NSP_ProjectTriggerHelper{
         } 
         if(!setofProjAccId.isEmpty()){
             relatedProjectTaskUpdate(setofProjAccId,projectNewMap,projectOldMap);
+        }
+        // Share task and Milestone after project sharing
+        // added as a part of STY-04601
+        if(!accountIdSet.isEmpty() && mapOfProjects.size()>0  && !System.isFuture() && !System.isBatch() ){
+             NSP_ProjectRecordSharing.shareRelatedProjectTasks(mapOfProjects.keySet());
+             NSP_ProjectRecordSharing.shareRelatedMilestones(mapOfProjects.keySet());
         }
     }   
 
