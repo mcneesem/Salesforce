@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>Open_Benefits_Cases_All_MM_Benefits_Divisions</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Open Benefits Cases - All MM Benefits Divisions</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

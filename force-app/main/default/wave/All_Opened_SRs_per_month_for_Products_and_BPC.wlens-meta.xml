@@ -4,6 +4,6 @@
     <application>Health_Welfare</application>
     <datasets>Case_details_with_User_Queue</datasets>
     <dateVersion>1</dateVersion>
-    <masterLabel>All Opened SRs per month for Products and BPC</masterLabel>
+    <masterLabel>All Opened SRs per month for H&amp;W BPC</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

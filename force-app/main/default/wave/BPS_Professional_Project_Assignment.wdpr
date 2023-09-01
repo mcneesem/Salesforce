@@ -1038,29 +1038,12 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "NSP_Client__c", "Id", "RecordTypeId", "NSP_Account_Status__c", "NSP_SaaS_URL__c", "NSP_RET_Client_ID__c" ],
+        "fields" : [ "NSP_Account_Status__c", "Id", "AccountId", "RecordTypeId", "NSP_RET_Client_ID__c", "NSP_SaaS_URL__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "Asset",
           "connectionName" : "SFDC_LOCAL",
           "sourceObjectName" : "Asset"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "LOAD_DATASET12" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "Asset__c", "Project__c" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "Project_Asset__c",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "Project_Asset__c"
         },
         "sampleDetails" : {
           "type" : "TopN",
@@ -1080,15 +1063,15 @@
         }
       },
       "parameters" : {
-        "joinType" : "RIGHT_OUTER",
-        "leftKeys" : [ "Project__c" ],
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
         "rightQualifier" : "Proj_ProjAsset",
-        "rightKeys" : [ "Id" ]
+        "rightKeys" : [ "pse__Account__c" ]
       }
     },
     "JOIN27" : {
       "action" : "join",
-      "sources" : [ "LOAD_DATASET12", "JOIN29" ],
+      "sources" : [ "LOAD_DATASET15", "JOIN29" ],
       "schema" : {
         "fields" : [ ],
         "slice" : {
@@ -1098,10 +1081,10 @@
         }
       },
       "parameters" : {
-        "joinType" : "LEFT_OUTER",
-        "leftKeys" : [ "Asset__c" ],
+        "joinType" : "RIGHT_OUTER",
+        "leftKeys" : [ "Id" ],
         "rightQualifier" : "ProjAsset_Asset",
-        "rightKeys" : [ "Id" ]
+        "rightKeys" : [ "AccountId" ]
       }
     },
     "OUTPUT4" : {
@@ -1210,7 +1193,8 @@
           "sourceObjectName" : "NSP_Account_Team__c"
         },
         "sampleDetails" : {
-          "type" : "TopN"
+          "type" : "TopN",
+          "sortBy" : [ ]
         }
       }
     },
@@ -1218,6 +1202,7 @@
       "action" : "join",
       "sources" : [ "JOIN25", "LOAD_DATASET14" ],
       "schema" : {
+        "fields" : [ ],
         "slice" : {
           "mode" : "DROP",
           "ignoreMissingFields" : true,
@@ -1230,6 +1215,23 @@
         "rightQualifier" : "Acc_AccTeam",
         "rightKeys" : [ "NSP_Account__c" ]
       }
+    },
+    "LOAD_DATASET15" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "NSP_AIMS_Client__c", "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
     }
   },
   "ui" : {
@@ -1238,21 +1240,21 @@
         "label" : "User, Project, Contact, Assignment, Account DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 1092
       },
       "OUTPUT1" : {
         "label" : "User, Project, Project Task, Contact, Assignment DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 1092
       },
       "LOAD_DATASET1" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
-        "left" : 112,
+        "top" : 1092,
+        "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1260,8 +1262,8 @@
       "LOAD_DATASET2" : {
         "label" : "pse__Assignment__c",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
-        "left" : 252,
+        "top" : 1231.9,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1269,8 +1271,8 @@
       "LOAD_DATASET4" : {
         "label" : "Contact",
         "type" : "LOAD_DATASET",
-        "top" : 1370.2,
-        "left" : 252,
+        "top" : 1232.1,
+        "left" : 671.8,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1279,15 +1281,15 @@
         "label" : "Assignment lookup with Contact",
         "description" : "Assignment lookup with Contact to get Resource name",
         "type" : "JOIN",
-        "top" : 1230.2,
-        "left" : 392
+        "top" : 1092,
+        "left" : 532
       },
       "sfdcDigest_User1_copy0_copy1" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
-        "left" : 532,
+        "top" : 1231.9,
+        "left" : 812.3,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1295,8 +1297,8 @@
       "TRANSFORM0_copy0_copy1" : {
         "label" : "flatten_user",
         "type" : "TRANSFORM",
-        "top" : 1230.2,
-        "left" : 672,
+        "top" : 1092,
+        "left" : 812,
         "graph" : {
           "flatten_user_copy0_copy1" : null
         },
@@ -1306,14 +1308,14 @@
         "label" : "flatten link with Contact",
         "description" : "flatten link with Contact  to apply security predicate",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 812
       },
       "LOAD_DATASET1_copy0" : {
         "label" : "pse__Proj__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 250.2,
+        "top" : 112,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1323,8 +1325,8 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 530.2,
-        "left" : 532,
+        "top" : 252,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1333,8 +1335,8 @@
         "label" : "flatten_user",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 530.2,
-        "left" : 672,
+        "top" : 252,
+        "left" : 812,
         "graph" : {
           "flatten_user_copy0_copy1_copy0" : {
             "label" : "Flatten"
@@ -1346,15 +1348,15 @@
         "label" : "flatten link with user",
         "description" : "flatten link with user to apply security predicate",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 812
+        "top" : 112,
+        "left" : 952
       },
       "sfdcDigest_User1_copy0_copy1_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 670.2,
-        "left" : 672,
+        "top" : 532,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1363,8 +1365,8 @@
         "label" : "flatten_user",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 670.2,
-        "left" : 812,
+        "top" : 532,
+        "left" : 952,
         "graph" : {
           "flatten_user_copy0_copy1_copy0_copy0" : {
             "label" : "Flatten"
@@ -1376,21 +1378,21 @@
         "label" : "flatten link with user",
         "description" : "flatten link with user to apply security predicate",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 952
+        "top" : 112,
+        "left" : 1092
       },
       "JOIN10" : {
         "label" : "Project lookup with Assignment",
         "description" : "Project lookup with Assignment to get all the related projects",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 532
       },
       "LOAD_DATASET5" : {
         "label" : "pse__Project_Task__c",
         "type" : "LOAD_DATASET",
-        "top" : 2070.2,
-        "left" : 392,
+        "top" : 1652,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1398,7 +1400,7 @@
       "LOAD_DATASET6" : {
         "label" : "pse__Proj__c",
         "type" : "LOAD_DATASET",
-        "top" : 1790.2,
+        "top" : 1652,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1408,15 +1410,15 @@
         "label" : "Project lookup with Project Task",
         "description" : "Project lookup with Project Task to get Project Task related fields",
         "type" : "JOIN",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 532
       },
       "LOAD_DATASET2_copy0" : {
         "label" : "pse__Assignment__c",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1790.2,
-        "left" : 392,
+        "top" : 1792,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1425,8 +1427,8 @@
         "label" : "Contact",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1930.2,
-        "left" : 392,
+        "top" : 1791.9,
+        "left" : 672.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1435,29 +1437,29 @@
         "label" : "Assignment lookup with Contact",
         "description" : "Assignment lookup with Contact to get Resource name",
         "type" : "JOIN",
-        "top" : 1790.2,
-        "left" : 532
+        "top" : 1652,
+        "left" : 672
       },
       "JOIN12" : {
         "label" : "Project lookup with Assignment",
         "description" : "Project lookup with Assignment to get all the related projects",
         "type" : "JOIN",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 672
       },
       "OUTPUT2" : {
         "label" : "Project, User, Account DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 390.2,
-        "left" : 1232
+        "top" : 252,
+        "left" : 1372
       },
       "sfdcDigest_User1_copy0_copy1_copy1" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1790.2,
-        "left" : 672,
+        "top" : 1791.9,
+        "left" : 952.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1466,8 +1468,8 @@
         "label" : "flatten_user",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1790.2,
-        "left" : 812,
+        "top" : 1651.8,
+        "left" : 952,
         "graph" : {
           "flatten_user_copy0_copy1_copy1" : null
         },
@@ -1477,14 +1479,14 @@
         "label" : "flatten link with Contact",
         "description" : "flatten link with Contact to apply security predicate",
         "type" : "JOIN",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 952
       },
       "LOAD_DATASET7" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 1230.2,
-        "left" : 812,
+        "top" : 1091.9,
+        "left" : 952,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1492,8 +1494,8 @@
       "LOAD_DATASET8" : {
         "label" : "Account",
         "type" : "LOAD_DATASET",
-        "top" : 670.2,
-        "left" : 952,
+        "top" : 532,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1502,21 +1504,21 @@
         "label" : "Project lookup with Account",
         "description" : "Project lookup with Account to get Account name",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 952
       },
       "JOIN15" : {
         "label" : "Project lookup with Account",
         "description" : "Project lookup with Account to get Account name",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1092
+        "top" : 112,
+        "left" : 1232
       },
       "LOAD_DATASET9" : {
         "label" : "Contact",
         "type" : "LOAD_DATASET",
-        "top" : 1370.2,
-        "left" : 532,
+        "top" : 1092,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1525,15 +1527,15 @@
         "label" : "Project lookup with Contact",
         "description" : "Project lookup with Contact to get Project manager name",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 672
       },
       "LOAD_DATASET9_copy0" : {
         "label" : "Contact",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1930.2,
-        "left" : 672,
+        "top" : 1652.1,
+        "left" : 812,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1542,14 +1544,14 @@
         "label" : "Project lookup with Contact",
         "description" : "Project lookup with Contact\nProject lookup with Contact to get Project manager name",
         "type" : "JOIN",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 812
       },
       "LOAD_DATASET10" : {
         "label" : "User",
         "type" : "LOAD_DATASET",
-        "top" : 1510.2,
-        "left" : 252,
+        "top" : 1092.1,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1558,14 +1560,14 @@
         "label" : "Project lookup with User",
         "description" : "Project lookup with User to get Project coordinator name",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 392
       },
       "LOAD_DATASET10_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1575,14 +1577,14 @@
         "label" : "Project lookup with User",
         "description" : "Project lookup with User to get Project Implementer name",
         "type" : "JOIN",
-        "top" : 1090.2,
+        "top" : 952,
         "left" : 252
       },
       "LOAD_DATASET10_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 112,
         "parameters" : {
           "sampleSize" : 2000
@@ -1592,7 +1594,7 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1790.2,
+        "top" : 1652,
         "left" : 252,
         "parameters" : {
           "sampleSize" : 2000
@@ -1602,22 +1604,22 @@
         "label" : "Project lookup with User",
         "description" : "Project lookup with User to get Project coordinator name",
         "type" : "JOIN",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 392
       },
       "JOIN21" : {
         "label" : "Project lookup with User",
         "description" : "Project lookup with User to get Project Implementer name",
         "type" : "JOIN",
-        "top" : 1650.2,
+        "top" : 1512,
         "left" : 252
       },
       "LOAD_DATASET10_copy0_copy1" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 810.2,
-        "left" : 392,
+        "top" : 672,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1626,8 +1628,8 @@
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 950.2,
-        "left" : 532,
+        "top" : 672,
+        "left" : 672,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1636,22 +1638,22 @@
         "label" : "Project left join with User",
         "description" : "Project left join with User to get Project coordinator name",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 672
+        "top" : 112,
+        "left" : 812
       },
       "JOIN23" : {
         "label" : "Project left join with User",
         "description" : "Project left join with User to get Project Implementer name",
         "type" : "JOIN",
         "top" : 112,
-        "left" : 532
+        "left" : 672
       },
       "LOAD_DATASET10_copy0_copy1_copy0" : {
         "label" : "Contact",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 252,
+        "top" : 252,
+        "left" : 392,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1660,15 +1662,15 @@
         "label" : "Project left join with contact",
         "description" : "To get the project manager name",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 392
+        "top" : 112,
+        "left" : 532
       },
       "sfdcDigest_User1_copy0_copy1_copy0_copy0_copy0" : {
         "label" : "User",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 952,
+        "top" : 392,
+        "left" : 1092,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1677,8 +1679,8 @@
         "label" : "flatten_user",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 390.2,
-        "left" : 1092,
+        "top" : 392,
+        "left" : 1232,
         "graph" : {
           "flatten_user_copy0_copy1_copy0_copy0_copy0" : {
             "label" : "Flatten"
@@ -1690,21 +1692,21 @@
         "label" : "flatten link with user",
         "description" : "To apply the security predicate",
         "type" : "JOIN",
-        "top" : 250.2,
-        "left" : 1232
+        "top" : 112,
+        "left" : 1372
       },
       "OUTPUT3" : {
         "label" : "Project DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 250.2,
-        "left" : 1372
+        "top" : 112,
+        "left" : 1652
       },
       "TRANSFORM1" : {
         "label" : "Transformation of Date fields",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 250.2,
+        "top" : 112,
         "left" : 252,
         "graph" : {
           "FORMULA0" : {
@@ -1773,47 +1775,38 @@
       "LOAD_DATASET11" : {
         "label" : "Asset",
         "type" : "LOAD_DATASET",
-        "top" : 390.2,
-        "left" : 392,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "LOAD_DATASET12" : {
-        "label" : "Project_Asset__c",
-        "type" : "LOAD_DATASET",
-        "top" : 810.2,
+        "top" : 392,
         "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
       },
       "JOIN26" : {
-        "label" : "Project right join with Project_Asset",
+        "label" : "Account with Asset Left join with Project",
         "description" : "To link Project with Asset",
         "type" : "JOIN",
-        "top" : 530.2,
-        "left" : 812
+        "top" : 252,
+        "left" : 952
       },
       "JOIN27" : {
-        "label" : "Project_Asset left join with Asset",
+        "label" : "Account Right join with Asset",
         "description" : "To link Asset with Project",
         "type" : "JOIN",
-        "top" : 390.2,
-        "left" : 672
+        "top" : 392,
+        "left" : 812
       },
       "OUTPUT4" : {
         "label" : "Project, Asset DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 530.2,
-        "left" : 1092
+        "top" : 252,
+        "left" : 1232
       },
       "LOAD_DATASET13" : {
         "label" : "RecordType",
         "type" : "LOAD_DATASET",
-        "top" : 530.2,
-        "left" : 392,
+        "top" : 532,
+        "left" : 532,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1822,29 +1815,29 @@
         "label" : "Asset left join with RecordType",
         "description" : "To get the ReordType name",
         "type" : "JOIN",
-        "top" : 252,
-        "left" : 532
+        "top" : 392,
+        "left" : 672
       },
       "JOIN30" : {
         "label" : "Project left join with Recordtype",
         "description" : "To get project recordtype name",
         "type" : "JOIN",
-        "top" : 530.2,
-        "left" : 252
+        "top" : 112,
+        "left" : 392
       },
       "OUTPUT5" : {
         "label" : "Projects DS",
         "description" : "",
         "type" : "OUTPUT",
-        "top" : 670.2,
-        "left" : 392
+        "top" : 252,
+        "left" : 532
       },
       "TRANSFORM2" : {
         "label" : "Field Attributes",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 530.2,
-        "left" : 952,
+        "top" : 252,
+        "left" : 1092,
         "graph" : {
           "EDIT_ATTRIBUTES0" : {
             "label" : "Edit Attributes"
@@ -1865,11 +1858,23 @@
         "label" : "Account left join with Account Team",
         "description" : "To get Role from Account team",
         "type" : "JOIN",
-        "top" : 392,
+        "top" : 112,
         "left" : 1512
+      },
+      "LOAD_DATASET15" : {
+        "label" : "Account",
+        "type" : "LOAD_DATASET",
+        "top" : 532,
+        "left" : 672,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
       }
     },
     "connectors" : [ {
+      "source" : "LOAD_DATASET15",
+      "target" : "JOIN27"
+    }, {
       "source" : "JOIN16",
       "target" : "JOIN8"
     }, {
@@ -2028,9 +2033,6 @@
     }, {
       "source" : "JOIN22",
       "target" : "JOIN26"
-    }, {
-      "source" : "LOAD_DATASET12",
-      "target" : "JOIN27"
     }, {
       "source" : "JOIN29",
       "target" : "JOIN27"
