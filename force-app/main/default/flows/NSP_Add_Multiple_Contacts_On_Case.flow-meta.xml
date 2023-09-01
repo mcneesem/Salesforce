@@ -166,6 +166,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>ErrorMessageForSeparationWizardCases</name>
+        <label>ErrorMessageForSeparationWizardCases</label>
+        <locationX>792</locationX>
+        <locationY>1946</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Primary Contact is set by the Separating WSEE on the Wizard.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Remove_Contact_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>getAccountRecId</name>
         <label>getAccountRecId</label>
         <locationX>176</locationX>
@@ -191,6 +207,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Contact Already Selected.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>New_Contact_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Remove_Contact_Id</name>
+        <label>Remove Contact Id</label>
+        <locationX>792</locationX>
+        <locationY>2054</locationY>
+        <assignmentItems>
+            <assignToReference>currentFlowContactIds</assignToReference>
+            <operator>RemoveFirst</operator>
+            <value>
+                <elementReference>selectedContactRecId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -254,6 +287,20 @@
         <choiceText>Yes</choiceText>
         <dataType>String</dataType>
     </choices>
+    <constants>
+        <name>HREmployeeRelationsCategory</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>HR Employee Relations</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>SeparationAgreementRequestSubCategory</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Separation Agreement Request</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>alreadySelectedContactsIsPrimary</name>
         <label>alreadySelectedContactsIsPrimary</label>
@@ -277,6 +324,38 @@
                 <targetReference>removePrimaryCheckbox</targetReference>
             </connector>
             <label>alreadyIsPrimary</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_For_Separation_Agreement_Cases</name>
+        <label>Check For Separation Agreement Cases</label>
+        <locationX>1100</locationX>
+        <locationY>1838</locationY>
+        <defaultConnector>
+            <targetReference>LoopAlreadyContacts</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsSeparationAgreementCase</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCaserecord.NSP_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>HREmployeeRelationsCategory</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaserecord.NSP_SubCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>SeparationAgreementRequestSubCategory</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ErrorMessageForSeparationWizardCases</targetReference>
+            </connector>
+            <label>IsSeparationAgreementCase</label>
         </rules>
     </decisions>
     <decisions>
@@ -331,7 +410,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>LoopAlreadyContacts</targetReference>
+                <targetReference>Check_For_Separation_Agreement_Cases</targetReference>
             </connector>
             <label>isPrimaryYes</label>
         </rules>
@@ -500,6 +579,8 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>ContactId</queriedFields>
         <queriedFields>AccountId</queriedFields>
+        <queriedFields>NSP_Category__c</queriedFields>
+        <queriedFields>NSP_SubCategory__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -764,7 +845,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
-    <variables>
+        <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
