@@ -70,11 +70,12 @@
       </div>
 
       <div class="slds-col slds-size_1-of-2">
-        <lightning-input-field
-          disabled={disabledFields.Sales_Office__c}
-          field-name="Sales_Office__c"
-          data-name="Sales_Office__c"
-          onchange={handleValueChange}></lightning-input-field>
+        <lightning-input
+          type="text" 
+          label={_objectInfo.Sales_Office__c.label}
+          value={salesOfficePicklistLabel}
+          disabled>
+        </lightning-input>
         <lightning-input-field
           disabled={disabledFields.NSP_Payroll_Specialist__c}
           field-name="NSP_Payroll_Specialist__c"
