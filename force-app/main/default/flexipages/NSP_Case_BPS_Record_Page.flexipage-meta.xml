@@ -262,6 +262,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Created_From__c</fieldItem>
+                <identifier>RecordNSP_Created_From_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Project__c</fieldItem>
                 <identifier>RecordProject_cField</identifier>
             </fieldInstance>
