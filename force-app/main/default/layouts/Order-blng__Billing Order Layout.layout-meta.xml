@@ -465,6 +465,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>25</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Link_Project_To_Order_Items</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>26</sortOrder>
+        </platformActionListItems>
      </platformActionList>    
     <relatedLists>
         <fields>Product2</fields>
