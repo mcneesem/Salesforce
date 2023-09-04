@@ -387,6 +387,8 @@
     <relatedLists>
         <fields>Case.NAME</fields>
         <fields>Case.CASE_SUBJECT</fields>
+        <fields>Case.NSP_Category__c</fields>
+        <fields>Case.NSP_SubCategory__c</fields>
         <fields>NSP_Case_Account_Name__c</fields>
         <fields>Case.CASE_PRIORITY</fields>
         <fields>Case.CASE_CREATED_DATE</fields>
