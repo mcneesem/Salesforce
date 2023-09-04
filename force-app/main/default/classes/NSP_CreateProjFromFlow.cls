@@ -43,12 +43,13 @@ public class NSP_CreateProjFromFlow {
                     List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
                         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
                             new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{projRequest});
-                    if(projResponse[0].isSuccess() || Test.isRunningTest()){
-                        for(pse.CreateProjectFromTemplateService.CreateProjectResponse resp : projResponse){
+                    for(pse.CreateProjectFromTemplateService.CreateProjectResponse resp : projResponse){
+                        if(resp.NewProjectId!=null || Test.isRunningTest()){
                             projectResponseMap.put(resp.Request.ProjectName,resp.NewProjectId);
                         }
-                    } else {
-                        NSP_ErrorLogHandler.logSaveException('NSP_CreateProjectFromFlow', 'createProject',projResponse[0].Errors.toString() );
+                        else{
+                            NSP_ErrorLogHandler.logSaveException('NSP_CreateProjectFromFlow', 'createProject',resp.Errors.toString() );
+                        }  
                     }
                     
                 }
