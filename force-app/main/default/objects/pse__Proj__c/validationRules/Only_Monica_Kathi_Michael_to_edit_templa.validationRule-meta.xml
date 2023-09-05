@@ -2,11 +2,9 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Only_Monica_Kathi_Michael_to_edit_templa</fullName>
     <active>true</active>
-    <description>This validation rule will be deleted in prod. This is to prevent other admin users from editing templates in sandboxes.</description>
+    <description>It doesn&apos;t allow user without NSP Service Stakeholder check to change the project template</description>
     <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.ProjectValidations__c != true,
-$User.NSP_Service_Stakeholder__c  &lt;&gt; TRUE,
- $User.FirstName != &apos;Deployment&apos;, 
+$User.NSP_Service_Stakeholder__c &lt;&gt; TRUE,
 pse__Is_Template__c = TRUE)</errorConditionFormula>
-    <errorDisplayField>pse__Percent_Hours_Completed_For_Recognition__c</errorDisplayField>
-    <errorMessage>Project templates can only be edited by Monica, Kathi, Michael</errorMessage>
+    <errorMessage>You do not have permission to add or edit project templates.</errorMessage>
 </ValidationRule>
