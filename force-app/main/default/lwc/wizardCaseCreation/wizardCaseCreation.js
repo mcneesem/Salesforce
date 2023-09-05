@@ -1,9 +1,8 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import {
     updateRecord,
-    createRecord,
-    getRecord
+    createRecord
 } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
 import { getObjectInfo } from "lightning/uiObjectInfoApi";
@@ -15,7 +14,6 @@ import getQueueID from '@salesforce/apex/NSP_ReportRequestWizardController.getQu
 import getWoAssetId from '@salesforce/apex/NSP_ReportRequestWizardController.getAccountWoAsset';
 import CASE_OBJ from "@salesforce/schema/Case";
 import { LABEL } from './constants';
-import SUBCLIENT_NUMBER from '@salesforce/schema/NSP_ReportRequest__c.NSP_Sub_Client__r.NSP_Sub_Client__c';
 export default class WizardCaseCreation extends NavigationMixin(LightningElement)  {
  @api reReqObj;
  @api recordInput;
@@ -23,9 +21,6 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
   woasset = '';
   fieldsData ;
   recordTypeID = '012000000000000AAA';
-  @track subclientData;
-  @track error;
-  
 
 
   
@@ -43,17 +38,6 @@ defultRecordInputCreation(queueID){
     };
 return { apiName: CASE_OBJ.objectApiName, fields };
 }
-
-@wire(getRecord, { recordId: '$reReqObj.Id', fields: [SUBCLIENT_NUMBER]})
-wiredContact({ error, data }) {
-    if (data) {
-        this.subclientData = data;
-    } else if (error) {
-        this.error = error;
-    }
-}
-
-
 
 separationQueueName ='HR Separation Agreement Team';
 getQueueIdbyName( queueName ) {
@@ -145,24 +129,14 @@ async createCaseRecord(inputData){
          (this.reReqObj.NSP_AgreementType__c.value != null || this.reReqObj.NSP_ReviewType__c.value !=null) ){
             fields.NSP_SubCategory__c=wizardSeparationSubcategory;
             fields.NSP_Category__c=wizardSeparationCategory;
-        if(this.reReqObj.NSP_AgreementType__c.value != null && this.reReqObj.NSP_RequestingMultipleEmployees__c.value != 'Yes'){
-            subject = this.reReqObj.NSP_AgreementType__c.value == 'Insperity-Prepared' ? 'Requested: Insperity-Prepared' : 'Requested: ';
+        if(this.reReqObj.NSP_AgreementType__c.value != null){
+            subject = this.reReqObj.NSP_AgreementType__c.value ;
         }
         if( this.reReqObj.NSP_ReviewType__c.value !=null){
-            subject = subject + this.reReqObj.NSP_ReviewType__c.value ;
+            subject = subject +' - '+ this.reReqObj.NSP_ReviewType__c.value ;
         }
         if(this.reReqObj.NSP_RequestingMultipleEmployees__c != null && this.reReqObj.NSP_RequestingMultipleEmployees__c.value !=null){
-            subject = this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' ? 'Insperity Prepared Separation Agreement requested for multiple WSEEs' :subject ;
-            
-        }
-        if(this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' && this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value != null){
-            subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
-        }
-        if(this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null){
-            subject = this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value != null ?
-            subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue + ' ('+ this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value +')' :
-            subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue;
-            
+            subject = this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' ? subject +' - '+ 'Requested for Multiple Employee' :subject ;
         }
 
     } else if(this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null && this.reReqObj.NSP_Survey_Type__c.value  != '') {
