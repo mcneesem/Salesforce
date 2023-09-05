@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import EMPLOYEE_FIELD from "@salesforce/schema/NSP_ReportRequest__c.NSP_ClientName__r.NumberOfEmployees";
@@ -7,13 +7,15 @@ import SERVICELENGTH_PICKLIST from '@salesforce/schema/NSP_ReportRequest__c.NSP_
 import STATUS_PICKLIST from '@salesforce/schema/NSP_ReportRequest__c.NSP_HRSurveyStatusSelection__c';
 import getActiveEmployeeCount from '@salesforce/apex/NSP_ReportRequestWizardController.getActiveEmployeeCount';
 import wizardFilterMessage from '@salesforce/label/c.NSP_HR_Survey_Wizard_Filter_Message';
-const fields = [EMPLOYEE_FIELD];
+
 export default class WizardSurveyPageFilters extends LightningElement {
     customLabel ={
         wizardFilterMessage
     };
     @api reReqId ;
     @api recordObj;
+
+    @track visibility ={};
     isPrevClick=false;
     recordTypeId = '012000000000000AAA';
     showLocation = false;
@@ -51,10 +53,12 @@ export default class WizardSurveyPageFilters extends LightningElement {
     serviceLengthErrorMsg ='display:none';
     surveyStatusErrorMsg = 'display:none';
 
-    @wire(getRecord, { recordId: '$reReqId', fields })
+    @wire(getRecord, { recordId: '$reReqId', fields: '$fields' })
     account({ error, data }) {
         if (data) {
            this.employeeCount =  getFieldValue(data, EMPLOYEE_FIELD);
+
+            this.updateFieldVisibility(data.fields);
             this.errorMsg = undefined;
         } else {
             this.errorMsg = error;
@@ -99,6 +103,16 @@ export default class WizardSurveyPageFilters extends LightningElement {
     RoleOptionSelection
     ServiceLengthSelection
     HRSurveyStatusSelection
+
+    updateFieldVisibility(fields) {
+        Object.keys(fields).forEach(fieldName => {
+            const { value } = fields[fieldName];
+
+            if (value) {
+                this.visibility[fieldName] = true;
+            }
+        });
+    }
 
 //dependent field value store
     get NSP_ListOfLocations__c(){
@@ -198,15 +212,17 @@ export default class WizardSurveyPageFilters extends LightningElement {
             switch (key) {
                 case "NSP_RoleOptionSelection__c":
                     this.NSP_RoleOptionSelection__c = value;
+                    this.visibility.NSP_CustomRoleList__c = value.includes('Custom Role Options');
                     if( this.template.querySelector('div.'+key) != null){
-                        value.includes('Custom Role Options')? (this.template.querySelector('div.' + key).style.display = '', this.NSP_CustomRoleList = true) : (this.template.querySelector('div.' + key).style.display = 'none', this.NSP_CustomRoleList = false, (this.template.querySelector('lightning-input-field.' + key).value != null ? this.template.querySelector('lightning-input-field.' + key).value = '' : ''));
+                        value.includes('Custom Role Options')? this.NSP_CustomRoleList = true : (this.template.querySelector('div.' + key).style.display = 'none', this.NSP_CustomRoleList = false, (this.template.querySelector('lightning-input-field.' + key).value != null ? this.template.querySelector('lightning-input-field.' + key).value = '' : ''));
                        }
                        this.roleOptionErrorMsg = 'display:none';
                     break;
                     case "NSP_ServiceLengthSelection__c":
                         this.NSP_ServiceLengthSelection__c = value;
+                        this.visibility.NSP_CustomServiceLength__c = value.includes("Custom Service Length");
                         if( this.template.querySelector('div.'+key) != null){
-                            value.includes("Custom Service Length") ? (this.template.querySelector('div.' + key).style.display = '', this.NSP_CustomServiceLength = true) : (this.template.querySelector('div.' + key).style.display = 'none', this.NSP_CustomServiceLength = false, (this.template.querySelector('lightning-input-field.' + key).value != null ? this.template.querySelector('lightning-input-field.' + key).value = '' : ''));
+                            value.includes("Custom Service Length") ? this.NSP_CustomServiceLength = true : (this.template.querySelector('div.' + key).style.display = 'none', this.NSP_CustomServiceLength = false, (this.template.querySelector('lightning-input-field.' + key).value != null ? this.template.querySelector('lightning-input-field.' + key).value = '' : ''));
                         }
                         this.serviceLengthErrorMsg='display:none';
                         break;
@@ -218,115 +234,100 @@ export default class WizardSurveyPageFilters extends LightningElement {
         }
     }
 
-    radioOnChange(event) {
-        if(event.currentTarget !=null && event.currentTarget.fieldName !=null && event.currentTarget.value !=null){
-            let key = event.currentTarget.fieldName;
-             let value = event.currentTarget.value;
-            switch (key) {
-                case "NSP_ClientLocation__c":
+    radioOnChange({ currentTarget }) {
+        if(currentTarget?.fieldName !=null && currentTarget?.value !=null){
+            const { fieldName, value } = currentTarget;
 
-                    if (value) {
-                        this.NSP_ClientLocation = true;
-                    } else {
-                        this.NSP_ClientLocation = false;
-                    }
-                    if( this.template.querySelector('div.'+key) != null){
-                        value == true? this.template.querySelector('div.'+key).style.display='':this.template.querySelector('div.'+key).style.display='none';
-                       }
-                    if(!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ClientLocation__c')!= null){
-                         this.template.querySelector('lightning-input-field.NSP_ClientLocation__c').value = null;
-                    }
-                    break;
-                case "NSP_ClientDepartmentsDivision__c":
-
-                    if (value) {
-                        this.NSP_ClientDepartmentsDivision = true;
-                    } else {
-                        this.NSP_ClientDepartmentsDivision = false;
-                    }
-                    if( this.template.querySelector('div.'+key) != null){
-                        value == true? this.template.querySelector('div.'+key).style.display='block':this.template.querySelector('div.'+key).style.display='none';
-                       }
-                    if(!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ClientDepartmentsDivision__c')!=null){
-                        this.template.querySelector('lightning-input-field.NSP_ClientDepartmentsDivision__c').value = null;
-                    }
-                    break;
-                case "NSP_RoleOptions__c":
-                    if (value) {
-                        this.NSP_RoleOptions = true;
-                        if(this.NSP_RoleOptionSelection__c == null || this.NSP_RoleOptionSelection__c == '' || this.NSP_RoleOptionSelection__c == []){
-                            this.roleOptionErrorMsg = "display:''";
-                        }
-                    } else {
-                        this.NSP_RoleOptions = false;
-                        this.NSP_RoleOptionSelection__c= [];
-                        this.NSP_RoleOptionSelection = false;
-                        this.NSP_CustomRoleList=false;
-                        this.roleOptionErrorMsg = "display:none";
-                        this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c').value != null ? this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c').value = '' : '';
-                        this.template.querySelector('div.NSP_RoleOptionSelection__c').style.display = 'none'
-                    }
-                    
-                    if( this.template.querySelector('lightning-checkbox-group.'+key) != null){
-                        value == true? this.template.querySelector('lightning-checkbox-group.'+key).style.display='':(this.template.querySelector('lightning-checkbox-group.'+key).style.display='none',this.template.querySelector('lightning-checkbox-group.'+key).value !=null ? this.template.querySelector('lightning-checkbox-group.'+key).value =[]:'');
-                       }
-
-                       if(!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c')!= null){
-                        this.template.querySelector('lightning-input-field.NSP_RoleOptions__c')!=null?this.template.querySelector('lightning-input-field.NSP_RoleOptions__c').value = null:'';
-                        this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c').value = null;
-                      }
-
-                    break;
-
-                    case "NSP_ServiceLength__c":
-                        if (value) {
-                            this.NSP_ServiceLength = true;
-                            if(this.NSP_ServiceLengthSelection__c == null || this.NSP_ServiceLengthSelection__c == '' || this.NSP_ServiceLengthSelection__c == []){
-                                this.serviceLengthErrorMsg = "display:''";
-                            }
-                        } else {
-                            this.NSP_ServiceLength = false;
-                            this.NSP_ServiceLengthSelection__c= [];
-                            this.serviceLengthErrorMsg = "display:none";
-                            this.NSP_CustomServiceLength = false;
-                            this.template.querySelector('div.NSP_ServiceLengthSelection__c').style.display = 'none'
-                            this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value != null ? this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value = '' : '';
-                        }
-                    if( this.template.querySelector('lightning-checkbox-group.'+key) != null){
-                        value == true? this.template.querySelector('lightning-checkbox-group.'+key).style.display='': this.template.querySelector('lightning-checkbox-group.'+key).style.display='none';
-                        this.template.querySelector('lightning-checkbox-group.'+key).value =null;
-                        }
-
-                        if(!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c')!=null){
-                            this.template.querySelector('lightning-input-field.NSP_ServiceLength__c') != null ? this.template.querySelector('lightning-input-field.NSP_ServiceLength__c').value = null:'';
-                             this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value = null;
-                          }
-                        break;
-
-                    case "NSP_HRSurveyStatus__c":
-                        if (value) {
-                            this.NSP_HRSurveyStatus = true;
-                            if(this.NSP_HRSurveyStatusSelection__c == null || this.NSP_HRSurveyStatusSelection__c == '' || this.NSP_HRSurveyStatusSelection__c == []){
-                                this.surveyStatusErrorMsg = "display:''";
-                            }
-                        } else {
-                            this.NSP_HRSurveyStatus = false;
-                            this.NSP_HRSurveyStatusSelection__c =[];
-                            this.surveyStatusErrorMsg = "display:none";
-        
-                        }
-                        if( this.template.querySelector('lightning-checkbox-group.'+key) != null){
-                            value == true? this.template.querySelector('lightning-checkbox-group.'+key).style.display='':(this.template.querySelector('lightning-checkbox-group.'+key).style.display='none',this.template.querySelector('lightning-checkbox-group.'+key).value !=null ? this.template.querySelector('lightning-checkbox-group.'+key).value =[]:'');
-                        }
-                        if(!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_HRSurveyStatus__c') !=null){
-                            this.template.querySelector('lightning-input-field.NSP_HRSurveyStatus__c').value = null;
-                          }
-                        break;
-              }
-          }
+            this.doFieldValueChangeActions(fieldName, value);
+        }
     }
 
     fieldValue =  { currentTarget : { fieldName :'',name:'',value :''} };
+
+    doFieldValueChangeActions(fieldName, value) {
+        this.visibility[fieldName] = !!value;
+
+        switch (fieldName) {
+            case "NSP_ClientLocation__c":
+
+                this.NSP_ClientLocation = !!value;
+
+                if (!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ClientLocation__c') != null) {
+                    this.template.querySelector('lightning-input-field.NSP_ClientLocation__c').value = null;
+                }
+                break;
+            case "NSP_ClientDepartmentsDivision__c":
+
+                this.NSP_ClientDepartmentsDivision = !!value;
+
+                if (!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ClientDepartmentsDivision__c') != null) {
+                    this.template.querySelector('lightning-input-field.NSP_ClientDepartmentsDivision__c').value = null;
+                }
+                break;
+            case "NSP_RoleOptions__c":
+                if (value) {
+                    this.NSP_RoleOptions = true;
+                    if (this.NSP_RoleOptionSelection__c == null || this.NSP_RoleOptionSelection__c == '' || this.NSP_RoleOptionSelection__c == []) {
+                        this.roleOptionErrorMsg = "display:''";
+                    }
+                } else {
+                    this.NSP_RoleOptions = false;
+                    this.NSP_RoleOptionSelection__c = [];
+                    this.NSP_RoleOptionSelection = false;
+                    this.NSP_CustomRoleList = false;
+                    this.roleOptionErrorMsg = "display:none";
+                    this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c').value != null ? this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c').value = '' : '';
+                    this.template.querySelector('div.NSP_RoleOptionSelection__c').style.display = 'none';
+                }
+
+                if (!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c') != null) {
+                    this.template.querySelector('lightning-input-field.NSP_RoleOptions__c') != null ? this.template.querySelector('lightning-input-field.NSP_RoleOptions__c').value = null : '';
+                    this.template.querySelector('lightning-input-field.NSP_RoleOptionSelection__c').value = null;
+                }
+
+                break;
+
+            case "NSP_ServiceLength__c":
+                if (value) {
+                    this.NSP_ServiceLength = true;
+                    if (this.NSP_ServiceLengthSelection__c == null || this.NSP_ServiceLengthSelection__c == '' || this.NSP_ServiceLengthSelection__c == []) {
+                        this.serviceLengthErrorMsg = "display:''";
+                    }
+                } else {
+                    this.NSP_ServiceLength = false;
+                    this.NSP_ServiceLengthSelection__c = [];
+                    this.serviceLengthErrorMsg = "display:none";
+                    this.NSP_CustomServiceLength = false;
+                    this.template.querySelector('div.NSP_ServiceLengthSelection__c').style.display = 'none';
+                    this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value != null ? this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value = '' : '';
+                }
+                if (this.template.querySelector('lightning-checkbox-group.' + fieldName) != null) {
+                    this.template.querySelector('lightning-checkbox-group.' + fieldName).value = null;
+                }
+
+                if (!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c') != null) {
+                    this.template.querySelector('lightning-input-field.NSP_ServiceLength__c') != null ? this.template.querySelector('lightning-input-field.NSP_ServiceLength__c').value = null : '';
+                    this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value = null;
+                }
+                break;
+
+            case "NSP_HRSurveyStatus__c":
+                if (value) {
+                    this.NSP_HRSurveyStatus = true;
+                    if (this.NSP_HRSurveyStatusSelection__c == null || this.NSP_HRSurveyStatusSelection__c == '' || this.NSP_HRSurveyStatusSelection__c == []) {
+                        this.surveyStatusErrorMsg = "display:''";
+                    }
+                } else {
+                    this.NSP_HRSurveyStatus = false;
+                    this.NSP_HRSurveyStatusSelection__c = [];
+                    this.surveyStatusErrorMsg = "display:none";
+                }
+                if (!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_HRSurveyStatus__c') != null) {
+                    this.template.querySelector('lightning-input-field.NSP_HRSurveyStatus__c').value = null;
+                }
+                break;
+        }
+    }
 
     handleOnload(event) {
         if(event.detail != null &&  event.detail.records != null){
@@ -334,7 +335,7 @@ export default class WizardSurveyPageFilters extends LightningElement {
             this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
             if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
 
-            if(this.isOnloaded){                                
+            if(this.isOnloaded){
                 if(this.fieldsData.NSP_Survey_Type__c != null  && this.fieldsData.NSP_Survey_Type__c.value != null ){
                     this.NSP_Manager =  (this.fieldsData.NSP_Survey_Type__c.value =='Exit');
                     
@@ -450,4 +451,23 @@ isActiveEmployeeCount (parentId) {
     });
 }
 
+    get fields(){
+        return [
+            EMPLOYEE_FIELD,
+            'NSP_ReportRequest__c.NSP_LastSavedPageNumber__c',
+            'NSP_ReportRequest__c.NSP_ClientLocation__c',
+            'NSP_ReportRequest__c.NSP_ListOfLocations__c',
+            'NSP_ReportRequest__c.NSP_ClientDepartmentsDivision__c',
+            'NSP_ReportRequest__c.NSP_ListOfDepartmentsDivisions__c',
+            'NSP_ReportRequest__c.NSP_RoleOptions__c',
+            'NSP_ReportRequest__c.NSP_RoleOptionSelection__c',
+            'NSP_ReportRequest__c.NSP_CustomRoleList__c',
+            'NSP_ReportRequest__c.NSP_ServiceLength__c',
+            'NSP_ReportRequest__c.NSP_ServiceLengthSelection__c',
+            'NSP_ReportRequest__c.NSP_CustomServiceLength__c',
+            'NSP_ReportRequest__c.NSP_HRSurveyStatus__c',
+            'NSP_ReportRequest__c.NSP_HRSurveyStatusSelection__c',
+            'NSP_ReportRequest__c.NSP_Manager__c'
+        ];
+    }
 }
