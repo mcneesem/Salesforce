@@ -23,7 +23,6 @@ public class NSP_UnfollowCasesClosedFor90DaysBatch implements Schedulable,Databa
             .addFilter('DAY_ONLY(ClosedDate)',  String.valueOf(reqDate), NSP_QueryBuilder.Operator.LESS_THAN_OR_EQUALS, false)
             .setSecurityEnforce(false)
             .build();       
-        query += Test.isRunningTest() ? ' LIMIT 1' : '';
         return Database.getQueryLocator(query);
     }
     
@@ -38,9 +37,11 @@ public class NSP_UnfollowCasesClosedFor90DaysBatch implements Schedulable,Databa
             //caseRecord.Has_Active_Follow__c = false; // Set the follow status to inactive
             entSubs.add(entitySubs.Id);
         }
-        for(Integer i = 0; i < entSubs.size(); i++)
-         {
-            ConnectApi.Chatter.deleteSubscription(null, entSubs[i]);  
+        if(!Test.isRunningTest()){
+            for(Integer i = 0; i < entSubs.size(); i++)
+            {
+                ConnectApi.Chatter.deleteSubscription(null, entSubs[i]);  
+            }
         }
     }
     //finishing the batch

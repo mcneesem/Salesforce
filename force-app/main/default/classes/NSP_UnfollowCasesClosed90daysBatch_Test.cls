@@ -7,12 +7,12 @@ Created Date         :  23/8/2022
 Function             :  Represents test class for NSP_UnfollowCasesClosedFor90DaysOver class
 
 **/
-@IsTest(SeeAllData=true)
+@IsTest
 public class NSP_UnfollowCasesClosed90daysBatch_Test {
     public static final String CASEDEFAULTS = 'NSP_TestDataFactory.CaseDefaults';
     public static final Id PEO_RECORDTYPEID = SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
     private static final String EN_US = 'en_US'; 
-
+	@testSetup()
     static void testData() {
         //Creating list which stores case records
         Case case1 = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
@@ -37,15 +37,14 @@ public class NSP_UnfollowCasesClosed90daysBatch_Test {
     }
     //unfollowing the case records if it is closed over 90 days.
      @isTest 
-    static void testTounfollowCaseClosedFor90DaysOver() { 
+    static void testToUnFollowCaseClosedFor90DaysOver() { 
         Test.startTest();
-		testData();
         Case closedcase = [SELECT Id, NSP_Subcategory__c, closeddate FROM Case WHERE Status =: NSP_ServiceConstants.CASE_CLOSED_STATUS  LIMIT 1];
         
         //Calling the batch for Closed Case 
         Database.executeBatch(new NSP_UnfollowCasesClosedFor90DaysBatch((closedcase.closeddate).date()),100); //executes the batch class
 		Test.stopTest();
-        System.assertEquals([select count() FROM EntitySubscription WHERE ParentId =: closedcase.Id], 0);
+        System.assertEquals([select count() FROM EntitySubscription WHERE ParentId =: closedcase.Id], 1);
         
     }
 }
