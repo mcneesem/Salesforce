@@ -4,12 +4,69 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Task.NSP_Create_Case_Flow_Action</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3) AND ( 4 AND 5)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Related_Case_1_ID__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Related_Case_2_ID__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Related_Case_3_ID__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>TES CSS Task</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>BPS Service</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.LogACall</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.Follow_Up</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Task.EditDescription</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Task.Defer</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Task.UpdateStatus</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Task.UpdatePriority</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
