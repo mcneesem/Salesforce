@@ -224,10 +224,10 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CASES.SUBJECT</fields>
         <fields>NSP_Category__c</fields>
         <fields>NSP_SubCategory__c</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>CASES.SUBJECT</fields>
         <fields>CASES.STATUS</fields>
         <fields>CASES.CREATED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
