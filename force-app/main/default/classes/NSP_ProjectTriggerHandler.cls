@@ -73,7 +73,9 @@ public class NSP_ProjectTriggerHandler implements NSP_ITriggerHandler {
     *                
     */
     public void beforeDelete(List<sObject> oldList , Map<Id, sObject> oldMap) {
-        
+        // Added as part of STY-04554
+        NSP_ProjectTriggerHelper  projectTriggerHelperObject =  new NSP_ProjectTriggerHelper(); 
+        projectTriggerHelperObject.handleBeforeDeleteOfProjTemp((List<pse__Proj__c>)oldList);
     }
 
     /**
