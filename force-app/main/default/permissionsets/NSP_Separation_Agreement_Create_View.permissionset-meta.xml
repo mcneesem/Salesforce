@@ -659,7 +659,7 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
+    
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
@@ -900,7 +900,7 @@
         <field>NSP_ReportRequest__c.NSP_StatusOfAgreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Survey_Filters__c</field>
         <readable>true</readable>
@@ -1000,12 +1000,12 @@
         <field>NSP_ReportRequest__c.NSP_columsToBeTotaled__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.SR__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <hasActivationRequired>false</hasActivationRequired>
+    <hasActivationRequired>false</hasActivationRequired>
     <label>Separation Agreement - Create/View</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
