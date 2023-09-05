@@ -5,7 +5,7 @@
         <name>Validate_Account_Group</name>
         <label>Validate Account Group</label>
         <locationX>1172</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>CSS_Rep_exists</name>
@@ -27,7 +27,7 @@
         <name>Validate_Account_Record</name>
         <label>Validate Account Record</label>
         <locationX>1535</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Account_is_valid</name>
@@ -77,7 +77,7 @@
         <name>Validate_WX_Asset</name>
         <label>Validate WX Asset</label>
         <locationX>710</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>WX_Asset_exists</name>
@@ -97,24 +97,14 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
-        <name>CSSStartDatePlus180</name>
-        <dataType>Date</dataType>
-        <expression>{!$Record.NSP_CSS_Start_Date__c} +180</expression>
-    </formulas>
-    <formulas>
-        <name>CSSStartDatePlus270</name>
-        <dataType>Date</dataType>
-        <expression>{!$Record.NSP_CSS_Start_Date__c} + 270</expression>
-    </formulas>
-    <formulas>
-        <name>CSSStartDatePlus35</name>
-        <dataType>Date</dataType>
-        <expression>{!$Record.NSP_CSS_Start_Date__c} + IF(WEEKDAY({!$Record.NSP_CSS_Start_Date__c}) = 1, 5, IF(WEEKDAY({!$Record.NSP_CSS_Start_Date__c}) = 7, 6, 7)) + 30</expression>
-    </formulas>
-    <formulas>
         <name>CSSStartDatePlus120</name>
         <dataType>Date</dataType>
         <expression>{!$Record.NSP_CSS_Start_Date__c} + 120</expression>
+    </formulas>
+    <formulas>
+        <name>CSSStartDatePlus180</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.NSP_CSS_Start_Date__c} +180</expression>
     </formulas>
     <formulas>
         <name>CSSStartDatePlus210</name>
@@ -122,9 +112,19 @@
         <expression>{!$Record.NSP_CSS_Start_Date__c} + 210</expression>
     </formulas>
     <formulas>
+        <name>CSSStartDatePlus270</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.NSP_CSS_Start_Date__c} + 270</expression>
+    </formulas>
+    <formulas>
         <name>CSSStartDatePlus300</name>
         <dataType>Date</dataType>
         <expression>{!$Record.NSP_CSS_Start_Date__c} + 300</expression>
+    </formulas>
+    <formulas>
+        <name>CSSStartDatePlus35</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.NSP_CSS_Start_Date__c} + IF(WEEKDAY({!$Record.NSP_CSS_Start_Date__c}) = 1, 5, IF(WEEKDAY({!$Record.NSP_CSS_Start_Date__c}) = 7, 6, 7)) + 30</expression>
     </formulas>
     <formulas>
         <description>CSS Start Date + 5 Business Days</description>
@@ -162,7 +162,7 @@
         <name>Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</name>
         <label>Create 1st CSS TP (Assigned by Project Manager) Task</label>
         <locationX>50</locationX>
-        <locationY>1175</locationY>
+        <locationY>1079</locationY>
         <connector>
             <targetReference>Create_Quarterly_Client_Meeting_Task_90_Days</targetReference>
         </connector>
@@ -218,7 +218,7 @@
         <name>Create_Error_Log_Record</name>
         <label>Create Error Log Record</label>
         <locationX>1106</locationX>
-        <locationY>1295</locationY>
+        <locationY>1187</locationY>
         <inputAssignments>
             <field>NSP_Class__c</field>
             <value>
@@ -256,7 +256,7 @@
         <name>Create_Quarterly_Client_Meeting_Task_180_Days</name>
         <label>Create Quarterly Client Meeting Task (180 Days)</label>
         <locationX>50</locationX>
-        <locationY>1415</locationY>
+        <locationY>1295</locationY>
         <connector>
             <targetReference>Create_Quarterly_Client_Meeting_Task_270_Days</targetReference>
         </connector>
@@ -313,7 +313,7 @@
         <name>Create_Quarterly_Client_Meeting_Task_270_Days</name>
         <label>Create Quarterly Client Meeting Task (270 Days)</label>
         <locationX>50</locationX>
-        <locationY>1535</locationY>
+        <locationY>1403</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log_Record</targetReference>
@@ -367,7 +367,7 @@
         <name>Create_Quarterly_Client_Meeting_Task_90_Days</name>
         <label>Create Quarterly Client Meeting Task (90 Days)</label>
         <locationX>50</locationX>
-        <locationY>1295</locationY>
+        <locationY>1187</locationY>
         <connector>
             <targetReference>Create_Quarterly_Client_Meeting_Task_180_Days</targetReference>
         </connector>
@@ -424,12 +424,12 @@
         <name>Fetch_Active_WX_Asset</name>
         <label>Fetch Active WX Asset</label>
         <locationX>710</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_WX_Asset</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
@@ -451,6 +451,13 @@
                 <stringValue>Active</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Onboarding</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Asset</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -459,7 +466,7 @@
         <name>Fetch_BPS_Record_Type_Id_of_Task_Object</name>
         <label>Fetch BPS Record Type Id of Task Object</label>
         <locationX>50</locationX>
-        <locationY>1055</locationY>
+        <locationY>971</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</targetReference>
@@ -487,7 +494,7 @@
         <name>Fetch_WX_Asset_Record_Type_Id</name>
         <label>Fetch WX Asset Record Type Id</label>
         <locationX>710</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Fetch_Active_WX_Asset</targetReference>
@@ -516,7 +523,7 @@
         <name>Get_Account_Team_records</name>
         <label>Get &apos;Account Team&apos; records</label>
         <locationX>1172</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Account_Group</targetReference>
