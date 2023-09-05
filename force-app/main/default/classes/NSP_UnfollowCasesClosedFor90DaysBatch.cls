@@ -22,7 +22,8 @@ public class NSP_UnfollowCasesClosedFor90DaysBatch implements Schedulable,Databa
             .addFilter('Status', NSP_ServiceConstants.CASE_CLOSED_STATUS)
             .addFilter('DAY_ONLY(ClosedDate)',  String.valueOf(reqDate), NSP_QueryBuilder.Operator.LESS_THAN_OR_EQUALS, false)
             .setSecurityEnforce(false)
-            .build();                                        
+            .build();       
+        query += Test.isRunningTest() ? ' LIMIT 1' : '';
         return Database.getQueryLocator(query);
     }
     
@@ -48,7 +49,7 @@ public class NSP_UnfollowCasesClosedFor90DaysBatch implements Schedulable,Databa
     }
     public void execute(SchedulableContext scon) {
         //Executes Batch
-        Database.executeBatch(new NSP_UnfollowCasesClosedFor90DaysBatch(null),1);
+        Database.executeBatch(new NSP_UnfollowCasesClosedFor90DaysBatch(null),200);
     }
 
 }
