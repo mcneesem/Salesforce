@@ -72,8 +72,7 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
      */
 
     public void beforeDelete(List<sObject> oldList , Map<Id, sObject> oldMap) {
-        NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
-        caseContactTriggerHelperObj.beforeDeleteDirector((List<NSP_Case_Contacts__c>)oldList);
+       
     }
     
     /**
