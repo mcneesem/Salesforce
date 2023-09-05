@@ -6073,11 +6073,4 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
     </labels>
-    <labels>
-        <fullName>NSP_ProjTemplateDeleteError</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP_ProjTemplateDeleteError</shortDescription>
-        <value>You do not have permission to delete project templates</value>
-    </labels>
 </CustomLabels>
