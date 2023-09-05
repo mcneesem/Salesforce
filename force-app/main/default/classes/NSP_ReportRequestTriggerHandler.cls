@@ -32,7 +32,7 @@ public class NSP_ReportRequestTriggerHandler implements NSP_ITriggerHandler{
   *                
   */
    public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
-
+       
    }
    
  /**
@@ -58,8 +58,6 @@ public class NSP_ReportRequestTriggerHandler implements NSP_ITriggerHandler{
   */
 
    public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_ReportRequestTriggerHelper ReportRequest = new NSP_ReportRequestTriggerHelper();
-        ReportRequest.afterUpdateDirector( (Map<Id,NSP_ReportRequest__c>) newMap, (Map<Id,NSP_ReportRequest__c>) oldMap ); 
        
    }
 
