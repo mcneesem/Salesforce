@@ -33,6 +33,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             System.debug( ' ~ objects remaining=' + objectApiNames.size() );
         } else {
             System.debug( ' ~ This was the final job for LoadOBPermSetsQueueable' );
+            sendCompletionEmail();
         }
     }
 
@@ -129,5 +130,14 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             }
         }
         Database.upsert(fpList, false);
+    }
+
+    public void sendCompletionEmail(){
+        Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
+        oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
+        oEmail.setTargetObjectId(UserInfo.getUserId());
+        oEmail.setSaveAsActivity(false);
+        oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished.');
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{oEmail});
     }
 }
