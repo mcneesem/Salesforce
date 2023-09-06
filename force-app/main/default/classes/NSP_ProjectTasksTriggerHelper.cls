@@ -2160,7 +2160,9 @@
                 }
                 for (pse__Project_Task__c task : projTasks) {
                     if (projIdTempValMap.containsKey(task.Id)) {
-                        task.addError(System.Label.NSP_ProjTemplateDeleteError);
+                        //After the custom label gets deployed please change the below line to
+                        //task.addError(System.Label.NSP_ProjTemplateDeleteError);
+                        task.addError('You do not have permission to delete project templates');
                     }
                 }
             }

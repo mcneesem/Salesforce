@@ -1626,7 +1626,9 @@ public class NSP_ProjectTriggerHelper{
             
             for (pse__Proj__c project : projects) {
                 if (project.pse__Is_Template__c && !userDetails.Name.contains('Deployment') && !userDetails.NSP_Service_Stakeholder__c) {
-                    project.addError(System.Label.NSP_ProjTemplateDeleteError);
+                    //After the custom label gets deployed please change the below line to
+                    //project.addError(System.Label.NSP_ProjTemplateDeleteError);
+                    project.addError('You do not have permission to delete project templates');
                 }
             }
         }catch(Exception exp ){
