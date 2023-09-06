@@ -171,4 +171,60 @@ private class NSP_CaseContactTriggerHelperTest {
         System.assertNotEquals(assertCse.NSP_CorporateEmployeeEE__c, true); // Positive Scenario
     }
     
+    /*
+     * MethodName : beforeDeleteDirectorTest
+     * @Description: This test method is used to cover beforeDeleteDirector method
+     * @Created date: 08/25/2023. 
+     * @return void             
+     * */  
+    @isTest
+    private static void beforeDeleteDirectorTest(){
+        // Querying Account
+        String accQuery = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addFilter('Name', System.Label.NSP_Insperity_Account).addLimit(1).build();
+        Account insAacc =  Database.query(accQuery);  
+        
+        // Querying Contact
+        String conQuery = new NSP_QueryBuilder('Contact', CONTACT_FIELDS).addFilter('FirstName', 'INS ' + SECONDARY_CONTACT_FIRSTNAME).addLimit(1).build();
+        Contact con =  Database.query(conQuery);
+        
+        // Querying AccountContact Relationship
+        String acrQuery = new NSP_QueryBuilder('AccountContactRelation', ACR_FIELDS).addFilter(ACCOUNT_ID, insAacc.Id).
+            addLimit(1).build();
+        AccountContactRelation acr1 =  Database.query(acrQuery);
+        acr1.NSP_Employee_Status__c = 'HIRED';
+        update(acr1);
+        
+        // Querying Case
+        String caseQuery = new NSP_QueryBuilder('Case', CASE_FIELDS).addFilter(ACCOUNT_ID, insAacc.Id).addLimit(1).build();
+        Case cse =  Database.query(caseQuery);
+        
+        // Inserting Additional Contact on Case so that the NSP_CorporateEmployeeEE__c will be false when Case is having multiple Case Contacts
+        List<NSP_Case_Contacts__c> CseConList = new List<NSP_Case_Contacts__c>();
+        NSP_Case_Contacts__c addCseCon = (NSP_Case_Contacts__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Case_Contacts__c(), 'NSP_TestDataFactory.caseContactDefaults', false);
+        addCseCon.NSP_Contact__c = con.Id;
+        addCseCon.NSP_Case__c = cse.Id;
+        addCseCon.NSP_IsPrimary__c = false;
+        CseConList.add(addCseCon);
+        insert CseConList;
+        
+        Id separationRecordTypeID = NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest');
+        NSP_ReportRequest__c reportrequest2 = (NSP_ReportRequest__c)NSP_TestExtendedDataFactory.createSObject(new NSP_ReportRequest__c(), 'NSP_TestDataFactory.ReportRequestDefaults', false);
+        reportrequest2.RecordTypeId = separationRecordTypeID;
+        reportrequest2.NSP_AgreementType__c = 'Client-Prepared';
+        reportrequest2.NSP_ReviewType__c = 'Corporate Review';
+        reportrequest2.NSP_WSEE__c = con.Id;
+        reportrequest2.NSP_Case__c = cse.Id;
+        insert reportrequest2;
+        
+        try{
+            Test.startTest();
+            delete CseConList;
+            Test.stopTest();  
+        }catch(Exception ex){
+            //After custom label is deployed to UAT, we have to update the error message with custom label
+            Boolean expectedExceptionThrown =  ex.getMessage().contains('Separating WSEE cannot be deleted from the Case') ? true : false;
+            System.assertEquals(expectedExceptionThrown, true); 
+        }
+    }
+    
 }
