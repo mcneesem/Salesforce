@@ -26358,16 +26358,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_ReportRequest__c.Is_Notary_Required__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_ReportRequest__c.Is_Rehire_Clause_Required__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Active_EEs__c</field>
         <readable>true</readable>
     </fieldPermissions>
