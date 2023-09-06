@@ -27,11 +27,11 @@
                 <behavior>Edit</behavior>
                 <field>SR__c</field>
             </layoutItems>
-<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Mid_Market_or_Mid_Market_Enterprise__c</field>
             </layoutItems>
-            <layoutItems>
+            <layoutItems> 
                 <behavior>Edit</behavior>
                 <field>NSP_Written_Approval_From_The_MHRS__c</field>
             </layoutItems>
@@ -57,7 +57,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Client_Contact__c</field>
-            </layoutItems>
+            </layoutItems>            
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -176,7 +176,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_ReviewType__c</field>
             </layoutItems>
-                        <layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -238,11 +238,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Is_Rehire_Clause_Required__c</field>
+                <field>NSP_RemoveNoRehireClause__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Is_Notary_Required__c</field>
+                <field>NSP_KeepNorehireParagraphForcompany__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_RemoveNotaryRequirement__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -276,7 +280,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_COBRASelectOne__c</field>
             </layoutItems>
-                        <layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_NumberOfMonthsCOBRA__c</field>
             </layoutItems>
@@ -284,7 +288,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_COBRA_Amount__c</field>
             </layoutItems>
-                        <layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Commissions__c</field>
             </layoutItems>
@@ -314,7 +318,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_MutualNonDisparagement__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_MutualConfidentiality__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_NonSolicitationofCustomers_Company__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_IncludeTerminationDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -364,7 +380,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_TransitionOfDuties__c</field>
             </layoutItems>
-<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_TransitionOfDutiesValue__c</field>
             </layoutItems>
@@ -413,7 +429,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_DocVerifySeparationAgremtSpreedSheet__c</field>
             </layoutItems>
-                    </layoutColumns>
+        </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -427,7 +443,7 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-        <relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

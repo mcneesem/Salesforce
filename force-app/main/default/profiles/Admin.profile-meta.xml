@@ -19054,16 +19054,6 @@ m   <fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_ReportRequest__c.Is_Notary_Required__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_ReportRequest__c.Is_Rehire_Clause_Required__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Action__c</field>
         <readable>true</readable>
     </fieldPermissions>

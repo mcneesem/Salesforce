@@ -900,8 +900,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Is_Rehire_Clause_Required__c</fieldItem>
-                <identifier>RecordIs_Rehire_Clause_Required__c</identifier>
+                <fieldItem>Record.NSP_RemoveNoRehireClause__c</fieldItem>
+                <identifier>RecordNSP_RemoveNoRehireClause_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -910,8 +910,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Is_Notary_Required__c</fieldItem>
-                <identifier>RecordIs_Notary_Required_cField</identifier>
+                <fieldItem>Record.NSP_KeepNorehireParagraphForcompany__c</fieldItem>
+                <identifier>RecordNSP_KeepNorehireParagraphForcompany_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -943,7 +943,7 @@
                 <fieldItem>Record.NSP_NumberOfpayments__c</fieldItem>
                 <identifier>RecordNSP_NumberOfpayments_cField</identifier>
                 <visibilityRule>
-<booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Installments__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1028,7 +1028,7 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-                <itemInstances>
+        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -1173,8 +1173,38 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_MutualNonDisparagement__c</fieldItem>
+                <identifier>RecordNSP_MutualNonDisparagement_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_MutualConfidentiality__c</fieldItem>
                 <identifier>RecordNSP_MutualConfidentiality_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_NonSolicitationofCustomers_Company__c</fieldItem>
+                <identifier>RecordNSP_NonSolicitationofCustomers_Company_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_IncludeTerminationDate__c</fieldItem>
+                <identifier>RecordNSP_IncludeTerminationDate_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1187,9 +1217,9 @@
                 <identifier>RecordNSP_Termination_Date_cField2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_Employee_Status__c}</leftValue>
+                        <leftValue>{!Record.NSP_IncludeTerminationDate__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>TERMINATED</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1356,7 +1386,7 @@
                 <identifier>RecordNSP_TransitionOfDuties_cField</identifier>
             </fieldInstance>
         </itemInstances>
-<itemInstances>
+        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -2124,6 +2154,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Termination_Date_cField4</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2607,7 +2644,7 @@
                 <fieldItem>Record.NSP_NumberOfpayments__c</fieldItem>
                 <identifier>RecordNSP_NumberOfpayments__cField</identifier>
                 <visibilityRule>
-<booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Installments__c}</leftValue>
                         <operator>EQUAL</operator>
