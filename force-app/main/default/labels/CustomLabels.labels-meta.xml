@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>NSP_Prevent_Case_Contact_Deletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Prevent Case Contact Deletion</shortDescription>
+        <value>Separating WSEE cannot be deleted from the Case</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ReportRequestErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReportRequestErrorMessage</shortDescription>
+        <value>You cannot add WSEEs to multi employee agreements</value>
+    </labels>
+    <labels>
         <fullName>ASSET_BPS_RET_RECORDTYPES</fullName>
         <language>en_US</language>
         <protected>false</protected>
