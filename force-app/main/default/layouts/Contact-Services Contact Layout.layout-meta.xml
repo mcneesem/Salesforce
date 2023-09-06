@@ -389,8 +389,6 @@
         <fields>Case.CASE_CLOSED_DATE</fields>
         <fields>Case.CASE_STATUS</fields>
         <fields>Case.NSP_Owner__c</fields>
-        <fields>Case.NSP_Category__c</fields>
-        <fields>Case.NSP_SubCategory__c</fields>
         <fields>Case.NSP_Detail__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Contact__c</relatedList>
     </relatedLists>
