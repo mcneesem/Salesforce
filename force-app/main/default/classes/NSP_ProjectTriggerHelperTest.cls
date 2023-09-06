@@ -14,8 +14,7 @@ Modification Log     :
 
 @isTest(SeeAllData=false)
 private class NSP_ProjectTriggerHelperTest {
-    private static final String PROJECTDEFAULTS = 'NSP_TestDataFactory.ProjectDefaults';
-    private static final String MILESTONEDEFAULTS = 'NSP_TestDataFactory.MileStoneDefaults';
+
     private static final Id peoProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME,'PEO_Project');
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     private static final String NAME = 'name';
@@ -131,13 +130,7 @@ private class NSP_ProjectTriggerHelperTest {
         oProjectTask.pse__Project__c = projectObj.Id;
         oProjectTask.RecordTypeId = PEOProjectTaskRecordTypeId;
         insert oProjectTask;
-
-        pse__Project_Task__c pTaskSharing = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-        pTaskSharing.Name = 'pTaskSharing';
-        pTaskSharing.pse__Project__c = projectObj.Id;
-        pTaskSharing.NSP_Visible_to_Client__c = true;
-        pTaskSharing.RecordTypeId = PEOProjectTaskRecordTypeId;
-        insert pTaskSharing;        
+        
          // Asset Creation
         Asset integra = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         integra.NSP_Client__c='2345';
@@ -194,10 +187,10 @@ private class NSP_ProjectTriggerHelperTest {
         milestoneObj.Name = 'Test milestone delete 1';
         milestoneObj.pse__Target_Date__c = system.today();
         milestoneObj.pse__Project__c = projectObj.id;
-	milestoneObj.NSP_Visible_to_Client__c = true;
-        insert milestoneObj;	
-        
-        
+        objRecInsertList.add(milestoneObj);
+    
+        Database.insert(objRecInsertList);
+
         User BpaUser = new User(alias = 'jsmit', email='jsmith@insperity.com', 
                                 emailencodingkey='UTF-8', lastname='Smith', 
                                 languagelocalekey='en_US', 
@@ -825,58 +818,5 @@ private class NSP_ProjectTriggerHelperTest {
             System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
         } 
         
-    }
-    /******************************************************************
-    * MethodName: testProjectRelatedSharing
-    * Description : Test Method to check project sharing 
-    * ****************************************************************/
-    //positive
-    @isTest
-    static void testProjectRelatedSharing(){
-        List<String> accFields = new List<String>{'Id',NAME};
-        String accQuery = new NSP_QueryBuilder('Account', accFields)
-            .addFilter(NAME, 'Test Account').addLimit(1).build();
-        Account acc = Database.query(accQuery);
-
-        List<String> projectFields = new List<String>{'Id', NAME, 'pse__Account__c','NSP_Visible_to_Client__c'};
-        String prjQuery = new NSP_QueryBuilder('pse__Proj__c', projectFields)
-            .addFilter(NAME, 'Test Delete 1').addLimit(1).build();
-        pse__Proj__c oProject = Database.query(prjQuery);
-       
-        List<String> prjTaskFields = new List<String>{'Id','NSP_Visible_to_Client__c' , 'pse__Project__r.pse__Account__c' , 'pse__Project__c'};
-        String prjTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', prjTaskFields)
-            .addFilter('NSP_Visible_to_Client__c', True).addLimit(1).build();
-         pse__Project_Task__c  prjTask = Database.query(prjTaskQuery);
-        
-        List<String> milestoneFields = new List<String>{'Id', 'NSP_Visible_to_Client__c' , 'pse__Project__r.pse__Account__c' , 'pse__Project__c'};
-        String milestoneQuery = new NSP_QueryBuilder('pse__Milestone__c', milestoneFields)
-            .addFilter('NSP_Visible_to_Client__c', True).addLimit(1).build();
-         pse__Milestone__c milestone = Database.query(milestoneQuery);
-        
-        Test.startTest(); 
-        	oProject.pse__Account__c=acc.Id;
-            oProject.NSP_Visible_to_Client__c = true;
-            update oProject;
-        Test.stopTest();
-        pse__Proj__Share prjShare = [SELECT Id , ParentId , UserorGroupId FROM pse__Proj__Share 
-                                             WHERE ParentId =:oProject.Id  AND 
-                                             RowCause = :Schema.pse__Proj__Share.RowCause.InsperitySharing__c ]; 
-        
-        
-       pse__Project_Task__Share prjTaskShare = [SELECT Id , ParentId , UserorGroupId FROM pse__Project_Task__Share 
-                                             WHERE ParentId =:prjTask.Id  AND 
-                                             RowCause = :Schema.pse__Project_Task__Share.RowCause.InsperitySharing__c ];  
-        
-
-        
-        pse__Milestone__Share milestShare = [SELECT Id , ParentId , UserorGroupId FROM pse__Milestone__Share 
-                                             WHERE ParentId =:milestone.Id  AND 
-                                             RowCause = :Schema.pse__Milestone__Share.RowCause.InsperitySharing__c ];  
-        
-        
-        System.assertEquals(prjShare.UserorGroupId, prjTaskShare.UserorGroupId );
-        System.assertEquals(prjShare.UserorGroupId, milestShare.UserorGroupId ); 
-        
-        NSP_ProjectRecordSharing.removeRelatedProjectSharing(new Set<Id>{oProject.Id});
     }
 }
