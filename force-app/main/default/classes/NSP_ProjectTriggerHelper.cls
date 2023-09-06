@@ -431,7 +431,7 @@ public class NSP_ProjectTriggerHelper{
         if(!projectIdSet.isEmpty()){
             updateChildStatus(projectIdSet,'pse__Assignment__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CLOSED_STATUS);
             updateChildStatus(projectIdSet,'pse__Milestone__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CANCELLED_STATUS);
-            updateChildStatus(projectIdSet,'pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.PROJECT_TASK_CANCELLED);
+            updateChildStatus(projectIdSet,'pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CANCELLED_STATUS);
         }
     }
     /**
@@ -1609,4 +1609,30 @@ public class NSP_ProjectTriggerHelper{
              }           
          }                                                      
      }
+     
+    /***********************************************************************************************
+    * MethodName: handleBeforeDeleteOfProjTemp
+    * Description : Helper method to check before deleting a project
+    * Params:       List<pse__Proj__c> projects
+    * Created as part of STY-04554
+    * ********************************************************************************************/
+    public void handleBeforeDeleteOfProjTemp(List<pse__Proj__c> projects) {
+        
+        try{
+            List<String> userList = new List<String>{'Id','Name','NSP_Service_Stakeholder__c'};
+                String query = new NSP_QueryBuilder('User', userList)
+                                  .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();            				
+            User userDetails = Database.query(query);
+            
+            for (pse__Proj__c project : projects) {
+                if (project.pse__Is_Template__c && !userDetails.Name.contains('Deployment') && !userDetails.NSP_Service_Stakeholder__c) {
+                    //After the custom label gets deployed please change the below line to
+                    //project.addError(System.Label.NSP_ProjTemplateDeleteError);
+                    project.addError('You do not have permission to delete project templates');
+                }
+            }
+        }catch(Exception exp ){
+                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
+        }
+    }
 }
