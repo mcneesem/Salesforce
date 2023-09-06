@@ -18,7 +18,7 @@ public class LoadFullAccessPermSetsQueueableTest {
 		map<id,Boolean> psMap = new map<id,Boolean>{ [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Permisson_Set' LIMIT 1].Id => false };
 
         List<EntityDefinition> entities = [SELECT QualifiedApiName, IsCustomSetting, PublisherId
-			FROM EntityDefinition WHERE QualifiedApiName IN ('Account','EntityDefinition')];
+			FROM EntityDefinition WHERE QualifiedApiName IN ('Account','EntityDefinition')]; // one success case and one falure case
 
 		List<String> objectApiNames = new List<String>();
 		for ( EntityDefinition entity : entities )  {
