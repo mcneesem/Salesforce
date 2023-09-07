@@ -3,6 +3,7 @@
     <content xsi:nil="true"/>
     <application>PEO</application>
     <datasets>Asset_AccountTeam_ImplementationProfile</datasets>
+    <dateVersion>1</dateVersion>
     <masterLabel>Active Account Contract Information</masterLabel>
     <visualizationType>valuestable</visualizationType>
 </WaveLens>

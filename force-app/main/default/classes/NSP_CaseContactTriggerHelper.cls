@@ -127,7 +127,7 @@ public class NSP_CaseContactTriggerHelper {
                 cse.ContactId = caseConIdMap.get(cse.Id);
                 caseToUpdateList.add(cse);
             }
-            
+
             if(!caseToUpdateList.isEmpty()){
                 Database.update(caseToUpdateList);
             }
@@ -180,6 +180,32 @@ public class NSP_CaseContactTriggerHelper {
             }
         }catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException(NSP_CASE_TRIGGERHELPER, 'checkCaseContactIsPrimary', ex.getMessage());
+        }
+    }
+    
+    /***********************************************************************************************
+    * MethodName   : beforeDeleteDirector
+    * Description  : Iterates throught the list of Case Contacts Records and displays error if it is primary WSEE on wizard
+    * Params       : List <NSP_Case_Contacts__c> newList
+    * Created Date : 24/08/2023 created as part of story STY-04602
+    * ********************************************************************************************/ 
+    public void beforeDeleteDirector(List<NSP_Case_Contacts__c> caseContactList) {
+        Map<Id, Id> caseContactIdMap = new Map<Id, Id>();
+        Set<Id> caseContactIdSet = new Set<Id>();
+            for(NSP_Case_Contacts__c caseContact : caseContactList){
+                if(caseContact.NSP_Case__c != null && caseContact.NSP_Contact__c != null){
+                    caseContactIdSet.add(caseContact.NSP_Case__c);
+                }   
+            }
+        for(NSP_ReportRequest__c repReq : [Select Id,NSP_Case__c, NSP_WSEE__c from NSP_ReportRequest__c WHERE NSP_Case__c IN : caseContactIdSet]){
+            caseContactIdMap.put(repReq.NSP_Case__c, repReq.NSP_WSEE__c);
+        }
+        
+        for(NSP_Case_Contacts__c caseCon : caseContactList){
+            if(caseContactIdMap.containsKey(caseCon.NSP_Case__c) && caseCon.NSP_Contact__c == caseContactIdMap.get(caseCon.NSP_Case__c) && caseCon.NSP_IsPrimary__c){
+                //After custom label is deployed to UAT, we have to update the error message with custom label
+                caseCon.addError('Separating WSEE cannot be deleted from the Case');
+            }
         }
     }
 }

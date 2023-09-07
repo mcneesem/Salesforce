@@ -519,6 +519,7 @@ public class NSP_AccountTriggerHelperTest {
         }
         accountList[0].NSP_Template_Selection__c = REFPROG3;
         accountList[0].ownerId = salesManagerUser.Id;
+        accountList[0].NSP_Account_Status__c = NSP_SalesConstants.ACTIVE;
         insert accountList;
         Account accoutObject1 = [Select Id, Name FROM Account WHERE Name = 'AccountTestData0'];
         Opportunity opportuniytObject = new Opportunity();
@@ -561,6 +562,8 @@ public class NSP_AccountTriggerHelperTest {
            
         NSP_AccountTriggerHelper helper = new NSP_AccountTriggerHelper();
          helper.afterUpdateDirector(accountMapNew, accountMapOld);
+         helper.setAccountStage(accountList);
+         helper.restrictAccountChange(accountMapNew,accountMapOld,userRecord1);
          system.assertEquals(salesManagerUser.Id, accountList[0].ownerId);
         Test.stopTest();
  

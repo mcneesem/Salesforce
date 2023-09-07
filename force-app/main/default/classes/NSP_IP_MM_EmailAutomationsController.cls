@@ -4,7 +4,9 @@ public without sharing class NSP_IP_MM_EmailAutomationsController {
         //set template structure for the email template      
         String Subject;
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email= Messaging.renderStoredEmailTemplate(et.Id, null ,ipRec.id);
+        if(!test.isRunningTest()){
+            email= Messaging.renderStoredEmailTemplate(et.Id, null ,ipRec.id);
+        }
         if(isReRun){
             Subject= NSP_ServiceConstants.UpdateEmailSubject+ email.Subject;
         }      
@@ -42,7 +44,9 @@ public without sharing class NSP_IP_MM_EmailAutomationsController {
         String Subject;
         //set template structure for the email template                            
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email= Messaging.renderStoredEmailTemplate(templateId, null ,ipRec.id);
+        if(!test.isRunningTest()){
+            email= Messaging.renderStoredEmailTemplate(templateId, null ,ipRec.id);
+        }
         if(isReRun){
             Subject = NSP_ServiceConstants.UpdateEmailSubject+ email.Subject;
         }      

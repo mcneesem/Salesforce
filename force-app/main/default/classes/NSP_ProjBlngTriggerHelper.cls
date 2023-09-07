@@ -77,8 +77,11 @@ public class NSP_ProjBlngTriggerHelper {
                     orderEvent.NSP_Invoice_Ready__c=newProj.Invoice_Ready__c;
                 }
             }
-            billingEvents.add(orderEvent); //add the event to list
+            if(orderEvent.NSP_Action__c!=null){
+                billingEvents.add(orderEvent); //add the event to list
+            }
         }
+       
         if(billingEvents.size()>0){
             List<NSP_Error_Log__c> erlogs= new List<NSP_Error_Log__c>();
             // Call method to publish events

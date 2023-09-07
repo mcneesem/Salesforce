@@ -987,6 +987,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_CQA_Issue_Type__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NSP_ClientNumber__c</field>
             <table>Case</table>
         </columns>
@@ -1013,11 +1018,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Is_Case_Closed__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_CQA_Issue_Type__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1208,6 +1208,31 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_RET_Sub_Plan_Change_History__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project__c.Project_Implementer__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project__c.Name</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project__c.NSP_BPS_Project_Template__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project__c.Peer_Review__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project__c.NSP_Client_Size__c</field>
             <table>Case</table>
         </columns>
         <masterLabel>Cases</masterLabel>

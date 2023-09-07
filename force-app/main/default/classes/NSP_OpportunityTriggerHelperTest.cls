@@ -675,6 +675,30 @@ static void createAssetTest3(){
         Test.stopTest();
     }
     
+    /**
+     * Test for before insert trigger
+     * Method Name : testParent
+     */
+     @isTest
+    static void testParent(){
+        
+        Test.startTest();
+        Opportunity opp = [SELECT ID,AccountId,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null LIMIT 1];
+        Opportunity childopportuniytObject2 = new Opportunity();
+        childopportuniytObject2.Name = 'Child Oppty Insurance Service';
+        childopportuniytObject2.AccountId = Opp.AccountId;
+        childopportuniytObject2.stagename = 'Qualification';
+        childopportuniytObject2.CloseDate = date.today();
+        childopportuniytObject2.CurrencyIsoCode = CURRENCY_USD;
+        childopportuniytObject2.NSP_Number_of_Employees__c = 100;
+        childopportuniytObject2.NSP_PrimaryProduct__c = 'Insurance Services';
+        childopportuniytObject2.NSP_Parent_Opportunity__c = opp.id;
+        childopportuniytObject2.Type = NSP_SalesConstants.CLIENT_GROWTH_CREDIT;
+        childopportuniytObject2.NSP_Contribution_Level__c = 'Level 1';  
+        childopportuniytObject2.NSP_Frequency_of_Distribution__c = 'Lump sum';
+        insert childopportuniytObject2;
+    }
+    
      /** 
     * Test for after update trigger
     * Method Name : testenrollmentfee

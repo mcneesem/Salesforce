@@ -37,7 +37,7 @@
                         <lightning-input-field field-name="NSP_ClientLocation__c"
                             onchange={radioOnChange}></lightning-input-field>
 
-                        <div class="NSP_ClientLocation__c" style="display:none">
+                        <div if:true={visibility.NSP_ClientLocation__c} class="NSP_ClientLocation__c">
                             <div class="slds-form-element_horizontal">
                                 <label class="slds-form-element__label" for="NSP_ListOfLocations__c">
                                     <abbr title="required" class="slds-required">*</abbr>
@@ -52,7 +52,7 @@
                     <div class='slds-p-vertical_medium'>
                         <lightning-input-field field-name="NSP_ClientDepartmentsDivision__c" onchange={radioOnChange}>
                         </lightning-input-field>
-                        <div class="NSP_ClientDepartmentsDivision__c" style="display:none">
+                        <div if:true={visibility.NSP_ClientDepartmentsDivision__c} class="NSP_ClientDepartmentsDivision__c">
                             <div class="slds-form-element_horizontal">
                                 <label class="slds-form-element__label" for="NSP_ListOfDepartmentsDivisions__c">
                                     <abbr title="required" class="slds-required">*</abbr>
@@ -70,13 +70,18 @@
                         onchange={radioOnChange}></lightning-input-field>
 
                         <div class='slds-form-element_horizontal' for='NSP_RoleOptionSelection__c'> 
-                            <lightning-checkbox-group name="NSP_RoleOptionSelection__c" class='NSP_RoleOptions__c' style="display:none"
-                                options={roleOptions} onchange={handleComboChange} required={NSP_RoleOptions}
+                            <lightning-checkbox-group 
+                                if:true={visibility.NSP_RoleOptions__c}
+                                name="NSP_RoleOptionSelection__c"
+                                class='NSP_RoleOptions__c'
+                                options={roleOptions}
+                                onchange={handleComboChange}
+                                required={NSP_RoleOptions}
                                 value={NSP_RoleOptionSelection__c}
                                 variant='label-hidden'>
                             </lightning-checkbox-group>
                         </div>
-                            <div style= {roleOptionErrorMsg} >
+                            <div style={roleOptionErrorMsg}>
                                 <span  class="slds-text-color_error slds-form-element__help">An option must be selected.</span>
                             </div>
 
@@ -84,7 +89,7 @@
                                 style="display:none" value={NSP_RoleOptionSelection__c} required={NSP_RoleOptions}>
                             </lightning-input-field>
                         
-                         <div class="NSP_RoleOptionSelection__c slds-p-top_small" style="display:none"> 
+                         <div if:true={visibility.NSP_CustomRoleList__c} class="NSP_RoleOptionSelection__c slds-p-top_small"> 
                             <div class="slds-form-element_horizontal">
                                 <label class="slds-form-element__label " for="NSP_CustomRoleList__c">  <span class="slds-required" >*</span>
                                     List custom Role options, separated by a semi-colon </label>
@@ -101,7 +106,8 @@
                             onchange={radioOnChange}></lightning-input-field>
 
                             <div class='slds-form-element_horizontal'>
-                                    <lightning-checkbox-group name="NSP_ServiceLengthSelection__c" class='NSP_ServiceLength__c'  style="display:none"
+                                    <lightning-checkbox-group if:true={visibility.NSP_ServiceLength__c} 
+                                        name="NSP_ServiceLengthSelection__c" class='NSP_ServiceLength__c'
                                      options={serviceOptions} onchange={handleComboChange} required={NSP_ServiceLength}
                                      variant='label-hidden'
                                     value={NSP_ServiceLengthSelection__c}>
@@ -115,7 +121,7 @@
                             <span aria-live="assertive" class="slds-text-color_error slds-form-element__help">An option must be selected.</span>
                         </div>
 
-                      <div class="NSP_ServiceLengthSelection__c slds-p-top_small " style="display:none">
+                      <div if:true={visibility.NSP_CustomServiceLength__c} class="NSP_ServiceLengthSelection__c slds-p-top_small">
                             <div class="slds-form-element_horizontal">
                                 <label class="slds-form-element__label " for="NSP_ServiceLengthSelection__c">  <span class="slds-required" >*</span>
                                     List custom Service Length options, separated by a semi-colon </label>
@@ -129,7 +135,8 @@
                         <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_HRSurveyStatus__c"
                             onchange={radioOnChange}></lightning-input-field>
                             <div class='slds-form-element_horizontal'>
-                                <lightning-checkbox-group name="NSP_HRSurveyStatusSelection__c"  style="display:none"
+                                <lightning-checkbox-group if:true={visibility.NSP_HRSurveyStatus__c}
+                                    name="NSP_HRSurveyStatusSelection__c"
                                     class='NSP_HRSurveyStatus__c' options={statusOptions} onchange={handleComboChange}
                                     required={NSP_HRSurveyStatus} value={NSP_HRSurveyStatusSelection__c} variant='label-hidden'>
                                 </lightning-checkbox-group>
@@ -138,7 +145,7 @@
                                      value={NSP_HRSurveyStatusSelection__c} required={NSP_HRSurveyStatus}>
                                 </lightning-input-field>
 
-                                <div style= {surveyStatusErrorMsg} >
+                                <div style={surveyStatusErrorMsg} >
                                     <span aria-live="assertive" class="slds-text-color_error slds-form-element__help">An option must be selected.</span>
                                 </div>
                             

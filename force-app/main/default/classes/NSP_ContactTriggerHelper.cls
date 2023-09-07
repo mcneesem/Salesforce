@@ -26,9 +26,19 @@ public class NSP_ContactTriggerHelper {
     public void beforeInsertDirector(List<Contact> newList) {
         
         //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
-        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
+        //Modified as part of SOQL fix 228901 
+        String loggedInUserProfile_Name;
+        List<Profile> loggedInUserProfileName = new List<Profile>();
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+            loggedInUserProfileName = getLoggedInUserProfile();
+        } else {
+            loggedInUserProfile_Name = getLoggedInUserProfileName();
+        }
         Id regionId, workCalenderId = null;
-        if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name)) {
+        //Modified as part of SOQL fix 228901 
+        //if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name)) 
+        if((loggedInUserProfile_Name != null && ALLOWED_PROFILES.contains(loggedInUserProfile_Name)) 
+               || (loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name))){
             regionId = getRegionId();
         	workCalenderId = getWorkCalendarId();
         }
@@ -44,7 +54,10 @@ public class NSP_ContactTriggerHelper {
                 conObj.NSP_isContactInsertion__c = true;
             
             //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
-            if(ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name)) {
+            //modified as part of SOQL fix 228901 
+            //if(ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name)) 
+            if((loggedInUserProfile_Name != null && ALLOWED_PROFILES.contains(loggedInUserProfile_Name)) 
+               || (loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name))){
                 conObj.pse__Is_Resource_Active__c = true;
                 conObj.pse__Is_Resource__c = true;
                 conObj.pse__Region__c =  regionId;
@@ -53,7 +66,10 @@ public class NSP_ContactTriggerHelper {
             //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - end
         }
         //Format Phone number
-        if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+        //modified as part of SOQL fix 228901 
+        //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+        if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+            || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
             updatePhoneNumber(newList);
         }
         try{
@@ -79,8 +95,10 @@ public class NSP_ContactTriggerHelper {
             NSP_CustomException.LogException(ex);
         }
        
-    
-        if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+        //modified as part of SOQL fix 228901 
+       // if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+        if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+            || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
             setSalesOfficeDetails(newList,null);
         }
     }        
@@ -96,8 +114,18 @@ public class NSP_ContactTriggerHelper {
 public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > newMap) {
     Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
     List < Contact > clientRefernceContactList = new List < Contact > ();
-    List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
-    if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+    //Modified as part of SOQL fix 228901
+    String loggedInUserProfile_Name;
+    List<Profile> loggedInUserProfileName = new List<Profile>();
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+            loggedInUserProfileName = getLoggedInUserProfile();
+        } else {
+            loggedInUserProfile_Name = getLoggedInUserProfileName();
+        } 
+    //Modified as part of SOQL fix 228901 
+    //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+    if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+        || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))) {
         for (Contact conObj: newList) {
           if (conObj.NSP_Client_Reference__c) {
             clientRefernceContactList.add(conObj);
@@ -124,7 +152,14 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
 */
     
     public void beforeUpdateDirector(Map<Id,Contact> newMap,Map<Id,Contact> oldMap) {
-        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
+        //Modified as part of SOQL fix 228901 
+        String loggedInUserProfile_Name;
+    	List<Profile> loggedInUserProfileName = new List<Profile>();
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+            loggedInUserProfileName = getLoggedInUserProfile();
+        } else {
+            loggedInUserProfile_Name = getLoggedInUserProfileName();
+        }
         try{
         Set<Id> sUserIds = new Set<Id>();
         List<Contact> lContacts = new List<Contact>();
@@ -151,15 +186,21 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
             NSP_CustomException.LogException(ex);
         }
         //Format Phone Number
-            if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+        //Modified as part of SOQL fix 228901 
+           // if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+            if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+                || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))) {
                 updatePhoneNum(newMap.Values(),oldMap);
             }
         //for integration
         Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
         NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
         accountIdSetToUpdateResyncFLag = sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_CONTACT, newMap, oldMap);
-        
-        if(accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+
+        //Modified as part of SOQL fix 228901         
+        //if(accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+        if((accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+            ||(accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
             List<Account> accountList = new List<Account>();
             for(Id accountId : accountIdSetToUpdateResyncFLag){
                 Account accountObj = new Account();
@@ -174,7 +215,10 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
             
         }
         
-        if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+        //Modified as part of SOQL fix 228901                 
+        //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+        if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+            || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
                 setSalesOfficeDetails(newMap.values(),oldMap);
         }
     }
@@ -211,12 +255,22 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
 */
     
     public void afterUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
-        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
+        //Modified as part of SOQL fix 228901 
+        String loggedInUserProfile_Name;
+    	List<Profile> loggedInUserProfileName = New List<Profile>();
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+            loggedInUserProfileName = getLoggedInUserProfile();
+        } else {
+            loggedInUserProfile_Name = getLoggedInUserProfileName();
+        }
         try{
             List<Contact> clientRefernceContactList = new List<Contact>();
             Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
             Contact oldContact;
-            if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+        //Modified as part of SOQL fix 228901             
+            //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+            if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+                || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
               for(Contact conObj : newMap.values()){
                 oldContact = oldMap.get(conObj.Id);
                 if(conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c 
@@ -492,12 +546,26 @@ public String formatCommonPattern(String input) {
 	* Date : 21/06/2023
 	* @param   
 	* @return List<Profile> 
-	*/    
+	*/ 
     public List<Profile> getLoggedInUserProfile() {
         List<String> profileFields = new List<String>{'Id','Name'};        
         String queryProfile = new NSP_QueryBuilder('Profile', profileFields)
                 .addFilter('Id', UserInfo.getProfileId()).setSecurityEnforce(false).build();
         return Database.query(queryProfile);
+    }
+    
+    /**
+	* Method Name : getLoggedInUserProfileName 
+	* Date : 11/08/2023
+	* @param   
+	* @return String  profileName
+	*/   
+    public String getLoggedInUserProfileName() {
+        
+        Id profileId = userinfo.getProfileId();
+        String profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId LIMIT 1].Profile_Name__c;
+		
+        return profileName;
     }
     
     /**

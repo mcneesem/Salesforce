@@ -123,7 +123,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Department", "Id", "Name" ],
+        "fields" : [ "NSP_RET_Department_list__c", "Id", "Name", "Department" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "User",

@@ -200,7 +200,8 @@ public class NSP_CaseTriggerHelper {
     
     // when a new case is created with Owner and code will assign date & time.
     public case recordOwnerAssingedDateTime(Case eachCase , Map<Id, Case> caseOldMap){
-        if( eachCase.OwnerId != null && String.valueOf(eachCase.OwnerId).startsWith(STARTSWITHUSER) && ( caseOldMap == null || caseOldMap.get(eachCase.Id).OwnerId != eachCase.OwnerId )){
+        //DF-05853 - Update the "Owner Assign Date" whenever there is change in Owner
+        if( eachCase.OwnerId != null && ( caseOldMap == null || caseOldMap.get(eachCase.Id).OwnerId != eachCase.OwnerId )){
             eachCase.NSP_Owner_Assign_Date__c = System.now();
         }
         return eachCase;
@@ -1680,7 +1681,8 @@ Story:        STY-01785
             if(!parentIdChildStatusMap.isEmpty()){
                 for(Case cse : [SELECT Id, Status FROM Case WHERE Id IN: parentIdChildStatusMap.keySet()]){
                     if(!parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.CASE_OPEN_STATUS) &&
-                       !parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.REOPENED)){
+                       !parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.REOPENED) && 
+                       !parentIdChildStatusMap.get(cse.Id).Contains(NSP_ServiceConstants.CASE_STATUS_NOT_STARTED)){
                            cse.Status = NSP_ServiceConstants.CASE_CLOSED_STATUS;
                            cseListToUpdate.add(cse);
                        }

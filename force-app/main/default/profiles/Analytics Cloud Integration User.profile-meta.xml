@@ -107,16 +107,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Task.NSP_Lead__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Lead__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-    <fieldPermissions>
-        <editable>false</editable>
         <field>AVA_BLNG__AvaTax_Log__c.AVA_BLNG__Object_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11192,17 +11182,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Activity_type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Actual_Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Event.NSP_Assigned_Sales_Engineer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11267,16 +11247,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Event.NSP_Documents_Missing__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Engagement_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Event.NSP_Event_Subtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11291,11 +11261,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Event.NSP_Form_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Is_Referral_Task__c</field>
         <readable>true</readable>
@@ -11303,11 +11268,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Last_Assigned_Owner__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11367,11 +11327,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Opportunity_Product_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Opportunity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11388,16 +11343,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Owners_Current_Region__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Recurrence_Interval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11501,18 +11446,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Event.NSP_Sub_Type_BPS__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Subcategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Submission_type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45658,17 +45593,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Task.NSP_Activity_type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Task.NSP_Actual_Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Task.NSP_Assigned_Sales_Engineer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45733,16 +45658,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Task.NSP_Documents_Missing__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Engagement_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Task.NSP_Event_Subtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -45757,11 +45672,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Task.NSP_Form_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Is_Referral_Task__c</field>
         <readable>true</readable>
@@ -45769,11 +45679,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Last_Assigned_Owner__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45833,11 +45738,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Task.NSP_Opportunity_Product_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Task.NSP_Opportunity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -45854,16 +45754,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Owners_Current_Region__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Recurrence_Interval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45967,18 +45857,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Task.NSP_Sub_Type_BPS__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Subcategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Submission_type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

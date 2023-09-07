@@ -250,256 +250,6 @@
         "measuresToCurrencies" : [ ]
       }
     },
-    "LOAD_DATASET0_copy0" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "NSP_Role__c", "NSP_User__c", "NSP_Account__c" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "NSP_Account_Team__c",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "NSP_Account_Team__c"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "JOIN0_copy0" : {
-      "action" : "join",
-      "sources" : [ "LOAD_DATASET0_copy0", "LOAD_DATASET1_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "User.Id" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "LOOKUP",
-        "leftKeys" : [ "NSP_User__c" ],
-        "rightQualifier" : "User",
-        "rightKeys" : [ "Id" ]
-      }
-    },
-    "LOAD_DATASET1_copy0" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "Name" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "User",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "User"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "JOIN1_copy0" : {
-      "action" : "join",
-      "sources" : [ "JOIN0_copy0", "LOAD_DATASET2_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "Account.Id", "Id", "NSP_Account__c", "NSP_User__c" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "LOOKUP",
-        "leftKeys" : [ "NSP_Account__c" ],
-        "rightQualifier" : "Account",
-        "rightKeys" : [ "Id" ]
-      }
-    },
-    "LOAD_DATASET2_copy0" : {
-      "action" : "load",
-      "sources" : [ ],
-      "parameters" : {
-        "fields" : [ "Id", "Name" ],
-        "dataset" : {
-          "type" : "connectedDataset",
-          "label" : "Account",
-          "connectionName" : "SFDC_LOCAL",
-          "sourceObjectName" : "Account"
-        },
-        "sampleDetails" : {
-          "type" : "TopN",
-          "sortBy" : [ ]
-        }
-      }
-    },
-    "EXTRACT0_copy0" : {
-      "action" : "extractGrains",
-      "sources" : [ "JOIN1_copy0" ],
-      "parameters" : {
-        "grainExtractions" : [ ]
-      }
-    },
-    "AGGREGATE1_copy0" : {
-      "action" : "aggregate",
-      "sources" : [ "EXTRACT0_copy0" ],
-      "parameters" : {
-        "aggregations" : [ {
-          "action" : "UNIQUE",
-          "source" : "Account.Name",
-          "name" : "UNIQUE_Account.Name",
-          "label" : "Unique Account Name"
-        } ],
-        "groupings" : [ "Account.Name" ],
-        "pivots" : [ ],
-        "nodeType" : "STANDARD"
-      }
-    },
-    "FILTER0_copy0" : {
-      "action" : "filter",
-      "sources" : [ "JOIN1_copy0" ],
-      "parameters" : {
-        "filterExpressions" : [ {
-          "type" : "TEXT",
-          "field" : "NSP_Role__c",
-          "operator" : "EQUAL",
-          "operands" : [ "Bus. Team-HRSp/CL" ]
-        } ]
-      }
-    },
-    "FILTER1_copy0" : {
-      "action" : "filter",
-      "sources" : [ "JOIN1_copy0" ],
-      "parameters" : {
-        "filterExpressions" : [ {
-          "type" : "TEXT",
-          "field" : "NSP_Role__c",
-          "operator" : "EQUAL",
-          "operands" : [ "Client Liaison" ]
-        } ]
-      }
-    },
-    "FILTER2_copy0" : {
-      "action" : "filter",
-      "sources" : [ "JOIN1_copy0" ],
-      "parameters" : {
-        "filterExpressions" : [ {
-          "type" : "TEXT",
-          "field" : "NSP_Role__c",
-          "operator" : "EQUAL",
-          "operands" : [ "MidMarket Account Exec" ]
-        } ]
-      }
-    },
-    "EDIT_ATTRIBUTES0_copy0" : {
-      "action" : "schema",
-      "sources" : [ "FILTER0_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "User.Name",
-          "newProperties" : {
-            "label" : "Business",
-            "name" : "Business",
-            "typeProperties" : {
-              "type" : "TEXT",
-              "length" : 32000
-            }
-          }
-        } ]
-      }
-    },
-    "EDIT_ATTRIBUTES1_copy0" : {
-      "action" : "schema",
-      "sources" : [ "FILTER1_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "User.Name",
-          "newProperties" : {
-            "label" : "Client",
-            "name" : "Client",
-            "typeProperties" : {
-              "type" : "TEXT",
-              "length" : 32000
-            }
-          }
-        } ]
-      }
-    },
-    "EDIT_ATTRIBUTES2_copy0" : {
-      "action" : "schema",
-      "sources" : [ "FILTER2_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "User.Name",
-          "newProperties" : {
-            "label" : "Midmarket",
-            "name" : "Midmarket",
-            "typeProperties" : {
-              "type" : "TEXT",
-              "length" : 32000
-            }
-          }
-        } ]
-      }
-    },
-    "JOIN2_copy0" : {
-      "action" : "join",
-      "sources" : [ "AGGREGATE1_copy0", "EDIT_ATTRIBUTES0_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "UNIQUE_Account.Name", "Transform0.NSP_Role__c", "Transform0.Account.Name" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "MULTI_VALUE_LOOKUP",
-        "leftKeys" : [ "Account.Name" ],
-        "rightQualifier" : "Transform0",
-        "rightKeys" : [ "Account.Name" ]
-      }
-    },
-    "JOIN3_copy0" : {
-      "action" : "join",
-      "sources" : [ "JOIN2_copy0", "EDIT_ATTRIBUTES1_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "Transform1.NSP_Role__c", "Transform1.Account.Name" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "MULTI_VALUE_LOOKUP",
-        "leftKeys" : [ "Account.Name" ],
-        "rightQualifier" : "Transform1",
-        "rightKeys" : [ "Account.Name" ]
-      }
-    },
-    "JOIN4_copy0" : {
-      "action" : "join",
-      "sources" : [ "JOIN3_copy0", "EDIT_ATTRIBUTES2_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "Transform2.Account.Name", "Transform2.NSP_Role__c" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "MULTI_VALUE_LOOKUP",
-        "leftKeys" : [ "Account.Name" ],
-        "rightQualifier" : "Transform2",
-        "rightKeys" : [ "Account.Name" ]
-      }
-    },
     "LOAD_DATASET3_copy0" : {
       "action" : "load",
       "sources" : [ ],
@@ -640,103 +390,9 @@
         "rightKeys" : [ "User.Name" ]
       }
     },
-    "FILTER3_copy0" : {
-      "action" : "filter",
-      "sources" : [ "JOIN1_copy0" ],
-      "parameters" : {
-        "filterExpressions" : [ {
-          "type" : "TEXT",
-          "field" : "NSP_Role__c",
-          "operator" : "EQUAL",
-          "operands" : [ "Manager, HR Services" ]
-        } ]
-      }
-    },
-    "FILTER4_copy0" : {
-      "action" : "filter",
-      "sources" : [ "JOIN1_copy0" ],
-      "parameters" : {
-        "filterExpressions" : [ {
-          "type" : "TEXT",
-          "field" : "NSP_Role__c",
-          "operator" : "EQUAL",
-          "operands" : [ "Renewal Coordinator" ]
-        } ]
-      }
-    },
-    "EDIT_ATTRIBUTES3_copy0" : {
-      "action" : "schema",
-      "sources" : [ "FILTER3_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "User.Name",
-          "newProperties" : {
-            "label" : "MHRS Team",
-            "name" : "MHRS",
-            "typeProperties" : {
-              "type" : "TEXT",
-              "length" : 32000
-            }
-          }
-        } ]
-      }
-    },
-    "EDIT_ATTRIBUTES4_copy0" : {
-      "action" : "schema",
-      "sources" : [ "FILTER4_copy0" ],
-      "parameters" : {
-        "fields" : [ {
-          "name" : "User.Name",
-          "newProperties" : {
-            "label" : "Renewal Team",
-            "name" : "RenewalTeam",
-            "typeProperties" : {
-              "type" : "TEXT",
-              "length" : 32000
-            }
-          }
-        } ]
-      }
-    },
-    "JOIN9_copy0" : {
-      "action" : "join",
-      "sources" : [ "JOIN4_copy0", "EDIT_ATTRIBUTES3_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "Transform3.Account.Name", "Transform3.NSP_Role__c" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "MULTI_VALUE_LOOKUP",
-        "leftKeys" : [ "Account.Name" ],
-        "rightQualifier" : "Transform3",
-        "rightKeys" : [ "Account.Name" ]
-      }
-    },
-    "JOIN10_copy0" : {
-      "action" : "join",
-      "sources" : [ "JOIN9_copy0", "EDIT_ATTRIBUTES4_copy0" ],
-      "schema" : {
-        "fields" : [ ],
-        "slice" : {
-          "mode" : "DROP",
-          "ignoreMissingFields" : true,
-          "fields" : [ "Transform4.Account.Name", "Transform4.NSP_Role__c" ]
-        }
-      },
-      "parameters" : {
-        "joinType" : "MULTI_VALUE_LOOKUP",
-        "leftKeys" : [ "Account.Name" ],
-        "rightQualifier" : "Transform4",
-        "rightKeys" : [ "Account.Name" ]
-      }
-    },
     "JOIN11_copy0" : {
       "action" : "join",
-      "sources" : [ "JOIN5_copy0", "JOIN10_copy0" ],
+      "sources" : [ "JOIN5_copy0", "LOAD_DATASET12" ],
       "schema" : {
         "fields" : [ ],
         "slice" : {
@@ -747,9 +403,9 @@
       },
       "parameters" : {
         "joinType" : "LOOKUP",
-        "leftKeys" : [ "Account.Name" ],
+        "leftKeys" : [ "AccountId" ],
         "rightQualifier" : "Join10",
-        "rightKeys" : [ "Account.Name" ]
+        "rightKeys" : [ "Id" ]
       }
     },
     "FORMULA0_copy0" : {
@@ -827,22 +483,24 @@
         } ]
       }
     },
-    "FORMULA5_copy0" : {
+    "FORMULA5" : {
       "action" : "formula",
       "sources" : [ "FORMULA4_copy0" ],
       "parameters" : {
         "expressionType" : "SQL",
         "fields" : [ {
-          "type" : "MULTIVALUE",
+          "type" : "TEXT",
           "name" : "BTHRS_CL_AE",
           "label" : "BTHRS/CL/AE",
-          "formulaExpression" : "concat(\"Join10.Transform0.Business\",\"Join10.Transform1.Client\",\"Join10.Transform2.Midmarket\")"
+          "formulaExpression" : "concat(\"Join10.BusTeamHRCL.Bus_Team_HRSp_CL_Final\",\"Join10.CL.Client_Liaison_Final\")",
+          "precision" : 255,
+          "defaultValue" : ""
         } ]
       }
     },
     "OUTPUT0_copy0" : {
       "action" : "save",
-      "sources" : [ "FORMULA5_copy0" ],
+      "sources" : [ "FORMULA5" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -1598,6 +1256,22 @@
           "defaultValue" : ""
         } ]
       }
+    },
+    "LOAD_DATASET12" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "PerfSp.Performance_Specialis_Final", "BusTeamHRCL.Bus_Team_HRSp_CL_Final", "MHRS.MHRS_Final", "MMAE.MidMarket_AE_Final", "Name", "HRSp.HR_Specialist_Final", "SafetyCons.Safety_Consultant_Final", "PayrollSup.Payroll_Supervisor_Final", "Id", "PayrollSp.Payroll_Specialist_Final", "CL.Client_Liaison_Final", "RenewalCor.RenewalCoordinator_final" ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Account with Roles",
+          "name" : "Account_with_Roles"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
     }
   },
   "ui" : {
@@ -1719,152 +1393,12 @@
         "top" : 532.3,
         "left" : 952
       },
-      "LOAD_DATASET0_copy0" : {
-        "label" : "NSP_Account_Team__c",
-        "description" : "",
-        "type" : "LOAD_DATASET",
-        "top" : 1371.9,
-        "left" : 113.30000000000001,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "JOIN0_copy0" : {
-        "label" : "Lookup user",
-        "description" : "Based on key column to get user name",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 252
-      },
-      "LOAD_DATASET1_copy0" : {
-        "label" : "User",
-        "description" : "",
-        "type" : "LOAD_DATASET",
-        "top" : 1232,
-        "left" : 112,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "JOIN1_copy0" : {
-        "label" : "Lookup Account",
-        "description" : "to get Account Name",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 392
-      },
-      "LOAD_DATASET2_copy0" : {
-        "label" : "Account",
-        "description" : "",
-        "type" : "LOAD_DATASET",
-        "top" : 1511.9,
-        "left" : 112,
-        "parameters" : {
-          "sampleSize" : 2000
-        }
-      },
-      "AGGREGATE0_copy0" : {
-        "label" : "Aggregate Account Name",
-        "description" : "",
-        "type" : "AGGREGATE",
-        "top" : 2073,
-        "left" : 812,
-        "graph" : {
-          "EXTRACT0_copy0" : null,
-          "AGGREGATE1_copy0" : null
-        },
-        "connectors" : [ {
-          "source" : "EXTRACT0_copy0",
-          "target" : "AGGREGATE1_copy0"
-        } ]
-      },
-      "FILTER0_copy0" : {
-        "label" : "Business",
-        "description" : "",
-        "type" : "FILTER",
-        "top" : 1373.3,
-        "left" : 532
-      },
-      "FILTER1_copy0" : {
-        "label" : "Client",
-        "description" : "",
-        "type" : "FILTER",
-        "top" : 1512.5,
-        "left" : 532
-      },
-      "FILTER2_copy0" : {
-        "label" : "Midmarket",
-        "description" : "",
-        "type" : "FILTER",
-        "top" : 1652.3,
-        "left" : 532
-      },
-      "TRANSFORM0_copy0" : {
-        "label" : "Edit Attribute",
-        "description" : "Rename full Name to Business",
-        "type" : "TRANSFORM",
-        "top" : 1372,
-        "left" : 672,
-        "graph" : {
-          "EDIT_ATTRIBUTES0_copy0" : {
-            "label" : "Edit Attributes"
-          }
-        },
-        "connectors" : [ ]
-      },
-      "TRANSFORM1_copy0" : {
-        "label" : "Edit Attribute",
-        "description" : "Rename full Name to Client",
-        "type" : "TRANSFORM",
-        "top" : 1512,
-        "left" : 672,
-        "graph" : {
-          "EDIT_ATTRIBUTES1_copy0" : {
-            "label" : "Edit Attributes"
-          }
-        },
-        "connectors" : [ ]
-      },
-      "TRANSFORM2_copy0" : {
-        "label" : "Edit Attribute",
-        "description" : "Rename full Name to Midmarket",
-        "type" : "TRANSFORM",
-        "top" : 1652,
-        "left" : 672,
-        "graph" : {
-          "EDIT_ATTRIBUTES2_copy0" : {
-            "label" : "Edit Attributes"
-          }
-        },
-        "connectors" : [ ]
-      },
-      "JOIN2_copy0" : {
-        "label" : "Adding role as column",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 812
-      },
-      "JOIN3_copy0" : {
-        "label" : "Adding role as column",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 952
-      },
-      "JOIN4_copy0" : {
-        "label" : "Adding role as column",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 1092
-      },
       "LOAD_DATASET3_copy0" : {
         "label" : "Asset",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1792,
-        "left" : 1653.4,
+        "top" : 1512,
+        "left" : 952,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1873,15 +1407,15 @@
         "label" : "lookup Account to get Account name",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1372.6,
-        "left" : 1792.5
+        "top" : 1372.1,
+        "left" : 1093.6
       },
       "LOAD_DATASET4_copy0" : {
         "label" : "Account",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1792,
-        "left" : 1793.4,
+        "top" : 1512,
+        "left" : 1092.1,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1890,8 +1424,8 @@
         "label" : "RecordType",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 1792,
-        "left" : 1513.4,
+        "top" : 1651.4,
+        "left" : 812.2,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1900,14 +1434,14 @@
         "label" : "Lookup RecordType to Column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1652,
-        "left" : 1512
+        "top" : 1511.9,
+        "left" : 812
       },
       "LOAD_DATASET7_copy0" : {
         "label" : "Implementation_Profile__c",
         "type" : "LOAD_DATASET",
-        "top" : 1794.1,
-        "left" : 951.8,
+        "top" : 1373.8,
+        "left" : 111.69999999999999,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -1916,83 +1450,29 @@
         "label" : "get Asset Column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1232.2
+        "top" : 1372.2,
+        "left" : 392.2
       },
       "JOIN8_copy0" : {
         "label" : "lookup Asset to get Onboarding specialist",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1372.8,
-        "left" : 1652.6
-      },
-      "FILTER3_copy0" : {
-        "label" : "Manager HR",
-        "description" : "",
-        "type" : "FILTER",
-        "top" : 1791.8,
-        "left" : 532.5
-      },
-      "FILTER4_copy0" : {
-        "label" : "Renewal coordinator",
-        "description" : "",
-        "type" : "FILTER",
-        "top" : 1932.2,
-        "left" : 532
-      },
-      "TRANSFORM3_copy0" : {
-        "label" : "Edit Attribute",
-        "description" : "Rename full Name to MHRS Team",
-        "type" : "TRANSFORM",
-        "top" : 1792,
-        "left" : 672,
-        "graph" : {
-          "EDIT_ATTRIBUTES3_copy0" : {
-            "label" : "Edit Attributes"
-          }
-        },
-        "connectors" : [ ]
-      },
-      "TRANSFORM4_copy0" : {
-        "label" : "Edit Attribute",
-        "description" : "Rename full Name to Renewal Team",
-        "type" : "TRANSFORM",
-        "top" : 1932,
-        "left" : 672,
-        "graph" : {
-          "EDIT_ATTRIBUTES4_copy0" : {
-            "label" : "Edit Attributes"
-          }
-        },
-        "connectors" : [ ]
-      },
-      "JOIN9_copy0" : {
-        "label" : "Adding role as column",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 1232
-      },
-      "JOIN10_copy0" : {
-        "label" : "Adding role as column",
-        "description" : "",
-        "type" : "JOIN",
-        "top" : 1372,
-        "left" : 1372
+        "top" : 1372.3,
+        "left" : 811
       },
       "JOIN11_copy0" : {
         "label" : "Lookup Account name to get Account Team Role as Column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1372,
-        "left" : 1932
+        "top" : 1372.6,
+        "left" : 1372.4
       },
       "TRANSFORM5_copy0" : {
         "label" : "Date Format & Concat",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1372,
-        "left" : 2072,
+        "top" : 1372.1,
+        "left" : 1513,
         "graph" : {
           "FORMULA0_copy0" : {
             "parameters" : {
@@ -2024,7 +1504,7 @@
             },
             "label" : "Formula"
           },
-          "FORMULA5_copy0" : {
+          "FORMULA5" : {
             "parameters" : {
               "type" : "BASE_FORMULA_UI"
             },
@@ -2045,7 +1525,7 @@
           "target" : "FORMULA4_copy0"
         }, {
           "source" : "FORMULA4_copy0",
-          "target" : "FORMULA5_copy0"
+          "target" : "FORMULA5"
         } ]
       },
       "OUTPUT0_copy0" : {
@@ -2053,20 +1533,20 @@
         "description" : "",
         "type" : "OUTPUT",
         "top" : 1372,
-        "left" : 2212
+        "left" : 1652.5
       },
       "JOIN12_copy0" : {
         "label" : "get contact column",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1792,
-        "left" : 1092.2
+        "top" : 1372.8,
+        "left" : 252.5
       },
       "LOAD_DATASET8_copy0" : {
         "label" : "Contact",
         "type" : "LOAD_DATASET",
-        "top" : 1932.1,
-        "left" : 1092.2,
+        "top" : 1512.5,
+        "left" : 251.89999999999998,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2075,8 +1555,8 @@
         "label" : "Asset",
         "description" : "",
         "type" : "LOAD_DATASET",
-        "top" : 2072.6,
-        "left" : 1232,
+        "top" : 1512.4,
+        "left" : 391.9,
         "parameters" : {
           "sampleSize" : 2000
         }
@@ -2085,8 +1565,8 @@
         "label" : "Aggregate Asset Name",
         "description" : "",
         "type" : "AGGREGATE",
-        "top" : 1931.9,
-        "left" : 1372,
+        "top" : 1512.2,
+        "left" : 532.2,
         "graph" : {
           "EXTRACT1_copy0" : null,
           "AGGREGATE3_copy0" : null
@@ -2100,8 +1580,8 @@
         "label" : "Edit Attribute",
         "description" : "",
         "type" : "TRANSFORM",
-        "top" : 1792.5,
-        "left" : 1372,
+        "top" : 1372.1,
+        "left" : 532.1,
         "graph" : {
           "EDIT_ATTRIBUTES5_copy0" : {
             "label" : "Edit Attributes"
@@ -2113,8 +1593,8 @@
         "label" : "lookup to get Onboarding Multiple values",
         "description" : "",
         "type" : "JOIN",
-        "top" : 1932,
-        "left" : 1512
+        "top" : 1372.3,
+        "left" : 672.1
       },
       "LOAD_DATASET0_copy0_copy0_copy0_copy0" : {
         "label" : "AccountContactRelation",
@@ -2446,6 +1926,15 @@
           "source" : "FORMULA1_copy1",
           "target" : "FORMULA2_copy1"
         } ]
+      },
+      "LOAD_DATASET12" : {
+        "label" : "Account with Roles",
+        "type" : "LOAD_DATASET",
+        "top" : 1512.6,
+        "left" : 1372.1,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
       }
     },
     "connectors" : [ {
@@ -2491,57 +1980,6 @@
       "source" : "JOIN3",
       "target" : "OUTPUT1"
     }, {
-      "source" : "LOAD_DATASET0_copy0",
-      "target" : "JOIN0_copy0"
-    }, {
-      "source" : "LOAD_DATASET1_copy0",
-      "target" : "JOIN0_copy0"
-    }, {
-      "source" : "JOIN0_copy0",
-      "target" : "JOIN1_copy0"
-    }, {
-      "source" : "LOAD_DATASET2_copy0",
-      "target" : "JOIN1_copy0"
-    }, {
-      "source" : "JOIN1_copy0",
-      "target" : "AGGREGATE0_copy0"
-    }, {
-      "source" : "JOIN1_copy0",
-      "target" : "FILTER0_copy0"
-    }, {
-      "source" : "JOIN1_copy0",
-      "target" : "FILTER1_copy0"
-    }, {
-      "source" : "JOIN1_copy0",
-      "target" : "FILTER2_copy0"
-    }, {
-      "source" : "FILTER0_copy0",
-      "target" : "TRANSFORM0_copy0"
-    }, {
-      "source" : "FILTER1_copy0",
-      "target" : "TRANSFORM1_copy0"
-    }, {
-      "source" : "FILTER2_copy0",
-      "target" : "TRANSFORM2_copy0"
-    }, {
-      "source" : "AGGREGATE0_copy0",
-      "target" : "JOIN2_copy0"
-    }, {
-      "source" : "TRANSFORM0_copy0",
-      "target" : "JOIN2_copy0"
-    }, {
-      "source" : "JOIN2_copy0",
-      "target" : "JOIN3_copy0"
-    }, {
-      "source" : "TRANSFORM1_copy0",
-      "target" : "JOIN3_copy0"
-    }, {
-      "source" : "JOIN3_copy0",
-      "target" : "JOIN4_copy0"
-    }, {
-      "source" : "TRANSFORM2_copy0",
-      "target" : "JOIN4_copy0"
-    }, {
       "source" : "JOIN8_copy0",
       "target" : "JOIN5_copy0"
     }, {
@@ -2560,34 +1998,7 @@
       "source" : "JOIN6_copy0",
       "target" : "JOIN8_copy0"
     }, {
-      "source" : "JOIN1_copy0",
-      "target" : "FILTER3_copy0"
-    }, {
-      "source" : "JOIN1_copy0",
-      "target" : "FILTER4_copy0"
-    }, {
-      "source" : "FILTER3_copy0",
-      "target" : "TRANSFORM3_copy0"
-    }, {
-      "source" : "FILTER4_copy0",
-      "target" : "TRANSFORM4_copy0"
-    }, {
-      "source" : "JOIN4_copy0",
-      "target" : "JOIN9_copy0"
-    }, {
-      "source" : "TRANSFORM3_copy0",
-      "target" : "JOIN9_copy0"
-    }, {
-      "source" : "JOIN9_copy0",
-      "target" : "JOIN10_copy0"
-    }, {
-      "source" : "TRANSFORM4_copy0",
-      "target" : "JOIN10_copy0"
-    }, {
       "source" : "JOIN5_copy0",
-      "target" : "JOIN11_copy0"
-    }, {
-      "source" : "JOIN10_copy0",
       "target" : "JOIN11_copy0"
     }, {
       "source" : "JOIN11_copy0",
@@ -2733,6 +2144,9 @@
     }, {
       "source" : "JOIN18_copy0",
       "target" : "TRANSFORM3_copy1"
+    }, {
+      "source" : "LOAD_DATASET12",
+      "target" : "JOIN11_copy0"
     } ],
     "hiddenColumns" : [ ]
   },

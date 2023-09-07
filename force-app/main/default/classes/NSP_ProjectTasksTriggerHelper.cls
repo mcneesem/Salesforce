@@ -1,9 +1,9 @@
-/**
-* Represents the project trigger helper which handles all the logic.
-*/
-public class NSP_ProjectTasksTriggerHelper {
-// test w/ NSP_ProjectTasksTriggerHelperTest (81%)
-    
+    /**
+    * Represents the project trigger helper which handles all the logic.
+    */
+    public class NSP_ProjectTasksTriggerHelper {
+    // test w/ NSP_ProjectTasksTriggerHelperTest (81%)
+
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String NSP_PROJECTTASKSTRIGGERHELPER = 'NSP_ProjectTasksTriggerHelper';
     private static final string SYS_ADMIN = 'System Administrator';
@@ -57,7 +57,7 @@ public class NSP_ProjectTasksTriggerHelper {
             for(pse__Project_Task__c parentTask : [SELECT pse__Milestone__c FROM pse__Project_Task__c WHERE ID IN : setOfParentProjectTask]){
                 mapOfparentTaskIdAndMilestoneId.put(parentTask.id, parentTask.pse__Milestone__c);
             }
-    
+
             for(pse__Project_Task__c pTask : projectTaskList){
                 if(pTask.pse__Parent_Task__c != null){
                     pTask.pse__Milestone__c = mapOfparentTaskIdAndMilestoneId.get(pTask.pse__Parent_Task__c);
@@ -67,12 +67,12 @@ public class NSP_ProjectTasksTriggerHelper {
 
         if(projectTaskMap.size() > 0){
             parentProjectMap  = new  Map<Id, pse__Proj__c>( [Select Id, pse__Is_Template__c 
-                                                             FROM pse__Proj__c 
-                                                             WHERE pse__Is_Template__c = True AND 
-                                                             ID In: projectTaskMap.keySet()]);
+                                                                FROM pse__Proj__c 
+                                                                WHERE pse__Is_Template__c = True AND 
+                                                                ID In: projectTaskMap.keySet()]);
         }
-         
-       if(!parentProjectMap.isEmpty()){
+            
+        if(!parentProjectMap.isEmpty()){
             for(pse__Proj__c eachProj : parentProjectMap.values() ){
                 if( projectTaskMap.get(eachProj.Id) != null){
                     for(pse__Project_Task__c projectTask : projectTaskMap.get(eachProj.Id)){
@@ -141,7 +141,7 @@ public class NSP_ProjectTasksTriggerHelper {
             if(oProjecTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED 
                 && oProjecTask.NSP_Percentage_Complete__c != HUNDRED_PERCENT
                 && oldMap.get(oProjecTask.id).NSP_Percentage_Complete__c == HUNDRED_PERCENT){
-                     oProjecTask.addError(System.Label.ShowErrorMessageWhenStausCompleteButPercentageNot100);
+                        oProjecTask.addError(System.Label.ShowErrorMessageWhenStausCompleteButPercentageNot100);
             }
 
             if(oProjecTask.NSP_Percentage_Complete__c == HUNDRED_PERCENT 
@@ -150,8 +150,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 oProjecTask.addError(System.Label.ShowErrorMessageWhenPercentage100ButStatusNotComplete);
             }
 
-           /* commented as a part of <DF-02510>
-           if(oProjecTask.NSP_Percentage_Complete__c == '0%' 
+            /* commented as a part of <DF-02510>
+            if(oProjecTask.NSP_Percentage_Complete__c == '0%' 
                 && oldMap.get(oProjecTask.id).NSP_Percentage_Complete__c != '0%'){
                     oProjecTask.addError(System.Label.ShowErrorMessageWhenPercentageMoveBackToZero);
             } */ 
@@ -171,7 +171,7 @@ public class NSP_ProjectTasksTriggerHelper {
         map<Id, Id> mapOfProjectAndAccount = new map<Id, Id>();
         map<Id, pse__Project_Task__c> mapOfProjectAndAccountName = new map<Id, pse__Project_Task__c>();
         List<Id> listOfAccountId = new List<Id>();
-		map<Id, Asset> woActiveList = new map<Id, Asset>();
+        map<Id, Asset> woActiveList = new map<Id, Asset>();
 
         map<Id, list<String>> mapOfAccountAndListOfAccountTeamMemberEmailAddress = new map<Id, list<String>>();
         Map<Id, pse__Project_Task__c> projectTaskLetterMap = new Map<Id, pse__Project_Task__c>();
@@ -228,12 +228,12 @@ public class NSP_ProjectTasksTriggerHelper {
                 if(!mapOfProjectAndAccountName.containsKey(projectTask.id)){
                     mapOfProjectAndAccountName.put(projectTask.Id, projectTask);                                           
                 }
-                 if(!mapOfNotifyaccountMem.containsKey(projectTask.id)){
+                    if(!mapOfNotifyaccountMem.containsKey(projectTask.id)){
                     mapOfNotifyaccountMem.put(projectTask.Id, projectTask.NSP_AccountId__c);
                 }
             }
         }
-		
+        
         if(!mapOfProjectAndAccount.values().isEmpty() || !mapOfNotifyaccountMem.values().isEmpty() ){
             for(NSP_Account_Team__c accTeamMember :  [SELECT Id, NSP_Role__c, NSP_Account__c, NSP_Email__c,NSP_First_Name__c,NSP_Last_Name__c,NSP_Work_Phone__c
                                                     FROM NSP_Account_Team__c 
@@ -246,7 +246,7 @@ public class NSP_ProjectTasksTriggerHelper {
                                                     NSP_Role__c = 'Payroll Specialist'
                                                     )) OR (NSP_Account__c IN: mapOfNotifyaccountMem.values() AND
                                                     NSP_Role__c = 'Payroll Specialist')]){
-                                                     
+                                                        
                 if(accTeamMember.NSP_Role__c !='Payroll Specialist' && mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c) ){
                 if(mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey(accTeamMember.NSP_Account__c)){
                     mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(accTeamMember.NSP_Account__c).add(accTeamMember.NSP_Email__c);
@@ -254,27 +254,27 @@ public class NSP_ProjectTasksTriggerHelper {
                     mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(accTeamMember.NSP_Account__c, new list<String> {accTeamMember.NSP_Email__c});
                 }
             }
-               Else if(accTeamMember.NSP_Role__c =='Payroll Specialist'&& mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c) ){  
+                Else if(accTeamMember.NSP_Role__c =='Payroll Specialist'&& mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c) ){  
                 if(mapOfAccountPayrollMem.containsKey(accTeamMember.NSP_Account__c)){
                     mapOfAccountPayrollMem.get(accTeamMember.NSP_Account__c).add(accTeamMember);
                 } else{
                     mapOfAccountPayrollMem.put(accTeamMember.NSP_Account__c, new list<NSP_Account_Team__c> {accTeamMember});
         }
-               }
-               Else if(accTeamMember.NSP_Role__c =='Payroll Specialist'&& mapOfNotifyaccountMem.values().contains(accTeamMember.NSP_Account__c) ){
-                 if(mapOfNotifyPayrollMem.containsKey(accTeamMember.NSP_Account__c)){
+                }
+                Else if(accTeamMember.NSP_Role__c =='Payroll Specialist'&& mapOfNotifyaccountMem.values().contains(accTeamMember.NSP_Account__c) ){
+                    if(mapOfNotifyPayrollMem.containsKey(accTeamMember.NSP_Account__c)){
                     mapOfNotifyPayrollMem.get(accTeamMember.NSP_Account__c).add(accTeamMember);
                 } else{
                     mapOfNotifyPayrollMem.put(accTeamMember.NSP_Account__c, new list<NSP_Account_Team__c> {accTeamMember});
                 }
-               }
-             
+                }
+                
             }
         }
-       
+        
         
         if(projectTaskLetterMap.size()>0 || (mapOfProjectTaskAndProject1.size()>0 && mapOfProjectAndAccountName.size()>0 ) ){
-           // Group terminationQueueEmailAddress = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and DeveloperNAME = 'Termination_Team'];   
+            // Group terminationQueueEmailAddress = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and DeveloperNAME = 'Termination_Team'];   
 
         for(pse__Project_Task__c pTask : lProjectTasks){
             if(projectTaskLetterMap.containsKey(pTask.id)&& woActiveList.containsKey(pTask.NSP_AccountId__c) && pTask.name == 'Letter Received (Termination Letter)'){
@@ -292,14 +292,14 @@ public class NSP_ProjectTasksTriggerHelper {
                 
             }if(mapOfProjectAndAccountName.containsKey(pTask.id) && mapOfProjectAndAccountName.get(pTask.id).Name == 'Notify ITA if term date is today'){
                 if(mapOfNotifyPayrollMem.size()>0){
-                	listOfNotifyMem.addAll(mapOfNotifyPayrollMem.get(mapOfNotifyaccountMem.get(pTask.id)));
+                    listOfNotifyMem.addAll(mapOfNotifyPayrollMem.get(mapOfNotifyaccountMem.get(pTask.id)));
                 }
                 notifyEmail(mapOfProjectAndAccountName.get(pTask.id).pse__Project__r.pse__Account__r.Name, mapOfProjectAndAccountName.get(pTask.id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c, listOfNotifyMem);
             }
         }
     }
     }
-    
+
     //Letter Received email.
     public void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate){
         String dtStr;
@@ -330,7 +330,7 @@ public class NSP_ProjectTasksTriggerHelper {
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
         }
     }
-    
+
     //Notify email.
     public void notifyEmail(String accountName, String accountAIMS, List<NSP_Account_Team__c> listOfNotifyMem){
         String subjectString = 'Termination date is today for '+accountName+'('+accountAIMS+')'+' - do not disable access to ITA';
@@ -359,11 +359,11 @@ public class NSP_ProjectTasksTriggerHelper {
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
         }
     }
-    
+
 
     /* Description : This method throws an error if Dependent Task is started
                     without completing Preceding Task
-       Date        : 12/10/2021 */
+        Date        : 12/10/2021 */
 
     public void showErrorIfPreceedingTaskNotCompleted(List<pse__Project_Task__c> lProjectTasks, map<Id, pse__Project_Task__c> oldMap){
         set<ID> setOfDependentTask                      = new set<ID>();
@@ -439,9 +439,9 @@ public class NSP_ProjectTasksTriggerHelper {
             }
             if(projectsIdSet.size() > 0){
                 parentProjectMap = new Map<Id, pse__Proj__c>([Select Id, pse__Is_Template__c 
-                                                  From pse__Proj__c 
-                                                  WHERE pse__Is_Template__c = False
-                                                  AND ID In: projectsIdSet]);
+                                                    From pse__Proj__c 
+                                                    WHERE pse__Is_Template__c = False
+                                                    AND ID In: projectsIdSet]);
                     
             }
             if(!parentProjectMap.isEmpty()){
@@ -481,9 +481,9 @@ public class NSP_ProjectTasksTriggerHelper {
                     mapOfProjectIdAndSetOfTemplateNameOnProjectTask.get(projectTask.pse__Project__c);
                 } else if(!mapOfProjectIdAndSetOfTemplateNameOnProjectTask.containsKey(projectTask.pse__Project__c) 
                     && projectTask.Template_Name__c != null){
-                              mapOfProjectIdAndSetOfTemplateNameOnProjectTask.put(projectTask.pse__Project__c, new Set<String> {projectTask.Template_Name__c});
+                                mapOfProjectIdAndSetOfTemplateNameOnProjectTask.put(projectTask.pse__Project__c, new Set<String> {projectTask.Template_Name__c});
                     }
-                          }   
+                            }   
         }
 
         for(pse__Proj__c project : [SELECT Templates_Used__c FROM pse__Proj__c WHERE ID IN : setOfProjectId and pse__Is_Template__c = false]){
@@ -535,15 +535,15 @@ public class NSP_ProjectTasksTriggerHelper {
             updateProjectPercentageComplete(setOfProjectId);
         }
     }
-       /**
-* UPDATE: This method update Milestone Complete field and Project Complete on related Milestone and Project respectively after deletion of Project task
-* @param projectTaskList List of old project.
-* @Defect : DF-02180
-* STORY : STY-00717
-* @return void             
-*                
-*/
-public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
+        /**
+    * UPDATE: This method update Milestone Complete field and Project Complete on related Milestone and Project respectively after deletion of Project task
+    * @param projectTaskList List of old project.
+    * @Defect : DF-02180
+    * STORY : STY-00717
+    * @return void             
+    *                
+    */
+    public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     Set<Id> setOfMilestoneId = new Set<Id>();
     Set<Id> projectIdSet = new Set<Id>(); 
     for(pse__Project_Task__c pTask : projectTaskList){
@@ -554,14 +554,14 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             projectIdSet.add(pTask.pse__Project__c);
         }
     }
-    
+
     if(!setOfMilestoneId.isEmpty()){
             updateMilestonePercentComplete(setOfMilestoneId);
         }
     if(!projectIdSet.isEmpty() && !System.isFuture() && !System.isBatch()){
             updateProjectPercentageComplete(projectIdSet);
-         }
-}
+            }
+    }
     /**
     * UPDATE: This method update Milestone Complete field and Project Complete field on related Milestone and Project respectively.
     * @param projectTaskList List of New project.
@@ -569,30 +569,30 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * @return void
     * STY-00717                 
     */
-   public void updateMilestoneAndProjectPercentCompleteOnUpdate(List<pse__Project_Task__c> projectTaskList, Map<Id, pse__Project_Task__c> oldMap){
+    public void updateMilestoneAndProjectPercentCompleteOnUpdate(List<pse__Project_Task__c> projectTaskList, Map<Id, pse__Project_Task__c> oldMap){
         Set<Id> setOfMilestoneId = new Set<Id>();
         Set<Id> setOFProjectId = new Set<Id>();
         for(pse__Project_Task__c pTask : projectTaskList){
             if(pTask.NSP_PercentageCompleteFormula__c!=null && !String.isBlank(pTask.pse__Status__c) && 
-               pTask.NSP_PercentageCompleteFormula__c != oldMap.get(pTask.id).NSP_PercentageCompleteFormula__c 
+                pTask.NSP_PercentageCompleteFormula__c != oldMap.get(pTask.id).NSP_PercentageCompleteFormula__c 
             || (pTask.pse__Status__c != oldMap.get(pTask.id).pse__Status__c)){
 
                 if(String.isNotBlank(pTask.pse__Milestone__c)){
                     setOfMilestoneId.add(pTask.pse__Milestone__c);
                 }
-                 if(String.isNotBlank(pTask.pse__Project__c)){
+                    if(String.isNotBlank(pTask.pse__Project__c)){
                     setOFProjectId.add(pTask.pse__Project__c);
                 }
             }
         }
-     if(!setOfMilestoneId.isEmpty()){
+        if(!setOfMilestoneId.isEmpty()){
             updateMilestonePercentComplete(setOfMilestoneId);
         }
-     if(!setOfProjectId.isEmpty() && !System.isFuture() && !System.isBatch()){
+        if(!setOfProjectId.isEmpty() && !System.isFuture() && !System.isBatch()){
         updateProjectPercentageComplete(setOfProjectId);
         }
     }
-    
+
     public static void updateMilestonePercentComplete(Set<Id> setOfMilestone){
         List<pse__Milestone__c> listOfMilestone = new List<pse__Milestone__c>();
 
@@ -600,7 +600,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
                                                 FROM pse__Project_Task__c 
                                                 WHERE pse__Milestone__c IN :setOfMilestone and 
                                                 (pse__Status__c !=: NSP_ServiceConstants.PROJECT_TASK_CANCELLED OR
-                                                 pse__Status__c !=: NSP_ServiceConstants.PROJECTSTATUSCOMPLETED ) AND
+                                                    pse__Status__c !=: NSP_ServiceConstants.PROJECTSTATUSCOMPLETED ) AND
                                                 pse__Synchronize_Milestone_And_Task__c = false 
                                                 GROUP BY pse__Milestone__c ];
             
@@ -619,7 +619,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             Database.update(listOfMilestone);
         }
     }
-/**
+    /**
     * UPDATE: This method update Project Complete field on related Project
     * @return void
     * STY-00717                 
@@ -632,7 +632,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
                                             FROM pse__Project_Task__c 
                                             WHERE pse__Project__c IN :projectIds AND
                                             (pse__Status__c !=: NSP_ServiceConstants.PROJECT_TASK_CANCELLED OR
-                                             pse__Status__c !=: NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+                                                pse__Status__c !=: NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
                                             GROUP BY pse__Project__c ];
         
         for(AggregateResult ar:groupedResults) {
@@ -649,7 +649,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             Database.update(listOfProject);
         }
     }
-    
+
     /**
     * Description: This method update NSP_NumberOfCompletedProjectTask__c field on related Milestone
                     when project gets Cancelled/complete with total number of Complete + cancelled projects
@@ -667,7 +667,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             
             for(pse__Project_Task__c projectTask : projectTaskList){
                 if(projectTask.pse__Milestone__c != null && projectTask.RecordTypeId == PEOProjectTaskRecordTypeId
-                  && (projectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED || projectTask.pse__Status__c == NSP_ServiceConstants.PROJECT_TASK_CANCELLED )){
+                    && (projectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED || projectTask.pse__Status__c == NSP_ServiceConstants.PROJECT_TASK_CANCELLED )){
                     setOfMilestoneId.add(projectTask.pse__Milestone__c);
                 }
             }
@@ -700,9 +700,9 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         }
         
     }
-    
 
-   /**
+
+    /**
     * Update Depenedent Task Resources about Precending Task Completion if Responsible Party is Different
     * @param mNewProjectTasks Map of New project. 
     * @param mOldProjectTasks Map of Old project. 
@@ -734,61 +734,61 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
                 sProjectTasksIds.add(oProjectTask.Id);
             }
             if(oProjectTask.Name ==NSP_ServiceConstants.GO_LIVE && oProjectTask.pse__Project__c != NULL && oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
-               && oProjectTask.NSP_Is_Status_Completed__c && !oldMapProjecttasks.get(oProjectTask.Id).NSP_Is_Status_Completed__c){
+                && oProjectTask.NSP_Is_Status_Completed__c && !oldMapProjecttasks.get(oProjectTask.Id).NSP_Is_Status_Completed__c){
                 goLiveProjectTaskIds.add(oProjectTask.Id);
             }
             
             if(oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE 
-                   && oProjectTask.pse__Status__c==NSP_ServiceConstants.TASKCOMPLETE && oProjectTask.pse__Project__c!=null){
-                       //check if FEIN project task is completed
+                    && oProjectTask.pse__Status__c==NSP_ServiceConstants.TASKCOMPLETE && oProjectTask.pse__Project__c!=null){
+                        //check if FEIN project task is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.FEIN  ){
                         mapofProjecttasks.put(oProjectTask.pse__Project__c,oProjectTask.Id);
                         projectTaskIdSet.add(oProjectTask.Id);
                     }
-                       //check if FUNDING DOCUMENTS project task is completed
+                        //check if FUNDING DOCUMENTS project task is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.FUNDINGDOCUMENTS ){
                         mapofFundingProjecttasks.put(oProjectTask.pse__Project__c,oProjectTask.Id);
                         fundingprojectTaskIdSet.add(oProjectTask.Id);
                     }
-                       //check if FORM COLLECTED project task is completed
+                        //check if FORM COLLECTED project task is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.FORMCOLLECTED){
                         mapofFormProjecttasks.put(oProjectTask.pse__Project__c,oProjectTask.Id);
                     }
-                       //Check if subtask first payroll approved task is completed
+                        //Check if subtask first payroll approved task is completed
                     if(oProjectTask.pse__Parent_Task__c!=null && oProjectTask.Name==NSP_ServiceConstants.PAYROLLAPPROVED){
-                         projectFsoIdset.add(oProjectTask.pse__Project__c);
-                         accountIdFsoProjectTaskMap.put(oProjectTask.NSP_AccountId__c, oProjectTask.Id);  
+                            projectFsoIdset.add(oProjectTask.pse__Project__c);
+                            accountIdFsoProjectTaskMap.put(oProjectTask.NSP_AccountId__c, oProjectTask.Id);  
                     }
-                       //Check if cobra  task is completed
+                        //Check if cobra  task is completed
                     if(oProjectTask.Name.startsWith(NSP_ServiceConstants.COBRA_FORM_YES) ||
                         oProjectTask.Name.startsWith(NSP_ServiceConstants.COBRA_FORM_NO)){
                             projectTaskCobraIdSet.add(oProjectTask.Id);
                             projectTaskList.add(oProjectTask);
 
                     }
-                       //Check if client transition is completed
+                        //Check if client transition is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.CLIENTTRANSITION){
-                         mapOfProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
-                         mapofClientProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);   
+                            mapOfProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
+                            mapofClientProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);   
                     }
-                       //Check if onsite discovery task is completed
+                        //Check if onsite discovery task is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.ONSITEDISCOVERY){
-                         mapOfDiscoveryProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
-                         mapofDiscoveryProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);
+                            mapOfDiscoveryProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
+                            mapofDiscoveryProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);
                         
                     }
                     
             }
 
             if(oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != oProjectTask.pse__Status__c &&
-                   oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE){
-                       if(oProjectTask.Name == NSP_ServiceConstants.PROJECT_TASK_DISCOVERY){
+                    oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE){
+                        if(oProjectTask.Name == NSP_ServiceConstants.PROJECT_TASK_DISCOVERY){
                             hcmProjectSet.add(oProjectTask.Id); 
-                       }
-                       if(oProjectTask.Name == NSP_ServiceConstants.CONFIGURATION_TASK){
+                        }
+                        if(oProjectTask.Name == NSP_ServiceConstants.CONFIGURATION_TASK){
                             newTaxIMPLSubProjectSet.add(oProjectTask.Id);
                             wXWADataMigrationSubProject.add(oProjectTask.Id);
-                       }
+                        }
             }
             if(oldMapProjecttasks.get(oProjectTask.Id).OwnerId != oProjectTask.OwnerId && oProjectTask.OwnerId.getsobjecttype() == User.sobjecttype){
                 projectTaskidsChangedOwner.add(oProjectTask.Id);
@@ -796,7 +796,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         }
         
         if(!hcmProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
-           createHCMCaseOnProjectTaskUpdate(hcmProjectSet);
+            createHCMCaseOnProjectTaskUpdate(hcmProjectSet);
         }
         if(!projectTaskidsChangedOwner.isEmpty() && !System.isFuture() && !System.isBatch()){
             Map<String, Object> mapInputParams = new Map<String, Object>{
@@ -806,13 +806,13 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'createPTAIfOwnerIsChanged', NSP_UserId__c = UserInfo.getUserId()));
             List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
         }
-       // Added as part of STY-02157
+        // Added as part of STY-02157
         if(!newTaxIMPLSubProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
-           createNewTaxIMPLSubProject(newTaxIMPLSubProjectSet);
+            createNewTaxIMPLSubProject(newTaxIMPLSubProjectSet);
         }
-       // Added as part of STY-02158
+        // Added as part of STY-02158
         if(!wXWADataMigrationSubProject.isEmpty() && !System.isFuture() && !System.isBatch()){
-           createWXWADataMigrationSubProject(wXWADataMigrationSubProject);
+            createWXWADataMigrationSubProject(wXWADataMigrationSubProject);
         }
         if(sProjectTasksIds.size() > 0){
             sendNotificationToDependentResource(sProjectTasksIds);
@@ -872,20 +872,20 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         }
         
         if(termFormList.size() > 0){
-		for(NSP_Termination_Form__c termFormTask : termFormList){
+        for(NSP_Termination_Form__c termFormTask : termFormList){
             if(termFormTask.ownerId != null){
                 termFormRecordList.add(termFormTask.NSP_Project_Task__c);
                 }
             }
         }
-             
+                
         for(pse__Project_Task_Dependency__c mOwnerDependentTask : mDependentTasksOwner){
             if(mOwnerDependentTask.pse__Dependent_Task__r.ownerId != null && termFormRecordList.contains(mOwnerDependentTask.pse__Preceding_Task__c)){
                 mDependentTaskOwnerIds.add(mOwnerDependentTask.pse__Dependent_Task__r.ownerId);
         
             }
         }
-       
+        
         if(mDependentTaskOwnerIds.size() == 0){
             return;
         }
@@ -902,7 +902,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         }
     }
 
-   /**
+    /**
     * Update Depenedent Task Resources about Precending Task Completion if Responsible Party is Different
     * @param sProjectTasksIds Set of project Task Ids
     * @return void
@@ -953,9 +953,9 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * Update Start Date and End date on Project Task using Offset date and # number of days offset.
     * USE THIS METHOD IF YOU ADD MORE VALUES TO OFFSET DATE.
     * @param projectTaskList List of project. 
-* @return void
-*/
-    
+    * @return void
+    */
+
     public void setStartDateAndEndDateOnProjectTask(List<pse__Project_Task__c> projectTaskList){
         Set<Id> setOfProjectId                         = new Set<Id>();
         Map<Id,pse__Proj__c> projectMap                = new Map<Id,pse__Proj__c> ();
@@ -1023,7 +1023,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'setStartDateAndEndDateOnProjectTaskQTP', NSP_UserId__c = UserInfo.getUserId()));
         List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
     }
-    
+
     /**
     * @description : Update Start Date and End date on Project Task using Offset date and # number of days offset.
     * USE THIS METHOD IF YOU ADD MORE VALUES TO OFFSET DATE.
@@ -1099,7 +1099,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * @param oldMap Map of Project Id and Project
     * @return void
     */
-    
+
     public void cancelParentProjectIfProjectTaskIsCompletedonReinstatementRequestedTask(List<pse__Project_Task__c> projectTaskList, Map<Id, pse__Project_Task__c> oldMap){
         Set<Id> setOfProjectId                 = new Set<Id> ();
         Set<Id> setOfParentProject             = new Set<Id> ();
@@ -1157,12 +1157,12 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
 
         for(pse__Project_Task__c projectTask : projectTaskList){
             if(projectTask.pse__Project__c != null &&
-               mapOfProjectTaskIdAndProject.get(projectTask.pse__Project__c).pse__Is_Template__c){
+                mapOfProjectTaskIdAndProject.get(projectTask.pse__Project__c).pse__Is_Template__c){
             projectTask.Template_Name__c = mapOfProjectTaskIdAndProject.get(projectTask.pse__Project__c).TemplateName__c;
             }
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: assignQueueTasks
     * Description : This Method will update Queue as the Owner of MM and FSO projects   
@@ -1192,20 +1192,20 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             }
             // Searching for MM and FSO Projects 
             Map<Id,pse__Proj__c> projectMap= new Map<Id,pse__Proj__c>([Select Id,OwnerId, TemplateName__c, pse__End_Date__c from pse__Proj__c WHERE Id IN:projectIdSet  
-                                                                       AND pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND
-                                                                       (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c=  :label.FSOImplementationProject) AND recordTypeId=:peoProjectRecordTypeId   ]);
-           // Assign Queue as the Owner of  Project tasks
+                                                                        AND pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND
+                                                                        (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c=  :label.FSOImplementationProject) AND recordTypeId=:peoProjectRecordTypeId   ]);
+            // Assign Queue as the Owner of  Project tasks
             for(pse__Project_Task__c prjTask:projectTaskList){
                 if(projectMap.containsKey(prjTask.pse__Project__c) && !MMCoreQueues.isEmpty()){
                     if( prjTask.Name==NSP_ServiceConstants.PayCodeClientTask
-                       || prjTask.Name==NSP_ServiceConstants.ClientPackingTask || prjTask.Name==NSP_ServiceConstants.EnrollmentTask){
-                           prjTask.OwnerId=IPICQueueId;
-                       } else if(prjTask.Name==NSP_ServiceConstants.ClientOptumTask){
-                           prjTask.OwnerId=HWQueueId;
-                      }else if(prjTask.Name==NSP_ServiceConstants.CONFIGURATION){
+                        || prjTask.Name==NSP_ServiceConstants.ClientPackingTask || prjTask.Name==NSP_ServiceConstants.EnrollmentTask){
+                            prjTask.OwnerId=IPICQueueId;
+                        } else if(prjTask.Name==NSP_ServiceConstants.ClientOptumTask){
+                            prjTask.OwnerId=HWQueueId;
+                        }else if(prjTask.Name==NSP_ServiceConstants.CONFIGURATION){
                         prjTask.OwnerId=projectMap.get(prjTask.pse__Project__c).OwnerId;
                         
-                                 
+                                    
                     }
                 }
             }
@@ -1261,7 +1261,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'updateEmailsTransitionToService', ex.getMessage());
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: createHCMCaseOnProjectTaskUpdate
     * Description : Create HCM Case when Discovery Project Task status is Complete on 
@@ -1270,7 +1270,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * Params: List<pse__Project_Task__c> newProjectTaskList
     * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
     * ********************************************************************************************/ 
-   @future
+    @future
     public static void createHCMCaseOnProjectTaskUpdate(Set<Id> projectTaskIdSet){
         try{
             List<Case> createCaseList = new List<Case>();
@@ -1287,7 +1287,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
                                                     AND pse__Project__r.TemplateName__c =:NSP_ServiceConstants.HCM_PROJECT_NAME 
                                                     AND Name =: NSP_ServiceConstants.PROJECT_TASK_DISCOVERY 
                                                     AND pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE
-                                                   ]){
+                                                    ]){
                     if(projectTask.pse__Status__c ==NSP_ServiceConstants.TASKCOMPLETE){
                     projectTaskList.add(projectTask);
                     }
@@ -1327,7 +1327,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         if (srObject != null) {
             dataTemplateContent = srObject.body.toString();
         }
-    
+
         //To get case recordtypeId
         Id recordTypeIdWxImpl = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.WX_IMPL);
 
@@ -1363,7 +1363,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         }
         return mapAccTeamEmails;
     }
-    
+
     private static Map<String,NSP_Account_Team__c> getAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
         Map<String,NSP_Account_Team__c> mapAccTeamCLHR = new Map<String,NSP_Account_Team__c>();
         for(NSP_Account_Team__c accTeam: accTeamRecords){
@@ -1379,7 +1379,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         }
         return mapAccTeamCLHR;
     }
-    
+
     private static List<NSP_Account_Team__c> getAccountTeamRecords(Set<Id> setAccountIds){
         List<String> lstAccTeamRoles = new List<String>{NSP_ServiceConstants.MANAGER_HRSERVICES,NSP_ServiceConstants.PAYROLL_SUPERVISOR,
             NSP_ServiceConstants.CLIENT_LIAISION,NSP_ServiceConstants.HRSpecialist,NSP_ServiceConstants.PayrollSpecialist,
@@ -1388,8 +1388,8 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
                 return [SELECT Id,NSP_Email__c,NSP_Account__c,NSP_First_Name__c,NSP_Last_Name__c,NSP_Role__c FROM NSP_Account_Team__c 
                         WHERE NSP_Account__c IN:setAccountIds AND NSP_Role__c IN:lstAccTeamRoles];
     }
-    
-    
+
+
     /***********************************************************************************************
     * MethodName  : checkStatusComplete
     * Description : This Method updated the NSP_Is_Status_Completed__c checkbox on Project Task
@@ -1401,16 +1401,16 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             for(pse__Project_Task__c projTask :newMap.values() ){
                 // update the flag when first time the NSP_Is_Status_Completed__c is set to Complete
                 if(projTask.pse__Status__c !=null && 
-                   oldMap.get(projTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && 
-                   projTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && !oldMap.get(projTask.Id).NSP_Is_Status_Completed__c){
-                       projTask.NSP_Is_Status_Completed__c = true;
+                    oldMap.get(projTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && 
+                    projTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && !oldMap.get(projTask.Id).NSP_Is_Status_Completed__c){
+                        projTask.NSP_Is_Status_Completed__c = true;
                 }
             }
         }catch(Exception ex ){
-           NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'beforeUpdate', ex.getMessage());
+            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'beforeUpdate', ex.getMessage());
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: createCasesOnProjectTasksUpdate
     * Description : Create First Live Payroll Case when Go Live Project Task status is Complete on 
@@ -1419,25 +1419,25 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * Params: List<pse__Project_Task__c> newProjectTaskList
     * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
     * ********************************************************************************************/ 
-    
+
     public static void createCasesOnProjectTasksUpdate(Set<Id> newProjectTaskIds ){
         List<pse__Project_Task__c> projTasksList = new List<pse__Project_Task__c>();
         try{
             for(pse__Project_Task__c projTaskRec: [SELECT Id, Name, pse__Status__c, NSP_Is_Status_Completed__c,
-                                                   pse__Project__c, pse__Project__r.Name,
-                                                   pse__Project__r.TemplateName__c, pse__Project__r.Project_Implementer__c
-                                                   FROM pse__Project_Task__c
-                                                   WHERE Id IN: newProjectTaskIds
-                                                  
-                                                   AND pse__Project__r.Project_Implementer__c != NULL
-                                                   AND pse__Project__r.TemplateName__c =: NSP_ServiceConstants.HCM_PROJECT_NAME
-                                                   
-                                                  ]){
-                                                      //if the project task status is set to 'Complete' for the first time
-                                                     
-                                                             projTasksList.add(projTaskRec);
-                                                         
-                                                  }
+                                                    pse__Project__c, pse__Project__r.Name,
+                                                    pse__Project__r.TemplateName__c, pse__Project__r.Project_Implementer__c
+                                                    FROM pse__Project_Task__c
+                                                    WHERE Id IN: newProjectTaskIds
+                                                    
+                                                    AND pse__Project__r.Project_Implementer__c != NULL
+                                                    AND pse__Project__r.TemplateName__c =: NSP_ServiceConstants.HCM_PROJECT_NAME
+                                                    
+                                                    ]){
+                                                        //if the project task status is set to 'Complete' for the first time
+                                                        
+                                                                projTasksList.add(projTaskRec);
+                                                            
+                                                    }
             if(!projTasksList.isEmpty()){
                 createCaseForISolvedHCMProj(projTasksList);
             }
@@ -1445,7 +1445,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createCasesOnProjectTasksUpdate', ex.getMessage());
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: createCaseForISolvedHCMProj
     * Description : Helper mehtod for createCasesOnProjectTasksUpdate which will create a case 
@@ -1453,7 +1453,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
     * Story : STY-02182
     * Params: List<pse__Project_Task__c> projTaskList
     * ********************************************************************************************/ 
-    
+
     private static void createCaseForISolvedHCMProj(List<pse__Project_Task__c> projTaskList){
         List<Case> createCaseList = new List<Case>();
         List<String> emailTempFields = new List<String>{'ID'};
@@ -1463,7 +1463,7 @@ public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
         Id recordTypeIdWxImpl = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.WX_IMPL);
         //Get email template
         EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_First_Live_Payroll_Case_Creation_Email');
-OrgWideEmailAddress orgWideAddress;
+    OrgWideEmailAddress orgWideAddress;
         if(Label.NSP_Report_Dev_OrgWideEmail != null && !Test.isRunningTest()){
             List<String> orgWideEmailFields = new List<String>{'Id'};
                 String query = new NSP_QueryBuilder(NSP_ServiceConstants.ORG_WIDE_EMAIL_SOBJECT_TYPE, orgWideEmailFields)
@@ -1511,7 +1511,7 @@ OrgWideEmailAddress orgWideAddress;
             Messaging.sendEmail(lstEmailMessages);
         } 
     }
-    
+
     /***********************************************************************************************
     * MethodName: createNewTaxIMPLSubProject
     * Description : Create New Tax IMPL sub project
@@ -1551,7 +1551,7 @@ OrgWideEmailAddress orgWideAddress;
                                                     AND pse__Project__r.TemplateName__c =:NSP_ServiceConstants.HCM_PROJECT_NAME 
                                                     AND Name =: NSP_ServiceConstants.CONFIGURATION_TASK
                                                     AND pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE
-                                                   ]){
+                                                    ]){
                 if(projectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE){
                     projectTaskList.add(projectTask);
 
@@ -1566,7 +1566,7 @@ OrgWideEmailAddress orgWideAddress;
                         projRequestList.add(projRequest);
                         parentProjectIdSet.add(projectTask.pse__Project__c);
                         projectIdWithAccountIdMap.put(projectTask.pse__Project__c, projectTask.pse__Project__r.pse__Account__c);
-                                                                                   }
+                                                                                    }
                 }
                 
             }
@@ -1606,8 +1606,8 @@ OrgWideEmailAddress orgWideAddress;
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createNewTaxIMPLSubProject', ex.getMessage());
         }
     }
-    
-     /***********************************************************************************************
+
+        /***********************************************************************************************
     * MethodName: createWXWADataMigrationSubProject
     * Description : Create New Tax IMPL sub project
     * Story : STY-02158
@@ -1645,7 +1645,7 @@ OrgWideEmailAddress orgWideAddress;
                                                     AND pse__Project__r.TemplateName__c =:NSP_ServiceConstants.HCM_PROJECT_NAME 
                                                     AND Name =: NSP_ServiceConstants.CONFIGURATION_TASK
                                                     AND pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE
-                                                   ]){
+                                                    ]){
                 if(projectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE){
 
                     if(projectTemplate != null){
@@ -1659,7 +1659,7 @@ OrgWideEmailAddress orgWideAddress;
                         projRequestList.add(projRequest);
                         parentProjectIdSet.add(projectTask.pse__Project__c);
                         projectIdWithAccountIdMap.put(projectTask.pse__Project__c, projectTask.pse__Project__r.pse__Account__c);
-                                                                                   }
+                                                                                    }
                 }
                 
             }
@@ -1684,7 +1684,7 @@ OrgWideEmailAddress orgWideAddress;
                     projListToUpdate = linkProjectWithParentProject(newProjectId, parentProjectIdSet, projectIdWithAccountIdMap, projectTemplate);
                 }
             }
-             
+                
             if(!projListToUpdate.isEmpty() && !newProjectIdSet.isEmpty() && childProjectList.size() == 0){
                 Database.SaveResult[] projectUpdateList = Database.update(projListToUpdate,false);
                 //send email
@@ -1772,13 +1772,13 @@ OrgWideEmailAddress orgWideAddress;
             Messaging.sendEmail(lstEmailMessages);
         }
     }
-    
-/***********************************************************************************************
-* MethodName: sendEmailToProjectResource
-* Description : Method to send an email to proj resource when higher peer order proj task is completed.
-* Params: List<pse__Project_Task__c> newProjectTaskList, Map<Id, pse__Project_Task__c> projectTaskOldMap
-* Story : STY-02213
-* ********************************************************************************************/ 
+
+    /***********************************************************************************************
+    * MethodName: sendEmailToProjectResource
+    * Description : Method to send an email to proj resource when higher peer order proj task is completed.
+    * Params: List<pse__Project_Task__c> newProjectTaskList, Map<Id, pse__Project_Task__c> projectTaskOldMap
+    * Story : STY-02213
+    * ********************************************************************************************/ 
     public static void sendEmailToProjectResource(Set<Id> projectTaskIdSet){
         //A list to store all RET Templates
         List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split(',');
@@ -1792,48 +1792,48 @@ OrgWideEmailAddress orgWideAddress;
                                                 FROM pse__Project_Task__c WHERE Id IN: projectTaskIdSet AND pse__Project__r.TemplateName__c IN :retTemplateNames]){
                 
                                                                 mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
-                   
+                    
             }
             
             List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c', 'Responsible_Party__c'};
                 
                 //Get a list of all the project task associated with the parent project
             String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
-                               .addFilter('pse__Project__c',  new List<Id>(mapOfProjAndProjTask.keySet()), NSP_QueryBuilder.Operator.INCLUDES).build();
+                                .addFilter('pse__Project__c',  new List<Id>(mapOfProjAndProjTask.keySet()), NSP_QueryBuilder.Operator.INCLUDES).build();
             List<pse__Project_Task__c> listOfAllPrjTaskForAProject = (List<pse__Project_Task__c>) Database.query(query);
             
             for(pse__Resource_Request__c resourceRequest: [SELECT Id, pse__Resource_Role__c, pse__Staffer_Resource__r.pse__Salesforce_User__r.Email, pse__Project__c
-                                                           FROM pse__Resource_Request__c
-                                                           WHERE pse__Project__c IN: mapOfProjAndProjTask.keySet()]){
-                                                               if(!mapOfProjAndResourceEmail.containsKey(resourceRequest.pse__Project__c)){
-                                                                   mapOfProjAndResourceEmail.put(resourceRequest.pse__Project__c, new Map<String,String>());
-                                                               }
-                                                               mapOfProjAndResourceEmail.get(resourceRequest.pse__Project__c).put(resourceRequest.pse__Resource_Role__c, resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email);
-                                                           }
+                                                            FROM pse__Resource_Request__c
+                                                            WHERE pse__Project__c IN: mapOfProjAndProjTask.keySet()]){
+                                                                if(!mapOfProjAndResourceEmail.containsKey(resourceRequest.pse__Project__c)){
+                                                                    mapOfProjAndResourceEmail.put(resourceRequest.pse__Project__c, new Map<String,String>());
+                                                                }
+                                                                mapOfProjAndResourceEmail.get(resourceRequest.pse__Project__c).put(resourceRequest.pse__Resource_Role__c, resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email);
+                                                            }
             
             //If the next in line projTask Responsibe party is diff send an email to the proj resource who's resource role matches with the next in line projTask's Responsibe party
             if(!listOfAllPrjTaskForAProject.isEmpty() && !mapOfProjAndResourceEmail.isEmpty()){        
                 for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
                     if(projTask.pse__Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).pse__Order__c+1 &&
-                       projTask.Responsible_Party__c != mapOfProjAndProjTask.get(projTask.pse__Project__c).Responsible_Party__c &&
-                       mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) && 
-                       mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c)){
-                           sendEmailNotificationToResource(mapOfProjAndProjTask.get(projTask.pse__Project__c).Name, mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c), projTask.Id);
-                       }
+                        projTask.Responsible_Party__c != mapOfProjAndProjTask.get(projTask.pse__Project__c).Responsible_Party__c &&
+                        mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) && 
+                        mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c)){
+                            sendEmailNotificationToResource(mapOfProjAndProjTask.get(projTask.pse__Project__c).Name, mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c), projTask.Id);
+                        }
                 }
             }
         }catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'sendEmailToProjectResource', ex.getMessage());
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: sendEmailNotificationToResource
     * Description : Helper method for sendEmailToProjectResource
     * Params: String nextInLineProjTask, String completedProjTask, String sendToUserAddress, Id projTaskId
     * Story : STY-02213
     * ********************************************************************************************/ 
-    
+
     private static void sendEmailNotificationToResource(String completedProjTask, String sendToUserAddress, Id projTaskId){
         //list to store to email address
         List<String> toEmailAddress = new List<String>();
@@ -1906,7 +1906,7 @@ OrgWideEmailAddress orgWideAddress;
                 
                 if(projectTask.pse__Start_Date_Time__c == projectTask.pse__End_Date_Time__c){
                     projectTask.pse__End_Date_Time__c = projectTask.pse__Start_Date_Time__c.addHours(1);
-                                   
+                                    
             }
                 else if (projectTask.pse__End_Date_Time__c == null){
                     projectTask.pse__End_Date_Time__c = projectTask.pse__Start_Date_Time__c.addHours(1);
@@ -1926,7 +1926,7 @@ OrgWideEmailAddress orgWideAddress;
         return dataMap;
     }
 
-     /***********************************************************************************************
+        /***********************************************************************************************
     * MethodName: doBeforeUpdateActions
     * Description : before Update Actions
     * Params: Map<String, Object> filteredDataMap
@@ -1944,7 +1944,7 @@ OrgWideEmailAddress orgWideAddress;
         
     }
 
-     /***********************************************************************************************
+        /***********************************************************************************************
     * MethodName: assignResourceToServiceAppointment
     * Description : assuign Resource to SA before Scheduling
     * Params: List<pse__Project_Task__c> projectTasks
@@ -2057,22 +2057,6 @@ OrgWideEmailAddress orgWideAddress;
         return newObj != null && oldObj != null && String.isNotBlank(fieldName) ? newObj.get(fieldName) != oldObj.get(fieldName) : false;
     }
 
-    /**********************************************************************************************
-     * MethodName: restrictProjectTaskDelete
-     * Description : Restricts Delete if the Users didn't create a Project Task
-     * Params: List<pse__Project_Task__c> projectTaskList
-     * Params: Map < Id, pse__Project_Task__c > projectTaskMap
-     * ********************************************************************************************/
-    public void restrictProjectTaskDelete(List<pse__Project_Task__c> projectTaskList, Map < Id, pse__Project_Task__c > projectTaskMap) {
-        User userDetails = [SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id = : userinfo.getUserId()];
-        Id PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-        for (pse__Project_Task__c ptObject: projectTaskList) {
-            if (userDetails.Id != ptObject.createdById && ptObject.recordtypeId == PEOProjectTaskRecordTypeId && userDetails.Profile.Name != SYS_ADMIN) {
-                ptObject.addError(System.Label.NSP_Cannot_Delete_Project_Task);
-            }
-        }
-    }
-    
     /***********************************************************************************************
     * MethodName: createPTAIfOwnerIsChanged
     * Description : if Project task owner is updated Check for PTA and Insert new PTA if doesnt exist
@@ -2150,4 +2134,40 @@ OrgWideEmailAddress orgWideAddress;
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createPTAIfOwnerIsChanged', ex.getMessage());
         }
     }
+
+    /***********************************************************************************************
+    * MethodName: handleBeforeDeleteOfProjTemp
+    * Description : Helper method to check before deleting a project Task  
+    * Params:       List<pse__Project_Task__c> projTasks
+    * Created as part of STY-04554
+    * ********************************************************************************************/
+    public void handleBeforeDeleteOfProjTemp(List<pse__Project_Task__c> projTasks) {
+        
+        try{
+            List<String> userList = new List<String>{'Id','Name','NSP_Service_Stakeholder__c'};
+            Map<Id, Boolean> projIdTempValMap = new Map<Id, Boolean>();
+                String query = new NSP_QueryBuilder('User', userList)
+                                    .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();            				
+            User userDetails = Database.query(query);
+            
+            if(!userDetails.Name.contains('Deployment') && !userDetails.NSP_Service_Stakeholder__c){
+                for (pse__Project_Task__c task : [Select Id, pse__Project__c,pse__Project__r.pse__Is_Template__c 
+                                                    FROM pse__Project_Task__c
+                                                    WHERE Id IN: projTasks]) {
+                    if (task.pse__Project__r.pse__Is_Template__c ) {
+                        projIdTempValMap.put(task.Id, task.pse__Project__r.pse__Is_Template__c);
+                    }
+                }
+                for (pse__Project_Task__c task : projTasks) {
+                    if (projIdTempValMap.containsKey(task.Id)) {
+                        //After the custom label gets deployed please change the below line to
+                        //task.addError(System.Label.NSP_ProjTemplateDeleteError);
+                        task.addError('You do not have permission to delete project templates');
+                    }
+                }
+            }
+        }catch(Exception exp ){
+                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
+        }
     }
+}

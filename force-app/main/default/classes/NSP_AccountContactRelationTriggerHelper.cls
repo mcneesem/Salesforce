@@ -17,7 +17,7 @@ public class NSP_AccountContactRelationTriggerHelper {
     private static final String RESTRICT_DELETING_ACR = 'restrictDeletingACR';
     private static final String UPDATE_WORK_PHONE_EMAIL_ON_CONTACT = 'updateWorkPhoneEmailOnContact';
     public static final List<String> INT_DM_PROFILES = new List<String>{NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
-	
+  
     /**
      * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
      * @param newList List of New AccountContactRelation.
@@ -99,7 +99,7 @@ public class NSP_AccountContactRelationTriggerHelper {
             List<Case> ceCaseList = new List<Case>();
             //added as part of STY-03866
             Set<Id> newAccountIdSet = new Set<Id>();
-        	Set<Id> oldAccountIdSet = new Set<Id>();
+          Set<Id> oldAccountIdSet = new Set<Id>();
             AccountContactRelation oldACR;
             for(AccountContactRelation acr : newMap.values()){
                 oldACR = oldMap.get(acr.Id);
@@ -138,7 +138,7 @@ public class NSP_AccountContactRelationTriggerHelper {
                 if((acr.NSP_Community_Access__c == null && oldMap.get(acr.Id).NSP_Community_Access__c != null 
                     && oldMap.get(acr.Id).NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)) ||
                    (acr.NSP_Community_Access__c != null && !acr.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess))){
-                    	oldAccountIdSet.add(acr.AccountId);
+                      oldAccountIdSet.add(acr.AccountId);
                 }
             }
             
@@ -198,7 +198,13 @@ public class NSP_AccountContactRelationTriggerHelper {
  
     public static void beforeUpsertDirector(List<AccountContactRelation> newList) {
         Id profileId = userinfo.getProfileId();
-        String profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
+        //228901 - For fixing SOQL changed to metadata query
+        String profileName;
+        if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
+            profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
+        } else {
+            profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
+        }
         try{
             if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 Set<Id> accountIdSet = new Set<Id>();
@@ -226,8 +232,8 @@ public class NSP_AccountContactRelationTriggerHelper {
     * Description : This method will create OCR
     * Params:       List<AccountContactRelation> newList,Map<Id, AccountContactRelation> oldMap
     * Author : Rahul Singh
-	* Created Date:10/26/22
-	* Created as part of User story - 128223
+  * Created Date:10/26/22
+  * Created as part of User story - 128223
     * ********************************************************************************************/   
     
    
@@ -297,7 +303,7 @@ public class NSP_AccountContactRelationTriggerHelper {
         }
         
         try{
-		if((ocrInsertList.Size() > 0 || ocrUpdateList.Size() >0)){  
+    if((ocrInsertList.Size() > 0 || ocrUpdateList.Size() >0)){  
             update ocrUpdateList;
             insert ocrInsertList;
             
@@ -531,7 +537,7 @@ public class NSP_AccountContactRelationTriggerHelper {
         Set<Id> oldAccountIdSet = new Set<Id>();
         for(AccountContactRelation acr : lstAccConRelations){ 
             if(acr.NSP_Community_Access__c != null && acr.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)){
-            	oldAccountIdSet.add(acr.AccountId);
+              oldAccountIdSet.add(acr.AccountId);
             }
           
         }
@@ -541,12 +547,12 @@ public class NSP_AccountContactRelationTriggerHelper {
     }
     
     /**
-	* Method Name : getLoggedInUserProfile 
-	* Description : STY-02849/DF-05013 Method to get loggedin user profile
-	* Author : Prakash       Date : 21/06/2023
-	* @param   
-	* @return List<Profile> 
-	*/    
+  * Method Name : getLoggedInUserProfile 
+  * Description : STY-02849/DF-05013 Method to get loggedin user profile
+  * Author : Prakash       Date : 21/06/2023
+  * @param   
+  * @return List<Profile> 
+  */    
     public List<Profile> getLoggedInUserProfile() {
         List<String> profileFields = new List<String>{'Id','Name'};        
         String queryProfile = new NSP_QueryBuilder('Profile', profileFields)

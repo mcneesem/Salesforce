@@ -322,24 +322,19 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>EmailHighlightAction</actionName>
             <actionType>ProductivityAction</actionType>
-            <sortOrder>7</sortOrder>
+            <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
+            <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>10</sortOrder>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Edit</actionName>
@@ -387,11 +382,14 @@
     <relatedLists>
         <fields>Case.NAME</fields>
         <fields>Case.CASE_SUBJECT</fields>
+        <fields>Case.NSP_Category__c</fields>
+        <fields>Case.NSP_SubCategory__c</fields>
         <fields>NSP_Case_Account_Name__c</fields>
-        <fields>Case.CASE_PRIORITY</fields>
         <fields>Case.CASE_CREATED_DATE</fields>
+        <fields>Case.CASE_CLOSED_DATE</fields>
         <fields>Case.CASE_STATUS</fields>
         <fields>Case.NSP_Owner__c</fields>
+        <fields>Case.NSP_Detail__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
