@@ -44,6 +44,9 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> childopportunityList =  new List<Opportunity>();
         Set<Id> parentOpportunityIdSet = new Set<Id>();
         
+        // AZD-191924 AZD-232114
+        List<Opportunity> calculateFrees =  new List<Opportunity>();
+
         //set to store opportunity owner Ids when opportunity owner is changed/or when opportunity is created
         Set<Id> ownerIdsSet = new Set<Id>();
         //118442- Opp list which is Closed on insert
@@ -58,6 +61,12 @@ public class NSP_OpportunityTriggerHelper {
                 verifyCloseWonNotAllowedRoles(opportunityObject);
             }
     
+            // AZD-191924 AZD-232114 AZD-232117
+            //  If primary product IS 'Workforce Optimization' then calculate fees
+            if(String.isNotBlank(opportunityObject.Accountid) && opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) && 
+            opportunityObject.NSP_lock_enrollment_fee__c == false){
+               calculateFrees.add(opportunityObject);
+           }
 
             // Checking if account id is not blank
             if(String.isNotBlank(opportunityObject.Accountid)){
@@ -129,6 +138,10 @@ public class NSP_OpportunityTriggerHelper {
         NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(newList,ownerIdsSet);
         setSalesOfficeDetails(newList,null); // added for STY-03154
         
+         // AZD-191924 AZD-232114
+         if(!calculateFrees.isEmpty()){
+            calculateEnrollmentFees(calculateFrees);
+        }     
             
     }
     
@@ -226,6 +239,9 @@ public class NSP_OpportunityTriggerHelper {
         List<Opportunity> opptyListToStampDocusignTemplateId = new List<Opportunity>();
         List<Opportunity> closedOppList =  new List<Opportunity>();
 
+        // AZD-191924 AZD-232114
+        List<Opportunity> calculateFrees =  new List<Opportunity>();
+
         //Iterating over the new opportunity map
         for(Id opportunityId : opportunityNewMap.keySet()){
             
@@ -235,6 +251,14 @@ public class NSP_OpportunityTriggerHelper {
             //  Check opportunity stage
             if(newOpportunity.StageName == 'Closed Won'){
                 verifyCloseWonNotAllowedRoles(newOpportunity);
+            }
+
+            // AZD-191924 AZD-232114 AZD-232117 
+            //  If primary product IS 'Workforce Optimization' then calculate fees
+            if(String.isNotBlank(newOpportunity.Accountid) && 
+            newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) &&
+            !newOpportunity.NSP_lock_enrollment_fee__c){
+                   calculateFrees.add(newOpportunity);
             }
 
             if(newOpportunity.OwnerId != oldOpportunity.OwnerId){
@@ -292,10 +316,6 @@ public class NSP_OpportunityTriggerHelper {
                (opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c != opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c)){
                    updatePriceBookList.add(opportunityNewMap.get(opportunityId));
                }
-            
-            
-            
-           
             
             //create list to populate docusign template id for merge on demand templates
             if(!String.isBlank(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c) && 
@@ -367,7 +387,11 @@ public class NSP_OpportunityTriggerHelper {
         }
         
         setSalesOfficeDetails(opportunityNewMap.values(),opportunityOldMap); // added for STY-03154
-        
+      
+        // AZD-191924 AZD-232114
+        if(!calculateFrees.isEmpty()){
+            calculateEnrollmentFees(calculateFrees);
+        }
     }    
     
     /**
@@ -1430,6 +1454,57 @@ Created Date:12/05/2022
                 }
             }
         }
+
+    // AZD-191924 232114
+    public static void calculateEnrollmentFees(List<Opportunity> opps){
+    
+        for(Opportunity opp : opps){
+                    
+            String oppSubType = opp.NSP_AddonType__c == null ? '' : opp.NSP_AddonType__c;
+
+            if(oppSubType.equals('CAM') && opp.NSP_TotalAnnualPayroll__c !=null && 
+            opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == false && 
+            opp.NSP_WaivedInsperityFee__c == false && opp.NSP_InsperityFeePercent__c == null )  {
+                
+                opp.NSP_Calculated_Enrollment_Fee__c = opp.NSP_Schedule_B_Enrollment_Fee__c;
+                opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
+                opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+                opp.NSP_Total_EF_Due_Reps__c = opp.NSP_Schedule_B_Enrollment_Fee__c - opp.NSP_InsperityFee__c;
+
+            }
+            else if(!oppSubType.equals('CAM') && opp.NSP_TotalAnnualPayroll__c !=null && 
+                opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == false &&
+                opp.NSP_WaivedInsperityFee__c == false && opp.NSP_InsperityFeePercent__c == null ) {
+            
+                    opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+                    opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
+                    opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
+                    opp.NSP_Total_EF_Due_Reps__c = opp.NSP_Schedule_B_Enrollment_Fee__c - opp.NSP_InsperityFee__c;
+
+            }
+            else if(!oppSubType.equals('CAM') && opp.NSP_TotalAnnualPayroll__c !=null && 
+                opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == true && 
+                opp.NSP_WaivedInsperityFee__c == false && opp.NSP_InsperityFeePercent__c == null ) {
+
+                opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+                opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
+                opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+                opp.NSP_Total_EF_Due_Reps__c = opp.NSP_Schedule_B_Enrollment_Fee__c - opp.NSP_InsperityFee__c;
+            
+            }
+            else if(!oppSubType.equals('CAM') &&  opp.NSP_TotalAnnualPayroll__c !=null && 
+                opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == false &&  
+                opp.NSP_WaivedInsperityFee__c == true && opp.NSP_InsperityFeePercent__c !=null ) {
+
+                opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+                opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
+                opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
+                opp.NSP_Total_EF_Due_Reps__c = opp.NSP_Schedule_B_Enrollment_Fee__c - opp.NSP_InsperityFee__c;   
+
+            }
+
+        }
+     }
     
 }
 
