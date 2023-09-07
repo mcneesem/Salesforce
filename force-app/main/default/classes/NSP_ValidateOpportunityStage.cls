@@ -12,6 +12,7 @@ Modification Log     :
 */
 
 public class NSP_ValidateOpportunityStage {
+    // test w/ NSP_ValidateOpportunityStageTest (83%)
     
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
