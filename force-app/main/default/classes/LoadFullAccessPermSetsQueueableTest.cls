@@ -7,9 +7,16 @@ public class LoadFullAccessPermSetsQueueableTest {
 	}
 
 	@isTest
-	static void testLoadFullAccessPermSets() {
+	static void testLoadFullAccessPermSets1() {
 		Test.startTest();
         LoadFullAccessPermSets.runLoadFullAccessPermSets();
+        Test.stopTest();
+	}
+
+	@isTest
+	static void testLoadFullAccessPermSets2() {
+		Test.startTest();
+        LoadFullAccessPermSets.runLoadFullAccessPermSets('Account,EntityDefinition');
         Test.stopTest();
 	}
 
@@ -17,8 +24,8 @@ public class LoadFullAccessPermSetsQueueableTest {
 	static void testLoadFullAccessPermSetsQueueable() {
 		map<id,Boolean> psMap = new map<id,Boolean>{ [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Permisson_Set' LIMIT 1].Id => false };
 
-        List<EntityDefinition> entities = [SELECT QualifiedApiName, IsCustomSetting, PublisherId
-			FROM EntityDefinition WHERE QualifiedApiName IN ('Account','EntityDefinition')]; // one success case and one falure case
+        List<EntityDefinition> entities = [SELECT QualifiedApiName FROM EntityDefinition 
+			WHERE QualifiedApiName IN ('Account','EntityDefinition')]; // one success case and one falure case
 
 		List<String> objectApiNames = new List<String>();
 		for ( EntityDefinition entity : entities )  {
@@ -28,10 +35,10 @@ public class LoadFullAccessPermSetsQueueableTest {
         Test.startTest();        
         System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, true));
         Test.stopTest();
-		
+
 		List<ObjectPermissions> op = [SELECT Id, ParentId FROM ObjectPermissions WHERE ParentId IN :psMap.keySet() ];
         System.assertNotEquals(null, op);
-		
+
         List<FieldPermissions> fp = [SELECT Id, ParentId FROM FieldPermissions WHERE ParentId IN :psMap.keySet() ];
         System.assertNotEquals(null, fp);
     }

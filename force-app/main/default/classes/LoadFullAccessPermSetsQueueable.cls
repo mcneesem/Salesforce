@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (85%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (93%)
 
     private List<String> objectApiNames = new List<String>();
     private Map<id,Boolean> psMap = new Map<id,Boolean>();
@@ -14,23 +14,20 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public void execute(QueueableContext context) {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in the chain
-        
-        loadFieldPermissions(psMap, currObjName); // upsert Field Permissions for first object in list
 
         // in first few jobs, upsert object permissions for entire objects list to resolve any dependencies;
 		// once all obj perm upserts are successful, flag will be disabled
         if (oUpsertFlag) {
-            List<String> objUpsertList = new List<String>();
-            objUpsertList.add(currObjName);
-            objUpsertList.addAll(objectApiNames);
-            oUpsertFlag = loadObjectPermissions(psMap, objectApiNames, objUpsertList, oUpsertFlag);
+            oUpsertFlag = loadObjectPermissions(psMap, objectApiNames, currObjName, oUpsertFlag);
 		}
+        
+        loadFieldPermissions(psMap, currObjName); // upsert Field Permissions for first object in list
 
 		// chain new job for next object
         if (objectApiNames.size() > 0) {
             Id jobID = System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, oUpsertFlag));
-			System.debug( ' ~ nextJob=' + jobID );
             System.debug( ' ~ objects remaining=' + objectApiNames.size() );
+			System.debug( ' ~ nextJob=' + jobID );
         } else {
             System.debug( ' ~ This was the final job for LoadOBPermSetsQueueable' );
             sendCompletionEmail();
@@ -38,8 +35,11 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     }
 
     // ************************ Object Permissions ************************
-    public static Boolean loadObjectPermissions(Map<id,Boolean> psMap, List<String> objectApiNames, List<String> objUpsertList, Boolean oUpsertFlag) {
+    public static Boolean loadObjectPermissions(Map<id,Boolean> psMap, List<String> objectApiNames, String currObjName, Boolean oUpsertFlag) {
         List<ObjectPermissions> opList = new List<ObjectPermissions>();
+        List<String> objUpsertList = new List<String>{currObjName};
+            objUpsertList.addAll(objectApiNames);
+
         for(Id key : psMap.keySet()) { // loop through the perm sets
             // populate map of current object permissions records with each permission set Id as key
             map<string, ObjectPermissions> mCurrentObjectPerms = new Map<string, ObjectPermissions>();
@@ -79,19 +79,18 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
                 }
             }
         }
-        if (oUpsertFlag) { // after first pass, remove bad names from object list
-            System.debug( ' ~ original Object count=' + objUpsertList.size() );
+        if (!objBadList.isEmpty()) { // after first pass, remove bad names from object list
             for(integer i= objectApiNames.size()-1; i>= 0 ; i--){ // remove bad object names from initial list
-                if(!objBadList.isEmpty() && objBadList.contains(objectApiNames[i])){
+                if(objBadList.contains(objectApiNames[i])){
                     objectApiNames.remove(i);
                 }
             }
-            System.debug( ' ~ Bad List count=' + objBadList.size() );
-            System.debug( ' ~ updated Object count=' + (objectApiNames.size()+1) );
+            System.debug( ' ~ bad Object name count=' + objBadList.size() );
         }
         if (depCount > 0) {
-            System.debug( ' ~ Object dependency errors=' + depCount );
+            System.debug( ' ~ dependent Object count=' + depCount );
         } else {
+            System.debug( ' ~  Object Permissions upserts complete' );
             oUpsertFlag = false; // if no dependency errors, stop the object permissions upsert iterations
         }
         return oUpsertFlag;
@@ -132,12 +131,13 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         Database.upsert(fpList, false);
     }
 
+    // ************************ Chain Completion Email ************************
     public void sendCompletionEmail(){
         Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
         oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
         oEmail.setTargetObjectId(UserInfo.getUserId());
         oEmail.setSaveAsActivity(false);
-        oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished.');
+        oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
         Messaging.sendEmail(new Messaging.SingleEmailMessage[]{oEmail});
     }
 }
