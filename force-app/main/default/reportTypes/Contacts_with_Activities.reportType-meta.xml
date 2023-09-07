@@ -1075,16 +1075,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Submission_type__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Activity_type__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Account__c</field>
             <table>Contact.Activities</table>
         </columns>
@@ -1101,11 +1091,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_District_Manager__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Engagement_Type__c</field>
             <table>Contact.Activities</table>
         </columns>
         <columns>
@@ -1135,16 +1120,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Priority__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Documents_Missing__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Sales_Office__c</field>
             <table>Contact.Activities</table>
         </columns>
@@ -1160,22 +1135,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity_Product_Type__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_WO_WX_Email__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Recurrence_Interval__c</field>
             <table>Contact.Activities</table>
         </columns>
         <columns>
@@ -1191,11 +1151,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Owners_Current_Region__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Sub_Type_BPS__c</field>
             <table>Contact.Activities</table>
         </columns>
         <masterLabel>Activities</masterLabel>

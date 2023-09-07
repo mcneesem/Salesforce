@@ -865,22 +865,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Submission_type__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Activity_type__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Opportunity__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Engagement_Type__c</field>
             <table>Lead.Activities</table>
         </columns>
         <columns>
@@ -900,17 +885,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Status__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Documents_Missing__c</field>
             <table>Lead.Activities</table>
         </columns>
         <columns>
@@ -935,11 +910,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Priority__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_District_Administrator__c</field>
             <table>Lead.Activities</table>
         </columns>
@@ -955,22 +925,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity_Product_Type__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_OneForce_External_ID__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Recurrence_Interval__c</field>
             <table>Lead.Activities</table>
         </columns>
         <columns>
@@ -1005,22 +960,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Sub_Type_BPS__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>RelatedTo_WhatID_TA__c</field>
             <table>Lead.Activities</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>RelatedTo_WhoID_TA__c</field>
-            <table>Lead.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Form_Name__c</field>
             <table>Lead.Activities</table>
         </columns>
         <columns>

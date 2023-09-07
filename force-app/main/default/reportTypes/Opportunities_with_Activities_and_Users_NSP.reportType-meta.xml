@@ -980,17 +980,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Activity_type__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsAllDayEvent</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <columns>
@@ -1070,22 +1060,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Documents_Missing__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ActivityTimeOnly</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DurationInMinutes</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Engagement_Type__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <columns>
@@ -1130,11 +1110,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Location</field>
             <table>Opportunity.Activities__r</table>
         </columns>
@@ -1160,11 +1135,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity_Product_Type__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Owners_Current_Region__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
@@ -1175,17 +1145,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Priority__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsPrivate</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Recurrence_Interval__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <columns>
@@ -1245,16 +1205,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Submission_type__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Sub_Type_BPS__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsTask</field>
             <table>Opportunity.Activities__r</table>
         </columns>
@@ -1286,11 +1236,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>RelatedTo_WhoID_TA__c</field>
-            <table>Opportunity.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Form_Name__c</field>
             <table>Opportunity.Activities__r</table>
         </columns>
         <columns>

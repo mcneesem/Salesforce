@@ -39,11 +39,6 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Owner</field>
             <table>Activity</table>
         </columns>
@@ -114,27 +109,12 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Documents_Missing__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Activity_type__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ActivityTimeOnly</field>
             <table>Activity</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DurationInMinutes</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Engagement_Type__c</field>
             <table>Activity</table>
         </columns>
         <columns>
@@ -204,27 +184,12 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity_Product_Type__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>Activity</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Priority__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsPrivate</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Recurrence_Interval__c</field>
             <table>Activity</table>
         </columns>
         <columns>
@@ -279,11 +244,6 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Submission_type__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsTask</field>
             <table>Activity</table>
         </columns>
@@ -324,11 +284,6 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Sub_Type_BPS__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>RelatedTo_WhatID_TA__c</field>
             <table>Activity</table>
         </columns>
@@ -339,17 +294,7 @@ Each record in this Report represents an Activity;</description>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Form_Name__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Account_Owner_Email__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c</field>
             <table>Activity</table>
         </columns>
         <columns>
@@ -528,64 +473,6 @@ Each record in this Report represents an Activity;</description>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.Name</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.Email</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.UserRole</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.Profile</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_Sales_Number__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_Sales_Office__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_Hire_Date__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_Termination_Date__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_District_Administrator__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_District_Manager__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c.NSP_Sales_Region__c</field>
-            <table>Activity</table>
-        </columns>
-        <masterLabel>AssignedSalesEngineer</masterLabel>
-    </sections>
-    <sections>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Opportunity__c.Campaign</field>
             <table>Activity</table>
         </columns>
@@ -698,24 +585,6 @@ Each record in this Report represents an Activity;</description>
             <table>Activity</table>
         </columns>
         <masterLabel>OpportunityPartner</masterLabel>
-    </sections>
-    <sections>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c.Name</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c.NSP_PID__c</field>
-            <table>Activity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c.Id</field>
-            <table>Activity</table>
-        </columns>
-        <masterLabel>Lead</masterLabel>
     </sections>
     <sections>
         <columns>
