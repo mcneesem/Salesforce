@@ -27,9 +27,20 @@ public class NSP_AccountContactRelationTriggerHelper {
      */
 
     public void afterInsertDirector(List<AccountContactRelation> newList, Map<Id, AccountContactRelation> newMap) {
-        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
+        //Modified as part of SOQL fix 228901 
+        String loggedInUserProfile_Name;
+        List<Profile> loggedInUserProfileName = new List<Profile>();
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch_2__c){
+            loggedInUserProfileName = getLoggedInUserProfile();
+        } else {
+            loggedInUserProfile_Name = getLoggedInUserProfileName();
+        }
         try{
-           if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+           	//Modified as part of SOQL fix 228901 
+       		//if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+			if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+               || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
+
                 Set<Id> accountIdSet = new Set<Id>();
                 Map<Id, AccountContactRelation> ConIdACRMap = new Map<Id, AccountContactRelation>();
                 Set<Id> accountsWithCommunityAccess =new Set<Id>();
@@ -86,9 +97,19 @@ public class NSP_AccountContactRelationTriggerHelper {
      */
 
     public void afterUpdateDirector(Map<Id, AccountContactRelation> newMap,Map<Id, AccountContactRelation> oldMap) {
-        List<Profile> loggedInUserProfileName = getLoggedInUserProfile();
+        //Modified as part of SOQL fix 228901 
+        String loggedInUserProfile_Name;
+        List<Profile> loggedInUserProfileName = new List<Profile>();
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch_2__c){
+            loggedInUserProfileName = getLoggedInUserProfile();
+        } else {
+            loggedInUserProfile_Name = getLoggedInUserProfileName();
+        }
         try{
-          if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+          //Modified as part of SOQL fix 228901 
+         // if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+          if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+              || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
                 
             Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
             Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
@@ -440,14 +461,20 @@ public class NSP_AccountContactRelationTriggerHelper {
     */
     public static void updateWorkPhoneEmailOnContact(Map<Id, AccountContactRelation> ConIdACRMap){
         List<Contact> conList = new List<Contact>();
-        List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
+        List<Profile> integrationUser;
+        Id integrationProfileId;
+        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch_2__c){
+        	integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
+        } else {
+            integrationProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = :NSP_ServiceConstants.INTEGRATION_USER].Profile_ID__c;
+        }
         AccountContactRelation acr;
         try{
             for(Contact con : [SELECT Id, NSP_Work_email__c, NSP_Work_Phone__c, createdById, NSP_Employee_Status__c,
                                NSP_Status_Date__c, NSP_Job_Title__c, CreatedBy.ProfileId 
                                FROM Contact 
                                WHERE Id IN: ConIdACRMap.keySet()
-                               AND CreatedBy.ProfileId !=: integrationUser[0].Id
+                               AND (CreatedBy.ProfileId !=: integrationUser[0].Id OR CreatedBy.ProfileId !=:integrationProfileId)
                                AND NSP_isContactInsertion__c != true]){
                                    acr = ConIdACRMap.get(con.Id);
                                    con.NSP_Work_email__c = acr.NSP_Work_Email__c;
@@ -553,10 +580,23 @@ public class NSP_AccountContactRelationTriggerHelper {
   * @param   
   * @return List<Profile> 
   */    
+   
     public List<Profile> getLoggedInUserProfile() {
         List<String> profileFields = new List<String>{'Id','Name'};        
         String queryProfile = new NSP_QueryBuilder('Profile', profileFields)
                 .addFilter('Id', UserInfo.getProfileId()).setSecurityEnforce(false).build();
         return Database.query(queryProfile);
+    }
+    
+  /**
+  * Method Name : getLoggedInUserProfileName 
+  * @param   
+  * @return String profileName  
+  */ 
+    public String getLoggedInUserProfileName() {
+        
+        Id profileId = userinfo.getProfileId();
+        String profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId LIMIT 1].Profile_Name__c;		
+        return profileName;
     }
 }
