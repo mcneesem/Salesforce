@@ -6058,6 +6058,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.NSP_MergeProducts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.AVA_SFCLOUD__Sales_Tax_Amount_Line__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16764,6 +16769,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__InvoiceLine__c.NSP_AIMS_Item_Code_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__InvoiceLine__c.NSP_MergeProducts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
