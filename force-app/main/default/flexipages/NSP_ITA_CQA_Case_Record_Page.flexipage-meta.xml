@@ -138,6 +138,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Due_Date__c</fieldItem>
+                <identifier>RecordNSP_Due_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.SuppliedEmail</fieldItem>
                 <identifier>RecordSuppliedEmailField</identifier>
             </fieldInstance>
@@ -518,7 +528,7 @@
                 <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
+<itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
