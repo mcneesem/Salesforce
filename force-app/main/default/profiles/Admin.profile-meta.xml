@@ -6503,12 +6503,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.NSP_MergeProducts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.NSP_Consumption_Rate_Flat_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__InvoiceLine__c.NSP_AIMS_Billing_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__InvoiceLine__c.NSP_MergeProducts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
