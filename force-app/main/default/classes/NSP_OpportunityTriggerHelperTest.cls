@@ -134,61 +134,6 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject4.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
        	oppList2.add(opportuniytObject4);
-
-
-        Opportunity opportuniytObject5 = new Opportunity();
-        opportuniytObject5.Name = 'Test Oppty Email';
-        opportuniytObject5.AccountId = accoutObject1.id;
-        opportuniytObject5.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
-        opportuniytObject5.CloseDate = date.today();
-        opportuniytObject5.CurrencyIsoCode = CURRENCY_USD;
-        opportuniytObject5.NSP_PrimaryProduct__c = 'WO';
-        opportuniytObject5.Type ='Existing Product';
-        opportuniytObject5.NSP_AddonType__c = 'CAM';
-        opportuniytObject5.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opportuniytObject5.NSP_TotalAnnualPayroll__c = 2500;
-        opportuniytObject5.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-        oppList2.add(opportuniytObject5);
-
-        Opportunity opportuniytObject6 = new Opportunity();
-        opportuniytObject6.Name = 'Test Oppty Email';
-        opportuniytObject6.AccountId = accoutObject1.id;
-        opportuniytObject6.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
-        opportuniytObject6.CloseDate = date.today();
-        opportuniytObject6.CurrencyIsoCode = CURRENCY_USD;
-        opportuniytObject6.NSP_PrimaryProduct__c = 'WO';
-        opportuniytObject6.NSP_Schedule_B_Enrollment_Fee__c = 100;
-        opportuniytObject6.NSP_TotalAnnualPayroll__c = 2500;
-        opportuniytObject6.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-        oppList2.add(opportuniytObject6);
-
-        Opportunity opportuniytObject7 = new Opportunity();
-        opportuniytObject7.Name = 'Test Oppty Email';
-        opportuniytObject7.AccountId = accoutObject1.id;
-        opportuniytObject7.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
-        opportuniytObject7.CloseDate = date.today();
-        opportuniytObject7.CurrencyIsoCode = CURRENCY_USD;
-        opportuniytObject7.NSP_PrimaryProduct__c = 'WO';
-        opportuniytObject7.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opportuniytObject7.NSP_TotalAnnualPayroll__c = 2500;
-        opportuniytObject7.NSP_1_6_OfScheduleB__c = true;
-        opportuniytObject7.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-        oppList2.add(opportuniytObject7);
-
-        Opportunity opportuniytObject8 = new Opportunity();
-        opportuniytObject8.Name = 'Test Oppty Email';
-        opportuniytObject8.AccountId = accoutObject1.id;
-        opportuniytObject8.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
-        opportuniytObject8.CloseDate = date.today();
-        opportuniytObject8.CurrencyIsoCode = CURRENCY_USD;
-        opportuniytObject8.NSP_PrimaryProduct__c = 'WO';
-        opportuniytObject8.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opportuniytObject8.NSP_TotalAnnualPayroll__c = 2500;
-        opportuniytObject8.NSP_WaivedInsperityFee__c = true;
-        opportuniytObject8.NSP_InsperityFeePercent__c = 10;
-        opportuniytObject8.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-        oppList2.add(opportuniytObject8);
-
         insert oppList2;
         
         SBQQ__Quote__c quoteRec = new SBQQ__Quote__c();
@@ -236,6 +181,77 @@ public class NSP_OpportunityTriggerHelperTest {
 
     }
    
+ /**
+* Test the enrollment fee calculation
+* @param N/A.
+* @return void                          
+*/
+    @isTest
+    static void TestEnrollmentFee() {
+        
+         Account accoutObject1 = new Account();
+        accoutObject1.Name = 'Test Enrollment Fee';
+        //inserting account object
+        insert accoutObject1;
+       
+        List<Opportunity> oppList = new List<Opportunity>();
+        
+        Opportunity opp1 = new Opportunity();
+        opp1.Name = 'Test Oppty Enrollment Fee';
+        opp1.AccountId = accoutObject1.id;
+        opp1.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp1.CloseDate = date.today();
+        opp1.CurrencyIsoCode = CURRENCY_USD;
+        opp1.NSP_PrimaryProduct__c = 'WO';
+        opp1.Type ='Existing Product';
+        opp1.NSP_AddonType__c = 'CAM';
+        opp1.NSP_Schedule_B_Enrollment_Fee__c = 500;
+        opp1.NSP_TotalAnnualPayroll__c = 2500;
+        opp1.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
+        oppList.add(opp1);
+
+        Opportunity opp2 = new Opportunity();
+        opp2.Name = 'Test Oppty Enrollment Fee';
+        opp2.AccountId = accoutObject1.id;
+        opp2.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp2.CloseDate = date.today();
+        opp2.CurrencyIsoCode = CURRENCY_USD;
+        opp2.NSP_PrimaryProduct__c = 'WO';
+        opp2.NSP_Schedule_B_Enrollment_Fee__c = 100;
+        opp2.NSP_TotalAnnualPayroll__c = 2500;
+        opp2.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
+        oppList.add(opp2);
+
+        Opportunity opp3 = new Opportunity();
+        opp3.Name = 'Test Oppty Enrollment Fee';
+        opp3.AccountId = accoutObject1.id;
+        opp3.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp3.CloseDate = date.today();
+        opp3.CurrencyIsoCode = CURRENCY_USD;
+        opp3.NSP_PrimaryProduct__c = 'WO';
+        opp3.NSP_Schedule_B_Enrollment_Fee__c = 500;
+        opp3.NSP_TotalAnnualPayroll__c = 2500;
+        opp3.NSP_1_6_OfScheduleB__c = true;
+        opp3.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
+        oppList.add(opp3);
+
+        Opportunity opp4 = new Opportunity();
+        opp4.Name = 'Test Oppty Enrollment Fee';
+        opp4.AccountId = accoutObject1.id;
+        opp4.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp4.CloseDate = date.today();
+        opp4.CurrencyIsoCode = CURRENCY_USD;
+        opp4.NSP_PrimaryProduct__c = 'WO';
+        opp4.NSP_Schedule_B_Enrollment_Fee__c = 500;
+        opp4.NSP_TotalAnnualPayroll__c = 2500;
+        opp4.NSP_WaivedInsperityFee__c = true;
+        opp4.NSP_InsperityFeePercent__c = 10;
+        opp4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
+        oppList.add(opp4);
+        
+        NSP_OpportunityTriggerHelper.calculateEnrollmentFees(oppList);
+    }
+    
         /**
 * @Description: This test method is used to cover updatesOnChildOpportunity
 * @Created date: 04/29/2022.
