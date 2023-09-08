@@ -99,6 +99,7 @@ public class NSP_CreateProjFromFlowTest{
                                          WHERE OrderId = :orderList[0].Id
                                          Limit 1];
         System.assertEquals(projList[0].Id, orderItemList[0].NSP_Project__c, '');
+        NSP_CreateProjFromFlow.linkProjectToOrderLines(orderList[0].Id);
     }
 
 }

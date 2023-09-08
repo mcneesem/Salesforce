@@ -142,4 +142,30 @@ public class NSP_CreateProjFromFlow {
             NSP_ErrorLogHandler.logSaveResultsException('NSP_OrderTriggerHelper','checkCreateProject', results);
         }
     }
+    
+/**
+* Method Name : linkProjectToOrderLines 
+* Description : This method is called from NSP_linkProjectToOrderItems Lightning component to link Project to Order Items
+* Author : CPQ Team       Date : 03/09/2023
+* @return Boolean  
+*/ 
+@AuraEnabled    
+public static Boolean linkProjectToOrderLines(String orderId){
+    Boolean res = false;
+    List<Order> orderRec = [Select Id, NSP_Project__c from Order where Id =:orderId];
+    List<OrderItem> orderItemList = [Select Id, NSP_Project__c from OrderItem where OrderId = :orderId];
+    
+    if (orderRec.size() >0 && orderRec[0].NSP_Project__c!=null) {
+        for(OrderItem oli : orderItemList){
+            oli.NSP_Project__c = orderRec[0].NSP_Project__c;
+        }
+        if(orderItemList != null && orderItemList.size()>0) {
+            List<Database.SaveResult> results = Database.update(orderItemList,false);
+            NSP_ErrorLogHandler.logSaveResultsException('NSP_CreateProjFromFlow','linkProjectToOrderLines', results);
+            res=true;
+        }
+    }
+    return res;
+}
+
 }
