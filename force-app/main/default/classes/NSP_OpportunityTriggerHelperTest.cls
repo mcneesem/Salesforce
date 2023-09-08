@@ -189,55 +189,54 @@ public class NSP_OpportunityTriggerHelperTest {
     @isTest
     static void TestEnrollmentFee() {
         
-         Account accoutObject1 = new Account();
-        accoutObject1.Name = 'Test Enrollment Fee';
+        Test.startTest();
+
+         Account acct = new Account();
+         acct.Name = 'Test Enrollment Fee';
         //inserting account object
-        insert accoutObject1;
+        insert acct;
        
         List<Opportunity> oppList = new List<Opportunity>();
         
         Opportunity opp1 = new Opportunity();
         opp1.Name = 'Test Oppty Enrollment Fee';
-        opp1.AccountId = accoutObject1.id;
+        opp1.AccountId = acct.id;
         opp1.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
         opp1.CloseDate = date.today();
         opp1.CurrencyIsoCode = CURRENCY_USD;
         opp1.NSP_PrimaryProduct__c = 'WO';
         opp1.Type ='Existing Product';
         opp1.NSP_AddonType__c = 'CAM';
-        opp1.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opp1.NSP_TotalAnnualPayroll__c = 2500;
-        opp1.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
+        opp1.NSP_Schedule_B_Enrollment_Fee__c = 1200;
+        opp1.NSP_TotalAnnualPayroll__c = 1500;
         oppList.add(opp1);
 
         Opportunity opp2 = new Opportunity();
         opp2.Name = 'Test Oppty Enrollment Fee';
-        opp2.AccountId = accoutObject1.id;
+        opp2.AccountId = acct.id;
         opp2.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
         opp2.CloseDate = date.today();
         opp2.CurrencyIsoCode = CURRENCY_USD;
         opp2.NSP_PrimaryProduct__c = 'WO';
         opp2.NSP_Schedule_B_Enrollment_Fee__c = 100;
         opp2.NSP_TotalAnnualPayroll__c = 2500;
-        opp2.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
         oppList.add(opp2);
 
         Opportunity opp3 = new Opportunity();
         opp3.Name = 'Test Oppty Enrollment Fee';
-        opp3.AccountId = accoutObject1.id;
+        opp3.AccountId = acct.id;
         opp3.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
         opp3.CloseDate = date.today();
         opp3.CurrencyIsoCode = CURRENCY_USD;
         opp3.NSP_PrimaryProduct__c = 'WO';
-        opp3.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opp3.NSP_TotalAnnualPayroll__c = 2500;
+        opp3.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp3.NSP_TotalAnnualPayroll__c = 2500; 
         opp3.NSP_1_6_OfScheduleB__c = true;
-        opp3.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
         oppList.add(opp3);
 
         Opportunity opp4 = new Opportunity();
         opp4.Name = 'Test Oppty Enrollment Fee';
-        opp4.AccountId = accoutObject1.id;
+        opp4.AccountId = acct.id;
         opp4.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
         opp4.CloseDate = date.today();
         opp4.CurrencyIsoCode = CURRENCY_USD;
@@ -246,10 +245,28 @@ public class NSP_OpportunityTriggerHelperTest {
         opp4.NSP_TotalAnnualPayroll__c = 2500;
         opp4.NSP_WaivedInsperityFee__c = true;
         opp4.NSP_InsperityFeePercent__c = 10;
-        opp4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
         oppList.add(opp4);
         
         NSP_OpportunityTriggerHelper.calculateEnrollmentFees(oppList);
+        Test.stopTest();
+        
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  1200/ 6 = 200
+        System.assertEquals(200, opp1.NSP_InsperityFee__c);
+        
+        //  opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+        //  opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
+        // NSP_InsperityFee__c = ((2500 /12) * .06 )/6 = 2.08333333333333333333333333333333 (include decimals otherwise won't work) 
+        System.assertEquals(2.08333333333333333333333333333333, opp2.NSP_InsperityFee__c);
+
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  600 / 6 = 100
+        System.assertEquals(100, opp3.NSP_InsperityFee__c);
+
+        //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
+        //  (500 * 10) /100 = 50
+        System.assertEquals(50, opp4.NSP_InsperityFee__c);
+
     }
     
         /**
