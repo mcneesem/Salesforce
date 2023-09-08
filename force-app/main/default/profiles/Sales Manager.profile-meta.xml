@@ -1079,6 +1079,11 @@
     </fieldPermissions>	
     <fieldPermissions>
         <editable>false</editable>
+        <field>Activity.NSP_Sales_Office__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.MidMarket_National_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
