@@ -511,7 +511,7 @@
                 <field>NSP_BackOutDate__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Back_Out__c</field>
             </layoutItems>
         </layoutColumns>
