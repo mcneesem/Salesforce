@@ -1932,10 +1932,6 @@
             <fullName>Workers Compensation</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Update in Salesforce</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Category_Picklist__c</picklist>
