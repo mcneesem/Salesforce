@@ -165,7 +165,7 @@ public class NSP_QuoteApprovalPreValidation {
         
         for(SBQQ__Quote__c quoteRec: quoteRecord) {
             //sequential execution of validations conditions for that specific quote
-            if(quoteRec.NSP_Invoice_To_Email__c == null){
+            if(quoteRec.NSP_Invoice_To_Email__c == null && quoteRec.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
                 errorMessageList.add(INVOICE_EMAIL_ERR_MESSAGE);
             }   
             if((quoteRec.SBQQ__ExpirationDate__c == null)  || (quoteRec.SBQQ__ExpirationDate__c <= system.today())) {
