@@ -73,6 +73,7 @@
     <customValue>
         <fullName>Integra</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Integra (need to check)</label>
     </customValue>
     <customValue>
