@@ -1,8 +1,10 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
+import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
 import * as LABELS from 'c/nsp_implementationLabels';
 
 import IP_OBJECT from '@salesforce/schema/Implementation_Profile__c';
 import EMPLOYEE_ORIENTATION from '@salesforce/schema/Employee_Orientation__c';
+import SALES_OFFICE from '@salesforce/schema/Account.NSP_Sales_Office__c';
 
 import {
   isMultiSelectCheckbox,
@@ -55,6 +57,12 @@ export default class Nsp_assignmentAndMeetingsFso extends LightningElement {
       this.addStyleToPrePopulatedQuestions(fieldName, value);
     }
   }
+
+  @wire(getObjectInfo, { objectApiName: 'Account' })
+  accObjectInfo;
+  
+  @wire(getPicklistValues, { recordTypeId: '$accObjectInfo.data.defaultRecordTypeId', fieldApiName: SALES_OFFICE })
+  salesOfficePicklistValues;
 
   postSyncOperations(fieldName, value) {
     const postSyncOperationFn = POST_SYNC_IP_FIELDS[SYNC_FIELDS[fieldName]];
@@ -206,5 +214,14 @@ export default class Nsp_assignmentAndMeetingsFso extends LightningElement {
   
   get checkIfIpisActive(){
     return this.userData?.Profile?.displayValue !== LABELS.SYSTEM_ADMIN && this.fieldValues && this.fieldValues?.NSP_Inactive__c?.value
+  }
+
+  get salesOfficePicklistLabel() {
+    const selectedValue = this.fieldValues?.Sales_Office__c?.value; 
+    if (this.salesOfficePicklistValues.data && selectedValue) {
+      const selectedOption = this.salesOfficePicklistValues.data.values.find(option => option.value === selectedValue);
+      return selectedOption ? selectedOption.label : '';
+    }
+    return '';
   }
 }
