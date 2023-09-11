@@ -553,13 +553,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>NSP_Project_Link__c</fields>
         <fields>pse__Start_Date__c</fields>
-        <fields>pse__End_Date__c</fields>
-        <fields>pse__Parent_Task__c</fields>
-        <fields>pse__Milestone__c</fields>
+        <fields>pse__Status__c</fields>
         <fields>pse__Order__c</fields>
-        <fields>pse__WBS_Element_Number__c</fields>
+        <fields>pse__Long_Description__c</fields>
         <relatedList>pse__Project_Task__c.pse__Project__c</relatedList>
         <sortField>pse__Order__c</sortField>
         <sortOrder>Asc</sortOrder>
@@ -626,8 +623,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Note_Type__c</fields>
+        <fields>Note__c</fields>
         <fields>CREATED_DATE</fields>
-        <fields>CREATEDBY_USER</fields>
+        
         <relatedList>NSP_Note__c.NSP_Project__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -650,7 +649,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4x000003Eh7M</masterLabel>
+        <masterLabel>00h8G000000NT3C</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
