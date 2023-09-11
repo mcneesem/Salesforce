@@ -35805,11 +35805,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Activity.NSP_Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Activity.NSP_Minutes_spent_on_task__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -34008,11 +34008,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Activity.NSP_Activity_type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Activity.NSP_Assigned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34033,11 +34028,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Activity.NSP_Engagement_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Activity.NSP_Event_Subtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34054,11 +34044,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Activity.NSP_Follow_up_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Activity.NSP_Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34113,17 +34098,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Activity.NSP_Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Activity.NSP_Minutes_spent_on_task__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Activity.NSP_Recurrence_Interval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34153,22 +34128,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Activity.NSP_Sub_Type_BPS__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Activity.NSP_Subcategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Activity.Subject__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Activity.NSP_Submission_type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
