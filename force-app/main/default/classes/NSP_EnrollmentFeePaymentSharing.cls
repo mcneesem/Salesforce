@@ -153,16 +153,10 @@ public class NSP_EnrollmentFeePaymentSharing
             }
         }
 
-
-        //SOQL Fix 
-        Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = new Map<Id, List<NSP_Enrollment_Fee_Payment__Share>>();
-        if(closedOpps.size() > 0){
-            oppIdEfpShareRecordsMap = efpSharedRecordsToProcess(closedOpps);
-        }
+        Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = efpSharedRecordsToProcess(closedOpps);
 
         List<NSP_Enrollment_Fee_Payment__Share> efpUpdateList = new List<NSP_Enrollment_Fee_Payment__Share>();
-        //SOQL Fix 
-        if(oppIdEfpShareRecordsMap.size() > 0){
+        
         for(List<NSP_Enrollment_Fee_Payment__Share> efpShareRecords : oppIdEfpShareRecordsMap.values()) {
             for(NSP_Enrollment_Fee_Payment__Share efpShareRecord : efpShareRecords)
             {
@@ -173,7 +167,7 @@ public class NSP_EnrollmentFeePaymentSharing
                 }
             }
         }
-        }
+        
         if(!efpUpdateList.isEmpty()){                
             Database.update(efpUpdateList,false);
         }
@@ -197,7 +191,7 @@ public class NSP_EnrollmentFeePaymentSharing
         efpshare.UserOrGroupId = userorGroupId;
         return efpshare;
     }
-    
+
     public static Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> efpSharedRecordsToProcess(Set<Id> opportunityIds)
     {
         List<NSP_Enrollment_Fee_Payment__c> efpRecordsByOppIds = [SELECT Id, NSP_Opportunity__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c IN:opportunityIds];
