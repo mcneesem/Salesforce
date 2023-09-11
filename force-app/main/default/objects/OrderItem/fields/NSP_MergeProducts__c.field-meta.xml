@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_MergeProducts__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This fields indicates the product is amended. This field is used to validate whether the order product is eligible to be billed(Set Hold Billing to YES/NO)</description>
+    <externalId>false</externalId>
+    <label>Merge Products</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -65,7 +65,9 @@ public class NSP_SubscriptionTriggerHandler  implements NSP_ITriggerHandler  {
      */
 
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-
+        //Added as part of DF-05939
+        NSP_SubscriptionTriggerHelper subscriptionTriggerHelperObject =  new NSP_SubscriptionTriggerHelper();
+        subscriptionTriggerHelperObject.afterUpdateDirector((Map<Id, SBQQ__Subscription__c>) newMap,(Map<Id, SBQQ__Subscription__c>) oldMap);
     }
 
     /**
