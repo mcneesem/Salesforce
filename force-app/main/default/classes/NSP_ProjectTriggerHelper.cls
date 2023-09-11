@@ -344,7 +344,7 @@ public class NSP_ProjectTriggerHelper{
             NSP_ProjectRecordSharing.removeRelatedProjectSharing(projectSharedIdSet); 
         }
 
-        if(!sentToReviewPrjcgtIdSet.isEmpty()){
+        if(!sentToReviewPrjctIdSet.isEmpty()){
             createItaCqaCaseAndSendEmail(sentToReviewPrjctIdSet); // STY-01785
         }
         if(!updateAssetProductSegmentPrjIdSet.isEmpty()){
