@@ -319,12 +319,9 @@ public class NSP_SubscriptionTriggerHelperTest {
         subscription1.SBQQ__QuoteLine__c = quoteLine1[0].Id;
         subscription1.NSP_Serial_Ids__c = serialIds;
         subscription1.SBQQ__SubscriptionStartDate__c=system.today();
-        subscription1.SBQQ__TerminatedDate__c = System.today()+15;
-		subscription1.SBQQ__BillingFrequency__c = 'Annual';
         subList.add(subscription1);
         
         insert subList;
-        update subList;
         test.stopTest(); 
         List<Asset> assets = [SELECT Id, Status FROM Asset WHERE Status = :NSP_CPQConstants.TERMINATED];
         System.assertNotEquals(Null, assets.size());
