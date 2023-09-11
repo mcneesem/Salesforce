@@ -195,7 +195,7 @@ public class NSP_OrderItemTriggerHelper {
                                 SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, 
                                 NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c, NSP_Payment_Method__c,SBQQ__Activated__c, 
                                 Product2.NSP_Partial_Period_Free_Treatment__c, Product2.NSP_Legal_Entity__c,NSP_Additional_Product_Description__c,
-                                SBQQ__QuoteLine__r.SBQQ__EndDate__c,SBQQ__BillingFrequency__c,EndDate,Order.Type,SBQQ__QuoteLine__r.NSP_MergeProducts__c FROM OrderItem WHERE Id IN:OrderItemNewMap.keyset()]) {
+                                SBQQ__QuoteLine__r.SBQQ__EndDate__c,SBQQ__BillingFrequency__c,EndDate,Order.Type FROM OrderItem WHERE Id IN:OrderItemNewMap.keyset()]) {
                 op.NSP_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
                 if(OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null){
                     OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
@@ -250,16 +250,9 @@ public class NSP_OrderItemTriggerHelper {
                 }
                 //Update Bill through override date for anniversay billing products when invoice is cancelled and rebilled
                 if(OrderItemNewMap.get(op.Id).blng__InvoiceRunProcessingStatus__c == NSP_CPQConstants.INVRUN_PENDING && OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c == null &&
-                  OrderItemNewMap.get(op.Id).NSP_AnniversaryBlngApplicable__c == true && OrderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL && op.Order.Status != NSP_CPQConstants.ORDER_DRAFT && 
-                  op.SBQQ__QuoteLine__r.NSP_ActionType__c != 'Amend' && op.SBQQ__QuoteLine__r.NSP_ActionType__c != null){
+                  OrderItemNewMap.get(op.Id).NSP_AnniversaryBlngApplicable__c == true && OrderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL && op.Order.Status != NSP_CPQConstants.ORDER_DRAFT){
                   OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c = OrderItemNewMap.get(op.Id).EndDate;
               }
-              //Added as part of 	DF-05939 to update Hold Billing to "Yes" which helps in not creating Invoice lines for the products which are unchanged during amendment
-                if((op.SBQQ__QuoteLine__r.NSP_ActionType__c == 'Amend' || op.SBQQ__QuoteLine__r.NSP_ActionType__c == null) && op.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL && 
-                        OrderItemNewMap.get(op.Id).blng__NextChargeDate__c != null && op.Order.Type == 'Amendment' && op.SBQQ__QuoteLine__r.NSP_MergeProducts__c == FALSE) {
-                        OrderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
-                        OrderItemNewMap.get(op.Id).blng__HoldBilling__c = 'Yes';
-                }    
              }
             // STY-03095 - logic to handle order line reprocessing that calls CPQ Quote Calculator API
             if(statusIdToChange.size()>0 || orderLinesToActivate.size()>0){
