@@ -1138,11 +1138,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Lead__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-    <fieldPermissions>
         <editable>true</editable>
         <field>Task.Notes__c</field>
         <readable>true</readable>
@@ -1152,11 +1147,6 @@
         <field>Task.NSP_What_needs_to_get_done__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Lead__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
         <field>Onboarding_Meeting_Request__c.NSP_Date_Valid_Formula__c</field>
@@ -13443,7 +13433,6 @@
         <editable>true</editable>
         <field>Task.NSP_Status__c</field>
         <readable>true</readable>
-    </fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
