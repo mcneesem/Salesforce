@@ -40,7 +40,7 @@ public class LoadFullAccessPermSets {
 
         if (!Test.isRunningTest()) {
             System.debug( ' ~ Launch LoadFullAccessPermSetsQueueable chain - objectCount=' + objectApiNames.size() );
-            Id jobID = System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, true));
+            Id jobID = System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, true, true));
             System.debug( ' ~ firstJob=' + jobID );
         }
     }

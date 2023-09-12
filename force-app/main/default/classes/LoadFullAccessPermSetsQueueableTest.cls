@@ -33,7 +33,7 @@ public class LoadFullAccessPermSetsQueueableTest {
 		}
 
         Test.startTest();        
-        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, true));
+        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, true, false));
         Test.stopTest();
 
 		List<ObjectPermissions> op = [SELECT Id, ParentId FROM ObjectPermissions WHERE ParentId IN :psMap.keySet() ];
