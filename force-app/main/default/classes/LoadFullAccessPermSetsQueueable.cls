@@ -28,11 +28,10 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 		// chain new job for next object
         if (objectApiNames.size() > 0) {
             Id jobID = System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, oUpsertFlag, false));
-            System.debug( ' ~ objectCount remaining=' + objectApiNames.size() );
-			System.debug( ' ~ nextJob=' + jobID );
+			System.debug( ' ~ nextJob=' + jobID + ' ~ objectCount remaining=' + objectApiNames.size() );
         } else {
-            System.debug( ' ~ This was the final job for LoadOBPermSetsQueueable' );
             sendCompletionEmail();
+            System.debug( ' ~ This was the final job for LoadOBPermSetsQueueable' );
         }
     }
 
