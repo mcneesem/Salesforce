@@ -13018,6 +13018,7 @@
         <editable>false</editable>
         <field>Task.NSP_Activity_Type_Reporting__c</field>
         <readable>false</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Completed_Date_Deprecated__c</field>
