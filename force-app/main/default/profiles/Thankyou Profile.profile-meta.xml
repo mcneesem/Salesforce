@@ -3986,6 +3986,7 @@
         <editable>false</editable>
         <field>Event.NSP_Event_Type__c</field>
         <readable>false</readable>
+    </fieldPermissions>   
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Legacy_District_Administrator__c</field>
