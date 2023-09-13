@@ -1121,11 +1121,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Activity_type__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Activity_Type_Reporting__c</field>
             <table>Case.Activities</table>
         </columns>
@@ -1142,11 +1137,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Assigned__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Assigned_Sales_Engineer__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>
@@ -1282,11 +1272,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Documents_Missing__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Due_Date_Oracle__c</field>
             <table>Case.Activities</table>
         </columns>
@@ -1298,11 +1283,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DurationInMinutes</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Engagement_Type__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>
@@ -1328,11 +1308,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Follow_up_Date__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Form_Name__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>
@@ -1363,11 +1338,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>LastModifiedDate</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Lead__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>
@@ -1437,11 +1407,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Opportunity_Product_Type__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Outcome__c</field>
             <table>Case.Activities</table>
         </columns>
@@ -1453,11 +1418,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Priority__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>
@@ -1478,11 +1438,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Minutes_spent_on_task__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Recurrence_Interval__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>
@@ -1594,17 +1549,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Submission_type__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Sub_Title__c</field>
-            <table>Case.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Sub_Type_BPS__c</field>
             <table>Case.Activities</table>
         </columns>
         <columns>

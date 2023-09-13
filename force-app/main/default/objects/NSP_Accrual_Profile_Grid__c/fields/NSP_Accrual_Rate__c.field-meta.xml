@@ -5,7 +5,7 @@
     <label>Accrual Rate</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>8</scale>
+    <scale>5</scale>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>

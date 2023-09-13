@@ -49,7 +49,7 @@
                 <field>NSP_Number_of_Employees__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Re_book__c</field>
             </layoutItems>
             <layoutItems>

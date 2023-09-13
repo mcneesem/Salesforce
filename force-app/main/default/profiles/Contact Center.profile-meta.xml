@@ -20787,7 +20787,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.NSP_SIC__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35801,11 +35801,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Activity.NSP_Number_Attending__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Activity.NSP_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

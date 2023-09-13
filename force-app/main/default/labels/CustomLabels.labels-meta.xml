@@ -727,7 +727,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Batch Size for Invoice Post Batch</shortDescription>
-        <value>200</value>
+        <value>25</value>
     </labels>
     <labels>
         <fullName>NSP_BPSPermisisonAssetValidation</fullName>
@@ -5093,7 +5093,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_Sub_Client_Contact_Address_Initial</shortDescription>
-        <value>aD1</value>
+        <value>aD3</value>
     </labels>
     <labels>
         <fullName>NSP_Subaccount_Needed_Different_Pay_Period</fullName>
@@ -6049,7 +6049,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sub Client Contact Initial</shortDescription>
-        <value>aAV</value>
+        <value>aD4</value>
     </labels>
     <labels>
         <fullName>Transition_Progress_Survey_Case_Owner</fullName>

@@ -112,11 +112,13 @@ public class NSP_AccountContactRelationTriggerHelper {
                 }
                 // Added as part of STY-02840
                 if((acr.isDirect == true && (acr.NSP_Work_Phone__c != null && oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c || 
-                    acr.NSP_Work_Email__c != null && oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c)) ||
-                    (acr.isDirect == true && oldACR.isDirect != acr.isDirect) ||
+                    acr.NSP_Work_Email__c != null && oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c ||
                     oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c ||
                     oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c ||
-                    oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c){
+                    oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c)) ||
+                    (acr.isDirect == true && oldACR.isDirect != acr.isDirect)
+                  )
+                {
                        ConIdACRMap.put(acr.ContactId, acr);
                    }
                 

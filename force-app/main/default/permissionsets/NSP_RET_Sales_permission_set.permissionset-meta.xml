@@ -7961,4 +7961,8 @@ RET Sales users who need create edit access to Retirement Services object</descr
         <tab>NSP_Sub_Plan_Change_History__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>TransferAnyCase</name>
+    </userPermissions>
 </PermissionSet>

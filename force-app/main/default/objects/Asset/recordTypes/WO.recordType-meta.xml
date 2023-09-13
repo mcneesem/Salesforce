@@ -928,7 +928,51 @@
     <picklistValues>
         <picklist>NSP_Service_Region__c</picklist>
         <values>
+            <fullName>FSO - Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSO - Northeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSO - Southeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSO - Western</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FSO - Southwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Houston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Southeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Western</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO -%C2%A0Enterprise</fullName>
             <default>false</default>
         </values>
     </picklistValues>
