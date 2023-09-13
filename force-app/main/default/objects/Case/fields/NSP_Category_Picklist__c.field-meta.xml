@@ -717,6 +717,7 @@
         <valueSettings>
             <controllingFieldValue>Corporate Services/BPS</controllingFieldValue>
             <controllingFieldValue>Client Management</controllingFieldValue>
+            <controllingFieldValue>Payroll Services</controllingFieldValue>
             <valueName>FIN-Selected Services</valueName>
         </valueSettings>
         <valueSettings>
