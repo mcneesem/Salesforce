@@ -438,7 +438,7 @@ public class NSP_ProjectTriggerHelper{
         if(!projectIdSet.isEmpty()){
             updateChildStatus(projectIdSet,'pse__Assignment__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CLOSED_STATUS);
             updateChildStatus(projectIdSet,'pse__Milestone__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CANCELLED_STATUS);
-            updateChildStatus(projectIdSet,'pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CANCELLED_STATUS);
+            updateChildStatus(projectIdSet,'pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.PROJECT_TASK_CANCELLED);
         }
     }
     /**
