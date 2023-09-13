@@ -3911,10 +3911,6 @@
             <valueName>Employee Moves/Changes/Reinstate DD</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>FIN-Funding</controllingFieldValue>
-            <valueName>Wires/Purge Debit</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>FIN-Withholding Tax</controllingFieldValue>
             <valueName>State Tax Credits</valueName>
         </valueSettings>
@@ -4038,15 +4034,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Services</controllingFieldValue>
-            <valueName>Garnishments</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Payroll Services</controllingFieldValue>
             <valueName>Hired Date Changed - Clt Req</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Payroll Services</controllingFieldValue>
-            <valueName>Invoice Issue</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Services</controllingFieldValue>
@@ -4079,10 +4067,6 @@
         <valueSettings>
             <controllingFieldValue>Payroll Services</controllingFieldValue>
             <valueName>Client Transfer Checklist</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Payroll Services</controllingFieldValue>
-            <valueName>Credit/Adjustment Issue</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Services</controllingFieldValue>
