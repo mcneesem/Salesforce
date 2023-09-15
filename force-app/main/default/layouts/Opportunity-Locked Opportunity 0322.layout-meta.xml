@@ -644,6 +644,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -679,11 +684,6 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.Financial_Analysis_Tool</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
@@ -696,7 +696,7 @@
         <platformActionListItems>
             <actionName>New_RET_Task</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -858,6 +858,8 @@
         <fields>NSP_Payment_Date__c</fields>
         <fields>NSP_Payment_Cleared_Date__c</fields>
         <fields>NSP_Payment_Status__c</fields>
+        <fields>NSP_WX_WA_Enrollment_Fee_Received__c</fields>
+        <fields>NSP_Docupay_Upfront_fee_Inc_Tax__c</fields>
         <relatedList>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
