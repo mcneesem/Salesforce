@@ -51758,8 +51758,4 @@
         <enabled>false</enabled>
         <name>CreateReportInLightning</name> 
     </userPermissions>
-    <userPermissions>
-        <enabled>false</enabled>
-        <name>ManageConvMiningReports</name>
-    </userPermissions>
 </Profile>
