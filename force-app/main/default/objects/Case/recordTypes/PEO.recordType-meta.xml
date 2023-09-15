@@ -1829,6 +1829,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SUI Work State Update/Correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Survey %26 Assessment Analysis</fullName>
             <default>false</default>
         </values>
