@@ -6,10 +6,9 @@
             STY-02255	 -  Retirement Services - Project Assignment Email Alert	<STY-02255>
 
 */
-
-
 public class NSP_ResourceRequestTriggerHelper {
-	
+    // test w/ NSP_ResourceRequestTriggerHelperTest (98%)
+
     /***********************************************************************************************
     * MethodName: afterInsertDirector
     * Description : Iterates throught the list of Resource Requests Records and passes the parameters to other methods.
