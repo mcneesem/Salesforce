@@ -1497,6 +1497,8 @@
         <fields>NSP_Payment_Date__c</fields>
         <fields>NSP_Payment_Cleared_Date__c</fields>
         <fields>NSP_Payment_Status__c</fields>
+        <fields>NSP_WX_WA_Enrollment_Fee_Received__c</fields>
+        <fields>NSP_Docupay_Upfront_fee_Inc_Tax__c</fields>
         <relatedList>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
