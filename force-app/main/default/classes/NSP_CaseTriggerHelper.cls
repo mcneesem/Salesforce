@@ -307,12 +307,13 @@ Date        : 30/09/2021
     }
     
     //Collect the Account team member
-    public Id getAccountTeamMember(Id accId){
-        Id teamMemberId = [SELECT Id,NSP_Account__c, NSP_Role__c,NSP_User__c
-                           FROM NSP_Account_Team__c 
-                           WHERE NSP_Role__c =: NSP_SalesConstants.PayrollSpecialist 
-                           AND NSP_Account__c =: accId].NSP_User__c;
-        return teamMemberId;
+    public Id getAccountTeamMember(Id accId) {
+        List<NSP_Account_Team__c> accountTeamList = [SELECT NSP_User__c
+                                                    FROM NSP_Account_Team__c 
+                                                    WHERE NSP_Role__c = :NSP_SalesConstants.PayrollSpecialist 
+                                                    AND NSP_Account__c = :accId AND NSP_User__c!=null Limit 1];
+    
+        return !accountTeamList.isEmpty() ? accountTeamList[0].NSP_User__c : null;
     }
     
     /**
@@ -519,12 +520,17 @@ Date        : 30/09/2021
     public Case updateFLSACaseDetails(Case eachCase, Map<Id, Case> caseOldMap){
         if(eachCase.NSP_FLSA_Case__c == True && caseOldMap.get(eachCase.Id).NSP_SubCategory__c == null &&
            eachCase.AccountId != null){
+               if((eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory1) ||
+                  (eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory2)){
+                      Id teamMemberId = getAccountTeamMember(eachCase.AccountId);
+               	   	  if(teamMemberId!=null){
+                         eachCase.OwnerId = teamMemberId;
+                      } 
+               }
                if(eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory1){
-                   eachCase.OwnerId = getAccountTeamMember(eachCase.AccountId);
                    eachCase.NSP_Case_Sub_Status__c = NSP_SalesConstants.InProgress;
                    eachCase.NSP_Due_Date__c = eachCase.NSP_Opened_Date__c != null ? eachCase.NSP_Opened_Date__c.addDays(90):eachCase.NSP_Due_Date__c;
                }else if(eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory2){
-                   eachCase.OwnerId = getAccountTeamMember(eachCase.AccountId);
                    eachCase.NSP_Case_Sub_Status__c = NSP_SalesConstants.Resolved;
                    eachCase.Status = NSP_SalesConstants.Closed;
                    //STY-04507 - When update the sub category of the case from null to FLSA Quick Check Service then Resolution is Complete
