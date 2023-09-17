@@ -360,6 +360,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Complexity_Level__c</fieldItem>
                 <identifier>RecordNSP_Complexity_Level_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HR Employee Relations</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Separation Agreement Request</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-79755648-616d-468a-8dd0-c0a157c43521</name>
