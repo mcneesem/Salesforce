@@ -5,6 +5,7 @@
 * Name : NSP_AccountProfileController
 */
 public with sharing class NSP_AccountProfileController {
+    // test w/ NSP_AccountProfileController (90%)
 
     // Only for testing purpose
     @TestVisible
@@ -337,7 +338,7 @@ public with sharing class NSP_AccountProfileController {
     }
 
     private static NSP_Eligibility__c getEligibilityRecord(String assetId){
-        List<NSP_Eligibility__c> retEligibleObj;
+        List<NSP_Eligibility__c> retEligibleObj = new List<NSP_Eligibility__c>();
         NSP_Plan_SubPlan__c subPlanObj = getRETSubPlanId(assetId);
         if(subPlanObj!=NULL){
             List<String> rtEligibleFields = new List<String>{
@@ -401,7 +402,7 @@ public with sharing class NSP_AccountProfileController {
     }
 
     private static NSP_Participation_SaaS_Activity__c getSaaSActivityField(String assetId){
-        List<NSP_Participation_SaaS_Activity__c> saasFields;
+        List<NSP_Participation_SaaS_Activity__c> saasFields = new List<NSP_Participation_SaaS_Activity__c>();
         NSP_Plan_SubPlan__c subPlanObj = getRETSubPlanId(assetId);
         if(subPlanObj!=NULL){
             List<String> retParticipateFields = new List<String>{
