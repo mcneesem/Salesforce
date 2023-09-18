@@ -67,6 +67,11 @@
                 <default>false</default>
                 <label>Finance Client Equity Confidential</label>
             </value>
+            <value>
+                <fullName>Leave Admin Data Visibility</fullName>
+                <default>false</default>
+                <label>Leave Admin Data Visibility</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
