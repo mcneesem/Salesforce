@@ -5,7 +5,7 @@
 * Name : NSP_AccountProfileController
 */
 public with sharing class NSP_AccountProfileController {
-    // test w/ NSP_AccountProfileController (90%)
+    // test w/ NSP_AccountProfileControllerTest (90%)
 
     // Only for testing purpose
     @TestVisible
