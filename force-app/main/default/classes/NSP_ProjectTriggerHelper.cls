@@ -3,6 +3,8 @@
 * V2.0              Ramya Ravi  02/10/2023   To update Project owner from quote for PEO Billable RT     <STY-04002>
 */
 public class NSP_ProjectTriggerHelper{
+    // test w/ NSP_ProjectTriggerHelperTest (84%)
+
     public Static Set<Id> dupPreventionSet = new Set<Id>();
     public final String PROJECTTASKSTATUSCOMPLETE = 'Complete';
     public final String PROJECTTASKSTATUSCANCELLED = 'Canceled';
@@ -438,7 +440,7 @@ public class NSP_ProjectTriggerHelper{
         if(!projectIdSet.isEmpty()){
             updateChildStatus(projectIdSet,'pse__Assignment__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CLOSED_STATUS);
             updateChildStatus(projectIdSet,'pse__Milestone__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CANCELLED_STATUS);
-            updateChildStatus(projectIdSet,'pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.CANCELLED_STATUS);
+            updateChildStatus(projectIdSet,'pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT,NSP_ServiceConstants.PROJECT_TASK_CANCELLED);
         }
     }
     /**

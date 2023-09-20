@@ -189,7 +189,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Accout Billing /  Shipping Addresses</label>
+        <label>Account Billing /  Shipping Addresses</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>

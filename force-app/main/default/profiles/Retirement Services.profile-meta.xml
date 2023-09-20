@@ -19225,7 +19225,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.Sic</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50034,9 +50034,5 @@
     <userPermissions>
         <enabled>false</enabled>
         <name>CreateReportInLightning</name> 
-    </userPermissions>
-    <userPermissions>
-        <enabled>false</enabled>
-        <name>ManageConvMiningReports</name>
     </userPermissions>
 </Profile>

@@ -6,10 +6,9 @@
             STY-02255	 -  Retirement Services - Project Assignment Email Alert	<STY-02255>
 
 */
-
-
 public class NSP_ResourceRequestTriggerHelper {
-	
+    // test w/ NSP_ResourceRequestTriggerHelperTest (98%)
+
     /***********************************************************************************************
     * MethodName: afterInsertDirector
     * Description : Iterates throught the list of Resource Requests Records and passes the parameters to other methods.
@@ -70,7 +69,7 @@ public class NSP_ResourceRequestTriggerHelper {
     * ********************************************************************************************/  
         
         public void sendEmailToResourceRole(pse__Resource_Request__c resourceRequest, String resourceRole){
-            sendEmailBasedOnResourceRoleSelected(resourceRequest, resourceRole);
+            //sendEmailBasedOnResourceRoleSelected(resourceRequest, resourceRole);
         }
         
     /***********************************************************************************************
@@ -79,7 +78,7 @@ public class NSP_ResourceRequestTriggerHelper {
     * Params:     : pse__Resource_Request__c resourceRequest, String resourceRole
     * ********************************************************************************************/  
         
-        public void sendEmailBasedOnResourceRoleSelected(pse__Resource_Request__c resourceRequest, String resourceRole){
+        /*public void sendEmailBasedOnResourceRoleSelected(pse__Resource_Request__c resourceRequest, String resourceRole){
             if(resourceRole == NSP_ServiceConstants.RET_COMPLIANCE){
                 sendEmailNotification(resourceRequest, new List<String>{getEmailAddressFromMDT(NSP_ServiceConstants.RET_401KCOMPLIANCE)});
             }
@@ -126,27 +125,27 @@ public class NSP_ResourceRequestTriggerHelper {
                 sendEmailNotification(resourceRequest, new List<String>{getEmailAddressFromMDT(NSP_ServiceConstants.RET_ORKMDT)});
             }
         }
-        
+        */
         
     /***********************************************************************************************
     * MethodName: getEmailAddressFromMDT
     * Description : Helper method for sendEmailBasedOnResourceRoleSelected which Gets emails from metadata record
     * Params:     : String mdtRecord
     * ********************************************************************************************/  
-        
+        /*
         public String getEmailAddressFromMDT(String mdtRecord){
             NSP_Retirement_Services__mdt mdtrec = NSP_Retirement_Services__mdt.getInstance(mdtRecord);
             return mdtrec.NSP_Email_Address__c;
         }
         
-        
+        */
     /***********************************************************************************************
     * MethodName: sendEmailNotification
     * Description : Sends an email notification to shared inboxes based on the resource role selected
     * Params:       Map<Id, pse__Resource_Request__c> mNewResourceRequests Map<Id, pse__Resource_Request__c> mOldResourceRequests
     * ********************************************************************************************/  
         
-        public void sendEmailNotification(pse__Resource_Request__c resourceRequest, List<String> sendToList){
+       /* public void sendEmailNotification(pse__Resource_Request__c resourceRequest, List<String> sendToList){
             List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
             List<String> emailTempFields = new List<String>{
                 'ID',
@@ -170,7 +169,7 @@ public class NSP_ResourceRequestTriggerHelper {
                 Messaging.sendEmail(lstEmailMessages);
             }
         }
-        
+        */
         
         /**
     * Send the contact in Resource on Project Task Assignment rec to individual functionality methods

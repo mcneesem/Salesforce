@@ -2,6 +2,8 @@
 * Represents the Implementation profile tirgger for update scenario.
 */ 
 public class NSP_Implprofile_ServiceHelperUpdate {
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (81%)
+
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
     private Map<Id, Implementation_Profile__c> newIPs = null; 
@@ -2577,13 +2579,13 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c!=ipRec.NSP_Old_Effective_Date_EPLI__c){
                             isSendMail =true;
                             mailBody +='The Insperity effective date for Payroll/Worker’s Comp/EPLI has changed from '
-                            + String.valueOf(ipRec.NSP_Old_Effective_Date_EPLI__c).removeEnd(' 00:00:00') +' to '+ String.valueOf(ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c).removeEnd(' 00:00:00')+'. <br/>';
+							+ ipRec.NSP_Old_Effective_Date_EPLI__c.format() +' to '+ ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c.format()+'. <br/>';
                         }
                         if(ipRec.NSP_Old_Insperity_Ben_effective_date__c!=null && 
                         ipRec.Insperity_benefits_effective_date__c!=ipRec.NSP_Old_Insperity_Ben_effective_date__c){
                             isSendMail =true;
                             mailBody +='The Insperity benefits effective date has changed from '
-                            + String.valueOf(ipRec.NSP_Old_Insperity_Ben_effective_date__c).removeEnd(' 00:00:00') +' to '+ String.valueOf(ipRec.Insperity_benefits_effective_date__c).removeEnd(' 00:00:00') + '. <br/>';
+							+ ipRec.NSP_Old_Insperity_Ben_effective_date__c.format() +' to '+ ipRec.Insperity_benefits_effective_date__c.format() + '. <br/>';
                         }
                         if(ipRec.NSP_Old_Benefits_Package__c!=null && 
                         ipRec.Benefits_Package__c!=ipRec.NSP_Old_Benefits_Package__c){
