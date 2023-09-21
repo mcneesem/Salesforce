@@ -198,6 +198,7 @@ public class NSP_OpportunityTriggerHelperTest {
        
         List<Opportunity> oppList = new List<Opportunity>();
         
+        //  Formula 1
         Opportunity opp1 = new Opportunity();
         opp1.Name = 'Test Oppty Enrollment Fee';
         opp1.AccountId = acct.id;
@@ -210,7 +211,8 @@ public class NSP_OpportunityTriggerHelperTest {
         opp1.NSP_Schedule_B_Enrollment_Fee__c = 1200;
         opp1.NSP_TotalAnnualPayroll__c = 1500;
         oppList.add(opp1);
-
+        
+        //  Formula 2
         Opportunity opp2 = new Opportunity();
         opp2.Name = 'Test Oppty Enrollment Fee';
         opp2.AccountId = acct.id;
@@ -222,6 +224,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opp2.NSP_TotalAnnualPayroll__c = 2500;
         oppList.add(opp2);
 
+        //  Formula 3
         Opportunity opp3 = new Opportunity();
         opp3.Name = 'Test Oppty Enrollment Fee';
         opp3.AccountId = acct.id;
@@ -234,6 +237,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opp3.NSP_1_6_OfScheduleB__c = true;
         oppList.add(opp3);
 
+        //  Formula 4
         Opportunity opp4 = new Opportunity();
         opp4.Name = 'Test Oppty Enrollment Fee';
         opp4.AccountId = acct.id;
@@ -241,8 +245,8 @@ public class NSP_OpportunityTriggerHelperTest {
         opp4.CloseDate = date.today();
         opp4.CurrencyIsoCode = CURRENCY_USD;
         opp4.NSP_PrimaryProduct__c = 'WO';
-        opp4.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opp4.NSP_TotalAnnualPayroll__c = 2500;
+        opp4.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp3.NSP_TotalAnnualPayroll__c = 1500; 
         opp4.NSP_WaivedInsperityFee__c = true;
         opp4.NSP_InsperityFeePercent__c = 10;
         oppList.add(opp4);
@@ -264,9 +268,8 @@ public class NSP_OpportunityTriggerHelperTest {
         System.assertEquals(100, opp3.NSP_InsperityFee__c);
 
         //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
-        //  (500 * 10) /100 = 50
-        System.assertEquals(50, opp4.NSP_InsperityFee__c);
-
+        //  (600 * 10) /100 = 60
+        System.assertEquals(60, opp4.NSP_InsperityFee__c);
     }
     
         /**
