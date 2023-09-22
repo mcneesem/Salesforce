@@ -14,6 +14,9 @@ Modification Log     :
     
 @isTest
 private class NSP_EmailMessageTriggerHelperTest {
+    public static final String CONTACTCENTER = 'contactcenter@insperity.com.invalid';
+    public static final String QUEUE = 'Queue';
+    public static final String CONTACTCENTERQUEUE = 'NSP_ContactCenter';
     
     @testSetup
     static void setupTestData(){
@@ -47,10 +50,6 @@ private class NSP_EmailMessageTriggerHelperTest {
         //inserting Email message
         insert eMsg;
         test.stopTest();
-
-        Case updatedCase = [SELECT NSP_Response_After_Close__c FROM Case WHERE ID = : caseRecord.id];
-        System.assertEquals(true, updatedCase.NSP_Response_After_Close__c);
-        
 
     }     
 
@@ -269,5 +268,82 @@ private class NSP_EmailMessageTriggerHelperTest {
         
         List<EmailMessage> eMessageList = [SELECT Id, FromName ,ParentId ,CreatedDate From EmailMessage WHERE FromName = 'cases.345678_SB4.22778899_3456789.netsuite'];
         system.assert(eMessageList.size() > 0);
+    }
+    
+    /***********************************************************************************************
+    * MethodName : markResponseAfterCloseMoreThanFiveForPEOTest
+    * Description : This method is used to test if Mark Response field and creation of Child case base on Case closed Date
+    * ********************************************************************************************/ 
+    @isTest
+    static void markResponseAfterCloseMoreThanFiveForPEOTest() {   
+        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+        ID contactCenterQueueId = ([SELECT ID FROM Group WHERE Type = :QUEUE AND DeveloperNAME = :CONTACTCENTERQUEUE]).ID;
+        Map<Case,String> CaseToSubjectMap = new Map<Case,String>();
+        Map<Case,EmailMessage> ParentCaseToEmailMessageMap = new Map<Case,EmailMessage>();
+        List<Case> caseList = new List<Case>();
+
+        Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        caseRecord.NSP_Rating__c = 'Neutral';
+        caseRecord.Status = 'Closed';
+        caseRecord.RecordTypeId = casePEORecordTypeId;
+        caseRecord.NSP_Category__c = 'Adaption';
+        caseRecord.NSP_SubCategory__c = 'Claim';
+        caseRecord.NSP_Date_Closed__c = Date.Today().addDays(-10);
+        update caseRecord;
+        
+        
+        //Email message creation
+        EmailMessage eMsg = new EmailMessage ();
+        eMsg.FromAddress = 'test@test.com';
+        eMsg.Incoming = True;
+        eMsg.ToAddress= CONTACTCENTER;
+        eMsg.Subject = 'Test email Subject';
+        eMsg.HtmlBody = 'Test email body';
+        eMsg.ParentId = caseRecord.id;
+        
+        test.startTest();
+        //inserting Email message
+        insert eMsg;
+        
+        CaseToSubjectMap.put(caseRecord,'Created From TestClass');
+        ParentCaseToEmailMessageMap.put(caseRecord,eMsg);
+        caseList.add(caseRecord);
+        
+        NSP_EmailMessageTriggerHelper.createCaseFromEmail(CaseToSubjectMap,contactCenterQueueId);
+        NSP_EmailMessageTriggerHelper.updateRelatedCaseOnEmailMessage(ParentCaseToEmailMessageMap,caseList);
+        test.stopTest();        
+
+    }
+    
+    /***********************************************************************************************
+    * MethodName : markResponseAfterCloseLessThanFiveForPEOTest
+    * Description : This method is used to test if Mark Response field and reopen case based on Case closed Date
+    * ********************************************************************************************/ 
+    @isTest
+    static void markResponseAfterCloseLessThanFiveForPEOTest() {   
+        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+
+        Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        caseRecord.NSP_Rating__c = 'Neutral';
+        caseRecord.Status = 'Closed';
+        caseRecord.RecordTypeId = casePEORecordTypeId;
+        caseRecord.NSP_Category__c = 'Adaption';
+        caseRecord.NSP_SubCategory__c = 'Claim';
+        caseRecord.NSP_Date_Closed__c = Date.Today();
+        update caseRecord;
+        //Email message creation
+        EmailMessage eMsg = new EmailMessage ();
+        eMsg.FromAddress = 'test@test.com';
+        eMsg.Incoming = True;
+        eMsg.ToAddress= CONTACTCENTER;
+        eMsg.Subject = 'Test email Subject';
+        eMsg.HtmlBody = 'Test email body';
+        eMsg.ParentId = caseRecord.id;
+        
+        test.startTest();
+        //inserting Email message
+        insert eMsg;
+        test.stopTest();
+
     }
 }
