@@ -233,6 +233,10 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testAccountUpdate() {
+        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabledDeleteAccountTeams__c = True;
+        upsert settings;
+
         List<Account>  accountList = New List<Account>();
          User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@insperity.com' Limit 1];
         for(integer count = 0; count < 5; count++) {
@@ -332,7 +336,10 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testhandleTask() {
-        
+        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabledDeleteAccountTeams__c = True;
+        upsert settings;
+
         List<Account>  accountList = New List<Account>();
         Map<Id, Account> accountMapOld = new Map<Id, Account>();
         List<Account> accountUpdateList = [Select Id, Name, NSP_Ready_for_Integration_Sync__c FROM Account WHERE Id =: accountMapOld.keySet()];
@@ -509,8 +516,10 @@ public class NSP_AccountTriggerHelperTest {
     
     @isTest
     static void testAccountPremierUpdate() {
-    
-        
+        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabledDeleteAccountTeams__c = True;
+        upsert settings;
+
          List<Account>  accountList = New List<Account>();
          User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE Email = 'jsmith@insperity.com' Limit 1];
         for(integer count = 0; count < 1; count++) {
