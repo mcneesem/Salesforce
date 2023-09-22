@@ -6,8 +6,8 @@ public class LoadFullAccessPermSets {
     // * MethodName:    runLoadFullAccessPermSets 
 	// * Description :  Method for loading two specified PermissionSets with Object and Field Permissions
     // *                for all (or optional list of) object API names. Method launches a Queueable
-    // *                (LoadFullAccessPermSetsQueueable) chain, each job upserting ObjectPermissions and
-    // *                FieldPermissions into both Perm Sets for a single object from the specified list.
+    // *                (LoadFullAccessPermSetsQueueable) chain which upserts the ObjectPermissions and
+    // *                FieldPermissions into each Perm Set for a single object from the specified list.
     // *
 	// * Params:        readPermSetId (Id of perm set to be loaded with Read permissions)
     // *                editPermSetId (Id of perm set to be loaded with Edit permissions)
