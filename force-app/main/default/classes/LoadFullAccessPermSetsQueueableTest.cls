@@ -1,39 +1,55 @@
 @isTest
 public class LoadFullAccessPermSetsQueueableTest {
 	@testSetup 
-    static void testData() {	
-		PermissionSet ps = new PermissionSet(Label='FA Test Permisson Set',Name='FA_Test_Permisson_Set');
-		insert ps;
+    static void testData() {
+		List<PermissionSet> psList = new List<PermissionSet>();
+		PermissionSet ps1 = new PermissionSet(Label='FA Test Read Permisson Set',Name='FA_Test_Read_Permisson_Set');
+		PermissionSet ps2 = new PermissionSet(Label='FA Test Edit Permisson Set',Name='FA_Test_Edit_Permisson_Set');
+        psList.add(ps1);
+        psList.add(ps2);
+		insert psList;
 	}
 
 	@isTest
 	static void testLoadFullAccessPermSets1() {
 		Test.startTest();
-        LoadFullAccessPermSets.runLoadFullAccessPermSets();
+		Id readPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Read_Permisson_Set' LIMIT 1].Id;
+		Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permisson_Set' LIMIT 1].Id;
+        List<String> objectApiNames = new List<String>();
+		LoadFullAccessPermSets.runLoadFullAccessPermSets(readPermSetId, editPermSetId, objectApiNames);
+		LoadFullAccessPermSetsQueueable.sendCompletionEmail();
         Test.stopTest();
 	}
 
 	@isTest
 	static void testLoadFullAccessPermSets2() {
 		Test.startTest();
-        LoadFullAccessPermSets.runLoadFullAccessPermSets('Account,EntityDefinition');
+		Id readPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Read_Permisson_Set' LIMIT 1].Id;
+		Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permisson_Set' LIMIT 1].Id;
+        List<String> objectApiNames = new List<String>{'Account', 'EntityDefinition'};
+		LoadFullAccessPermSets.runLoadFullAccessPermSets(null, null, objectApiNames);
+		LoadFullAccessPermSets.runLoadFullAccessPermSets(readPermSetId, editPermSetId, objectApiNames);
         Test.stopTest();
 	}
 
 	@isTest
 	static void testLoadFullAccessPermSetsQueueable() {
-		map<id,Boolean> psMap = new map<id,Boolean>{ [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Permisson_Set' LIMIT 1].Id => false };
+		Id readPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Read_Permisson_Set' LIMIT 1].Id;
+		Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permisson_Set' LIMIT 1].Id;
+		Map<id,Boolean> psMap = new map<id,Boolean>{ readPermSetId => false, editPermSetId => true };
+		Map<String, Integer> depRetry = new Map<String, Integer>();
 
         List<EntityDefinition> entities = [SELECT QualifiedApiName FROM EntityDefinition 
-			WHERE QualifiedApiName IN ('Account','EntityDefinition')]; // one success case and one falure case
+			WHERE QualifiedApiName IN ('Account','EntityDefinition','Idea')]; // one success case, one bad case, one ViewAll case
 
 		List<String> objectApiNames = new List<String>();
 		for ( EntityDefinition entity : entities )  {
 			objectApiNames.add( entity.QualifiedApiName );
 		}
 
-        Test.startTest();        
-        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, psMap, true, false));
+        Test.startTest();
+        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
+        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
         Test.stopTest();
 
 		List<ObjectPermissions> op = [SELECT Id, ParentId FROM ObjectPermissions WHERE ParentId IN :psMap.keySet() ];
