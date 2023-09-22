@@ -417,7 +417,7 @@
         <platformActionListItems>
             <actionName>FeedItem.ContentNote</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
+            <sortOrder>19</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
