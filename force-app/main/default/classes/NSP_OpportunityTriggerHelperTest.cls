@@ -246,7 +246,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opp4.CurrencyIsoCode = CURRENCY_USD;
         opp4.NSP_PrimaryProduct__c = 'WO';
         opp4.NSP_Schedule_B_Enrollment_Fee__c = 600;
-        opp3.NSP_TotalAnnualPayroll__c = 1500; 
+        opp4.NSP_TotalAnnualPayroll__c = 1500; 
         opp4.NSP_WaivedInsperityFee__c = true;
         opp4.NSP_InsperityFeePercent__c = 10;
         oppList.add(opp4);
