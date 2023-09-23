@@ -1,5 +1,4 @@
-@isTest
-private class NSP_SubClientContactTriggerHelperTest {
+@isTest private class NSP_SubClientContactTriggerHelperTest {
     private static final List<String> CONTACT_FIELDS = new List<String>{'Id','LastName'};
     @TestSetup
     private Static Void TestData(){
@@ -58,8 +57,12 @@ private class NSP_SubClientContactTriggerHelperTest {
         insert reportrequest;
         
     }
-    
-    private Static TestMethod Void shouldUpdatePaperLessBatchDate(){
+
+    @isTest private static void shouldUpdatePaperLessBatchDate() {
+        SubClientContactTriggerSettings__c settings = SubClientContactTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabledDeleteAddresses__c = True;
+        upsert settings;
+
         Test.StartTest();
         List<NSP_Sub_Client_Contact__c> subClientContacts = [SELECT Id, NSP_Employee_Status__c , NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client_Contact__c WHERE NSP_Employee_Status__c = 'TERMINATED'  LIMIT 1];
         subClientContacts[0].NSP_Employee_Status__c = 'HIRED';

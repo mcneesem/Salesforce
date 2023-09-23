@@ -5,55 +5,87 @@
 *Modification Log     :                                                                              
 ************************************************************************************************/
 public class NSP_SubClientContactTriggerHelper {
-    
-    public void deleteAddressRecordsBasedOnStatus(List<NSP_Sub_Client_Contact__c> newSubClientCon, Map<Id, NSP_Sub_Client_Contact__c> oldSubClientConMap) {
-        
-        Map<Id, NSP_Sub_Client_Contact__c> subClientConByContact = new Map<Id,NSP_Sub_Client_Contact__c> ();
-        List<string> ClientId_PERIDs = new List<string>();
-        for (NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) {
-            if (subClientCon.NSP_Contact__c != null && ((oldSubClientConMap == null && subClientCon.NSP_Employee_Status__c != null && subClientCon.NSP_Employee_Status__c != 'PRIMED')
-                                                        || (oldSubClientConMap != null   && oldSubClientConMap.get(subClientCon.Id).NSP_Employee_Status__c == 'PRIMED'))) {
-                                                            subClientConByContact.put(subClientCon.NSP_Contact__c,subClientCon);
-                                                        }
-        }
-        
-        if(!subClientConByContact.isEmpty()){
-            Map<Id, Contact> contactMap = new  Map<Id, Contact>([SELECT Id, NSP_PER_ID__c FROM Contact WHERE Id =:subClientConByContact.keyset()]);
-            
-            string ClientId_PERIDWithComma1 = '';
-            
-            for(NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) { 
-                if(contactMap.containskey(subClientCon.NSP_Contact__c)){
-                    if( subClientCon.NSP_AIMS_Sub_Client__c != null ){
-                        ClientId_PERIDWithComma1 += subClientCon.NSP_AIMS_Sub_Client__c+'-';                        
-                    }
-                    if(contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c != null ){
-                        ClientId_PERIDWithComma1 += contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c;                         
-                            
-                    }                    
-                    ClientId_PERIDs.add(ClientId_PERIDWithComma1+'PH1');
-                    ClientId_PERIDs.add(ClientId_PERIDWithComma1 +'PW1');
-                    ClientId_PERIDs.add(ClientId_PERIDWithComma1 +'PH1PW1');
-                }                
-            }
-            
-            if(!ClientId_PERIDs.isEmpty()){
-                 initiateAddressDelete(ClientId_PERIDs);
-            }
-        }
-    }
-    
-    
-    @future
-    public static void initiateAddressDelete(List<string> ClientId_PERIDs){
-        List<NSP_Address__c> addressToBeDeleted =[select Id, NSP_Label_Code__c From NSP_Address__c WHERE NSP_Label_Code__c != null AND NSP_Label_Code__c =: ClientId_PERIDs];
+    // test w/ NSP_SubClientContactTriggerHelperTest (91%)
 
-        if(addressToBeDeleted.size() > 0){
-            Database.DeleteResult[] deleteAddress = Database.Delete(addressToBeDeleted, false) ;
-            NSP_ErrorLogHandler.logDeleteResultsException('NSP_AddressTriggerHelper', 'initiateAddressDelete', deleteAddress ); 
+    public void deleteAddressRecordsBasedOnStatus( List<NSP_Sub_Client_Contact__c> newSubClientCon , Map<Id,NSP_Sub_Client_Contact__c> oldSubClientConMap ) {
+        if ( NSP_SubClientContactTriggerHelper.isEnabledDeleteAddresses ) { // kill switch added by AZD-XXXXXX
+            Map<Id,NSP_Sub_Client_Contact__c> subClientConByContact = new Map<Id,NSP_Sub_Client_Contact__c> ();
+            List<string> ClientId_PERIDs = new List<string>();
+            for (NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) {
+                if ( subClientCon.NSP_Contact__c != null ) {
+                    Boolean isRequiredToDeleteAddresses = False;
+                    if ( ( oldSubClientConMap == null )
+                        && String.isNotBlank( subClientCon.NSP_Employee_Status__c )
+                        && ( subClientCon.NSP_Employee_Status__c != 'PRIMED' )
+                        )
+                    {
+                        // inserting an NSP_Sub_Client_Contact__c that IS NOT 'PRIMED'...
+                        isRequiredToDeleteAddresses = True;
+                    } else if ( ( oldSubClientConMap != null )
+                        && ( oldSubClientConMap.get(subClientCon.Id).NSP_Employee_Status__c == 'PRIMED' )
+                        )
+                    {
+                        // updating an NSP_Sub_Client_Contact__c that WAS OR STILL IS 'PRIMED'...
+                        isRequiredToDeleteAddresses = True;
+                    }
+                    if ( isRequiredToDeleteAddresses ) {
+                        subClientConByContact.put(subClientCon.NSP_Contact__c,subClientCon);
+                    }
+                }
+            }
+            if(!subClientConByContact.isEmpty()){
+                Map<Id, Contact> contactMap = new  Map<Id, Contact>([SELECT Id, NSP_PER_ID__c FROM Contact WHERE Id =:subClientConByContact.keyset()]);
+                string ClientId_PERIDWithComma1 = '';
+                for(NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) { 
+                    if(contactMap.containskey(subClientCon.NSP_Contact__c)){
+                        if( subClientCon.NSP_AIMS_Sub_Client__c != null ){
+                            ClientId_PERIDWithComma1 += subClientCon.NSP_AIMS_Sub_Client__c+'-';                        
+                        }
+                        if(contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c != null ){
+                            ClientId_PERIDWithComma1 += contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c;                         
+                                
+                        }                    
+                        ClientId_PERIDs.add(ClientId_PERIDWithComma1+'PH1');
+                        ClientId_PERIDs.add(ClientId_PERIDWithComma1 +'PW1');
+                        ClientId_PERIDs.add(ClientId_PERIDWithComma1 +'PH1PW1');
+                    }                
+                }
+                if(!ClientId_PERIDs.isEmpty()){
+                    initiateAddressDelete(ClientId_PERIDs);
+                }
+            }
         }
     }
-    
+
+    // kill switch added by AZD-XXXXXX
+    public static Boolean isEnabledDeleteAddresses {
+        public get {
+            if ( isEnabledDeleteAddresses == null ) {
+                isEnabledDeleteAddresses = SubClientContactTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledDeleteAddresses__c;
+            }
+            return isEnabledDeleteAddresses;
+        }
+        private set;
+    }
+
+    // DEPRECATED BY AZD-XXXXXX
+    @future public static void initiateAddressDelete( List<string> ClientId_PERIDs ) {
+        if ( NSP_SubClientContactTriggerHelper.isEnabledDeleteAddresses ) { // kill switch added by AZD-XXXXXX
+            List<NSP_Address__c> addressToBeDeleted =[
+                SELECT Id, NSP_Label_Code__c
+                FROM NSP_Address__c
+                WHERE (
+                    ( NSP_Label_Code__c != null )
+                    AND ( NSP_Label_Code__c =: ClientId_PERIDs )
+                )
+            ];
+            if(addressToBeDeleted.size() > 0){
+                Database.DeleteResult[] deleteAddress = Database.delete(addressToBeDeleted, false);
+                NSP_ErrorLogHandler.logDeleteResultsException('NSP_AddressTriggerHelper', 'initiateAddressDelete', deleteAddress ); 
+            }
+        }
+    }
+
     Public Void updatePaperlessBatchDateBeforeInsertOrUpdate(List<NSP_Sub_Client_Contact__c> NewList , Map<Id, NSP_Sub_Client_Contact__c> OldMap){             
         For(NSP_Sub_Client_Contact__c SubClientContactObj : NewList){
             If(OldMap == null && ((SubClientContactObj.NSP_Employee_Status__c != null ) ||
