@@ -13,10 +13,8 @@ public class LoadFullAccessPermSetsQueueableTest {
 	@isTest
 	static void testLoadFullAccessPermSets1() {
 		Test.startTest();
-		Id readPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Read_Permisson_Set' LIMIT 1].Id;
-		Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permisson_Set' LIMIT 1].Id;
         List<String> objectApiNames = new List<String>();
-		LoadFullAccessPermSets.runLoadFullAccessPermSets(readPermSetId, editPermSetId, objectApiNames);
+		LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permisson_Set', 'FA_Test_Edit_Permisson_Set', objectApiNames);
 		LoadFullAccessPermSetsQueueable.sendCompletionEmail();
         Test.stopTest();
 	}
@@ -24,12 +22,10 @@ public class LoadFullAccessPermSetsQueueableTest {
 	@isTest
 	static void testLoadFullAccessPermSets2() {
 		Test.startTest();
-		Id readPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Read_Permisson_Set' LIMIT 1].Id;
-		Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permisson_Set' LIMIT 1].Id;
         List<String> objectApiNames = new List<String>{'Account', 'EntityDefinition'};
 		LoadFullAccessPermSets.runLoadFullAccessPermSets(null, null, objectApiNames);
-		LoadFullAccessPermSets.runLoadFullAccessPermSets(readPermSetId, editPermSetId, objectApiNames);
-        Test.stopTest();
+		LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permisson_Set', 'FA_Test_Edit_Permisson_Set', objectApiNames);
+		Test.stopTest();
 	}
 
 	@isTest

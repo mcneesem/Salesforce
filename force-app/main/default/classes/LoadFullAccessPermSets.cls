@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSets {
-    // test w/ LoadFullAccessPermSetsQueueableTest (95%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (90%)
 
     // /*************************************************************************************************
 	// * Author:        Matthew McNeese
@@ -15,17 +15,18 @@ public class LoadFullAccessPermSets {
     // *                                query all object names from EntityDefinition)
 	// ***************************************************************************************************/
 
-    public static void runLoadFullAccessPermSets(Id readPermSetId, Id editPermSetId, List<String> objectApiNames) {
+    public static void runLoadFullAccessPermSets(String readPermSetName, String editPermSetName, List<String> objectApiNames) {
         Map<String, Integer> depRetry = new Map<String, Integer>();
-
-        if ([SELECT Id, Name FROM PermissionSet WHERE Id = :readPermSetId].isEmpty()) {
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'PermissionSet does not exist: ' + readPermSetId);
-            readPermSetId = null;
+        Map<String, Id> mPermSets = new Map<String, Id>();
+        for (PermissionSet ps : [SELECT Id, Name FROM PermissionSet WHERE Name IN (:readPermSetName, :editPermSetName)]) {
+            mPermSets.put(ps.Name, ps.Id);
         }
 
-        if ([SELECT Id, Name FROM PermissionSet WHERE Id = :editPermSetId].isEmpty()) {
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'PermissionSet does not exist: ' + editPermSetId);
-            editPermSetId = null;
+        if (!mPermSets.containsKey(readPermSetName)) {
+            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'PermissionSet not found: ' + readPermSetName);
+        }
+        if (!mPermSets.containsKey(editPermSetName)) {
+            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'PermissionSet not found: ' + editPermSetName);
         }
         
         if ( objectApiNames.isEmpty() ) {
@@ -45,7 +46,7 @@ public class LoadFullAccessPermSets {
         }
 
         if (!Test.isRunningTest()) {
-            System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
+            System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
             LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
         }
     }
