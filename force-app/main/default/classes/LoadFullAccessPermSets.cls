@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSets {
-    // test w/ LoadFullAccessPermSetsQueueableTest (90%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (95%)
 
     // /*************************************************************************************************
 	// * Author:        Matthew McNeese
@@ -23,10 +23,10 @@ public class LoadFullAccessPermSets {
         }
 
         if (!mPermSets.containsKey(readPermSetName)) {
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'PermissionSet not found: ' + readPermSetName);
+            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'PermissionSet not found: ' + readPermSetName);
         }
         if (!mPermSets.containsKey(editPermSetName)) {
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'PermissionSet not found: ' + editPermSetName);
+            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'PermissionSet not found: ' + editPermSetName);
         }
         
         if ( objectApiNames.isEmpty() ) {
@@ -47,7 +47,7 @@ public class LoadFullAccessPermSets {
 
         if (!Test.isRunningTest()) {
             System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
         }
+        LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
     }
 }

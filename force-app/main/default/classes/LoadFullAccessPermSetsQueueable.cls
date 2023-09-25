@@ -28,25 +28,25 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
 
-        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', 'Loading ObjectPermissions for: ' + currObjName);
-        if (!String.isBlank(readPermSetId)) loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for all objects in list
-        if (!String.isBlank(editPermSetId)) loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for all objects in list
+        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading ObjectPermissions');
+        loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for all objects in list
+        loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for all objects in list
 
-        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', 'Loading FieldPermissions for: ' + currObjName);
-        if (!String.isBlank(readPermSetId)) loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
-        if (!String.isBlank(editPermSetId)) loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
+        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading FieldPermissions');
+        loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
+        loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
 
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
                 if ( objectApiNames.size() > 0 ) { // chain new job for next object
                     System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
-                    createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', 'objectCount remaining=' + objectApiNames.size() );
+                    createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', null, 'objectCount remaining=' + objectApiNames.size() );
                 } else {
                     sendCompletionEmail();
-                    createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', 'This was the final job for LoadFullAccessPermSetsQueueable');
+                    createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', null, 'This was the final job for LoadFullAccessPermSetsQueueable');
                 }
             } else {
-                createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', 'QueueableSettings__c.EnableLoadPermSetChain__c is disabled');
+                createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', null, 'QueueableSettings__c.EnableLoadPermSetChain__c is disabled');
             }
         }
     }
@@ -58,49 +58,52 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     //                  permission depency is encountered. Dependency retries are limited to five attempts.
     // ***********************************************************************************************************
     public static void loadObjectPermissions(Id permSetId, Boolean editFlag, List<String> objectApiNames, String currObjName, Map<String, Integer> depRetry, Boolean allPermFlag) {
-        List<ObjectPermissions> opList = new List<ObjectPermissions>();
-        Boolean retryFlag = false;
+        
+        if (!String.isBlank(permSetId)) {
+            List<ObjectPermissions> opList = new List<ObjectPermissions>();
+            Boolean retryFlag = false;
 
-        // For current PermissionSet, populate map of current ObjectPermissions records using SObjectType as key
-        Map<String, ObjectPermissions> mCurrentObjectPerms = new Map<String, ObjectPermissions>();
-        for (ObjectPermissions oPerm : [SELECT Id, SObjectType, ParentId
-                FROM ObjectPermissions WHERE ParentId = :permSetId AND SObjectType = :currObjName]) {
-            mCurrentObjectPerms.put(oPerm.SObjectType, oPerm);
-        }
-        ObjectPermissions op= new ObjectPermissions();
-        if (mCurrentObjectPerms.size() > 0 && mCurrentObjectPerms.containsKey(currObjName)) {
-            op.Id = mCurrentObjectPerms.get(currObjName).Id;
-        } else {
-            op.ParentId = permSetId;
-            op.SobjectType = currObjName;
-        }
-        op.PermissionsRead = true;
-        op.PermissionsCreate = editFlag;
-        op.PermissionsDelete = editFlag;
-        op.PermissionsEdit = editFlag;
-        if (allPermFlag) {
-            op.PermissionsViewAllRecords = true;
-            op.PermissionsModifyAllRecords = editFlag;
-        }
-        opList.add(op);
+            // For current PermissionSet, populate map of current ObjectPermissions records using SObjectType as key
+            Map<String, ObjectPermissions> mCurrentObjectPerms = new Map<String, ObjectPermissions>();
+            for (ObjectPermissions oPerm : [SELECT Id, SObjectType, ParentId
+                    FROM ObjectPermissions WHERE ParentId = :permSetId AND SObjectType = :currObjName]) {
+                mCurrentObjectPerms.put(oPerm.SObjectType, oPerm);
+            }
+            ObjectPermissions op= new ObjectPermissions();
+            if (mCurrentObjectPerms.size() > 0 && mCurrentObjectPerms.containsKey(currObjName)) {
+                op.Id = mCurrentObjectPerms.get(currObjName).Id;
+            } else {
+                op.ParentId = permSetId;
+                op.SobjectType = currObjName;
+            }
+            op.PermissionsRead = true;
+            op.PermissionsCreate = editFlag;
+            op.PermissionsDelete = editFlag;
+            op.PermissionsEdit = editFlag;
+            if (allPermFlag) {
+                op.PermissionsViewAllRecords = true;
+                op.PermissionsModifyAllRecords = editFlag;
+            }
+            opList.add(op);
 
-        Database.UpsertResult[] oprList = Database.upsert(opList, false);
+            Database.UpsertResult[] oprList = Database.upsert(opList, false);
 
-        if (!oprList[0].isSuccess()) {
-            for(Database.Error err : oprList[0].getErrors()) {
-                if ( err.getMessage().contains('depends on')) {
-                    depRetry.put(currObjName, depRetry.containsKey(currObjName) ? depRetry.get(currObjName)+1 : 1);
-                    if (depRetry.get(currObjName) > 5) {
-                        createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', 'exceeded retry limit for object: ' + currObjName);
-                    } else if (!objectApiNames.contains(currObjName)) {
-                        objectApiNames.add(currObjName);
-                        createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', 'object dependency found for Object: ' + currObjName + '; moving to bottom of list');
+            if (!oprList[0].isSuccess()) {
+                for(Database.Error err : oprList[0].getErrors()) {
+                    if ( err.getMessage().contains('depends on')) {
+                        depRetry.put(currObjName, depRetry.containsKey(currObjName) ? depRetry.get(currObjName)+1 : 1);
+                        if (depRetry.get(currObjName) > 5) {
+                            createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'exceeded retry limit');
+                        } else if (!objectApiNames.contains(currObjName)) {
+                            objectApiNames.add(currObjName);
+                            createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'object dependency found; moving to bottom of list');
+                        }
+                    } else if ( err.getMessage().contains('The following permission isn\'t allowed: View All')) {
+                        createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'View All error found; disabling allPermFlag');
+                        loadObjectPermissions(permSetId, editFlag, objectApiNames, currObjName, depRetry, false);
+                    } else if (!err.getMessage().contains('bad value for restricted picklist field')) {
+                        createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'ObjectPermissions error occurred for Perm Set: ' + permSetId + ' : ' + err.getMessage());
                     }
-                } else if ( err.getMessage().contains('The following permission isn\'t allowed: View All')) {
-                    createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', 'View All error found for Object: ' + currObjName + '; disabling allPermFlag');
-                    loadObjectPermissions(permSetId, editFlag, objectApiNames, currObjName, depRetry, false);
-                } else if (!err.getMessage().contains('bad value for restricted picklist field')) {
-                    createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', 'ObjectPermissions error occurred for Perm Set: ' + permSetId + ' : ' + err.getMessage());
                 }
             }
         }
@@ -111,50 +114,53 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     //                  specified Perm Set.
     // *******************************************************************************************
     public static void loadFieldPermissions(Id permSetId, Boolean editFlag, String currObjName) {
-        Set<String> skipFields = new Set<String>{'Id','IsDeleted','CreatedDate','LastModifiedDate','SystemModstamp','UserRecordAccessId',
+        
+        if (!String.isBlank(permSetId)) {
+            Set<String> skipFields = new Set<String>{'Id','IsDeleted','CreatedDate','LastModifiedDate','SystemModstamp','UserRecordAccessId',
             	'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','Name','CurrencyIsoCode',
            		'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
 
-        List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName, IsCalculated
-            FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName = :currObjName AND IsNameField=false AND QualifiedApiName NOT IN :skipFields];
+            List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName, IsCalculated
+                FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName = :currObjName AND IsNameField=false AND QualifiedApiName NOT IN :skipFields];
 
-        List<FieldPermissions> fpList = new List<FieldPermissions>();
+            List<FieldPermissions> fpList = new List<FieldPermissions>();
 
-        // populate map of current field permissions records for current permission set with each field name as key
-        Map<String, FieldPermissions> mCurrentFieldPerms = new Map<String, FieldPermissions>();
-        for (FieldPermissions fPerm : [SELECT Id, Field, SObjectType, ParentId
-                FROM FieldPermissions WHERE ParentId = :permSetId AND SObjectType = :currObjName]) {
-            mCurrentFieldPerms.put(fPerm.Field, fPerm);
-        }
-        for (FieldDefinition field : fieldDefList) {
-            FieldPermissions fp = new FieldPermissions();
-            String fName = currObjName+'.'+field.QualifiedApiName;
-            if (mCurrentFieldPerms.size() > 0 && mCurrentFieldPerms.containsKey(fName)) {
-                fp.Id = mCurrentFieldPerms.get(fName).Id;
-            } else {
-                fp.ParentId = permSetId; // id of permission set
-                fp.SobjectType = currObjName;
-                fp.Field = fName;
+            // populate map of current field permissions records for current permission set with each field name as key
+            Map<String, FieldPermissions> mCurrentFieldPerms = new Map<String, FieldPermissions>();
+            for (FieldPermissions fPerm : [SELECT Id, Field, SObjectType, ParentId
+                    FROM FieldPermissions WHERE ParentId = :permSetId AND SObjectType = :currObjName]) {
+                mCurrentFieldPerms.put(fPerm.Field, fPerm);
             }
-            fp.PermissionsEdit = (field.IsCalculated) ? false : editFlag;
-            fp.PermissionsRead = true;
-            fpList.add(fp);
-        }
+            for (FieldDefinition field : fieldDefList) {
+                FieldPermissions fp = new FieldPermissions();
+                String fName = currObjName+'.'+field.QualifiedApiName;
+                if (mCurrentFieldPerms.size() > 0 && mCurrentFieldPerms.containsKey(fName)) {
+                    fp.Id = mCurrentFieldPerms.get(fName).Id;
+                } else {
+                    fp.ParentId = permSetId; // id of permission set
+                    fp.SobjectType = currObjName;
+                    fp.Field = fName;
+                }
+                fp.PermissionsEdit = (field.IsCalculated) ? false : editFlag;
+                fp.PermissionsRead = true;
+                fpList.add(fp);
+            }
 
-        Database.UpsertResult[] fprList = Database.upsert(fpList, false); // field perms results
+            Database.UpsertResult[] fprList = Database.upsert(fpList, false); // field perms results
 
-        Integer errLogCount = 0; // reduce ErrorLog calls by just collecting an error count
-        for (Database.UpsertResult fpr : fprList) { // retrieve errors for failed record upserts
-            if (!fpr.isSuccess()) {
-                for (Database.Error err : fpr.getErrors()) {
-                    if (!err.getMessage().contains('bad value for restricted picklist field') && // ignore ineligible field names
-                        !err.getMessage().contains('Read only field')) {
-                        if (errLogCount++ < 1) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', 'FieldPermissions error occurred for Object: ' + currObjName + ' on Perm Set: ' + permSetId + ' : ' + err.getMessage());
+            Integer errLogCount = 0; // reduce ErrorLog calls by just collecting an error count
+            for (Database.UpsertResult fpr : fprList) { // retrieve errors for failed record upserts
+                if (!fpr.isSuccess()) {
+                    for (Database.Error err : fpr.getErrors()) {
+                        if (!err.getMessage().contains('bad value for restricted picklist field') && // ignore ineligible field names
+                            !err.getMessage().contains('Read only field')) {
+                            if (errLogCount++ < 1) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', currObjName, 'FieldPermissions error occurred on Perm Set: ' + permSetId + ' : ' + err.getMessage());
+                        }
                     }
                 }
             }
+            if (errLogCount > 0) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', currObjName, errLogCount + ' FieldPermissions errors occurred on Perm Set: ' + permSetId);
         }
-        if (errLogCount > 0) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', errLogCount + ' FieldPermissions errors occurred for Object: ' + currObjName + ' on Perm Set: ' + permSetId);
     }
 
     // ************************ Chain Completion Email ************************
@@ -169,10 +175,11 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
     // ************************ Write Error Log ************************
     @future
-    public static void createErrorLog(String className, String methName, String descText){
+    public static void createErrorLog(String className, String methName, String objName, String descText){
         NSP_Error_Log__c log = new NSP_Error_Log__c();
         log.NSP_Class__c = className;
         log.NSP_Method__c = methName;
+        log.NSP_Object__c = objName;
         log.NSP_Description__c = descText;
         Insert log;
     }
