@@ -133,7 +133,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     getCase.NSP_Case_Reopened_EmaiToCase__c = true;
                     listOfCase.add(getCase);
                 } else if(
-                    //(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId) ||
+                    	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId) ||
                     	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween > 90)){
                               getCase.NSP_Response_After_Close__c = true;
                               listOfCase.add(getCase);
