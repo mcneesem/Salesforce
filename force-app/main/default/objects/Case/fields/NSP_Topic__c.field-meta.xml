@@ -53,19 +53,21 @@
                 <label>Training/Learning Dev</label>
             </value>
             <value>
-                <fullName>Leave &amp; Disability</fullName>
+                <fullName>Corporate Services/BPS</fullName>
                 <default>false</default>
-                <label>Leave &amp; Disability</label>
+                <label>Corporate Services/BPS</label>
             </value>
             <value>
                 <fullName>Compensation Services</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Compensation Services</label>
             </value>
             <value>
-                <fullName>Corporate Services/BPS</fullName>
+                <fullName>Leave &amp; Disability</fullName>
                 <default>false</default>
-                <label>Corporate Services/BPS</label>
+                <isActive>false</isActive>
+                <label>Leave &amp; Disability</label>
             </value>
         </valueSetDefinition>
     </valueSet>
