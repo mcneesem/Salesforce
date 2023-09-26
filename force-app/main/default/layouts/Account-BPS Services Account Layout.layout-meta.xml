@@ -460,27 +460,13 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>NAME</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
-        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
-        <fields>CASES.STATUS</fields>
-        <fields>OWNER_NAME</fields>
-        <relatedList>RelatedCaseList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>NSP_Account_Group__c.NAME</fields>
-        <fields>NSP_AIMS_Client_ID__c</fields>
-        <fields>NSP_Primary__c</fields>
-        <fields>NSP_Type__c</fields>
-        <relatedList>NSP_Account_Group_Member__c.NSP_Member_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>ASSET.NAME</fields>
         <fields>ASSET.STATUS</fields>
         <relatedList>RelatedAssetList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>NSP_Account_Group_Member__c.NSP_Member_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -494,6 +480,13 @@
         <relatedList>NSP_Account_Team__c.NSP_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>FULL_NAME</fields>
+        <fields>CONTACT.TITLE</fields>
+        <fields>CONTACT.EMAIL</fields>
+        <fields>CONTACT.PHONE1</fields>
+        <relatedList>RelatedContactList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>NSP_Address_Type__c</fields>
         <fields>NSP_Contact__c</fields>
@@ -505,14 +498,13 @@
         <relatedList>NSP_Address__c.NSP_Related_Site__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>NSP_Create_Accrual_Profile_APAR</customButtons>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NSP_Accrual_Profile__c.NAME</fields>
-        <fields>NSP_Accrual_Profile__c.NSP_Status__c</fields>
-        <fields>NSP_Accrual_Profile__c.NSP_Accrual_Profile_Plan_Name__c</fields>
-        <fields>NSP_Accrual_Profile__c.LAST_UPDATE</fields>
-        <relatedList>NSP_Accrual_Profile_Account_Relationship__c.NSP_Account__c</relatedList>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>NSP_Category__c</fields>
+        <fields>NSP_SubCategory__c</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
+        <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>pse__Create_Project_From_Template</customButtons>
@@ -524,21 +516,6 @@
         <relatedList>pse__Proj__c.pse__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>NewEvent</excludeButtons>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>TASK.WHAT_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>TASK.STATUS</fields>
-        <fields>TASK.CLOSED</fields>
-        <fields>TASK.PRIORITY</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>Activity.NSP_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHAT_NAME</fields>
         <fields>Title__c</fields>
@@ -546,16 +523,6 @@
         <fields>TASK.DUE_DATE</fields>
         <fields>NSP_Minutes_spent_on_task__c</fields>
         <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>EVENT.LOCATION</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.WHAT_NAME</fields>
-        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -604,6 +571,29 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>NSP_Create_Accrual_Profile_APAR</customButtons>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NSP_Accrual_Profile__c.NAME</fields>
+        <fields>NSP_Accrual_Profile__c.NSP_Status__c</fields>
+        <fields>NSP_Accrual_Profile__c.NSP_Accrual_Profile_Plan_Name__c</fields>
+        <fields>NSP_Accrual_Profile__c.LAST_UPDATE</fields>
+        <relatedList>NSP_Accrual_Profile_Account_Relationship__c.NSP_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>TASK.WHAT_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>TASK.STATUS</fields>
+        <fields>TASK.CLOSED</fields>
+        <fields>TASK.PRIORITY</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
+        <relatedList>Activity.NSP_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -784,6 +774,16 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>NSP_Account_Regulated_area__c.NSP_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>EVENT.LOCATION</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.WHAT_NAME</fields>
+        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
