@@ -36,19 +36,18 @@ public class NSP_SubClientContactTriggerHelper {
             if(!subClientConByContact.isEmpty()){
                 Map<Id, Contact> contactMap = new  Map<Id, Contact>([SELECT Id, NSP_PER_ID__c FROM Contact WHERE Id =:subClientConByContact.keyset()]);
                 string ClientId_PERIDWithComma1 = '';
-                for(NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) { 
+                for(NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) {
                     if(contactMap.containskey(subClientCon.NSP_Contact__c)){
                         if( subClientCon.NSP_AIMS_Sub_Client__c != null ){
-                            ClientId_PERIDWithComma1 += subClientCon.NSP_AIMS_Sub_Client__c+'-';                        
+                            ClientId_PERIDWithComma1 += subClientCon.NSP_AIMS_Sub_Client__c+'-';
                         }
                         if(contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c != null ){
-                            ClientId_PERIDWithComma1 += contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c;                         
-                                
-                        }                    
+                            ClientId_PERIDWithComma1 += contactMap.get(subClientCon.NSP_Contact__c).NSP_PER_ID__c;
+                        }
                         ClientId_PERIDs.add(ClientId_PERIDWithComma1+'PH1');
                         ClientId_PERIDs.add(ClientId_PERIDWithComma1 +'PW1');
                         ClientId_PERIDs.add(ClientId_PERIDWithComma1 +'PH1PW1');
-                    }                
+                    }
                 }
                 if(!ClientId_PERIDs.isEmpty()){
                     initiateAddressDelete(ClientId_PERIDs);
