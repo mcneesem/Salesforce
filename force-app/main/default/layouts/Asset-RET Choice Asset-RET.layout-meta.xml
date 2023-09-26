@@ -373,14 +373,6 @@
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>NSP_Subplan_Name__c</fields>
-        <fields>NSP_Parent_Plan_ID__c</fields>
-        <fields>NSP_Status__c</fields>
-        <fields>NSP_Plan_Effective_Date__c</fields>
-        <relatedList>NSP_Plan_SubPlan__c.NSP_Subplan_Lead_Parent__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NSP_Name__c</fields>
         <fields>NSP_Client_Change_Status__c</fields>
         <fields>NSP_Notification_Date__c</fields>
