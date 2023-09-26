@@ -12,44 +12,185 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Choice Customized</fullName>
+                <default>false</default>
+                <label>Choice Customized</label>
+            </value>
+            <value>
+                <fullName>Choice Merger</fullName>
+                <default>false</default>
+                <label>Choice Merger</label>
+            </value>
+            <value>
+                <fullName>Choice Startup</fullName>
+                <default>false</default>
+                <label>Choice Startup</label>
+            </value>
+            <value>
+                <fullName>NSPK Association</fullName>
+                <default>false</default>
+                <label>NSPK Association</label>
+            </value>
+            <value>
+                <fullName>NSPK Association w/ merger</fullName>
+                <default>false</default>
+                <label>NSPK Association w/ merger</label>
+            </value>
+            <value>
+                <fullName>NSPK Merger</fullName>
+                <default>false</default>
+                <label>NSPK Merger</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger &lt;150</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger &lt;150</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger &gt;501 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger &gt;501 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger 150-300 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger 150-300 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger 301-500 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger 301-500 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup &lt;150</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup &lt;150</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup &gt;501 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup &gt;501 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup 150-300 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup 150-300 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup 301-500 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup 301-500 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK Startup</fullName>
+                <default>false</default>
+                <label>NSPK Startup</label>
+            </value>
+            <value>
+                <fullName>WO Customized</fullName>
+                <default>false</default>
+                <label>WO Customized</label>
+            </value>
+            <value>
+                <fullName>WO Customized MM</fullName>
+                <default>false</default>
+                <label>WO Customized MM</label>
+            </value>
+            <value>
+                <fullName>Choice Custom</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Choice Custom</label>
+            </value>
+            <value>
+                <fullName>Health &amp; Welfare</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Health &amp; Welfare</label>
+            </value>
+            <value>
                 <fullName>MEP</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>MEP</label>
-            </value>
-            <value>
-                <fullName>ORK</fullName>
-                <default>false</default>
-                <label>ORK</label>
-            </value>
-            <value>
-                <fullName>Prototype</fullName>
-                <default>false</default>
-                <label>Prototype</label>
-            </value>
-            <value>
-                <fullName>No Plan</fullName>
-                <default>false</default>
-                <label>No Plan</label>
             </value>
             <value>
                 <fullName>Netsaver</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Netsaver</label>
+            </value>
+            <value>
+                <fullName>No Plan</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No Plan</label>
+            </value>
+            <value>
+                <fullName>ORK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ORK</label>
+            </value>
+            <value>
+                <fullName>Property &amp; Casualty</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Property &amp; Casualty</label>
+            </value>
+            <value>
+                <fullName>Prototype</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prototype</label>
+            </value>
+            <value>
+                <fullName>Tier 1</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 1</label>
+            </value>
+            <value>
+                <fullName>Tier 2</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 2</label>
+            </value>
+            <value>
+                <fullName>Tier 3</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 3</label>
+            </value>
+            <value>
+                <fullName>Tier 4</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 4</label>
+            </value>
+            <value>
+                <fullName>Tier 5</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 5</label>
+            </value>
+            <value>
+                <fullName>Tier 6</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tier 6</label>
             </value>
             <value>
                 <fullName>WA Choice</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>WA Choice</label>
             </value>
             <value>
                 <fullName>WA Choice Custom</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>WA Choice Custom</label>
-            </value>
-            <value>
-                <fullName>Choice Custom</fullName>
-                <default>false</default>
-                <label>Choice Custom</label>
             </value>
         </valueSetDefinition>
     </valueSet>
