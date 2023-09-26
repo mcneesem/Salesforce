@@ -8,7 +8,7 @@ public class NSP_SubClientContactTriggerHelper {
     // test w/ NSP_SubClientContactTriggerHelperTest (91%)
 
     public void deleteAddressRecordsBasedOnStatus( List<NSP_Sub_Client_Contact__c> newSubClientCon , Map<Id,NSP_Sub_Client_Contact__c> oldSubClientConMap ) {
-        if ( NSP_SubClientContactTriggerHelper.isEnabledDeleteAddresses ) { // kill switch added by AZD-XXXXXX
+        if ( NSP_SubClientContactTriggerHelper.isEnabledDeleteAddresses ) { // kill switch added by AZD-237218
             Map<Id,NSP_Sub_Client_Contact__c> subClientConByContact = new Map<Id,NSP_Sub_Client_Contact__c> ();
             List<string> ClientId_PERIDs = new List<string>();
             for (NSP_Sub_Client_Contact__c subClientCon : newSubClientCon) {
@@ -57,7 +57,7 @@ public class NSP_SubClientContactTriggerHelper {
         }
     }
 
-    // kill switch added by AZD-XXXXXX
+    // kill switch added by AZD-237218
     public static Boolean isEnabledDeleteAddresses {
         public get {
             if ( isEnabledDeleteAddresses == null ) {
@@ -68,9 +68,9 @@ public class NSP_SubClientContactTriggerHelper {
         private set;
     }
 
-    // DEPRECATED BY AZD-XXXXXX
+    // DEPRECATED BY AZD-237218
     @future public static void initiateAddressDelete( List<string> ClientId_PERIDs ) {
-        if ( NSP_SubClientContactTriggerHelper.isEnabledDeleteAddresses ) { // kill switch added by AZD-XXXXXX
+        if ( NSP_SubClientContactTriggerHelper.isEnabledDeleteAddresses ) { // kill switch added by AZD-237218
             List<NSP_Address__c> addressToBeDeleted =[
                 SELECT Id, NSP_Label_Code__c
                 FROM NSP_Address__c
