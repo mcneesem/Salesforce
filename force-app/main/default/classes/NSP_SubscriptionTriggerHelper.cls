@@ -115,6 +115,9 @@ public class NSP_SubscriptionTriggerHelper {
 */
 private void populateOriginalDateAndWaivedAmount(List<SBQQ__Subscription__c> newList){
     Set<Id> quoteLineIds= new Set<Id>();
+    Set<Id> revOrderProdIds = new Set<Id>();
+    List<OrderItem> opUpdateList = new List<OrderItem>();
+    Map<Id,SBQQ__Subscription__c> updateSubsMap = new Map<Id,SBQQ__Subscription__c>();
     for ( SBQQ__Subscription__c sub : newList ) {
         if(sub.SBQQ__QuoteLine__c != null) {
             quoteLineIds.add(sub.SBQQ__QuoteLine__c); 
@@ -126,6 +129,10 @@ private void populateOriginalDateAndWaivedAmount(List<SBQQ__Subscription__c> new
                 sub.SBQQ__RequiredById__c = null;
                 
             }
+             if(sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__TerminatedDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null){
+                sub.SBQQ__TerminatedDate__c = sub.NSP_ProjectGoLiveDate__c - 1;
+                revOrderProdIds.add(sub.SBQQ__OrderProduct__c);
+            }
     }
     if(quoteLineIds.size()>0){
         Map<Id,SBQQ__QuoteLine__c> quoteLinesMap= new Map<Id,SBQQ__QuoteLine__c>([SELECT Id,SBQQ__Source__c,SBQQ__Quote__r.SBQQ__Type__c FROM SBQQ__QuoteLine__c WHERE Id IN:quoteLineIds]);
@@ -135,6 +142,9 @@ private void populateOriginalDateAndWaivedAmount(List<SBQQ__Subscription__c> new
                 sub.NSP_Original_waived_Amount__c=sub.NSP_Waived_Amount__c;
             }
         }
+    }
+    if(revOrderProdIds.size() > 0){
+        updateTermDateonOP(revOrderProdIds);
     }
     
 }
@@ -351,4 +361,70 @@ public static void callReparentMethod(List<String> contractIds) {
     }
 }
 
+ /**
+* Method Name : updateTermDateonOP 
+* Description : Method to override termination date on order product
+* Author : CPQ Team      Date : 09/01/2024
+* @param  Set of Order Product Ids   
+* @return void
+*/ 
+    @future  
+    public static void updateTermDateonOP(Set<Id> orderProdIdSet){
+        List<OrderItem> opUpdateList = new List<OrderItem>();
+        List<OrderItem> opList = [Select SBQQ__TerminatedDate__c,SBQQ__Subscription__r.SBQQ__TerminatedDate__c,SBQQ__Subscription__r.NSP_ProjectGoLiveDate__c FROM OrderItem WHERE Id IN :orderProdIdSet];
+        for(OrderItem oi: opList){
+            oi.SBQQ__TerminatedDate__c = oi.SBQQ__Subscription__r.SBQQ__TerminatedDate__c;
+            //List to update Termination Date on Order Product
+            opUpdateList.add(oi);
+        }
+        if(opUpdateList.size() > 0){
+            List<Database.SaveResult> results = Database.update(opUpdateList,false);
+            NSP_ErrorLogHandler.logSaveResultsException('NSP_SubscriptionTriggerHelper','updateTermDateonOP', results);
+        }
+    }
+    
+    /**
+* Method Name : updateTermDateOnRevisedSub 
+* Description : Method to override termination date on revised Subscription
+* Author : CPQ Team      Date : 09/01/2024
+* @param  Set of Order Product Ids   
+* @return void
+*/     
+    public void updateTermDateOnRevisedSub(List<SBQQ__Subscription__c> subList,Map<Id, SBQQ__Subscription__c> subOldMap){
+        
+        Set<Id> revOrderProdIds = new Set<Id>();
+        List<SBQQ__Subscription__c> updateList = new  List<SBQQ__Subscription__c>();
+        Map<Id,Date> updateSubsMap = new Map<Id,Date>();
+        List<SBQQ__Subscription__c> updateSubList = new List<SBQQ__Subscription__c>();
+        for ( SBQQ__Subscription__c sub : subList) {
+            if(sub.SBQQ__TerminatedDate__c != null && sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null){
+                SBQQ__Subscription__c revisedSubsObj = new SBQQ__Subscription__c();
+                revisedSubsObj.Id = sub.SBQQ__RevisedSubscription__c;
+                revisedSubsObj.SBQQ__TerminatedDate__c = sub.SBQQ__SubscriptionStartDate__c - 1;
+                //Prepares a map of Revised Subscription Ids
+                if(!updateSubsMap.containsKey(revisedSubsObj.Id)){
+                    updateSubsMap.put(revisedSubsObj.Id,revisedSubsObj.SBQQ__TerminatedDate__c);
+                }
+            }
+        }
+        if(updateSubsMap.size() > 0){
+            List<SBQQ__Subscription__c> result = [SELECT Id,SBQQ__TerminatedDate__c,SBQQ__OrderProduct__c FROM SBQQ__Subscription__c WHERE Id IN :updateSubsMap.keySet()];
+            for(SBQQ__Subscription__c subObj:result){
+                subObj.SBQQ__TerminatedDate__c = updateSubsMap.get(subObj.Id);
+                //Set of order products related to the revised subscription to update termination date on order products
+                revOrderProdIds.add(subObj.SBQQ__OrderProduct__c);
+                updateList.add(subObj);
+            }
+            //DML to update termination Date on  the revised subscription 
+            if(updateList != null && updateList.size() > 0){
+                List<Database.SaveResult> results = Database.update(updateList,false);
+                NSP_ErrorLogHandler.logSaveResultsException('NSP_SubscriptionTriggerHelper','updateTermDateOnRevisedSub', results);
+            }
+            
+        }
+        //Method call to update termination date on related order products
+        if(revOrderProdIds != null && revOrderProdIds.size() > 0){
+            updateTermDateonOP(revOrderProdIds);
+        }
+    }
 }
