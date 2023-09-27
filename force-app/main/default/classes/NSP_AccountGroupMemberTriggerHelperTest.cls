@@ -23,6 +23,7 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
     //setup for test data
     @testSetup
     static void testData() {
+        Test.StartTest();
         Id manuallyCreatedRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ACCOUNT_GROUP,MANUALLY_CREATED);
         NSP_Account_Group__c accountGroupRec = (NSP_Account_Group__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Group__c(), 'NSP_TestDataFactory.AccountGroupDefaults', false);
         accountGroupRec.Name = 'Account Health - Test Grp 1';
@@ -70,6 +71,7 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
         accGrpMem.NSP_Member_Account__c = newAcc.id;
         accGrpMem.NSP_Group__c = accGroup.Id;
         insert accGrpMem;
+        Test.StopTest();
     }
     
     /* After Insert for AccountGroupMemberTrigger it will update the Primary Account on the related Group Name
@@ -242,5 +244,42 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
         DELETE accGrpMem1;
         System.assertEquals([SELECT Id, NSP_Primary__c FROM NSP_Account_Group_Member__c WHERE Id =: accGrpMem2.Id].NSP_Primary__c, true ,'Not Updated Last Member as Primary');
         Test.StopTest();
+    }
+    
+    /***********************************************************************
+    * @Description: This method for testing WX Account Group 
+    * if primary account is deleted from Account Group Member then Assign the Primary
+    * Account i.e from Asset WX child lowest Number as Primary Group Member
+    **************************************************************************/
+    @isTest
+    static void onUpdatePrimaryAccountForWxAccountGroup(){
+        Id wXWARecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WX_WA).getRecordTypeId();
+        List<sObject> lstrecords = new List<sObject>();
+        for(Integer i = 1; i <= 3; i++){
+            Account acc = new Account();
+            acc.Name = 'Test Account '+i;
+            acc.NSP_OneVoice_External_ID__c = 'TestAccount'+i;
+            Account accountRef = new Account(NSP_OneVoice_External_ID__c = 'TestAccount'+i);
+            
+            Asset asset = new Asset();
+           	asset.Name = 'Test Account '+i;
+            asset.recordtypeId = wXWARecordTypeId;
+            asset.NSP_WX_WA_CHILD_ID__c = i == 1 ? null : i;
+            asset.Account = accountRef;
+            asset.NSP_WX_WA_Parent_ID__c = '12345';
+
+            lstrecords.add(acc);
+            lstrecords.add(asset);
+        }
+		insert new NSP_Trigger_Switch__c(AccountTrigger__c = True);
+        insert lstrecords;
+        
+        Asset asst = [SELECT Id,AccountId FROM Asset WHERE NSP_WX_WA_CHILD_ID__c = null AND NSP_WX_WA_Parent_ID__c = '12345'];
+        asst.NSP_WX_WA_CHILD_ID__c = 1;
+        Test.startTest();
+        update asst;
+        delete [SELECT Id FROM NSP_Account_Group_Member__c WHERE NSP_Member_Account__c =:asst.AccountId];
+        Assert.areEqual('WX Account Group - Test Account 2', [SELECT Name FROM NSP_Account_Group__c WHERE NSP_Type__c = 'WX Account Group' LIMIT 1].Name);
+        Test.stopTest();
     }
 }
