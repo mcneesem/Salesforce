@@ -19,7 +19,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Center Email Addresses</shortDescription>
-	<value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com,test.contact_center_sfqa2@insperity.com</value>
+	<value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com</value>
     </labels>
     <labels>
         <fullName>ASSET_BPS_RET_RECORDTYPES</fullName>
