@@ -25,7 +25,7 @@ public class NSP_OpportunityTriggerHelperFunctions {
      *                
      */
     public void setDirectOpptyFieldsAssignments(List < Opportunity > opportunityList) {
-        List < Pricebook2 > priceBookList = [SELECT id, name FROM pricebook2 WHERE name =: NSP_SalesConstants.NON_CPQ_PRICEBOOK];
+        List < Pricebook2 > priceBookList = new List < Pricebook2 >();
 		
         for (Opportunity opportunityObject: opportunityList) {
             //stamping Mid-Market sales team email on opportunity record
@@ -76,6 +76,7 @@ public class NSP_OpportunityTriggerHelperFunctions {
            
             //When Opportunity has primary product as WO then price is set to WO price book
             if (String.isNotBlank(opportunityObject.NSP_PrimaryProduct__c) && 'WO'.equals(opportunityObject.NSP_PrimaryProduct__c)) {
+                priceBookList = [SELECT id, name FROM pricebook2 WHERE name =: NSP_SalesConstants.NON_CPQ_PRICEBOOK];
                 if (priceBookList.size() > 0) {
                     opportunityObject.Pricebook2id = priceBookList[0].id;
                 }
