@@ -207,7 +207,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                                       /*If Emp >= 150 and Product of Interest is WX, then assign to payroll/HCM queue */
                                                       payrollHCMList.add(leadNewMap.get(leadId));
                                                   }
-                                              } else if (leadNewMap.get(leadId).PostalCode.length >=5
+                                              } else if (leadNewMap.get(leadId).PostalCode.length() >=5
                                                      && (leadNewMap.get(leadId).NumberOfEmployees == null || Integer.valueof(leadNewMap.get(leadId).NumberOfEmployees) < Integer.valueOf(System.Label.NSP_EMP_THRESH_150))) {
                                                       /* If Postal Code is not blank, Number of Employees is null or < 150 and Product of interest is WO/WX assign to Sales office */
                                                       leadsForRoundRobin.add(leadNewMap.get(leadId));
