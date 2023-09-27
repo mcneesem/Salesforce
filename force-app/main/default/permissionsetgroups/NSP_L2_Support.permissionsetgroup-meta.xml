@@ -11,6 +11,7 @@
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
+    <permissionSets>Opportunity_Lock_Enrollment_Fee_Edit_Access</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Read_Permission_on_all_Fields</permissionSets>
