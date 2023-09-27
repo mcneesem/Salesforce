@@ -15,6 +15,13 @@
         <value>You cannot add WSEEs to multi employee agreements</value>
     </labels>
     <labels>
+        <fullName>NSP_Contact_Center_Email_Addresses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Center Email Addresses</shortDescription>
+	<value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com,test.contact_center_sfqa2@insperity.com</value>
+    </labels>
+    <labels>
         <fullName>ASSET_BPS_RET_RECORDTYPES</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1070,7 +1077,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case Validation Bypass User</shortDescription>
-        <value>0054x000002LEFRAA4</value>
+        <value>0054x000002LEFR</value>
     </labels>
     <labels>
         <fullName>NSP_Case_Creation_and_Transferring</fullName>
