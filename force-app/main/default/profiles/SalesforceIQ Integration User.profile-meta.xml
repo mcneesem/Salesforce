@@ -1044,6 +1044,11 @@
     <custom>false</custom>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_SKU__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.DoNotCall</field>
         <readable>true</readable>
     </fieldPermissions>
