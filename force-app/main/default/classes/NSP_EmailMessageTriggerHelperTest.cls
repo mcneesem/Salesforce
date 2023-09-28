@@ -28,7 +28,6 @@ private class NSP_EmailMessageTriggerHelperTest {
 
     @isTest
     static void markResponseAfterCloseTrueForPEOTest() {   
-        test.startTest();
         Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
 
         Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
@@ -47,6 +46,7 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMsg.HtmlBody = 'Test email body';
         eMsg.ParentId = caseRecord.id;
         
+        test.startTest();
         //inserting Email message
         insert eMsg;
         test.stopTest();
@@ -54,8 +54,7 @@ private class NSP_EmailMessageTriggerHelperTest {
     }     
 
     @isTest  
-    static void reOpenCaseForBPSTest() {  
-        test.startTest();
+    static void reOpenCaseForBPSTest() {   
         Id caseBPSRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
    
         Case caseRecord = [SELECT id, Status FROM Case WHERE Status = 'Open' LIMIT 1];
@@ -72,6 +71,7 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMsg.HtmlBody = 'Test email body';
         eMsg.ParentId = caseRecord.id;
         
+        test.startTest();
         //inserting Email message
         insert eMsg;
         test.stopTest();
@@ -106,12 +106,12 @@ private class NSP_EmailMessageTriggerHelperTest {
     */
     @isTest
     private static void testEmailMessageCreationWithoutRestrictedFromAddress(){
-        test.startTest();
         List<String> caseFields = new List<String>{'Id','Status'};
         String query = new NSP_QueryBuilder('Case', caseFields)
                           .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS).build();
         Case caseRecord = Database.query(query);
         EmailMessage eMessage = (EmailMessage)NSP_TestExtendedDataFactory.createSObject(new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults', false);
+        Test.startTest();
         eMessage.ParentId = caseRecord.Id;
         INSERT eMessage;
         System.assertEquals(1, [SELECT Count() FROM EmailMessage WHERE Id =: eMessage.Id]);   
@@ -125,12 +125,12 @@ private class NSP_EmailMessageTriggerHelperTest {
     * ********************************************************************************************/ 
     @isTest
     private static void testUpdateConfidentialCheckBoxForEmpScreening(){
-        test.startTest();
         List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c'};
         String query = new NSP_QueryBuilder('Case', caseFields)
                           .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
             			  .addLimit(1).build();
         Case caseRecord = Database.query(query);     
+        test.startTest();
         EmailMessage eMessage = (EmailMessage)NSP_TestExtendedDataFactory.createSObject(new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults', false);
         eMessage.ToAddress = System.Label.NSP_Customer_Service_Email;
         eMessage.Subject = 'test';
@@ -138,8 +138,8 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMessage.FromAddress = 'test@test.com';
         eMessage.ParentId = caseRecord.Id;
         Database.insert(eMessage);
-        System.assertEquals(false, caseRecord.NSP_Confidential__c);
         test.stopTest();
+        System.assertEquals(false, caseRecord.NSP_Confidential__c);
     }
     
     /***********************************************************************************************
@@ -149,12 +149,12 @@ private class NSP_EmailMessageTriggerHelperTest {
     * ********************************************************************************************/ 
     @isTest
     private static void neagativTestUpdateConfidentialCheckBoxForEmpScreening(){
-        test.startTest();
         List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c', 'Status'};
             String query = new NSP_QueryBuilder('Case', caseFields)
             .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
             .addLimit(1).build();
         Case caseRecord = Database.query(query);    
+        test.startTest();
         EmailMessage eMessage = (EmailMessage)NSP_TestExtendedDataFactory.createSObject(new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults', false);
         eMessage.ToAddress = 'test.test@test.com';
         eMessage.Subject = 'test';
@@ -162,8 +162,8 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMessage.FromAddress = 'test@test.com';
         eMessage.ParentId = caseRecord.Id;
         Database.insert(eMessage);
-        System.assertEquals(false, caseRecord.NSP_Confidential__c);
         test.stopTest();
+        System.assertEquals(false, caseRecord.NSP_Confidential__c);
     }
     
     /***********************************************************************************************
@@ -172,12 +172,12 @@ private class NSP_EmailMessageTriggerHelperTest {
     * ********************************************************************************************/ 
     @isTest
     private static void sendEmailToHealthWelfareInternal(){
-        test.startTest();
         List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c', 'Status'};
             String query = new NSP_QueryBuilder('Case', caseFields)
             .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
             .addLimit(1).build();
         Case caseRecord = Database.query(query);    
+        test.startTest();
         EmailTemplate template = new EmailTemplate ();
         template.developerName = 'Test_Email_Template_Unique';
         template.FolderId=userInfo.getUserId();
@@ -193,8 +193,8 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMessage.ParentId = caseRecord.Id;
         Database.insert(eMessage);
         }
-        system.assertEquals(caseRecord.Status, NSP_ServiceConstants.CASE_OPEN_STATUS);
         test.stopTest();
+        system.assertEquals(caseRecord.Status, NSP_ServiceConstants.CASE_OPEN_STATUS);
     }
     
     /***********************************************************************************************
@@ -203,12 +203,12 @@ private class NSP_EmailMessageTriggerHelperTest {
     * ********************************************************************************************/ 
     @isTest
     private static void sendEmailToHealthWelfareExternal(){
-        test.startTest();
         List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c', 'Status'};
             String query = new NSP_QueryBuilder('Case', caseFields)
             .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
             .addLimit(1).build();
         Case caseRecord = Database.query(query);    
+        test.startTest();
         EmailMessage eMessage = (EmailMessage)NSP_TestExtendedDataFactory.createSObject(new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults', false);
         eMessage.ToAddress = 'test.customer.service@insperity.com';
         eMessage.Subject = 'test';
@@ -226,12 +226,12 @@ private class NSP_EmailMessageTriggerHelperTest {
     * ********************************************************************************************/ 
     @isTest
     private static void negativesendEmailToHealthWelfareExternal(){
-        test.startTest();
         List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c', 'Status'};
             String query = new NSP_QueryBuilder('Case', caseFields)
             .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
             .addLimit(1).build();
         Case caseRecord = Database.query(query);    
+        test.startTest();
         EmailMessage eMessage = (EmailMessage)NSP_TestExtendedDataFactory.createSObject(new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults', false);
         eMessage.ToAddress = 'test.customer.service@test.com';
         eMessage.Subject = 'test';
@@ -251,11 +251,11 @@ private class NSP_EmailMessageTriggerHelperTest {
     */  
     @isTest  
     private static void updateEmailMessageFieldsTest(){
-        test.startTest();
         Case nCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
         nCase.NSP_Case_External_Id__c = '22778899';
         insert nCase;
         
+        test.startTest();
         EmailMessage eMessage = (EmailMessage)NSP_TestExtendedDataFactory.createSObject(new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults', false);
         eMessage.ToAddress = 'test@insperity.com';
         eMessage.FromName = 'cases.345678_SB4.22778899_3456789.netsuite';
@@ -264,11 +264,10 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMessage.ParentId = nCase.Id;
         eMessage.FromAddress = 'test@pwc.com';
         Database.insert(eMessage);
-        
+        test.stopTest();
         
         List<EmailMessage> eMessageList = [SELECT Id, FromName ,ParentId ,CreatedDate From EmailMessage WHERE FromName = 'cases.345678_SB4.22778899_3456789.netsuite'];
         system.assert(eMessageList.size() > 0);
-        test.stopTest();
     }
     
     /***********************************************************************************************
@@ -276,8 +275,7 @@ private class NSP_EmailMessageTriggerHelperTest {
     * Description : This method is used to test if Mark Response field and creation of Child case base on Case closed Date
     * ********************************************************************************************/ 
     @isTest
-    static void markResponseAfterCloseMoreThanFiveForPEOTest() {
-        test.startTest();
+    static void markResponseAfterCloseMoreThanFiveForPEOTest() {   
         Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
         ID contactCenterQueueId = ([SELECT ID FROM Group WHERE Type = :QUEUE AND DeveloperNAME = :CONTACTCENTERQUEUE]).ID;
         Map<Case,String> CaseToSubjectMap = new Map<Case,String>();
@@ -303,6 +301,7 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMsg.HtmlBody = 'Test email body';
         eMsg.ParentId = caseRecord.id;
         
+        test.startTest();
         //inserting Email message
         insert eMsg;
         
@@ -322,7 +321,6 @@ private class NSP_EmailMessageTriggerHelperTest {
     * ********************************************************************************************/ 
     @isTest
     static void markResponseAfterCloseLessThanFiveForPEOTest() {   
-        test.startTest();
         Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
 
         Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
@@ -342,6 +340,7 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMsg.HtmlBody = 'Test email body';
         eMsg.ParentId = caseRecord.id;
         
+        test.startTest();
         //inserting Email message
         insert eMsg;
         test.stopTest();
