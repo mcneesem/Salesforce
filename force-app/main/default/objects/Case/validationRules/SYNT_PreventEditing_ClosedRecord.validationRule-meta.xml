@@ -11,7 +11,6 @@ AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), NSP_Show_Confidential_PopUp_
 AND(NSP_Confidential__c = true, NSP_Show_Confidential_PopUp__c = false),
 AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), PRIORVALUE(NSP_Show_Confidential_PopUp__c) = false)), 
   NOT(ISPICKVAL(Status, &apos;ReOpened&apos;)),
-NOT($User.Id = $Label.NSP_CaseValidationBypassUser ),
 OR(AND(ISCHANGED(NSP_Response_After_Close__c), NSP_Response_After_Close__c = false),
   AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), NSP_Response_After_Close__c = true),
   AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), PRIORVALUE(NSP_Response_After_Close__c) = false)),
