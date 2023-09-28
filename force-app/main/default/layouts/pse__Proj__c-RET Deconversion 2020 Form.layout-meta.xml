@@ -262,49 +262,43 @@
     </platformActionList>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>NSP_Project_Link__c</fields>
         <fields>pse__Start_Date__c</fields>
         <fields>pse__End_Date__c</fields>
-        <fields>pse__Parent_Task__c</fields>
-        <fields>pse__Milestone__c</fields>
+        <fields>pse__Status__c</fields>
         <fields>pse__Order__c</fields>
-        <fields>pse__WBS_Element_Number__c</fields>
+        <fields>NSP_Account__c</fields>
         <relatedList>pse__Project_Task__c.pse__Project__c</relatedList>
-        <sortField>pse__Order__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>pse__Resource_Role__c</fields>
-        <fields>pse__Opportunity__c</fields>
-        <fields>pse__Resource__c</fields>
-        <fields>pse__Status__c</fields>
-        <relatedList>pse__Resource_Request__c.pse__Project__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Account.NAME</fields>
-        <fields>Account.NSP_Status__c</fields>
-        <relatedList>Project_Account__c.Project__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>pse__Status__c</fields>
-        <fields>pse__Target_Date__c</fields>
-        <fields>pse__Actual_Date__c</fields>
-        <fields>pse__Milestone_Amount__c</fields>
-        <fields>pse__Milestone_Cost__c</fields>
-        <fields>pse__Log_Milestone_Cost_As_External__c</fields>
-        <fields>pse__Include_In_Financials__c</fields>
-        <fields>pse__Billed__c</fields>
-        <relatedList>pse__Milestone__c.pse__Project__c</relatedList>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
+        <relatedList>Case.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>NSP_Project__c</fields>
+        <fields>pse__Role__c</fields>
+        <fields>pse__Resource__c</fields>
         <fields>pse__Start_Date__c</fields>
         <fields>pse__End_Date__c</fields>
         <relatedList>pse__Assignment__c.pse__Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>pse__Resource_Role__c</fields>
+        <fields>pse__Start_Date__c</fields>
+        <fields>pse__End_Date__c</fields>
+        <fields>pse__Status__c</fields>
+        <relatedList>pse__Resource_Request__c.pse__Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>Order.NSP_Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>Create_Project_From_Template</customButtons>
@@ -322,6 +316,18 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>pse__Status__c</fields>
+        <fields>pse__Target_Date__c</fields>
+        <fields>pse__Actual_Date__c</fields>
+        <fields>pse__Milestone_Amount__c</fields>
+        <fields>pse__Milestone_Cost__c</fields>
+        <fields>pse__Log_Milestone_Cost_As_External__c</fields>
+        <fields>pse__Include_In_Financials__c</fields>
+        <fields>pse__Billed__c</fields>
+        <relatedList>pse__Milestone__c.pse__Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>NSP_Note__c.NSP_Project__c</relatedList>
@@ -330,7 +336,18 @@
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>NewEvent</excludeButtons>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Asset.NAME</fields>
+        <fields>Asset.NSP_Status__c</fields>
+        <relatedList>Project_Asset__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Account.NAME</fields>
+        <fields>Account.NSP_Status__c</fields>
+        <relatedList>Project_Account__c.Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>Title__c</fields>
         <fields>NSP_Owner__c</fields>
@@ -353,7 +370,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4x000003Eh76</masterLabel>
+        <masterLabel>00h3C0000018CyH</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
