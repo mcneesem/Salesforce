@@ -1946,6 +1946,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CreatedByUserRole__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.Employee_Orientation_OMR_Id__c</field>
         <readable>true</readable>
@@ -2798,6 +2803,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.NSP_usng_third_pary_timekeeping_system__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.RecordTypeName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
