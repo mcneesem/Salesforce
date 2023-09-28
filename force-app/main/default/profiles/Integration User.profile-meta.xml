@@ -6783,6 +6783,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_SKU__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.NSP_SaaS_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
