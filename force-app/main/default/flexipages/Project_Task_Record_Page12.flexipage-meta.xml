@@ -146,9 +146,6 @@
                             <value>NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>pse__Project__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>pse__Resource__c</value>
                         </valueListItems>
                         <valueListItems>
@@ -159,6 +156,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>pse__End_Date__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>pse__Project__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
