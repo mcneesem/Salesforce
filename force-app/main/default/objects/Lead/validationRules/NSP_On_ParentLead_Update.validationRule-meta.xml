@@ -6,6 +6,10 @@
     <errorConditionFormula>AND($UserRole.Name != &apos;District Manager&apos;, 
 $UserRole.Name != &apos;District Administrator&apos;,
 $UserRole.Name != &apos;Inbound Manager&apos;,
-$UserRole.Name != &apos;Inbound Rep&apos;, ISCHANGED( NSP_Parent_Lead__c),$Profile.Name &lt;&gt; &quot;System Administrator&quot;)</errorConditionFormula>
+$UserRole.Name != &apos;Inbound Rep&apos;, 
+ISCHANGED( NSP_Parent_Lead__c),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;Data Migration&quot;
+)</errorConditionFormula>
     <errorMessage>Only Users with District Administrator, District Manager, Inbound Manager or Inbound Rep Role can update Parent Lead</errorMessage>
 </ValidationRule>
