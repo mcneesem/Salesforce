@@ -714,6 +714,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_lock_enrollment_fee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Lock_Opportunity__c</field>
             </layoutItems>
             <layoutItems>

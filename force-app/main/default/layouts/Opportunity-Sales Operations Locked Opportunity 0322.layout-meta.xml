@@ -225,6 +225,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_lock_enrollment_fee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_TotalAnnualPayroll__c</field>
             </layoutItems>
             <layoutItems>
@@ -267,6 +271,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_EnrollmentFeeDiscount__c</field>
