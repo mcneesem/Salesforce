@@ -339,8 +339,8 @@
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -410,8 +410,8 @@
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -427,8 +427,8 @@
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

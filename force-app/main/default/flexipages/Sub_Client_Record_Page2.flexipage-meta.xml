@@ -32,8 +32,8 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
@@ -53,8 +53,8 @@
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

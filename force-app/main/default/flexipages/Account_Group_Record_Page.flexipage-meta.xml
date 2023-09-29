@@ -75,7 +75,7 @@
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
