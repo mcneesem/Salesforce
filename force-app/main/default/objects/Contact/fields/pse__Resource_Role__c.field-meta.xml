@@ -106,6 +106,16 @@
                 <default>false</default>
                 <label>RET ORK</label>
             </value>
+            <value>
+                <fullName>CSP-Implementation</fullName>
+                <default>false</default>
+                <label>CSP-Implementation</label>
+            </value>
+            <value>
+                <fullName>CSP-Plan Consulting</fullName>
+                <default>false</default>
+                <label>CSP-Plan Consulting</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -75,6 +75,16 @@
                 <default>false</default>
                 <label>RET Finance</label>
             </value>
+            <value>
+                <fullName>CSP-Implementation</fullName>
+                <default>false</default>
+                <label>CSP-Implementation</label>
+            </value>
+            <value>
+                <fullName>CSP-Plan Consulting</fullName>
+                <default>false</default>
+                <label>CSP-Plan Consulting</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>3</visibleLines>
