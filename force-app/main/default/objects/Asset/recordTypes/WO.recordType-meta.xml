@@ -24,6 +24,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>National_Account_Type__c</picklist>
+        <values>
+            <fullName>82004</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>82005</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>82006</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>82007</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_RET_Auto_Enroll__c</picklist>
         <values>
             <fullName>N%2FA</fullName>
