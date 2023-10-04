@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestWizardController {
-    // test w/ NSP_ReportRequestWizardControllerTest (??%)
+    // test w/ NSP_ReportRequestWizardControllerTest (85%)
 
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     private static final String NOT_FOUND = 'Not Found';
@@ -353,5 +353,44 @@ public with sharing class NSP_ReportRequestWizardController {
               throw new AuraHandledException(exc.getMessage());
           }
 
+    }
+
+    /**
+    * @MethodName: createCaseDocuments
+    * @Description: This method will create documents for case based on wizard output
+    * @param :  String caseID, string NSP_ReprotRequest__c.ID
+    * @createdDate : 10/02/2023
+    * @return: N/A                     
+    */
+    
+    @AuraEnabled
+    public static void createCaseDocuments(Id reportRequestID, Id caseID)
+    {
+        try {
+            List<ContentDocumentLink> lstConDocs = new List<ContentDocumentLink>();
+            
+            // Getting the content document links related to Report Request record for content document ID
+            for(ContentDocumentLink cntLink : [Select Id, ContentDocumentId, ShareType, Visibility 
+                                               From ContentDocumentLink 
+                                               WHERE LinkedEntityId =:reportRequestID]) 
+            {
+                lstConDocs.add(new ContentDocumentLink(
+                    LinkedEntityId      = caseID,
+                    ContentDocumentId   = cntLink.ContentDocumentId,
+                    ShareType           = 'V',
+                    Visibility          = 'InternalUsers'
+                ));
+            }
+            
+            if(lstConDocs?.size() > 0)
+            {
+                Database.insert(lstConDocs, false);
+            }
+            
+        }
+        catch (Exception e) 
+        {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }

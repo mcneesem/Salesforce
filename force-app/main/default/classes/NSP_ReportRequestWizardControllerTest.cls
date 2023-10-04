@@ -7,13 +7,13 @@ Function             :   Represents test class for NSP_ReportRequestWizardContro
 Story                :                                                                      
 Modification Log     :                                                                              
 */
+
 @isTest
 private class NSP_ReportRequestWizardControllerTest {
     
     private static final Id recordTypeID = NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_DevelopmentReport' );
     private static final Id assetRrdTypeID = NSP_GenericRecordType.getRecordTypeId('Asset','WO' );
     private static List<String> accFields = new List<String>{'Id'};
-
 
     /**
 	* @Description: This test method is used to prepare data for testing
@@ -23,18 +23,21 @@ private class NSP_ReportRequestWizardControllerTest {
     @testSetup
     static void testData() {
        Test.startTest();
+       //Creating Account Record
        Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
        newAccount.NSP_Premier_Pathway_Client__c ='12345ABCDEF';
        newAccount.Name= System.Label.NSP_InternalAccountName;
        newAccount.NSP_FinanceLevel__c= 'Level 2';
        insert newAccount;
         
+      //Creating Contact Record
       Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
       newContact.AccountId = newAccount.Id;
       newContact.NSP_Per_ID__c ='ABCDEF12345';
       newContact.NSP_Date_of_Birth__c = system.today()-150;
       insert newContact;
 
+      //Creating Asset Record
       Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
       newAsset.AccountId = newAccount.Id;
       newAsset.RecordTypeId= assetRrdTypeID;
@@ -45,6 +48,7 @@ private class NSP_ReportRequestWizardControllerTest {
       newAsset.NSP_Unique_Active_Employee__c=45;
       insert newAsset;
         
+      //Creating ReportRequest Record
       NSP_ReportRequest__c newRepReqTrigger = new NSP_ReportRequest__c();
       newRepReqTrigger.RecordTypeId =recordTypeID;
    	  newRepReqTrigger.NSP_Existing_NewReport__c = 'New Report';
@@ -54,6 +58,7 @@ private class NSP_ReportRequestWizardControllerTest {
       newRepReqTrigger.NSP_ClientName__c=newAccount.Id;
       insert newRepReqTrigger;
         
+      //Creating AccountTeam Record
       NSP_Account_Team__c acTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
       acTeam.NSP_Role__c ='HR Specialist';
       acTeam.NSP_Account__c= newAccount.Id;
@@ -61,6 +66,7 @@ private class NSP_ReportRequestWizardControllerTest {
       acTeam.NSP_User__c = UserInfo.getUserId();
       insert acTeam;
       
+      //Creating Sub Client Record
       NSP_Sub_Client__c scIns = new NSP_Sub_Client__c ();
       scIns.Name = 'Test';
       scIns.NSP_Account__c = newAccount.Id ;
@@ -68,6 +74,7 @@ private class NSP_ReportRequestWizardControllerTest {
       scIns.NSP_Sub_Client__c='1233';
       insert scIns ;
       
+      //Creating Sub Client Contact Record
       NSP_Sub_Client_Contact__c subClientContact = (NSP_Sub_Client_Contact__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client_Contact__c(), 'NSP_TestDataFactory.SubClientContactDefaults', false);
       subClientContact.NSP_Sub_Client__c=scIns.Id;
       subClientContact.NSP_Contact__c=newContact.Id;
@@ -75,6 +82,7 @@ private class NSP_ReportRequestWizardControllerTest {
       subClientContact.NSP_Is_Primary__c=true;
       insert subClientContact;
       
+      //Creating Address Record
       NSP_Address__c address1 = (NSP_Address__c) NSP_TestDataFactory.createSObject(new NSP_Address__c(), 'NSP_TestDataFactory.AddressDefaults', false);
       address1.NSP_Address_Type__c = 'Worksite';
       address1.NSP_Country__c = 'United States';
@@ -84,6 +92,7 @@ private class NSP_ReportRequestWizardControllerTest {
       address1.NSP_State__c ='NY'; 
       insert address1;       
       
+      //Creating Sub Client Contact Address Record
       NSP_Sub_Client_Contact_Address__c sccAddress = (NSP_Sub_Client_Contact_Address__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client_Contact_Address__c(), 'NSP_TestDataFactory.SubClientContactAddressDefaults', false);
       sccAddress.NSP_Sub_Client_Contact__c=subClientContact.id;
       sccAddress.NSP_Address__c=address1.id;
@@ -97,8 +106,8 @@ private class NSP_ReportRequestWizardControllerTest {
            newGroup.DeveloperName ='NSP_ReportDevelopment' ;
            insert newGroup; 
            QueuesObject testQueue = new QueueSObject(QueueID = newGroup.Id, SObjectType = 'Case');
-           System.runAs(new User(Id = UserInfo.getUserId())){
-           insert testQueue;}
+           System.runAs(new User(Id = UserInfo.getUserId()))
+           {insert testQueue;}
       }
       Test.stopTest();
         
@@ -115,7 +124,7 @@ private class NSP_ReportRequestWizardControllerTest {
        
        String accQuery = new NSP_QueryBuilder('Account', accFields).addLimit(1).build();
        Account acc = Database.query(accQuery);
-       NSP_ReportRequest__c reportRequest =[SELECT Id from NSP_ReportRequest__c WHERE Id != null LIMIT 1];
+       NSP_ReportRequest__c reportRequest =[SELECT Id from NSP_ReportRequest__c LIMIT 1];
        
        Test.startTest();
        String internalAccountId = NSP_ReportRequestWizardController.getInternalAccountId();
@@ -162,7 +171,7 @@ private class NSP_ReportRequestWizardControllerTest {
 	*     */
     @isTest
     private static void testSeperationRequest2(){
-       
+        
         String accQuery = new NSP_QueryBuilder('Account', accFields).addLimit(1).build();
         Account acc = Database.query(accQuery); 
         String assetQuery = new NSP_QueryBuilder('Asset', accFields).addLimit(1).build();
@@ -235,6 +244,88 @@ private class NSP_ReportRequestWizardControllerTest {
         update oAsset;
         Boolean isActiveEmployeeFalse = NSP_ReportRequestWizardController.getActiveEmployeeCount( acc.Id );
         system.assertEquals(isActiveEmployeeFalse, false);
+        Test.stopTest();
+    }
+    
+    @isTest static void test_FileLoad_For_case()
+    {
+        // Fetching the Account Record
+        Account testAccount = [SELECT ID, Name FROM Account LIMIT 1];
+        Assert.isNotNull(testAccount, 'Test Account should be available');
+        
+        // Fetching the contact Record based on Account
+        Contact newContact = [SELECT ID, AccountId FROM Contact WHERE AccountId = :testAccount.ID LIMIT 1];
+        Assert.isNotNull(newContact, 'Contact should be present and should be linked to account');
+        Assert.areEqual(newContact.AccountId, testAccount.ID, 'Account should be same');
+        
+        // Create Case Record
+        Case CaseRecord 				=	(Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
+        CaseRecord.NSP_Category__c 		=	NSP_ServiceConstants.HR_EMPLOYEE_RELATIONS;
+        CaseRecord.NSP_SubCategory__c 	=	'Separation Agreement Request';
+        CaseRecord.Subject 				=	'Test Case';
+        CaseRecord.AccountId 			=	testAccount.Id;
+        insert CaseRecord;
+        Assert.isNotNull(CaseRecord, 'Case should be present');
+        Assert.areNotEqual(null, CaseRecord.AccountId, 'Case should be linked to Account');
+        
+        // Creating the Report Request with Record Type Seperation Agreement
+        Id separationRecordTypeID 			=	NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest');
+        NSP_ReportRequest__c reportRequest 	=	(NSP_ReportRequest__c)NSP_TestExtendedDataFactory.createSObject(new NSP_ReportRequest__c(), 'NSP_TestDataFactory.ReportRequestDefaults', false);
+        reportRequest.RecordTypeId 			=	separationRecordTypeID;
+        reportRequest.NSP_IsDraft__c		=	false;
+        reportRequest.name					=	'test ReportRequest';
+        reportRequest.NSP_Case__c 			=	CaseRecord.Id;
+        reportRequest.NSP_AgreementType__c 	=	'Client-Prepared';
+        reportRequest.NSP_ReviewType__c 	=	'Corporate Review';
+        reportRequest.NSP_WSEE__c 			=	newContact.Id;
+        reportRequest.NSP_ClientName__c 	=	testAccount.Id;
+        
+        insert reportrequest;
+        Assert.areEqual(separationRecordTypeID, reportrequest.RecordTypeId, 'Report Request should be created with NSP_SeparationRequest record type value');
+        
+        // Create Content Version
+        ContentVersion conVer 	= new ContentVersion(
+            Title 				= 'Test Document',
+            PathOnClient 		= 'document.jpg',
+            VersionData 		= Blob.valueOf('Test Content'),
+            IsMajorVersion 		= true
+        );
+        
+        insert conVer;
+        Assert.areNotEqual(conVer, null, 'There is a problem in creating the content version');
+        
+        ContentDocument document = [SELECT ID, Title, LatestPublishedVersionId, ParentId FROM ContentDocument LIMIT 1];
+        Assert.isNotNull(document, 'Document should be created to test the content document link');
+        
+        // Create Conent Document Link
+        ContentDocumentLink cdl = new ContentDocumentLink(
+            LinkedEntityID 		= reportRequest.ID,
+            ContentDocumentID 	= document.ID,
+            ShareType 			= 'V'  
+        );
+        
+        insert cdl;
+        Assert.isNotNull(cdl, 'There is a problem in creating the Content Document Link');
+        
+        Test.startTest();
+        NSP_ReportRequestWizardController.createCaseDocuments(reportrequest.ID, CaseRecord.ID);
+        Test.stopTest();
+    }
+        @isTest static void test_FileLoad_For_case_Negative()
+    {
+        Test.startTest();
+        NSP_ReportRequest__c reportrequest 	= new NSP_ReportRequest__c();
+        Case CaseRecord 					= new Case();
+        try
+        {
+            NSP_ReportRequestWizardController.createCaseDocuments(reportrequest.ID, CaseRecord.ID);
+        }
+        catch(Exception e)
+        {
+            Assert.isNotNull(e.getMessage());
+        }
+        
+        
         Test.stopTest();
     }
 }
