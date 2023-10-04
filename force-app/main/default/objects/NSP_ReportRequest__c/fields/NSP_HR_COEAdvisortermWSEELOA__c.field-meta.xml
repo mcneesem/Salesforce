@@ -32,11 +32,6 @@
                 <label>Celenia Estime</label>
             </value>
             <value>
-                <fullName>Andrea Cook</fullName>
-                <default>false</default>
-                <label>Andrea Cook</label>
-            </value>
-            <value>
                 <fullName>Lori Sweeney</fullName>
                 <default>false</default>
                 <label>Lori Sweeney</label>
@@ -45,6 +40,22 @@
                 <fullName>Taylor Queen</fullName>
                 <default>false</default>
                 <label>Taylor Queen</label>
+            </value>
+            <value>
+                <fullName>Dawn Motsiff</fullName>
+                <default>false</default>
+                <label>Dawn Motsiff</label>
+            </value>
+            <value>
+                <fullName>Angela Smart</fullName>
+                <default>false</default>
+                <label>Angela Smart</label>
+            </value>
+            <value>
+                <fullName>Andrea Cook</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Andrea Cook</label>
             </value>
         </valueSetDefinition>
     </valueSet>

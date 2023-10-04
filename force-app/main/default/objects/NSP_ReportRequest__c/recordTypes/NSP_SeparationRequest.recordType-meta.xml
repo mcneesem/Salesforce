@@ -210,15 +210,15 @@
     <picklistValues>
         <picklist>NSP_HR_COEAdvisortermWSEELOA__c</picklist>
         <values>
-            <fullName>Andrea Cook</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Caroline Hernandez</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Celenia Estime</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dawn Motsiff</fullName>
             <default>false</default>
         </values>
         <values>
@@ -237,8 +237,12 @@
             <fullName>Taylor Queen</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
+        <values>
+            <fullName>Angela Smart</fullName>
+            <default>false</default>
+        </values>
+        </picklistValues>
+        <picklistValues>
         <picklist>NSP_HaveYouattachedPreparedAgreement__c</picklist>
         <values>
             <fullName>No</fullName>
