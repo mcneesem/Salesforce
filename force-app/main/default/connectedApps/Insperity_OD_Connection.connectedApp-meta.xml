@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
-    <contactEmail>aashish.mahodaya@insperity.com</contactEmail>
+    <contactEmail>paul.mccluskey@insperity.com</contactEmail>
     <label>Insperity OD Connection</label>
     <oauthConfig>
         <callbackUrl>https://test.salesforce.com</callbackUrl>
@@ -19,6 +19,5 @@
         <ipRelaxation>ENFORCE</ipRelaxation>
         <refreshTokenPolicy>infinite</refreshTokenPolicy>
     </oauthPolicy>
-    <profileName>System Administrator</profileName>
-    <profileName>Custom : Netskope Profile</profileName>
+    <permissionSetName>Assign Connected App: Insperity OD Connection</permissionSetName>
 </ConnectedApp>
