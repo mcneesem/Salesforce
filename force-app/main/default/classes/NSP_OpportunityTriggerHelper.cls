@@ -64,7 +64,9 @@ public class NSP_OpportunityTriggerHelper {
             // AZD-191924 AZD-232114 AZD-232117
             //  If primary product IS 'Workforce Optimization' then calculate fees
             if(opportunityObject.NSP_PrimaryProduct__c != null){
-                if(String.isNotBlank(opportunityObject.Accountid) && opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) && 
+                if(String.isNotBlank(opportunityObject.Accountid) && 
+                (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) || 
+                opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ) && 
                 opportunityObject.NSP_lock_enrollment_fee__c == false){
                    calculateFrees.add(opportunityObject);
                }
@@ -258,7 +260,9 @@ public class NSP_OpportunityTriggerHelper {
             // AZD-191924 AZD-232114 AZD-232117 
             //  If primary product IS 'Workforce Optimization' then calculate fees
             if(newOpportunity.NSP_PrimaryProduct__c != null){
-               if(String.isNotBlank(newOpportunity.Accountid) && newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) &&
+               if(String.isNotBlank(newOpportunity.Accountid) && 
+               (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
+               newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)) &&
                 !newOpportunity.NSP_lock_enrollment_fee__c){
                    calculateFrees.add(newOpportunity);
                 }
@@ -1469,6 +1473,7 @@ Created Date:12/05/2022
             opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == false && 
             opp.NSP_WaivedInsperityFee__c == false && opp.NSP_InsperityFeePercent__c == null )  {
                 
+                //  Formula 1
                 opp.NSP_Calculated_Enrollment_Fee__c = opp.NSP_Schedule_B_Enrollment_Fee__c;
                 opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
                 opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
@@ -1478,7 +1483,8 @@ Created Date:12/05/2022
             else if(!oppSubType.equals('CAM') && opp.NSP_TotalAnnualPayroll__c !=null && 
                 opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == false &&
                 opp.NSP_WaivedInsperityFee__c == false && opp.NSP_InsperityFeePercent__c == null ) {
-            
+                    
+                    //  Formula 2
                     opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
                     opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
                     opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
@@ -1488,24 +1494,25 @@ Created Date:12/05/2022
             else if(!oppSubType.equals('CAM') && opp.NSP_TotalAnnualPayroll__c !=null && 
                 opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == true && 
                 opp.NSP_WaivedInsperityFee__c == false && opp.NSP_InsperityFeePercent__c == null ) {
-
+                
+                //  Formula 3
                 opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
                 opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
                 opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
                 opp.NSP_Total_EF_Due_Reps__c = opp.NSP_Schedule_B_Enrollment_Fee__c - opp.NSP_InsperityFee__c;
             
             }
-            else if(!oppSubType.equals('CAM') &&  opp.NSP_TotalAnnualPayroll__c !=null && 
-                opp.NSP_Schedule_B_Enrollment_Fee__c != null && opp.NSP_1_6_OfScheduleB__c == false &&  
-                opp.NSP_WaivedInsperityFee__c == true && opp.NSP_InsperityFeePercent__c !=null ) {
-
-                opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+            else if(!oppSubType.equals('CAM') && opp.NSP_TotalAnnualPayroll__c !=null 
+            &&  opp.NSP_Schedule_B_Enrollment_Fee__c != null  && opp.NSP_1_6_OfScheduleB__c == false && 
+            opp.NSP_WaivedInsperityFee__c == true &&  opp.NSP_InsperityFeePercent__c !=null ) {
+            
+                //  Formula 4
+                opp.NSP_Calculated_Enrollment_Fee__c = opp.NSP_Schedule_B_Enrollment_Fee__c;
                 opp.NSP_EnrollmentFeeDiscount__c = opp.NSP_Calculated_Enrollment_Fee__c - opp.NSP_Schedule_B_Enrollment_Fee__c;
                 opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
                 opp.NSP_Total_EF_Due_Reps__c = opp.NSP_Schedule_B_Enrollment_Fee__c - opp.NSP_InsperityFee__c;   
 
-            }
-
+            }   
         }
      }
     

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Gives visibility to the &quot;Lock Enrollment Fee&quot; field</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_lock_enrollment_fee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Opportunity - Lock Enrollment Fee - Read Access</label>
+</PermissionSet>

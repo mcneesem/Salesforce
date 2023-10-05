@@ -57,6 +57,12 @@ const DYNAMIC_FIELDS = {
       dependentFields: ['NSP_Hours_paid_for_earning_accruals__c_ITA_CALENDER'],
     },
   ],
+  NSP_Is_there_a_frontloaded_proration__c_ITA_CALENDAR: [
+    {
+      expValue: [YES],
+      dependentFields: ['frontLoadITACalendar'],
+    }
+  ],
   NSP_time_accrue_under_plan_anniv_year__c: [
     {
       expValue: [
@@ -138,7 +144,7 @@ const DYNAMIC_FIELDS = {
       ],
     },
   ],
-  NSP_Is_there_a_frontloaded_proration__c: [
+  NSP_Is_there_a_frontloaded_proration__c_ITA_FISCAL: [
     {
       expValue: [YES],
       dependentFields: ['frontLoad'],
@@ -147,7 +153,7 @@ const DYNAMIC_FIELDS = {
   NSP_Submitted_to_satisfy_compliance_need__c: [
     {
       expValue: [YES],
-      dependentFields: ['NSP_Compliance_Locations__c'],
+      dependentFields: ['NSP_Compliance_Location__c'],
     },
   ],
   NSP_Hours_paid_for_earning_accruals__c_ITA_ANNIVERSARY: [

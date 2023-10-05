@@ -9,7 +9,7 @@ Modification Log     :
 * Developer                   Date                   Description                                     
 * -------------------------------------------------------------------------------------------------  
 
-*	CPQ           7/2/2023           First Iteration
+*   CPQ           7/2/2023           First Iteration
 *
 ***************************************************************************************************/
 @isTest
@@ -34,6 +34,7 @@ public class NSP_SubscriptionTriggerHelperTest {
     @testSetup
     static void setupTestData(){
         // NSP_TestHelpser th = new NSP_TestHelper();
+        Set<Id> orderItemSet = new Set<Id>();
         Account objaccount = NSP_TestHelper.createAccount(true);
         blng__BillingRule__c bRule=NSP_TestHelper.createBillingRule();
         blng__RevenueRecognitionRule__c rRule=NSP_TestHelper.createRevrecRule(NSP_CPQConstants.PROJ_REV_REC);
@@ -83,7 +84,8 @@ public class NSP_SubscriptionTriggerHelperTest {
         update orderList;
         list<OrderItem> orderItemList = new list<OrderItem>([SELECT Id,SBQQ__BillingFrequency__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type FROM OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id AND Product2Id=:objproduct.Id]);
         orderItemList[0].SBQQ__BillingFrequency__c='Annual';
-        update orderItemList; 
+        update orderItemList;
+        orderItemSet.add(orderItemList[0].Id);
         List<SBQQ__Quoteline__c> quoteLine1 = [SELECT Id, SBQQ__Quote__r.SBQQ__Type__c, SBQQ__Quote__c FROM SBQQ__Quoteline__c WHERE Id != null LIMIT 1];
         //Create Contract
         Contract ct = new Contract();
@@ -109,6 +111,7 @@ public class NSP_SubscriptionTriggerHelperTest {
         insert subscription;
         
         update subscription;
+        NSP_SubscriptionTriggerHelper.updateTermDateonOP(orderItemSet);
         Test.stopTest();       
     }
     /**
@@ -171,7 +174,8 @@ public class NSP_SubscriptionTriggerHelperTest {
         SBQQ__Subscription__c subscription3 = new SBQQ__Subscription__c();
         subscription3.SBQQ__Account__c = accounts[0].Id;
         subscription3.SBQQ__Quantity__c = 1;
-        subscription3.NSP_SubscriptionStartDate__c = goLiveDate;
+        //changed
+        subscription3.NSP_SubscriptionStartDate__c = NSP_CPQConstants.SUBS_ODERACTIVATEPLUS1MONTH;
         subscription3.SBQQ__OrderProduct__c = orderItemList[0].Id;
         subscription3.SBQQ__Product__c = product1.Id;
         subscription3.NSP_Create_Entitlement__c = true;
@@ -308,6 +312,9 @@ public class NSP_SubscriptionTriggerHelperTest {
         subscription.NSP_Create_Entitlement__c = true;
         subscription.SBQQ__QuoteLine__c = quoteLine1[0].Id;
         subList.add(subscription);
+        
+        product1.NSP_Product_Type__c = 'Time & Attendance Hardware';
+        update product1;
         //creates subscription
         SBQQ__Subscription__c subscription1 = new SBQQ__Subscription__c();
         subscription1.SBQQ__Account__c = accounts[0].Id;
@@ -319,9 +326,15 @@ public class NSP_SubscriptionTriggerHelperTest {
         subscription1.SBQQ__QuoteLine__c = quoteLine1[0].Id;
         subscription1.NSP_Serial_Ids__c = serialIds;
         subscription1.SBQQ__SubscriptionStartDate__c=system.today();
+        subscription1.SBQQ__TerminatedDate__c = System.today()+15;
+        subscription1.SBQQ__BillingFrequency__c = 'Annual';
+        //subscription1.NSP_Remove_Bundle_Details__c = True;
+        subscription1.SBQQ__RequiredById__c = accounts[0].Id;
+
         subList.add(subscription1);
         
         insert subList;
+        update subList;
         test.stopTest(); 
         List<Asset> assets = [SELECT Id, Status FROM Asset WHERE Status = :NSP_CPQConstants.TERMINATED];
         System.assertNotEquals(Null, assets.size());

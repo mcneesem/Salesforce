@@ -198,6 +198,7 @@ public class NSP_OpportunityTriggerHelperTest {
        
         List<Opportunity> oppList = new List<Opportunity>();
         
+        //  Formula 1
         Opportunity opp1 = new Opportunity();
         opp1.Name = 'Test Oppty Enrollment Fee';
         opp1.AccountId = acct.id;
@@ -210,7 +211,8 @@ public class NSP_OpportunityTriggerHelperTest {
         opp1.NSP_Schedule_B_Enrollment_Fee__c = 1200;
         opp1.NSP_TotalAnnualPayroll__c = 1500;
         oppList.add(opp1);
-
+        
+        //  Formula 2
         Opportunity opp2 = new Opportunity();
         opp2.Name = 'Test Oppty Enrollment Fee';
         opp2.AccountId = acct.id;
@@ -222,6 +224,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opp2.NSP_TotalAnnualPayroll__c = 2500;
         oppList.add(opp2);
 
+        //  Formula 3
         Opportunity opp3 = new Opportunity();
         opp3.Name = 'Test Oppty Enrollment Fee';
         opp3.AccountId = acct.id;
@@ -234,6 +237,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opp3.NSP_1_6_OfScheduleB__c = true;
         oppList.add(opp3);
 
+        //  Formula 4
         Opportunity opp4 = new Opportunity();
         opp4.Name = 'Test Oppty Enrollment Fee';
         opp4.AccountId = acct.id;
@@ -241,32 +245,109 @@ public class NSP_OpportunityTriggerHelperTest {
         opp4.CloseDate = date.today();
         opp4.CurrencyIsoCode = CURRENCY_USD;
         opp4.NSP_PrimaryProduct__c = 'WO';
-        opp4.NSP_Schedule_B_Enrollment_Fee__c = 500;
-        opp4.NSP_TotalAnnualPayroll__c = 2500;
+        opp4.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp4.NSP_TotalAnnualPayroll__c = 1500; 
         opp4.NSP_WaivedInsperityFee__c = true;
         opp4.NSP_InsperityFeePercent__c = 10;
         oppList.add(opp4);
+
+        //  Formula 1 - Workforce Sync
+        Opportunity opp6 = new Opportunity();
+        opp6.Name = 'Test Oppty Enrollment Fee';
+        opp6.AccountId = acct.id;
+        opp6.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp6.CloseDate = date.today();
+        opp6.CurrencyIsoCode = CURRENCY_USD;
+        opp6.NSP_PrimaryProduct__c = 'WS';
+        opp6.Type ='Existing Product';
+        opp6.NSP_AddonType__c = 'CAM';
+        opp6.NSP_Schedule_B_Enrollment_Fee__c = 1200;
+        opp6.NSP_TotalAnnualPayroll__c = 1500;
+        oppList.add(opp6);
+        
+        //  Formula 2 - Workforce Sync
+        Opportunity opp7 = new Opportunity();
+        opp7.Name = 'Test Oppty Enrollment Fee';
+        opp7.AccountId = acct.id;
+        opp7.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp7.CloseDate = date.today();
+        opp7.CurrencyIsoCode = CURRENCY_USD;
+        opp7.NSP_PrimaryProduct__c = 'WS';
+        opp7.NSP_Schedule_B_Enrollment_Fee__c = 100;
+        opp7.NSP_TotalAnnualPayroll__c = 2500;
+        oppList.add(opp7);
+
+        //  Formula 3 - Workforce Sync
+        Opportunity opp8 = new Opportunity();
+        opp8.Name = 'Test Oppty Enrollment Fee';
+        opp8.AccountId = acct.id;
+        opp8.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp8.CloseDate = date.today();
+        opp8.CurrencyIsoCode = CURRENCY_USD;
+        opp8.NSP_PrimaryProduct__c = 'WS';
+        opp8.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp8.NSP_TotalAnnualPayroll__c = 2500; 
+        opp8.NSP_1_6_OfScheduleB__c = true;
+        oppList.add(opp8);
+
+        //  Formula 4 - Workforce Sync
+        Opportunity opp5 = new Opportunity();
+        opp5.Name = 'Test Oppty Enrollment Fee';
+        opp5.AccountId = acct.id;
+        opp5.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp5.CloseDate = date.today();
+        opp5.CurrencyIsoCode = CURRENCY_USD;
+        opp5.NSP_PrimaryProduct__c = 'WS';
+        opp5.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp5.NSP_TotalAnnualPayroll__c = 1500; 
+        opp5.NSP_WaivedInsperityFee__c = true;
+        opp5.NSP_InsperityFeePercent__c = 10;
+        oppList.add(opp5);
         
         NSP_OpportunityTriggerHelper.calculateEnrollmentFees(oppList);
         Test.stopTest();
         
+        //  Formula 1
         //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
         //  1200/ 6 = 200
         System.assertEquals(200, opp1.NSP_InsperityFee__c);
         
+        //  Formula 2
         //  opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
         //  opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
         // NSP_InsperityFee__c = ((2500 /12) * .06 )/6 = 2.08333333333333333333333333333333 (include decimals otherwise won't work) 
         System.assertEquals(2.08333333333333333333333333333333, opp2.NSP_InsperityFee__c);
 
+        //  Formula 3    
         //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
         //  600 / 6 = 100
         System.assertEquals(100, opp3.NSP_InsperityFee__c);
 
+        //  Formula 4
         //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
-        //  (500 * 10) /100 = 50
-        System.assertEquals(50, opp4.NSP_InsperityFee__c);
+        //  (600 * 10) /100 = 60
+        System.assertEquals(60, opp4.NSP_InsperityFee__c);
 
+        //  Formula 1 - Workforce Sync  
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  1200/ 6 = 200
+        System.assertEquals(200, opp6.NSP_InsperityFee__c);
+
+        //  Formula 2 -Workforce Sync
+        //  opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+        //  opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
+        // NSP_InsperityFee__c = ((2500 /12) * .06 )/6 = 2.08333333333333333333333333333333 (include decimals otherwise won't work) 
+        System.assertEquals(2.08333333333333333333333333333333, opp7.NSP_InsperityFee__c);
+
+        //  Formula 3 - Workforce Sync 
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  600 / 6 = 100
+        System.assertEquals(100, opp8.NSP_InsperityFee__c);
+
+        // Formula 4 -  Workforce Sync
+        //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
+        //  (600 * 10) /100 = 60
+        System.assertEquals(60, opp5.NSP_InsperityFee__c);
     }
     
         /**

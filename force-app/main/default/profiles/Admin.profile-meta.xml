@@ -1946,6 +1946,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CreatedByUserRole__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.Employee_Orientation_OMR_Id__c</field>
         <readable>true</readable>
@@ -2798,6 +2803,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.NSP_usng_third_pary_timekeeping_system__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.RecordTypeName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6273,6 +6283,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.NSP_SKU__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.NSP_SaaS_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6503,12 +6518,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.NSP_MergeProducts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.NSP_Consumption_Rate_Flat_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__InvoiceLine__c.NSP_AIMS_Billing_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__InvoiceLine__c.NSP_MergeProducts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34825,7 +34850,7 @@ m   <fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Accrual_Profile__c.NSP_Compliance_Locations__c</field>
+        <field>NSP_Accrual_Profile__c.NSP_Compliance_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35256,11 +35281,6 @@ m   <fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Accrual_Profile__c.NSP_Carryover_in_Hours_or_percentage__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Accrual_Profile__c.NSP_Compliance_Locations__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

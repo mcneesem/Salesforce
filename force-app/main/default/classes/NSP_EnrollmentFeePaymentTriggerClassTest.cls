@@ -32,6 +32,24 @@ private class NSP_EnrollmentFeePaymentTriggerClassTest{
       nsp_enrollment_fee_payment_Obj.NSP_Payment_Amount__c = 100.00;
       Update nsp_enrollment_fee_payment_Obj;
       
+      //Insert User
+      User userRecord = new User(
+                ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+                LastName = 'TestClassUser',
+                Phone = '1231231231',
+                Email = 'testuser@insperity.com',
+                Username = 'testuser@test.com' + System.currentTimeMillis(),
+                CompanyName = 'TEST',
+                Title = 'title',
+                Alias = 'alias',
+                TimeZoneSidKey = 'America/Los_Angeles',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'en_US',
+                LocaleSidKey = 'en_US',
+                NSP_Sales_Office_Membership__c = '301'
+            );
+            insert userRecord;
+      
     test.stopTest();
   }
   static testMethod void test_sumofEnrollmentFee_UseCase1(){
@@ -91,6 +109,37 @@ private class NSP_EnrollmentFeePaymentTriggerClassTest{
         enrollmentfee.CurrencyIsoCode = 'USD';
         insert enrollmentfee;
         
+        Test.stopTest();
+    }
+    
+    /** 
+    * Test for after update trigger
+    * Method Name : testEnrollmentFeeShare
+    */
+    @isTest
+    static void testEnrollmentFeeShare() {
+		Test.startTest();
+        Opportunity oppObj = [Select Id,Name,NSP_Number_of_Employees__c from Opportunity WHERE NSP_Number_of_Employees__c > 150 Limit 1];
+        
+        ID oppId = oppObj.Id;
+        
+        user getUser = [SELECT Id FROM User WHERE LastName = 'TestClassUser'];
+
+        NSP_Enrollment_Fee_Payment__c enrollmentfee = new NSP_Enrollment_Fee_Payment__c();
+        enrollmentfee.NSP_Opportunity__c = oppId;
+        enrollmentfee.CurrencyIsoCode = 'USD';
+        insert enrollmentfee;
+       
+        NSP_Enrollment_Fee_Payment__Share efpShare = new NSP_Enrollment_Fee_Payment__Share();
+        efpShare.ParentId = enrollmentfee.Id;
+        efpShare.RowCause = NSP_SalesConstants.manualRowCause;
+        efpShare.UserOrGroupId = getUser.Id;
+        efpShare.AccessLevel = NSP_SalesConstants.readSharingAccess;
+		insert efpShare;
+        
+        oppObj.StageName = 'Closed Lost';
+        update oppObj;
+
         Test.stopTest();
     }
 }

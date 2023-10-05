@@ -633,6 +633,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Quickbooks Integration%28Insperity Integra%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recruiting Services</fullName>
             <default>false</default>
         </values>
@@ -791,6 +795,10 @@
             <fullName>Open</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values> 
     </picklistValues>
     <picklistValues>
         <picklist>Subject</picklist>

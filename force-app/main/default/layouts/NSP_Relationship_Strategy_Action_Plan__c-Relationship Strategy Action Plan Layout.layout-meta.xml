@@ -153,6 +153,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Initiative_Type__c</fields>
+        <fields>NSP_Status__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>NSP_Initiative__c.NSP_Relationship_Strategy_Action_Plan__c</relatedList>
     </relatedLists>

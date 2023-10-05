@@ -58,6 +58,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Per_ID__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Contact_Pin__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -204,10 +208,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_More_Information__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Contact_Pin__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

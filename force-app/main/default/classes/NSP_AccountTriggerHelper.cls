@@ -9,8 +9,11 @@
 
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
+    // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest (76%)
+    // test w/ NSP_AccountContactRelationHelperTest (34%)
+    // test w/ NSP_AccountContactServiceHelperTest (38%)
 
-    private static final string NSP_AccountTriggerHelper = 'NSP_AccountTriggerHelper';
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
@@ -106,9 +109,9 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                 }
             }
         }catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'updateAddressOnCheckList',ex.getMessage());
-                }
+            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'updateAddressOnCheckList',ex.getMessage());
         }
+    }
 
     /**
      * Iterates throught the Account map and identifies the records that needs to worked based on various criterias.
@@ -240,33 +243,48 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      * @return void
      *
      */
-    public void afterUpdateDirector(Map < Id, Account > newMap, Map < Id, Account > oldMap) {
-        List < Account > accountList = new List < Account > (); //list to store accounts to handle Tasks when Partner contract is generated
+    public void afterUpdateDirector( Map<Id,Account> newMap , Map<Id,Account> oldMap ) {
         try {
-            Map < Id, DateTime > accountTeamMDeleteMap = new Map < Id, DateTime > ();
-            Map < Id, String > accountTeamMDelete = new Map < Id, String > ();
-            List < Integration_Account_Event__e > accountEvent = New List < Integration_Account_Event__e > ();
-            List < Account > updateAccountList = new List < Account > ();
-        //Added for User Story - 194644
-        List<Account> updateAddressAccountList = new List<Account>();
+            List<Account> accountList = new List<Account>(); // list to store accounts to handle Tasks when Partner contract is generated
+            Map<Id,DateTime> accountTeamMDeleteMap = new Map<Id,DateTime>();
+            Map<Id,String> accountTeamMDelete = new Map<Id,String>();
+            List<Integration_Account_Event__e> accountEvent = new List<Integration_Account_Event__e>();
+            List<Account> updateAccountList = new List <Account>();
+            //Added for User Story - 194644
+            List<Account> updateAddressAccountList = new List<Account>();
             for (Account accObj: newMap.values()) {
                 if (accObj.NSP_Ready_for_Integration_Sync__c) {
                     accountEvent.add(New Integration_Account_Event__e(Id__c = accObj.Id));
                     updateAccountList.add(accObj);
                 }
-                if (accObj.NSP_Delete_Account_Teams__c != Null) {
+                if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams // kill switch added by AZD-236894
+                    && ( accObj.NSP_Delete_Account_Teams__c != null )
+                   )
+                {
                     accountTeamMDeleteMap.put(accObj.Id, accObj.NSP_Delete_Account_Teams__c);
                     accountTeamMDelete.put(accObj.Id, accObj.NSP_Integrated_With__c);
                 }
-if(accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycle__c
-&& accObj.RecordTypeId==PARTNER_RECORDTYPE_ID && (accObj.NSP_Partner_Lifecycle__c == NSP_SalesConstants.ACTIVE
-|| accObj.NSP_Partner_Lifecycle__c == NSP_SalesConstants.ONBOARDING)){
+                if ( ( accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycle__c )
+                    && ( accObj.RecordTypeId == PARTNER_RECORDTYPE_ID )
+                    && (
+                        ( accObj.NSP_Partner_Lifecycle__c == NSP_SalesConstants.ACTIVE )
+                        || ( accObj.NSP_Partner_Lifecycle__c == NSP_SalesConstants.ONBOARDING )
+                    )
+                   )
+                {
                     accountList.add(accObj);
                 }
-            //Added for User Story - 194644
-            if(accObj.BillingCity != oldMap.get(accObj.Id).BillingCity || accObj.BillingState != oldMap.get(accObj.Id).BillingState || accObj.BillingCountry != oldMap.get(accObj.Id).BillingCountry || accObj.BillingStreet != oldMap.get(accObj.Id).BillingStreet || accObj.BillingStateCode != oldMap.get(accObj.Id).BillingStateCode || accObj.BillingPostalCode != oldMap.get(accObj.Id).BillingPostalCode) {
-                updateAddressAccountList.add(accObj);
-            }
+                //Added for User Story - 194644
+                if ( ( accObj.BillingCity != oldMap.get(accObj.Id).BillingCity )
+                    || ( accObj.BillingState != oldMap.get(accObj.Id).BillingState )
+                    || ( accObj.BillingCountry != oldMap.get(accObj.Id).BillingCountry )
+                    || ( accObj.BillingStreet != oldMap.get(accObj.Id).BillingStreet )
+                    || ( accObj.BillingStateCode != oldMap.get(accObj.Id).BillingStateCode )
+                    || ( accObj.BillingPostalCode != oldMap.get(accObj.Id).BillingPostalCode)
+                   )
+                {
+                    updateAddressAccountList.add(accObj);
+                }
             }
             //for tracking history
             if (!test.isRunningTest()) {
@@ -296,17 +314,17 @@ if(accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycl
             if (accountList.size() > 0) {
                 handleTaskForPartnerContracts(accountList);
             }
-        //Added for User Story - 194644
-        if(updateAddressAccountList.size() > 0) {
-            updateAddressOnCheckList(updateAddressAccountList, newMap);
-        }
+            //Added for User Story - 194644
+            if(updateAddressAccountList.size() > 0) {
+                updateAddressOnCheckList(updateAddressAccountList, newMap);
+            }
             //call future method
-            if (accountTeamMDeleteMap.size() > 0) {
+            if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams // kill switch added by AZD-236894
+                && ( accountTeamMDeleteMap.size() > 0 )
+                )
+            {
                 deleteAccountTeam(accountTeamMDeleteMap, accountTeamMDelete);
             }
-            //for tracking history
-            //NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
-            //System.enqueueJob(objectFieldHistoryHelper);
         } catch (Exception ex) {
             NSP_CustomException.LogException(ex);
         }
@@ -346,7 +364,7 @@ if(accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycl
      * @return void
      *
      */
-public void publishEventBus(List<SObject> eventList, List<Account> objectList) {
+    public void publishEventBus(List<SObject> eventList, List<Account> objectList) {
         List < Account > updateResyncFlagAccountList = new List < Account > ();
         if (!eventList.isEmpty()) {
             // Publishing records Event
@@ -355,7 +373,7 @@ public void publishEventBus(List<SObject> eventList, List<Account> objectList) {
             List < NSP_Error_Log__c > logList = new List < NSP_Error_Log__c > ();
             for (Database.SaveResult sr: results) {
                 NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = NSP_AccountTriggerHelper;
+                log.NSP_Class__c = NSP_AccountTriggerHelper.class.getName();
                 log.NSP_Method__c = 'publishEventBus';
                 log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  ' + String.valueOf(sr.getErrors()[0].getStatusCode());
                 log.NSP_Record_Id__c = sr.getId();
@@ -442,9 +460,9 @@ public static void updateAddressOnCheckList(List<Account> accountList, Map<Id, A
                 if(checklistToUpdate.size() > 0) {
                     update checklistToUpdate;
                     }
-            }catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'updateAddressOnCheckList',ex.getMessage());
-                }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'updateAddressOnCheckList',ex.getMessage());
+        }
     }
 /*
      * Description: Method takes all Account records WHERE partner lifecycle is
@@ -530,7 +548,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 }
             }
         } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper, 'setChannelPartnerAndLoyaltyAdvisor', ex.getMessage());
+            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(), 'setChannelPartnerAndLoyaltyAdvisor', ex.getMessage());
         }
     }
 
@@ -550,34 +568,43 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         }
     }
 
-    /**
-     * Iterates throught the Account Id set and update successfully publish Account records.
-     * @param idSet Map of New Account.
-     * @return void
-     *
-     */
-    @future
-    public static void deleteAccountTeam(Map < Id, DateTime > accountIdDeleteAccountTeamMap, Map < Id, String > accountTeamMDelete) {
-        try {
-            List < NSP_Account_Team__c > accountTeamList = [SELECT Id, NSP_Account__c, NSP_Integrated_With__c from NSP_Account_Team__c
-                WHERE NSP_Account__c IN: accountIdDeleteAccountTeamMap.keySet() AND createdBy.profile.name =: System.label.NSP_Integration_Profile_Name
-                AND createddate <: accountIdDeleteAccountTeamMap.values()
-AND NSP_Integrated_With__c != ''];
-            List < NSP_Account_Team__c > accountDelTeamList = new List < NSP_Account_Team__c > ();
-            if (!accountTeamList.isEmpty()) {
-                for (NSP_Account_Team__c nspAccTeam: accountTeamList) {
-                    if (nspAccTeam.NSP_Integrated_With__c == accountTeamMDelete.get(nspAccTeam.NSP_Account__c)) {
-                        NSP_Account_Team__c newAccTeam = new NSP_Account_Team__c();
-                        newAccTeam.Id = nspAccTeam.Id;
-                        accountDelTeamList.add(newAccTeam);
+    // kill switch added by AZD-236894
+    public static Boolean isEnabledDeleteAccountTeams {
+        public get {
+            if ( isEnabledDeleteAccountTeams == null ) {
+                isEnabledDeleteAccountTeams = AccountTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledDeleteAccountTeams__c;
+            }
+            return isEnabledDeleteAccountTeams;
+        }
+        private set;
+    }
+
+    // DEPRECATED BY AZD-236894
+    @future public static void deleteAccountTeam( Map<Id,DateTime> accountIdDeleteAccountTeamMap , Map<Id,String> accountTeamMDelete ) {
+        if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams ) { // kill switch added by AZD-236894
+            try {
+                List<NSP_Account_Team__c> accountTeamList = [
+                    SELECT Id, NSP_Account__c, NSP_Integrated_With__c from NSP_Account_Team__c
+                    WHERE NSP_Account__c IN: accountIdDeleteAccountTeamMap.keySet() AND createdBy.profile.name =: System.label.NSP_Integration_Profile_Name
+                    AND createddate <: accountIdDeleteAccountTeamMap.values()
+                    AND NSP_Integrated_With__c != ''
+                ];
+                List < NSP_Account_Team__c > accountDelTeamList = new List < NSP_Account_Team__c > ();
+                if (!accountTeamList.isEmpty()) {
+                    for (NSP_Account_Team__c nspAccTeam: accountTeamList) {
+                        if (nspAccTeam.NSP_Integrated_With__c == accountTeamMDelete.get(nspAccTeam.NSP_Account__c)) {
+                            NSP_Account_Team__c newAccTeam = new NSP_Account_Team__c();
+                            newAccTeam.Id = nspAccTeam.Id;
+                            accountDelTeamList.add(newAccTeam);
+                        }
                     }
                 }
+                if (!accountDelTeamList.isEmpty()) {
+                    delete accountDelTeamList;
+                }
+            } catch (Exception ex) {
+                NSP_CustomException.LogException(ex);
             }
-            if (!accountDelTeamList.isEmpty()) {
-                delete accountDelTeamList;
-            }
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
         }
     }
 
@@ -670,7 +697,7 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
                     }
                 }
     } catch(Exception ex) {
-        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper,'restrictAccountChange',ex.getMessage());
+        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'restrictAccountChange',ex.getMessage());
     }
 }
 

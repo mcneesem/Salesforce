@@ -4881,6 +4881,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.NSP_SKU__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_SaaS_URL__c</field>
         <readable>true</readable>
@@ -4960,6 +4965,7 @@
         <field>Asset.NSP_Signed_Grosvenor_Cloud_Terms__c</field>
         <readable>true</readable>
     </fieldPermissions>
+
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_Start_Date__c</field>
@@ -18453,7 +18459,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Accrual_Profile__c.NSP_Compliance_Locations__c</field>
+        <field>NSP_Accrual_Profile__c.NSP_Compliance_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

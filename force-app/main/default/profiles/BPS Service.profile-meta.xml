@@ -45053,7 +45053,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Accrual_Profile__c.NSP_Compliance_Locations__c</field>
+        <field>NSP_Accrual_Profile__c.NSP_Compliance_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -45714,6 +45714,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.NSP_SKO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.NSP_SKU__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

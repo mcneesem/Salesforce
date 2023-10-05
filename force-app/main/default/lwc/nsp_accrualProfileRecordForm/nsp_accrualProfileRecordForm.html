@@ -215,10 +215,10 @@
               </lightning-input-field>
 
               <lightning-input-field
-                if:true={visibility.NSP_Compliance_Locations__c}
-                field-name="NSP_Compliance_Locations__c"
-                value={fieldValue.NSP_Compliance_Locations__c}
-                data-name="NSP_Compliance_Locations__c"
+                if:true={visibility.NSP_Compliance_Location__c}
+                field-name="NSP_Compliance_Location__c"
+                value={fieldValue.NSP_Compliance_Location__c}
+                data-name="NSP_Compliance_Location__c"
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -302,7 +302,7 @@
                   </lightning-input-field>
 
                   <lightning-formatted-text
-                    if:true={visibility.frontLoad}
+                    if:true={visibility.frontLoadITACalendar}
                     value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved."
                     class="slds-show slds-text-heading_small slds-var-m-around_medium">
                   </lightning-formatted-text>
@@ -515,7 +515,8 @@
 
                 <lightning-formatted-text
                   if:true={visibility.frontLoad}
-                  value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved.">
+                  value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved."
+                  class="slds-show slds-text-heading_small slds-var-m-around_medium">
                 </lightning-formatted-text>
 
                 <lightning-input-field
