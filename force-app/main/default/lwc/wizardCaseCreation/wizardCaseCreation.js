@@ -16,6 +16,7 @@ import getWoAssetId from '@salesforce/apex/NSP_ReportRequestWizardController.get
 import CASE_OBJ from "@salesforce/schema/Case";
 import { LABEL } from './constants';
 import SUBCLIENT_NUMBER from '@salesforce/schema/NSP_ReportRequest__c.NSP_Sub_Client__r.NSP_Sub_Client__c';
+import relatedFiles from '@salesforce/apex/NSP_ReportRequestWizardController.createCaseDocuments';
 export default class WizardCaseCreation extends NavigationMixin(LightningElement)  {
  @api reReqObj;
  @api recordInput;
@@ -191,7 +192,21 @@ async createCaseRecord(inputData){
 
     createRecord(inputData)
         .then(result => {
+            relatedFiles({ reportRequestID : this.reReqObj.Id, caseID : result.id }).then(result =>{
+                console.log("Files created successfully.");
+            })
+            .catch(error =>{
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error creating record',
+                        message: error.body.message,
+                        variant: 'error'
+                    })
+                );
+                this.hideSpinner();
+            });
           this.updateReportRequest(result);
+          
     })
     .catch(error => {
         this.error = error;
@@ -210,7 +225,6 @@ async createCaseRecord(inputData){
  }
 
 }
-
 
 updateReportRequest(result) {
         // Create the recordInput object        
