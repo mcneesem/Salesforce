@@ -493,6 +493,61 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>canCreateNewFolder</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canDelete</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canDownload</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canPreview</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canRename</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canSetShareAccess</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canShare</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>canUpload</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>fileId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>folderId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>shareLink</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Explorer</value>
+                </componentInstanceProperties>
+                <componentName>box:UIElementContentExplorer</componentName>
+                <identifier>box_UIElementContentExplorer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-57b9c850-1040-4880-a5c2-02400f001bc2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>detailTabContent</value>
                 </componentInstanceProperties>
@@ -558,6 +613,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-57b9c850-1040-4880-a5c2-02400f001bc2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>File Request</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
