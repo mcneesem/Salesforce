@@ -74,7 +74,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>LID__No_longer_at_Company__c</picklist>
         <values>
             <fullName>Ignore</fullName>
@@ -194,7 +194,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_EEOC_Race_Code__c</picklist>
         <values>
             <fullName>B</fullName>
@@ -953,7 +953,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_Source__c</picklist>
         <values>
             <fullName>AIMS</fullName>
@@ -1010,7 +1010,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>appirio_core__Licensed_Features__c</picklist>
         <values>
             <fullName>Expenses Only</fullName>
@@ -1067,6 +1067,14 @@
         </values>
         <values>
             <fullName>Insperity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET CSP Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET CSP Plan Consulting</fullName>
             <default>false</default>
         </values>
         <values>

@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Responsible Party</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+        <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -67,14 +67,14 @@
                 <label>RET Sec 125</label>
             </value>
             <value>
-                <fullName>CSP-Implementation</fullName>
+                <fullName>RET CSP Implementation</fullName>
                 <default>false</default>
-                <label>CSP-Implementation</label>
+                <label>RET CSP Implementation</label>
             </value>
             <value>
-                <fullName>CSP-Plan Consulting</fullName>
+                <fullName>RET CSP Plan Consulting</fullName>
                 <default>false</default>
-                <label>CSP-Plan Consulting</label>
+                <label>RET CSP Plan Consulting</label>
             </value>
         </valueSetDefinition>
     </valueSet>

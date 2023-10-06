@@ -3,7 +3,7 @@
     <fullName>RET_Project_Task</fullName>
     <active>true</active>
     <label>RET Project Task</label>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_Group_Membership_for_Plan_Projects__c</picklist>
         <values>
             <fullName>Group 1</fullName>
@@ -42,14 +42,14 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_Offset_Date__c</picklist>
         <values>
             <fullName>Asset Renewal Date</fullName>
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_Percentage_Complete__c</picklist>
         <values>
             <fullName>0%25</fullName>
@@ -97,6 +97,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Responsible_Party__c</picklist>
+        <values>
+            <fullName>RET CSP Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET CSP Plan Consulting</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>RET Compliance</fullName>
             <default>false</default>

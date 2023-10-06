@@ -504,7 +504,7 @@
             <fullName>Central</fullName>
             <default>false</default>
         </values>
-                <values>
+        <values>
             <fullName>Corporate</fullName>
             <default>false</default>
         </values>
@@ -1210,11 +1210,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RET CSP Consulting</fullName>
+            <fullName>RET CSP Implementation</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RET CSP Implementation</fullName>
+            <fullName>RET CSP Plan Consulting</fullName>
             <default>false</default>
         </values>
         <values>
