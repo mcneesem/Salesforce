@@ -36,9 +36,9 @@ public class NSP_AccountContactRelationTriggerHelper {
             loggedInUserProfile_Name = getLoggedInUserProfileName();
         }
         try{
-           	//Modified as part of SOQL fix 228901 
-       		//if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
-			if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+            //Modified as part of SOQL fix 228901 
+            //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
+            if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
                || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
 
                 Set<Id> accountIdSet = new Set<Id>();
@@ -139,7 +139,7 @@ public class NSP_AccountContactRelationTriggerHelper {
                     oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c)) ||
                     (acr.isDirect == true && oldACR.isDirect != acr.isDirect)
                   )
-                {
+                    {
                        ConIdACRMap.put(acr.ContactId, acr);
                    }
                 
@@ -463,29 +463,40 @@ public class NSP_AccountContactRelationTriggerHelper {
     */
     public static void updateWorkPhoneEmailOnContact(Map<Id, AccountContactRelation> ConIdACRMap){
         List<Contact> conList = new List<Contact>();
-        List<Profile> integrationUser;
+        List<Profile> integrationUser = new List<Profile>();
         Id integrationProfileId;
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch_2__c){
-        	integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
+            integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
         } else {
             integrationProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = :NSP_ServiceConstants.INTEGRATION_USER].Profile_ID__c;
         }
         AccountContactRelation acr;
         try{
-            for(Contact con : [SELECT Id, NSP_Work_email__c, NSP_Work_Phone__c, createdById, NSP_Employee_Status__c,
+            List<Contact> contactList = new List<Contact>();
+            if(integrationUser.size() > 0){
+                contactList = [SELECT Id, NSP_Work_email__c, NSP_Work_Phone__c, createdById, NSP_Employee_Status__c,
                                NSP_Status_Date__c, NSP_Job_Title__c, CreatedBy.ProfileId 
                                FROM Contact 
                                WHERE Id IN: ConIdACRMap.keySet()
-                               AND (CreatedBy.ProfileId !=: integrationUser[0].Id OR CreatedBy.ProfileId !=:integrationProfileId)
-                               AND NSP_isContactInsertion__c != true]){
-                                   acr = ConIdACRMap.get(con.Id);
-                                   con.NSP_Work_email__c = acr.NSP_Work_Email__c;
-                                   con.NSP_Work_Phone__c = acr.NSP_Work_Phone__c;
-                                   con.NSP_Employee_Status__c = acr.NSP_Employee_Status__c;
-                                   con.NSP_Status_Date__c = acr.NSP_Status_Date__c;
-                                   con.NSP_Job_Title__c = acr.NSP_Job_Title__c;
-                                   conList.add(con);
-                               }
+                               AND CreatedBy.ProfileId !=: integrationUser[0].Id
+                               AND NSP_isContactInsertion__c != true];
+            }else{ 
+                contactList = [SELECT Id, NSP_Work_email__c, NSP_Work_Phone__c, createdById, NSP_Employee_Status__c,
+                               NSP_Status_Date__c, NSP_Job_Title__c, CreatedBy.ProfileId 
+                               FROM Contact 
+                               WHERE Id IN: ConIdACRMap.keySet()
+                               AND CreatedBy.ProfileId !=:integrationProfileId
+                               AND NSP_isContactInsertion__c != true];}
+            
+            for(Contact con : contactList){
+                acr = ConIdACRMap.get(con.Id);
+                con.NSP_Work_email__c = acr.NSP_Work_Email__c;
+                con.NSP_Work_Phone__c = acr.NSP_Work_Phone__c;
+                con.NSP_Employee_Status__c = acr.NSP_Employee_Status__c;
+                con.NSP_Status_Date__c = acr.NSP_Status_Date__c;
+                con.NSP_Job_Title__c = acr.NSP_Job_Title__c;
+                conList.add(con);
+            }
             if(!conList.isEmpty()){
                 update conList ;  // Don't chnage to Database.update
             }
