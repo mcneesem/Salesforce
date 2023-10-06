@@ -6,7 +6,7 @@
 * --------------------------------------------------------------------------------------------------  
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
-* Rahul Singh      		26/10/2022			         Create OCR as part of user story - 128223
+* Rahul Singh           26/10/2022                   Create OCR as part of user story - 128223
 */
 
 @isTest(SeeAllData=FALSE)
@@ -209,7 +209,7 @@ public class NSP_AccountContactRelationHelperTest {
     static void createPlatformEventForACRTest() {
         Test.startTest();
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
         
         Account account = [SELECT Id, Name FROM Account WHERE Name='TestAccount' LIMIT 1];
@@ -267,6 +267,18 @@ public class NSP_AccountContactRelationHelperTest {
           String conQuery = new NSP_QueryBuilder('Contact', CONTACT_FIELDS).addFilter('Id', acr.ContactId).addLimit(1).build();
         Contact assertCon =  Database.query(conQuery);
         system.assertEquals(assertCon.NSP_Work_Email__c, TEST_EMAIL); // Negative Test
+    }
+    
+    /**
+    * @Description: This test method is used to check loggedinUserProfile
+    * @Created date: 12/14/2022. 
+    * @return void             
+    */ 
+    @isTest
+    static void acrTest() {
+        Test.startTest();
+        NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfile();
+        Test.stopTest();
     }
     
 }
