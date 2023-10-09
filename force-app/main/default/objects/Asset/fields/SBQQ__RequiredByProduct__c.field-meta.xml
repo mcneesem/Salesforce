@@ -11,6 +11,6 @@
     <relationshipLabel>Child Assets</relationshipLabel>
     <relationshipName>ChildAssets</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

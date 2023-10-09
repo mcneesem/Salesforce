@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <label>RET-Default Order Priority</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>TextArea</type>
 </CustomField>

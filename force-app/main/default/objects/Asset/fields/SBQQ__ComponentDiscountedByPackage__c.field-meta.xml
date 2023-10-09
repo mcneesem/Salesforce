@@ -7,6 +7,6 @@
     <externalId>false</externalId>
     <inlineHelpText>Fixes additional discount for this component to the parent package discount.</inlineHelpText>
     <label>Component Discounted By Package</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

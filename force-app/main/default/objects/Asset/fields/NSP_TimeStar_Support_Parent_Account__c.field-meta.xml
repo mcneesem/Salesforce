@@ -8,6 +8,6 @@
     <relationshipLabel>Assets (TimeStar Support Parent Account)</relationshipLabel>
     <relationshipName>Assets6</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

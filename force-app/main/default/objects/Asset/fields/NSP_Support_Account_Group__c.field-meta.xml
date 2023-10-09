@@ -9,6 +9,6 @@
     <relationshipLabel>Assets (Support Account Group)</relationshipLabel>
     <relationshipName>Assets4</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

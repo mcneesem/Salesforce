@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Sales Region</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>NSP_Sales_Division__c</controllingField>

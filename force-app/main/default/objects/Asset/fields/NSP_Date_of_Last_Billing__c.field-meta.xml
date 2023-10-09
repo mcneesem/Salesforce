@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <label>Date of Last Billing</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

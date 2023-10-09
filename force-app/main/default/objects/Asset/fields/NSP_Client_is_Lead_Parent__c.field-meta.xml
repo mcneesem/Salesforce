@@ -5,6 +5,6 @@
     <description>STY-02671</description>
     <externalId>false</externalId>
     <label>Client is Lead Parent</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

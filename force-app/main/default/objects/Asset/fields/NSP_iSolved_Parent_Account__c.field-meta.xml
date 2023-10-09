@@ -8,6 +8,6 @@
     <relationshipLabel>Assets (iSolved Parent Account)</relationshipLabel>
     <relationshipName>Assets</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

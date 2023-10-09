@@ -11,6 +11,6 @@
     <relationshipLabel>Covered Assets</relationshipLabel>
     <relationshipName>CoveredAssets</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

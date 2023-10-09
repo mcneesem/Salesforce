@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>Business Inception Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

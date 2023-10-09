@@ -4,6 +4,6 @@
     <externalId>false</externalId>
     <label>PSPM Review Kickoff</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>
