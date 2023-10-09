@@ -14214,7 +14214,6 @@
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
-    
     <layoutAssignments>
         <layout>OpportunityTeamMember-Opportunity Team Member Layout</layout>
     </layoutAssignments>
@@ -14228,7 +14227,7 @@
         <layout>blng__Invoice__c-Non-Billing Invoice Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Outlook-Outlook Layout</layout>
+        <layout>Outlook-Sales Outlook Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Pricebook2-Price Book Layout</layout>
