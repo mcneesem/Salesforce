@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows users to see / use fields related to creating a file request</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Create_Box_com_Folder_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.File_Request_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Box NSP Created Fields</label>
+</PermissionSet>
