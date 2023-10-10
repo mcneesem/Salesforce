@@ -9,9 +9,9 @@
 * 
 * 
 */
-// test w/ NSP_AccountContactRelationTriggerHelperTest (79%)
-
 public class NSP_AccountContactRelationTriggerHelper {
+    // test w/ NSP_AccountContactRelationTriggerHelperTest (79%)
+
     private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final String NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER = 'NSP_AccountContactRelationTriggerHelper';
     private static final String BEFORE_UPSERT_DIRECTOR = 'beforeUpsertDirector';
@@ -474,14 +474,17 @@ public class NSP_AccountContactRelationTriggerHelper {
         }
         AccountContactRelation acr;
         try{
-            List<Contact> contactList = new List<Contact>();
-            contactList = [SELECT Id, NSP_Work_email__c, NSP_Work_Phone__c, createdById, NSP_Employee_Status__c,
-                               NSP_Status_Date__c, NSP_Job_Title__c, CreatedBy.ProfileId 
-                               FROM Contact 
-                               WHERE Id IN: ConIdACRMap.keySet()
-                               AND CreatedBy.ProfileId !=:integrationProfileId
-                               AND NSP_isContactInsertion__c !=True];
-            
+            List<Contact> contactList = [
+                SELECT
+                    Id, NSP_Work_email__c, NSP_Work_Phone__c, CreatedById, NSP_Employee_Status__c,
+                    NSP_Status_Date__c, NSP_Job_Title__c, CreatedBy.ProfileId 
+                FROM Contact 
+                WHERE (
+                    Id IN :ConIdACRMap.keySet()
+                    AND CreatedBy.ProfileId != :integrationProfileId
+                    AND NSP_isContactInsertion__c != True
+                )
+            ];
             for(Contact con : contactList){
                 acr = ConIdACRMap.get(con.Id);
                 con.NSP_Work_email__c = acr.NSP_Work_Email__c;
