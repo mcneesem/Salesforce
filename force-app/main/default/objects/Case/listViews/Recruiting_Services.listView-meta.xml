@@ -11,7 +11,7 @@
     <columns>CREATEDBY_USER.ALIAS</columns>
     <filterScope>Queue</filterScope>
     <label>Recruiting Services</label>
-    <queue>NSP_Talent_Connect</queue>
+    <queue>NSP_Recruiting_Services</queue>
     <sharedTo>
         <allInternalUsers></allInternalUsers>
     </sharedTo>
