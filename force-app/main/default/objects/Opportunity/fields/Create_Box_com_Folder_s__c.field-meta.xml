@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_Box_com_Folder_s__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Will trigger the Flow labeled Box Opportunity Folder and Sub Folder Creation</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Click and save for Folder Creation.</inlineHelpText>
+    <label>Create Box.com Folder(s)</label>
+    <type>Checkbox</type>
+</CustomField>
