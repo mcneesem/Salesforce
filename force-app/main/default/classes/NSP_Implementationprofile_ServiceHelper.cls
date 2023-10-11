@@ -2720,13 +2720,22 @@ public class NSP_Implementationprofile_ServiceHelper {
     Automation icon: envelope
     */
     public void checkforEEOInformation(Implementation_Profile__c newIp,  Implementation_Profile__c existingRecp){
-        if(((ipMMRecordTypeId == newIp.recordTypeId && newIp.NSP_Asset__c!=null) || ipFSORecordTypeId == newIp.recordTypeId )  && 
-           newIp.Is_the_client_a_federal_contractor__c != null && newIp.Client_have_EEO_filing_under__c != null 
-            && ((newIp.Client_have_EEO_filing_under__c==NSP_ServiceConstants.YES && newIp.Can_client_provide_EEO_filing_address__c == NSP_ServiceConstants.YES && newIp.EEO__c != null && newIp.Filing_address__c != null)
-           || (newIp.Client_have_EEO_filing_under__c == NSP_ServiceConstants.YES && newIp.Can_client_provide_EEO_filing_address__c == NSP_ServiceConstants.NO && newIp.EEO_name_phone_contact_email_for_info__c != null))
-            && newIp.NSP_co_employ_100_of_client_workforce__c!=null && newIp.Client_part_of_entity_w_o_NSP__c!=null){
-                   updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, EEO_INFO_FN);
-               }
+        if(((ipMMRecordTypeId == newIp.recordTypeId && newIp.NSP_Asset__c!=null) 
+        || ipFSORecordTypeId == newIp.recordTypeId)  
+    && newIp.Is_the_client_a_federal_contractor__c != null 
+    && newIp.Client_have_EEO_filing_under__c != null 
+    && ((String.IsNotBlank(newIp.Client_have_EEO_filing_under__c) 
+        && newIp.Can_client_provide_EEO_filing_address__c == NSP_ServiceConstants.YES 
+        && newIp.EEO__c != null 
+        && newIp.Filing_address__c != null)
+        || (String.IsNotBlank(newIp.Client_have_EEO_filing_under__c) 
+            && newIp.Can_client_provide_EEO_filing_address__c == NSP_ServiceConstants.NO
+            && newIp.EEO_name_phone_contact_email_for_info__c != null))
+    || newIp.Client_have_EEO_filing_under__c == NSP_ServiceConstants.NO
+    && newIp.NSP_co_employ_100_of_client_workforce__c!=null 
+    && newIp.Client_part_of_entity_w_o_NSP__c!=null){
+           updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, EEO_INFO_FN);
+       }
     }
     
     
