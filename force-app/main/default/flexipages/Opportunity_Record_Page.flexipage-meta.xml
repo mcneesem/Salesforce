@@ -539,6 +539,13 @@
                 </componentInstanceProperties>
                 <componentName>box:UIElementContentExplorer</componentName>
                 <identifier>box_UIElementContentExplorer</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Box_Insperity_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-57b9c850-1040-4880-a5c2-02400f001bc2</name>
