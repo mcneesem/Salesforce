@@ -13,17 +13,20 @@
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
     <permissionSets>Grant_Modify_All_on_Lead_Object_for_DA</permissionSets>
+    <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>MidMarket_Fields_Read_Access</permissionSets>
     <permissionSets>MidMarket_National_Account_edit_permissions</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
     <permissionSets>NSP_Asset_Pending_Comment_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
+    <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Giving access to resources beyond the Minimum Access profile</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Developer Permission Set Group</label>
+    <permissionSets>Account_View_All_Modify_All</permissionSets>
+    <permissionSets>Checklist_View_All</permissionSets>
+    <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Error_Logs_Read_and_View_All</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

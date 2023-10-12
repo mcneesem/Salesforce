@@ -4,8 +4,14 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Retirement Services</label>
     <permissionSets>BPS</permissionSets>
+    <permissionSets>BPS_Sales_Admin_Mgr_Perms</permissionSets>
+    <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
+    <permissionSets>NSP_RET_Sales_permission_set</permissionSets>
     <permissionSets>NSP_Retirement_Services_Opportunity_Credit</permissionSets>
+    <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
