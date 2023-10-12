@@ -998,7 +998,7 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-            <itemInstances>
+        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -1721,7 +1721,7 @@
                     <name>columns</name>
                     <value>Facet-d96d30cf-ff26-4a18-8d32-bab2d18b494e</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Employee Information</value>
                 </componentInstanceProperties>
@@ -1782,7 +1782,7 @@
                     <name>columns</name>
                     <value>Facet-92cd8a95-b9ba-48c5-8a4a-dbaa622a51b6</value>
                 </componentInstanceProperties>
-                    <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
