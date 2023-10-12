@@ -367,8 +367,11 @@ public with sharing class NSP_ReportRequestWizardController {
     public static void createCaseDocuments(Id reportRequestID, Id caseID)
     {
         try {
-            Id separationRecordTypeID       =	NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest');
-            NSP_ReportRequest__c request    =   [SELECT ID FROM NSP_ReportRequest__c WHERE ID = : reportRequestID AND RecordTypeId = :separationRecordTypeID LIMIT 1];
+            Set<Id> recordTypeIdSet         =   new Set<Id>();
+            recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest'));
+            recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SurveyRequest'));
+            
+            NSP_ReportRequest__c request    =   [SELECT ID FROM NSP_ReportRequest__c WHERE ID = : reportRequestID AND RecordTypeId = :recordTypeIdSet LIMIT 1];
             
             // Query results to check for the Report Reqeust with Seperarion Agreement Record Type
             if(request <> null)
