@@ -3,7 +3,21 @@
     <fullName>NSP_Open_to_Assigned_Hours__c</fullName>
     <description>Duration between case status Open to the Date/time stamp of when the case was first assigned to a user as owner.</description>
     <externalId>false</externalId>
-    <formula>( NSP_Owner_Assign_Date__c  -  CreatedDate )*24</formula>
+    <formula>12 * (
+   ( 5 * FLOOR( ( DATEVALUE( NSP_Owner_Assign_Date__c ) - DATE( 1900, 1, 8) ) / 7) +
+    MIN(5, 
+     MOD( DATEVALUE( NSP_Owner_Assign_Date__c ) - DATE( 1900, 1, 8), 7) +
+     MIN( 1, 24 / 12 * ( MOD( NSP_Owner_Assign_Date__c - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1 ) ) )
+    ) 
+   )
+ -
+   ( 5 * FLOOR( ( DATEVALUE( CreatedDate ) - DATE( 1900, 1, 8) ) / 7) +
+     MIN( 5,
+      MOD( DATEVALUE( CreatedDate ) - DATE( 1996, 1, 1), 7 ) +
+      MIN( 1, 24 / 12 * ( MOD( CreatedDate - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1) ) )
+    )
+   ) 
+  )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Open to Assigned (Hours)</label>
     <precision>18</precision>

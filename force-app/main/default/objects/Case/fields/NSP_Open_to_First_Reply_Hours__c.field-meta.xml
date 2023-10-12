@@ -2,7 +2,21 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Open_to_First_Reply_Hours__c</fullName>
     <externalId>false</externalId>
-    <formula>( NSP_First_Reply_Date__c - CreatedDate) *24</formula>
+    <formula>12 * (
+   ( 5 * FLOOR( ( DATEVALUE( NSP_First_Reply_Date__c ) - DATE( 1900, 1, 8) ) / 7) +
+    MIN(5, 
+     MOD( DATEVALUE( NSP_First_Reply_Date__c ) - DATE( 1900, 1, 8), 7) +
+     MIN( 1, 24 / 12 * ( MOD( NSP_First_Reply_Date__c - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1 ) ) )
+    ) 
+   )
+ -
+   ( 5 * FLOOR( ( DATEVALUE( CreatedDate ) - DATE( 1900, 1, 8) ) / 7) +
+     MIN( 5,
+      MOD( DATEVALUE( CreatedDate ) - DATE( 1996, 1, 1), 7 ) +
+      MIN( 1, 24 / 12 * ( MOD( CreatedDate - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1) ) )
+    )
+   ) 
+  )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Open to First Reply (Hours)</label>
     <precision>18</precision>
