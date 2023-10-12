@@ -61,6 +61,16 @@ public class NSP_ResourceRequestTriggerHelper {
                    }
             }
         }
+    
+    /***********************************************************************************************
+    * MethodName: SendEmailToResourceRole
+    * Description : Method to send an email based on the resource role selected
+    * Params:       List <pse__Resource_Request__c> newList Map<Id, pse__Resource_Request__c> newMap
+    * ********************************************************************************************/  
+        
+    public void sendEmailToResourceRole(pse__Resource_Request__c resourceRequest, String resourceRole){
+        //sendEmailBasedOnResourceRoleSelected(resourceRequest, resourceRole);
+    }
         
         /**
     * Send the contact in Resource on Project Task Assignment rec to individual functionality methods
