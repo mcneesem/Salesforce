@@ -30,8 +30,8 @@
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -40,8 +40,8 @@
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -50,8 +50,8 @@
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -61,7 +61,7 @@
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -70,8 +70,8 @@
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
