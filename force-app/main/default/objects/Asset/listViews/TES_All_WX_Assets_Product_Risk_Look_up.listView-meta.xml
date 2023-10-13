@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TES_All_WX_Assets_Product_Risk_Look_up</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ASSET.NAME</columns>
+    <columns>ASSET.STATUS</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>NSP_iSolved_ID__c</columns>
+    <columns>NSP_Product_Segment__c</columns>
+    <columns>NSP_Current_SaaS_Seats__c</columns>
+    <columns>NSP_First_Pay_Date__c</columns>
+    <columns>NSP_Product_Risk_Level__c</columns>
+    <columns>NSP_Reference_Able__c</columns>
+    <columns>NSP_Product_Term_Reason__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ASSET.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Asset.NSP_Asset_Product</value>
+    </filters>
+    <filters>
+        <field>NSP_Product_Risk_Level__c</field>
+        <operation>notContain</operation>
+        <value>Low,Medium,Terminated,Termination Pending,High</value>
+    </filters>
+    <filters>
+        <field>ASSET.STATUS</field>
+        <operation>equals</operation>
+        <value>Active</value>
+    </filters>
+    <filters>
+        <field>NSP_ProductBundle__c</field>
+        <operation>equals</operation>
+        <value>WA,WA (WO to WA),Payroll Only,WX,WX (WO to WX)</value>
+    </filters>
+    <label>TES - All WX Assets_Product Risk Look up</label>
+</ListView>

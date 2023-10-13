@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Workers Comp Agency</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>

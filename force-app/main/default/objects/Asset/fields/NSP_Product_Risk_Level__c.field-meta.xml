@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Product Risk Level</label>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>

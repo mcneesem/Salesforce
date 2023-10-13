@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>ORK Notes</label>
     <length>4000</length>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

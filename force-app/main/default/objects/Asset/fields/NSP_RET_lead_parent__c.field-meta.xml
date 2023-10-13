@@ -9,6 +9,7 @@
     <relationshipLabel>Assets (RET-lead parent)</relationshipLabel>
     <relationshipName>Assets</relationshipName>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

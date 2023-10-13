@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Reason for Keeping ORK</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>TextArea</type>
 </CustomField>

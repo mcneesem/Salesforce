@@ -5,6 +5,7 @@
     <description>598324, Phase 2 integration, Monica Adams</description>
     <externalId>false</externalId>
     <label>Invoice Reconciliation</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

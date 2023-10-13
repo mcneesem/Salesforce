@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>iSolved Medical Lead</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>

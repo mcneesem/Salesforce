@@ -8,6 +8,7 @@
     <relationshipLabel>Assets (Support Group)</relationshipLabel>
     <relationshipName>Assets1</relationshipName>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Anticipated Date of Termination</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>
