@@ -4,12 +4,16 @@
     <active>true</active>
     <description>Not allow Projected First Pay Date field to be updated on WX Assets</description>
     <errorConditionFormula>AND(
-ISCHANGED(NSP_Projected_First_Pay_Date__c),
-RecordType.DeveloperName = &quot;NSP_Asset_Product&quot;,
-NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
-$Profile.Name = &quot;Data Migration&quot;,
-$Profile.Name = &quot;Sales Administrator&quot;,
-$Profile.Name = &quot;Integration User&quot;))
+  ISCHANGED(NSP_Projected_First_Pay_Date__c),
+  RecordType.DeveloperName = &quot;NSP_Asset_Product&quot;,
+  NOT(
+    OR(
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
+      $Profile.Name = &quot;Data Migration&quot;,
+      $Profile.Name = &quot;Sales Administrator&quot;,
+      $Profile.Name = &quot;Integration User&quot;
+    )
+  )
 )</errorConditionFormula>
     <errorMessage>You don&apos;t have permission to update Projected First Pay Date on WX type assets.</errorMessage>
 </ValidationRule>
