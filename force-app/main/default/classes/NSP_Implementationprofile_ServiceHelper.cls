@@ -1,5 +1,6 @@
-// Test: NSP_FSOImplementationControllerTest 84% | NSP_ImpprofileServiceHelper_Test 84% | NSP_MMImplProfile_UpdateTest 84%
 public class NSP_Implementationprofile_ServiceHelper {
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (84%)
+
     private String impRecordId;
     private String  impAutomationName;
     private String impMethodName;
