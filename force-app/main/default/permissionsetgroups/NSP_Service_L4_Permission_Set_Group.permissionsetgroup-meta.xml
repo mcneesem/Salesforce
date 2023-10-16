@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Service L4 Permission Set Group</label>
     <permissionSets>FSL_Admin_Permissions</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Service_L4_Permission_Set</permissionSets>
     <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
     <permissionSets>pse__PSAAdministration</permissionSets>
