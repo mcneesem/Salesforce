@@ -1,36 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_Related_Records</name>
+        <label>Create Related Records</label>
+        <locationX>587</locationX>
+        <locationY>444</locationY>
+        <actionName>NSP_CloneRSAPRelatedRecords</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Result</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>newRSAPName</name>
+            <value>
+                <elementReference>RSAP_Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>oldRSAPId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_To_new_RecordId</name>
+        <label>Navigate To new RecordId</label>
+        <locationX>470</locationX>
+        <locationY>731</locationY>
+        <actionName>c:NSP_FlowNavigatetoRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObject</name>
+            <value>
+                <elementReference>Create_Related_Records.clonedRecordId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Assign_Error</name>
+        <label>Assign Error</label>
+        <locationX>781</locationX>
+        <locationY>722</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Create_Related_Records.message</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>FaultMessage</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Error_Message</name>
+        <label>Assign Error Message</label>
+        <locationX>1508</locationX>
+        <locationY>290</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>FaultMessage</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Result</name>
+        <label>Check Result</label>
+        <locationX>581</locationX>
+        <locationY>609</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Failed</defaultConnectorLabel>
+        <rules>
+            <name>Success</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Related_Records.isSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_To_new_RecordId</targetReference>
+            </connector>
+            <label>Success</label>
+        </rules>
+    </decisions>
     <description>clone RSAP Record and it&apos;s related engagement paths if status is not started or in progress</description>
     <environments>Default</environments>
     <interviewLabel>Clone RSAP Records {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Clone RSAP Record</label>
-    <loops>
-        <description>get all engagement paths in previous step and create new records to be assigned to newly created RSAP</description>
-        <name>iterate_over_all_engagement_paths</name>
-        <label>iterate over all engagement paths</label>
-        <locationX>176</locationX>
-        <locationY>1094</locationY>
-        <collectionReference>Get_Engagement_Paths</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>create_engagement_paths</targetReference>
-        </nextValueConnector>
-    </loops>
-    <loops>
-        <name>Iterate_Overall_Initiatives</name>
-        <label>Iterate Overall Initiatives</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
-        <collectionReference>get_Initiatives</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Copy_1_of_created_initiative_for_cloned_RSAP</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>iterate_over_all_engagement_paths</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -40,7 +112,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -50,222 +122,19 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <description>created initiative for cloned RSAP</description>
-        <name>Copy_1_of_created_initiative_for_cloned_RSAP</name>
-        <label>Copy 1 of created initiative for cloned RSAP</label>
-        <locationX>264</locationX>
-        <locationY>878</locationY>
-        <assignRecordIdToReference>Iterate_Overall_Initiatives.Id</assignRecordIdToReference>
-        <connector>
-            <targetReference>Iterate_Overall_Initiatives</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Initiative_Type__c</field>
-            <value>
-                <elementReference>Iterate_Overall_Initiatives.Initiative_Type__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Business_Drivers__c</field>
-            <value>
-                <elementReference>Iterate_Overall_Initiatives.NSP_Business_Drivers__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Relationship_Strategy_Action_Plan__c</field>
-            <value>
-                <elementReference>RSAPrecord.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Status__c</field>
-            <value>
-                <elementReference>Iterate_Overall_Initiatives.NSP_Status__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>Iterate_Overall_Initiatives.Name</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Initiative__c</object>
-    </recordCreates>
-    <recordCreates>
-        <name>create_engagement_paths</name>
-        <label>create engagement paths</label>
-        <locationX>264</locationX>
-        <locationY>1214</locationY>
-        <connector>
-            <targetReference>iterate_over_all_engagement_paths</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Action__c</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.Action__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Initiative__c</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.NSP_Initiative__r.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Service_Provider__c</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.NSP_Service_Provider__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Start_Date__c</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.NSP_Start_Date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Status__c</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.NSP_Status__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Target_Date__c</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.NSP_Target_Date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>iterate_over_all_engagement_paths.Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Relationship_Strategy_Action_Plan__c</field>
-            <value>
-                <elementReference>RSAPrecord.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Engagement_Path__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <description>create new RSAP Record from data in previous screen</description>
-        <name>Create_new_RSAP_Record</name>
-        <label>Create new RSAP Record</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
-        <assignRecordIdToReference>RSAPrecord.Id</assignRecordIdToReference>
-        <connector>
-            <targetReference>Get_Engagement_Paths</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NSP_Account__c</field>
-            <value>
-                <elementReference>Account.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>RSAP_Name</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Relationship_Strategy_Action_Plan__c</object>
-    </recordCreates>
-    <recordLookups>
-        <description>get related engagement paths which are not started or in progress</description>
-        <name>Get_Engagement_Paths</name>
-        <label>Get Engagement Paths</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>get_Initiatives</targetReference>
-        </connector>
-        <filterLogic>1 AND ( 2 OR 3)</filterLogic>
-        <filters>
-            <field>Relationship_Strategy_Action_Plan__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Not Started</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>In Progress</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>NSP_Engagement_Path__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>NSP_Status__c</queriedFields>
-        <queriedFields>NSP_Initiative__c</queriedFields>
-        <queriedFields>NSP_Start_Date__c</queriedFields>
-        <queriedFields>NSP_Actual_End_Date__c</queriedFields>
-        <queriedFields>Action__c</queriedFields>
-        <queriedFields>NSP_Service_Provider__c</queriedFields>
-        <queriedFields>NSP_Target_Date__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <description>get Initiatives related to RSAP</description>
-        <name>get_Initiatives</name>
-        <label>get Initiatives</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Iterate_Overall_Initiatives</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
-        <filters>
-            <field>NSP_Relationship_Strategy_Action_Plan__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>get_RSAP_Record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Not Started</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>In Progress</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>NSP_Initiative__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <description>get RSAP record to be cloned</description>
         <name>get_RSAP_Record</name>
         <label>get RSAP Record</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>584</locationX>
+        <locationY>182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_RSAP_before_Clone</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Error_Message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -279,17 +148,33 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <name>FaultMessage</name>
+        <label>FaultMessage</label>
+        <locationX>1508</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayFaultMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 8, 8);&quot;&gt;{!ErrorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <description>show required fields to clone RSAP records</description>
         <name>Update_RSAP_before_Clone</name>
         <label>Update RSAP before Clone</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>531</locationX>
+        <locationY>317</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <backButtonLabel>Cancel</backButtonLabel>
         <connector>
-            <targetReference>Create_new_RSAP_Record</targetReference>
+            <targetReference>Create_Related_Records</targetReference>
         </connector>
         <fields>
             <name>Update_RSAP_before_Clone_Section1</name>
@@ -372,8 +257,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>458</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>get_RSAP_Record</targetReference>
         </connector>
@@ -419,6 +304,13 @@
         </value>
     </variables>
     <variables>
+        <name>clonedRSAPId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>currentItem_ClientHumanCapitalGoals_0</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -433,6 +325,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_ClientGoal__c</objectType>
+    </variables>
+    <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>to iterate through human capital goals list</description>
@@ -472,9 +371,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <value>
-            <elementReference>RSAPrecord.Id</elementReference>
-        </value>
     </variables>
     <variables>
         <description>RSAP Record</description>
