@@ -5,10 +5,11 @@
     <externalId>false</externalId>
     <label>Client Segment type</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>     
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>

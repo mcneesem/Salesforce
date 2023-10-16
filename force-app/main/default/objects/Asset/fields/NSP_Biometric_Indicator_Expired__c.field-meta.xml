@@ -5,6 +5,7 @@
     <description>Updated from Asset Batch if Biometric End Date is in past.</description>
     <externalId>false</externalId>
     <label>Biometric Indicator Expired</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

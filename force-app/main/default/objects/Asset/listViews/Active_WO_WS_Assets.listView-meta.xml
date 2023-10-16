@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_WO_WS_Assets</fullName>
+    <columns>ASSET.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NSP_Client__c</columns>
+    <columns>ASSET.STATUS</columns>
+    <columns>NSP_Account_Status__c</columns>
+    <columns>NSP_Account_Status_Date__c</columns>
+    <columns>NSP_AIMS_First_Pay_Date__c</columns>
+    <columns>NSP_Client_Segment_type__c</columns>
+    <columns>NSP_Service_Region__c</columns>
+    <columns>NSP_Unique_Active_Employee__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ASSET.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Asset.WO</value>
+    </filters>
+    <filters>
+        <field>NSP_Account_Status__c</field>
+        <operation>equals</operation>
+        <value>Active</value>
+    </filters>
+    <label>Active WO/WS Assets</label>
+</ListView>

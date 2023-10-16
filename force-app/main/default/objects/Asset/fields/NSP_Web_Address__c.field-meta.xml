@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Web Address</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Url</type>
 </CustomField>

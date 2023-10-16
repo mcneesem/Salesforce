@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Time_Attendance_Active_Assets</fullName>
+    <columns>ASSET.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NSP_Client__c</columns>
+    <columns>NSP_Account_Status__c</columns>
+    <columns>ASSET.STATUS</columns>
+    <columns>NSP_Current_SaaS_Seats__c</columns>
+    <columns>NSP_SaaS_URL__c</columns>
+    <columns>NSP_ProductBundle__c</columns>
+    <columns>NSP_Product_Segment__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ASSET.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Asset.Time_Attendance</value>
+    </filters>
+    <filters>
+        <field>ASSET.STATUS</field>
+        <operation>equals</operation>
+        <value>Active,On Demand</value>
+    </filters>
+    <label>Time &amp; Attendance Active Assets</label>
+</ListView>

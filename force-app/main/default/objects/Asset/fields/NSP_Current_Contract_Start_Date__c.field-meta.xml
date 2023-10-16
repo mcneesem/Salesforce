@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Current Contract Start Date</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

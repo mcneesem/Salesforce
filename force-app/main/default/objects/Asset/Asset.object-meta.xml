@@ -102,7 +102,7 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>ASSET.NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>ASSET.SERIAL_NUMBER</customTabListAdditionalFields>

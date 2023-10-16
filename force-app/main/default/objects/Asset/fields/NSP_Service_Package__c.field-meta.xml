@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Service Package</label>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ITA_Hardware_Assets</fullName>
+    <columns>ASSET.NAME</columns>
+    <columns>ASSET.STATUS</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>ASSET.SERIAL_NUMBER</columns>
+    <columns>NSP_Support__c</columns>
+    <columns>NSP_Support_Expires__c</columns>
+    <columns>ASSET.PURCHASE_DATE</columns>
+    <columns>NSP_Comments__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ASSET.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Asset.Hardware_Asset</value>
+    </filters>
+    <filters>
+        <field>ASSET.STATUS</field>
+        <operation>equals</operation>
+        <value>Onboarding,Active,On Demand,Purchased</value>
+    </filters>
+    <filters>
+        <field>NSP_Prod_Line__c</field>
+        <operation>notEqual</operation>
+        <value>iSolved Time</value>
+    </filters>
+    <label>ITA Hardware Assets</label>
+</ListView>

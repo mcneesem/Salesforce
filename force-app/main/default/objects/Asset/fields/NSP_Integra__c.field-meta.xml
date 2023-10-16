@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
     <label>Integra</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
