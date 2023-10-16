@@ -3,6 +3,6 @@
     <fullName>NSP_States_of_Operations__c</fullName>
     <externalId>false</externalId>
     <label>States EEs work in</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>TextArea</type>
 </CustomField>

@@ -7,6 +7,6 @@
     <externalId>false</externalId>
     <inlineHelpText>Determines whether Service Cloud was enabled when this Asset was created.</inlineHelpText>
     <label>From Service Cloud</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

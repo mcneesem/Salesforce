@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Product Bundle</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>NSP_Product_Line__c</controllingField>

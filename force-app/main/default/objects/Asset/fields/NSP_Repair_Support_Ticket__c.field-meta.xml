@@ -8,6 +8,6 @@
     <relationshipLabel>Assets (Repair Support Ticket)</relationshipLabel>
     <relationshipName>Assets1</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

@@ -6,7 +6,7 @@
     <inlineHelpText>Describe the business fit with this partner. Why is the partnership a good one for the partner?</inlineHelpText>
     <label>Describe Business Fit With This Partner</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
 </CustomField>

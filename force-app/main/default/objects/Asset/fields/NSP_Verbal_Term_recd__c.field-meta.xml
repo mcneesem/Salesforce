@@ -5,6 +5,6 @@
     <description>to track if verbal termination is received</description>
     <externalId>false</externalId>
     <label>Verbal Termination Notice Received</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

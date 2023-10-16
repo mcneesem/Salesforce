@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <label>Handbook URL</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Url</type>
 </CustomField>

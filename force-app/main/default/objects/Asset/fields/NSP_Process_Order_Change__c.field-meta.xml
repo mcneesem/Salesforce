@@ -5,6 +5,6 @@
     <description>Field to indicate process of Order Change On Asset</description>
     <externalId>false</externalId>
     <label>Process Order Change</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>Verbal Termination Date Received</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>
