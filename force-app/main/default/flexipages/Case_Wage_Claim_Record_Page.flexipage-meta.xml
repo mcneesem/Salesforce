@@ -10,48 +10,20 @@
                             <value>Case.NSP_Add_Multiple_Contacts</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>PrintableView</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.NSP_TimeEntry</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case.nsp_Create_Project_From_Template</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>PEO Service</rightValue>
+                                    <leftValue>{!$Permission.CustomPermission.NSP_FLSA}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case.Project_Setup</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Share</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.New_Task_LWC</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.Create_Project_From_Template</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>PEO Service</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>BPS Service</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
