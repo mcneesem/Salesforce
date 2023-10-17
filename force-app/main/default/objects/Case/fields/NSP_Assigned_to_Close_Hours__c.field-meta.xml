@@ -3,7 +3,21 @@
     <fullName>NSP_Assigned_to_Close_Hours__c</fullName>
     <description>captures the time in hours that user spent to to close the case.</description>
     <externalId>false</externalId>
-    <formula>(ClosedDate - NSP_Owner_Assign_Date__c)*24</formula>
+    <formula>12 * (
+   ( 5 * FLOOR( ( DATEVALUE( ClosedDate ) - DATE( 1900, 1, 8) ) / 7) +
+    MIN(5, 
+     MOD( DATEVALUE( ClosedDate ) - DATE( 1900, 1, 8), 7) +
+     MIN( 1, 24 / 12 * ( MOD( ClosedDate - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1 ) ) )
+    ) 
+   )
+ -
+   ( 5 * FLOOR( ( DATEVALUE( NSP_Owner_Assign_Date__c ) - DATE( 1900, 1, 8) ) / 7) +
+     MIN( 5,
+      MOD( DATEVALUE( NSP_Owner_Assign_Date__c ) - DATE( 1996, 1, 1), 7 ) +
+      MIN( 1, 24 / 12 * ( MOD( NSP_Owner_Assign_Date__c - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1) ) )
+    )
+   ) 
+  )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Assigned to Close (Hours)</label>
     <precision>18</precision>
