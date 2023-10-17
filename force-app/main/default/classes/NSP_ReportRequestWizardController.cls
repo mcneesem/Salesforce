@@ -367,24 +367,34 @@ public with sharing class NSP_ReportRequestWizardController {
     public static void createCaseDocuments(Id reportRequestID, Id caseID)
     {
         try {
-            List<ContentDocumentLink> lstConDocs = new List<ContentDocumentLink>();
+            Set<Id> recordTypeIdSet         =   new Set<Id>();
+            recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest'));
+            recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SurveyRequest'));
             
-            // Getting the content document links related to Report Request record for content document ID
-            for(ContentDocumentLink cntLink : [Select Id, ContentDocumentId, ShareType, Visibility 
-                                               From ContentDocumentLink 
-                                               WHERE LinkedEntityId =:reportRequestID]) 
-            {
-                lstConDocs.add(new ContentDocumentLink(
-                    LinkedEntityId      = caseID,
-                    ContentDocumentId   = cntLink.ContentDocumentId,
-                    ShareType           = 'V',
-                    Visibility          = 'InternalUsers'
-                ));
-            }
+            NSP_ReportRequest__c request    =   [SELECT ID FROM NSP_ReportRequest__c WHERE ID = : reportRequestID AND RecordTypeId = :recordTypeIdSet LIMIT 1];
             
-            if(lstConDocs?.size() > 0)
+            // Query results to check for the Report Reqeust with Seperarion Agreement Record Type
+            if(request <> null)
             {
-                Database.insert(lstConDocs, false);
+                List<ContentDocumentLink> lstConDocs = new List<ContentDocumentLink>();
+            
+                // Getting the content document links related to Report Request record for content document ID
+                for(ContentDocumentLink cntLink : [Select Id, ContentDocumentId, ShareType, Visibility 
+                                                   From ContentDocumentLink 
+                                                   WHERE LinkedEntityId =:request.ID]) 
+                {
+                    lstConDocs.add(new ContentDocumentLink(
+                        LinkedEntityId      = caseID,
+                        ContentDocumentId   = cntLink.ContentDocumentId,
+                        ShareType           = 'V',
+                        Visibility          = 'InternalUsers'
+                    ));
+                }
+                
+                if(lstConDocs?.size() > 0)
+                {
+                    Database.insert(lstConDocs, false);
+                }
             }
             
         }
