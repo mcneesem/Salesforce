@@ -1,13 +1,15 @@
-/*   
-* Name   :  NSP_ProjectDeleteController
-* Purpose: Delete child records when parent project is deleted
-*/
-public with sharing class NSP_ProjectDeleteController {   
-    /**
-* method to fetch Ids of child records for deletion
-* @param  projectId
-* @return void
-*/
+//   
+// Name   :  NSP_ProjectDeleteController
+// Purpose: Delete child records when parent project is deleted
+//
+public with sharing class NSP_ProjectDeleteController {
+    // test w/ NSP_ProjectDeleteControllerTest (89%)
+
+    //
+    // method to fetch Ids of child records for deletion
+    // @param  projectId
+    // @return void
+    //
     @auraEnabled
     public static void deepDeleteRecords(Id projectId){
         //check if parent project exists then don't allow delete of the project
@@ -39,48 +41,63 @@ public with sharing class NSP_ProjectDeleteController {
         try{
             Database.delete(recordToDeleteList,true);
         }catch(Exception varEx){
-            // throw Exception           
             throw new AuraHandledException(varEx.getMessage());
         }
     }
-    /**
-* Dynamic method to intake Paramter and fetch records accordingly
-* @param  projectId,objectName,relationField
-* @return      Set of Id fetched
-*/
+
+    //
+    // Dynamic method to intake Paramter and fetch records accordingly
+    // @param  projectId,objectName,relationField
+    // @return Set of Id fetched
+    //
     public static Set<Id> getRelatedChildRecords(Set<Id> projectId,String objectName,String relationField){
         Set<Id> childRecordIdSet = New Set<Id>();
         if(objectName == 'pse__Assignment__c'){
             for(pse__Assignment__c childRecordInstance : [SELECT Id , pse__Schedule__c FROM pse__Assignment__c WHERE pse__Project__c IN :projectId]){
-           if(childRecordInstance.pse__Schedule__c != null){
-              childRecordIdSet.add(childRecordInstance.pse__Schedule__c);
-             }
-              childRecordIdSet.add(childRecordInstance.Id);
-           }        
+                if(childRecordInstance.pse__Schedule__c != null){
+                    childRecordIdSet.add(childRecordInstance.pse__Schedule__c);
+                }
+                childRecordIdSet.add(childRecordInstance.Id);
+            }
         } else {
-        List<sObject> childRecordList = Database.query('SELECT Id FROM '+ String.escapeSingleQuotes(objectName) +' WHERE '+ String.escapeSingleQuotes(relationField) +' IN :projectId');
-        if(childRecordList.size() > 0){
-         childRecordIdSet.addAll( new Map<Id,sObject>(childRecordList).keySet());
-           }
+            List<sObject> childRecordList = Database.query('SELECT Id FROM '+ String.escapeSingleQuotes(objectName) +' WHERE '+ String.escapeSingleQuotes(relationField) +' IN :projectId');
+            if(childRecordList.size() > 0){
+                childRecordIdSet.addAll( new Map<Id,sObject>(childRecordList).keySet());
+            }
         }
         return childRecordIdSet;
     }
-/**
-* to check if logged in user is system Administrator
-* @param  none
-* @return true if logged in user is System admin else false
-*/
-    @auraEnabled
-    public static Boolean getIsUserSystemAdmin(){
+
+    //
+    // to check if logged in user is system Administrator
+    // @param  none
+    // @return true if logged in user is System admin else false
+    //
+    @auraEnabled public static Boolean getIsUserSystemAdmin() {
         try{
-            Boolean isSystemAdmin = False;
-            List<Profile> PROFILE = [SELECT Id, Name FROM Profile WHERE Id=:userinfo.getProfileId() LIMIT 1];
-            isSystemAdmin = PROFILE[0].Name == NSP_ServiceConstants.SYSTEM_ADMINISTRATOR ? true:false;
-            return isSystemAdmin;
-        }catch(Exception varEx){
-            // throw Exception           
-            throw new AuraHandledException(varEx.getMessage());
+            List<Profile> userProfiles = [
+                SELECT Id , Name
+                FROM Profile
+                WHERE ( Id = :userinfo.getProfileId() )
+                LIMIT 1
+            ];
+            Profile userProfile = null;
+            if ( ! userProfiles.isEmpty() ) {
+                userProfile = userProfiles[0];
+            }
+            String userProfileName = null;
+            if ( userProfile != null ) {
+                userProfileName = userProfile.Name;
+            }
+            Boolean isAllowedDelete = False;
+            if ( String.isNotBlank( userProfileName ) && userProfileName.startsWith( 'System Admin' ) ) {
+                isAllowedDelete = True;
+            }
+            return isAllowedDelete;
+        } catch( Exception varEx ) {
+            throw new AuraHandledException( varEx.getMessage() );
         }
     }
-    
+
 }
+//
