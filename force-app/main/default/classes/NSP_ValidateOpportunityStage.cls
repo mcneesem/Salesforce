@@ -48,73 +48,12 @@ public class NSP_ValidateOpportunityStage {
         
         Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c  FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
         
-        for(Opportunity opp:newList){     
-
+        for(Opportunity opp:newList){        
             Opportunity oppFromMap=oppMapwithEventTask.get(opp.Id);
             List<Task> taskList=oppFromMap?.Tasks;
             List<Event> eventList=oppFromMap?.Events;
             List<Quote> quotes=oppFromMap?.Quotes;
             
-            //  Retirement Services
-            if(opp.NSP_PrimaryProduct__c != null && opp.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.RETIREMENT_SERVICE)){
-                
-
-                    //  Before exit to Proposal from Discovery, Analysis
-                    if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
-                    
-                        //  If not bypass validation
-                        if(!opp.NSP_RET_Bypass__c){
-                            //  Discovery call
-                            verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCalls);
-                        }
-    
-                    }
-                    else if(opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE) || 
-                    opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) || opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
-                    //  Before exit to Close from Discovery, Analysis or Proposal
-                        
-                        //  If not bypass validation
-                        if(!opp.NSP_RET_Bypass__c){
-                        //  Discovery call
-                        verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCallsClose);
-                        }
-
-                           //  Sub Product
-                        if(opp.NSP_Sub_Product__c == null || String.isEmpty(opp.NSP_Sub_Product__c)){
-                            opp.addError(System.Label.NSP_AddSubProduct);
-                        }
-
-                        //  Opportunity Credit
-                        Integer oppCredit = [SELECT COUNT() FROM NSP_Employee_Split__c WHERE NSP_Opportunity__c =: opp.id];
-
-                        if(oppCredit == 0){
-                            opp.addError(System.Label.NSP_AddOppotunityCredit);
-                        }
-
-                        //  If not bypass validation
-                        if(!opp.NSP_RET_Bypass__c){
-
-                            //  Primary Quote and CPQ Quote Approved
-                            if(opp.SBQQ__PrimaryQuote__c != null){
-                                if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                                    opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                                }
-                            }
-                            else{
-                                opp.addError(System.Label.NSP_AddPrimaryQuote);
-                            } 
-                        }
-
-                        // Sales to Implementation
-                        Integer salesToImp = [SELECT COUNT() FROM NSP_Sales_to_Implementation__c WHERE NSP_Opportunity__c =: opp.id];
-
-                        if(salesToImp == 0){
-                            opp.addError(System.Label.NSP_AddSalesToImplementation);
-                        }
-                }
-            }
-            else{
-
             //Analysis
             if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE) || 
                opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ||
@@ -204,38 +143,11 @@ public class NSP_ValidateOpportunityStage {
             if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
                 evaluateClosedLostStageCriteria(opp);
             }
-            }
         }
+        
         
     }
     
-    private static void verifyCompletedDiscoveryCalls(Opportunity opp, List<Event> eventList, String errorMessage){
-        
-        String scannedTask='';
-        
-        if(eventList != null){
-            for(Event event:eventList){
-                if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
-                   event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
-                    scannedTask += HAS_DISCOVERY;
-                    if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
-                        scannedTask += HAS_OPEN_EVENT;
-                    }
-                }
-            }
-        }
-        
-        //Show error
-        if(!scannedTask.contains(HAS_DISCOVERY)){
-            opp.addError(errorMessage);
-        }
-
-        if(scannedTask.contains(HAS_OPEN_EVENT)){
-            opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
-        }
-         
-    }
-
     /**
 * Evaluate entry criteria for analysis stage
 * @param opportunityList list of New Opportunity.  
