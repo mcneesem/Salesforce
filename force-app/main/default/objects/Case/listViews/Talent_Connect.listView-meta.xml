@@ -12,7 +12,4 @@
     <filterScope>Queue</filterScope>
     <label>Talent Connect</label>
     <queue>NSP_Talent_Connect</queue>
-    <sharedTo>
-        <allInternalUsers></allInternalUsers>
-    </sharedTo>
 </ListView>
