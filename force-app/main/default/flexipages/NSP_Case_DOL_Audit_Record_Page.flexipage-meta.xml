@@ -10,15 +10,12 @@
                             <value>Case.NSP_Add_Multiple_Contacts</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>PrintableView</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.NSP_TimeEntry</value>
                             <visibilityRule>
-                                <booleanFilter>NOT( 4 OR 5 OR 6) OR (1 AND ( 2 OR 3 ))</booleanFilter>
+                                <booleanFilter>(NOT( 4 OR 5 OR 6) OR (1 AND ( 2 OR 3 ))) AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NSP_Category__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -49,108 +46,15 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>NSP_WageClaims</rightValue>
                                 </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case.nsp_Create_Project_From_Template</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.RecordType.Name}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>OrgPlus M&amp;A</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>PEO Service</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Contact Center</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case.Project_Setup</value>
-                            <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR 6)</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.NSP_FLSA}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>BPS</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>NSP_OrgPlusM_A</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Integra</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>OrgPlus Software</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>PerformSmart Software</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NSP_Category__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Time &amp; Attendance</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Share</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Contact Center</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.New_Task_LWC</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.Create_Project_From_Template</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>PEO Service</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>BPS Service</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Contact Center</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>MergeCase</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.NSP_Merge_Case}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                     </valueList>                    
                 </componentInstanceProperties>
