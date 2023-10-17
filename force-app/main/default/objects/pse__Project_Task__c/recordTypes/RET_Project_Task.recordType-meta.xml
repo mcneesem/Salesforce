@@ -98,6 +98,10 @@
     <picklistValues>
         <picklist>Responsible_Party__c</picklist>
         <values>
+            <fullName>RET CSP Conversion</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RET CSP Implementation</fullName>
             <default>false</default>
         </values>
