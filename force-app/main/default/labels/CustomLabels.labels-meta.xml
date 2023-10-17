@@ -6087,4 +6087,32 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <shortDescription>NSP_ProjTemplateDeleteError</shortDescription>
         <value>You do not have permission to delete project templates</value>
     </labels>
+    <labels>
+        <fullName>NSP_AddDiscoveryCallsClose</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCallsClose</shortDescription>
+        <value>Please add discovery calls before moving stage to Close</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddSubProduct</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddSubProduct</shortDescription>
+        <value>Please select a sub product before changing stage</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddOppotunityCredit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddOppotunityCredit</shortDescription>
+        <value>Please add opportunity credit record</value>
+    </labels>
+    <labels>
+        <fullName>NSP_AddSalesToImplementation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddSalesToImplementation</shortDescription>
+        <value>Please add sales to implementation record</value>
+    </labels>
 </CustomLabels>
