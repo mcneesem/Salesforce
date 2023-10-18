@@ -12,7 +12,7 @@ Modification Log     :
 */
 
 public class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (83%)
+    // test w/ NSP_ValidateOpportunityStageTest (81%)
     
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -48,36 +48,113 @@ public class NSP_ValidateOpportunityStage {
         
         Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c  FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
         
-        for(Opportunity opp:newList){        
+        for(Opportunity opp:newList){ 
             Opportunity oppFromMap=oppMapwithEventTask.get(opp.Id);
             List<Task> taskList=oppFromMap?.Tasks;
             List<Event> eventList=oppFromMap?.Events;
             List<Quote> quotes=oppFromMap?.Quotes;
-            
-            //Analysis
-            if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE) || 
-               opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ||
-               opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE) ){ //add Proposal
+
+             //  Retirement Services
+             if(opp.NSP_PrimaryProduct__c != null && opp.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.RETIREMENT_SERVICE)){
+
+                //  Before exit to Proposal from Discovery, Analysis
+                if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
+                
+                    //  If not bypass validation
+                    if(!opp.NSP_RET_Bypass__c){
+                        //  Discovery call
+                        verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCalls);
+                        
+                        if(opp.getErrors().size() > 0){
+                            continue;
+                        }
+                    }
+
+                }
+                else if(opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE) || 
+                opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) || 
+                opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                    
+                    //  Before exit to Close from Discovery, Analysis or Proposal
+                    
+                    // Check if Opportunity Credit and Sales to Implementation have been created for the Oppornutity
+                    Map<ID, Opportunity> queryMap = new Map<ID, Opportunity>([SELECT id,  
+                                                                            (SELECT id FROM Employee_Splits__r), 
+                                                                            (SELECT id FROM Sales_to_Implementation__r)
+                                                                             FROM Opportunity Where Id =:opp.id]);
+
+                    Opportunity queryFromMap = queryMap.get(opp.Id);
+                    List<NSP_Employee_Split__c> creditList = queryFromMap?.Employee_Splits__r;
+                    List<NSP_Sales_to_Implementation__c > salesList = queryFromMap?.Sales_to_Implementation__r;
+
+                    if(creditList.size() == 0){
+                        opp.addError(System.Label.NSP_AddOppotunityCredit);
+                        continue;
+                    }                        
+
+                    if(salesList.size() == 0) {
+                        opp.addError(System.Label.NSP_AddSalesToImplementation);
+                        continue;
+                    }           
+
+                    //  If not bypass validation
+                    if(!opp.NSP_RET_Bypass__c){
+
+                         //  Discovery call
+                        verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCallsClose);
+                       
+                        if(opp.getErrors().size() > 0){
+                            continue;
+                        }
+                    }
+
+                       //  Sub Product
+                    if(opp.NSP_Sub_Product__c == null || String.isEmpty(opp.NSP_Sub_Product__c)){
+                        opp.addError(System.Label.NSP_AddSubProduct);
+                        continue;
+                    }
+
+                    //  If not bypass validation
+                    if(!opp.NSP_RET_Bypass__c){
+
+                        //  Primary Quote and CPQ Quote Approved
+                        if(opp.SBQQ__PrimaryQuote__c != null){
+                            if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                                opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                            }
+                        }
+                        else{
+                            opp.addError(System.Label.NSP_AddPrimaryQuote);
+                        } 
+                    }
+                }
+            }
+            else{ 
+
+                //Analysis
+                if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE) || 
+                   opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ||
+                   opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE) ){ //add Proposal
                    
-                   /* Added Or Condition as part of DF-01031 to show error When Number of Employees is equal to Zero */
-                   if(opp.NSP_Number_of_Employees__c == null || opp.NSP_Number_of_Employees__c == 0){
+                    /* Added Or Condition as part of DF-01031 to show error When Number of Employees is equal to Zero */
+                    if(opp.NSP_Number_of_Employees__c == null || opp.NSP_Number_of_Employees__c == 0){
                        opp.addError(System.Label.NSP_EnterNumberOfEmployees);
-                   }
-                   if(opp.NSP_PrimaryProduct__c == null){
-                       opp.addError(System.Label.NSP_AddPrimaryProduct);
-                   } 
-                   if(opp.Type == null){
+                    }
+                    if(opp.NSP_PrimaryProduct__c == null){
+                        opp.addError(System.Label.NSP_AddPrimaryProduct);
+                    } 
+                    if(opp.Type == null){
                        opp.addError(System.Label.NSP_EnterOpportunityType);
                    }
-               }
+                }
             
-            if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
-                evaluateAnalysisStageCriteria(opp,eventList);
-            }
+                if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
+                    evaluateAnalysisStageCriteria(opp,eventList);
+                }
             
-            /////Proposal 
+                /////Proposal 
             
-            if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
+                if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
                 
                 if(proposeStageCriteraTypes.contains(opp.Type)){
                     
@@ -112,17 +189,17 @@ public class NSP_ValidateOpportunityStage {
                         }
                     } 
                 }
-                evaluateQuoteCriteria(opp,quoteMap);
-            }
-            //CR-031 removed Executive summary check and have added BPS Products condition
-			// 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
-                if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
-                    if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
-                        opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
-                    }else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
-                        opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
-                    }
+                    evaluateQuoteCriteria(opp,quoteMap);
+                }
+                //CR-031 removed Executive summary check and have added BPS Products condition
+			    // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
+                if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
+                    if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
+                        if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
+                            opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
+                        }else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
+                            opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
+                        }
                     
                 }else if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) || 
                 ((opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS) && opp.NSP_Order_Generated__c)){
@@ -144,10 +221,44 @@ public class NSP_ValidateOpportunityStage {
                 evaluateClosedLostStageCriteria(opp);
             }
         }
-        
+    }
         
     }
     
+    /*
+    * Evaluate if there are completed discovery calls
+    * @param Opportunity.  
+    * @param List of events
+    * @param Error message text
+    * @return void       
+    */
+    private static void verifyCompletedDiscoveryCalls(Opportunity opp, List<Event> eventList, String errorMessage){
+        
+        String scannedTask='';
+        
+        if(eventList != null){
+            for(Event event:eventList){
+                if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
+                   event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
+                    scannedTask += HAS_DISCOVERY;
+                    if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
+                        scannedTask += HAS_OPEN_EVENT;
+                    }
+                }
+            }
+        }
+        
+        //Show error
+        if(!scannedTask.contains(HAS_DISCOVERY)){
+            opp.addError(errorMessage);
+        }
+
+        if(scannedTask.contains(HAS_OPEN_EVENT)){
+            opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
+        }
+         
+    }
+
     /**
 * Evaluate entry criteria for analysis stage
 * @param opportunityList list of New Opportunity.  
