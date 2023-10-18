@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Talent_Connect</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NSP_Case_Created_date__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>NSP_Category_Picklist__c</columns>
+    <columns>NSP_Subcategory_Picklist__c</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CREATEDBY_USER.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <label>Talent Connect</label>
+    <queue>NSP_Talent_Connect</queue>
+</ListView>
