@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Talent_Connect</fullName>
+    <columns>SUBJECT</columns>
+    <columns>PRIORITY</columns>
+    <columns>NSP_Account__c</columns>
+    <columns>WHAT_NAME</columns>
+    <columns>DUE_DATE</columns>
+    <filterScope>Queue</filterScope>
+    <label>Talent Connect</label>
+    <queue>NSP_Talent_Connect</queue>
+</ListView>
