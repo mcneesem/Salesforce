@@ -37,7 +37,7 @@ public class NSP_ValidateOpportunityStage {
     
     public static void validateOpportunityStage(List<Opportunity> newList){
         
-        Map<Id,Opportunity> newMap =  Trigger.isInsert ? new Map<Id,Opportunity>() : new Map<Id,Opportunity>(newList);
+        Map<Id,Opportunity> newMap = Trigger.isInsert ? new Map<Id,Opportunity>() : new Map<Id,Opportunity>(newList);
         
         Map<ID, Opportunity> oppMapwithEventTask = new Map<ID, Opportunity>(
             [
