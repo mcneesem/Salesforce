@@ -39,7 +39,7 @@ public class NSP_ValidateOpportunityStage {
         
         Map<Id,Opportunity> newMap =  Trigger.isInsert ? new Map<Id,Opportunity>() : new Map<Id,Opportunity>(newList);
         
-        Map<ID, Opportunity> oppMapwithEventTask =  new Map<ID, Opportunity>(
+        Map<ID, Opportunity> oppMapwithEventTask = new Map<ID, Opportunity>(
             [
                 SELECT
                     AccountId,Id,
