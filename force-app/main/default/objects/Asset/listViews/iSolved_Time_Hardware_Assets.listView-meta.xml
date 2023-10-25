@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>iSolved_Time_Hardware_Assets</fullName>
+    <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
+    <columns>ASSET.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>ASSET.STATUS</columns>
+    <columns>ASSET.SERIAL_NUMBER</columns>
+    <columns>ASSET.PURCHASE_DATE</columns>
+    <columns>ASSET.address_state</columns>
+    <columns>ASSET.address_state_code</columns>
+    <columns>NSP_Location_of_Clock_State__c</columns>
+    <columns>Location</columns>
+    <columns>NSP_Comments__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ASSET.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Asset.Hardware_Asset</value>
+    </filters>
+    <filters>
+        <field>ASSET.STATUS</field>
+        <operation>equals</operation>
+        <value>Onboarding,Active,On Demand,Purchased</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.NAME</field>
+        <operation>startsWith</operation>
+        <value>NXG</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.NAME</field>
+        <operation>startsWith</operation>
+        <value>LE</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.NAME</field>
+        <operation>startsWith</operation>
+        <value>G7</value>
+    </filters>
+    <label>iSolved Time Hardware Assets</label>
+</ListView>

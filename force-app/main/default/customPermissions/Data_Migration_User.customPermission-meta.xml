@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission to be assigned via perm set to allow &quot;data migration users&quot; to bypass validation rules and automation</description>
+    <isLicensed>false</isLicensed>
+    <label>Data Migration User</label>
+</CustomPermission>

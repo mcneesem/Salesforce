@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Benefits Term Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

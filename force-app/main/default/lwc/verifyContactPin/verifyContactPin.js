@@ -65,7 +65,7 @@ export default class VerifyContactPin extends LightningElement {
             this.pinValidated = this.contact.fields.NSP_Pin_Validated__c.value;
             this.serviceChannel = this.contact.fields.NSP_Service_Request_Channel__c.value;
 
-            if (this.contactPin != null && !this.pinValidated && this.serviceChannel == 'Phone'){
+            if (this.contactPin != null && ((!this.pinValidated && this.serviceChannel == 'Phone')||this.serviceChannel != 'Chat')){
                 this.showPinModal = true;
                 this.showCancel = true;               
             }

@@ -3,14 +3,13 @@
     <fullName>NSP_Account_Health_Image__c</fullName>
     <description>Graphical presentation of Account Health Status</description>
     <externalId>false</externalId>
-    <formula>IMAGE(
-CASE(NSP_Account_Health__c,
-&quot;Unfavorable&quot;, $Setup.NSP_Rating_Colours__c.NSP_Unfavorable__c ,
-&quot;Somewhat unfavorable&quot;, $Setup.NSP_Rating_Colours__c.NSP_Somewhat_Unfavorable__c ,
-&quot;Neutral&quot;, $Setup.NSP_Rating_Colours__c.NSP_Neutral__c ,
-&quot;Somewhat favorable&quot;, $Setup.NSP_Rating_Colours__c.NSP_Somewhat_Favorable__c ,
-&quot;Favorable&quot;, $Setup.NSP_Rating_Colours__c.NSP_Favorable__c ,&quot;/s.gif&quot;),
-&quot;&quot;, 30,500)</formula>
+    <formula>IMAGE(CASE(NSP_Account_Health__c, 
+&apos;Favorable&apos;, &apos;/resource/RatingColors/Favorable.png&apos;, 
+&apos;Neutral&apos;, &apos;/resource/RatingColors/Neutral.png&apos;, 
+&apos;Somewhat Favorable&apos;, &apos;/resource/RatingColors/SomewhatFavorable.png&apos;, 
+&apos;Somewhat Unfavorable&apos;, &apos;/resource/RatingColors/SomewhatUnfavorable.png&apos;, 
+&apos;Unfavorable&apos;, &apos;/resource/RatingColors/Unfavorable.png&apos;, 
+&apos;&apos;), TEXT(NSP_Account_Health__c), 30, 500)</formula>
     <label>Account Health Rating</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -22,10 +22,12 @@ class NSP_PrepSandboxTest {
         System.assertEquals(0, queueCount);
     }
 
-    @isTest
+    @isTest(SeeAllData = True)
     static void testManualSteps(){
         Test.startTest();
         NSP_PrepSandbox.runManualSteps();
+        NSP_PrepSandbox.doUserImport('sandbox');
+        NSP_PrepSandbox.doCMetadataSvc('sandbox');
         Test.stopTest();
     }
 }

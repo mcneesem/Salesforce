@@ -4,8 +4,8 @@
     <active>true</active>
     <description>Only System Admins should be able to edit Project Templates</description>
     <errorConditionFormula>AND(
-$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-pse__Project__r.pse__Is_Template__c = true
+ NOT( $User.NSP_Service_Stakeholder__c ) ,
+ pse__Project__r.pse__Is_Template__c
 )</errorConditionFormula>
     <errorMessage>Project templates cannot be edited.</errorMessage>
 </ValidationRule>

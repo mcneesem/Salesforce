@@ -7,6 +7,7 @@
     <permissionSets>MidMarket_National_Account_edit_permissions</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <status>Updated</status>

@@ -6,6 +6,9 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Enable_SSO_Permission_Set</permissionSets>
     <permissionSets>Grant_login_access</permissionSets>
+    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
+    <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>User_Compliance_and_Audit_permissions</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_Admin</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusAdmin</permissionSets>

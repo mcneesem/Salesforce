@@ -12,139 +12,196 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>ArizpeAward</fullName>
-                <default>false</default>
-                <label>ArizpeAward</label>
-            </value>
-            <value>
                 <fullName>BpaOfTheYear</fullName>
                 <default>false</default>
-                <label>BpaOfTheYear</label>
+                <label>BPA Of The Year</label>
             </value>
             <value>
                 <fullName>BusinessPerformanceLeaderCert</fullName>
                 <default>false</default>
-                <label>BusinessPerformanceLeaderCert</label>
+                <label>Business Performance Leader Cert</label>
             </value>
             <value>
                 <fullName>CentralRegionDaOfTheYear</fullName>
                 <default>false</default>
-                <label>CentralRegionDaOfTheYear</label>
+                <label>Central Region DA Of The Year</label>
             </value>
             <value>
                 <fullName>ChairmansClub</fullName>
                 <default>false</default>
-                <label>ChairmansClub</label>
+                <label>Chairman&apos;s Club</label>
+            </value>
+            <value>
+                <fullName>ChairmansEliteClub</fullName>
+                <default>false</default>
+                <label>Chairman&apos;s Elite Club</label>
             </value>
             <value>
                 <fullName>CircleOfExcellence</fullName>
                 <default>false</default>
-                <label>CircleOfExcellence</label>
+                <label>Circle Of Excellence</label>
+            </value>
+            <value>
+                <fullName>ClientRetentionAward</fullName>
+                <default>false</default>
+                <label>Client Retention Award</label>
             </value>
             <value>
                 <fullName>DaOfTheYear</fullName>
                 <default>false</default>
-                <label>DaOfTheYear</label>
+                <label>DA Of The Year</label>
+            </value>
+            <value>
+                <fullName>DMChairmansClub</fullName>
+                <default>false</default>
+                <label>DM Chairman&apos;s Club</label>
             </value>
             <value>
                 <fullName>DmOfTheYear</fullName>
                 <default>false</default>
-                <label>DmOfTheYear</label>
-            </value>
-            <value>
-                <fullName>EliteClub</fullName>
-                <default>false</default>
-                <label>EliteClub</label>
+                <label>DM Of The Year</label>
             </value>
             <value>
                 <fullName>FastStart</fullName>
                 <default>false</default>
-                <label>FastStart</label>
+                <label>Fast Start</label>
             </value>
             <value>
                 <fullName>MillionDollarClub</fullName>
                 <default>false</default>
-                <label>MillionDollarClub</label>
+                <label>Million Dollar Club</label>
+            </value>
+            <value>
+                <fullName>MM1KClub</fullName>
+                <default>false</default>
+                <label>MM 1K Club</label>
+            </value>
+            <value>
+                <fullName>MMChairmansClub</fullName>
+                <default>false</default>
+                <label>MM Chairman&apos;s Club</label>
+            </value>
+            <value>
+                <fullName>MMChairmansEliteClub</fullName>
+                <default>false</default>
+                <label>MM Chairman&apos;s Elite Club</label>
+            </value>
+            <value>
+                <fullName>MostCompanyVolunteerEventHours</fullName>
+                <default>false</default>
+                <label>Most Company Volunteer Event Hours</label>
+            </value>
+            <value>
+                <fullName>MostIndividualVolunteerHours</fullName>
+                <default>false</default>
+                <label>Most Individual Volunteer Hours</label>
+            </value>
+            <value>
+                <fullName>MostOverallVolunteersatAllEvents</fullName>
+                <default>false</default>
+                <label>Most Overall Volunteers At All Events</label>
+            </value>
+            <value>
+                <fullName>MostUniqueVolunteersatAllEvents</fullName>
+                <default>false</default>
+                <label>Most Unique Volunteers At All Events</label>
+            </value>
+            <value>
+                <fullName>MostVolunteerEvents</fullName>
+                <default>false</default>
+                <label>Most Volunteer Events</label>
             </value>
             <value>
                 <fullName>PresidentsClub</fullName>
                 <default>false</default>
-                <label>PresidentsClub</label>
+                <label>President&apos;s Club</label>
             </value>
             <value>
                 <fullName>RmOfTheYear</fullName>
                 <default>false</default>
-                <label>RmOfTheYear</label>
+                <label>RM Of The Year</label>
             </value>
             <value>
                 <fullName>RookieDmOfTheYear</fullName>
                 <default>false</default>
-                <label>RookieDmOfTheYear</label>
+                <label>Rookie DM Of The Year</label>
             </value>
             <value>
                 <fullName>RookieOfTheYear</fullName>
                 <default>false</default>
-                <label>RookieOfTheYear</label>
+                <label>Rookie Of The Year</label>
             </value>
             <value>
                 <fullName>SpecialAward</fullName>
                 <default>false</default>
-                <label>SpecialAward</label>
+                <label>Special Award</label>
             </value>
             <value>
                 <fullName>TopBpsSalesIndividual</fullName>
                 <default>false</default>
-                <label>TopBpsSalesIndividual</label>
+                <label>Top BPS Sales Individual</label>
             </value>
             <value>
                 <fullName>TopChannelProgramsIndividual</fullName>
                 <default>false</default>
-                <label>TopChannelProgramsIndividual</label>
+                <label>Top Channel Programs Individual</label>
             </value>
             <value>
                 <fullName>TopLoyaltyProgramIndividual</fullName>
                 <default>false</default>
-                <label>TopLoyaltyProgramIndividual</label>
+                <label>Top Loyalty Program Individual</label>
             </value>
             <value>
                 <fullName>TopMarginDistrict</fullName>
                 <default>false</default>
-                <label>TopMarginDistrict</label>
+                <label>Top Margin District</label>
             </value>
             <value>
                 <fullName>TopMarginIndividual</fullName>
                 <default>false</default>
-                <label>TopMarginIndividual</label>
+                <label>Top Margin Individual</label>
             </value>
             <value>
                 <fullName>TopPercentageDistrict</fullName>
                 <default>false</default>
-                <label>TopPercentageDistrict</label>
+                <label>Top Percentage District</label>
             </value>
             <value>
                 <fullName>TopVolumeDistrict</fullName>
                 <default>false</default>
-                <label>TopVolumeDistrict</label>
+                <label>Top Volume District</label>
             </value>
             <value>
                 <fullName>TopVolumeIndividual</fullName>
                 <default>false</default>
-                <label>TopVolumeIndividual</label>
+                <label>Top Volume Individual</label>
             </value>
             <value>
                 <fullName>TopWoVolumeIndividual</fullName>
                 <default>false</default>
-                <label>TopWoVolumeIndividual</label>
+                <label>Top WO Volume Individual</label>
             </value>
             <value>
                 <fullName>TripQualifer</fullName>
                 <default>false</default>
-                <label>TripQualifer</label>
+                <label>Trip Qualifer</label>
             </value>
             <value>
                 <fullName>WesternRegionDaOfTheYear</fullName>
                 <default>false</default>
-                <label>WesternRegionDaOfTheYear</label>
+                <label>Western Region DA Of The Year</label>
+            </value>
+            <value>
+                <fullName>ArizpeAward</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ArizpeAward</label>
+            </value>
+            <value>
+                <fullName>EliteClub</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EliteClub</label>
             </value>
         </valueSetDefinition>
     </valueSet>

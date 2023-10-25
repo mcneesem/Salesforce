@@ -9,6 +9,7 @@
     <relationshipLabel>Assets (Partner Lookup)</relationshipLabel>
     <relationshipName>Assets_PartnerLookup</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

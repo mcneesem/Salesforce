@@ -7,7 +7,8 @@
     <inlineHelpText>The type of the product charge.  This is a system field that is derived from the associated product.</inlineHelpText>
     <label>Charge Type</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

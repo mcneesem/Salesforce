@@ -185,9 +185,9 @@
                                     <rightValue>PEO Service</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
@@ -364,9 +364,9 @@
                 <identifier>RecordOneTrust_Opt_Out_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -569,9 +569,9 @@
                 <identifier>RecordNSP_Running_SubRegion_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2571,9 +2571,9 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
@@ -2601,9 +2601,9 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
@@ -2631,9 +2631,9 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
@@ -2844,9 +2844,9 @@
                         <rightValue>false</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
@@ -2878,6 +2878,19 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.OneTrust_Opt_Out__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

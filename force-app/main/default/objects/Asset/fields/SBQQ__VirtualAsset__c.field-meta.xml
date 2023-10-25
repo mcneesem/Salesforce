@@ -9,6 +9,7 @@
     <relationshipLabel>Assets (Virtual Asset)</relationshipLabel>
     <relationshipName>VirtualAsset</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

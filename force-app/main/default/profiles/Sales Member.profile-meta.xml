@@ -14325,7 +14325,7 @@
         <layout>blng__Invoice__c-Non-Billing Invoice Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Outlook-Outlook Layout</layout>
+        <layout>Outlook-Sales Plus Outlook Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Pricebook2-Price Book Layout</layout>

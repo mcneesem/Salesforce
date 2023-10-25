@@ -5,6 +5,7 @@
     <description>True if Biometric End Date is today or in Future.</description>
     <externalId>false</externalId>
     <label>Biometric Indicator Assigned</label>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -5,6 +5,7 @@
     <description>field use to exclude subscription on reports</description>
     <externalId>false</externalId>
     <label>Exclude From Report</label>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

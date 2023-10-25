@@ -9,7 +9,8 @@
     <precision>12</precision>
     <required>false</required>
     <scale>2</scale>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

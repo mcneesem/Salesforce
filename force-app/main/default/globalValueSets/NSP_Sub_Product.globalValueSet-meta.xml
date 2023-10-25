@@ -1,190 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Abra Migration</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Abra Migration</label>
-    </customValue>
-    <customValue>
-        <fullName>Add On Software</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Add On Software</label>
-    </customValue>
-    <customValue>
-        <fullName>CompuPayTime</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>CompuPayTime</label>
-    </customValue>
-    <customValue>
-        <fullName>Descriptions Now</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Descriptions Now</label>
-    </customValue>
-    <customValue>
-        <fullName>Dotcoms</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Dotcoms</label>
-    </customValue>
-    <customValue>
-        <fullName>ExpenseAble Corporate</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ExpenseAble Corporate</label>
-    </customValue>
-    <customValue>
-        <fullName>ExpenseAble Express</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ExpenseAble Express</label>
-    </customValue>
-    <customValue>
-        <fullName>Hardware</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Hardware</label>
-    </customValue>
-    <customValue>
-        <fullName>Health &amp; Welfare</fullName>
-        <default>false</default>
-        <label>Health &amp; Welfare</label>
-    </customValue>
-    <customValue>
-        <fullName>OPRT</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OPRT</label>
-    </customValue>
-    <customValue>
-        <fullName>OPRT Express</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OPRT Express</label>
-    </customValue>
-    <customValue>
-        <fullName>OPRT Renewal</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OPRT Renewal</label>
-    </customValue>
-    <customValue>
-        <fullName>OrgPlus Desktop</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OrgPlus Desktop</label>
-    </customValue>
-    <customValue>
-        <fullName>Performance Now</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Performance Now</label>
-    </customValue>
-    <customValue>
-        <fullName>PerformSmart</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>PerformSmart</label>
-    </customValue>
-    <customValue>
-        <fullName>PerformSmart Renewal</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>PerformSmart Renewal</label>
-    </customValue>
-    <customValue>
-        <fullName>Property &amp; Casualty</fullName>
-        <default>false</default>
-        <label>Property &amp; Casualty</label>
-    </customValue>
-    <customValue>
-        <fullName>Pro Services</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Pro Services</label>
-    </customValue>
-    <customValue>
-        <fullName>Sage OrgPlus</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Sage OrgPlus</label>
-    </customValue>
-    <customValue>
-        <fullName>Sage Time</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Sage Time</label>
-    </customValue>
-    <customValue>
-        <fullName>TFW Migration</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>TFW Migration</label>
-    </customValue>
-    <customValue>
-        <fullName>TimeStar Mgd Hosted</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>TimeStar Mgd Hosted</label>
-    </customValue>
-    <customValue>
-        <fullName>TimeStar On Prem</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>TimeStar On Prem</label>
-    </customValue>
-    <customValue>
-        <fullName>Timestar SaaS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Timestar SaaS</label>
-    </customValue>
-    <customValue>
-        <fullName>UED Bundle</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>UED Bundle</label>
-    </customValue>
-    <customValue>
-        <fullName>WX Choice Custom</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WX Choice Custom</label>
-    </customValue>
-    <customValue>
-        <fullName>Insperity 401k Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Insperity 401k Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>Insperity Customized Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Insperity Customized Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>WX Choice Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WX Choice Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>WX Choice Customized Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WX Choice Customized Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>TimeStar-Software-as-a-Service</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>TimeStar-Software-as-a-Service</label>
-    </customValue>
-    <customValue>
         <fullName>Choice Customized</fullName>
         <default>false</default>
         <label>Choice Customized</label>
@@ -198,6 +14,11 @@
         <fullName>Choice Startup</fullName>
         <default>false</default>
         <label>Choice Startup</label>
+    </customValue>
+    <customValue>
+        <fullName>Health &amp; Welfare</fullName>
+        <default>false</default>
+        <label>Health &amp; Welfare</label>
     </customValue>
     <customValue>
         <fullName>NSPK Association</fullName>
@@ -260,6 +81,11 @@
         <label>NSPK Startup</label>
     </customValue>
     <customValue>
+        <fullName>Property &amp; Casualty</fullName>
+        <default>false</default>
+        <label>Property &amp; Casualty</label>
+    </customValue>
+    <customValue>
         <fullName>WO Customized</fullName>
         <default>false</default>
         <label>WO Customized</label>
@@ -270,34 +96,214 @@
         <label>WO Customized MM</label>
     </customValue>
     <customValue>
+        <fullName>TimeStar Mgd Hosted</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>TimeStar Mgd Hosted</label>
+    </customValue>
+    <customValue>
+        <fullName>Timestar SaaS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Timestar SaaS</label>
+    </customValue>
+    <customValue>
+        <fullName>UED Bundle</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>UED Bundle</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Custom</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WX Choice Custom</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity 401k Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Insperity 401k Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity Customized Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Insperity Customized Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WX Choice Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Customized Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WX Choice Customized Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>TimeStar-Software-as-a-Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>TimeStar-Software-as-a-Service</label>
+    </customValue>
+    <customValue>
         <fullName>Tier 1</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Tier 1</label>
     </customValue>
     <customValue>
         <fullName>Tier 2</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Tier 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 6</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 6</label>
     </customValue>
     <customValue>
         <fullName>Tier 3</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Tier 3</label>
     </customValue>
     <customValue>
         <fullName>Tier 4</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Tier 4</label>
     </customValue>
     <customValue>
         <fullName>Tier 5</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Tier 5</label>
     </customValue>
     <customValue>
-        <fullName>Tier 6</fullName>
+        <fullName>TFW Migration</fullName>
         <default>false</default>
-        <label>Tier 6</label>
+        <isActive>false</isActive>
+        <label>TFW Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>Sage Time</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sage Time</label>
+    </customValue>
+    <customValue>
+        <fullName>TimeStar On Prem</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>TimeStar On Prem</label>
+    </customValue>
+    <customValue>
+        <fullName>Sage OrgPlus</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sage OrgPlus</label>
+    </customValue>
+    <customValue>
+        <fullName>Pro Services</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Pro Services</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart Renewal</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PerformSmart Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PerformSmart</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Now</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Performance Now</label>
+    </customValue>
+    <customValue>
+        <fullName>OrgPlus Desktop</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OrgPlus Desktop</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT Renewal</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OPRT Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT Express</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OPRT Express</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OPRT</label>
+    </customValue>
+    <customValue>
+        <fullName>Hardware</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Hardware</label>
+    </customValue>
+    <customValue>
+        <fullName>ExpenseAble Express</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ExpenseAble Express</label>
+    </customValue>
+    <customValue>
+        <fullName>ExpenseAble Corporate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ExpenseAble Corporate</label>
+    </customValue>
+    <customValue>
+        <fullName>Descriptions Now</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Descriptions Now</label>
+    </customValue>
+    <customValue>
+        <fullName>CompuPayTime</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CompuPayTime</label>
+    </customValue>
+    <customValue>
+        <fullName>Dotcoms</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dotcoms</label>
+    </customValue>
+    <customValue>
+        <fullName>Abra Migration</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Abra Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>Add On Software</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Add On Software</label>
     </customValue>
     <description>Global value set for sub products on Lead and Opportunity</description>
     <masterLabel>Sub Product</masterLabel>

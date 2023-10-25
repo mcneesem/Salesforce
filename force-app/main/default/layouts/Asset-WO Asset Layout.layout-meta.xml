@@ -290,6 +290,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Pending_Report_Comments__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Projected_First_Pay_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -1,20 +1,26 @@
 public class NSP_customNewProjButtonController {
+    // test w/ NSP_customNewProjButtonControllerTest (83%)
 
-    private static final List<String> USER_FIELDS = new List<String>{ 
-        'NSP_Profile_Name__c'
-    };
-/**
-* @description  :  method to check if user is System admin
-* Author : Abhishek Kumar
-* Story : STY-01938
-*/ 
-@AuraEnabled(cacheable = false)
-public static Boolean isUserPermittedToCreateProject( Id currentUserId){
-    //query login in user
-    try{
-    User UserInfo = (User) new NSP_sObjectSelector('User', USER_FIELDS).selectById(currentUserId);
-    return UserInfo.NSP_Profile_Name__c == 'System Administrator';
-    }catch (Exception ex) { throw NSP_Utilities.getAuraException(ex); } //moving to one line for test class coverage.
-}
+    // STY-01938 ~ method to check if a User is allowed to create Project via custom components...
+    @AuraEnabled(cacheable=false)
+    public static Boolean isUserPermittedToCreateProject( Id currentUserId ) {
+        //query login in user
+        try {
+            List<String> fields = new List<String>();
+            fields.add( 'NSP_Profile_Name__c' );
+            User record = (User) new NSP_sObjectSelector( 'User' , fields ).selectById( currentUserId );
+            Boolean isAllowedCreate = False;
+            if ( String.isNotBlank( record.NSP_Profile_Name__c )
+                && record.NSP_Profile_Name__c.startsWith( 'System Admin' )
+               )
+            {
+                isAllowedCreate = True;
+            }
+            return isAllowedCreate;
+        } catch ( Exception ex ) {
+            throw NSP_Utilities.getAuraException( ex );
+        }
+    }
     
 }
+//

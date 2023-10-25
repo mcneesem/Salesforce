@@ -9,6 +9,7 @@
     <relationshipLabel>Assets (Billing Account)</relationshipLabel>
     <relationshipName>Assets_BillingAccount</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

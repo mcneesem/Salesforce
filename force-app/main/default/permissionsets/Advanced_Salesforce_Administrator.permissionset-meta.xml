@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Advanced_Salesforce_Administrator</name>
+    </customPermissions>
+    <description>L3 and L2 Admin permissions</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Advanced Salesforce Administrator</label>
+</PermissionSet>

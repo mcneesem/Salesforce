@@ -422,6 +422,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_lock_enrollment_fee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_TotalAnnualPayroll__c</field>
             </layoutItems>
             <layoutItems>
@@ -461,6 +465,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_EnrollmentFeeDiscount__c</field>
@@ -1201,6 +1208,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Opportunity.NSP_GenerateDoc</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -1214,11 +1226,6 @@
             <actionName>NSP_Merge_on_Demand_Send_for_Signature</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Clone</actionName>
