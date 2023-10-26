@@ -20605,12 +20605,17 @@
 	</fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.WO_Asset_Name__c</field>
+        <readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Account_Team__c.HasActiveWO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Account_Team__c.Asset_Name__c</field>
+        <field>NSP_Account_Team__c.WO_Asset_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
