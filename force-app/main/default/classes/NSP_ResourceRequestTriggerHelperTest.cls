@@ -218,11 +218,11 @@ public class NSP_ResourceRequestTriggerHelperTest {
         pse__Resource_Request__c resourceRec = [SELECT Id, pse__End_Date__c, pse__Resource_Role__c, pse__Staffer_Resource__c 
                                                 FROM pse__Resource_Request__c WHERE pse__Resource_Role__c =: 'RET Compliance' LIMIT 1];
         
-        resourceRec.pse__Resource_Role__c = 'RET CSP Consulting';
+        resourceRec.pse__Resource_Role__c = 'RET CSP Plan Consulting';
         resourceRec.pse__Staffer_Resource__c = con.Id;
         Test.startTest();
         Database.update(resourceRec);
-        system.assertEquals(resourceRec.pse__Resource_Role__c, 'RET CSP Consulting');
+        system.assertEquals(resourceRec.pse__Resource_Role__c, 'RET CSP Plan Consulting');
         Test.stopTest();
     }
     @isTest

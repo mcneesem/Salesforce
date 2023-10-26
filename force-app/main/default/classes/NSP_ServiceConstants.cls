@@ -782,7 +782,6 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public static final String RET_CSPPROCESSING = 'RET CSP Processing';
   public static final String RET_CSPIMPLEMENTATION = 'RET CSP Implementation';
   public static final String RET_CSPCOMPLIANCE = 'RET CSP Compliance';
-  public static final String RET_CSPCONSULTING = 'RET CSP Consulting';
   public static final String RET_SRP = 'RET SRP';
   public static final String RET_ORK = 'RET ORK';
   public static final String RET_OPSOMNI = 'RET Ops - OMNI';

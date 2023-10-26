@@ -126,9 +126,9 @@
                 <label>RET CSP Compliance</label>
             </value>
             <value>
-                <fullName>RET CSP Consulting</fullName>
+                <fullName>RET CSP Plan Consulting</fullName>
                 <default>false</default>
-                <label>RET CSP Consulting</label>
+                <label>RET CSP Plan Consulting</label>
             </value>
             <value>
                 <fullName>RET SRP</fullName>
@@ -139,6 +139,11 @@
                 <fullName>RET ORK</fullName>
                 <default>false</default>
                 <label>RET ORK</label>
+            </value>
+            <value>
+                <fullName>RET CSP Conversion</fullName>
+                <default>false</default>
+                <label>RET CSP Conversion</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1070,6 +1070,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RET CSP Conversion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET CSP Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET CSP Plan Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RET Compliance</fullName>
             <default>false</default>
         </values>
