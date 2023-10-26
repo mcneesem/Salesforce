@@ -4,7 +4,7 @@
     <booleanFilter>1 AND (2 OR 3) AND 4</booleanFilter>
     <columns>NAME</columns>
     <columns>NSP_Account__c</columns>
-    <columns>Asset_Name__c</columns>
+    <columns>WO_Asset_Name__c</columns>
     <columns>NSP_Role__c</columns>
     <columns>NSP_User__c</columns>
     <columns>Account_Status__c</columns>
