@@ -20,32 +20,44 @@
             return validSoFar && !inputCmp.get('v.validity').valueMissing;
        }, true);
 
+       /*
+       *  Product of interest is required - AZD-223578
+       */
+       var productInterestSelect = component.find('selectPI');
+       var isProductInterestValid = productInterestSelect.checkValidity();
+ 
+       if(!isProductInterestValid){
+           productInterestSelect.showHelpMessageIfInvalid();
+       }
+ 
        /* Added as part of DF-01739  - Potential customer*/
        var isNotPcValid = false;
        var select = component.find('pCOptions');
-       if (!select.checkValidity()) {
+       if(!select.checkValidity()){
            select.showHelpMessageIfInvalid();
            isNotPcValid = true;
-       }  else  {
+       }else{
            isNotPcValid = false;
        }
-
-       /* Validate the Zip Code - this field is not required
-           Aura doesn't validate the pattern only displays an error message 
+ 
+       /* Validate the Zip Code is required AZD-223573
+       *  Aura doesn't validate the pattern only displays an error message 
        */ 
-       var isZipCodeValid = true;
-       var zipCode = component.find('postalcode').get('v.value');
-       if(zipCode != undefined){
-            //  If zip code is not empty
-            if(zipCode.trim().length > 0){
-                // zip code must contain 5 digits
-                let e = new RegExp("^\\d{5}$");
-                isZipCodeValid = e.test(zipCode);
-           }
+       var zipCodeInput = component.find('postalcode');
+       var isZipCodeValid = zipCodeInput.checkValidity();
+ 
+       if(!isZipCodeValid){
+           zipCodeInput.showHelpMessageIfInvalid();
+       }
+ 
+       if(isZipCodeValid){
+           // zip code must contain 5 digits
+           let e = new RegExp("^\\d{5}$");
+           isZipCodeValid = e.test(zipCodeInput.get('v.value'));
        }
 
        /* Added as part of DF-01739 Ends*/
-       if (allValid && !isNotPcValid && isZipCodeValid) {
+       if (allValid && !isNotPcValid && isZipCodeValid && isProductInterestValid) {
            helper.saveLead(component, event);
            window.dispatchEvent(new Event("submit"));
        }
