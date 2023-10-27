@@ -518,28 +518,26 @@ Date        : 30/09/2021
     
     //Update required details on FLSA Case 
     public Case updateFLSACaseDetails(Case eachCase, Map<Id, Case> caseOldMap){
-        if(eachCase.NSP_FLSA_Case__c == True && caseOldMap.get(eachCase.Id).NSP_SubCategory__c == null &&
-           eachCase.AccountId != null){
-               if((eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory1) ||
-                  (eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory2)){
-                      Id teamMemberId = getAccountTeamMember(eachCase.AccountId);
-               	   	  if(teamMemberId!=null){
-                         eachCase.OwnerId = teamMemberId;
-                      } 
-               }
-               if(eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory1){
-                   eachCase.NSP_Case_Sub_Status__c = NSP_SalesConstants.InProgress;
-                   eachCase.NSP_Due_Date__c = eachCase.NSP_Opened_Date__c != null ? eachCase.NSP_Opened_Date__c.addDays(90):eachCase.NSP_Due_Date__c;
-               }else if(eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory2){
-                   eachCase.NSP_Case_Sub_Status__c = NSP_SalesConstants.Resolved;
-                   eachCase.Status = NSP_SalesConstants.Closed;
-                   //STY-04507 - When update the sub category of the case from null to FLSA Quick Check Service then Resolution is Complete
-                   eachCase.Reason = CASE_REASON_COMPLETE;
-               }
-           } 
+        if(eachCase.NSP_FLSA_Case__c == True && caseOldMap.get(eachCase.Id).NSP_SubCategory__c == null && eachCase.AccountId != null){
+            if(eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory1){
+                Id teamMemberId = getAccountTeamMember(eachCase.AccountId);
+                if(teamMemberId!=null){
+                    eachCase.OwnerId = teamMemberId;
+                }
+                eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.CASE_ASSIGNED;
+                eachCase.Reason = NSP_ServiceConstants.CASE_REFERRED_TO_PAYROLL;
+                eachCase.NSP_Due_Date__c = eachCase.NSP_Opened_Date__c != null ? eachCase.NSP_Opened_Date__c.addDays(90):eachCase.NSP_Due_Date__c;
+            }else if(eachCase.NSP_SubCategory__c == NSP_SalesConstants.FLSASubCategory2){
+                eachCase.NSP_Case_Sub_Status__c = NSP_SalesConstants.Resolved;
+                eachCase.Status = NSP_SalesConstants.Closed;
+                eachCase.OwnerId = userInfo.getUserId();
+                //STY-04507 - When update the sub category of the case from null to FLSA Quick Check Service then Resolution is Complete
+                eachCase.Reason = CASE_REASON_COMPLETE;
+            }
+        }
         return eachCase;
-    }  
-    
+    }
+
     //auto update the sub status as resolved on PEO case closeure
     public Case autoResolvePEOCaseOnClosure(Case eachCase, Map<Id, Case> caseOldMap){
         // Upon Closing the case trigger will Chane the Sub Status to Resoloved for PEO record type
