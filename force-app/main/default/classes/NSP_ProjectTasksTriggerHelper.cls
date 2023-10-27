@@ -2051,10 +2051,11 @@
         Map<Id, List<Id>> projTaskWithResourceLst = new Map<Id, List<Id>>();
         List<pse__Project_Task_Assignment__c> newPTAList = new List<pse__Project_Task_Assignment__c> () ;
         try{
-            String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c'})
+            String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c','pse__Summary__c'})
                             .addFilter('Id', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
                             .addFilter('pse__Project__r.NSP_Auto_Resource_Project__c', true , NSP_QueryBuilder.Operator.EQUALS, false)
                             .addFilter('RecordTypeId', new List<Id>{ peoRecordTypeId, bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES)
+                            .addFilter('pse__Project__r.pse__Summary__c', false , NSP_QueryBuilder.Operator.EQUALS, false)
                             .build();
 
             for(pse__Project_Task__c projTask : Database.query(projTaskQuery)) {
