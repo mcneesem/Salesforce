@@ -48,6 +48,8 @@ public class NSP_ProjectTriggerHelper{
  		List<pse__Proj__c> projectsList = new List<pse__Proj__c>();//<STY-04002> 
         List<ID> projAccountIDs = new List<ID>(); //<STY-04002> 
         List<pse__Proj__c> projectNameList = new List<pse__Proj__c>();
+        List<pse__Proj__c> servicePlanProjectsList = new List<pse__Proj__c>();
+        Set<Id> servicePlanAccountIDs = new Set<Id>();
 
         for(pse__Proj__c project : newProjectsList){
             if(String.isNotBlank(project.pse__Account__c)){
@@ -73,6 +75,12 @@ public class NSP_ProjectTriggerHelper{
             if(project.Name != NEWPROJECTNAME){
                 projectNameList.add(project);
             }
+
+             //Added this condition as part of STY-04589 to populate owner based on account segment type
+            if(project.pse__Project_Type__c == NSP_ServiceConstants.PROJECT_TYPE_SERVICE && project.pse__Is_Template__c == False && project.pse__Account__c!= null){                            
+                servicePlanAccountIDs.add(project.pse__Account__c);
+                servicePlanProjectsList.add(project);
+            }
         }        
 
         if(!accIdSet.isEmpty()){
@@ -92,6 +100,11 @@ public class NSP_ProjectTriggerHelper{
         //Update Project owner for PEO billable - <STY-04002> 
         if(!projectsList.isEmpty()){
           updateProjOwnerForPEOBillable(projectsList,projAccountIDs);  
+        }
+
+        //Update Project owner for Service Plan project type 
+        if(!servicePlanProjectsList.isEmpty()){
+            updateProjOwnerForServicePlanProjectType(servicePlanProjectsList, servicePlanAccountIDs);
         }
     }
 
@@ -1645,5 +1658,49 @@ public class NSP_ProjectTriggerHelper{
         }catch(Exception exp ){
                 NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
         }
+    }
+
+    
+     /***********************************************************************************************
+    * MethodName  : updateProjOwnerForServicePlanProjectType
+    * Description : Helper method to assign owner for Service Plan Project based on Account Segments.
+    * Params      : List<pse__Proj__c> servicePlanProjectsList,Set<ID> servicePlanAccountIDs
+    * Created as part of STY-04589
+    * ********************************************************************************************/
+    private static void updateProjOwnerForServicePlanProjectType (List<pse__Proj__c> servicePlanProjectsList,Set<ID> servicePlanAccountIDs){
+        Map<String, String> AcccountTeamRoleSegmentTypeMap = new Map<String, String>();
+        Map<Id, Id> accountWithTeamMemberId = new Map<Id,Id>();
+        
+        List<String> segmentRoleMappingFields = new List<String>{'NSP_Segment_Type__c','NSP_Account_Team_Role__c'};
+        String querySegmentRoleMetaData = new NSP_QueryBuilder('NSP_Segment_Role_Mapping__mdt', segmentRoleMappingFields).build();
+        
+        //Creating a map for Account Team Role and Account Segment from NSP_Segment_Role_Mapping__mdt
+        for(NSP_Segment_Role_Mapping__mdt segmentRoleRecords : Database.query(querySegmentRoleMetaData)){
+            AcccountTeamRoleSegmentTypeMap.put(segmentRoleRecords.NSP_Segment_Type__c,segmentRoleRecords.NSP_Account_Team_Role__c);
+        }
+
+        List<String> accounTeamFields = new List<String>{'Id', 'NSP_Role__c', 'NSP_User__c', 'NSP_Primary__c', 'NSP_Account__c', 'NSP_Account__r.NSP_Service_Segment__c'};
+        String queryAccTeam = new NSP_QueryBuilder('NSP_Account_Team__c', accounTeamFields)
+            .addFilter('NSP_Account__c', new List<Id>(servicePlanAccountIDs), NSP_QueryBuilder.Operator.INCLUDES)
+            .addFilter('NSP_Role__c', new List<String>(AcccountTeamRoleSegmentTypeMap.values()), NSP_QueryBuilder.Operator.INCLUDES)
+            .orderBy('NSP_Primary__c', 'asc', true).build();
+        
+        //Creating map with Account and Account Team Role User.
+        for(NSP_Account_Team__c acctTeam: Database.query(queryAccTeam)){
+            if(AcccountTeamRoleSegmentTypeMap.keySet().contains(acctTeam.NSP_Account__r.NSP_Service_Segment__c) &&
+               AcccountTeamRoleSegmentTypeMap.get(acctTeam.NSP_Account__r.NSP_Service_Segment__c) == acctTeam.NSP_Role__c &&
+               acctTeam.NSP_User__c != null){
+                   accountWithTeamMemberId.put(acctTeam.NSP_Account__c, acctTeam.NSP_User__c);
+               }
+        }
+        
+        //Assigning project owner based on account segment
+        for(pse__Proj__c project: servicePlanProjectsList){
+            if(accountWithTeamMemberId.keySet().contains(project.pse__Account__c) && !accountWithTeamMemberId.isEmpty()){
+                project.OwnerId = accountWithTeamMemberId.get(project.pse__Account__c);
+            }else{
+                project.OwnerId = UserInfo.getUserId();
+            }
+        }  
     }
 }

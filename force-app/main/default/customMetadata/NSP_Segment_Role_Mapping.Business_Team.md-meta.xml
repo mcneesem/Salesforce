@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Business Team</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Account_Team_Role__c</field>
+        <value xsi:type="xsd:string">Bus. Team-HRSp/CL</value>
+    </values>
+    <values>
+        <field>NSP_Segment_Type__c</field>
+        <value xsi:type="xsd:string">Business Team</value>
+    </values>
+</CustomMetadata>

@@ -18617,6 +18617,10 @@
     <custom>true</custom>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>NSP_Segment_Role_Mapping__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>FSL__O2_Settings__mdt</name>
     </customMetadataTypeAccesses>
     <customPermissions>
