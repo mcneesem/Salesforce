@@ -78,7 +78,6 @@ public without sharing class NSP_CreateReferralLead {
             //Passing the sobject name and field API name
             picklistValueClassObject.industry = NSP_CreatePartnerAccount.getPiklistValues(objectName,Industry);
             picklistValueClassObject.potentialCustomer = NSP_CreatePartnerAccount.getPiklistValues(objectName,Customerpotential);
-            picklistValueClassObject.productofinterest = NSP_CreatePartnerAccount.getPiklistValues(objectName,Productinterted);
         }Catch(Exception Ex){
             throw new AuraHandledException(ex.getMessage());
         }
