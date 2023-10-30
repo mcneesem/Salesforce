@@ -5080,7 +5080,12 @@ RET Sales users who need create edit access to Retirement Services object</descr
         <field>NSP_Note__c.NSP_RET_Sub_Plan_Change_History__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_RET_Bypass__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Owner__c</field>
         <readable>true</readable>
