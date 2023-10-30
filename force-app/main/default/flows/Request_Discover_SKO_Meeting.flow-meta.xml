@@ -295,7 +295,6 @@
             <label>OMR Discovery/SKO Task already exists</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>bidversionformula</name>
         <dataType>Number</dataType>
@@ -501,7 +500,6 @@
             <targetReference>Get_Most_Recent_Closed_Won_Opportunity</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -542,7 +540,6 @@
             <targetReference>Get_OMR_Queue</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -632,7 +629,6 @@
             <targetReference>Get_Closed_Won_Opportunity_Checklist</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
@@ -680,7 +676,6 @@
             <targetReference>Get_Checklist_from_Open_Opportunity</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
@@ -735,7 +730,6 @@
             <targetReference>Does_Active_WO_Asset_exist</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -767,7 +761,6 @@
             <targetReference>Sort_client_transition_OMRs_by_date_and_time</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -822,7 +815,6 @@
             <targetReference>Get_Related_Discovery_SKO_Task</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -882,7 +874,6 @@
             <targetReference>Get_OMR_Task_Record_Type_ID</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -921,7 +912,6 @@
             <targetReference>Get_STP_Checklist_RT</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -960,7 +950,6 @@
             <targetReference>Get_Most_Recent_Open_Opportunity</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -992,7 +981,6 @@
             <targetReference>Get_WO_Asset_RT</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -1017,7 +1005,6 @@
             <targetReference>Get_Related_Asset</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -1048,7 +1035,6 @@
             <targetReference>Create_OMR_Task</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -1073,7 +1059,6 @@
         <locationX>578</locationX>
         <locationY>2294</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Create_Error_Log</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -1092,7 +1077,7 @@
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Discovery_SKO_Meeting_has_Already_been_Requested</name>
         <label>Discovery/SKO Meeting has Already been Requested</label>
@@ -1106,7 +1091,6 @@
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(244, 4, 4); font-size: 14px;&quot;&gt;Client Transition Meeting has already been requested for Account ({!Get_Triggering_Account_Record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -1123,7 +1107,6 @@
             <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(244, 7, 7);&quot;&gt;Client Transition Meeting cannot be requested until a WO Asset is created for Account ({!Get_Triggering_Account_Record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -1196,7 +1179,7 @@
                     <inputParameters>
                         <name>columns</name>
                         <value>
-                            <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-d5e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-2b52&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Start Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-9aa3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;End Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-bcbb&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                            <stringValue>[{&quot;apiName&quot;:&quot;Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-d5e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Date Valid&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid Formula&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-2b52&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Start Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-9aa3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;End Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-bcbb&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1226,7 +1209,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Account</name>
@@ -1451,7 +1433,6 @@
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
         </fields>
-        <nextOrFinishButtonLabel>Submit</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
