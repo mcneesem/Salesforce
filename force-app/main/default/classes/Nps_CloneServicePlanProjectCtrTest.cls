@@ -55,6 +55,16 @@ public class Nps_CloneServicePlanProjectCtrTest {
         oProject.pse__Is_Template__c = true;
         insert oProject;
         
+        //inserting Project
+        pse__Proj__c oProject1 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject1.pse__Account__c = oAccount.Id;
+        oProject1.pse__Copy_Child_Records_from_Template_Async__c = true;
+        oProject1.Name = 'Test Project1'; 
+        oProject1.pse__Start_Date__c = Date.Today();
+        oProject1.pse__Project_Type__c = 'Service Plan';
+        oProject1.pse__Is_Template__c = true;
+        insert oProject1;
+        
         //inserting Milestone
         Test.startTest();
         pse__Milestone__c milestone = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), 'NSP_TestDataFactory.MileStoneDefaults', false);
@@ -64,15 +74,16 @@ public class Nps_CloneServicePlanProjectCtrTest {
         // inserting Project Task
         pse__Project_Task__c oProjectTask1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask1.pse__Project__c = oProject.Id;
+        oProjectTask1.Name = 'pTask1';
         oProjectTask1.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
         oProjectTask1.pse__Milestone__c = milestone.id;
         oProjectTask1.NSP_Template_Generated__c = true;
         oProjectTask1.RecordTypeId = PEOProjectTaskRecordTypeId;
-        
+        insert oProjectTask1;
         pse__Project_Task__c oProjectTask2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask2.Name = 'pTask2';
         oProjectTask2.pse__Project__c = oProject.Id;
-        oProjectTask1.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
+        oProjectTask2.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
         oProjectTask2.pse__Milestone__c = milestone.id;
         oProjectTask2.NSP_Template_Generated__c = true;
         oProjectTask2.RecordTypeId = PEOProjectTaskRecordTypeId;
@@ -87,7 +98,7 @@ public class Nps_CloneServicePlanProjectCtrTest {
         List<pse__Proj__c> projList = [SELECT ID, pse__Start_Date__c FROM pse__Proj__c WHERE pse__Start_Date__c =: Date.Today()];
         String recdId = projList[0].Id ;
         
-        System.assertEquals(1,[SELECT count() FROM pse__Proj__c WHERE pse__Start_Date__c =: Date.Today()]);
+        System.assertEquals(2,[SELECT count() FROM pse__Proj__c WHERE pse__Start_Date__c =: Date.Today()]);
         Test.startTest();
         //creating list to store task records  
         List<pse__Project_Task__c> listTask = new List<pse__Project_Task__c>();
@@ -136,7 +147,7 @@ public class Nps_CloneServicePlanProjectCtrTest {
         Test.stopTest();
         System.assert(relatedRecordsDataMap.containsKey('openProjectTasksCount'));
         List<String> relatedRecordsDataMapValues = new List<String>(relatedRecordsDataMap.values());
-        System.assertEquals(true, relatedRecordsDataMapValues.contains('0'));
+        System.assertEquals(false, relatedRecordsDataMapValues.contains('0'));
         
         System.assertEquals(relatedRecordsDataMap.size(), 3);
     }
@@ -144,12 +155,14 @@ public class Nps_CloneServicePlanProjectCtrTest {
     @isTest
     public static void createProjectRelatedRecordsTest(){
         
-        pse__Proj__c projrec = [SELECT Id FROM pse__Proj__c WHERE pse__Project_Type__c = 'Service Plan' LIMIT 1];
+        pse__Proj__c projrec = [SELECT Id FROM pse__Proj__c WHERE pse__Project_Type__c = 'Service Plan' AND NAME = 'Test Project1' LIMIT 1];
+        pse__Proj__c projrec1 = [SELECT Id FROM pse__Proj__c WHERE pse__Project_Type__c = 'Service Plan' AND NAME = 'Test Project' LIMIT 1];
         pse__Proj__c projTemplate = [SELECT Id FROM pse__Proj__c WHERE pse__Is_Template__c = true LIMIT 1];
-        pse__Project_Task__c projTask1 = [SELECT Id FROM pse__Project_Task__c WHERE Name = 'pTask2' LIMIT 1];
-        String config = '{"projectTemplateId":"' + projTemplate.Id +'","projectId":"' + projrec.Id +'","oldProjectId":"' + projrec.Id +'","prevProjectTaskIds":"[]","projectAccountIds":"[]"}';
+        pse__Project_Task__c projTask1 = [SELECT Id FROM pse__Project_Task__c WHERE Name = 'pTask1' LIMIT 1];
+        pse__Project_Task__c projTask2 = [SELECT Id FROM pse__Project_Task__c WHERE Name = 'pTask2' LIMIT 1];
+        String config = '{"projectTemplateId":"' + projTemplate.Id +'","projectId":"' + projrec.Id +'","oldProjectId":"' + projrec1.Id +'","prevProjectTaskIds":"[\\"'+projTask1.Id+'\\",\\"'+projTask2.Id+'\\"]","projectAccountIds":"[]"}';
         Test.startTest();
-        
+        system.debug('config'+config);
         List<String> relatedRecordsData = Nps_CloneServicePlanProjectController.createProjectRelatedRecords(config);
         List<pse__Proj__c> lstProjs = [SELECT Id FROM pse__Proj__c WHERE Id =: projTemplate.Id];
         System.assertEquals(lstProjs.size(), 1);
