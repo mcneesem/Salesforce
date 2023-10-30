@@ -12,8 +12,8 @@ Modification Log     :
 */
 
 public class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (83%)
-    
+    // test w/ NSP_ValidateOpportunityStageTest (81%)
+
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -36,118 +36,274 @@ public class NSP_ValidateOpportunityStage {
     public static final String HAS_WO = 'has WO';
     
     public static void validateOpportunityStage(List<Opportunity> newList){
-        List<Id> oppIdList= new List<Id>();
-        for(Opportunity opp:newList){
-            oppIdList.add(opp.Id);
-        }
         
-        Map<ID, Opportunity> oppMapwithEventTask = new Map<ID, Opportunity>([SELECT AccountId,Id,
-                                                                             (SELECT Id,Status, NSP_Task_Subtype__c FROM Tasks WHERE NSP_Task_Subtype__c != NULL),
-                                                                             (SELECT Id, NSP_Event_Subtype__c,NSP_Status__c FROM Events WHERE NSP_Event_Subtype__c   != NULL)
-                                                                             FROM Opportunity Where Id IN :oppIdList]);
+        Map<Id,Opportunity> newMap = new Map<Id,Opportunity>(newList);
         
-        Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c  FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
-        
-        for(Opportunity opp:newList){        
+        Map<ID, Opportunity> oppMapwithEventTask = new Map<ID, Opportunity>(
+            [
+                SELECT
+                    AccountId,Id,
+                    (SELECT Id,Status, NSP_Task_Subtype__c FROM Tasks WHERE NSP_Task_Subtype__c != NULL),
+                    (SELECT Id, NSP_Event_Subtype__c,NSP_Status__c FROM Events WHERE NSP_Event_Subtype__c   != NULL)
+                FROM Opportunity
+                WHERE Id IN :newMap.keySet()
+            ]
+        );
+
+        Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>(
+            [
+                SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c
+                FROM SBQQ__Quote__c
+                WHERE SBQQ__Opportunity2__c IN :newMap.keySet() AND SBQQ__Primary__c = TRUE
+            ]
+        );
+
+        List<Opportunity> oppRetServices = new  List<Opportunity>();
+
+        for(Opportunity opp:newList){ 
             Opportunity oppFromMap=oppMapwithEventTask.get(opp.Id);
             List<Task> taskList=oppFromMap?.Tasks;
             List<Event> eventList=oppFromMap?.Events;
             List<Quote> quotes=oppFromMap?.Quotes;
             
-            //Analysis
-            if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE) || 
-               opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ||
-               opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE) ){ //add Proposal
-                   
-                   /* Added Or Condition as part of DF-01031 to show error When Number of Employees is equal to Zero */
-                   if(opp.NSP_Number_of_Employees__c == null || opp.NSP_Number_of_Employees__c == 0){
-                       opp.addError(System.Label.NSP_EnterNumberOfEmployees);
-                   }
-                   if(opp.NSP_PrimaryProduct__c == null){
-                       opp.addError(System.Label.NSP_AddPrimaryProduct);
-                   } 
-                   if(opp.Type == null){
-                       opp.addError(System.Label.NSP_EnterOpportunityType);
-                   }
-               }
-            
-            if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
-                evaluateAnalysisStageCriteria(opp,eventList);
+            //  Retirement Services
+            if(opp.NSP_PrimaryProduct__c != null && opp.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.RETIREMENT_SERVICE)){
+                oppRetServices.add(opp);
             }
-            
-            /////Proposal 
-            
-            if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
+            else{ 
                 
-                if(proposeStageCriteraTypes.contains(opp.Type)){
-                    
-                    //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
-                    //Perform WO
-                    // Added WS condition as part of DF-01869
-                    if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
-                    opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS){
-                        
-                        String scannedTask='';
-                        if(taskList != null){
-                            for(Task task:taskList){//looking for WO Profile
-                                if(task.NSP_Task_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
-                                    scannedTask += HAS_WO_TASK;
+                //Analysis
+                if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
+                    || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
+                    || opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)
+                    )
+                { //add Proposal
+                       
+                        /* Added Or Condition as part of DF-01031 to show error When Number of Employees is equal to Zero */
+                        if(opp.NSP_Number_of_Employees__c == null || opp.NSP_Number_of_Employees__c == 0){
+                            opp.addError(System.Label.NSP_EnterNumberOfEmployees);
+                        }
+                        if(opp.NSP_PrimaryProduct__c == null){
+                            opp.addError(System.Label.NSP_AddPrimaryProduct);
+                        }
+                        if(opp.Type == null){
+                            opp.addError(System.Label.NSP_EnterOpportunityType);
+                        }
+                    }
+                
+                if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
+                    evaluateAnalysisStageCriteria(opp,eventList);
+                }
+                
+                /////Proposal 
+                
+                if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
+                    if(proposeStageCriteraTypes.contains(opp.Type)){
+                        //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
+                        //Perform WO
+                        // Added WS condition as part of DF-01869
+                        if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO
+                            || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS
+                            )
+                        {
+                            String scannedTask='';
+                            if(taskList != null){
+                                for(Task task:taskList){//looking for WO Profile
+                                    if(task.NSP_Task_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
+                                        scannedTask += HAS_WO_TASK;
+                                    }
                                 }
                             }
-                        }
-                        if(eventList != null){
-                            for(Event event:eventList){////looking for discovery
-                                if(event.NSP_Event_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
-                                    scannedTask += HAS_WO_EVENT;
+                            if(eventList != null){
+                                for(Event event:eventList){////looking for discovery
+                                    if(event.NSP_Event_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
+                                        scannedTask += HAS_WO_EVENT;
+                                    }
                                 }
                             }
-                        }                    
-                        
-                        //Show error
-                        if(!scannedTask.contains(HAS_WO) ){
-                            opp.addError(System.Label.NSP_AddWOBusinessProfile);
+                            //Show error
+                            if(!scannedTask.contains(HAS_WO) ){
+                                opp.addError(System.Label.NSP_AddWOBusinessProfile);
+                            }
+                            if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
+                                opp.addError(System.Label.NSP_AddBidNumber);
+                            }
                         }
-                        if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
-                            opp.addError(System.Label.NSP_AddBidNumber);
+                    }
+                    evaluateQuoteCriteria(opp,quoteMap);
+                }
+                //CR-031 removed Executive summary check and have added BPS Products condition
+                // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
+                if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
+                    if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
+                        if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
+                            opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
+                        }else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
+                            opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }
-                    } 
-                }
-                evaluateQuoteCriteria(opp,quoteMap);
-            }
-            //CR-031 removed Executive summary check and have added BPS Products condition
-			// 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
-                if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
-                    if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
-                        opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
-                    }else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
-                        opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
-                    }
-                    
-                }else if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) || 
-                ((opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS) && opp.NSP_Order_Generated__c)){
-                    if(!opp.NSP_Closing_Appointment__c){
-                        opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);  
+                    }else if(
+                        (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)
+                        || ((opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS) && opp.NSP_Order_Generated__c)
+                        )
+                    {
+                        if(!opp.NSP_Closing_Appointment__c){
+                            opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);  
+                        }
                     }
                 }
-            } 
-            
-            //closed-won criteria CR-031
-            if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
-                //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
-                evaluateQuoteCriteria(opp,quoteMap);
-                evaluateClosedWonStageCriteria(opp);
-            }
-            
-            //closed-Lost criteria DF-1769
-            if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
-                evaluateClosedLostStageCriteria(opp);
+                
+                //closed-won criteria CR-031
+                if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
+                    //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
+                    evaluateQuoteCriteria(opp,quoteMap);
+                    evaluateClosedWonStageCriteria(opp);
+                }
+                
+                //closed-Lost criteria DF-1769
+                if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
+                    evaluateClosedLostStageCriteria(opp);
+                }
             }
         }
         
-        
+        //  If there are retirement services opportunities then evaluate the stage
+        if(oppRetServices.size() > 0){
+            validateRetirementServicesStage(oppRetServices, quoteMap, oppMapwithEventTask);
+        }
     }
     
+    /*
+    * Evaluate Retirement Services opportunities
+    * @param List of Opportunities  
+    * @param List of quotes
+    * @param Events and task map
+    * @return void       
+    */
+    private static void validateRetirementServicesStage(List<Opportunity> oppList, Map<Id,SBQQ__Quote__c> quoteMap, Map<ID, Opportunity> oppMapwithEventTask){
+        
+        Map<Id, Opportunity> retList = new Map<Id, Opportunity>(oppList);
+        
+        // Opportunity Credit and Sales to Implementation
+        Map<ID, Opportunity> queryMap = new Map<ID, Opportunity>(
+            [
+                SELECT
+                    id,
+                    (SELECT id FROM Employee_Splits__r), (SELECT id FROM Sales_to_Implementation__r)
+                FROM Opportunity
+                WHERE Id IN :retList.keySet()
+            ]
+        );
+
+        for(Opportunity opp: oppList){ 
+            
+            //  Before exit to Proposal from Discovery, Analysis
+            if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
+                
+                //  If not bypass validation
+                if(!opp.NSP_RET_Bypass__c){
+
+                    Opportunity oppFromMap = oppMapwithEventTask.get(opp.Id);
+                    List<Event> eventList = oppFromMap?.Events;
+
+                    //  Discovery call
+                    verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCalls);
+                    
+                    if(opp.getErrors().size() > 0){
+                        continue;
+                    }
+                }
+                
+            }
+            else if(opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE) || 
+            opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) || opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                
+                //  Before exit to Close from Discovery, Analysis or Proposal
+                Opportunity queryFromMap = queryMap.get(opp.Id);
+                List<NSP_Employee_Split__c> creditList = queryFromMap?.Employee_Splits__r;
+                List<NSP_Sales_to_Implementation__c > salesList = queryFromMap?.Sales_to_Implementation__r;
+                
+                if(creditList.size() == 0){
+                    opp.addError(System.Label.NSP_AddOppotunityCredit);
+                    continue;
+                }                        
+                
+                if(salesList.size() == 0) {
+                    opp.addError(System.Label.NSP_AddSalesToImplementation);
+                    continue;
+                }           
+                
+                //  If not bypass validation
+                if(!opp.NSP_RET_Bypass__c){
+
+                    Opportunity oppFromMap = oppMapwithEventTask.get(opp.Id);
+                    List<Event> eventList = oppFromMap?.Events;
+        
+                    //  Discovery call
+                    verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCallsClose);
+                    
+                    if(opp.getErrors().size() > 0){
+                        continue;
+                    }
+                }
+                
+                //  Sub Product
+                if(opp.NSP_Sub_Product__c == null || String.isEmpty(opp.NSP_Sub_Product__c)){
+                    opp.addError(System.Label.NSP_AddSubProduct);
+                    continue;
+                }
+                
+                //  If not bypass validation
+                if(!opp.NSP_RET_Bypass__c){
+                    
+                    //  Primary Quote and CPQ Quote Approved
+                    if(opp.SBQQ__PrimaryQuote__c != null){
+                        if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                            opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                        }
+                    }
+                    else{
+                        opp.addError(System.Label.NSP_AddPrimaryQuote);
+                    } 
+                }
+            }
+        }
+    }
+   
+    /*
+    * Evaluate if there are completed discovery calls
+    * @param Opportunity.  
+    * @param List of events
+    * @param Error message text
+    * @return void       
+    */
+    private static void verifyCompletedDiscoveryCalls(Opportunity opp, List<Event> eventList, String errorMessage){
+        
+        //  There is no StringBuilder class
+        String scannedTask = '';
+        
+        if(eventList != null){
+            for(Event event:eventList){
+                if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
+                   event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
+                    scannedTask += HAS_DISCOVERY;
+                    if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
+                        scannedTask += HAS_OPEN_EVENT;
+                    }
+                }
+            }
+        }
+        
+        //Show error
+        if(!scannedTask.contains(HAS_DISCOVERY)){
+            opp.addError(errorMessage);
+        }
+
+        if(scannedTask.contains(HAS_OPEN_EVENT)){
+            opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
+        }
+         
+    }
+
     /**
 * Evaluate entry criteria for analysis stage
 * @param opportunityList list of New Opportunity.  
