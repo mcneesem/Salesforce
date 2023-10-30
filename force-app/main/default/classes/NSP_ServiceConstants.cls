@@ -181,7 +181,9 @@ public class NSP_ServiceConstants {
   public final static String CASE_CATEGORY_EMP_SCREENING = 'Employment Screening';
   public static final String IMPACT_FOCUS_ITEM_ORIGIN = 'Impact Focus Item';  
   public final static String SEASONAL_EMP_DETAIL = 'Seasonal Employer Requests'; 
-  public final static string RESOLVED = 'Resolved';                                
+  public final static string RESOLVED = 'Resolved';
+  public final static string CASE_ASSIGNED = 'Assigned';
+  public final static string CASE_REFERRED_TO_PAYROLL = 'Referred to Payroll';
 
   //ASSET CONSTANTS
   public final static string ASSET_SOBJECT_TYPE            ='Asset';

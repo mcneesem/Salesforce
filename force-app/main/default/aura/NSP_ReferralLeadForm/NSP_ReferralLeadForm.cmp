@@ -98,7 +98,7 @@
                 </div>
             </lightning:layoutItem>
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="horizontal-medium" >       
-                <lightning:input aura:id="postalcode" type="text" maxlength="5" name="postalcode" pattern="\d{5}" messageWhenPatternMismatch="Zip code must contain 5 digits" value="{!v.LeadObj.postalcode}" label="Zip Code" required="true" messageWhenValueMissing="Please enter the zip code"/> 
+                <lightning:input aura:id="postalcode" type="text" maxlength="5" name="postalcode" pattern="\d{5}" messageWhenPatternMismatch="Zip code must contain 5 digits" value="{!v.LeadObj.postalcode}" label="Zip Code" /> 
             </lightning:layoutItem>
 
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="horizontal-medium" >       
@@ -135,9 +135,7 @@
                                            selectedLabel="Selected Product of Interest"
                                            options="{!v.PIlist }"
                                            value="{!v.selectedPIList}"
-                                           onchange="{!c.handlePIChange}"
-                                           required="true" 
-                                           messageWhenValueMissing="Please select at least one product of interest"/>
+                                           onchange="{!c.handlePIChange}"/>
                 </div>
             </lightning:layoutItem>
             <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="horizontal-medium" >       

@@ -7,27 +7,14 @@
                var picklistvalues = response.getReturnValue();
                component.set("v.industry",picklistvalues.industry);
                component.set("v.potentialCustomer",picklistvalues.potentialCustomer);
-              
-               /*   AZD-223578 Get the list of Products of Interest (filtered by referral record-type)
-               *    Since the Referral Form is public we load the list of products from static resource
-               */
-               fetch($A.get("$Resource.lead_referral_product_interest")) 
-               .then(function(res){return res.text()})
-               .then(function(data){
-            
-                    var list = data.split(",");
-                    var l = list.length;
-                    var piValues = [];
-        
-                    for (var i = 0; i < l ; i++) {
-                        piValues.push({
-                            label: list[i].trim(),
-                            value: list[i].trim()
-                        });
-                    }
-
-                    component.set("v.PIlist", piValues);  
-                });                              
+               var piValues = [];
+               for (var i = 0; i < picklistvalues.productofinterest.length; i++) {
+                   piValues.push({
+                       label: picklistvalues.productofinterest[i],
+                       value: picklistvalues.productofinterest[i]
+                   });
+               }
+               component.set("v.PIlist",piValues);
                               
            } else if (state =="ERROR") {
               this.showErrorModal(component, event,$A.get("$Label.c.NSP_ReferralLeadErrorMessage"));
