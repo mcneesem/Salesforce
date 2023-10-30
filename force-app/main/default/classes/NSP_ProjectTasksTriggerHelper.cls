@@ -2,7 +2,7 @@
     * Represents the project trigger helper which handles all the logic.
     */
     public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (81%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (87%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String NSP_PROJECTTASKSTRIGGERHELPER = 'NSP_ProjectTasksTriggerHelper';
@@ -977,27 +977,6 @@
             }
 
 
-            if(!setOfProjectId.isEmpty()){
-                for(pse__Proj__c project : [SELECT  Id, TemplateName__c,pse__Project_Type__c, RecordTypeId, pse__Account__r.NSP_AIMS_Renewal_Date__c, pse__Start_Date__c, pse__End_Date__c 
-                                            FROM pse__Proj__c 
-                                            WHERE ID IN : setOfProjectId and pse__Is_Template__c = false]){
-                                                //check if project of type implementation and MM or FSO template
-                                                if(!projectMap.containsKey(project.id) && project.RecordTypeId == projectRecordType && project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType 
-                                                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject ) ){
-                                                    projectMap.put(project.id,project);
-                                                }
-                                            }
-            }
-            //update start & end time of project task of type implementation and template MM or FSO as part of STY-02129
-            if(!projectMap.isEmpty()){
-                for(pse__Project_Task__c prTask:projectTaskList){
-                    // updating Project Start and End Date on Project Taks 
-                    if(prTask.pse__Project__c!=null && projectMap.containsKey(prTask.pse__Project__c)){
-                        prTask.pse__Start_Date_Time__c	= DateTime.newInstance(system.Now().date(), Time.newInstance(12, 0, 0, 0));
-                        prTask.pse__End_Date_Time__c = DateTime.newInstance(projectMap.get(prTask.pse__Project__c).pse__End_Date__c, Time.newInstance(12, 0, 0, 0));
-                    }   
-                }
-            }
             //update start & end time of project task of rec type PEO & not of type implementation and template MM or FSO 
             if(!setOfProjectId.isEmpty()){
                     for(pse__Project_Task__c projectTasks : projectTaskList){ 
