@@ -118,9 +118,10 @@ public class NSP_AssetProjectCreation implements Queueable  {
                 }
                 NSP_ProjectTriggerHelper.createImplementationProfile(ImpProjectList, accIdSet); 
                 NSP_ProjectTriggerHelper.createProjectTeamRoles(ImpProjectList);
+                //setting Project Task start and end date for fso and mm implementation
+                setStartDateAndEndDateOnFSOImplProjectTask(projectIds);
             }
-            //setting Project Task start and end date for fso and mm implementation
-            setStartDateAndEndDateOnFSOImplProjectTask(projectIds);
+
 
             if(!projectAssetMapping.isEmpty()){
                 List < Database.UpsertResult > upsertResults = Database.upsert(projectAssetMapping, false);
