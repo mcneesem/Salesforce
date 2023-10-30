@@ -162,6 +162,11 @@
                 <label>Top Margin Individual</label>
             </value>
             <value>
+                <fullName>TopMiddleMarketVolumeIndividual</fullName>
+                <default>false</default>
+                <label>Top Middle Market Volume Individual</label>
+            </value>
+            <value>
                 <fullName>TopPercentageDistrict</fullName>
                 <default>false</default>
                 <label>Top Percentage District</label>
@@ -182,9 +187,9 @@
                 <label>Top WO Volume Individual</label>
             </value>
             <value>
-                <fullName>TripQualifer</fullName>
+                <fullName>TripQualifier</fullName>
                 <default>false</default>
-                <label>Trip Qualifer</label>
+                <label>Trip Qualifier</label>
             </value>
             <value>
                 <fullName>WesternRegionDaOfTheYear</fullName>
@@ -202,6 +207,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>EliteClub</label>
+            </value>
+            <value>
+                <fullName>TripQualifer</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Trip Qualifer</label>
             </value>
         </valueSetDefinition>
     </valueSet>
