@@ -122,7 +122,6 @@ public class NSP_AssetProjectCreation implements Queueable  {
                 setStartDateAndEndDateOnFSOImplProjectTask(projectIds);
             }
 
-
             if(!projectAssetMapping.isEmpty()){
                 List < Database.UpsertResult > upsertResults = Database.upsert(projectAssetMapping, false);
                 NSP_ErrorLogHandler.logUpsertResultsException(NSP_ASSET_PROJECT_CREATION, 'createImplementationProject', upsertResults);
