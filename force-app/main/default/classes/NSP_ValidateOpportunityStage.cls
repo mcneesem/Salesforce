@@ -37,7 +37,7 @@ public class NSP_ValidateOpportunityStage {
     
     public static void validateOpportunityStage(List<Opportunity> newList){
         
-        Map<Id,Opportunity> newMap = Trigger.isInsert ? new Map<Id,Opportunity>() : new Map<Id,Opportunity>(newList);
+        Map<Id,Opportunity> newMap = new Map<Id,Opportunity>(newList);
         
         Map<ID, Opportunity> oppMapwithEventTask = new Map<ID, Opportunity>(
             [
@@ -181,7 +181,7 @@ public class NSP_ValidateOpportunityStage {
     */
     private static void validateRetirementServicesStage(List<Opportunity> oppList, Map<Id,SBQQ__Quote__c> quoteMap, Map<ID, Opportunity> oppMapwithEventTask){
         
-        Map<Id, Opportunity> retList = Trigger.isInsert ? new Map<Id, Opportunity>() : new Map<Id, Opportunity>(oppList);
+        Map<Id, Opportunity> retList = new Map<Id, Opportunity>(oppList);
         
         // Opportunity Credit and Sales to Implementation
         Map<ID, Opportunity> queryMap = new Map<ID, Opportunity>(
