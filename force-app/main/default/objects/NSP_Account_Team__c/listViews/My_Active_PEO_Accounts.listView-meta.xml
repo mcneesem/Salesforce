@@ -8,8 +8,7 @@
     <columns>NSP_Role__c</columns>
     <columns>NSP_User__c</columns>
     <columns>Account_Status__c</columns>
-    <columns>CREATEDBY_USER</columns>
-    <columns>CREATED_DATE</columns>
+    <columns>WO_AIMS_Status__c</columns>
     <columns>UPDATEDBY_USER</columns>
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
