@@ -705,7 +705,7 @@ public class NSP_ValidateOpportunityStageTest {
         event.Subject = 'call';
         event.WhatId = opp.id;
         event.ActivityDateTime = System.now();
-        event.StartDateTime = System.now();
+        event.StartDateTime = event.ActivityDateTime;
         event.EndDateTime = event.StartDateTime;
         event.ActivityDate = System.today();
         //event.DurationInMinutes = 10;
