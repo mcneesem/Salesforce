@@ -7,6 +7,9 @@
         <locationY>1355</locationY>
         <actionName>CreateProjectFromTemplateAction</actionName>
         <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Error_in_parameter</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>oaccount</name>
@@ -26,9 +29,11 @@
                 <elementReference>Get_Project_Owner</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>CreateProjectFromTemplateAction</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Set_Login_User</name>
         <label>Set Login User</label>
@@ -261,6 +266,9 @@
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Get_PEO_Project_Failed</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>pse__Is_Template__c</field>
@@ -327,7 +335,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>var_user_id</name>
         <dataType>String</dataType>
