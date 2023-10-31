@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Account_Segment__c</fullName>
-    <description>Formula field decides if the Account segment is Midmarket, Emerging Growth or Core sales based on the number of employees</description>
+    <description>Formula field to look at the Account&apos;s &quot;Account Segment&quot; field/value</description>
     <externalId>false</externalId>
-    <formula>IF(NSP_Number_of_Employees__c &gt; VALUE($Label.NSP_MidMarket_Threshold) , &quot;MidMarket&quot;, IF(NSP_Number_of_Employees__c &gt;  VALUE($Label.NSP_Emerging_Growth_Threshold_Employees) &amp;&amp; NSP_Number_of_Employees__c &lt;= VALUE($Label.NSP_MidMarket_Threshold), &quot;Emerging Growth&quot;, &quot;Core Sales&quot;))</formula>
+    <formula>TEXT( Account.NSP_Account_Segment__c )</formula>
     <label>Account Segment</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
