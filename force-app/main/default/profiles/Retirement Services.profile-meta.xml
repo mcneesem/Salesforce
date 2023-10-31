@@ -16605,6 +16605,10 @@
     <custom>true</custom>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>NSP_Segment_Role_Mapping__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>FSL__O2_Settings__mdt</name>
     </customMetadataTypeAccesses>
     <customPermissions>
@@ -31179,6 +31183,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Quote_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_RET_Bypass__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -49818,10 +49827,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SocialInsightsLogoAdmin</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

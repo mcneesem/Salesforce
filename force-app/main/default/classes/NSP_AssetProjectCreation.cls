@@ -5,7 +5,7 @@
 * Name : NSP_AssetProjectCreation
 */
 public class NSP_AssetProjectCreation implements Queueable  {
-    
+    // test w/ NSP_AssetServiceTriggerHelperTest (83%)
     private static final String NSP_ASSET_PROJECT_CREATION = 'NSP_AssetProjectCreation';
     
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
@@ -121,7 +121,6 @@ public class NSP_AssetProjectCreation implements Queueable  {
                 //setting Project Task start and end date for fso and mm implementation
                 setStartDateAndEndDateOnFSOImplProjectTask(projectIds);
             }
-            
 
             if(!projectAssetMapping.isEmpty()){
                 List < Database.UpsertResult > upsertResults = Database.upsert(projectAssetMapping, false);
@@ -165,6 +164,45 @@ public class NSP_AssetProjectCreation implements Queueable  {
             project.pse__End_Date__c = System.Today().addDays(90);
         }
         return project;
+    }
+
+    /**
+    * Update Start Date and End date on Project Task when WO Asset are created
+    * @param setOfProject List of project. 
+    * @return void
+    */
+    private static void setStartDateAndEndDateOnFSOImplProjectTask(Set<Id> setOfProject){   
+        Set<Id> setOfProjectId = new Set<Id>();
+        Id projectRecordType = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PEOProject);
+        Map<Id,pse__Proj__c> projectMap = new Map<Id,pse__Proj__c> ();
+        List<pse__Project_Task__c> projectTaskList= [SELECT Id, Name,pse__Project__c FROM pse__Project_Task__c WHERE pse__Project__c IN:  setOfProject];
+        for(pse__Project_Task__c projectTask : projectTaskList){
+        if(projectTask.pse__Project__c != null && projectTask.NSP_Template_Generated__c){
+                    setOfProjectId.add(projectTask.pse__Project__c);
+            }
+        }
+        
+        if(!setOfProjectId.isEmpty()){
+            for(pse__Proj__c project : [SELECT  Id, TemplateName__c,pse__Project_Type__c, RecordTypeId, pse__Account__r.NSP_AIMS_Renewal_Date__c, pse__Start_Date__c, pse__End_Date__c 
+                                        FROM pse__Proj__c 
+                                        WHERE ID IN : setOfProjectId and pse__Is_Template__c = false])
+                                        //check if project of type implementation and MM or FSO template
+                                        if(!projectMap.containsKey(project.id) && project.RecordTypeId == projectRecordType && project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType 
+                                        && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject ) ){
+                                            projectMap.put(project.id,project);
+                                        }
+            }
+            //update start & end time of project task of type implementation and template MM or FSO as part of STY-02129
+        if(!projectMap.isEmpty()){
+            for(pse__Project_Task__c prTask:projectTaskList){
+                // updating Project Start and End Date on Project Taks 
+                if(prTask.pse__Project__c!=null && projectMap.containsKey(prTask.pse__Project__c)){
+                    prTask.pse__Start_Date_Time__c	= DateTime.newInstance(system.Now().date(), Time.newInstance(12, 0, 0, 0));
+                    prTask.pse__End_Date_Time__c = DateTime.newInstance(projectMap.get(prTask.pse__Project__c).pse__End_Date__c, Time.newInstance(12, 0, 0, 0));
+                }  
+        
+            }
+        }
     }
     
 }

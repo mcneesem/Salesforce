@@ -28,6 +28,13 @@ public class NSP_AssetServiceTriggerHelperTest {
         Id wxWaAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, 'NSP_Asset_Product');
         Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);
 		Test.startTest();
+        List<NSP_Category_Sub_Category_Mapping__c> catSubCatMappingList = new List<NSP_Category_Sub_Category_Mapping__c>();
+        NSP_Category_Sub_Category_Mapping__c catSubCatMapping = (NSP_Category_Sub_Category_Mapping__c) NSP_TestDataFactory.createSObject(new NSP_Category_Sub_Category_Mapping__c(), 'NSP_TestDataFactory.CatSubCatMappingDefaults', false);
+        catSubCatMapping.NSP_Category__c = 'HR Services';
+        catSubCatMapping.NSP_Subcategory__c = 'HR Infrastructure';
+        catSubCatMapping.NSP_Detail__c = 'Client Guidance';
+        catSubCatMappingList.add(catSubCatMapping);
+        insert catSubCatMappingList;
         //Account creation
         Account accoutObject = new Account();
         accoutObject.Name = ACCOUNT_NAME;

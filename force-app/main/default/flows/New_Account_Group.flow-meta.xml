@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Navigate_To_Record</name>
         <label>Navigate To Record</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>512</locationX>
+        <locationY>1622</locationY>
         <actionName>c:NSP_FlowNavigatetoRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -22,10 +22,26 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
+        <name>Assign_Account_Group_Selected_Record_Type</name>
+        <label>Assign Account Group Selected Record Type</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountGroup.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getSelectedRecordType.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_1_of_AccountGroupScreen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_AccountGroup_Record_Type</name>
         <label>Assign AccountGroup Record Type</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varAccountGroup.RecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -37,6 +53,79 @@
             <targetReference>AccountGroupScreen</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Automatically_Created</name>
+        <choiceText>Automatically Created</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Automatically_Created</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Manually_Created</name>
+        <choiceText>Manually Created</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Manually_Created</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Check_Create_Auto_Account_Groups_Access</name>
+        <label>Check Create Auto Account Groups Access</label>
+        <locationX>512</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Get_Account_Group_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>HasAccess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getPermissionSetAssignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_Record_Type</targetReference>
+            </connector>
+            <label>HasAccess</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Selected_Record_Type</name>
+        <label>Validate Selected Record Type</label>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>getSelectedRecordType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordTypeSelected</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Automatically_Created</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordTypeSelected</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Manually_Created</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Record_Type_Error_Screen</targetReference>
+            </connector>
+            <label>Not Valid</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>New Account Group {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Account Group</label>
@@ -60,10 +149,42 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Copy_1_of_Create_Account_Group</name>
+        <label>Create Account Group</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <assignRecordIdToReference>recordId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Add_Account_Group_Members</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Copy_1_of_Error_Screen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NSP_Tag__c</field>
+            <value>
+                <elementReference>varAccountGroup.NSP_Tag__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Type__c</field>
+            <value>
+                <elementReference>varAccountGroup.NSP_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>getSelectedRecordType.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NSP_Account_Group__c</object>
+    </recordCreates>
+    <recordCreates>
         <name>Create_Account_Group</name>
         <label>Create Account Group</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
         <assignRecordIdToReference>recordId</assignRecordIdToReference>
         <connector>
             <targetReference>Add_Account_Group_Members</targetReference>
@@ -88,8 +209,8 @@
     <recordLookups>
         <name>Get_Account_Group_Record_Type</name>
         <label>Get Account Group Record Type</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>842</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_AccountGroup_Record_Type</targetReference>
@@ -113,12 +234,89 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getPermissionSet</name>
+        <label>getPermissionSet</label>
+        <locationX>512</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getPermissionSetAssignment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Create_Auto_Created_Account_Groups</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPermissionSetAssignment</name>
+        <label>getPermissionSetAssignment</label>
+        <locationX>512</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Create_Auto_Account_Groups_Access</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getPermissionSet.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getSelectedRecordType</name>
+        <label>getSelectedRecordType</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Account_Group_Selected_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordTypeSelected</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Account_Group__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>AccountGroupScreen</name>
         <label>AccountGroupScreen</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -183,10 +381,94 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Copy_1_of_AccountGroupScreen</name>
+        <label>AccountGroupScreen</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Copy_1_of_Create_Account_Group</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_AccountGroupScreen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Copy_1_of_AccountGroupScreen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <fieldType>ObjectProvided</fieldType>
+                    <isRequired>false</isRequired>
+                    <objectFieldReference>varAccountGroup.NSP_Type__c</objectFieldReference>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Copy_1_of_AccountGroupScreen_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <fieldType>ObjectProvided</fieldType>
+                    <isRequired>false</isRequired>
+                    <objectFieldReference>varAccountGroup.NSP_Tag__c</objectFieldReference>
+                </fields>
+                <fields>
+                    <fieldType>ObjectProvided</fieldType>
+                    <isRequired>false</isRequired>
+                    <objectFieldReference>varAccountGroup.NSP_Watchlist__c</objectFieldReference>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>varAccountGroup.NSP_Type__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Growth Forecast</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <nextOrFinishButtonLabel>Save</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Copy_1_of_Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>578</locationX>
+        <locationY>1106</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Copy_1_of_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>704</locationX>
-        <locationY>638</locationY>
+        <locationX>1106</locationX>
+        <locationY>890</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -198,19 +480,60 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-    <start>
+    <screens>
+        <name>Record_Type_Error_Screen</name>
+        <label>Record Type Error Screen</label>
         <locationX>50</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ValidateRecordType</name>
+            <fieldText>&lt;p&gt;Please Select a Valid Record Type. &lt;b&gt; None &lt;/b&gt;is not a valid record type for Account Group.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Select_Record_Type</name>
+        <label>Select Record Type</label>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Validate_Selected_Record_Type</targetReference>
+        </connector>
+        <fields>
+            <name>recordTypeSelected</name>
+            <choiceReferences>Manually_Created</choiceReferences>
+            <choiceReferences>Automatically_Created</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>Manually_Created</defaultSelectedChoiceReference>
+            <fieldText>Select Record Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Account_Group_Record_Type</targetReference>
+            <targetReference>getPermissionSet</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Add_Account_Group_Members</name>
         <label>Add Account Group Members</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>512</locationX>
+        <locationY>1514</locationY>
         <connector>
             <targetReference>Navigate_To_Record</targetReference>
         </connector>
