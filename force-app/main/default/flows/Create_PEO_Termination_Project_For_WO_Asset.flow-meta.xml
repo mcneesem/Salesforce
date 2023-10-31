@@ -28,8 +28,10 @@
             <value>
                 <elementReference>Get_Project_Owner</elementReference>
             </value>
-        </inputParameters>        
-        <storeOutputAutomatically>true</storeOutputAutomatically>       
+        </inputParameters>
+        <nameSegment>CreateProjectFromTemplateAction</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
