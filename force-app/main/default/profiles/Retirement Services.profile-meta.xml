@@ -31187,6 +31187,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.NSP_RET_Bypass__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.NSP_RM__c</field>
         <readable>true</readable>
     </fieldPermissions>
