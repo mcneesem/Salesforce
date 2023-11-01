@@ -220,7 +220,7 @@ public class NSP_ValidateOpportunityStage {
                     List<Event> eventList = oppFromMap?.Events;
 
                     //  Discovery call
-                    verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCalls);
+                    verifyCompletedDiscoveryCalls(opp, eventList, System.Label.NSP_AddDiscoveryCallsProposal);
                     
                     if(opp.getErrors().size() > 0){
                         continue;
@@ -236,12 +236,12 @@ public class NSP_ValidateOpportunityStage {
                 List<NSP_Employee_Split__c> creditList = queryFromMap?.Employee_Splits__r;
                 List<NSP_Sales_to_Implementation__c > salesList = queryFromMap?.Sales_to_Implementation__r;
                 
-                if(creditList.size() == 0){
+                if(creditList == null || creditList.size() == 0){
                     opp.addError(System.Label.NSP_AddOppotunityCredit);
                     continue;
                 }                        
                 
-                if(salesList.size() == 0) {
+                if(salesList == null || salesList.size() == 0) {
                     opp.addError(System.Label.NSP_AddSalesToImplementation);
                     continue;
                 }           
