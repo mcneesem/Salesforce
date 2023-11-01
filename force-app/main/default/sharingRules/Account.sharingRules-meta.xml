@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>Account_Segment_MidMarket_or_MMNA_populated</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If Account Segment = MidMarket or MidMarket National Account field is populated, share with MidMarket Admins</description>
+        <label>Account Segment MidMarket or MMNA populated</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>NSP_Account_Segment__c</field>
+            <operation>equals</operation>
+            <value>MidMarket</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>MidMarket_National_Account__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Data_Gov_Account_Edit</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -16,6 +42,26 @@
             <field>Name</field>
             <operation>notEqual</operation>
             <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Employees_greater_or_equal_150</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If NumberOfEmployees is greater or equal to 150, share with MidMarket Admins</description>
+        <label>Employees greater or equal 150</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>NumberOfEmployees</field>
+            <operation>greaterOrEqual</operation>
+            <value>150</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -76,32 +122,6 @@
             <value>MidMarket</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>NSP_Share_Segment_Accounts_to_MM_Role_Users</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>Edit</opportunityAccessLevel>
-        </accountSettings>
-        <description>This Rule will Share Segment Accounts to MM Admin Role Users and subordinates</description>
-        <label>Share Segment Accounts to MM Role Users</label>
-        <sharedTo>
-            <roleAndSubordinates>MidMarket_Administrator</roleAndSubordinates>
-        </sharedTo>
-        <booleanFilter>1 OR 2</booleanFilter>
-        <criteriaItems>
-            <field>NSP_Account_Segment__c</field>
-            <operation>equals</operation>
-            <value>MidMarket</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>MidMarket_National_Account__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Share_All_Accounts</fullName>
@@ -255,6 +275,57 @@
         </sharedTo>
         <sharedFrom>
             <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_BPC_so_share_with_MidMarket_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If the owner is a Business Performance Consultant, share Account and Optys with MidMarket Admins</description>
+        <label>Owner is BPC so share with MidMarket Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Consultant</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Admin_so_share_with_MidMarket_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If owner is MidMarket Administrator, share with MidMarket Admins</description>
+        <label>Owner is MidMarket Admin so share with MidMarket Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Administrator</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Sales_Leader_so_share_with_MM_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If the owner is MidMarket Sales Leader, share Account and Optys with MidMarket Admins</description>
+        <label>Owner is MidMarket Sales Leader so share with MM Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Sales_Leader</role>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>
