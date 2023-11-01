@@ -3,7 +3,7 @@
     <fullName>NSP_SeparationRequest</fullName>
     <active>true</active>
     <label>Separation Request</label>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_Action__c</picklist>
         <values>
             <fullName>Development</fullName>
@@ -62,7 +62,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_AreThereAdditionalClients_subAccount__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -73,7 +73,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_BonusSelectOne__c</picklist>
         <values>
             <fullName>Payment of bonus is additional compensation %28include bonus amount%29</fullName>
@@ -84,7 +84,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_CSAaddendumForStockEquity__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -106,7 +106,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_CommissionsSelectOne__c</picklist>
         <values>
             <fullName>Payment of commissions is additional compensation</fullName>
@@ -139,7 +139,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_Delay__c</picklist>
         <values>
             <fullName>Developer</fullName>
@@ -207,7 +207,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
         <picklist>NSP_HR_COEAdvisortermWSEELOA__c</picklist>
         <values>
             <fullName>Caroline Hernandez</fullName>
@@ -235,6 +235,10 @@
         </values>
         <values>
             <fullName>Angela Smart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dawn Motsiff</fullName>
             <default>false</default>
         </values>
     </picklistValues>

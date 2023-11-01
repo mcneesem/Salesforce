@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>HR COE Advisor - term WSEE on LOA?</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+        <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -40,6 +40,11 @@
                 <fullName>Taylor Queen</fullName>
                 <default>false</default>
                 <label>Taylor Queen</label>
+            </value>
+            <value>
+                <fullName>Dawn Motsiff</fullName>
+                <default>false</default>
+                <label>Dawn Motsiff</label>
             </value>
             <value>
                 <fullName>Angela Smart</fullName>
