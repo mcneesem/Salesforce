@@ -3,8 +3,12 @@
     <label>WX Tax</label>
     <protected>false</protected>
     <values>
+        <field>Case_Owner__c</field>
+        <value xsi:type="xsd:string">WX Tax</value>
+    </values>
+    <values>
         <field>NSP_Email__c</field>
-        <value xsi:type="xsd:string">test.ips.tax_sfqa2@insperity.com</value>
+        <value xsi:type="xsd:string">ips.tax@insperity.com</value>
     </values>
     <values>
         <field>NSP_Name__c</field>
