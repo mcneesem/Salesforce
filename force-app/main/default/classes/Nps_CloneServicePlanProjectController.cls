@@ -169,24 +169,14 @@ public without sharing class Nps_CloneServicePlanProjectController {
             pse__Proj__c proj = (pse__Proj__c) new NSP_sObjectSelector('pse__Proj__c', projectFields).selectById(projId);
 
             // Populate list of project tasks that needs to be created
-            addPreviousProjectTasks(prevProjectTaskIds, projId);
-            
-            // Prepare a list of project account records that needs to be created
+            addPreviousProjectTasks(prevProjectTaskIds, projId,oldProjectId);
+			// Prepare a list of project account records that needs to be created
             List<Project_Account__c> projAccounts = getProjectAccounts(projAccountIds, projId);
-
-            // Prepare a list of unselected project task needs to be cancelled 
-            List<pse__Project_Task__c> projTaskToCancel = getUnselectedProjectTasksByProjectId(oldProjectId , prevProjectTaskIds);
-
-            // Prepare a consolidated list of items which needs to be inserted
+			// Prepare a consolidated list of items which needs to be inserted
             List<SObject> itemsToInsert = new List<SObject>();
-            itemsToInsert.addAll(projAccounts);
-
-            // Prepare a consolidated list of items which needs to be updated
             List<SObject> itemsToUpdate = new List<SObject>();
-            itemsToUpdate.addAll(updateStatusInProjectTasks(prevProjectTaskIds));
-            itemsToUpdate.addAll(cancelUnslectedTaskStatus(projTaskToCancel));
-
-            // Perform all the DML operations
+            itemsToInsert.addAll(projAccounts);
+			// Perform all the DML operations
             return performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
         } catch (Exception excep) {
             throw NSP_Utilities.getAuraException(excep);
@@ -292,7 +282,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
       * This method retrieves project tasks by task ids and add it to the given project task list.
       */
       @future
-      public static void addPreviousProjectTasks(List<String> prevProjectTaskIds, Id projId){
+      public static void addPreviousProjectTasks(List<String> prevProjectTaskIds, Id projId, Id oldProjectId){
         List<pse__Project_Task__c> prevProjTasks = (List<pse__Project_Task__c>) new NSP_sObjectSelector('pse__Project_Task__c', PROJECT_TASK_FIELDS)
                                                 .selectById(prevProjectTaskIds);
         List<String> newProjectTaskIds = new List<String>();
@@ -331,9 +321,19 @@ public without sharing class Nps_CloneServicePlanProjectController {
           }
 
           for(pse__Project_Task__c newTask:[SELECT Id,Name FROM pse__Project_Task__c WHERE pse__Project__c=:projId AND NSP_isClonedFromAutomation__c = true]){
-            newProjectTaskIds.add(newTask.Id); 
-        }
-        insertProjTaskRelatedRecords(prevProjectTaskIds, newProjectTaskIds, projId);
+              newProjectTaskIds.add(newTask.Id); 
+          }
+          insertProjTaskRelatedRecords(prevProjectTaskIds, newProjectTaskIds, projId);
+          List<pse__Project_Task__c> projTaskToCancel = getUnselectedProjectTasksByProjectId(oldProjectId , prevProjectTaskIds);
+			
+            // Prepare a consolidated list of items which needs to be updated
+            List<SObject> itemsToUpdate = new List<SObject>();
+          	List<SObject> itemsToInsert = new List<SObject>();
+            itemsToUpdate.addAll(updateStatusInProjectTasks(prevProjectTaskIds));
+            itemsToUpdate.addAll(cancelUnslectedTaskStatus(projTaskToCancel));
+
+            // Perform all the DML operations
+            performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
      }
 
      /**
