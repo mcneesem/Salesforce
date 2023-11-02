@@ -12,6 +12,8 @@ Modification Log     :
 */
 
 public class NSP_WXCSSTaskCreationBatch implements Schedulable, Database.Batchable < sObject >{
+    // test w/ NSP_WXCSSTaskCreationBatchTest  (89%)
+    
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Date cssRenewDate = System.today().addDays(15);
         
@@ -107,6 +109,7 @@ public class NSP_WXCSSTaskCreationBatch implements Schedulable, Database.Batchab
         newTask.OwnerId = cssRep;
         newTask.WhatId = acc.Id;
         newTask.NSP_Start_Date__c = cssDate;
+        newTask.ActivityDate = cssDate.addDays(30);
         return newTask;
     }
         
