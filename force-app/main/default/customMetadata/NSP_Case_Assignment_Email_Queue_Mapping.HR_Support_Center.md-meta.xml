@@ -3,8 +3,12 @@
     <label>HR Support Center</label>
     <protected>false</protected>
     <values>
+        <field>Case_Owner__c</field>
+        <value xsi:type="xsd:string">WX HR Services</value>
+    </values>
+    <values>
         <field>NSP_Email__c</field>
-        <value xsi:type="xsd:string">test.hrsupportcenter_sfqa2@insperity.com</value>
+        <value xsi:type="xsd:string">hrsupportcenter@insperity.com</value>
     </values>
     <values>
         <field>NSP_Name__c</field>
