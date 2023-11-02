@@ -411,6 +411,13 @@
         <value>Please add discovery calls before moving stage to Close</value>
     </labels>
     <labels>
+        <fullName>NSP_AddDiscoveryCallsProposal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCallsProposal</shortDescription>
+        <value>Please add discovery calls before moving stage to Proposal</value>
+    </labels>
+    <labels>
         <fullName>NSP_AddOppotunityCredit</fullName>
         <language>en_US</language>
         <protected>false</protected>
