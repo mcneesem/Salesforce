@@ -81,7 +81,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Bat
                                                                //Condition for EG Segment Types
                                                                else if(segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) && 
                                                                        subClientRecord.NSP_Asset__r.NSP_Unique_Active_Employee__c < 50){
-                                                                           flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_Christine_Bishop);
+                                                                           flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
                                                                            flsaCaseList.add(flsaCase);
                                                                            subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
                                                                            subClientList.add(subClientRecord);   
