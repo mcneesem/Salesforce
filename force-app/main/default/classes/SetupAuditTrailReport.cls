@@ -251,6 +251,7 @@ public with sharing class SetupAuditTrailReport {
                             AND ( CreatedDate >= :SetupAuditTrailQueueable.startDateTime )
                         )
                         ORDER BY CreatedDate DESC
+                        LIMIT :SetupAuditTrailQueueable.soqlAuditLimit
                     ];
                 }
             }
