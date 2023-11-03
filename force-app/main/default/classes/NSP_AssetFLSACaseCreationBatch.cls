@@ -11,6 +11,8 @@ Modification Log     :
 * Srushti Bikkannavar        12/13/2022           First Iteration
 */
 
+// Test NSP_AssetFLSACaseCreationBatchTest (90%)
+
 public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Batchable < sObject >{
     public Database.QueryLocator start(Database.BatchableContext bc) {
         //Get WO Asset Record Type Id
