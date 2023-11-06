@@ -3,13 +3,13 @@
     <fullName>NSP_Validation_On_Show_Discounts</fullName>
     <active>true</active>
     <description>Only Retail Users can check Show Discounts on Quote</description>
-    <errorConditionFormula>AND( 
-ISCHANGED( NSP_Show_Discounts__c ), NSP_Submitted_User_Role_L2__c &lt;&gt; &apos;Retail Sales&apos;,
-NSP_Submitted_User_Role_L2__c &lt;&gt; &apos;Admin&apos;,
-$Profile.Name &lt;&gt; &quot;System Administrator&quot;
-)
-&amp;&amp;
-NOT($Setup.NSP_Trigger_Switch__c.QuoteValidation__c)</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.QuoteValidation__c ),
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  ISCHANGED( NSP_Show_Discounts__c ),
+  NSP_Submitted_User_Role_L2__c &lt;&gt; &apos;Retail Sales&apos;,
+  NSP_Submitted_User_Role_L2__c &lt;&gt; &apos;Admin&apos;
+)</errorConditionFormula>
     <errorDisplayField>NSP_Show_Discounts__c</errorDisplayField>
     <errorMessage>Only Retail Users can check Show Discounts on Quote.</errorMessage>
 </ValidationRule>

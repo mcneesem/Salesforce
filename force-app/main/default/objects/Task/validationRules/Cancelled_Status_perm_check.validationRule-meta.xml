@@ -4,19 +4,18 @@
     <active>false</active>
     <description>Cancelled Status can only be used by Sys Admin and OneTrust Integration profiles as of now</description>
     <errorConditionFormula>AND(
-AND
-($Profile.Name &lt;&gt; &quot;System Administrator&quot;,
-$Profile.Name &lt;&gt; &quot;OneTrust Integration&quot;),
-OR(
-AND( ISNEW(), ISPICKVAL( Status, &quot;Cancelled&quot;)),
-AND( ISCHANGED( Status ), ISPICKVAL( Status, &quot;Cancelled&quot;) ),
-AND( ISCHANGED( Status ), NOT(ISPICKVAL( Status, &quot;Cancelled&quot;)) ),
-
-AND( ISNEW(), ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;)),
-AND( ISCHANGED( NSP_Status__c ), ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;) ),
-AND( ISCHANGED( NSP_Status__c ), NOT(ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;)) )
-
-)
+  AND(
+    NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+    $Profile.Name &lt;&gt; &quot;OneTrust Integration&quot;
+  ),
+  OR(
+    AND( ISNEW(), ISPICKVAL( Status, &quot;Cancelled&quot;)),
+    AND( ISCHANGED( Status ), ISPICKVAL( Status, &quot;Cancelled&quot;) ),
+    AND( ISCHANGED( Status ), NOT(ISPICKVAL( Status, &quot;Cancelled&quot;)) ),
+    AND( ISNEW(), ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;)),
+    AND( ISCHANGED( NSP_Status__c ), ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;) ),
+    AND( ISCHANGED( NSP_Status__c ), NOT(ISPICKVAL( NSP_Status__c, &quot;Cancelled&quot;)) )
+  )
 )</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
     <errorMessage>You do not have permission to set the status to &quot;Cancelled&quot; at this time.</errorMessage>

@@ -4,9 +4,9 @@
     <active>true</active>
     <description>This will make First Name field required</description>
     <errorConditionFormula>AND(
-NOT($Profile.Name = &quot;System Administrator&quot;),
-$Setup.NSP_Trigger_Switch__c.AccountValidations__c != true,
-ISBLANK(FirstName) 
+  NOT( $Setup.NSP_Trigger_Switch__c.AccountValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  ISBLANK( FirstName )
 )</errorConditionFormula>
     <errorDisplayField>FirstName</errorDisplayField>
     <errorMessage>Please enter First Name.</errorMessage>
