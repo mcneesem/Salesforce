@@ -6,7 +6,7 @@
   NOT( $Setup.NSP_Trigger_Switch__c.NSP_Payroll_Data_Sheet__c ) ,
   NOT(
     OR(
-      CONTAINS( $Profile.Name , &apos;System Admin&apos; )
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
       $Profile.Name = &quot;Data Migration&quot; ,
       $Profile.Name = &quot;Integration User&quot;
     )
