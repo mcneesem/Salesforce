@@ -3,12 +3,19 @@
     <fullName>Restrict_HCM_User_to_add_productOfIntere</fullName>
     <active>true</active>
     <description>This rule will restrict the HCM user to add Product of Interest on the creation of Opportunity record</description>
-    <errorConditionFormula>AND(TEXT( NSP_PrimaryProduct__c ) &lt;&gt; &quot;WX&quot;,
-ISNEW(),
-ISBLANK(NSP_Product_Interest__c) ,
-$UserRole.DeveloperName =&quot;HCM_Sales_Consultant&quot;,
-NOT(OR($Profile.Name = &quot;System Administrator&quot; ,
-$Profile.Name = &quot;Data Migration&quot;,
-$Profile.Name = &quot;Sales Administrator&quot;)),NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c))</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c ) ,
+  TEXT( NSP_PrimaryProduct__c ) &lt;&gt; &quot;WX&quot;,
+  ISNEW(),
+  ISBLANK(NSP_Product_Interest__c) ,
+  $UserRole.DeveloperName = &quot;HCM_Sales_Consultant&quot;,
+  NOT(
+    OR(
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
+      $Profile.Name = &quot;Data Migration&quot;,
+      $Profile.Name = &quot;Sales Administrator&quot;
+    )
+  )
+)</errorConditionFormula>
     <errorMessage>Please select Product of Interest</errorMessage>
 </ValidationRule>
