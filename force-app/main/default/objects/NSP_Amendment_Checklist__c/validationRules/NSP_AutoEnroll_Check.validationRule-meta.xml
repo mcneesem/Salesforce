@@ -3,12 +3,13 @@
     <fullName>NSP_AutoEnroll_Check</fullName>
     <active>true</active>
     <description>STY-02110</description>
-    <errorConditionFormula>AND($Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-$Profile.Name &lt;&gt; &apos;Data Migration&apos;,
-$Profile.Name &lt;&gt; &apos;Integration User&apos;,
-$Setup.NSP_Trigger_Switch__c.AmendmentChecklistTrigger__c!= true,
- NSP_Yes_autoenroll__c,
- NSP_Immediate__c 
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.AmendmentChecklistTrigger__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
+  $Profile.Name &lt;&gt; &apos;Integration User&apos; ,
+  NSP_Yes_autoenroll__c ,
+  NSP_Immediate__c
 )</errorConditionFormula>
     <errorDisplayField>NSP_Immediate__c</errorDisplayField>
     <errorMessage>Note: If client has auto enroll, immediate is not allowed.</errorMessage>
