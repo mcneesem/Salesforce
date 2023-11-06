@@ -53,10 +53,16 @@
                         <valueListItems>
                             <value>CustomButton.Account.NSP_Detailed_Data</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

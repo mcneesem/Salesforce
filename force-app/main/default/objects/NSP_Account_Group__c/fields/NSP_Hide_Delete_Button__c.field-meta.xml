@@ -3,20 +3,26 @@
     <fullName>NSP_Hide_Delete_Button__c</fullName>
     <description>Hide delete button for specifed users based on the fromula condition</description>
     <externalId>false</externalId>
-    <formula>OR($Profile.Name  =  &quot;System Administrator&quot;, 
- AND(
-   OR(
-   ISPICKVAL(NSP_Type__c, &quot;Common Ownership&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;Influencer&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;Private Equity&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;Venture Capital&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;Foreign Ownership&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;Common Ownership&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;ITA Support Group&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;PSPM Support Group&quot;),
-   ISPICKVAL(NSP_Type__c, &quot;OrgPlus Support Group&quot;) ),
-   OR( $Profile.Name  = &quot;BPS Service&quot;,$Profile.Name  = &quot;PEO Service&quot;,$Profile.Name  = &quot;Retirement Services&quot; ) 
- )
+    <formula>OR(
+  CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
+  AND(
+    OR(
+      ISPICKVAL(NSP_Type__c, &quot;Common Ownership&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;Influencer&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;Private Equity&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;Venture Capital&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;Foreign Ownership&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;Common Ownership&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;ITA Support Group&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;PSPM Support Group&quot;),
+      ISPICKVAL(NSP_Type__c, &quot;OrgPlus Support Group&quot;)
+    ),
+    OR(
+      $Profile.Name = &quot;BPS Service&quot;,
+      $Profile.Name = &quot;PEO Service&quot;,
+      $Profile.Name = &quot;Retirement Services&quot;
+    )
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Hide Delete Button</label>
