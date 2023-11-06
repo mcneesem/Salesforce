@@ -3,16 +3,19 @@
     <fullName>NSP_Other_Term_Reasons_not_Required</fullName>
     <active>true</active>
     <description>Other Term Reasons is not required when Reason For Term is not other.</description>
-    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
-   $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-   $RecordType.Name = &quot;Wage Claims&quot;,
-   OR( ISPICKVAL( NSP_ReasonForTerm__c , &apos;Layoff&apos;),
-       ISPICKVAL( NSP_ReasonForTerm__c , &apos;Resignation with Notice&apos;),
-       ISPICKVAL( NSP_ReasonForTerm__c , &apos;Resignation without Notice&apos;),
-       ISPICKVAL( NSP_ReasonForTerm__c , &apos;Misconduct&apos;),
-       ISPICKVAL( NSP_ReasonForTerm__c , &apos;Unsatisfactory Job Performance&apos;),
-        ISPICKVAL( NSP_ReasonForTerm__c , &apos;&apos;)  ),
-     NOT( ISBLANK( NSP_OtherReasonForTerm__c ) ) 
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $RecordType.Name = &quot;Wage Claims&quot; ,
+  OR(
+    ISPICKVAL( NSP_ReasonForTerm__c , &apos;Layoff&apos; ) ,
+    ISPICKVAL( NSP_ReasonForTerm__c , &apos;Resignation with Notice&apos; ) ,
+    ISPICKVAL( NSP_ReasonForTerm__c , &apos;Resignation without Notice&apos; ) ,
+    ISPICKVAL( NSP_ReasonForTerm__c , &apos;Misconduct&apos; ) ,
+    ISPICKVAL( NSP_ReasonForTerm__c , &apos;Unsatisfactory Job Performance&apos; ) ,
+    ISPICKVAL( NSP_ReasonForTerm__c , &apos;&apos; )
+  ) ,
+  NOT( ISBLANK( NSP_OtherReasonForTerm__c ) )
 )</errorConditionFormula>
     <errorDisplayField>NSP_ReasonForTerm__c</errorDisplayField>
     <errorMessage>Other Reason for Term is not required</errorMessage>
