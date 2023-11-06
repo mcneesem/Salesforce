@@ -4,15 +4,14 @@
     <active>true</active>
     <description>Service Profiles with the account management permission set can create/update a Account Team record when role is WX/WA Benefits Specialist, WA/WX Payroll Specialist, Customer Success Specialist, 401k Plan Consultant. STY-(STY-03549)</description>
     <errorConditionFormula>AND(
-
- $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c!=True,
-
- $Profile.Name  &lt;&gt;  &apos;System Administrator&apos;,
- OR( $Profile.Name = &apos;BPS Service&apos;,
-     $Profile.Name = &apos;Contact Center&apos;,
-     $Profile.Name = &apos;Retirement Services&apos;,
-     $Profile.Name = &apos;PEO Service&apos;
-   ),
+  NOT( $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  OR(
+    $Profile.Name = &apos;BPS Service&apos; ,
+    $Profile.Name = &apos;Contact Center&apos; ,
+    $Profile.Name = &apos;Retirement Services&apos; ,
+    $Profile.Name = &apos;PEO Service&apos;
+  ) ,
 
 OR ( 
 AND ( 
