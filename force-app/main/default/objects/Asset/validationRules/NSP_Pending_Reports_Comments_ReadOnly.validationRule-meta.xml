@@ -5,7 +5,7 @@
     <errorConditionFormula>AND(
   ISCHANGED( NSP_Pending_Report_Comments__c ) ,
   NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,
-  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) )
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
   AND(
     $UserRole.DeveloperName &lt;&gt; &apos;New_Client_Sales&apos; ,
     $UserRole.DeveloperName &lt;&gt; &apos;District_Administrator&apos; ,
