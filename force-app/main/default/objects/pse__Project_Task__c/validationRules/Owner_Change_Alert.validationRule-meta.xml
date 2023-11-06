@@ -4,14 +4,13 @@
     <active>false</active>
     <description>Alerts user while changing owner of Scheduled Project task</description>
     <errorConditionFormula>AND(
-       
-      NOT($Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c),
-      NOT(ISCHANGED( pse__Status__c )),
-      ISPICKVAL( pse__Status__c , &apos;Scheduled&apos;) ,
-      NSP_Create_Work_Order__c = True,
-      NOT( ISPICKVAL( NSP_Dispatch_Region__c ,&quot;&quot; ) )  ,
-      ISCHANGED( NSP_Owner__c ) ,
-      NOT( $User.NSP_Profile_Name__c = &apos;System Administrator&apos;)
-    )</errorConditionFormula>
+  NOT( $Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c ) ,
+  NOT( CONTAINS( $User.NSP_Profile_Name__c , &apos;System Admin&apos; ) ) ,
+  NOT(ISCHANGED( pse__Status__c )),
+  ISPICKVAL( pse__Status__c , &apos;Scheduled&apos;) ,
+  NSP_Create_Work_Order__c = True,
+  NOT( ISPICKVAL( NSP_Dispatch_Region__c ,&quot;&quot; ) ) ,
+  ISCHANGED( NSP_Owner__c )
+)</errorConditionFormula>
     <errorMessage>Please update the owner using the field service board</errorMessage>
 </ValidationRule>
