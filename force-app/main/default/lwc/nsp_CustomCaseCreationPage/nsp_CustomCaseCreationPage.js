@@ -1263,7 +1263,8 @@ if(this.isMultipleContactsSelected === false){
         getCategoryDependenciesMap({recordTypeId: this.selectedRecTypeId, isCatViewAll : this.showAllCategory}).then((response) => {
             let result = JSON.parse(response);
             this.categoryOptions = this.createOptions(Object.keys(result.mCatToSubCatogories).sort());
-            if( this.profileName !== 'System Administrator' && result.mCatToSubCatogories["HR Employee Relations"] != null ){
+            let isSystemAdmin = ( this.profileName && this.profileName.startsWith( 'System Admin' ) );
+            if ( !isSystemAdmin && ( result.mCatToSubCatogories["HR Employee Relations"] != null ) ) {
                 result.mCatToSubCatogories["HR Employee Relations"] = result.mCatToSubCatogories["HR Employee Relations"].filter(value => value !== "Separation Agreement Request");
             }
             this.subCategoryOptions = this.createOptions(result.mCatToSubCatogories[this.oCase.NSP_Category__c]);
@@ -1284,8 +1285,9 @@ if(this.isMultipleContactsSelected === false){
     getFiteredSubCatValues(){
         this.subCategoryOptions = [];
         getRelatedSubCategory({selectedCategory: this.selectedCategory, recordTypeId: this.selectedRecTypeId, isviewAllSubCat: this.showAllSubCategory}).then((response) => {
-            if( this.profileName !== 'System Administrator' ){
-            response = response.filter(value => value !== "Separation Agreement Request");
+            let isSystemAdmin = ( this.profileName && this.profileName.startsWith( 'System Admin' ) );
+            if ( !isSystemAdmin ) {
+                response = response.filter(value => value !== "Separation Agreement Request");
             }
             this.subCategoryOptions = this.createOptions(response);
         }).catch((error) => {
