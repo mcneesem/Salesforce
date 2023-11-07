@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>56.0</apiVersion>
     <choices>
         <name>Biweekly</name>
@@ -255,6 +255,13 @@
             <sortOrder>Asc</sortOrder>
         </sortOptions>
     </collectionProcessors>
+    <constants>
+        <name>flowName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Request Client Transition Meeting</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Does_Active_WO_Asset_exist</name>
         <label>Does Active WO Asset exist?</label>
@@ -295,6 +302,15 @@
             <label>OMR Discovery/SKO Task already exists</label>
         </rules>
     </decisions>
+    <description>Updated Medical plan to Checklist.WO Benefit Plan picklist vs hardcoded choices. Updated with Fault Handler subflow.</description>
+    <dynamicChoiceSets>
+        <name>checklistWOBenefitPlanPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>WO_Benefit_Package__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
         <name>bidversionformula</name>
@@ -392,38 +408,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Error_Log</name>
-        <label>Create Error Log</label>
-        <locationX>1106</locationX>
-        <locationY>2294</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Request Client Transition Meeting</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Get Error Message</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Orientation Meeting Requests</stringValue>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <name>Create_OMR_Task</name>
         <label>Create OMR Task</label>
         <locationX>578</locationX>
@@ -432,7 +416,7 @@
             <targetReference>Stamp_Account_with_Selected_OMR_ID</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Description</field>
@@ -502,7 +486,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -543,7 +527,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -582,6 +566,10 @@
         <connector>
             <targetReference>Get_field_definition_of_sales_office_on_account</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -603,6 +591,10 @@
         <connector>
             <targetReference>Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>QualifiedApiName</field>
@@ -633,7 +625,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
@@ -681,7 +673,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
         <filters>
@@ -736,7 +728,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -768,7 +760,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -823,7 +815,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -853,6 +845,10 @@
         <connector>
             <targetReference>Decrement_Selected_OMR_Record</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>EntityParticleId</field>
@@ -883,7 +879,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -922,7 +918,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -961,7 +957,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -993,7 +989,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1018,7 +1014,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1049,7 +1045,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1074,7 +1070,7 @@
         <locationY>2294</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1092,7 +1088,7 @@
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
-    <runInMode>SystemModeWithSharing</runInMode>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Discovery_SKO_Meeting_has_Already_been_Requested</name>
         <label>Discovery/SKO Meeting has Already been Requested</label>
@@ -1196,7 +1192,7 @@
                     <inputParameters>
                         <name>columns</name>
                         <value>
-                            <stringValue>[{&quot;apiName&quot;:&quot;Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-d5e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Date Valid&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid Formula&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-2b52&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Start Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-9aa3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;End Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-bcbb&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                            <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-d5e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-2b52&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Start Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-9aa3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;End Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-bcbb&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1346,31 +1342,9 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Medical_Plan_picklist</name>
-            <choiceReferences>Freedom_Premier</choiceReferences>
-            <choiceReferences>Freedom_Select</choiceReferences>
-            <choiceReferences>Freedom_Basic</choiceReferences>
-            <choiceReferences>Freedom_Choice</choiceReferences>
-            <choiceReferences>Freedom_Saver</choiceReferences>
-            <choiceReferences>Independence_Premier</choiceReferences>
-            <choiceReferences>Independence_Select</choiceReferences>
-            <choiceReferences>Independence_Basic</choiceReferences>
-            <choiceReferences>Independence_Choice</choiceReferences>
-            <choiceReferences>Independence_Saver</choiceReferences>
-            <choiceReferences>Liberty_Premier</choiceReferences>
-            <choiceReferences>Liberty_Select</choiceReferences>
-            <choiceReferences>Liberty_Basic</choiceReferences>
-            <choiceReferences>Liberty_Choice</choiceReferences>
-            <choiceReferences>Liberty_Saver</choiceReferences>
-            <choiceReferences>Freedom_Pacific_Northwest</choiceReferences>
-            <choiceReferences>Independence_Pacific_Northwest</choiceReferences>
-            <choiceReferences>Liberty_Pacific_Northwest</choiceReferences>
-            <choiceReferences>Revolution</choiceReferences>
-            <choiceReferences>Freedom_Savor</choiceReferences>
+            <name>Medical_Plan</name>
+            <choiceReferences>checklistWOBenefitPlanPicklist</choiceReferences>
             <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>medical_plan_formula</elementReference>
-            </defaultValue>
             <fieldText>Medical Plan</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
@@ -1463,6 +1437,25 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>1106</locationX>
+        <locationY>2294</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <elementReference>flowName</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>omrtaskdescriptiontemplate</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
@@ -1490,7 +1483,7 @@ NSP Effective Date: {!nspeffectivedate}
 -
 Medical Effective Date: {!medicaleffectivedate}
 -
-Medical Plan: {!Medical_Plan_picklist}
+Medical Plan: {!Medical_Plan}
 -
 Translator Needed for OT: {!Translator_Needed_for_OT}
 If yes to above question, language(s) needed: {!Language_s_Needed}
