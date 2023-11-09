@@ -4,7 +4,8 @@
 * Date : 24/08/2021
 */
 public class NSP_AccountTeamTriggerHelper {
-    
+    // test w/ NSP_AccountTeamTriggerTest (87%)
+
     private static final String NSP_ACCOUNT_TEAM_TRIGGER_HELPER = 'NSP_AccountTeamTriggerHelper';
     
     /**
@@ -198,6 +199,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             String profileName = [SELECT Id, Name from Profile WHERE Id =: profileId].Name;
             Set<String> accountTeamMemberUserIdSet = new Set<String>();
             List<NSP_Account_Team__c> newAccountTeamList=new  List<NSP_Account_Team__c>();
+            Set<String> perIdSet = new Set<String>();
+            List<NSP_Account_Team__c> perIdActTeamList=new  List<NSP_Account_Team__c>();
 
             //Profile Bypass logic added as part of DF-02431
             if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
@@ -222,6 +225,19 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                    accountTeamMemberUserIdSet.add(accountTeamMemberObj.NSP_User__c);
                    newAccountTeamList.add(accountTeamMemberObj);
                }
+                if(accountTeamMemberObj.NSP_PER_ID__c != oldMap.get(accountTeamMemberObj.Id).NSP_PER_ID__c
+                   && (String.isBlank(accountTeamMemberObj.NSP_PER_ID__c) || '0'.equals(accountTeamMemberObj.NSP_PER_ID__c))
+                  ){
+                    accountTeamMemberObj.NSP_User__c = null;
+                }
+                else if(!String.isBlank(accountTeamMemberObj.NSP_PER_ID__c) 
+                        &&accountTeamMemberObj.NSP_PER_ID__c != oldMap.get(accountTeamMemberObj.Id).NSP_PER_ID__c){
+                             perIdActTeamList.add(accountTeamMemberObj);
+                            perIdSet.add(accountTeamMemberObj.NSP_PER_ID__c);
+                        }
+                if(perIdSet.size()>0){
+                    populateUserIdOnATMBasedOnPerId(perIdActTeamList, perIdSet);
+                }
                
            }
            
@@ -234,6 +250,32 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_TEAM_TRIGGER_HELPER,'beforeUpdateDirector',ex.getMessage());
         }
         
+    }
+	
+	/**
+* MethodName  : populateUserIdOnATMBasedOnPerId
+* Description : This Method populates NSP User if there is a change on the PER Id.
+* Params      : List<NSP_Account_Team__c> acctTeamList
+* Params      : Set<String> perIdSet
+* Story       : AZD-235320
+* createdDate : 11/7/2023
+* */
+    public void populateUserIdOnATMBasedOnPerId(List<NSP_Account_Team__c> acctTeamList,Set<String> perIdSet){
+        Map<String,User> employeeIdMap = new Map<String,User>(); 
+        Map<ID, User> userMap = new Map<ID, User>([SELECT Id, EmployeeNumber FROM User WHERE EmployeeNumber IN: perIdSet]);
+       
+        for(User oUser : userMap.values()){
+            employeeIdMap.put(oUser.EmployeeNumber,oUser);
+        }
+        
+        for(NSP_Account_Team__c accountTeamMemberObj : acctTeamList) {
+            if(employeeIdMap.containsKey(accountTeamMemberObj.NSP_PER_ID__c) 
+               && (accountTeamMemberObj.NSP_PER_ID__c != null 
+                   && accountTeamMemberObj.NSP_User__c == null)){
+                       accountTeamMemberObj.NSP_User__c = employeeIdMap.get(accountTeamMemberObj.NSP_PER_ID__c).Id;
+                   }
+            
+        }
     }
     
     /**

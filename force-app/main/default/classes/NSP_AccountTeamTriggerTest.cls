@@ -16,7 +16,8 @@ public without sharing class NSP_AccountTeamTriggerTest {
     @testSetup
     static void testData() {
         User userObj = NSP_TestHelper.createUser(false);
-        userObj.NSP_Employee_Per_ID__c = EMP_PER_ID;
+        userObj.NSP_Employee_Per_ID__c = EMP_PER_ID; 
+        userObj.EmployeeNumber = EMP_PER_ID;
         userObj.NSP_Service_Region__c = 'MMSO - Houston';
         insert userObj;
         
@@ -331,5 +332,44 @@ public without sharing class NSP_AccountTeamTriggerTest {
         List<NSP_Account_Team__c> accTeamList =  Database.query(accTeamQuery);
         
       system.assertEquals(accTeamList.isEmpty(), false);       
+    }
+    /**
+    * @Description: This test method is used to cover populateUserIdOnATMBasedOnPerId
+    * @Created date: 11/7/2023. 
+    * @return void             
+    ***********************************/
+    @isTest
+    public static void populateUserIdOnATMBasedOnPerIdTest(){
+        Account accountObj = [SELECT Id,Name from Account WHERE Name !=null limit 1];
+        
+        NSP_Account_Team__c accTeam = new NSP_Account_Team__c();
+        accTeam.NSP_Account__c = accountObj.Id;
+        accTeam.NSP_Role__c = 'Recruiting';
+        accTeam.NSP_PER_ID__c = '545454';
+        insert accTeam;
+        
+        NSP_Account_Team__c accTeam1 = new NSP_Account_Team__c();
+        accTeam1.NSP_Account__c = accountObj.Id;
+        accTeam1.NSP_Role__c = 'Recruiting';
+        accTeam1.NSP_PER_ID__c = '765456';
+        insert accTeam1;
+        
+        List<NSP_Account_Team__c> accountTeamObjList = [SELECT Id,NSP_User__c from NSP_Account_Team__c WHERE
+                                              NSP_PER_ID__c = '545454' or NSP_PER_ID__c = '765456'];
+        
+        test.startTest();
+        
+         User userObj = [SELECT Id,EmployeeNumber FROM User WHERE NSP_Employee_Per_ID__c =: EMP_PER_ID];
+        accountTeamObjList[0].NSP_Role__c = 'HR Specialist';
+        accountTeamObjList[0].NSP_PER_ID__c = EMP_PER_ID;
+        //update accountTeamObj;
+        accountTeamObjList[1].NSP_PER_ID__c = '0';
+        update accountTeamObjList;
+        test.stopTest();  
+        
+        NSP_Account_Team__c accountTeam = [SELECT Id,NSP_Role__c,NSP_User__c from NSP_Account_Team__c 
+                                           WHERE NSP_Account__c =: accountObj.Id Limit 1];
+        
+        system.assertEquals(userObj.Id, accountTeam.NSP_User__c);  
     }
 }
