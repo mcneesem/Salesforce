@@ -75,7 +75,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Bat
                                                            subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(-21)){
                                                                //Condition for BT and Core Segment Type
                                                                if(segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)){
-                                                                   flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_Christine_Bishop);
+                                                                   flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
                                                                    flsaCaseList.add(flsaCase);
                                                                    subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
                                                                    subClientList.add(subClientRecord);
