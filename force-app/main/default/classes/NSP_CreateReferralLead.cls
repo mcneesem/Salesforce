@@ -1,5 +1,6 @@
 public without sharing class NSP_CreateReferralLead {
-    
+ // test w/ NSP_CreateReferralLeadTest (83%)
+
  private static final String ErrorOccured=' Error occured: ';   
  private static final String ReferralTask='Referral_Task';  
  private static final String objectName='Lead';  
@@ -78,7 +79,6 @@ public without sharing class NSP_CreateReferralLead {
             //Passing the sobject name and field API name
             picklistValueClassObject.industry = NSP_CreatePartnerAccount.getPiklistValues(objectName,Industry);
             picklistValueClassObject.potentialCustomer = NSP_CreatePartnerAccount.getPiklistValues(objectName,Customerpotential);
-            picklistValueClassObject.productofinterest = NSP_CreatePartnerAccount.getPiklistValues(objectName,Productinterted);
         }Catch(Exception Ex){
             throw new AuraHandledException(ex.getMessage());
         }

@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>myhires@insperity.com.invalid</email>
     <name>Recruiting Services</name>
-    <queueMembers>
-        <users>
-            <user>cindy.pack@insperity.com</user>
-            <user>jessica.fortin@insperity.com</user>
-            <user>jill.winzy-brown@insperity.com</user>
-            <user>leslie.box@insperity.com</user>
-            <user>leslie.lockhart@insperity.com</user>
-            <user>shay.lovett@insperity.com</user>
-        </users>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

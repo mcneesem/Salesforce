@@ -10,14 +10,14 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------
 * Jatin                      6/9/2022                First Iteration
 */
-
+// test with NPS_CloneServicePlanProjectController 81%
 public without sharing class Nps_CloneServicePlanProjectController {
 
     private static final List<String> PROJECT_TASK_FIELDS = new List<String>{ 
                                             'Id', 'pse__Project__c', 'Name', 'pse__Status__c', 'NSP_isClonedFromAutomation__c',
                                              'pse__Start_Date_Time__c',
                                              'pse__End_Date_Time__c', 'OwnerId', 'NSP_Percentage_Complete__c',
-                                             'NSP_Category__c', 'NSP_Sub_Category__c', 'NSP_Detail__c'
+                                             'NSP_Category__c', 'NSP_Sub_Category__c', 'NSP_Detail__c', 'pse__Parent_Task__r.Name','pse__Parent_Task__c'
                                         };
 
     @AuraEnabled
@@ -169,24 +169,14 @@ public without sharing class Nps_CloneServicePlanProjectController {
             pse__Proj__c proj = (pse__Proj__c) new NSP_sObjectSelector('pse__Proj__c', projectFields).selectById(projId);
 
             // Populate list of project tasks that needs to be created
-            addPreviousProjectTasks(prevProjectTaskIds, projectTasks, proj);
-
-            // Prepare a list of project account records that needs to be created
+            addPreviousProjectTasks(prevProjectTaskIds, projId,oldProjectId);
+			// Prepare a list of project account records that needs to be created
             List<Project_Account__c> projAccounts = getProjectAccounts(projAccountIds, projId);
-
-            // Prepare a list of unselected project task needs to be cancelled 
-            List<pse__Project_Task__c> projTaskToCancel = getUnselectedProjectTasksByProjectId(oldProjectId , prevProjectTaskIds);
-
-            // Prepare a consolidated list of items which needs to be inserted
+			// Prepare a consolidated list of items which needs to be inserted
             List<SObject> itemsToInsert = new List<SObject>();
-            itemsToInsert.addAll(projAccounts);
-
-            // Prepare a consolidated list of items which needs to be updated
             List<SObject> itemsToUpdate = new List<SObject>();
-            itemsToUpdate.addAll(updateStatusInProjectTasks(prevProjectTaskIds));
-            itemsToUpdate.addAll(cancelUnslectedTaskStatus(projTaskToCancel));
-
-            // Perform all the DML operations
+            itemsToInsert.addAll(projAccounts);
+			// Perform all the DML operations
             return performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
         } catch (Exception excep) {
             throw NSP_Utilities.getAuraException(excep);
@@ -291,21 +281,59 @@ public without sharing class Nps_CloneServicePlanProjectController {
      /**
       * This method retrieves project tasks by task ids and add it to the given project task list.
       */
-      private static void addPreviousProjectTasks(List<String> prevProjectTaskIds, List<pse__Project_Task__c> newProjectTasks, pse__Proj__c proj){
+      @future
+      public static void addPreviousProjectTasks(List<String> prevProjectTaskIds, Id projId, Id oldProjectId){
         List<pse__Project_Task__c> prevProjTasks = (List<pse__Project_Task__c>) new NSP_sObjectSelector('pse__Project_Task__c', PROJECT_TASK_FIELDS)
                                                 .selectById(prevProjectTaskIds);
-
+        List<String> newProjectTaskIds = new List<String>();
+        List<pse__Project_Task__c> newProjectTasks = new List<pse__Project_Task__c>();
+        List<pse__Project_Task__c> parentProjectTasks = new List<pse__Project_Task__c>();
+        List<pse__Project_Task__c> childProjectTasks = new List<pse__Project_Task__c>();
+        Map<String,String> parentTaskNameIds = new Map<String,String>(); 
         for(pse__Project_Task__c task : prevProjTasks){
             pse__Project_Task__c newTask = task.clone(false, true, false, false);
             newTask.NSP_isClonedFromAutomation__c = true;
-            newTask.pse__Project__c = proj.Id;
-            newProjectTasks.add(newTask);
+            newTask.pse__Project__c = projId;
+           
+            if(newTask.pse__Parent_Task__c != null){
+                childProjectTasks.add(newTask);
+            }else{
+                parentProjectTasks.add(newTask);
+            }
+            
         }
-        if(!newProjectTasks.isEmpty()){
-            Database.insert(newProjectTasks);
-        }
+        if(!parentProjectTasks.isEmpty()){
+            List<Database.SaveResult> results = Database.insert(parentProjectTasks,false);
+            NSP_ErrorLogHandler.logSaveResultsException('NPS_CloneServicePlanProjectController','newProjectTasks', results);
+          }
+          for(pse__Project_Task__c newTask:[SELECT Id,Name FROM pse__Project_Task__c WHERE pse__Project__c=:projId AND NSP_isClonedFromAutomation__c = true]){
+              parentTaskNameIds.put(newTask.Name,newTask.Id);
+          }
+          
+          //get parent task id and update child task
+          for(pse__Project_Task__c childTask: childProjectTasks){
+              childTask.pse__Parent_Task__c = parentTaskNameIds.get(childTask.pse__Parent_Task__r.Name);
+          }
+        
+          if(!childProjectTasks.isEmpty()){
+            List<Database.SaveResult> results = Database.insert(childProjectTasks,false);
+            NSP_ErrorLogHandler.logSaveResultsException('NPS_CloneServicePlanProjectController','newProjectTasks', results);
+          }
 
-        insertProjTaskRelatedRecords(prevProjTasks, newProjectTasks, proj);
+          for(pse__Project_Task__c newTask:[SELECT Id,Name FROM pse__Project_Task__c WHERE pse__Project__c=:projId AND NSP_isClonedFromAutomation__c = true]){
+              newProjectTaskIds.add(newTask.Id); 
+          }
+          insertProjTaskRelatedRecords(prevProjectTaskIds, newProjectTaskIds, projId);
+          List<pse__Project_Task__c> projTaskToCancel = getUnselectedProjectTasksByProjectId(oldProjectId , prevProjectTaskIds);
+			
+            // Prepare a consolidated list of items which needs to be updated
+            List<SObject> itemsToUpdate = new List<SObject>();
+          	List<SObject> itemsToInsert = new List<SObject>();
+            itemsToUpdate.addAll(updateStatusInProjectTasks(prevProjectTaskIds));
+            itemsToUpdate.addAll(cancelUnslectedTaskStatus(projTaskToCancel));
+
+            // Perform all the DML operations
+            performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
      }
 
      /**
@@ -324,7 +352,12 @@ public without sharing class Nps_CloneServicePlanProjectController {
      /**
       * This method inserts the related records of Project Task to be cloned.
       */
-     private static void insertProjTaskRelatedRecords(List<pse__Project_Task__c> prevProjTasks, List<pse__Project_Task__c> newProjTasks, pse__Proj__c proj){      
+    public static void insertProjTaskRelatedRecords(List<String> prevProjTaskIds, List<Id> newProjTaskIds, Id projId){
+        
+        List<pse__Project_Task__c> prevProjTasks = (List<pse__Project_Task__c>) new NSP_sObjectSelector('pse__Project_Task__c', PROJECT_TASK_FIELDS)
+                                               .selectById(prevProjTaskIds);
+        List<pse__Project_Task__c> newProjTasks = (List<pse__Project_Task__c>) new NSP_sObjectSelector('pse__Project_Task__c', PROJECT_TASK_FIELDS)
+                                               .selectById(newProjTaskIds);
         Map<String, Id> newMapOfPTNameAndId = new Map<String, Id>();
         Map<Id, String> oldMapOfPTIdAndName = new Map<Id, String>();
         List<sObject> relatedRecords = new List<sObject>();
@@ -344,9 +377,10 @@ public without sharing class Nps_CloneServicePlanProjectController {
                                                                 NSP_Project_Record_Type__c, NSP_Project_Start_Date__c, NSP_Project_Task_Assignment_External_ID__c, pse__Project_Task_End_Date__c,
                                                                 pse__Project_Task_Start_Date__c, psaws__Status__c, pse__Resource_Request__c, pse__Resource_Role__c,
                                                                 Resource_Type__c, pse__Schedule_Type__c, pse__Start_Date__c, pse__Project_Task__c, pse__Project_Task__r.Name, pse__Project_Task__r.pse__Status__c, pse__Resource__c,
-                                                                pse__Project_Task__r.pse__Start_Date_Time__c, pse__Project_Task__r.pse__End_Date_Time__c, pse__Project_Task__r.NSP_Percentage_Complete__c
+                                                                pse__Project_Task__r.pse__Start_Date_Time__c, pse__Project_Task__r.pse__End_Date_Time__c, pse__Project_Task__r.NSP_Percentage_Complete__c,
+                                                                pse__Resource__r.Name, pse__Project_Task__r.pse__Parent_Task__r.Name
                                                                 FROM pse__Project_Task_Assignment__c 
-                                                                WHERE pse__Project_Task__c =: oldMapOfPTIdAndName.keySet()]){
+                                                                WHERE pse__Project_Task__c =: prevProjTaskIds]){
             pse__Project_Task_Assignment__c newProjTaskAssignemt = projTaskAssignment.clone(false, true, false, false);
             String identifier = uniqueIdentifierForPTA(projTaskAssignment.pse__Project_Task__r);
             newProjTaskAssignemt.pse__Project_Task__c = newMapOfPTNameAndId.get(identifier);
@@ -356,7 +390,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
         //clone the notes and attach them to the newly cloned project task
         for(NSP_Note__c note: [SELECT Id, NSP_NetSuite_External_ID__c, NSP_OneVoice_External_ID__c, Note__c, NSP_Project_Task__c, NSP_Project_Task__r.Name, NSP_Project_Task__r.pse__Status__c, 
                                 NSP_Project_Task__r.pse__Start_Date_Time__c, NSP_Project_Task__r.pse__End_Date_Time__c, NSP_Project_Task__r.NSP_Percentage_Complete__c
-                                FROM NSP_Note__c WHERE NSP_Project_Task__c =:  oldMapOfPTIdAndName.keySet()]){
+                                FROM NSP_Note__c WHERE NSP_Project_Task__c =: prevProjTaskIds]){
             NSP_Note__c newNote = note.clone(false, true, false, false);
             String identifier = uniqueIdentifierForPTA(note.NSP_Project_Task__r);
             newNote.NSP_Project_Task__c = newMapOfPTNameAndId.get(identifier);
@@ -380,7 +414,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
      }
 
      private static String uniqueIdentifierForPTA(pse__Project_Task__c projTask){
-        return projTask.Name + '`' + projTask.pse__Status__c + '`' + projTask.pse__Start_Date_Time__c + '`' + projTask.pse__End_Date_Time__c + '`' + projTask.NSP_Percentage_Complete__c;
+        return projTask.Name + '`' + projTask.pse__Parent_Task__r.Name;
      }
 
      /**

@@ -19,13 +19,15 @@ private class NSP_ProjectTriggerHelperTest {
     private static final Id peoProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME,'PEO_Project');
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     private static final String NAME = 'name';
+    private static final String BENIFITS_MANAGER= 'Benefits Manager';
     private static final List<String> PROJECT_FIELDS = new List<String>{
         'Id',
         'Name',
         'pse__Start_Date__c',
         'Templates_Used__c',
         'Peer_Review__c',
-        'pse__Project_Type__c'
+        'pse__Project_Type__c',
+        'OwnerId'
     };
     private static final List<String> ACCOUNT_FIELDS = new List<String>{
         'Id',
@@ -198,6 +200,16 @@ private class NSP_ProjectTriggerHelperTest {
         objRecInsertList.add(milestoneObj);
     
         Database.insert(objRecInsertList);
+         //category subcategory mapping creation
+        NSP_Category_Sub_Category_Mapping__c newCat = (NSP_Category_Sub_Category_Mapping__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Category_Sub_Category_Mapping__c(), 'NSP_TestDataFactory.CatSubCatMappingDefaults', false);
+        newCat.NSP_UserTitle__c = BENIFITS_MANAGER;
+        newCat.NSP_Category__c = NSP_ServiceConstants.INFRASTRUCTURE;
+        newCat.NSP_Subcategory__c = NSP_ServiceConstants.PTO;
+        newCat.NSP_isActive__c=True;
+        newCat.NSP_Asset_Record_Types__c= NSP_ServiceConstants.WO_ASSET_RECORDTYPE;
+        newCat.NSP_RecordType__c= NSP_ServiceConstants.PEO;
+        newCat.NSP_Public_Groups_To_Share__c = NSP_ServiceConstants.ALL_DATA_VISIBILTY; 
+        insert(newCat);
 
         User BpaUser = new User(alias = 'jsmit', email='jsmith@insperity.com', 
                                 emailencodingkey='UTF-8', lastname='Smith', 
@@ -879,6 +891,37 @@ private class NSP_ProjectTriggerHelperTest {
         }catch (DmlException ex) {
             System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
         } 
+        
+    }
+
+    /***********************************************************************************************
+    * MethodName  : updateProjOwnerForServicePlanProjectTypeTest
+    * Description : This method is used to test project owner assignment based on Service Segmement on Account
+    * ********************************************************************************************/
+    @isTest
+    private static void updateProjOwnerForServicePlanProjectTypeTest(){
+        
+        List<String> accFields = new List<String>{'Id',NAME};
+            String accQuery = new NSP_QueryBuilder('Account', accFields)
+            .addFilter(NAME, 'Test Account').addLimit(1).build();
+        Account acc = Database.query(accQuery);
+        
+        acc.NSP_Service_Segment__c = NSP_ServiceConstants.CoreAssetSegment;
+        update acc;
+        
+        test.startTest();
+        pse__Proj__c proj = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        proj.TemplateName__c=NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
+        proj.pse__Project_Type__c = NSP_ServiceConstants.PROJECT_TYPE_SERVICE;
+        proj.pse__Account__c = acc.Id;
+        proj.pse__Is_Template__c = False;
+        proj.pse__Start_Date__c = System.today();
+        insert proj;
+        test.stopTest();
+        
+        pse__Proj__c updatedProj = (pse__Proj__c) new NSP_sObjectSelector('pse__Proj__c', PROJECT_FIELDS).selectById(proj.Id);
+
+        System.assertEquals(updatedProj.OwnerId, userinfo.getUserId());
         
     }
 }

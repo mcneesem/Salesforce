@@ -55,12 +55,12 @@
         </connector>
     </assignments>
     <assignments>
-        <name>BPABPS_Assignment</name>
-        <label>BPABPS Assignment</label>
+        <name>BPABPSSEMorMMAdmin_Assignment</name>
+        <label>BPABPSSEMorMMAdmin Assignment</label>
         <locationX>2448</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>varIsBPABPS</assignToReference>
+            <assignToReference>varIsBPABPSSEMorMMAdmin</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -369,7 +369,7 @@
             <label>DA/DM/RA/SSS Role</label>
         </rules>
         <rules>
-            <name>BPA_BPS_SEMRole</name>
+            <name>BPA_BPS_SEM_MM_Admin_Role</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$UserRole.DeveloperName</leftValueReference>
@@ -399,10 +399,17 @@
                     <stringValue>Sales_Compensation</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MidMarket_Administrator</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>BPABPS_Assignment</targetReference>
+                <targetReference>BPABPSSEMorMMAdmin_Assignment</targetReference>
             </connector>
-            <label>BPA/BPS/SEMRole</label>
+            <label>BPA/BPS/SEM/MM Admin Role</label>
         </rules>
         <rules>
             <name>NCS</name>
@@ -564,7 +571,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>varIsBPABPS</leftValueReference>
+                <leftValueReference>varIsBPABPSSEMorMMAdmin</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -576,7 +583,7 @@
             <label>Is SEM or NCS or BPA</label>
         </rules>
     </decisions>
-    <description>Added access for RA and SSS and fault handler subflow</description>
+    <description>Added MidMarket Admin to BPS/SEM path. Added access for RA and SSS and fault handler subflow</description>
     <dynamicChoiceSets>
         <name>OppAccessLevelPL</name>
         <dataType>Picklist</dataType>
@@ -1046,7 +1053,7 @@
         </value>
     </variables>
     <variables>
-        <name>varIsBPABPS</name>
+        <name>varIsBPABPSSEMorMMAdmin</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

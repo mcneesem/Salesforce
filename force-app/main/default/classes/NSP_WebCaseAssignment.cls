@@ -21,11 +21,11 @@ public without sharing class NSP_WebCaseAssignment {
             Id bpsCaseRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.BPS); 
             
             for (NSP_Case_Assignment_Email_Queue_Mapping__mdt caseAssignTable : NSP_Case_Assignment_Email_Queue_Mapping__mdt.getAll().values()){
-                caseQueueSet.add(caseAssignTable.NSP_Email__c);
+                caseQueueSet.add(caseAssignTable.Case_Owner__c);
             }
-            // fetching the users 
+            // fetching the users when the case owner(queue) on EmailMessage obj contains in mtd 
             for(EmailMessage eMessage : newEmailList){
-                if(caseQueueSet.Contains(eMessage.ToAddress)){
+                if(caseQueueSet.Contains(eMessage.Case_Owner_Name__c)){
                     userEmailSet.add(eMessage.FromAddress);
                 }
             }
@@ -35,7 +35,7 @@ public without sharing class NSP_WebCaseAssignment {
             // update cases 
             // Added Test.isRunning Test to by pass the email to case address as it will be different for every org.
             for(EmailMessage eMessage : newEmailList){
-                if((caseQueueSet.Contains(eMessage.ToAddress) && mapEmailUserId.containsKey(eMessage.FromAddress)) || test.isRunningTest() ){
+                if((caseQueueSet.Contains(eMessage.Case_Owner_Name__c) && mapEmailUserId.containsKey(eMessage.FromAddress)) || test.isRunningTest() ){
                     updateCaseList.add(new Case(
                         Id = eMessage.ParentId, 
                         RecordTypeId = bpsCaseRecordTypeId, 

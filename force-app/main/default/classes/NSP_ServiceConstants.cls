@@ -181,7 +181,9 @@ public class NSP_ServiceConstants {
   public final static String CASE_CATEGORY_EMP_SCREENING = 'Employment Screening';
   public static final String IMPACT_FOCUS_ITEM_ORIGIN = 'Impact Focus Item';  
   public final static String SEASONAL_EMP_DETAIL = 'Seasonal Employer Requests'; 
-  public final static string RESOLVED = 'Resolved';                                
+  public final static string RESOLVED = 'Resolved';
+  public final static string CASE_ASSIGNED = 'Assigned';
+  public final static string CASE_REFERRED_TO_PAYROLL = 'Referred to Payroll';
 
   //ASSET CONSTANTS
   public final static string ASSET_SOBJECT_TYPE            ='Asset';
@@ -782,7 +784,6 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public static final String RET_CSPPROCESSING = 'RET CSP Processing';
   public static final String RET_CSPIMPLEMENTATION = 'RET CSP Implementation';
   public static final String RET_CSPCOMPLIANCE = 'RET CSP Compliance';
-  public static final String RET_CSPCONSULTING = 'RET CSP Consulting';
   public static final String RET_SRP = 'RET SRP';
   public static final String RET_ORK = 'RET ORK';
   public static final String RET_OPSOMNI = 'RET Ops - OMNI';
