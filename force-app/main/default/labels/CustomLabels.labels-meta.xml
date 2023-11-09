@@ -5860,6 +5860,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Who will be submitting the payroll</value>
     </labels>
     <labels>
+        <fullName>NotifyITAEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NotifyITAEmail</shortDescription>
+        <value>ITA Implementation project has been created%</value>
+    </labels>
+    <labels>
         <fullName>Nsp_AccountGroupAlertLabel</fullName>
         <language>en_US</language>
         <protected>false</protected>
