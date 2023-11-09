@@ -378,7 +378,8 @@ public class NSP_AssetServiceTriggerHelper {
              asset.NSP_Phone__c  != oldMapvalue.NSP_Phone__c    ||
              asset.NSP_RET_Phone_Ext__c  != oldMapvalue.NSP_RET_Phone_Ext__c   ||
              asset.NSP_Email__c  != oldMapvalue.NSP_Email__c ||
-             asset.NSP_Renewal_Date__c  != oldMapvalue.NSP_Renewal_Date__c
+             asset.NSP_Renewal_Date__c  != oldMapvalue.NSP_Renewal_Date__c  ||
+             asset.NSP_Client__c    !=  oldMapvalue.NSP_RET_Client_ID__c    //11092023 - STY-241721
             )){
                 // check if atleast one field in WO asset is updated as per condition
                 isValid = true;
@@ -440,6 +441,7 @@ public class NSP_AssetServiceTriggerHelper {
     private Asset updateAssets(Asset getAsst, Asset assLst){
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
+        getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
         getAsst.NSP_Client__c = null;
         getAsst.NSP_Company_Name__c = null;
         getAsst.NSP_Account_Status__c = assLst.NSP_Account_Status__c;
@@ -463,7 +465,7 @@ public class NSP_AssetServiceTriggerHelper {
         getAsst.NSP_Phone__c = assLst.NSP_Phone__c;
         getAsst.NSP_RET_Phone_Ext__c = assLst.NSP_RET_Phone_Ext__c;
         getAsst.NSP_Email__c = assLst.NSP_Email__c;
-        getAsst.NSP_Renewal_Date__c = assLst.NSP_Renewal_Date__c;
+        getAsst.NSP_Renewal_Date__c = assLst.NSP_Renewal_Date__c;        
         return returnAsset;
     }
 
