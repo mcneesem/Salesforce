@@ -1,7 +1,7 @@
-    /**
-    * Represents the project trigger helper which handles all the logic.
-    */
-    public class NSP_ProjectTasksTriggerHelper {
+/**
+* Represents the project trigger helper which handles all the logic.
+*/
+public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest (87%)
 
     private static final String HUNDRED_PERCENT =  '100%';
@@ -87,29 +87,29 @@
         } 
     }
 
-
-/**
-* Description: Filter record for other functions
-* @return void             
-*/
-        public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
+    /**
+    * Description: Filter record for other functions
+    * @return void
+    */
+    public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
         List<pse__Project_Task__c> cobraProjectTaskList = new List<pse__Project_Task__c>();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
-            for(pse__Project_Task__c pTask : listProjectTasks){
+        for(pse__Project_Task__c pTask : listProjectTasks){
             //Checking for COBRA Parent Task
-            	if(pTask.Name==pta.NSP_Task_Name__c){
-                	cobraProjectTaskList.add(pTask);
-            	}
+            if(pTask.Name==pta.NSP_Task_Name__c){
+                cobraProjectTaskList.add(pTask);
+            }
         }
         if(cobraProjectTaskList.size() > 0){
             createCobraSubTasks(cobraProjectTaskList);
         }
-        }
-/***********************************************************************************************
-* MethodName:  createCobraSubTasks
-* Description : Create sub tasks for cobra
-* Params: List<pse__Project_Task__c> cobraProjectTaskList
-* ********************************************************************************************/
+    }
+
+    /***********************************************************************************************
+    * MethodName:  createCobraSubTasks
+    * Description : Create sub tasks for cobra
+    * Params: List<pse__Project_Task__c> cobraProjectTaskList
+    * ********************************************************************************************/
     public void createCobraSubTasks(List<pse__Project_Task__c> cobraProjectTaskList){
         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
@@ -119,28 +119,28 @@
         List<pse__Project_Task__c> cobraChildProjectTaskList = new List<pse__Project_Task__c>();
         try{
         for(pse__Project_Task__c pt: cobraProjectTaskList){
-                            if(pt.Name==pta.NSP_Task_Name__c){
-                                    pse__Project_Task__c eachProjecttask = createProjectTaskfromParent(pt);
-             						eachProjecttask.NSP_Sub_Category__c=pta1.NSP_Sub_Category__c;
-                                    eachProjecttask.Name=pta1.NSP_Task_Name__c;
-                                    eachProjecttask.pse__Hierarchy_Depth__c =1;
-                                    eachProjecttask.pse__Order__c=137;
-                                    cobraChildProjectTaskList.add(eachProjecttask); 
-                                
-                                	pse__Project_Task__c eachProjecttask1 = createProjectTaskfromParent(pt);
-             						eachProjecttask1.NSP_Sub_Category__c=pta2.NSP_Sub_Category__c;
-                                    eachProjecttask1.Name=pta2.NSP_Task_Name__c;
-                                    eachProjecttask1.pse__Hierarchy_Depth__c =2;
-                                    eachProjecttask1.pse__Order__c=138;
-                                    cobraChildProjectTaskList.add(eachProjecttask1);
-                                
-                                	pse__Project_Task__c eachProjecttask2 = createProjectTaskfromParent(pt);
-             						eachProjecttask2.NSP_Sub_Category__c=pta3.NSP_Sub_Category__c;
-                                    eachProjecttask2.Name=pta3.NSP_Task_Name__c;
-                                    eachProjecttask2.pse__Hierarchy_Depth__c =3;
-                                    eachProjecttask2.pse__Order__c=139;
-                                    cobraChildProjectTaskList.add(eachProjecttask2);   
-                            }
+            if(pt.Name==pta.NSP_Task_Name__c){
+                pse__Project_Task__c eachProjecttask = createProjectTaskfromParent(pt);
+                eachProjecttask.NSP_Sub_Category__c=pta1.NSP_Sub_Category__c;
+                eachProjecttask.Name=pta1.NSP_Task_Name__c;
+                eachProjecttask.pse__Hierarchy_Depth__c =1;
+                eachProjecttask.pse__Order__c=137;
+                //
+                cobraChildProjectTaskList.add(eachProjecttask);
+                pse__Project_Task__c eachProjecttask1 = createProjectTaskfromParent(pt);
+                eachProjecttask1.NSP_Sub_Category__c=pta2.NSP_Sub_Category__c;
+                eachProjecttask1.Name=pta2.NSP_Task_Name__c;
+                eachProjecttask1.pse__Hierarchy_Depth__c =2;
+                eachProjecttask1.pse__Order__c=138;
+                cobraChildProjectTaskList.add(eachProjecttask1);
+                //
+                pse__Project_Task__c eachProjecttask2 = createProjectTaskfromParent(pt);
+                eachProjecttask2.NSP_Sub_Category__c=pta3.NSP_Sub_Category__c;
+                eachProjecttask2.Name=pta3.NSP_Task_Name__c;
+                eachProjecttask2.pse__Hierarchy_Depth__c =3;
+                eachProjecttask2.pse__Order__c=139;
+                cobraChildProjectTaskList.add(eachProjecttask2);
+            }
         }
         if(!cobraChildProjectTaskList.isEmpty()){
             List<Database.SaveResult> insertChildResults = Database.Insert(cobraChildProjectTaskList, false);
@@ -150,32 +150,30 @@
             NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createCobraSubTasks', ex.getMessage());
         }
     }
-/***********************************************************************************************
-* MethodName:  createProjectTaskfromParent
-* Description : createProjectTask from Parent
-* Params: pse__Project_Task__c parentProjectTask
-* ********************************************************************************************/        
+
+    /***********************************************************************************************
+    * MethodName:  createProjectTaskfromParent
+    * Description : createProjectTask from Parent
+    * Params: pse__Project_Task__c parentProjectTask
+    * ********************************************************************************************/
     private pse__Project_Task__c createProjectTaskfromParent(pse__Project_Task__c parentProjectTask){
-         
-         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-         
-         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
-         eachProjectTask.RecordTypeId=projectTaskPEORecordTypeId;
-         eachProjectTask.NSP_Category__c= parentProjectTask.NSP_Category__c;
-         eachProjectTask.NSP_Visible_to_Client__c = TRUE;
-         eachProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
-         eachProjectTask.pse__Start_Date_Time__c = System.now();        
-         eachProjectTask.pse__WBS_Element_Number__c = parentProjectTask.pse__WBS_Element_Number__c;
-       	 eachProjecttask.pse__Project__c = parentProjectTask.pse__Project__c;
-         eachProjecttask.pse__End_Date_Time__c = parentProjectTask.pse__End_Date_Time__c;
-         eachProjectTask.NSP_Implementation_Profile_Account__c = parentProjectTask.NSP_Implementation_Profile_Account__c;
-         eachProjectTask.NSP_Implementation_Account_Id__c = parentProjectTask.NSP_Implementation_Account_Id__c;
-         eachProjectTask.OwnerId = parentProjectTask.OwnerId;
-         eachProjectTask.pse__Parent_Task__c = parentProjectTask.Id;
-         eachProjectTask.pse__Milestone__c = parentProjectTask.pse__Milestone__c;
-        
-         return eachProjectTask;
-     }
+        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
+        pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
+        eachProjectTask.RecordTypeId=projectTaskPEORecordTypeId;
+        eachProjectTask.NSP_Category__c= parentProjectTask.NSP_Category__c;
+        eachProjectTask.NSP_Visible_to_Client__c = TRUE;
+        eachProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
+        eachProjectTask.pse__Start_Date_Time__c = System.now();
+        eachProjectTask.pse__WBS_Element_Number__c = parentProjectTask.pse__WBS_Element_Number__c;
+        eachProjecttask.pse__Project__c = parentProjectTask.pse__Project__c;
+        eachProjecttask.pse__End_Date_Time__c = parentProjectTask.pse__End_Date_Time__c;
+        eachProjectTask.NSP_Implementation_Profile_Account__c = parentProjectTask.NSP_Implementation_Profile_Account__c;
+        eachProjectTask.NSP_Implementation_Account_Id__c = parentProjectTask.NSP_Implementation_Account_Id__c;
+        eachProjectTask.OwnerId = parentProjectTask.OwnerId;
+        eachProjectTask.pse__Parent_Task__c = parentProjectTask.Id;
+        eachProjectTask.pse__Milestone__c = parentProjectTask.pse__Milestone__c;
+        return eachProjectTask;
+    }
 
     /**
     * Update Project Task Completed and Started checkbox based on its Status.
