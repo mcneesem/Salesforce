@@ -3,6 +3,12 @@
     <fullName>NSP_ResolutionRequiredtocloseCase</fullName>
     <active>true</active>
     <description>Resolution required upon closing the case</description>
-    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true, $Profile.Name &lt;&gt; &apos;System Administrator&apos;, $RecordType.Name =&apos;PEO&apos;, ISPICKVAL(Status,&apos;Closed&apos;), ISBLANK( Text(Reason) ))</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $RecordType.Name = &apos;PEO&apos; ,
+  ISPICKVAL( Status , &apos;Closed&apos; ) ,
+  ISBLANK( Text( Reason ) )
+)</errorConditionFormula>
     <errorMessage>Please enter the Resolution to Close the Case</errorMessage>
 </ValidationRule>

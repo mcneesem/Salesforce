@@ -4,8 +4,11 @@
     <active>true</active>
     <description>mark Consumer Privacy Act Category required if CCPA Inquiry box is checked</description>
     <errorConditionFormula>AND( 
-$Setup.NSP_Trigger_Switch__c.CaseValidations__c != true, $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-NSP_Consumer_Privacy_Inquiry__c  = True, ISPICKVAL( NSP_Consumer_Privacy_Act_Category__c , &quot;&quot;))</errorConditionFormula>
+  NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  NSP_Consumer_Privacy_Inquiry__c ,
+  ISPICKVAL( NSP_Consumer_Privacy_Act_Category__c , &quot;&quot; )
+)</errorConditionFormula>
     <errorDisplayField>NSP_Consumer_Privacy_Act_Category__c</errorDisplayField>
     <errorMessage>Complete this field.</errorMessage>
 </ValidationRule>

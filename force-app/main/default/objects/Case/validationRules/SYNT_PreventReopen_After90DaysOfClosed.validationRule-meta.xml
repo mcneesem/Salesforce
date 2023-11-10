@@ -4,11 +4,11 @@
     <active>true</active>
     <description>This validation rule prevent the user editing on the Closed record</description>
     <errorConditionFormula>AND(
-  $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
-  $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-  $Profile.Name &lt;&gt; &apos;Data Migration&apos;,
-  ISPICKVAL(Status, &apos;ReOpened&apos;),
- ( NSP_Date_Closed__c &lt; ( TODAY()-91))
+  NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
+  ISPICKVAL( Status , &apos;ReOpened&apos; ) ,
+  ( NSP_Date_Closed__c &lt; ( TODAY() - 91 ) )
 )</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
     <errorMessage>Can&apos;t Reopen the Case that Closed 90 days ago</errorMessage>
