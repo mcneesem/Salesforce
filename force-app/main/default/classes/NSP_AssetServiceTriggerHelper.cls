@@ -1,5 +1,6 @@
 /**
 Apex Class Name      :  NSP_AssetServiceTriggerHelper
+Test Class Name      :  NSP_AssetServiceTriggerHelperTest
 Version              :  1.0
 Created Date         :  6/1/2022
 Author               :  Jatin
@@ -465,7 +466,7 @@ public class NSP_AssetServiceTriggerHelper {
         getAsst.NSP_Phone__c = assLst.NSP_Phone__c;
         getAsst.NSP_RET_Phone_Ext__c = assLst.NSP_RET_Phone_Ext__c;
         getAsst.NSP_Email__c = assLst.NSP_Email__c;
-        getAsst.NSP_Renewal_Date__c = assLst.NSP_Renewal_Date__c;        
+        getAsst.NSP_Renewal_Date__c = assLst.NSP_Renewal_Date__c;
         return returnAsset;
     }
 
