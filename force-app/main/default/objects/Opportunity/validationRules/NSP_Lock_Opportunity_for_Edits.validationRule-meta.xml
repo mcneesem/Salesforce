@@ -4,7 +4,7 @@
     <active>true</active>
     <description>Opportunity is Locked for edits once the Opportunity is closed won.</description>
     <errorConditionFormula>AND(
-  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c)
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c) ,
   NSP_Lock_Opportunity__c ,
   NOT(
     OR(
