@@ -1,5 +1,5 @@
 public with sharing class SetupAuditTrailReportLine {
-    // test w/ SetupAuditTrailReportLineTest (93%)
+    // test w/ SetupAuditTrailReportLineTest (89%)
     private static final String CLASS_NAME = ' ~ SetupAuditTrailReportLine';
 
     public SetupAuditTrailReportLine( SetupAuditTrail auditRecord , User auditCreator ) {
