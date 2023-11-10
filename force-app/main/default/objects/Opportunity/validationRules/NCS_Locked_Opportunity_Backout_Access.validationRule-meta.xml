@@ -3,6 +3,36 @@
     <fullName>NCS_Locked_Opportunity_Backout_Access</fullName>
     <active>true</active>
     <description>Only Sales Operations and Sales Admin profile should have access to edit backout fields.</description>
-    <errorConditionFormula>AND(AND(OR(OR(OR(OR(OR(OR(ISCHANGED(NSP_Forecast__c  ) , ISCHANGED( NSP_Back_Out__c ) ), ISCHANGED( NSP_Back_Out_By__c ) ), ISCHANGED( NSP_BackOutDate__c ) ), ISCHANGED( NSP_BackOutReason__c ) ), ISCHANGED( NSP_BackOutRequestor__c ) ), ISCHANGED( NSP_Booked_Date__c ) ),AND(AND( $Profile.Name != &apos;Sales Operations&apos;,$Profile.Name == &apos;Sales Admin&apos;),$Profile.Name == &apos;System Administrator&apos;)),  ISPICKVAL(StageName, &apos;Closed Won&apos;) )</errorConditionFormula>
+    <errorConditionFormula>AND(
+  AND(
+    OR(
+      OR(
+        OR(
+          OR(
+            OR(
+              OR(
+                ISCHANGED( NSP_Forecast__c ) ,
+                ISCHANGED( NSP_Back_Out__c )
+              ),
+              ISCHANGED( NSP_Back_Out_By__c )
+            ),
+            ISCHANGED( NSP_BackOutDate__c )
+          ),
+          ISCHANGED( NSP_BackOutReason__c )
+        ),
+        ISCHANGED( NSP_BackOutRequestor__c )
+      ),
+      ISCHANGED( NSP_Booked_Date__c )
+    ),
+    AND(
+      AND(
+        $Profile.Name != &apos;Sales Operations&apos;,
+        $Profile.Name == &apos;Sales Admin&apos;
+      ),
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; )
+    )
+  ),
+  ISPICKVAL(StageName, &apos;Closed Won&apos;)
+)</errorConditionFormula>
     <errorMessage>Once Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team</errorMessage>
 </ValidationRule>
