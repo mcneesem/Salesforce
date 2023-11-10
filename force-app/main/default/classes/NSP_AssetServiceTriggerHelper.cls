@@ -7,7 +7,6 @@ Author               :  Jatin
 Function             :  Represents the Asset trigger helper which handles all the logic.
 Story                :
 Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset.
-                        test w/NSP_AssetServiceTriggerHelperTest(82%)
 *--------------------------------------------------------------------------------------------------
 * Developer                   Date                   Description
 * -------------------------------------------------------------------------------------------------
@@ -18,8 +17,8 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Abhishek Kumar               12/26/2022          v5.0 - Account - Product First Pay Date <STY-03597>
 * Ramya Ravi 				   01/16/2022		   v6.0 - Create project from asset <STY-02234>
 */
-
 public class NSP_AssetServiceTriggerHelper {
+    // test w/ NSP_AssetServiceTriggerHelperTest (82%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
