@@ -1039,7 +1039,7 @@ if(this.isMultipleContactsSelected === false){
         let errorMessage = event.detail.detail;
         this.showError = true;
         this.errorMessageToDisplay = errorMessage;
-        if(errorMessage.includes(this.recordAccessErrorMessage) && this.recordId !== undefined){
+        if(errorMessage.includes(this.recordAccessErrorMessage)){
             this.navigateToRecentListView();
             this.showToastMessage('', this.caseCreationAndTransferring, 'warning');
         }
