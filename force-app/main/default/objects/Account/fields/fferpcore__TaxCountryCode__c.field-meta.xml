@@ -9,7 +9,7 @@ The country code is required for the correct reporting of VAT on cross-border tr
     <label>Tax Country Code</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>Part Time Payout</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -6,20 +6,20 @@
     <label>Agreement Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>AFF – III STD (RS) 18</fullName>
+                <default>false</default>
+                <label>AFF – III STD (RS) 18</label>
+            </value>
+            <value>
                 <fullName>AF I</fullName>
                 <default>false</default>
                 <label>AF I</label>
-            </value>
-            <value>
-                <fullName>AF I STD (NS)</fullName>
-                <default>false</default>
-                <label>AF I STD (NS)</label>
             </value>
             <value>
                 <fullName>AF II - ASSN</fullName>
@@ -37,6 +37,11 @@
                 <label>AF II - Custom</label>
             </value>
             <value>
+                <fullName>AF III STD (RS)</fullName>
+                <default>false</default>
+                <label>AF III STD (RS)</label>
+            </value>
+            <value>
                 <fullName>AF II - National</fullName>
                 <default>false</default>
                 <label>AF II - National</label>
@@ -52,9 +57,9 @@
                 <label>AF II - STD</label>
             </value>
             <value>
-                <fullName>AF III STD (RS)</fullName>
+                <fullName>AF I STD (NS)</fullName>
                 <default>false</default>
-                <label>AF III STD (RS)</label>
+                <label>AF I STD (NS)</label>
             </value>
             <value>
                 <fullName>Alliance Referral</fullName>
@@ -62,14 +67,14 @@
                 <label>Alliance Referral</label>
             </value>
             <value>
-                <fullName>Co Selling - Non Health</fullName>
-                <default>false</default>
-                <label>Co Selling - Non Health</label>
-            </value>
-            <value>
                 <fullName>Co-Selling</fullName>
                 <default>false</default>
                 <label>Co-Selling</label>
+            </value>
+            <value>
+                <fullName>Co Selling - Non Health</fullName>
+                <default>false</default>
+                <label>Co Selling - Non Health</label>
             </value>
             <value>
                 <fullName>Custom</fullName>
@@ -80,6 +85,11 @@
                 <fullName>General Agent – UHC</fullName>
                 <default>false</default>
                 <label>General Agent – UHC</label>
+            </value>
+            <value>
+                <fullName>MidMarket National Account</fullName>
+                <default>false</default>
+                <label>MidMarket National Account</label>
             </value>
             <value>
                 <fullName>MOU</fullName>
@@ -110,11 +120,6 @@
                 <fullName>TOP - UHC</fullName>
                 <default>false</default>
                 <label>TOP - UHC</label>
-            </value>
-            <value>
-                <fullName>AFF – III STD (RS) 18</fullName>
-                <default>false</default>
-                <label>AFF – III STD (RS) 18</label>
             </value>
             <value>
                 <fullName>Top-UHC  18</fullName>
