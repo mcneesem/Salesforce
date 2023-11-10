@@ -6,7 +6,8 @@ Created Date         :  6/1/2022
 Author               :  Jatin
 Function             :  Represents the Asset trigger helper which handles all the logic.
 Story                :
-Modification Log     :
+Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset.
+                        test w/NSP_AssetServiceTriggerHelperTest(82%)
 *--------------------------------------------------------------------------------------------------
 * Developer                   Date                   Description
 * -------------------------------------------------------------------------------------------------
