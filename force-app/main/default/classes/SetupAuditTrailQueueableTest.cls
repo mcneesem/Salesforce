@@ -9,6 +9,7 @@
         settings.IsEnabled__c = True;
         settings.SoqlHoursLimit__c = 6;
         settings.SoqlUserLimit__c = 5;
+        settings.SoqlAuditLimit__c = 10;
         settings.AuditorEmailAddresses__c = 'test@test.com.invalid';
         settings.NonCriticalTranslatedSections__c = 'Login-As Access';
         upsert settings;
