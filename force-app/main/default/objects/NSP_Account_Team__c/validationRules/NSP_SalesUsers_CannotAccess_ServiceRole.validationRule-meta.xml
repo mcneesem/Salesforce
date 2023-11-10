@@ -4,9 +4,9 @@
     <active>true</active>
     <description>Sales users cannot add a account team with service role. STY-03549</description>
     <errorConditionFormula>AND(
- $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c!=True,
- $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
- OR(
+  NOT( $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  OR(
     $Profile.Name = &apos;Finance Service&apos;,
     $Profile.Name = &apos;Finance Order Processing&apos;,
     $Profile.Name = &apos;Marketing&apos;,
