@@ -30,13 +30,6 @@
             <stringValue>Retirement Service</stringValue>
         </value>
     </constants>
-    <constants>
-        <name>SystemAdmin</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>System Administrator</stringValue>
-        </value>
-    </constants>
     <decisions>
         <description>Check current user is of any service profile</description>
         <name>Check_current_user_is_of_any_service_profile</name>
@@ -131,9 +124,9 @@
         </filters>
         <filters>
             <field>Name</field>
-            <operator>EqualTo</operator>
+            <operator>StartsWith</operator>
             <value>
-                <elementReference>SystemAdmin</elementReference>
+                <stringValue>System Admin</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

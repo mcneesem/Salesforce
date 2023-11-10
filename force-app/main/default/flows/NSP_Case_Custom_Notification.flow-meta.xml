@@ -320,9 +320,9 @@
         </filters>
         <filters>
             <field>Name</field>
-            <operator>EqualTo</operator>
+            <operator>StartsWith</operator>
             <value>
-                <stringValue>System Administrator</stringValue>
+                <stringValue>System Admin</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
