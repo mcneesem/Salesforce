@@ -112,6 +112,7 @@
     <permissionSets>Service Cloud User</permissionSets>
     <permissionSets>Merge Cases</permissionSets>
     <permissionSets>NSP Main Service Contacts</permissionSets>
+    <permissionSets>Create Auto Created Account Groups</permissionSets>
     <profiles>Sales Manager</profiles>
     <profiles>BPS Service</profiles>
     <profiles>Contact Center</profiles>
