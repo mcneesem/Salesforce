@@ -4,12 +4,18 @@
     <active>true</active>
     <description>This rule will prevent users for modifying BPS Tasks</description>
     <errorConditionFormula>AND(
-$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
-OR($User.Id &lt;&gt; Owner:User.Id, AND(ISCHANGED(OwnerId), $User.Id &lt;&gt; PRIORVALUE(OwnerId))),
-$User.Id &lt;&gt; CreatedById,
-NOT($Permission.Edit_BPS_Tasks),
-RecordType.DeveloperName = &apos;BPS_task_RT&apos;,
-NOT(ISNEW())
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  OR(
+    $User.Id &lt;&gt; Owner:User.Id,
+    AND(
+      ISCHANGED(OwnerId),
+      $User.Id &lt;&gt; PRIORVALUE(OwnerId)
+    )
+  ),
+  $User.Id &lt;&gt; CreatedById,
+  NOT($Permission.Edit_BPS_Tasks),
+  RecordType.DeveloperName = &apos;BPS_task_RT&apos;,
+  NOT(ISNEW())
 )</errorConditionFormula>
     <errorMessage>You are not eligible to update this Task.</errorMessage>
 </ValidationRule>

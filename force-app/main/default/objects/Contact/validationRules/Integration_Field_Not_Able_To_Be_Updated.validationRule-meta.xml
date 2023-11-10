@@ -4,11 +4,11 @@
     <active>true</active>
     <description>Developed as part of STY-00742 : To prevent users with profile other then Integration User, Data Migration and System Administrator from editing few fields on Contact created by Integration User.</description>
     <errorConditionFormula>AND(
-$User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos;,
-$User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos;,
-$User.NSP_Profile_Name__c &lt;&gt;&apos;System Administrator&apos;,
-$Setup.NSP_Trigger_Switch__c.ContactValidations__c = false,
- 
+  NOT( $Setup.NSP_Trigger_Switch__c.ContactValidations__c ) ,
+  NOT( CONTAINS( $User.NSP_Profile_Name__c , &apos;System Admin&apos; ) ) ,
+  $User.NSP_Profile_Name__c &lt;&gt; &apos;Integration User&apos; ,
+  $User.NSP_Profile_Name__c &lt;&gt; &apos;Data Migration&apos; ,
+
 OR (
 CreatedBy.NSP_Profile_Name__c = &apos;Integration User&apos;,
 LastModifiedBy.NSP_Profile_Name__c = &apos;Integration User&apos;,
