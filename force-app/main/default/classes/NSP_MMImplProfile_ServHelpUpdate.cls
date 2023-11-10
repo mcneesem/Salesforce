@@ -1,4 +1,5 @@
 public class NSP_MMImplProfile_ServHelpUpdate {
+    // test w/ NSP_MMImplProfile_UpdateTest (92%)
 
     private  Boolean isRerun =false;
     private Map<Id, Implementation_Profile__c> newIPs = null; 
@@ -451,6 +452,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          if(ipRecordsByAutomation.containsKey(CERTIFY_BPS_MM)){
             createProjectTaskForCertify();
          }
+         if(ipRecordsByAutomation.containsKey(COBRA_MM)){
+            createProjectTaskForCOBRA();
+         }
         finish();
         getProjectDBRecords();
         if(ipRecordsByAutomation.containsKey(LOA_GREATER_THAN_MM)){
@@ -472,11 +476,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          if(ipRecordsByAutomation.containsKey(HSA_OPTUM_NO_MM)){
             createProjectTaskForNoHSA();
          }
-         if(ipRecordsByAutomation.containsKey(COBRA_MM)){
-            createProjectTaskForCOBRA();
-            createSubTaskForCobra();
-         }
-         
          if(!childRecToInsert.isEmpty() && !System.isFuture() && !System.isBatch()){
              String childRecordsList = Json.serialize(childRecToInsert);
              insertChildRecords(childRecordsList);
@@ -2093,69 +2092,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 //check for existing Automation record and store the new Automation records
                 recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
      }
-
-     public void createSubTaskForCobra(){
-        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
-        NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_GUIDELINES_MM);
-        NSP_ProjectTask_Automation__mdt pta2 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_TEAM_MM);
-        NSP_ProjectTask_Automation__mdt pta3 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_PACKETS_MM);
-      
-        for(Id ipRecId : ipRecordsByAutomation.get(COBRA_MM)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if(isRerun || ipRec.NSP_Form_Completed__c){
-                    pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                    Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-
-                    
-                        for(pse__Project_Task__c pt: proj.pse__Project_Tasks__r){
-                            if(pt.Name==pta.NSP_Task_Name__c){
-                            
-                                    pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta1.NSP_Category__c, ipRecId,null);
-                                                        eachProjecttask.NSP_Sub_Category__c=pta1.NSP_Sub_Category__c;
-                                                        eachProjecttask.Name=pta1.NSP_Task_Name__c;
-                                                        if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                                        }
-                                                        eachProjecttask.pse__Hierarchy_Depth__c =1;
-                                                        eachProjecttask.pse__Parent_Task__c=pt.Id;
-                                                        eachProjecttask.pse__Milestone__c=pt.pse__Milestone__c;
-                                                        eachProjecttask.pse__Order__c=137;
-                                                        projectTaskList.add(eachProjecttask);
-                                    
-                                    pse__Project_Task__c eachProjecttask1 = createProjectTaskfromIP(proj, pta2.NSP_Category__c, ipRecId,null);
-                                                        eachProjecttask1.NSP_Sub_Category__c=pta2.NSP_Sub_Category__c;
-                                                        eachProjecttask1.Name=pta2.NSP_Task_Name__c;
-                                                        if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask1.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                                        }
-                                                        eachProjecttask1.pse__Hierarchy_Depth__c =2;
-                                                        eachProjecttask1.pse__Parent_Task__c=pt.Id;
-                                                        eachProjecttask1.pse__Milestone__c=pt.pse__Milestone__c;
-                                                        eachProjecttask1.pse__Order__c=138;
-                                                        projectTaskList.add(eachProjecttask1); 
-
-                                    pse__Project_Task__c eachProjecttask2 = createProjectTaskfromIP(proj, pta3.NSP_Category__c, ipRecId,null);
-                                                        eachProjecttask2.NSP_Sub_Category__c=pta3.NSP_Sub_Category__c;
-                                                        eachProjecttask2.Name=pta3.NSP_Task_Name__c;
-                                                        if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                                                eachProjecttask2.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                                        }
-                                                        eachProjecttask2.pse__Hierarchy_Depth__c =3;
-                                                        eachProjecttask2.pse__Parent_Task__c=pt.Id;
-                                                        eachProjecttask2.pse__Milestone__c=pt.pse__Milestone__c;
-                                                        eachProjecttask2.pse__Order__c=139;
-                                                        projectTaskList.add(eachProjecttask2); 
-
-                                
-                                }
-                            }
-                        
-                }
-        }
-        
-        childRecToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-    }
      
      public void createProjectTaskForDeducibleCarryover(){
          //Check when you have reviewed the deductible carryover process with the client
