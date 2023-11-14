@@ -3,10 +3,10 @@
 * @date 01/27/2022
 * Author : Nischay Jindal
 * Name : NSP_CaseIssueHelper
-* test w/NSP_CaseIssuehelperTest(82%)
 */
 public class NSP_CaseIssueHelper {
-        
+    // test w/ NSP_CaseIssuehelperTest (82%)
+
     /***********************************************************************************************
     * MethodName: beforeUpdateDirector
     * Description : Runs on Before Update
