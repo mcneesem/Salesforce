@@ -122,5 +122,12 @@
             <senderName>Test Employment Screening</senderName>
             <template>Services_Emails/NSP_Employment_Screening</template>
         </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;WX COS Team&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>WX COS Team</senderName>
+            <template>Services_Emails/WX_COS_Team</template>
+        </ruleEntry>
     </autoResponseRule>
 </AutoResponseRules>
