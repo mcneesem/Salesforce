@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FLSA_National_Quality_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>FLSA National Quality</label>
+    <queue>FLSA_National_Quality</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

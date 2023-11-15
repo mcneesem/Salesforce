@@ -2670,6 +2670,13 @@
         <value>FLSA EE exemption category must be provided for ALL EEs (Admin, Exe, Prof)</value>
     </labels>
     <labels>
+        <fullName>NSP_FLSA_QueueId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP FLSA QueueId</shortDescription>
+        <value>00G7g000006683Y</value>
+    </labels>
+    <labels>
         <fullName>NSP_FSO_Implementation_Profile</fullName>
         <language>en_US</language>
         <protected>false</protected>
