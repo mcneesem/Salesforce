@@ -158,7 +158,7 @@
         </values>
         <values>
             <fullName>Neutral</fullName>
-            <default>true</default>
+            <default>true</default> 
         </values>
         <values>
             <fullName>Somewhat Favorable</fullName>
