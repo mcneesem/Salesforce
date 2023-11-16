@@ -20659,7 +20659,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.NSP_Response_After_Close__c</field>
         <readable>true</readable>
     </fieldPermissions>
