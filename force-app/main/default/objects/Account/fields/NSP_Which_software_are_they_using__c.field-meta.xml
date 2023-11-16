@@ -6,6 +6,6 @@
     <label>Which software are they using?</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>TextArea</type>
 </CustomField>

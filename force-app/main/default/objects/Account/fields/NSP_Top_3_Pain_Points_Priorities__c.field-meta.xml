@@ -4,9 +4,9 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Top 3 Pain Points / Priorities</label>
-    <length>1000</length>
+    <length>4000</length>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
 </CustomField>

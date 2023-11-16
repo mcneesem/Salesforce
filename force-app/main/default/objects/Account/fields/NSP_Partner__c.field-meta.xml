@@ -12,13 +12,13 @@
             <operation>equals</operation>
             <value>Partner/Client</value>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Referred Accounts</relationshipLabel>
     <relationshipName>Client_Accounts</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

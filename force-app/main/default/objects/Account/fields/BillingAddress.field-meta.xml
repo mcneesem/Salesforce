@@ -3,5 +3,5 @@
     <fullName>BillingAddress</fullName>
     <encryptionScheme>None</encryptionScheme>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
 </CustomField>

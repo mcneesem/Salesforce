@@ -5,8 +5,8 @@
     <externalId>false</externalId>
     <label>Account Segment</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

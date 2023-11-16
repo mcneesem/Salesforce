@@ -5,8 +5,8 @@
     <externalId>false</externalId>
     <label>401K/ORK &amp; wait period</label>
     <length>1000</length>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
 </CustomField>
