@@ -117,7 +117,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         
         if (!String.isBlank(permSetId)) {
             Set<String> skipFields = new Set<String>{'Id','IsDeleted','CreatedDate','LastModifiedDate','SystemModstamp','UserRecordAccessId',
-            	'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','Name','CurrencyIsoCode',
+            	'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','CurrencyIsoCode',
            		'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
 
             List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName, IsCalculated

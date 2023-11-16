@@ -28,10 +28,10 @@ public class LoadFullAccessPermSets {
         if (!mPermSets.containsKey(editPermSetName)) {
             LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'PermissionSet not found: ' + editPermSetName);
         }
-        
+
         if ( objectApiNames.isEmpty() ) {
             List<EntityDefinition> entities = [SELECT QualifiedApiName, InternalSharingModel FROM EntityDefinition 
-                WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false AND IsRetrieveable = true 
+                WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false 
                 ORDER BY InternalSharingModel];
 
             for ( EntityDefinition entity : entities ) {
