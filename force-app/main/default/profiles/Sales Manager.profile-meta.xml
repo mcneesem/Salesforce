@@ -13819,6 +13819,41 @@
         <field>sbaa__Approver__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Payment__c.Payment_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Enter_Final_Employee_Orientation_Meeting_Information</flow>

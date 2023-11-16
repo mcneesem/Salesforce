@@ -31187,6 +31187,41 @@
         <field>NSP_Accrual_Profile__c.NSP_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Payment__c.Payment_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
