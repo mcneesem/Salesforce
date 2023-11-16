@@ -11,6 +11,24 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Service_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Service_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>Project_Record_Page16</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -260,7 +278,7 @@
         <type>Flexipage</type>
         <pageOrSobjectType>NSP_Sub_Client_Contact_Address__c</pageOrSobjectType>
     </actionOverrides>
-        <actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>NSP_Accrual_Profile_Service_Page</content>
@@ -268,7 +286,7 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-   </actionOverrides>
+    </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
@@ -278,7 +296,6 @@
         <type>Flexipage</type>
         <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
     </actionOverrides>
-
     <brand>
         <headerColor>#0070D2</headerColor>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
@@ -1477,7 +1494,7 @@
         <type>Flexipage</type>
         <profile>Retirement Services</profile>
     </profileActionOverrides>
-      <profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>PEO_Billable_Project_Record_Page</content>
         <formFactor>Small</formFactor>
@@ -1495,7 +1512,7 @@
         <type>Flexipage</type>
         <profile>PEO Service</profile>
     </profileActionOverrides>
-       <profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>PEO_Billable_Project_Record_Page</content>
         <formFactor>Small</formFactor>
@@ -1844,7 +1861,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.NSP_WageClaims</recordType>
         <type>Flexipage</type>
-        <profile>Admin</profile>
+        <profile>System Admin Lite</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1853,7 +1870,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.NSP_WageClaims</recordType>
         <type>Flexipage</type>
-        <profile>Admin</profile>
+        <profile>System Admin Lite</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -2720,6 +2737,15 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>NSP_Case_BPS_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.BPS</recordType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Case_BPS_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BPS</recordType>
@@ -3067,7 +3093,7 @@
         <recordType>Case.NSP_WageClaims</recordType>
         <type>Flexipage</type>
         <profile>Retirement Services</profile>
-    </profileActionOverrides> 
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>NSP_Case_DOL_Audit_Record_Page</content>
@@ -5024,7 +5050,7 @@
         <type>Flexipage</type>
         <profile>Data Migration</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5032,7 +5058,7 @@
         <type>Flexipage</type>
         <profile>Data Migration</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Small</formFactor>
@@ -5040,7 +5066,7 @@
         <type>Flexipage</type>
         <profile>BPS Service</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5048,7 +5074,7 @@
         <type>Flexipage</type>
         <profile>BPS Service</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Small</formFactor>
@@ -5056,7 +5082,7 @@
         <type>Flexipage</type>
         <profile>Contact Center</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5064,7 +5090,7 @@
         <type>Flexipage</type>
         <profile>Contact Center</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Small</formFactor>
@@ -5072,7 +5098,7 @@
         <type>Flexipage</type>
         <profile>Integration User</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5080,7 +5106,7 @@
         <type>Flexipage</type>
         <profile>Integration User</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Small</formFactor>
@@ -5088,7 +5114,7 @@
         <type>Flexipage</type>
         <profile>PEO Service</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5096,7 +5122,7 @@
         <type>Flexipage</type>
         <profile>PEO Service</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Small</formFactor>
@@ -5104,7 +5130,7 @@
         <type>Flexipage</type>
         <profile>Retirement Services</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5112,7 +5138,7 @@
         <type>Flexipage</type>
         <profile>Retirement Services</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Small</formFactor>
@@ -5120,7 +5146,7 @@
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Account_Group_Record_Page1</content>
         <formFactor>Large</formFactor>
@@ -5285,15 +5311,6 @@
         <actionName>View</actionName>
         <content>Implementation_Profile_Record_Page</content>
         <formFactor>Small</formFactor>
-        <pageOrSobjectType>Implementation_Profile__c</pageOrSobjectType>
-        <recordType>Implementation_Profile__c.FSO</recordType>
-        <type>Flexipage</type>
-        <profile>Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Implementation_Profile_Record_Page</content>
-        <formFactor>Large</formFactor>
         <pageOrSobjectType>Implementation_Profile__c</pageOrSobjectType>
         <recordType>Implementation_Profile__c.FSO</recordType>
         <type>Flexipage</type>
@@ -5302,6 +5319,15 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Implementation_Profile_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Implementation_Profile__c</pageOrSobjectType>
+        <recordType>Implementation_Profile__c.FSO</recordType>
+        <type>Flexipage</type>
+        <profile>Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Implementation_Profile_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Implementation_Profile__c</pageOrSobjectType>
         <recordType>Implementation_Profile__c.FSO</recordType>
@@ -5515,7 +5541,7 @@
         <type>Flexipage</type>
         <profile>Contact Center</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>NSP_New_Modal_Contact_Service_Page</content>
         <formFactor>Large</formFactor>
@@ -5569,7 +5595,7 @@
         <type>Flexipage</type>
         <profile>Retirement Services</profile>
     </profileActionOverrides>
-	<profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>NSP_New_Modal_Contact_Service_Page</content>
         <formFactor>Small</formFactor>
