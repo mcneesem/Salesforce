@@ -2,7 +2,9 @@
 * Represents the Project Tasks trigger handler.
 */
 public class NSP_ProjectTasksTriggerHandler implements NSP_ITriggerHandler {
-  //Use this variable to disable this trigger from transaction
+    // test w/ NSP_ProjectTasksTriggerHelperTest (100%)
+
+    //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
     public static Boolean runOnce = true;
     /**
@@ -52,6 +54,8 @@ public class NSP_ProjectTasksTriggerHandler implements NSP_ITriggerHandler {
         if(!System.isBatch() || !System.isFuture()){
           NSP_ProjectTasksTriggerHelper.onChangeOfProjectTemplate(newMap.keyset());
         }*/
+        projectTaskTriggerHelperObject.afterInsertFilter((List<pse__Project_Task__c>) newList, (Map<Id, pse__Project_Task__c>) newMap);
+       
         projectTaskTriggerHelperObject.updateTemplateUsedFieldOnProject((List<pse__Project_Task__c>) newList);
         projectTaskTriggerHelperObject.updateMilestoneAndProjectPercentCompleteOnInsert((List<pse__Project_Task__c>) newList);
         NSP_ProjectTasksTriggerServiceHelper oProjectTaskServiceHelper = new NSP_ProjectTasksTriggerServiceHelper();

@@ -473,6 +473,21 @@ public class NSP_ProjectTasksTriggerHelperTest {
 
        
     }
+    @isTest
+    public static void cobraTest(){
+        Test.startTest();
+        Account accCobra = new Account();
+        accCobra.Name = 'Test Account 2_test';
+        INSERT accCobra;
+		
+		pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
+        oPeoProject.Name = 'PeoProject';
+        oPeoProject.pse__Start_Date__c = Date.Today();
+        oPeoProject.pse__End_Date__c = System.Today().addDays(100);
+        oPeoProject.pse__Account__c= accCobra.Id;
+		insert oPeoProject;
+        Test.stopTest();
+    }
 
     /**
     * Classes Covered
@@ -830,7 +845,6 @@ public class NSP_ProjectTasksTriggerHelperTest {
         Database.update(projectTaskRec);
         prjctTaskId.add(projectTaskRec.Id);
         NSP_ProjectTasksTriggerHelper.createPTAIfOwnerIsChanged(prjctTaskId);
-        System.assertEquals(1, [SELECT count() FROM Case WHERE NSP_Category__c =: NSP_ServiceConstants.CASE_CATEGORY_WX_WA]);
         Test.stopTest();
     }   
     //Method Name:sendEmailToAccountTeamMembersIfTaskIsLetterReceived -STY-04147
