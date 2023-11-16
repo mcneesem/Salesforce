@@ -2,7 +2,9 @@
 * Represents the Project Tasks trigger handler.
 */
 public class NSP_ProjectTasksTriggerHandler implements NSP_ITriggerHandler {
-  //Use this variable to disable this trigger from transaction
+    // test w/ NSP_ProjectTasksTriggerHelperTest (100%)
+
+    //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
     public static Boolean runOnce = true;
     /**
