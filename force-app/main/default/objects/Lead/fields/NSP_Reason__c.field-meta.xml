@@ -19,14 +19,24 @@
                 <label>Duplicate</label>
             </value>
             <value>
-                <fullName>Inaccurate data, No budget</fullName>
+                <fullName>Inaccurate Data</fullName>
                 <default>false</default>
-                <label>Inaccurate data, No budget</label>
+                <label>Inaccurate Data</label>
+            </value>
+            <value>
+                <fullName>Job Applicant</fullName>
+                <default>false</default>
+                <label>Job Applicant</label>
             </value>
             <value>
                 <fullName>Max attempts reached/No contact established</fullName>
                 <default>false</default>
                 <label>Max attempts reached/No contact established</label>
+            </value>
+            <value>
+                <fullName>No Budget</fullName>
+                <default>false</default>
+                <label>No Budget</label>
             </value>
             <value>
                 <fullName>No buying authority</fullName>
@@ -59,6 +69,11 @@
                 <label>Regen</label>
             </value>
             <value>
+                <fullName>Spam</fullName>
+                <default>false</default>
+                <label>Spam</label>
+            </value>
+            <value>
                 <fullName>Too early, Regen 12 months</fullName>
                 <default>false</default>
                 <label>Too early, Regen 12 months</label>
@@ -73,6 +88,17 @@
                 <default>false</default>
                 <label>Too early, Regen 6 months</label>
             </value>
+            <value>
+                <fullName>WSEE Inquiry</fullName>
+                <default>false</default>
+                <label>WSEE Inquiry</label>
+            </value>
+            <value>
+                <fullName>Inaccurate data, No budget</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inaccurate data, No budget</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
@@ -80,13 +106,20 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
-            <controllingFieldValue>Nurturing</controllingFieldValue>
-            <valueName>Inaccurate data, No budget</valueName>
+            <valueName>Inaccurate Data</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Job Applicant</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
             <valueName>Max attempts reached/No contact established</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>No Budget</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
@@ -114,6 +147,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Spam</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
             <valueName>Too early, Regen 12 months</valueName>
         </valueSettings>
@@ -126,6 +163,10 @@
             <controllingFieldValue>Unqualified</controllingFieldValue>
             <controllingFieldValue>Nurturing</controllingFieldValue>
             <valueName>Too early, Regen 6 months</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>WSEE Inquiry</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nurturing</controllingFieldValue>

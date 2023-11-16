@@ -1030,11 +1030,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inaccurate data%2C No budget</fullName>
+            <fullName>Inaccurate Data</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Job Applicant</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Max attempts reached%2FNo contact established</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Budget</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1062,6 +1070,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Too early%2C Regen 12 months</fullName>
             <default>false</default>
         </values>
@@ -1071,6 +1083,10 @@
         </values>
         <values>
             <fullName>Too early%2C Regen 6 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WSEE Inquiry</fullName>
             <default>false</default>
         </values>
     </picklistValues>
