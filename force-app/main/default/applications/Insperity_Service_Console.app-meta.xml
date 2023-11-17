@@ -3,6 +3,24 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Service_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Service_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>Contact_Pin_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -2109,6 +2127,24 @@
         <recordType>pse__Proj__c.PEO_Project</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Project_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Project_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>Tab</actionName>
