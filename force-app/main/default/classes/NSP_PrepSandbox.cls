@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test coverage from NSP_PrepSandboxTest: 81%
+    // test coverage from NSP_PrepSandboxTest: 77%
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
@@ -155,6 +155,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
             List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
+            List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id!=Null];
             List<pse__Proj__c> oProjTmpls = [Select Id, TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true];
             Map<String, Id> mTmplId = new map<String, Id>();
             for (pse__Proj__c oProjTmpl : oProjTmpls) {
