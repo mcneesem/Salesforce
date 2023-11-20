@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test coverage from NSP_PrepSandboxTest: 77%
+    // test coverage from NSP_PrepSandboxTest: 80%
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
@@ -166,7 +166,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
                     string name = cMdTmpl.DeveloperName;
                     string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
-
                     MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
                         cMdUpd.fullName = fullName;
                         cMdUpd.label = name;
@@ -179,10 +178,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
 
             for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
-                if (mTmplId.containsKey(cMdTmplKey.Template_Name__c)) {
+                if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
                     string name = cMdTmplKey.DeveloperName;
-                    string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
-
+                    string fullName = 'Template_Key_and_Id_Mapping.' + name; //custom metadata full name
                     MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
                         cMdUpd.fullName = fullName;
                         cMdUpd.label = name;
@@ -196,9 +194,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
-                // for (MetadataService.SaveResult result: results) {
-                //     system.debug('Update Custom Metadata Type result success = ' + result.success);
-                // }
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doCMetadata: ' + e.getMessage());
