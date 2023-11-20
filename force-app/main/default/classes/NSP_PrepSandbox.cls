@@ -1,14 +1,23 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test coverage from NSP_PrepSandboxTest: 80%
+    // test coverage from NSP_PrepSandboxTest: 79%
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
-        doQueues();
-        doCSettings(context.sandboxName());
+        try{
+            doQueues();
+        } catch(Exception e) {
+            System.debug('An exception occurred in runApexClass: ' + e.getMessage());
+        }
+        try{
+            doCSettings(context.sandboxName());
+        } catch(Exception e) {
+            System.debug('An exception occurred in runApexClass: ' + e.getMessage());
+        }
     }
 
     public static void runManualSteps() {
-        String sandbox = OrgSettings__c.getOrgDefaults().SandboxName__c;
+        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        doCSettings(sandbox);
         doCMetadata(sandbox);
         doCLabels(sandbox);
         doEmailCLabels();
@@ -373,11 +382,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
             cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
             upsert cS1;
-            
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+
+        try {
             NSP_Docusign_Account_Details__c cS2 = NSP_Docusign_Account_Details__c.getOrgDefaults();
             cS2.Docusign_Account_Id__c = '65500';
             upsert cS2;
-            
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+
+        try {
             OrgSettings__c cS3 = OrgSettings__c.getOrgDefaults();
             cS3.OrgDomainUrl__c = URL.getOrgDomainUrl().toExternalForm().toLowerCase();
             cS3.Instance__c = [ SELECT InstanceName FROM Organization WHERE Id!=null LIMIT 1 ].InstanceName.toLowerCase();
