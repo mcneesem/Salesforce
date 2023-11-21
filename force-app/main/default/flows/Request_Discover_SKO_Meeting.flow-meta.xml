@@ -1345,6 +1345,9 @@
             <name>Medical_Plan</name>
             <choiceReferences>checklistWOBenefitPlanPicklist</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>medical_plan_formula</elementReference>
+            </defaultValue>
             <fieldText>Medical Plan</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
