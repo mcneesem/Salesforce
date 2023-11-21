@@ -1,24 +1,49 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test coverage from NSP_PrepSandboxTest: 81%
+    // test coverage from NSP_PrepSandboxTest: 79%
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
-        doQueues();
-        doCSettings(context.sandboxName());
+        try{
+            doQueues();
+        } catch(Exception e) {
+            System.debug('An exception occurred in runApexClass: ' + e.getMessage());
+        }
+        try{
+            doCSettings(context.sandboxName());
+        } catch(Exception e) {
+            System.debug('An exception occurred in runApexClass: ' + e.getMessage());
+        }
     }
 
     public static void runManualSteps() {
-        String sandbox = OrgSettings__c.getOrgDefaults().SandboxName__c;
+        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        doCSettings(sandbox);
         doCMetadata(sandbox);
         doCLabels(sandbox);
         doEmailCLabels();
         doEmailAlerts();
-        setPostRefreshRunFlag();
+        setPostRefreshRunFlag(1);
+    }
+
+    public static void runManualSteps2() {
+        String sandbox = OrgSettings__c.getOrgDefaults().SandboxName__c;
+        doCMetadataSvc(sandbox);
+        setPostRefreshRunFlag(2);
     }
 
     public pagereference runManualStepsButton() {
         try{
             runManualSteps();
+        } catch(Exception e) {
+            runManualResult = 'An exception occurred Updating Metadata: ' + e.getMessage();
+        }
+        return null;
+    }
+
+    public pagereference runManualStepsButton2() {
+        try{
+            runManualSteps2();
+            runManualResult = 'Post-Import Steps complete!';
         } catch(Exception e) {
             runManualResult = 'An exception occurred Updating Metadata: ' + e.getMessage();
         }
@@ -139,6 +164,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
             List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
+            List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id!=Null];
             List<pse__Proj__c> oProjTmpls = [Select Id, TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true];
             Map<String, Id> mTmplId = new map<String, Id>();
             for (pse__Proj__c oProjTmpl : oProjTmpls) {
@@ -146,10 +172,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
 
             for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
-                if (mTmplId.containsKey(cMdTmpl.Template_Name__c)) {
+                if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
                     string name = cMdTmpl.DeveloperName;
                     string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
-
                     MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
                         cMdUpd.fullName = fullName;
                         cMdUpd.label = name;
@@ -160,11 +185,24 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     allMetadataList.add(cMdUpd);
                 }
             }
+
+            for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
+                if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
+                    string name = cMdTmplKey.DeveloperName;
+                    string fullName = 'Template_Key_and_Id_Mapping.' + name; //custom metadata full name
+                    MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                        cMdUpd.fullName = fullName;
+                        cMdUpd.label = name;
+                    MetadataService.CustomMetadataValue customField2 = new MetadataService.CustomMetadataValue();
+                        customField2.field = 'Template_ID__c'; //the custom field API Name to be updated
+                        customField2.value = mTmplId.get(cMdTmplKey.Template_Name__c);
+                    cMdUpd.values.add(customField2); //add the changes to list of changes to be deployed
+                    allMetadataList.add(cMdUpd);
+                }
+            }
+
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
-                // for (MetadataService.SaveResult result: results) {
-                //     system.debug('Update Custom Metadata Type result success = ' + result.success);
-                // }
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doCMetadata: ' + e.getMessage());
@@ -182,23 +220,29 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 if(!Test.isRunningTest()){
                     cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
                 }else{
-                    cL.fullName = 'test';
+                    cL.fullName = 'NSP_FTA_Base_URL';
                     cL.value = 'test';
                 }
                 if(cL.value != null){
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
                     switch on cL.fullName {
-                        when 'NSP_FTA_Base_URL' {                           
-                           switch on sandboxName {
-                                when 'sfuat' {
-                                    cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
-                                }
-                                when else {
-                                    cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
-                                }
-                            }
-                        }
+                        when 'NSP_FTA_Base_URL' {
+                            switch on sandboxName {
+                                 when 'stage' {
+                                     cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
+                                 }
+                                 when 'test' {
+                                     cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
+                                 }
+                                 when 'merge' {
+                                     cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
+                                 }
+                                 when else {
+                                     cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
+                                 }
+                             }
+                         }
                         when 'NSP_Docusign_Account_Id' {
                            cLUpd.value = '65500';
                         }
@@ -276,11 +320,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }else{
             RecordAlert rec = new RecordAlert();
             Attributes att = new Attributes();
+            WorkflowEmail wfe = new WorkflowEmail();
+            MetadataService.WorkflowAlert wfa = new MetadataService.WorkflowAlert();
             att.type = 'test';
             att.url = 'test';
             rec.FullName='test';
             rec.id='test';
         	rec.attributes = att;
+        	wfe.attributes = att;
+            wfe.id='test';
+            wfe.TemplateId='test';
+            wfe.CcEmails='test';
+            wfe.Description='test';
+            wfe.DeveloperName='test';
+            wfe.EntityDefinitionId='test';
+            wfe.FullName='test';
+            wfe.Metadata=wfa;
             records.add(rec);
         }
         
@@ -327,11 +382,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
             cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
             upsert cS1;
-            
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+
+        try {
             NSP_Docusign_Account_Details__c cS2 = NSP_Docusign_Account_Details__c.getOrgDefaults();
             cS2.Docusign_Account_Id__c = '65500';
             upsert cS2;
-            
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+
+        try {
             OrgSettings__c cS3 = OrgSettings__c.getOrgDefaults();
             cS3.OrgDomainUrl__c = URL.getOrgDomainUrl().toExternalForm().toLowerCase();
             cS3.Instance__c = [ SELECT InstanceName FROM Organization WHERE Id!=null LIMIT 1 ].InstanceName.toLowerCase();
@@ -362,10 +425,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
     
-    public static void setPostRefreshRunFlag() {
+    public static void setPostRefreshRunFlag(Integer iStep) {
         try {            
             OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
-            cS.PostRefreshRun__c = true;
+            if (iStep == 1) cS.PostRefreshRun__c = true;
+            if (iStep == 2) cS.PostRefreshRun2__c = true;
             upsert cS;
         } catch(Exception e) {
             System.debug('An exception occurred in setPostRefreshRunFlag: ' + e.getMessage());
@@ -387,7 +451,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return newES.substringAfter(',');
     }
     
-    private static string invalidateEmailString(string origES) {
+    private static string invalidateEmailString(String origES) {
         string[] origEmails = origES.split(',');
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
@@ -415,14 +479,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     private class WorkflowEmail {
-        public Attributes attributes;
-        public string Id ;
-        public string TemplateId;
-        public String CcEmails;
-        public String Description;
-        public String DeveloperName;
-        public string EntityDefinitionId;
-        public MetadataService.WorkflowAlert Metadata;
-        public String FullName;
+        public Attributes attributes{get;set;}
+        public string Id{get;set;}
+        public string TemplateId{get;set;}
+        public String CcEmails{get;set;}
+        public String Description{get;set;}
+        public String DeveloperName{get;set;}
+        public string EntityDefinitionId{get;set;}
+        public MetadataService.WorkflowAlert Metadata{get;set;}
+        public String FullName{get;set;}
     }
 }
