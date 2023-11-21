@@ -7188,31 +7188,23 @@
     <picklistValues>
         <picklist>NSP_Template_Selection__c</picklist>
         <values>
-            <fullName>MarketingReferalAllianceAgreement</fullName>
+            <fullName>Affiliate-25</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>NDAChannelPartner</fullName>
+            <fullName>Affiliate-50</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ReferralProgramAF-II</fullName>
+            <fullName>NDA Channel Partner</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ReferralProgramAssociations</fullName>
+            <fullName>Referral Program Associations</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ReferralProgramChamberBanks</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ReferralProgramIII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ReferralProgramNationalNonRevShare</fullName>
+            <fullName>Referral Program National Non RevShare</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7224,15 +7216,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>TOPAllianceCoSellingBrokerRev</fullName>
+            <fullName>TOP Insurance Broker Alliance %E2%80%93 CoSelling</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>TermsofParticipationTOPAllianceGeneralAgent</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>referralProgramAF-I</fullName>
             <default>false</default>
         </values>
     </picklistValues>
