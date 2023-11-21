@@ -1429,7 +1429,15 @@
             <label>STP</label>
         </rules>
     </decisions>
-    <description>AZD story 165244...updated to leverage Fault Handler subflow and to include new STP field (&quot;Are all employees paid under one FEIN&quot;) and remove Broker information from STP checklist creation. Removed &quot;Multiple FEINs&quot; from WX STP Checklist</description>
+    <description>Added ABCP field. Flipped WO Benefits to picklist vs hard coded choices. Updated to leverage Fault Handler subflow and to include new STP field (&quot;Are all employees paid under one FEIN&quot;) and remove Broker information from STP checklist creation. Removed &quot;Multiple FEINs&quot; from WX STP Checklist</description>
+    <dynamicChoiceSets>
+        <name>activeBenefitContinuationPeriodPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Active_Benefit_Continuation_Period__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Addendums_required_before_download1_ChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -1500,6 +1508,14 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Benefits_Waiting_Period__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>checklistWOBenefitsPackagePicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>WO_Benefit_Package__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -3485,6 +3501,12 @@
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
+            <field>Active_Benefit_Continuation_Period__c</field>
+            <value>
+                <elementReference>Active_Benefit_Continuation_Period_WO</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Are_all_employees_paid_under_one_FEIN__c</field>
             <value>
                 <elementReference>woSTP_Are_all_employees_paid_under_one_FEIN</elementReference>
@@ -3757,7 +3779,7 @@
         <inputAssignments>
             <field>WO_Benefit_Package__c</field>
             <value>
-                <elementReference>Benefits_Package_WO</elementReference>
+                <elementReference>WO_Benefits_Package_choice</elementReference>
             </value>
         </inputAssignments>
         <object>NSP_Checklist__c</object>
@@ -6618,24 +6640,8 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Benefits_Package_WO</name>
-                    <choiceReferences>Freedom_Premier</choiceReferences>
-                    <choiceReferences>Freedom_Select</choiceReferences>
-                    <choiceReferences>Freedom_Basic</choiceReferences>
-                    <choiceReferences>Freedom_Saver</choiceReferences>
-                    <choiceReferences>Freedom_Choice</choiceReferences>
-                    <choiceReferences>Independence_Premier</choiceReferences>
-                    <choiceReferences>Independence_Select</choiceReferences>
-                    <choiceReferences>Independence_Basic</choiceReferences>
-                    <choiceReferences>Independence_Saver</choiceReferences>
-                    <choiceReferences>Independence_Choice</choiceReferences>
-                    <choiceReferences>Liberty_Premier</choiceReferences>
-                    <choiceReferences>Liberty_Select</choiceReferences>
-                    <choiceReferences>Liberty_Basic</choiceReferences>
-                    <choiceReferences>Liberty_Saver</choiceReferences>
-                    <choiceReferences>Liberty_Choice</choiceReferences>
-                    <choiceReferences>Revolution</choiceReferences>
-                    <choiceReferences>Pacific_Northwest</choiceReferences>
+                    <name>WO_Benefits_Package_choice</name>
+                    <choiceReferences>checklistWOBenefitsPackagePicklist</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>WO Benefits Package</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -6654,6 +6660,14 @@
                     <choiceReferences>Benefits_Waiting_Period_ChoiceSet</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Benefits Waiting Period</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Active_Benefit_Continuation_Period_WO</name>
+                    <choiceReferences>activeBenefitContinuationPeriodPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Active Benefit Continuation Period</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
