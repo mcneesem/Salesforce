@@ -2,7 +2,7 @@
 * @description  :   Test class for NSP_CaseIssuehelper .
 * @date 01/27/2023
 * Author : Nischay Jindal
-* Name : NSP_CaseIssuehelperTestTest
+* Name : NSP_CaseIssuehelperTestTest(94%)
 */
 @isTest
 public class NSP_CaseIssuehelperTest {
@@ -10,6 +10,7 @@ public class NSP_CaseIssuehelperTest {
     private static final String ACCOUNTDEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
     private static final String CASEDEFAULTS  = 'NSP_TestDataFactory.CaseDefaults';
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c', NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
+    private static final Id bpsRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get(NSP_ServiceConstants.BPS).getRecordTypeId();//11/10/2023-Suhas Added -STY-234800
     private static final List<String> PROJECT_FIELDS = new List<String>{
         'Id',
             'Name',
@@ -40,9 +41,10 @@ public class NSP_CaseIssuehelperTest {
         caseIssue.NSP_Rating__c ='Neutral';
         insert caseIssue;
         
-        Case cs = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
+        Case cs = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);        
         cs.contactId = newContact.Id;
         cs.AccountId = newAccount.Id;
+        cs.RecordTypeId = bpsRecordTypeId;//11/10/2023-Suhas Added -STY-234800
         cs.NSP_Case_Issue__c = caseIssue.Id;
         insert cs;
         
@@ -104,6 +106,7 @@ public class NSP_CaseIssuehelperTest {
             'NSP_Case_Issue__c',
             'contactId',
             'Status',
+            'NSP_Case_Sub_Status__c',
             'NSP_Rating__c'
         };
         String caseQuery = new NSP_QueryBuilder('CASE', caseFields).addLimit(1).setSecurityEnforce(false).build();
@@ -125,6 +128,7 @@ public class NSP_CaseIssuehelperTest {
         Test.stopTest();
         Case closeCase = Database.query(caseQuery);
         system.assertEquals(closeCase.Status, 'Closed');
+        system.assertEquals(closeCase.NSP_Case_Sub_Status__c, 'Closed');//11/10/2023-Suhas Added -STY-234800
     }
 
     @IsTest
