@@ -3,7 +3,6 @@
 */
 public class NSP_ProjectTeamTriggerHandler  implements NSP_ITriggerHandler {
 
-    // test w/ NSP_ProjectTeamTriggerHelperTest (86%)
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
 
@@ -32,7 +31,6 @@ public class NSP_ProjectTeamTriggerHandler  implements NSP_ITriggerHandler {
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
         //STY-03167 - project team object enhancement
         NSP_ProjectTeamTriggerHelper.updateProjectOwner((Map<Id, NSP_Project_Team__c>) newMap, null);
-        NSP_ProjectTeamTriggerHelper.updatePayrollSpecialistonProject((Map<Id,NSP_Project_Team__c>) newMap, null);
         
     }
     
@@ -44,7 +42,7 @@ public class NSP_ProjectTeamTriggerHandler  implements NSP_ITriggerHandler {
         NSP_ProjectTeamTriggerHelper.updateImplementationProfileRoles((Map <Id, NSP_Project_Team__c > ) newMap,(Map <Id, NSP_Project_Team__c > )oldMap);
         //STY-03167 - project team object enhancement
         NSP_ProjectTeamTriggerHelper.updateProjectOwner((Map<Id, NSP_Project_Team__c>) newMap, (Map<Id, NSP_Project_Team__c>) oldMap);
-        NSP_ProjectTeamTriggerHelper.updatePayrollSpecialistonProject((Map<Id,NSP_Project_Team__c>) newMap, null);
+        
     }
     
     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
