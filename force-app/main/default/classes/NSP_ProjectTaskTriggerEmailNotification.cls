@@ -1,5 +1,4 @@
 public class NSP_ProjectTaskTriggerEmailNotification {
-    // test w/ NSP_ProjectTaskTriggerEmailTest (88%)
 
     /***********************************************************************************************
     * MethodName: updateImplementationProfile
@@ -167,8 +166,8 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                 TemplateName__c=:label.Middle_Market_Implementation_Project AND pse__Project_Status__c NOT IN :listOfProjectStatus]){
                                     
                                             String projectTaskRecordId=mapofProjecttasks.get(proj.Id);
-                                            String projectManager='';
-                                            String projectManagerRole ='';
+                    						String projectManager='';
+                    						String projectManagerRole ='';
                                             String projectManagerEmail ='' ;
                                             emailAttachmentList=NSP_EmailServiceAttachment.getProjectTaskAttachments(projectTaskRecordId);
                                             if(proj.Project_Teams__r.size()>0){
@@ -224,7 +223,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
 
         
         try{
-            for(pse__Proj__c proj:[SELECT Id, pse__Account__c,Project_Team_Payroll_Specialist__c,
+            for(pse__Proj__c proj:[SELECT Id, pse__Account__c,
                                         (SELECT NSP_Assignee__c, NSP_Assignee__r.Name, 
                                         NSP_Assignee__r.NSP_Work_email__c, NSP_Assignee__r.NSP_Work_Phone__c  
                                         FROM Project_Teams__r 
@@ -328,9 +327,8 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     
                     if(!listOfTOAddresses.isEmpty()){
                         String mailBody = getMailBody(proj, template.Id);
-                        sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                            null,mapofAccountIds.get(accId).id , template.Id); 
-                        
+                    sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
+                            null, accountIdProjectTaskMap.get(accId), null);
                     }
                 }
                 
@@ -359,7 +357,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         
 
         try{
-            for(pse__Proj__c proj:[SELECT Id, pse__Account__c,Project_Team_Payroll_Specialist__c,
+            for(pse__Proj__c proj:[SELECT Id, pse__Account__c,
                                       (SELECT NSP_Assignee__c, NSP_Assignee__r.Name, 
                                       NSP_Assignee__r.NSP_Work_email__c, NSP_Assignee__r.NSP_Work_Phone__c  
                                       FROM Project_Teams__r 
@@ -398,7 +396,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             }
             if(!accountIds.isEmpty()){
                //get all Business Performance Advisor and/or Business Performance Consultant, payroll specialist from account team for cc address
-                Set<String> accountTeamccAddress = new Set<String>();
+            	Set<String> accountTeamccAddress = new Set<String>();
                 
                 for(NSP_Account_Team__c accTeam: [SELECT NSP_Account__c,NSP_User__c, NSP_User__r.Name, NSP_User__r.Title,NSP_Role__c,  NSP_Email__c
                                                   FROM NSP_Account_Team__c
@@ -462,8 +460,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     if(!listOfTOAddresses.isEmpty()){
                         String mailBody = getMailBody(proj, template.Id);
                         sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                            fromAddress,mapofAccountIds.get(accId).id , template.Id); 
-                        
+						fromAddress, accountIdProjectTaskMap.get(accId), null);
                     }
                     }
                 }
@@ -498,7 +495,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
     }
     
     public static void sendMailFEIN(String aimsClient, String aimsClientName, String jobTitle, list<String> listOfTOAddresses,
-                                            list<String> listOfCCAddresses, String projectManager, List<Messaging.EmailFileAttachment> emailAttachments, String prjcTaskId){
+              		 	 					list<String> listOfCCAddresses, String projectManager, List<Messaging.EmailFileAttachment> emailAttachments, String prjcTaskId){
         
                                                 //email template for FEIN Document
         String subjectString = aimsClientName+'('+aimsClient+')'+'– IRS Documentation collected ';
@@ -547,29 +544,29 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         
         if(listOfTOAddresses!=null && listOfTOAddresses.size()>0){
-            email.setToAddresses(listOfTOAddresses);
+        	email.setToAddresses(listOfTOAddresses);
         }
                                    
-        if(listOfCCAddresses!=null && listOfCCAddresses.size()>0){
-            email.setCcAddresses(listOfCCAddresses);
+		if(listOfCCAddresses!=null && listOfCCAddresses.size()>0){
+        	email.setCcAddresses(listOfCCAddresses);
         }                                     
         
         if(subjectString!=null && !String.isBlank(subjectString)){
-            email.setSubject(subjectString);
+        	email.setSubject(subjectString);
         }
 
-        if(mailBody!=null && !String.isBlank(mailBody)){
-            email.setHtmlBody(mailBody);
+		if(mailBody!=null && !String.isBlank(mailBody)){
+        	email.setHtmlBody(mailBody);
         }        
         
         if(emailAttachments!=null && emailAttachments.size()>0){
-            email.setFileAttachments(emailAttachments);
+        	email.setFileAttachments(emailAttachments);
         }
         if(targetId!=null && !String.isBlank(targetId)){
-            email.setWhatId(targetId);
+        	email.setWhatId(targetId);
         }
         if(templateId!=null && !String.isBlank(templateId)){
-            email.setTemplateId(templateId);
+        	email.setTemplateId(templateId);
         }
         email.setSaveAsActivity(true);
         email.setTargetObjectId(UserInfo.getUserId());
@@ -770,7 +767,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     }
                      User user=mapOfUser.get(mapOfProjectTaskOwner.get(proj.Id));
                     if(!listOfToAddresses.isEmpty()){
-                        sendOnsiteDiscoveryMail(proj.Id, proj.pse__Account__r.Name, proj.NSP_RET_Client_ID__c, user,listOfToAddresses,mapofProjectTask.get(proj.Id) );
+                    	sendOnsiteDiscoveryMail(proj.Id, proj.pse__Account__r.Name, proj.NSP_RET_Client_ID__c, user,listOfToAddresses,mapofProjectTask.get(proj.Id) );
                     }
                 
             }
@@ -812,8 +809,16 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         List<NSP_Project_Team__c> projTeamList = proj.Project_Teams__r;
         String mailBody;
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                email=Messaging.renderStoredEmailTemplate(templateId, null ,proj.Project_Team_Payroll_Specialist__c);
+                email=Messaging.renderStoredEmailTemplate(templateId, null ,null);
                 mailBody=email.htmlbody;
+                if(!projTeamList.isEmpty()){
+                    NSP_Project_Team__c projTeam =projTeamList[0];
+                    mailBody +='Kind Regards,'+'<br/>';
+                    mailBody +=projTeam.NSP_Assignee__r.Name+'<br/>';
+                    mailBody +=projTeam.NSP_Assignee__r.NSP_Work_email__c+'<br/>';
+                    mailBody +=projTeam.NSP_Assignee__r.NSP_Work_Phone__c;
+                }
+        
         return mailBody;
         
     }

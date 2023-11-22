@@ -5,7 +5,6 @@
 * Name : NSP_ProjectTeamTriggerHelper
 */
 public class NSP_ProjectTeamTriggerHelper {
-    // test w/ NSP_ProjectTeamTriggerHelperTest (88%)
     
     /***********************************************************************************************
     * MethodName: restrictDuplicateProjectTeamRecords
@@ -218,76 +217,6 @@ public class NSP_ProjectTeamTriggerHelper {
             //update the project if list is not empty
             if(!updateProjList.isEmpty()){
                 database.update(updateProjList, false);
-            }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTeamTriggerHelper', 'restrictDuplicateProjectTeamRecords', ex.getMessage());
-        } 
-            
-        
-    }
-    
-    /***********************************************************************************************
-    * MethodName: updatePayrollSpecialistonProject
-    * Description : This Method will update owner field on project when project manager role is assigned on project team object  
-    * Params:       Map <Id, NSP_Project_Team__c >newProjTeamMap, Map <Id, NSP_Project_Team__c >oldProjTeamMap
-    * Author :      Harsha Khiroya
-    * ********************************************************************************************/
-    
-    public static void updatePayrollSpecialistonProject(Map <Id, NSP_Project_Team__c >newProjTeamMap, Map <Id, NSP_Project_Team__c >oldProjTeamMap){
-        Map<Id,Id> mapOfPayrollSpecialist = new Map<Id,Id>();
-        Id PEORecordTypeId  = Schema.SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
-		Set<Id> projectIdSet = new Set<Id>();
-        try{
-            
-            for(NSP_Project_Team__c projTeam:newProjTeamMap.values()){
-                
-                //fetch project team assignee who has project manager role and put it in map of project, project manager
-                if(projTeam.NSP_Assignee__c!=null && projTeam.NSP_Project__c!=null && projTeam.NSP_Role__c==NSP_ServiceConstants.PayrollSpecialist){
-                   
-                    if(oldProjTeamMap==null || projTeam.NSP_Assignee__c!= oldProjTeamMap.get(projTeam.id).NSP_Assignee__c){
-                          
-                       mapOfPayrollSpecialist.put(projTeam.NSP_Project__c,projTeam.NSP_Assignee__c);
-                    }
-                }
-               
-                if(String.isBlank(projTeam.NSP_Assignee__c) && projTeam.NSP_Role__c==NSP_ServiceConstants.PayrollSpecialist){
-                    projectIdSet.add(projTeam.NSP_Project__c);
-                    
-                }
-                 
-            }
-           //get map of all salesforce user for the project manager role contact 
-           Map<Id,Contact> mapofContacts= new Map<Id, Contact>([SELECT Id,Name, NSP_Work_email__c, NSP_Work_Phone__c, pse__Salesforce_User__c from Contact WHERE Id in: mapOfPayrollSpecialist.values() ]);
-            
-           
-            //query for all the implementation project which present in the mapOfProjectManager
-            List<pse__Proj__c> implProjectList = new List<pse__Proj__c>([Select Id ,pse__Project_Type__c ,TemplateName__c,RecordTypeId ,OwnerId,Project_Team_Payroll_Specialist__c
-                                                                              From pse__Proj__c WHERE  pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND 
-                                                                              (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c = :label.FSOImplementationProject) 
-                                                                              AND RecordTypeId=:PEORecordTypeId AND Id IN :mapOfPayrollSpecialist.keyset()]);
-            
-             List<pse__Proj__c> projectList = new List<pse__Proj__c>([Select Id ,pse__Project_Type__c ,TemplateName__c,RecordTypeId ,OwnerId,Project_Team_Payroll_Specialist__c
-                                                                              From pse__Proj__c WHERE Id IN :projectIdSet]);
-           
-            List<pse__Proj__c> updateProjList = new List<pse__Proj__c>();
-            
-            for(pse__Proj__c proj:implProjectList ){
-                Id projTeamId=mapofContacts.get(mapOfPayrollSpecialist.get(proj.id)).Id;
-                
-               	 if(proj.Project_Team_Payroll_Specialist__c!=projTeamId){
-                   proj.Project_Team_Payroll_Specialist__c= projTeamId;
-                   updateProjList.add(proj); 
-                }
-            }
-            for(pse__Proj__c proj:projectList ){
-            	proj.Project_Team_Payroll_Specialist__c= null;
-            }
-            //update the project if list is not empty
-            if(!updateProjList.isEmpty()){
-                database.update(updateProjList, false);
-            }
-            if(!projectList.isEmpty()){
-                database.update(projectList,false);
             }
         }catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_ProjectTeamTriggerHelper', 'restrictDuplicateProjectTeamRecords', ex.getMessage());
