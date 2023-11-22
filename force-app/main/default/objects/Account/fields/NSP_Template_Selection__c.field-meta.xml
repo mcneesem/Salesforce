@@ -12,44 +12,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>MarketingReferalAllianceAgreement</fullName>
+                <fullName>Affiliate-25</fullName>
                 <default>false</default>
-                <label>MarketingReferalAllianceAgreement</label>
+                <label>Affiliate-25</label>
             </value>
             <value>
-                <fullName>NDAChannelPartner</fullName>
+                <fullName>Affiliate-50</fullName>
                 <default>false</default>
-                <label>NDAChannelPartner</label>
+                <label>Affiliate-50</label>
             </value>
             <value>
-                <fullName>referralProgramAF-I</fullName>
+                <fullName>NDA Channel Partner</fullName>
                 <default>false</default>
-                <label>referralProgramAF-I</label>
+                <label>NDA Channel Partner</label>
             </value>
             <value>
-                <fullName>ReferralProgramAF-II</fullName>
+                <fullName>Referral Program Associations</fullName>
                 <default>false</default>
-                <label>ReferralProgramAF-II</label>
+                <label>Referral Program Associations</label>
             </value>
             <value>
-                <fullName>ReferralProgramAssociations</fullName>
+                <fullName>Referral Program National Non RevShare</fullName>
                 <default>false</default>
-                <label>ReferralProgramAssociations</label>
-            </value>
-            <value>
-                <fullName>ReferralProgramChamberBanks</fullName>
-                <default>false</default>
-                <label>Referral Program Chamber Banks</label>
-            </value>
-            <value>
-                <fullName>ReferralProgramIII</fullName>
-                <default>false</default>
-                <label>ReferralProgramIII</label>
-            </value>
-            <value>
-                <fullName>ReferralProgramNationalNonRevShare</fullName>
-                <default>false</default>
-                <label>Referral Program National NonRev Share</label>
+                <label>Referral Program National Non RevShare</label>
             </value>
             <value>
                 <fullName>ReferralProgramNationalRevShare</fullName>
@@ -67,9 +52,63 @@
                 <label>Terms of Participation TOP Alliance General Agent</label>
             </value>
             <value>
+                <fullName>TOP Insurance Broker Alliance – CoSelling</fullName>
+                <default>false</default>
+                <label>TOP Insurance Broker Alliance – CoSelling</label>
+            </value>
+            <value>
+                <fullName>MarketingReferalAllianceAgreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MarketingReferalAllianceAgreement</label>
+            </value>
+            <value>
+                <fullName>NDAChannelPartner</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NDAChannelPartner</label>
+            </value>
+            <value>
+                <fullName>ReferralProgramChamberBanks</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Referral Program Chamber Banks</label>
+            </value>
+            <value>
+                <fullName>ReferralProgramNationalNonRevShare</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Referral Program National NonRev Share</label>
+            </value>
+            <value>
+                <fullName>ReferralProgramAF-II</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ReferralProgramAF-II</label>
+            </value>
+            <value>
+                <fullName>ReferralProgramAssociations</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ReferralProgramAssociations</label>
+            </value>
+            <value>
+                <fullName>ReferralProgramIII</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ReferralProgramIII</label>
+            </value>
+            <value>
                 <fullName>TOPAllianceCoSellingBrokerRev</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>TOP Alliance CoSelling Broker Rev</label>
+            </value>
+            <value>
+                <fullName>referralProgramAF-I</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>referralProgramAF-I</label>
             </value>
         </valueSetDefinition>
     </valueSet>
