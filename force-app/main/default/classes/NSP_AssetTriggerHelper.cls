@@ -6,7 +6,7 @@
 */
 
 public class NSP_AssetTriggerHelper {    
-    // test w/ NSP_AssetTriggerHelperTest (87%)
+    // test w/ NSP_AssetTriggerHelperTest (87%)    
         
     private static final string assetWoType = 'WO';
     private static final string assetwxType = 'WX_WA';
@@ -17,6 +17,10 @@ public class NSP_AssetTriggerHelper {
     private static final String ASSET_TRIGGER_HELPER = 'NSP_AssetTriggerHelper';
     Static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
     Static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
+    private static final string BACKOUT= 'Backout';
+    private static final string TERMINATED= 'Terminated';
+    private static final string RETURNED= 'Returned';
+    private static final string INACTIVE= 'Inactive';
 
     
     /**
@@ -205,7 +209,7 @@ public class NSP_AssetTriggerHelper {
         
     List <Asset> assetList = new List<Asset>();
     assetList = [SELECT ID, recordtypeId, recordtype.name, AccountId, Status from Asset WHERE AccountId IN:accountList 
-                 AND RecordTypeId != :WOAssetRecordTypeId AND RecordTypeId != :CPQAssetRecordTypeId AND Status != 'Terminated' AND Status != 'Backout' AND Status != 'Returned' AND Status != 'Inactive'
+                 AND RecordTypeId != :WOAssetRecordTypeId AND RecordTypeId != :CPQAssetRecordTypeId AND Status != :TERMINATED AND Status != :BACKOUT AND Status != :RETURNED AND Status != :INACTIVE
                  ];
         
     for (Asset eachAsset : assetList) {
