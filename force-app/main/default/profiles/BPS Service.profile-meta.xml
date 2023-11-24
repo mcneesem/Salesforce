@@ -16883,6 +16883,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.AVA_BLNG__Entity_Use_Code__c</field>
         <readable>false</readable>
