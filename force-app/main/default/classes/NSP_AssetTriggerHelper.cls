@@ -6,7 +6,7 @@
 */
 
 public class NSP_AssetTriggerHelper {    
-    
+    // test w/ NSP_AssetTriggerHelperTest (87%)
         
     private static final string assetWoType = 'WO';
     private static final string assetwxType = 'WX_WA';
@@ -16,6 +16,9 @@ public class NSP_AssetTriggerHelper {
     private static final Id asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetwxType).getRecordTypeId();
     private static final String ASSET_TRIGGER_HELPER = 'NSP_AssetTriggerHelper';
     Static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+    Static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
+
+    
     /**
 * Iterates throught the list of new Account and passes the required attributes to other methods.
 * @param newList List of New Accounts.  
@@ -68,13 +71,20 @@ public class NSP_AssetTriggerHelper {
         updateInvoiceDate(newList,newMap);
         peoTESClientStatus(newList,newMap);
         updateRETAsset(newList,newMap);
+        List<Asset> docusignAsset = new List<Asset>();
         try {
            for(Asset assetObj: newList){              
                 if(assetObj.Status != null && (assetObj.Status == activeStatus || assetObj.Status == onboardingStatus))
                 {
                  ast.add(assetObj);
                 }
-       }
+                if(assetObj.Status != null && assetObj.RecordTypeId != WOAssetRecordTypeId && assetObj.RecordTypeId != CPQAssetRecordTypeId){
+                      docusignAsset.add(assetObj); 
+                   }
+            }
+            if(!docusignAsset.isEmpty()){
+                updateAssetInDocusign(docusignAsset);
+            }
        if(!ast.isEmpty()){
            updateActiveAssets(ast);
        }
@@ -136,6 +146,7 @@ public class NSP_AssetTriggerHelper {
        Set<Id> asstIdSet = new Set<Id>();        
        List<Asset> ast = new List<Asset>();
        List<Asset> astremove = new List<Asset>();
+       List<Asset> docusignAsset = new List<Asset>();
        if(newMap.size() > 0){
            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
@@ -156,9 +167,14 @@ public class NSP_AssetTriggerHelper {
             if(asst.Status != oldMap.get(asst.Id).Status)
             {
                  ast.add(asst);
-       }      
+       }
+           if(asst.Status != oldMap.get(asst.Id).Status && asst.RecordTypeId != WOAssetRecordTypeId && asst.RecordTypeId != CPQAssetRecordTypeId){
+                 docusignAsset.add(asst); 
              
        }
+           if(!docusignAsset.isEmpty()){
+               updateAssetInDocusign(docusignAsset);
+           }
 
        if(!ast.isEmpty()){
            updateActiveAssets(ast);
@@ -167,8 +183,72 @@ public class NSP_AssetTriggerHelper {
        if(!asstIdSet.isEmpty()){
            mapGovernmentContratcorOnPDS(asstIdSet);
        }               
+       }
    }
-     
+   
+    /**
+    * @MethodName: updateAssetInDocusign
+    * @Description: Active asset for docusign use
+    * @param :List<Asset> ast
+    * @return void                          
+    */    
+    public static void updateAssetInDocusign(List<Asset> ast) {
+    Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
+    Map<Id, RecordTypeInfo> rtinfos = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
+    List<Id> accountList = new List<Id>();
+    try{    
+    for (Asset eachAsset : ast) {
+        if (eachAsset.AccountId != null ) {
+            accountList.add(eachAsset.AccountId);
+        }
+    }
+        
+    List <Asset> assetList = new List<Asset>();
+    assetList = [SELECT ID, recordtypeId, recordtype.name, AccountId, Status from Asset WHERE AccountId IN:accountList 
+                 AND RecordTypeId != :WOAssetRecordTypeId AND RecordTypeId != :CPQAssetRecordTypeId AND Status != 'Terminated' AND Status != 'Backout' AND Status != 'Returned' AND Status != 'Inactive'
+                 ];
+        
+    for (Asset eachAsset : assetList) {
+        if (eachAsset.AccountId != null) { 
+            if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
+                accountToAssetRecordtypeMap.put(eachAsset.AccountId, new Set<String>());
+            }
+          
+          String rtName;
+          if(rtinfos.containsKey(eachAsset.RecordTypeId)) {
+                 rtName = rtinfos.get(eachAsset.RecordTypeId).getName();
+             }
+            // Adding all recordtype here from all related assets
+            accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(rtName.split(','));
+
+           
+        }
+    }
+
+    List<Account> acctLst = new List<Account>();
+
+    for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
+        //Clearing old value for Docusign_Assets__c
+        eachAccount.Docusign_Assets__c = Null;
+        if (accountToAssetRecordtypeMap.containsKey(eachAccount.Id)) {
+			//Adding value into Set for dedupe
+            Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
+            //Adding value from set to List
+            List<String> ActiveAssetList = new List<String>();
+            ActiveAssetList.addAll(existingassetsrecordtype);
+			//Updating the Docusign_Assets__c
+            if(ActiveAssetList.size() > 0){
+                eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+            }
+            
+        }
+            acctLst.add(eachAccount);
+    }
+    	update acctLst;
+    }catch (exception ex) {
+                NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'updateAssetInDocusign', ex.getMessage());
+            }
+    }
     
    /**
     * @MethodName: updateActiveAssets
