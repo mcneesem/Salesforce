@@ -18905,6 +18905,11 @@
         <field>Account.Employee_Orientation_OMR_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Active_Assets__c</field>
