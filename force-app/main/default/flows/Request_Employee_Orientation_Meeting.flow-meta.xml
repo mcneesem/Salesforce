@@ -1401,6 +1401,13 @@
                 <stringValue>New Client Orientation</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Task</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
