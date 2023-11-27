@@ -11,9 +11,10 @@
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
-    <permissionSets>Opportunity_Lock_Enrollment_Fee_Edit_Access</permissionSets>
+    <permissionSets>Opportunity_Lock_Enrollment_Fee_Read_Access</permissionSets>
     <permissionSets>Opportunity_Non_Docupay_field_edit_permission</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
+    <permissionSets>Sales_Compensation_Role_Permission_Set</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
