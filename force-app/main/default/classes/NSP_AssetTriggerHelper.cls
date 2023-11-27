@@ -482,23 +482,19 @@ public class NSP_AssetTriggerHelper {
                 }
 		}
 
-	if(idSet.Size() > 0){
-		List<Asset> assetResult = [SELECT Id, NSP_AIMS_First_Pay_Date__c,opportunity__c FROM Asset WHERE opportunity__c In :IdSet AND NSP_AIMS_First_Pay_Date__c !=NULL order by NSP_AIMS_First_Pay_Date__c DESC limit 1];
-        for(Asset assetWo: assetResult){
-            oppList.add(new Opportunity(id = assetWo.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWo.NSP_AIMS_First_Pay_Date__c));
-	
+        if(idSet.Size() > 0) {
+            List<Asset> assetResult = [SELECT Id, NSP_AIMS_First_Pay_Date__c,opportunity__c FROM Asset WHERE opportunity__c In :IdSet AND NSP_AIMS_First_Pay_Date__c !=NULL order by NSP_AIMS_First_Pay_Date__c DESC limit 1];
+            for(Asset assetWo: assetResult){
+                oppList.add(new Opportunity(id = assetWo.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWo.NSP_AIMS_First_Pay_Date__c));
+            }
         }
-			}
-
 	
-	if(idwxset.Size() > 0){
-			List<Asset> assetWxResult = [SELECT Id, NSP_First_Pay_Date__c, opportunity__c FROM Asset WHERE opportunity__c In :idwxset AND NSP_First_Pay_Date__c !=NULL order by NSP_First_Pay_Date__c DESC limit 1];
-		   for(Asset assetWx: assetWxResult){
-             oppList.add(new Opportunity(id = assetWx.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWx.NSP_First_Pay_Date__c));
-				
-        }	
-       
-			}
+	    // if(idwxset.Size() > 0) {
+        //     List<Asset> assetWxResult = [SELECT Id, NSP_First_Pay_Date__c, opportunity__c FROM Asset WHERE opportunity__c In :idwxset AND NSP_First_Pay_Date__c !=NULL order by NSP_First_Pay_Date__c DESC limit 1];
+        //     for(Asset assetWx: assetWxResult){
+        //         oppList.add(new Opportunity(id = assetWx.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWx.NSP_First_Pay_Date__c));
+        //     }	
+		// }
 
        try{
         if(!oppList.isEmpty()){
