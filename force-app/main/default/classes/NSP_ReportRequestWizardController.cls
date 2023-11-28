@@ -386,7 +386,7 @@ public with sharing class NSP_ReportRequestWizardController {
                     lstConDocs.add(new ContentDocumentLink(
                         LinkedEntityId      = caseID,
                         ContentDocumentId   = cntLink.ContentDocumentId,
-                        ShareType           = 'V',
+                        ShareType           = 'I',
                         Visibility          = 'InternalUsers'
                     ));
                 }
