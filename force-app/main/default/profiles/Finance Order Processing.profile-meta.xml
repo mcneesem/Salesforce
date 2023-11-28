@@ -14396,6 +14396,34 @@
     <layoutAssignments>
         <layout>dfsle__EnvelopeStatus__c-dfsle__DocuSign Envelope Status Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>pse__Project_Task__c-BPS Project Task</layout>
+        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>pse__Project_Task__c-PEO Project Task</layout>
+        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
+    </layoutAssignments>
+	<layoutAssignments>
+        <layout>pse__Project_Task__c-RET Project Task</layout>
+        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>pse__Proj__c-PEO Project Layout</layout>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+    </layoutAssignments>  
+    <layoutAssignments>
+        <layout>pse__Proj__c-RET Deconversion 2020 Form</layout>
+        <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>pse__Proj__c-TES%2BBPS</layout>
+        <recordType>pse__Proj__c.TES_BPS</recordType>
+    </layoutAssignments>
+	<layoutAssignments>
+        <layout>pse__Proj__c-PEO Project Billable</layout>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
