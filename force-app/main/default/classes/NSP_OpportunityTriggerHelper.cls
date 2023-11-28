@@ -16,7 +16,8 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    
+    //  test w/ NSP_OpportunityTriggerHelperTest (78%)
+
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static final List<String> workforceProductsList = System.Label.NSP_Primary_Workforce_Products.split(',');
@@ -1076,8 +1077,8 @@ public class NSP_OpportunityTriggerHelper {
                     if(rewardType == 'Discovery'){
                         NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
                         if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
-                            newReward.NSP_Reward_Amount__c = 100;
-                            newReward.NSP_Nonprofit_Amount__c = 100;
+                            newReward.NSP_Reward_Amount__c = 200;
+                            newReward.NSP_Nonprofit_Amount__c = 200;
                             newReward.NSP_Payment_Type_Reward__c = 'Check';
                             newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
                         }
