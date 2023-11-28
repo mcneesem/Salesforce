@@ -942,6 +942,13 @@
                 <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Task</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1088,7 +1095,7 @@
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Discovery_SKO_Meeting_has_Already_been_Requested</name>
         <label>Discovery/SKO Meeting has Already been Requested</label>
