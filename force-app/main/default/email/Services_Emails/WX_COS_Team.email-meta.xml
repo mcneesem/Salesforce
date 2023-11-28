@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>WX COS Team</name>
+    <style>freeForm</style>
+    <subject>{!Case.Subject} - {!Case.CaseNumber}</subject>
+    <textOnly>Thank you for contacting the Client Optimization Support Team.  Your email has been received and a case has been created for you.  A member will respond to you shortly. Please note that a response can take up for 2 hours.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
