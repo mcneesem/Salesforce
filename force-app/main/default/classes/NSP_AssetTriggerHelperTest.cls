@@ -128,7 +128,7 @@ public class NSP_AssetTriggerHelperTest {
         assetObj6.NSP_Client__c = 'asset6';
         assetObj6.name = 'asset6';
         assetObj6.recordTypeId = retRecordTypeId;
-        assetObj6.NSP_Service_Region__c = users.NSP_Service_Region__c;
+        //assetObj6.NSP_Service_Region__c = users.NSP_Service_Region__c;
         assetObj6.NSP_Product_Line__c = 'Learning & Development';
         assetList.add(assetObj6);
         
