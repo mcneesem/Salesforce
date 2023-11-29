@@ -823,10 +823,10 @@ static void createAssetTest3(){
            NSP_Task_Type__c = 'Core Sales',
            NSP_Event_Subtype__c = 'Discovery Call',
            NSP_Status__c = 'Completed',
-           StartDateTime = system.now(),
-           EndDateTime = system.now(),
-           ActivityDate = System.today(),
-           ActivityDateTime = System.now()
+           ActivityDateTime = System.now(),
+           StartDateTime = eventRec.ActivityDateTime,
+           EndDateTime = eventRec.ActivityDateTime,
+           ActivityDate = System.today()
        );
        insert eventRec;
 
