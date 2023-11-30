@@ -815,7 +815,7 @@ static void createAssetTest3(){
        objOCR1.NSP_Nonprofit_Organization_Tax_Id__c = '123456789';
        insert objOCR1;
 
-       DataTime testtime = System.now();
+       DateTime testtime = System.now();
        Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
        Event eventRec = new Event(
            Subject = 'Discovery Call',
