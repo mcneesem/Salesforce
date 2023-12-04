@@ -11,13 +11,33 @@ Modification Log     :
 * Srushti Bikkannavar        12/13/2022           First Iteration
 */
 
-public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Batchable < sObject >{
-    // test w/ NSP_AssetFLSACaseCreationBatchTest (90%)
+// test w/ NSP_AssetFLSACaseCreationBatchTest (90%)
 
+public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stateful, Database.Batchable < sObject >{
+         Integer segmentDays = 0;
+         Integer btCoreEgMinDays = 0;
+         Integer btCoreEgMaxDays = 0;
+         Integer egMmMinDays = 0;
+         Integer egMmMaxDays = 0;
     public Database.QueryLocator start(Database.BatchableContext bc) {
+    //Get segment days range info    
+        if(String.isNotBlank(System.Label.NSP_Segment_Days)){
+            segmentDays = Integer.valueOf(System.Label.NSP_Segment_Days);
+        }        
+        
+        if(String.isNotBlank(System.Label.NSP_BTCoreEgMinMaxRange)){
+            btCoreEgMinDays = Integer.valueOf(System.Label.NSP_BTCoreEgMinMaxRange.split(';')[0]);
+            btCoreEgMaxDays = Integer.valueOf(System.Label.NSP_BTCoreEgMinMaxRange.split(';')[1]);
+        }  
+
+        if(String.isNotBlank(System.Label.NSP_EGMMMinMaxRange)){
+            egMmMinDays = Integer.valueOf(System.Label.NSP_EGMMMinMaxRange.split(';')[0]);
+            egMmMaxDays = Integer.valueOf(System.Label.NSP_EGMMMinMaxRange.split(';')[1]);
+        }  
+
         //Get WO Asset Record Type Id
         Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
-        String ageDays = (System.today().addDays(-28)+'').split(' ')[0];
+        String ageDays = (System.today().addDays(segmentDays)+'').split(' ')[0];
         //Asset fields to query
         List<String> assetFields = new List<String>{
             'NSP_Client_Segment_type__c',
@@ -46,6 +66,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Bat
     }
     
     public void execute(Database.BatchableContext BC, List<Asset> assetList){
+
         List<String> segmentList = new List<String>{
             NSP_ServiceConstants.BTAssetSegment,
             NSP_ServiceConstants.CoreAssetSegment
@@ -71,8 +92,8 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Bat
                                                     WHERE NSP_Asset__c IN: assetList AND 
                                                     NSP_Case_created_from_FLSA_Batch__c = false]){
                                                         
-                                                        if(subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(-14) && 
-                                                           subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(-21)){
+                                                        if(subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(btCoreEgMinDays) && 
+                                                           subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(btCoreEgMaxDays)){
                                                                //Condition for BT and Core Segment Type
                                                                if(segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)){
                                                                    flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
@@ -90,8 +111,8 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable, Database.Bat
                                                                }
                                                         }
  
-                                                        else if(subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(-22) && 
-                                                                subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(-28)){
+                                                        else if(subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(egMmMinDays) && 
+                                                                subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(egMmMaxDays)){
                                                                     //Condition for EG Segment Types
                                                                     if(segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) &&
                                                                        subClientRecord.NSP_Asset__r.NSP_Unique_Active_Employee__c >= 50){
