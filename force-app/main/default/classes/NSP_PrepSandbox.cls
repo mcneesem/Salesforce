@@ -161,8 +161,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCMetadataSvc(String sandboxName) {
         try {
+            Integer batch = 0;
             MetadataService.MetadataPort service = createService();
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
             List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id!=Null];
             List<pse__Proj__c> oProjTmpls = [Select Id, TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true];
@@ -170,6 +171,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             for (pse__Proj__c oProjTmpl : oProjTmpls) {
                 mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
             }
+
+    		allMetadataList.add(new List<MetadataService.Metadata>());
 
             for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
                 if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
@@ -182,7 +185,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         customField1.field = 'Template_ID__c'; //the custom field API Name to be updated
                         customField1.value = mTmplId.get(cMdTmpl.Template_Name__c);
                     cMdUpd.values.add(customField1); //add the changes to list of changes to be deployed
-                    allMetadataList.add(cMdUpd);
+
+                    if (allMetadataList[batch].size() >= 200) {
+						batch++;
+                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                    }
+                    allMetadataList[batch].add(cMdUpd);
                 }
             }
 
@@ -197,15 +205,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         customField2.field = 'Template_ID__c'; //the custom field API Name to be updated
                         customField2.value = mTmplId.get(cMdTmplKey.Template_Name__c);
                     cMdUpd.values.add(customField2); //add the changes to list of changes to be deployed
-                    allMetadataList.add(cMdUpd);
+                    if (allMetadataList[batch].size() >= 200) {
+						batch++;
+                        allMetadataList.add(new List<MetadataService.Metadata>());
+                    }
+                    allMetadataList[batch].add(cMdUpd);
                 }
             }
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
+                for (Integer i = 0; i < allMetadataList.size(); i ++) {
+                    List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
+                    System.debug('Partition: ' + i);
+                }
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doCMetadata: ' + e.getMessage());
+            System.debug('An exception occurred in doCMetadataSvc: ' + e.getMessage());
         }
     }
     
