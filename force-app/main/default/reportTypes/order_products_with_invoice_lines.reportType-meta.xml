@@ -1583,6 +1583,11 @@
             <field>blng__UsageSummary__c</field>
             <table>OrderItem.blng__OrderProductInvoiceLines__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Invoice_Line_ID_18__c</field>
+            <table>OrderItem.blng__OrderProductInvoiceLines__r</table>
+        </columns>
         <masterLabel>Invoice Lines</masterLabel>
     </sections>
 </ReportType>
