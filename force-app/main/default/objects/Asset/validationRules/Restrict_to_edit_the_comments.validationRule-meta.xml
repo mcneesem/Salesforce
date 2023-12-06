@@ -4,13 +4,17 @@
     <active>false</active>
     <description>Not allow Comments field to be updated if logged in user is not DA</description>
     <errorConditionFormula>AND(
-    $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True,
-    ISCHANGED(NSP_Pending_Report_Comments__c),
-    $UserRole.DeveloperName !=&apos;District_Administrator&apos;,
-    NOT(OR( $Profile.Name = &quot;System Administrator&quot; ,
-    $Profile.Name = &quot;Data Migration&quot;,
-    $Profile.Name = &quot;Sales Administrator&quot;,
-    $Profile.Name = &quot;Integration User&quot;))
-    )</errorConditionFormula>
+  NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,
+  ISCHANGED( NSP_Pending_Report_Comments__c ) ,
+  $UserRole.DeveloperName != &apos;District_Administrator&apos; ,
+  NOT(
+    OR(
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
+      $Profile.Name = &quot;Data Migration&quot; ,
+      $Profile.Name = &quot;Sales Administrator&quot; ,
+      $Profile.Name = &quot;Integration User&quot;
+    )
+  )
+)</errorConditionFormula>
     <errorMessage>You don&apos;t have permission to update comments on asset.</errorMessage>
 </ValidationRule>

@@ -16883,6 +16883,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.AVA_BLNG__Entity_Use_Code__c</field>
         <readable>false</readable>
@@ -21508,7 +21513,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.NSP_Response_After_Close__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -47385,6 +47390,41 @@
         <field>pse__Work_Calendar__c.pse__WeekendsAreWorkdays__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Payment__c.Payment_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <layoutAssignments>
         <layout>Onboarding_Meeting_Request__c-Onboarding Meeting Request Layout</layout>
     </layoutAssignments>

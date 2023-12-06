@@ -5,7 +5,8 @@
 * Name : NSP_CaseIssueHelper
 */
 public class NSP_CaseIssueHelper {
-        
+    // test w/ NSP_CaseIssuehelperTest (82%)
+
     /***********************************************************************************************
     * MethodName: beforeUpdateDirector
     * Description : Runs on Before Update
@@ -132,6 +133,7 @@ public class NSP_CaseIssueHelper {
         Case cs = new Case();
         cs.Id = caseId;
         cs.Status = NSP_ServiceConstants.CASE_CLOSED_STATUS;
+        cs.NSP_Case_Sub_Status__c = NSP_ServiceConstants.CASE_CLOSED_STATUS;//11/10/2023-Suhas Added -STY-234800
         cs.NSP_Rating__c = rating;
         return cs;
     }

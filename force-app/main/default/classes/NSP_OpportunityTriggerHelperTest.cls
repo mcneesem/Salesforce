@@ -105,6 +105,20 @@ public class NSP_OpportunityTriggerHelperTest {
         );
         taskList.add(taskRec);
 
+        Opportunity opportuniytObject5 = new Opportunity();
+        opportuniytObject5.Type = 'New Product';
+        opportuniytObject5.Name = 'Test Oppty Match';
+        opportuniytObject5.AccountId = accoutObject1.id;
+        opportuniytObject5.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject5.CloseDate = date.today();
+        opportuniytObject5.CurrencyIsoCode = CURRENCY_USD;
+        opportuniytObject5.NSP_PrimaryProduct__c = 'WO';
+        opportuniytObject5.NSP_Number_of_Employees__c = 5; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert opportuniytObject5;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
+       
+   
         Test.startTest();
         List<Opportunity> oppList2 = new List<Opportunity>();       
         Opportunity opportuniytObject3 = new Opportunity();
@@ -780,10 +794,59 @@ static void createAssetTest3(){
        update opportunityList;
        opportunityList[0].Nsp_1st_Pay_Invoice_Date_Reporting__c = system.today()+2;
        update opportunityList;
+
+       //   Test match reward 
+       List<Opportunity> opportunityList1 = [SELECT ID, Discovery_Completed__c FROM Opportunity WHERE Name = 'Test Oppty Match' ];
+              
+       Contact objContact1 = new Contact();
+       objContact1.firstName = 'Test Match';
+       objContact1.LastName = 'Contact NSP Match';
+       objContact1.Email = 'testcntmatch@nsp.com';
+       objContact1.AccountId = accountList[0].Id;
+       insert objContact1;
+       
+       OpportunityContactRole objOCR1 = new OpportunityContactRole();
+       objOCR1.OpportunityId = opportunityList1[0].id;
+       objOCR1.ContactId = objContact1.Id;
+       objOCR1.NSP_isReferral__c = true;
+       objOCR1.Role = 'COI';
+       objOCR1.NSP_Referralbenefitsanonprofitorg__c = 'Match';
+       objOCR1.NSP_Nonprofit_Organization_Name__c = 'Test';
+       objOCR1.NSP_Nonprofit_Organization_Tax_Id__c = '123456789';
+       insert objOCR1;
+
+       DateTime testtime = System.now();
+       Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+       Event eventRec = new Event(
+           Subject = 'Discovery Call',
+           WhatId = opportunityList[0].Id,
+           RecordTypeId = eventRecTypeId,
+           NSP_Task_Type__c = 'Core Sales',
+           NSP_Event_Subtype__c = 'Discovery Call',
+           NSP_Status__c = 'Completed',
+           ActivityDateTime = testtime,
+           StartDateTime = testtime,
+           EndDateTime = testtime,
+           ActivityDate = System.today()
+       );
+       insert eventRec;
+
+       //   Create reward
+       NSP_OpportunityTriggerHelper.createRewardsOnce = false;
+       opportunityList1[0].Discovery_Completed__c = true;
+       update opportunityList1;
+
+       List<NSP_Reward__c> reward = [SELECT id, NSP_Reward_Amount__c, NSP_Nonprofit_Amount__c FROM NSP_Reward__c WHERE Opportunity__c =: opportunityList1[0].Id];
+
+       //   Match reward amount and non-profit amount should be 200 
+       System.assertEquals(200, reward[0].NSP_Reward_Amount__c); 
+
+       System.assertEquals(200, reward[0].NSP_Nonprofit_Amount__c); 
+
        Test.stopTest();
    }
     
-       /** 
+    /** 
     * Test for before and after insert of ACR trigger
     * Method Name : testAccountContactInsert
     * created as part of user story - 128223

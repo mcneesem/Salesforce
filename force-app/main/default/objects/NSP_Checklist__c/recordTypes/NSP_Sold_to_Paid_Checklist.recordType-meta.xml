@@ -4,6 +4,28 @@
     <active>true</active>
     <label>Sold to Paid Checklist</label>
     <picklistValues>
+        <picklist>Active_Benefit_Continuation_Period__c</picklist>
+        <values>
+            <fullName>12 Weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26 Weeks</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Are_all_employees_paid_under_one_FEIN__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Addendums_required_before_OT__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -654,11 +676,11 @@
     <picklistValues>
         <picklist>WO_Benefit_Package__c</picklist>
         <values>
-            <fullName>Freedom Basic</fullName>
+            <fullName>Freedom Classic Choice</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Freedom Choice</fullName>
+            <fullName>Freedom Enhanced</fullName>
             <default>false</default>
         </values>
         <values>
@@ -674,11 +696,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Independence Basic</fullName>
+            <fullName>Freedom Value Choice</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Independence Choice</fullName>
+            <fullName>Independence Classic Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Enhanced</fullName>
             <default>false</default>
         </values>
         <values>
@@ -694,11 +720,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Liberty Basic</fullName>
+            <fullName>Independence Value Choice</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Liberty Choice</fullName>
+            <fullName>Liberty Classic Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Enhanced</fullName>
             <default>false</default>
         </values>
         <values>
@@ -711,6 +741,10 @@
         </values>
         <values>
             <fullName>Liberty Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Value Choice</fullName>
             <default>false</default>
         </values>
         <values>

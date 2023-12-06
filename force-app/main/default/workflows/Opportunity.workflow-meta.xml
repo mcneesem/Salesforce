@@ -272,7 +272,8 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>no-reply@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>NSP_Sales/NSP_NotificationforOpportunityOwner</template>
     </alerts>
     <alerts>

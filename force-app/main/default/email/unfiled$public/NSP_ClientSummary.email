@@ -59,7 +59,7 @@ CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'RI'),CONTAINS(rel
 
 <p> You indicated there are employees working in the following states that have specific <br/>
 rules on filing state unemployment taxes. Please review the section State <br/>
-Unemployment Taxes on the <apex:outputLink value="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fportal.insperity.com%2Fcs%2Fnsp%2FSitePage%2Fpayroll_tax_guidelines&data=04%7C01%7COneVoice_Dev%40insperity.com%7C4eb7f194f9724cac244d08d90b1d7731%7C895d9ea7ce114131829f33f878d784b2%7C0%7C0%7C637553043444463305%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=YsgHRUhL5J8qAa3hFerFtIzlTIqQQSUldxFXRpK939w%3D&reserved=0" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier
+Unemployment Taxes on the <apex:outputLink value="https://portal.insperity.com/pcms/payroll_tax_guidelines" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier
 for additional details.</p>
 
 
@@ -116,7 +116,7 @@ your accounts open, you are required to timely file all reports for as long as t
 are active – even if they are zero reports.</p>
 
 <p>For more information visit the Closing State Employment Tax Accounts section on the <br/>
-<apex:outputLink value="https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fportal.insperity.com%2Fcs%2Fnsp%2FSitePage%2Fpayroll_tax_guidelines&data=04%7C01%7COneVoice_Dev%40insperity.com%7C4eb7f194f9724cac244d08d90b1d7731%7C895d9ea7ce114131829f33f878d784b2%7C0%7C0%7C637553043444463305%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=YsgHRUhL5J8qAa3hFerFtIzlTIqQQSUldxFXRpK939w%3D&reserved=0" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier.</p>
+<apex:outputLink value="https://portal.insperity.com/pcms/payroll_tax_guidelines" target="_parent"> Payroll Tax Guidelines page</apex:outputLink> on Insperity Premier.</p>
 
 <p><b>Regular Rate of Pay Resources</b></p>
 

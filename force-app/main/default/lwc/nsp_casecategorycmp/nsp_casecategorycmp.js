@@ -82,8 +82,9 @@ export default class Nsp_casecategorycmp extends LightningElement {
         if (error) {
         this.error = error ; 
         } else if (data) {
-            this.prfName =data.fields.Profile.value.fields.Name.value; 
-            if(this.prfName != 'System Administrator' ){
+            this.prfName =data.fields.Profile.value.fields.Name.value;
+            let isSystemAdmin = ( this.prfName && this.prfName.startsWith( 'System Admin' ) );
+            if ( !isSystemAdmin ) {
                 this.isNonAdminProfile = true;
             }
             if(this.prfName=='BPS Service'){

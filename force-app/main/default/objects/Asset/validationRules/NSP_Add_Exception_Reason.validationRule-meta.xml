@@ -3,13 +3,19 @@
     <fullName>NSP_Add_Exception_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-$Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True,
-$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-$Profile.Name &lt;&gt; &apos;Data Migration&apos;,
-OR(
-AND(NSP_Segment_Exception__c  &lt;&gt; True,  PICKLISTCOUNT(NSP_Segment_Exception_Reason__c)&gt;0 ),
-AND(NSP_Segment_Exception__c, ISBLANK(NSP_Segment_Exception_Reason__c))
-)
+  NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
+  OR(
+    AND(
+      NOT( NSP_Segment_Exception__c ) ,
+      ( PICKLISTCOUNT( NSP_Segment_Exception_Reason__c ) &gt; 0 )
+    ),
+    AND(
+      NSP_Segment_Exception__c ,
+      ISBLANK( NSP_Segment_Exception_Reason__c )
+    )
+  )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Segment_Exception_Reason__c</errorDisplayField>
     <errorMessage>Segment Exception Reason is required when Segment Exception is checked.</errorMessage>

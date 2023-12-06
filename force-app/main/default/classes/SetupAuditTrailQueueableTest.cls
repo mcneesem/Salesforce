@@ -1,14 +1,19 @@
-@isTest private class SetupAuditTrailQueueableTest {
+@isTest public class SetupAuditTrailQueueableTest {
     private static final String CLASS_NAME = ' ~ SetupAuditTrailQueueableTest';
     private static final Boolean ENABLE_testSetupAuditTrailQueueableStartReport = True;
     private static final Boolean ENABLE_testSetupAuditTrailQueueableEnqueueJob = True;
     private static final Boolean ENABLE_testSetupAuditTrailQueueable = True;
 
     @testSetup private static void prepareData() {
+        SetupAuditTrailQueueableTest.upsertCustomSettings();
+    }
+
+    public static void upsertCustomSettings() {
         SetupAuditTrailReporting__c settings = SetupAuditTrailReporting__c.getOrgDefaults();
         settings.IsEnabled__c = True;
         settings.SoqlHoursLimit__c = 6;
         settings.SoqlUserLimit__c = 5;
+        settings.SoqlAuditLimit__c = 10;
         settings.AuditorEmailAddresses__c = 'test@test.com.invalid';
         settings.NonCriticalTranslatedSections__c = 'Login-As Access';
         upsert settings;
@@ -61,7 +66,7 @@
         }
     }
 
-    private static SetupAuditTrail selectSetupAuditTrail() {
+    public static SetupAuditTrail selectSetupAuditTrail() {
         String METHOD_NAME = ' ~ selectSetupAuditTrail';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
         SetupAuditTrail record = [
@@ -70,6 +75,7 @@
             CreatedDate , CreatedById , CreatedBy.Name ,
             DelegateUser , ResponsibleNamespacePrefix , CreatedByContext , CreatedByIssuer
             FROM SetupAuditTrail
+            ORDER BY CreatedDate DESC
             LIMIT 1
         ];
         System.debug( DEBUG_PREFIX + ' ~ record=' + record );

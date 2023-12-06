@@ -3,10 +3,17 @@
     <fullName>Only_NCS_can_mark_opportunity_as_C_Won</fullName>
     <active>false</active>
     <description>Deactivating this - scenario will be handled in NSP_ValidateOpportunityStage class - Only Users with NCS role or System Administrator can change the opportunity stage to Closed Won</description>
-    <errorConditionFormula>AND(ISCHANGED(StageName),
-ISPICKVAL(StageName, &quot;Closed Won&quot;),
-NOT(OR( $Profile.Name = &quot;System Administrator&quot;,
- $UserRole.DeveloperName = &quot;New_Client_Sales&quot;)),NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c))</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c ) ,
+  ISCHANGED(StageName),
+  ISPICKVAL(StageName, &quot;Closed Won&quot;),
+  NOT(
+    OR(
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
+      $UserRole.DeveloperName = &quot;New_Client_Sales&quot;
+    )
+  )
+)</errorConditionFormula>
     <errorDisplayField>StageName</errorDisplayField>
     <errorMessage>Only users with NCS role can change opportunity stage to Closed Won</errorMessage>
 </ValidationRule>

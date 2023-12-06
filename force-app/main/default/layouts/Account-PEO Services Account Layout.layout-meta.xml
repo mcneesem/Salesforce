@@ -269,7 +269,7 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-        <platformActionListItems>
+                <platformActionListItems>
             <actionName>Account.NSP_New_BPS_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -279,7 +279,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
+<platformActionListItems>
             <actionName>New_PEO_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -368,7 +368,7 @@
             <quickActionName>SendEmail</quickActionName>
         </quickActionListItems>
     </quickActionList>
-    <relatedContent>
+<relatedContent>
         <relatedContentItems>
             <layoutItem>
                 <component>wits:newsPanel</component>
@@ -605,6 +605,8 @@
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>NSP_PrimaryProduct__c</fields>
+        <fields>OPPORTUNITY.TYPE</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>

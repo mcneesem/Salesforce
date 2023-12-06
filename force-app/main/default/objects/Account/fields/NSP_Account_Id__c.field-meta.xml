@@ -7,8 +7,8 @@
     <label>Account Id</label>
     <length>40</length>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

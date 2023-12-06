@@ -3,16 +3,16 @@
     <fullName>NSP_Add_Remove_Change_eematch_Check</fullName>
     <active>true</active>
     <description>STY-02110</description>
-    <errorConditionFormula>AND
-($Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-$Profile.Name &lt;&gt; &apos;Data Migration&apos;,
-$Profile.Name &lt;&gt; &apos;Integration User&apos;,
-$Setup.NSP_Trigger_Switch__c.AmendmentChecklistTrigger__c!= true,
-OR
-( ISPICKVAL(NSP_Add_Remove_Change_eematch__c , &quot;Add&quot;) ,
-ISPICKVAL(NSP_Add_Remove_Change_eematch__c , &quot;Change&quot;)
-),
-ISPICKVAL(NSP_Comp_Level__c , &quot;&quot;)
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.AmendmentChecklistTrigger__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
+  $Profile.Name &lt;&gt; &apos;Integration User&apos; ,
+  OR(
+    ISPICKVAL( NSP_Add_Remove_Change_eematch__c , &quot;Add&quot; ) ,
+    ISPICKVAL( NSP_Add_Remove_Change_eematch__c , &quot;Change&quot; )
+  ) ,
+  ISPICKVAL( NSP_Comp_Level__c , &quot;&quot; )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Comp_Level__c</errorDisplayField>
     <errorMessage>Note: Comp Level Field is required.</errorMessage>

@@ -46,10 +46,9 @@ export default class Nsp_pdsRecordManager extends LightningElement {
 
     fetchUpdatedSubClient() {
         getUpdatedSubClient({recordId : this.recordId}).then((eachSubClient)=>{
-            if(eachSubClient === this.label.IntegrationUserLabel) {
-            //if(eachSubClient === 'System Administrator') {
+            if ( eachSubClient === this.label.IntegrationUserLabel ) {
                 this.navigateToList('/'+this.newPDSId);
-            }else {
+            } else {
                 this.fetchUpdatedSubClient();
             }
         })

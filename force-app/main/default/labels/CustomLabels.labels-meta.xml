@@ -2670,6 +2670,13 @@
         <value>FLSA EE exemption category must be provided for ALL EEs (Admin, Exe, Prof)</value>
     </labels>
     <labels>
+        <fullName>NSP_FLSA_QueueId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP FLSA QueueId</shortDescription>
+        <value>00G7g000006683Y</value>
+    </labels>
+    <labels>
         <fullName>NSP_FSO_Implementation_Profile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5851,6 +5858,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Who will be submitting the payroll</shortDescription>
         <value>Who will be submitting the payroll</value>
+    </labels>
+    <labels>
+        <fullName>NotifyITAEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NotifyITAEmail</shortDescription>
+        <value>ITA Implementation project has been created%</value>
     </labels>
     <labels>
         <fullName>Nsp_AccountGroupAlertLabel</fullName>

@@ -174,6 +174,25 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
         private set;
     }
 
+    // what is the maximum number of SetupAuditTrail records per User to include in the audit report???
+    public static Integer soqlAuditLimit {
+        public get {
+            if ( soqlAuditLimit == null ) {
+                Integer local = 0;
+                if ( ( SetupAuditTrailQueueable.settings != null ) && ( SetupAuditTrailQueueable.settings.SoqlAuditLimit__c != null ) ) {
+                    local = SetupAuditTrailQueueable.settings.SoqlAuditLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlAuditLimit = local;
+            }
+            return soqlAuditLimit;
+        }
+        private set;
+    }
+
     // set of non-critical translated audit sections...
     public static Set<String> nonCriticalTranslatedSections {
         public get {
@@ -201,7 +220,7 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
 
     // which Users have created a SetupAuditTrail record...
     // ~ returns list of User.Id values sorted by User.Name...
-    private static List<Id> getSetupAuditTrailCreatedByIds() {
+    public static List<Id> getSetupAuditTrailCreatedByIds() {
         String METHOD_NAME = 'getSetupAuditTrailCreatedByIds';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
         List<User> creators = [

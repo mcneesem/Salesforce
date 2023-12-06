@@ -36105,6 +36105,46 @@ m   <fieldPermissions>
         <field>pse__Work_Calendar__c.pse__WeekendsAreWorkdays__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Payment__c.Payment_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -39376,10 +39416,6 @@ m   <fieldPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SocialInsightsLogoAdmin</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

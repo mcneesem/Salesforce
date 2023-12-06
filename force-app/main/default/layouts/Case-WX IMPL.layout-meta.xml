@@ -408,17 +408,6 @@
         <relatedList>Asset.NSP_Loaner_Support_Ticket__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>Contact_Name__c</fields>
-        <fields>NSP_Work_Phone__c</fields>
-        <fields>NSP_Home_Phone__c</fields>
-        <fields>NSP_Work_Email__c</fields>
-        <fields>NSP_Contact_Email__c</fields>
-        <fields>NSP_Per_Id__c</fields>
-        <fields>NSP_IsPrimary__c</fields>
-        <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <customButtons>Create_Project_From_Template</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
@@ -444,6 +433,15 @@
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>Contact_Name__c</fields>
+        <fields>NSP_Work_Email__c</fields>
+        <fields>NSP_Work_Phone__c</fields>
+        <fields>NSP_Per_Id__c</fields>
+        <fields>NSP_IsPrimary__c</fields>
+        <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -452,7 +450,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3C0000018fGA</masterLabel>
+        <masterLabel>00h8G000000KpVW</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

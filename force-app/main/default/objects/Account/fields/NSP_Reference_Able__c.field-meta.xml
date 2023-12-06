@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>Referenceable</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

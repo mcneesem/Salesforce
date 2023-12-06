@@ -3,6 +3,10 @@
     private static final Boolean ENABLE_testSetupAuditTrailReportSummary = True;
     private static final Boolean ENABLE_testSetupAuditTrailReportSingle = True;
 
+    @testSetup private static void prepareData() {
+        SetupAuditTrailQueueableTest.upsertCustomSettings();
+    }
+
     @isTest private static void testSetupAuditTrailReportSummary() {
         String METHOD_NAME = ' ~ testSetupAuditTrailReportSummary';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
@@ -40,19 +44,7 @@
     }
 
     private static SetupAuditTrail selectSetupAuditTrail() {
-        String METHOD_NAME = ' ~ selectSetupAuditTrail';
-        String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
-        SetupAuditTrail record = [
-            SELECT
-            Id , Action , Section , Display ,
-            CreatedDate , CreatedById , CreatedBy.Name ,
-            DelegateUser , ResponsibleNamespacePrefix , CreatedByContext , CreatedByIssuer
-            FROM SetupAuditTrail
-            LIMIT 1
-        ];
-        System.debug( DEBUG_PREFIX + ' ~ record=' + record );
-        Assert.areNotEqual( null , record , 'No SetupAuditTrail records exist.');
-        return record;
+        return SetupAuditTrailQueueableTest.selectSetupAuditTrail();
     }
 
 }

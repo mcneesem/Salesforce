@@ -18905,6 +18905,11 @@
         <field>Account.Employee_Orientation_OMR_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Active_Assets__c</field>
@@ -20133,6 +20138,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Is_it_a_Safe_Harbor_plan__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Contact_Pin_Updated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Pin_Dismiss_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22651,7 +22666,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.NSP_Response_After_Close__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -46750,6 +46765,41 @@
         <field>Onboarding_Meeting_Request__c.Today_plus_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Payment__c.Payment_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <layoutAssignments>
         <layout>Onboarding_Meeting_Request__c-Onboarding Meeting Request Layout</layout>
     </layoutAssignments>

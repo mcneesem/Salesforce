@@ -4,15 +4,16 @@
     <active>true</active>
     <description>Asset Name cannot be editable by any profile other than Integration</description>
     <errorConditionFormula>AND(
-$Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c!=True,
-NOT(ISNEW()),
-OR(
-RecordType.Name = &quot;CPQ Asset&quot;,
-RecordType.Name = &quot;WO&quot;,
-RecordType.Name = &quot;RET WO&quot;),
-ISCHANGED( Name ),
-$Profile.Name &lt;&gt;  &apos;System Administrator&apos;,
-$Profile.Name &lt;&gt;  &apos;Integration User&apos;
+  NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Integration User&apos; ,
+  NOT( ISNEW() ) ,
+  OR(
+    RecordType.Name = &quot;CPQ Asset&quot; ,
+    RecordType.Name = &quot;WO&quot; ,
+    RecordType.Name = &quot;RET WO&quot;
+  ) ,
+  ISCHANGED( Name )
 )</errorConditionFormula>
     <errorDisplayField>Name</errorDisplayField>
     <errorMessage>Asset name can only be edited by integration</errorMessage>

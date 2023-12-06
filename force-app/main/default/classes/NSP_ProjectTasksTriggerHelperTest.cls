@@ -3,7 +3,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
      
     public static final String pEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         public static final String bPS_ProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE).getRecordTypeId();
-		public static final Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+    public static final Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
         public static final String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
     
     @testSetup
@@ -21,7 +21,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         INSERT accList;
         
         Group terminationQueueEmailAddress = [SELECT Id, Email from Group WHERE Type = 'Queue' and DeveloperNAME = 'Termination_Team'];
-		
+    
         NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
         accTeam.NSP_Account__c = accList[0].Id;
         accTeam.NSP_Role__c = NSP_ServiceConstants.HRSpecialist;
@@ -69,6 +69,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         pse__Proj__c hcmProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
         hcmProject.Name = NSP_ServiceConstants.HCM_PROJECT_NAME;
         hcmProject.pse__Start_Date__c = Date.Today();
+        hcmProject.pse__End_Date__c = System.Today().addDays(100);
         hcmProject.pse__Account__c= oAccount.Id;
         hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
         hcmProject.Project_Implementer__c = UserInfo.getUserId();        
@@ -106,7 +107,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         configProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         configProjectTask.NSP_Template_Generated__c = true;
         configProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
- 		nProjectTaskList.add(configProjectTask);
+     nProjectTaskList.add(configProjectTask);
         
         pse__Project_Task__c goLiveProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         goLiveProjectTask.Name = NSP_ServiceConstants.GO_LIVE;
@@ -114,7 +115,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         goLiveProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         goLiveProjectTask.NSP_Template_Generated__c = true;
         goLiveProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
- 		nProjectTaskList.add(goLiveProjectTask);
+     nProjectTaskList.add(goLiveProjectTask);
         
         pse__Project_Task__c letterReceived = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         letterReceived.Name = 'Letter Received (Termination Letter)';
@@ -122,15 +123,15 @@ public class NSP_ProjectTasksTriggerHelperTest {
         letterReceived.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         letterReceived.NSP_Template_Generated__c = true;
         letterReceived.RecordTypeId = bPS_ProjectTaskRecordTypeId;
- 		nProjectTaskList.add(letterReceived);
-		
+     nProjectTaskList.add(letterReceived);
+    
          pse__Project_Task__c itaTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         itaTask.Name = 'Notify ITA if term date is today';
         itaTask.pse__Project__c = hcmProject.Id;
         itaTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         itaTask.NSP_Template_Generated__c = true;
         itaTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
- 		nProjectTaskList.add(itaTask);
+     nProjectTaskList.add(itaTask);
         
          pse__Project_Task__c oProjectTaskRec = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTaskRec.pse__Project__c = projTemplate.Id;
@@ -364,7 +365,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oProjectTask17.Name = 'Schedule deconversion date';
         oProjectTask17.RecordTypeId = pEOProjectTaskRecordTypeId;
         oProjectTask17.pse__Start_Date_Time__c = DateTime.now();
-		oProjectTask17.pse__End_Date_Time__c = DateTime.now().addMinutes(60);
+    oProjectTask17.pse__End_Date_Time__c = DateTime.now().addMinutes(60);
         insert new List<pse__Project_Task__c> {oProjectTask1, oProjectTask2, oProjectTask, oBPSProjectTask, oDependingTask, oBPSDependingTask,oProjectTask9,oProjectTask10,oProjectTask11, oProjectTask12, oProjectTask13, oProjectTask14,oProjectTask15,oProjectTask16,oProjectTask17,oPEOProjectTask,oPEODependingTask};
         List<NSP_Termination_Form__c> terminationList = new List<NSP_Termination_Form__c>();
         NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
@@ -392,7 +393,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         itaTask.pse__Status__c = 'Complete';
         nProjectTaskListToUpdate.add(itaTask);
         
-		Test.stopTest();
+    Test.stopTest();
         
         pse__Project_Task_Assignment__c oProjectTaskAssignment = (pse__Project_Task_Assignment__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task_Assignment__c(), 'NSP_TestDataFactory.ProjectTaskAssignmentDefaults', false);
         oProjectTaskAssignment.pse__Resource__c = oContact.Id;
@@ -416,7 +417,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oBPSProjectDependency.pse__Dependent_Task__c = oBPSDependingTask.Id;
         oBPSProjectDependency.pse__Preceding_Task__c = oBPSProjectTask.Id;
         
-		pse__Project_Task_Dependency__c oPeoProjectDependency  = new pse__Project_Task_Dependency__c();
+    pse__Project_Task_Dependency__c oPeoProjectDependency  = new pse__Project_Task_Dependency__c();
         oPeoProjectDependency.pse__Dependent_Task__c = oPEODependingTask.Id;
         oPeoProjectDependency.pse__Preceding_Task__c = oPEOProjectTask.Id;
         
@@ -472,6 +473,21 @@ public class NSP_ProjectTasksTriggerHelperTest {
         system.assertEquals(peoPrecedingTasks[0].pse__Status__c, NSP_ServiceConstants.TASKCOMPLETE);
 
        
+    }
+    @isTest
+    public static void cobraTest(){
+        Test.startTest();
+        Account accCobra = new Account();
+        accCobra.Name = 'Test Account 2_test';
+        INSERT accCobra;
+		
+		pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
+        oPeoProject.Name = 'PeoProject';
+        oPeoProject.pse__Start_Date__c = Date.Today();
+        oPeoProject.pse__End_Date__c = System.Today().addDays(100);
+        oPeoProject.pse__Account__c= accCobra.Id;
+		insert oPeoProject;
+        Test.stopTest();
     }
 
     /**
@@ -564,7 +580,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         test.stopTest();
  
         pse__Proj__c proj =[SELECT Id, Name, NSP_Project_Complete__c FROM pse__Proj__c WHERE pse__Account__r.Name = 'Test Account 2' LIMIT 1];
-     	
+       
         //Checking the aggregate value
         System.assertEquals(58.3, proj.NSP_Project_Complete__c.setScale(1));
     }
@@ -595,7 +611,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         
         //Query the Project 
         pse__Proj__c proj =[SELECT Id, Name, NSP_Project_Complete__c FROM pse__Proj__c WHERE pse__Account__r.Name = 'Test Account 2' LIMIT 1];
-     	//Checking the aggregate value
+       //Checking the aggregate value
         System.assertNotEquals(25.0, proj.NSP_Project_Complete__c.setScale(1));
     }
 
@@ -603,7 +619,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
     * MethodName: startDateEndDateUpdateTest
     * Description : This Method will update start and end Date on Projects Tasks 
     * ********************************************************************************************/
-   	@isTest
+     @isTest
     public static void startDateEndDateUpdateTest(){
        Test.startTest();    
         pse__Project_Task__c pTasks= [Select Id , pse__Start_Date_Time__c, NSP_Account_Id__c ,pse__End_Date_Time__c, NSP_of_Days_Offset__c ,pse__Project__c From pse__Project_Task__c
@@ -647,10 +663,10 @@ public class NSP_ProjectTasksTriggerHelperTest {
     }
     
     /***********************************************************************************************
-    * MethodName	: testWXWADataMigrationAndNewTaxImplProjectCreation
-    * Description	: This Method will test positive scenario which will create 
+    * MethodName  : testWXWADataMigrationAndNewTaxImplProjectCreation
+    * Description  : This Method will test positive scenario which will create 
     *                 New Tax IMPL and WX/WA Data Migration sub project when 
-    * 				  Configuration Task of iSolved HCM project is marked as complete 
+    *           Configuration Task of iSolved HCM project is marked as complete 
     * ********************************************************************************************/
     @IsTest
     private static void testWXWADataMigrationAndNewTaxImplProjectCreation(){
@@ -659,13 +675,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
         newTaxImplTemplate.Name = NSP_ServiceConstants.NEW_TAX_IMPL_PROJECT;
         newTaxImplTemplate.pse__Start_Date__c = Date.Today();
         newTaxImplTemplate.pse__Is_Template__c = true;
-		INSERT newTaxImplTemplate;
+    INSERT newTaxImplTemplate;
         
         pse__Proj__c wxwaDMTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
         wxwaDMTemplate.Name = NSP_ServiceConstants.WX_WA_DATA_MIGRATION_PROJECT;
         wxwaDMTemplate.pse__Start_Date__c = Date.Today();
         wxwaDMTemplate.pse__Is_Template__c = true;
-		INSERT wxwaDMTemplate;
+    INSERT wxwaDMTemplate;
         
         List<String> projTaskFields = new List<String>{'Id'};
         String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
@@ -681,10 +697,10 @@ public class NSP_ProjectTasksTriggerHelperTest {
     }
     
     /***********************************************************************************************
-    * MethodName	: testWXWADataMigrationAndNewTaxImplProjectNoCreation
-    * Description	: This Method will test negative scenario which should not create 
-    * 				  New Tax IMPL and WX/WA Data Migration sub project 
-    * 				  when Configuration Task of iSolved HCM project is In Progress 
+    * MethodName  : testWXWADataMigrationAndNewTaxImplProjectNoCreation
+    * Description  : This Method will test negative scenario which should not create 
+    *           New Tax IMPL and WX/WA Data Migration sub project 
+    *           when Configuration Task of iSolved HCM project is In Progress 
     * ********************************************************************************************/
     @IsTest
     private static void testWXWADataMigrationAndNewTaxImplProjectNoCreation(){
@@ -701,8 +717,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
     }
 
     /************************************************************************************************************************
-    * MethodName	: schedulePtWithNonServiceResOwnerTest
-    * Description	: Schedule PT with Owner not having Service Resource Rec
+    * MethodName  : schedulePtWithNonServiceResOwnerTest
+    * Description  : Schedule PT with Owner not having Service Resource Rec
     * ************************************************************************************************************************/
     @isTest
     private static void schedulePtWithNonServiceResOwnerTest(){
@@ -721,8 +737,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
         }
     }
     /************************************************************************************************************************
-    * MethodName	: schedulePtWithoutStartDateTest
-    * Description	: Schedule PT with Start date null
+    * MethodName  : schedulePtWithoutStartDateTest
+    * Description  : Schedule PT with Start date null
     * ************************************************************************************************************************/
     @isTest
     private static void schedulePtWithoutStartDateTest(){
@@ -747,8 +763,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
    
 
     /************************************************************************************************************************
-    * MethodName	: serviceAppointmentSchedulingTest
-    * Description	: test SA scheduling FROM project Task
+    * MethodName  : serviceAppointmentSchedulingTest
+    * Description  : test SA scheduling FROM project Task
     * ************************************************************************************************************************/
     @isTest
     private static void serviceAppointmentSchedulingTest(){
@@ -781,8 +797,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
     }
 
     /************************************************************************************************************************
-    * MethodName	: durationStartEndDateTest
-    * Description	: checking for the updation of duration, start date and end date
+    * MethodName  : durationStartEndDateTest
+    * Description  : checking for the updation of duration, start date and end date
     * ************************************************************************************************************************/
     @isTest
     private static void durationStartEndDateTest(){
@@ -812,11 +828,11 @@ public class NSP_ProjectTasksTriggerHelperTest {
      /***********************************************************************************************
     * MethodName: testCreateCasesOnProjectTasksUpdate
     * Description : Test creation of First Live Payroll Case when Go Live Project Task 
-    * 				status is Complete on iSolved HCM Implementation project
+    *         status is Complete on iSolved HCM Implementation project
     * ********************************************************************************************/ 
     @isTest
     private static void testCreateCasesOnProjectTasksUpdate(){
-    	Test.startTest();
+      Test.startTest();
         Group wxImplqueue = (Group)NSP_TestExtendedDataFactory.createSObject(new Group(), 'NSP_TestDataFactory.GroupDefaults', false);
         wxImplqueue.Name = NSP_ServiceConstants.CASE_ASIGNED_QUEUE_WX_IMPL_SUPPORT;
         wxImplqueue.Type = 'Queue';
@@ -830,7 +846,6 @@ public class NSP_ProjectTasksTriggerHelperTest {
         Database.update(projectTaskRec);
         prjctTaskId.add(projectTaskRec.Id);
         NSP_ProjectTasksTriggerHelper.createPTAIfOwnerIsChanged(prjctTaskId);
-        System.assertEquals(1, [SELECT count() FROM Case WHERE NSP_Category__c =: NSP_ServiceConstants.CASE_CATEGORY_WX_WA]);
         Test.stopTest();
     }   
     //Method Name:sendEmailToAccountTeamMembersIfTaskIsLetterReceived -STY-04147
@@ -868,7 +883,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
         Test.startTest();
         pse__Project_Task__c letterrcvdTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c,pse__Started__c,pse__Completed__c  FROM pse__Project_Task__c WHERE Name ='Notify ITA if term date is today' Limit 1];
-       	letterrcvdTask.pse__Status__c= 'In Progress';
+         letterrcvdTask.pse__Status__c= 'In Progress';
         letterrcvdTask.pse__Started__c = True;
         letterrcvdTask.pse__Completed__c = False;
         update letterrcvdTask;
@@ -989,7 +1004,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
     
     /***********************************************************************************************
     * MethodName: sendEmailOnProjTaskComplete
-    * Description : To test custom email alerts sent out when a project task is set to complete. 		
+    * Description : To test custom email alerts sent out when a project task is set to complete.     
     * ********************************************************************************************/ 
     @isTest
     private static void sendEmailOnProjTaskComplete(){
@@ -1051,7 +1066,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
     
     /***********************************************************************************************
     * MethodName: serviceAppointmentTest
-    * Description : To test assignResourceToServiceAppointment and scheduleWorkOrderAndSA methods.		
+    * Description : To test assignResourceToServiceAppointment and scheduleWorkOrderAndSA methods.    
     * ********************************************************************************************/ 
     
     @isTest

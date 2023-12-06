@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>ALE Status by Year</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>TextArea</type>
 </CustomField>

@@ -8,9 +8,9 @@
 * Version : V1
 *
 **************************************************************************************************************************/
-
 public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchable<SObject> {
-    
+    // test w/ NSP_NotifyPMForITAProjTest (83%)
+
     /**
      * methodName: start
      * description: Start method to query project records
@@ -142,6 +142,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
     public static void sendEmailToUsers(List<pse__Proj__c> projListToUpdate,  Map<Id, List<String>> accountIdEmailListMap){       
         try{
             List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
+            List<id> listWithMail = new List<id>();
             // Send email to the PS to notify ITA proj creation 
             List<String> emailTempFields = new List<String>{
                     'ID',
@@ -154,10 +155,16 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                         EmailTemplate emailTemp = NSP_sObjectSelector.selectByDeveloperName(emailTempFields,NSP_ServiceConstants.ITA_Project_Creation_Email);
             //  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName = : NSP_ServiceConstants.ITA_Project_Creation_Email LIMIT 1];
             // check if Email template exists and if we have any sender email 
+            // Added for 235192
+            if(!projListToUpdate.isEmpty()){
+                for(EmailMessage emailList : [SELECT RelatedToId FROM EmailMessage Where RelatedToId IN: projListToUpdate AND Subject LIKE : label.NotifyITAEmail ]){
+                    listWithMail.add(emailList.RelatedToId);
+                }
+            }
             
             if(emailTemp!=null && !accountIdEmailListMap.isEmpty()){
                 for(pse__Proj__c projId : [SELECT Id, pse__Account__c FROM pse__Proj__c WHERE Id IN: projListToUpdate]){
-                    if(accountIdEmailListMap.get(projId.pse__Account__c) != null){
+                    if(accountIdEmailListMap.get(projId.pse__Account__c) != null && !listWithMail.contains(projId.Id) ){
                         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                         email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,projId.Id);
                         email.setTemplateId(emailTemp.Id);                    

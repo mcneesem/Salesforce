@@ -1,11 +1,12 @@
 /**
 Apex Class Name      :  NSP_AssetServiceTriggerHelper
+Test Class Name      :  NSP_AssetServiceTriggerHelperTest
 Version              :  1.0
 Created Date         :  6/1/2022
 Author               :  Jatin
 Function             :  Represents the Asset trigger helper which handles all the logic.
 Story                :
-Modification Log     :
+Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset.
 *--------------------------------------------------------------------------------------------------
 * Developer                   Date                   Description
 * -------------------------------------------------------------------------------------------------
@@ -16,8 +17,8 @@ Modification Log     :
 * Abhishek Kumar               12/26/2022          v5.0 - Account - Product First Pay Date <STY-03597>
 * Ramya Ravi 				   01/16/2022		   v6.0 - Create project from asset <STY-02234>
 */
-
 public class NSP_AssetServiceTriggerHelper {
+    // test w/ NSP_AssetServiceTriggerHelperTest (82%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -378,7 +379,8 @@ public class NSP_AssetServiceTriggerHelper {
              asset.NSP_Phone__c  != oldMapvalue.NSP_Phone__c    ||
              asset.NSP_RET_Phone_Ext__c  != oldMapvalue.NSP_RET_Phone_Ext__c   ||
              asset.NSP_Email__c  != oldMapvalue.NSP_Email__c ||
-             asset.NSP_Renewal_Date__c  != oldMapvalue.NSP_Renewal_Date__c
+             asset.NSP_Renewal_Date__c  != oldMapvalue.NSP_Renewal_Date__c  ||
+             asset.NSP_Client__c    !=  oldMapvalue.NSP_RET_Client_ID__c    //11092023 - STY-241721
             )){
                 // check if atleast one field in WO asset is updated as per condition
                 isValid = true;
@@ -440,6 +442,7 @@ public class NSP_AssetServiceTriggerHelper {
     private Asset updateAssets(Asset getAsst, Asset assLst){
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
+        getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
         getAsst.NSP_Client__c = null;
         getAsst.NSP_Company_Name__c = null;
         getAsst.NSP_Account_Status__c = assLst.NSP_Account_Status__c;

@@ -4,20 +4,21 @@
     <active>true</active>
     <description>Personal Email Field is readonly if the record is created or updated by integration user</description>
     <errorConditionFormula>AND(
- $Setup.NSP_Trigger_Switch__c.ContactValidations__c!=True,
- $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
- $Profile.Name &lt;&gt; &apos;Integration User&apos;,
- $Profile.Name &lt;&gt; &apos;Data Migration&apos;,
-
- OR( $Profile.Name = &apos;PEO Service&apos;, 
-     $Profile.Name = &apos;BPS Service&apos;,
-     $Profile.Name = &apos;Contact Center&apos;,
-     $Profile.Name = &apos;Retirement Services&apos;),
-
- OR( CreatedBy.Profile.Name  = &apos;Integration User&apos;,
-    LastModifiedBy.Profile.Name = &apos;Integration User&apos;),
-
- ISCHANGED( NSP_Personal_Email__c )
+  NOT( $Setup.NSP_Trigger_Switch__c.ContactValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Integration User&apos; ,
+  $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
+  OR(
+    $Profile.Name = &apos;PEO Service&apos; , 
+    $Profile.Name = &apos;BPS Service&apos; ,
+    $Profile.Name = &apos;Contact Center&apos; ,
+    $Profile.Name = &apos;Retirement Services&apos;
+  ) ,
+  OR(
+    CreatedBy.Profile.Name = &apos;Integration User&apos; ,
+    LastModifiedBy.Profile.Name = &apos;Integration User&apos;
+  ) ,
+  ISCHANGED( NSP_Personal_Email__c )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Personal_Email__c</errorDisplayField>
     <errorMessage>Personal Email is readonly, if the record is created or last modified by Integration User.</errorMessage>

@@ -3,10 +3,10 @@
     <fullName>Integration_Fields_Not_Editable</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-$User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos;,
-$User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos;,
-$User.NSP_Profile_Name__c &lt;&gt;&apos;System Administrator&apos;,
-$Setup.NSP_Trigger_Switch__c.NSP_Eligibility__c = false,
+  NOT( $Setup.NSP_Trigger_Switch__c.NSP_Eligibility__c ) ,
+  NOT( CONTAINS( $User.NSP_Profile_Name__c , &apos;System Admin&apos; ) ) ,
+  $User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos; ,
+  $User.NSP_Profile_Name__c &lt;&gt;&apos;Data Migration&apos; ,
 
 RecordType.DeveloperName = &apos;WO&apos; ,OR(
 

@@ -2793,6 +2793,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
                 <identifier>RecordNSP_Sales_Office__cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2803,6 +2810,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Client_Website__c</fieldItem>
                 <identifier>RecordNSP_Client_Website__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2823,6 +2837,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Bid_Number__c</fieldItem>
                 <identifier>RecordNSP_Bid_Number__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3027,6 +3048,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Version_Number__c</fieldItem>
                 <identifier>RecordNSP_Version_Number__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3047,6 +3075,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billling_City__c</fieldItem>
                 <identifier>RecordNSP_Account_Billling_City__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3057,6 +3092,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_Street__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_Street__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3067,6 +3109,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_State_Code__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_State_Code__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3077,6 +3126,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_State__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_State__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3087,6 +3143,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Billing_Postal_Code__c</fieldItem>
                 <identifier>RecordNSP_Billing_Postal_Code_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3107,6 +3170,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Benefits_Waiting_Period__c</fieldItem>
                 <identifier>RecordNSP_Benefits_Waiting_Period__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Active_Benefit_Continuation_Period__c</fieldItem>
+                <identifier>RecordActive_Benefit_Continuation_Period_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

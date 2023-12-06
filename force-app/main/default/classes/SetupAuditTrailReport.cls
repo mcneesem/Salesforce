@@ -1,5 +1,6 @@
 public with sharing class SetupAuditTrailReport {
-    // test w/ SetupAuditTrailReportTest (98%)
+    // test w/ SetupAuditTrailQueueableTest (95%)
+    // test w/ SetupAuditTrailReportTest (93%)
     private static final String CLASS_NAME = ' ~ SetupAuditTrailReport';
     private static final String FORMAT_USER = 'FORMAT_USER';
     private static final String FORMAT_SUMMARY = 'FORMAT_SUMMARY';
@@ -251,6 +252,7 @@ public with sharing class SetupAuditTrailReport {
                             AND ( CreatedDate >= :SetupAuditTrailQueueable.startDateTime )
                         )
                         ORDER BY CreatedDate DESC
+                        LIMIT :SetupAuditTrailQueueable.soqlAuditLimit
                     ];
                 }
             }

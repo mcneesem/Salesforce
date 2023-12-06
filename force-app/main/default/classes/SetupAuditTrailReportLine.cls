@@ -1,5 +1,5 @@
 public with sharing class SetupAuditTrailReportLine {
-    // test w/ SetupAuditTrailReportLineTest (93%)
+    // test w/ SetupAuditTrailReportLineTest (89%)
     private static final String CLASS_NAME = ' ~ SetupAuditTrailReportLine';
 
     public SetupAuditTrailReportLine( SetupAuditTrail auditRecord , User auditCreator ) {
@@ -54,7 +54,14 @@ public with sharing class SetupAuditTrailReportLine {
                     local += 'Action: ' + this.audit.Action + newLine;
                     local += 'Display: ' + this.audit.Display + newLine;
                     if ( String.isNotBlank( this.audit.DelegateUser ) ) {
-                        local += 'DelegateUser: ' + this.audit.DelegateUser + newLine;
+                        local += 'DelegateUser: ' + this.audit.DelegateUser;
+                        if ( ( this.audit.CreatedBy != null )
+                            && String.isNotBlank( this.audit.CreatedBy.Name )
+                           )
+                        {
+                            local += ' logged-in-as ' + this.audit.CreatedBy.Name;
+                        }
+                        local += newLine;
                     }
                     if ( String.isNotBlank( this.audit.ResponsibleNamespacePrefix ) ) {
                         local += 'ResponsibleNamespacePrefix: ' + this.audit.ResponsibleNamespacePrefix + newLine;
@@ -160,7 +167,7 @@ public with sharing class SetupAuditTrailReportLine {
                     local = 'Tab Visibility';
                 } else if ( action.contains( 'PageLayoutChanged' ) ) {
                     local = 'Page Layout Assignments';
-                } else if ( action.contains( 'using Login-As access for' ) ) {
+                } else if ( display.contains( 'using Login-As access for' ) ) {
                     local = 'Login-As Access';
                 } else if (
                     action.contains( auditCreator.Name )
