@@ -11466,6 +11466,11 @@
         <field>Onboarding_Meeting_Request__c.Today_plus_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Queued_for_Delete__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Finance - Service Objects Permission</label>
     <objectPermissions>
