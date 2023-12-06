@@ -297,10 +297,11 @@ onchangeNspPrepared(event){
 
      if(this.template.querySelector('lightning-input-field.NSP_EnterBonusAmmount__c') != null){
         if(this.NSP_BonusSelectOne__c != null && this.NSP_BonusSelectOne__c.includes('Payment of bonus')){
-            this.template.querySelector('lightning-input-field.NSP_EnterBonusAmmount__c').style.display='';
+            this.template.querySelector('lightning-input-field.NSP_EnterBonusAmmount__c').style.display='';   
         }else{
             this.template.querySelector('lightning-input-field.NSP_EnterBonusAmmount__c')
             this.template.querySelector('lightning-input-field.NSP_EnterBonusAmmount__c').style.display='none';
+            this.template.querySelector('lightning-input-field.NSP_EnterBonusAmmount__c').value=''
         }
       }
 
@@ -313,12 +314,19 @@ onchangeNspPrepared(event){
                 this.template.querySelector('lightning-input-field.NSP_COBRA_Amount__c').style.display='';
             }else{
                 this.template.querySelector('lightning-input-field.NSP_COBRA_Amount__c').style.display='none';
+                this.template.querySelector('lightning-input-field.NSP_COBRA_Amount__c').value='';
             }
         }
         
         if(this.NSP_COBRASelectOne__c!=null && this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsCOBRA__c')!= null){
-            this.NSP_COBRASelectOne__c.includes('COBRA4')?this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsCOBRA__c').style.display='':
-            this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsCOBRA__c').style.display='none';
+            if(this.NSP_COBRASelectOne__c.includes('COBRA4')){
+                this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsCOBRA__c').style.display=''
+            }else{
+                this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsCOBRA__c').style.display='none';
+                this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsCOBRA__c').value='';
+            }
+            
+            
         }
          
     }
@@ -328,20 +336,34 @@ onchangeNspPrepared(event){
 
     
      if(this.template.querySelector('lightning-input-field.NSP_CommissionAmount__c')!=null && this.NSP_CommissionsSelectOne__c != null){
-        this.NSP_CommissionsSelectOne__c.includes('additional compensation')?this.template.querySelector('lightning-input-field.NSP_CommissionAmount__c').style.display='':
-        this.template.querySelector('lightning-input-field.NSP_CommissionAmount__c').style.display='none';
+        if(this.NSP_CommissionsSelectOne__c.includes('additional compensation')){
+            this.template.querySelector('lightning-input-field.NSP_CommissionAmount__c').style.display='';
+        }else{
+            this.template.querySelector('lightning-input-field.NSP_CommissionAmount__c').style.display='none';
+            this.template.querySelector('lightning-input-field.NSP_CommissionAmount__c').value='';
+        }
     }
     }
     //additional compensation
     if( event.currentTarget.name == "NSP_OutplacementServicesValue__c" && event.currentTarget.value != null){
         this.NSP_OutplacementServicesValue__c = event.currentTarget.value ;
         if(this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsOfOutplacement_Service__c')!= null){
-            this.NSP_OutplacementServicesValue__c.includes('Standard Outplacement')?this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsOfOutplacement_Service__c').style.display='':
-            this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsOfOutplacement_Service__c').style.display='none';
+            if(this.NSP_OutplacementServicesValue__c.includes('Standard Outplacement')){
+                this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsOfOutplacement_Service__c').style.display='';
+            }else{
+                this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsOfOutplacement_Service__c').style.display='none';
+                this.template.querySelector('lightning-input-field.NSP_NumberOfMonthsOfOutplacement_Service__c').value='';
+            }
+            
         }
         if(this.template.querySelector('lightning-input-field.NSP_AmountOfReimbursement__c')!=null){
-            this.NSP_OutplacementServicesValue__c.includes('Reimbursement of Outplacement')?this.template.querySelector('lightning-input-field.NSP_AmountOfReimbursement__c').style.display='':
-            this.template.querySelector('lightning-input-field.NSP_AmountOfReimbursement__c').style.display='none';
+            if(this.NSP_OutplacementServicesValue__c.includes('Reimbursement of Outplacement')){
+                this.template.querySelector('lightning-input-field.NSP_AmountOfReimbursement__c').style.display='';
+            }else{
+                this.template.querySelector('lightning-input-field.NSP_AmountOfReimbursement__c').style.display='none';
+                this.template.querySelector('lightning-input-field.NSP_AmountOfReimbursement__c').value='';
+            }
+            
         }
         if(this.template.querySelector('lightning-input-field.NSP_ExpirationDate__c')!=null )
         {
@@ -354,13 +376,22 @@ onchangeNspPrepared(event){
     if( event.currentTarget.name == "NSP_TransitionOfDutiesValue__c" && event.currentTarget.value != null){
         this.NSP_TransitionOfDutiesValue__c = event.currentTarget.value ;
         if(this.template.querySelector('div.Transition1') !=null){
-            this.NSP_TransitionOfDutiesValue__c.includes('Transition 1') ?this.template.querySelector('div.Transition1').style.display='':
-            this.template.querySelector('div.Transition1').style.display='none';
+            if(this.NSP_TransitionOfDutiesValue__c.includes('Transition 1')){
+                this.template.querySelector('div.Transition1').style.display=''
+            }else{
+                this.template.querySelector('div.Transition1').style.display='none';
+                this.template.querySelector('div.Transition1').value='';
+            }
+            
         }
 
         if(this.template.querySelector('div.Transition2')!=null){
-            this.NSP_TransitionOfDutiesValue__c.includes('Transition 2')?this.template.querySelector('div.Transition2').style.display='':
-            this.template.querySelector('div.Transition2').style.display='none';
+            if(this.NSP_TransitionOfDutiesValue__c.includes('Transition 2')){
+                this.template.querySelector('div.Transition2').style.display='';
+            }else{
+                this.template.querySelector('div.Transition2').style.display='none';
+                this.template.querySelector('div.Transition2').value='';
+            }
         }
     }
 
@@ -375,6 +406,7 @@ onchangeNspPrepared(event){
         }else{
             this.template.querySelector('lightning-input-field.NSP_NumberOfpayments__c')
             this.template.querySelector('lightning-input-field.NSP_NumberOfpayments__c').style.display='none';
+            this.template.querySelector('lightning-input-field.NSP_NumberOfpayments__c').value='';
         }
       }
 }
@@ -982,6 +1014,4 @@ handlePrev(event){
 
  }
 }
-
-
 }

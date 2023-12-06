@@ -65,16 +65,21 @@
                  </div>
                 
             </div>
-            <template if:true={enableTotalAgreement}>
-            <lightning-input-field  class="slds-p-vertical_medium" field-name="NSP_TotalAgreementsRequested__c" required ></lightning-input-field>
-          <div  class="slds-form-element_horizontal">
-            <label class="slds-form-element__label" >
-              <span style="color:red">* </span>Severance Total including all considerations</label>
-          <lightning-input-field  class="slds-p-vertical_medium" variant="label-hidden" field-name="NSP_Severance_Total__c" required ></lightning-input-field>
-          </div>
-            <div class="slds-text-color_error NSP_RequestingMultipleEmployees__c slds-p-vertical_medium" style="display:none" >  STOP! Attach the Separation Agreement Spreadsheet to the right. </div> 
-          </template>
-        </template>
+            <div class="slds-p-vertical_medium" lwc:ref="SeveranceTotal">
+              <template if:true={enableTotalAgreement}>
+                <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_TotalAgreementsRequested__c" lwc:ref="TotalAgreementsRequested"
+                  required={NSP_TotalAgreementsRequested}></lightning-input-field>
+                <div class="slds-form-element_horizontal">
+                  <label class="slds-form-element__label">
+                    <span style="color:red">* </span>Severance Total including all considerations</label>
+                  <lightning-input-field class="slds-p-vertical_medium" variant="label-hidden" field-name="NSP_Severance_Total__c" lwc:ref="Severance_Total"
+                    required={NSP_Severance_Total}></lightning-input-field>
+                </div>
+                <div class="slds-text-color_error NSP_RequestingMultipleEmployees__c slds-p-vertical_medium" style="display:none">
+                  STOP! Attach the Separation Agreement Spreadsheet to the right. </div>
+              </template>
+            </div>
+            </template>
        </div>
   
        </lightning-layout-item>

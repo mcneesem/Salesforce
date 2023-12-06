@@ -176,6 +176,16 @@ handlePrev(event){
         this.multipleEmployeesValue = event.currentTarget.value;
         this.enableTotalAgreement = (event.currentTarget.value === "Yes");
        // this.findeFileSize(event);
+       if(this.enableTotalAgreement == true){
+            this.refs.SeveranceTotal.style.display = '';
+        }
+
+        if(event.currentTarget.value === "No"){
+            this.enableTotalAgreement = (event.currentTarget.value === "No");
+            this.refs.SeveranceTotal.style.display = 'none';
+            this.refs.Severance_Total.value=null;
+            this.refs.TotalAgreementsRequested.value=null;
+        }
     }
 
     if( event.currentTarget.fieldName == "NSP_ClientName__c" ){
@@ -190,6 +200,15 @@ handlePrev(event){
         }
     }
 
+  }
+
+
+  get NSP_TotalAgreementsRequested(){
+    return this.multipleEmployeesValue=='Yes' ? true : false;
+  }
+
+  get NSP_Severance_Total(){
+    return this.multipleEmployeesValue=='Yes' ? true : false;
   }
 
   publishSyncEvent(fieldName,value) {
