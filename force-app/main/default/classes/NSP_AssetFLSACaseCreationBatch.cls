@@ -21,6 +21,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
          Integer egMmMaxDays;
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
+        Database.QueryLocator queryResponse;
         try{
             //Get segment days range info    
             if(String.isNotBlank(System.Label.Segment_Days)){
@@ -66,12 +67,12 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                                                 .addFilter('NSP_AIMS_First_Pay_Date__c', ageDays, NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
                                                 .setSecurityEnforce(false);
             String query = queryBuilder.build();
-            return Database.getQueryLocator(query);
+            queryResponse = Database.getQueryLocator(query);
 
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'start', ex.getMessage());
-            return null;
         }
+        return queryResponse;
     }
     
     public void execute(Database.BatchableContext BC, List<Asset> assetList){
