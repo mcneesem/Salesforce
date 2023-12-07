@@ -1,10 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Send_Email_To_Owner</name>
+        <label>Send Email To Owner</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Owner:User.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply@insperity.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Task Assignment Notification</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>TaskAssignmentEmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
         <name>Send_Email_to_task_owner</name>
         <label>Send Email to task owner</label>
         <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -41,13 +82,15 @@
                 <stringValue>S2I Installation – Quality Control Issue</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <decisions>
         <name>Check_if_owner_Id_is_changed</name>
         <label>Check if owner Id is changed</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>changed</name>
@@ -77,6 +120,35 @@
                 <targetReference>Send_Email_to_task_owner</targetReference>
             </connector>
             <label>changed?</label>
+        </rules>
+        <rules>
+            <name>Non_S2I_Installation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>S2I Installation - Quality Control Issue</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_To_Owner</targetReference>
+            </connector>
+            <label>Non S2I Installation</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -110,7 +182,7 @@
         <name>Create_Email_Message_Record_to_trace_email_sent</name>
         <label>Create Email Message Record to trace email sent.</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -157,7 +229,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_if_owner_Id_is_changed</targetReference>
@@ -171,5 +243,10 @@
         <name>emailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;The following task has been assigned to you by {!$User.FirstName} {!$User.LastName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;To view this record,&amp;nbsp;click the link: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!linkToTask}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Task Name: {!$Record.Subject}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Priority: {!$Record.Priority}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Status: {!$Record.Status}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Start Date: {!$Record.NSP_Start_Date__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Due Date: {!$Record.ActivityDate}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Comments: {!$Record.Description}&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TaskAssignmentEmailBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;The following task has been assigned to you by {!$User.FirstName} {!$User.LastName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Subject&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;: {!$Record.Subject}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Related To: {!$Record.WhatId}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Priority: {!$Record.Priority}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Due Date: TEXT(MONTH({!$Record.ActivityDate}))+ &quot;/&quot; + TEXT(DAY({!$Record.ActivityDate}))+ &quot;/&quot; + TEXT(YEAR({!$Record.ActivityDate}))&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;To view this record,&amp;nbsp;click the link: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://insperity--devservb.sandbox.lightning.force.com/builder_platform_interaction/%7B!linkToTask%7D&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
 </Flow>
