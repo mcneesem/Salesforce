@@ -10,24 +10,22 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 * Srushti Bikkannavar        12/13/2022           First Iteration
 */
-
-// test w/ NSP_AssetFLSACaseCreationBatchTest (90%)
-
 public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stateful, Database.Batchable < sObject >{
-         Integer segmentDays;
-         Integer btCoreEgMinDays;
-         Integer btCoreEgMaxDays;
-         Integer egMmMinDays;
-         Integer egMmMaxDays;
+    // test w/ NSP_AssetFLSACaseCreationBatchTest (90%)
+
+    Integer segmentDays;
+    Integer btCoreEgMinDays;
+    Integer btCoreEgMaxDays;
+    Integer egMmMinDays;
+    Integer egMmMaxDays;
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Database.QueryLocator queryResponse;
         try{
-            //Get segment days range info    
+            //Get segment days range info
             if(String.isNotBlank(System.Label.Segment_Days)){
                 segmentDays = Integer.valueOf(System.Label.Segment_Days);
-            }        
-            
+            }
             if(String.isNotBlank(System.Label.BTCoreEgMinMaxRange)){
                 btCoreEgMinDays = Integer.valueOf(System.Label.BTCoreEgMinMaxRange.split(';')[0]);
                 btCoreEgMaxDays = Integer.valueOf(System.Label.BTCoreEgMinMaxRange.split(';')[1]);
@@ -35,8 +33,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
             if(String.isNotBlank(System.Label.EGMMMinMaxRange)){
                 egMmMinDays = Integer.valueOf(System.Label.EGMMMinMaxRange.split(';')[0]);
                 egMmMaxDays = Integer.valueOf(System.Label.EGMMMinMaxRange.split(';')[1]);
-            }  
-
+            }
             //Get WO Asset Record Type Id
             Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
             String ageDays;
@@ -61,20 +58,19 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
             };
             //Query to get all the assets of WO RT and where segment in clientSegmentTypes
             NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-                                                .addFilter('RecordTypeId', WOAssetRecordTypeId)
-                                                .addFilter('NSP_Client_Segment_type__c', clientSegmentTypes, NSP_QueryBuilder.Operator.INCLUDES)
-                                                .addFilter('NSP_Account_Status__c', 'Terminated', NSP_QueryBuilder.Operator.NOT_EQUALS, true)
-                                                .addFilter('NSP_AIMS_First_Pay_Date__c', ageDays, NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
-                                                .setSecurityEnforce(false);
+                .addFilter('RecordTypeId', WOAssetRecordTypeId)
+                .addFilter('NSP_Client_Segment_type__c', clientSegmentTypes, NSP_QueryBuilder.Operator.INCLUDES)
+                .addFilter('NSP_Account_Status__c', 'Terminated', NSP_QueryBuilder.Operator.NOT_EQUALS, true)
+                .addFilter('NSP_AIMS_First_Pay_Date__c', ageDays, NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
+                .setSecurityEnforce(false);
             String query = queryBuilder.build();
             queryResponse = Database.getQueryLocator(query);
-
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'start', ex.getMessage());
         }
         return queryResponse;
     }
-    
+
     public void execute(Database.BatchableContext BC, List<Asset> assetList){
 
         List<String> segmentList = new List<String>{
