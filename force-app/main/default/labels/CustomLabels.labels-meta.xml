@@ -42,6 +42,13 @@
         <shortDescription>Are_there_any_non_paid_users__c</shortDescription>
         <value>Are there any non-paid users?</value>
     </labels>
+<labels>
+        <fullName>BTCoreEgMinMaxRange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BTCoreEgMinMaxRange</shortDescription>
+        <value>-7;-14</value>
+    </labels>
     <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
@@ -139,6 +146,13 @@
         <protected>false</protected>
         <shortDescription>Does_the_client_offer_a_Stock_Purchase__c</shortDescription>
         <value>Does the client offer a Stock Purchase Plan?</value>
+    </labels>
+<labels>
+        <fullName>EGMMMinMaxRange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EGMMMinMaxRange</shortDescription>
+        <value>-22;-28</value>
     </labels>
     <labels>
         <fullName>ErrorMessageWhenPrimaryResourceAlreadyExist</fullName>
@@ -872,14 +886,7 @@
         <shortDescription>BPS Wet Envelope</shortDescription>
         <value>a8N4x0000000kh4EAA</value>
     </labels>
-    <labels>
-        <fullName>NSP_BTCoreEgMinMaxRange</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>BTCoreEgMinMaxRange</shortDescription>
-        <value>-7;-14</value>
-    </labels>
-    <labels>
+        <labels>
         <fullName>NSP_Back_up_Client_Cell_Phone</fullName>
         <categories>nsp_clientContactsIp</categories>
         <language>en_US</language>
@@ -2381,14 +2388,7 @@
         <shortDescription>EEs normal number of hours per day</shortDescription>
         <value>For exempt EEs, what are their number of hours per day?</value>
     </labels>
-    <labels>
-        <fullName>NSP_EGMMMinMaxRange</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>EGMMMinMaxRange</shortDescription>
-        <value>-22;-28</value>
-    </labels>
-    <labels>
+        <labels>
         <fullName>NSP_EMP_THRESH_150</fullName>
         <categories>NSP Lead Assignment</categories>
         <language>en_US</language>
@@ -4973,14 +4973,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <shortDescription>Number Of Seasonal Worksite Employees</shortDescription>
         <value># of Worksite Employees:Seasonal</value>
     </labels>
-    <labels>
-        <fullName>NSP_Segment_Days</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Segment Days</shortDescription>
-        <value>-28</value>
-    </labels>
-    <labels>
+        <labels>
         <fullName>NSP_SelectRelatedAsset</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6068,6 +6061,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>Regional Manager,Regional Administrator,District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
+<labels>
+        <fullName>Segment_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Segment Days</shortDescription>
+        <value>-28</value>
     </labels>
     <labels>
         <fullName>Separation_Agreement_Terms_List</fullName>

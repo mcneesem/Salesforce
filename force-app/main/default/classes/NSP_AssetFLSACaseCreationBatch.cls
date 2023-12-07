@@ -14,55 +14,64 @@ Modification Log     :
 // test w/ NSP_AssetFLSACaseCreationBatchTest (90%)
 
 public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stateful, Database.Batchable < sObject >{
-         Integer segmentDays = 0;
-         Integer btCoreEgMinDays = 0;
-         Integer btCoreEgMaxDays = 0;
-         Integer egMmMinDays = 0;
-         Integer egMmMaxDays = 0;
+         Integer segmentDays;
+         Integer btCoreEgMinDays;
+         Integer btCoreEgMaxDays;
+         Integer egMmMinDays;
+         Integer egMmMaxDays;
+
     public Database.QueryLocator start(Database.BatchableContext bc) {
-    //Get segment days range info    
-        if(String.isNotBlank(System.Label.NSP_Segment_Days)){
-            segmentDays = Integer.valueOf(System.Label.NSP_Segment_Days);
-        }        
-        
-        if(String.isNotBlank(System.Label.NSP_BTCoreEgMinMaxRange)){
-            btCoreEgMinDays = Integer.valueOf(System.Label.NSP_BTCoreEgMinMaxRange.split(';')[0]);
-            btCoreEgMaxDays = Integer.valueOf(System.Label.NSP_BTCoreEgMinMaxRange.split(';')[1]);
-        }  
+        try{
+            //Get segment days range info    
+            if(String.isNotBlank(System.Label.Segment_Days)){
+                segmentDays = Integer.valueOf(System.Label.Segment_Days);
+            }        
+            
+            if(String.isNotBlank(System.Label.BTCoreEgMinMaxRange)){
+                btCoreEgMinDays = Integer.valueOf(System.Label.BTCoreEgMinMaxRange.split(';')[0]);
+                btCoreEgMaxDays = Integer.valueOf(System.Label.BTCoreEgMinMaxRange.split(';')[1]);
+            }
+            if(String.isNotBlank(System.Label.EGMMMinMaxRange)){
+                egMmMinDays = Integer.valueOf(System.Label.EGMMMinMaxRange.split(';')[0]);
+                egMmMaxDays = Integer.valueOf(System.Label.EGMMMinMaxRange.split(';')[1]);
+            }  
 
-        if(String.isNotBlank(System.Label.NSP_EGMMMinMaxRange)){
-            egMmMinDays = Integer.valueOf(System.Label.NSP_EGMMMinMaxRange.split(';')[0]);
-            egMmMaxDays = Integer.valueOf(System.Label.NSP_EGMMMinMaxRange.split(';')[1]);
-        }  
+            //Get WO Asset Record Type Id
+            Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
+            String ageDays;
+            if(segmentDays!=NULL){
+                ageDays = (System.today().addDays(segmentDays)+'').split(' ')[0];
+            }
+            //Asset fields to query
+            List<String> assetFields = new List<String>{
+                'NSP_Client_Segment_type__c',
+                'NSP_Unique_Active_Employee__c',
+                'RecordTypeId',
+                'AccountId'
+            };
+            //Asset client segments
+            List<String> clientSegmentTypes = new List<String>{
+                NSP_ServiceConstants.BTAssetSegment,
+                NSP_ServiceConstants.CoreAssetSegment,
+                NSP_ServiceConstants.EG100AssetSegment,
+                NSP_ServiceConstants.EG50AssetSegment,
+                NSP_ServiceConstants.MMAssetSegment,
+                NSP_ServiceConstants.MMEAssetSegment
+            };
+            //Query to get all the assets of WO RT and where segment in clientSegmentTypes
+            NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
+                                                .addFilter('RecordTypeId', WOAssetRecordTypeId)
+                                                .addFilter('NSP_Client_Segment_type__c', clientSegmentTypes, NSP_QueryBuilder.Operator.INCLUDES)
+                                                .addFilter('NSP_Account_Status__c', 'Terminated', NSP_QueryBuilder.Operator.NOT_EQUALS, true)
+                                                .addFilter('NSP_AIMS_First_Pay_Date__c', ageDays, NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
+                                                .setSecurityEnforce(false);
+            String query = queryBuilder.build();
+            return Database.getQueryLocator(query);
 
-        //Get WO Asset Record Type Id
-        Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
-        String ageDays = (System.today().addDays(segmentDays)+'').split(' ')[0];
-        //Asset fields to query
-        List<String> assetFields = new List<String>{
-            'NSP_Client_Segment_type__c',
-            'NSP_Unique_Active_Employee__c',
-            'RecordTypeId',
-            'AccountId'
-        };
-        //Asset client segments
-        List<String> clientSegmentTypes = new List<String>{
-            NSP_ServiceConstants.BTAssetSegment,
-            NSP_ServiceConstants.CoreAssetSegment,
-            NSP_ServiceConstants.EG100AssetSegment,
-            NSP_ServiceConstants.EG50AssetSegment,
-            NSP_ServiceConstants.MMAssetSegment,
-            NSP_ServiceConstants.MMEAssetSegment
-        };
-        //Query to get all the assets of WO RT and where segment in clientSegmentTypes
-        NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-            								.addFilter('RecordTypeId', WOAssetRecordTypeId)
-            								.addFilter('NSP_Client_Segment_type__c', clientSegmentTypes, NSP_QueryBuilder.Operator.INCLUDES)
-            								.addFilter('NSP_Account_Status__c', 'Terminated', NSP_QueryBuilder.Operator.NOT_EQUALS, true)
-            								.addFilter('NSP_AIMS_First_Pay_Date__c', ageDays, NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
-            								.setSecurityEnforce(false);
-        String query = queryBuilder.build();
-        return Database.getQueryLocator(query);
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'start', ex.getMessage());
+            return null;
+        }
     }
     
     public void execute(Database.BatchableContext BC, List<Asset> assetList){
@@ -92,7 +101,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                                                     WHERE NSP_Asset__c IN: assetList AND 
                                                     NSP_Case_created_from_FLSA_Batch__c = false]){
                                                         
-                                                        if(subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(btCoreEgMinDays) && 
+                                                        if(btCoreEgMinDays!=NULL && btCoreEgMaxDays!=NULL && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(btCoreEgMinDays) && 
                                                            subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(btCoreEgMaxDays)){
                                                                //Condition for BT and Core Segment Type
                                                                if(segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)){
@@ -111,7 +120,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                                                                }
                                                         }
  
-                                                        else if(subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(egMmMinDays) && 
+                                                        else if(egMmMinDays!=NULL && egMmMaxDays!=NULL && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(egMmMinDays) && 
                                                                 subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(egMmMaxDays)){
                                                                     //Condition for EG Segment Types
                                                                     if(segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) &&
