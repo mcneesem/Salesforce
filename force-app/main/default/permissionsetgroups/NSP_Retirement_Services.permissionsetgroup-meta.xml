@@ -7,6 +7,7 @@
     <permissionSets>BPS_Sales_Admin_Mgr_Perms</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_RET_Sales_permission_set</permissionSets>

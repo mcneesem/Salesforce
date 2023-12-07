@@ -11,6 +11,7 @@
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSP_Asset_Pending_Comment_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
