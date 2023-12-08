@@ -197,6 +197,7 @@
             <label>Yes - There is a referral contact</label>
         </rules>
     </decisions>
+    <description>Removed old map roles field</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity Created - Create OCRs and ACRs {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity Created - Create OCRs and ACRs</label>
@@ -441,19 +442,12 @@
         <faultConnector>
             <targetReference>ErrorHandler</targetReference>
         </faultConnector>
-        <filterLogic>(1 AND 2 AND 3 AND 5) OR (1 AND 3 AND 4 AND 5)</filterLogic>
+        <filterLogic>(1 AND 2 AND 4 AND (5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13)) OR (1 AND 2 AND 3 AND 4)</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.AccountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Map_ACR_to_OCR_on_Related_Optys__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
@@ -475,6 +469,69 @@
             <operator>NotIn</operator>
             <value>
                 <elementReference>collectionOCRContactIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Channel Partner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>COI</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Decision Maker</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Economic Buyer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Economic Decision Maker</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Evaluator</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Executive Sponsor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Influencer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Technical Buyer</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
