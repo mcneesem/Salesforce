@@ -15,6 +15,7 @@ Modification Log     :
 
 
 public class NSP_LeadTriggerHelper {
+    // test w/ NSP_LeadTriggerHelperTest (81%)
     
     public static final List < String > reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split(';');
     private static final string NEW_LEAD_RT = 'NSP_New_Lead_Record_Type';
@@ -588,38 +589,82 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             }
         }
     }
-    
-    /**
-* Stamps Lead region on lead based on zip code 
-* @param zipCodeList List of zip code on lead. 
-* @param leadsForRoundRobin List of leads that will fo for round robin
-* @return void             
-*                
-*/
-    
-    public void setLeadRegion(List < String > zipCodeList, List < Lead > leadsForRoundRobin, Boolean isOwnerAssignment) {
-        //Get all the zip codes from zip tp city mapping custom setting
-        Map < String, NSP_Zip_To_City_Mapping__c > zipMap = new Map < String, NSP_Zip_To_City_Mapping__c > ();
-        //List of zip codes used by the lead records
-        List < String > zipBasedLocationList = new List < String > ();
-        List < Lead > finalRoundRobinList = new List < Lead > ();
-        
-        for (NSP_Zip_To_City_Mapping__c zipObj: [SELECT id, NSP_Zip__c, NSP_City__c, NSP_Location_Name__c, nsp_state__c,NSP_Sales_Office__c FROM NSP_Zip_To_City_Mapping__c WHERE NSP_Zip__c in: zipCodeList]) {
-            zipMap.put(String.valueof(zipObj.NSP_Zip__c), zipObj);
-        }
-        for (Lead leadObj: leadsForRoundRobin) {
-            //Checking if zip is present on lead or not
-            if (zipMap.containsKey(leadObj.PostalCode.substring(0,5))) {
-                leadObj.NSP_Zip_Based_Location__c = zipMap.get(leadObj.PostalCode.substring(0,5)).NSP_Location_Name__c;
-                zipBasedLocationList.add(zipMap.get(leadObj.PostalCode.substring(0,5)).NSP_Location_Name__c);
-                finalRoundRobinList.add(leadObj);
+
+    //
+    // Stamps Lead region on lead based on zip code
+    // @param zipCodeList List of zip code on lead.
+    // @param leadsForRoundRobin List of leads that will fo for round robin
+    // @return void
+    //
+    public void setLeadRegion( List<String> zipCodeList , List<Lead> leadsForRoundRobin , Boolean isOwnerAssignment ) {
+        // build a list of Lead that qualify for Round Robin assignment...
+        List<Lead> finalRoundRobinList = new List<Lead>();
+        // build a list of zip codes used by the qualified Lead records...
+        List<String> zipBasedLocationList = new List<String>();
+        // build a translation map from 5-digit zip codes to location names... 
+        Map<String,String> zipMap = this.buildZipCodeLocationNameMap( zipCodeList );
+        if ( zipMap != null ) {
+            for ( Lead leadObj : leadsForRoundRobin ) {
+                // determine if a zip code is present on Lead and in the translation map...
+                String zipcode = this.getRecordZipCode( leadObj );
+                if ( String.isNotBlank( zipcode )
+                    && zipMap.containsKey( zipcode )
+                   )
+                {
+                    // Lead qualifies for Round Robin assignment...
+                    leadObj.NSP_Zip_Based_Location__c = zipMap.get( zipcode );
+                    zipBasedLocationList.add( zipMap.get( zipcode ) );
+                    finalRoundRobinList.add( leadObj );
+                }
             }
         }
-        //calling method for round robin assignment
-        if (finalRoundRobinList != null && !finalRoundRobinList.isEmpty() && zipBasedLocationList!=null && !zipBasedLocationList.isEmpty()) {
-            NSP_RoundRobinAssigner.getOfficeAssignmentDetails(finalRoundRobinList, zipBasedLocationList, isOwnerAssignment);
+        // call method for round robin assignment
+        if ( ( finalRoundRobinList != null )
+            && !finalRoundRobinList.isEmpty()
+            && ( zipBasedLocationList != null )
+            && !zipBasedLocationList.isEmpty()
+           )
+        {
+            NSP_RoundRobinAssigner.getOfficeAssignmentDetails(
+                finalRoundRobinList ,
+                zipBasedLocationList ,
+                isOwnerAssignment
+            );
         }
     }
+
+    // build a map from 5-digit zip codes to location names... 
+    private Map<String,String> buildZipCodeLocationNameMap( List<String> zipcodes ) {
+        List<NSP_Zip_To_City_Mapping__c> records = [
+            SELECT NSP_Zip__c , NSP_Location_Name__c
+            FROM NSP_Zip_To_City_Mapping__c
+            WHERE NSP_Zip__c IN :zipcodes
+        ];
+        Map<String,String> zipCodeLocationNameMap = new Map<String,String>();
+        for ( NSP_Zip_To_City_Mapping__c record : records ) {
+            zipCodeLocationNameMap.put(
+                String.valueof( record.NSP_Zip__c ) ,
+                record.NSP_Location_Name__c
+            );
+        }
+        return zipCodeLocationNameMap;
+    }
+
+    // extract 5-digit zip code from Lead record...
+    private String getRecordZipCode( Lead record ) {
+        String zipcode = null;
+        if ( ( record != null )
+            && String.isNotBlank( record.PostalCode )
+            )
+        {
+            zipcode = record.PostalCode;
+            if ( zipcode.length() >= 5 ) {
+                zipcode = zipcode.substring( 0 , 5 );
+            }
+        }
+        return zipcode;
+    }
+
     /**
 * Marks the contact which refered the lead as COI on the converted Account 
 * @param leadList List of lead. 
@@ -643,25 +688,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
             acrList.add(acrObject);
         }
-        for (String opportunityId: opportunityLeadMap.keySet()) {
-            Lead leadObject = opportunityLeadMap.get(opportunityId);
-            OpportunityContactRole ocrObject = new OpportunityContactRole();
-            ocrObject.OpportunityId = leadObject.convertedOpportunityId;
-            ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
-            ocrObject.Role = leadObject.NSP_Referral_Source__c;
-            ocrObject.NSP_isReferral__c = true;
-			ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-            ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
-                                                          
-            ocrList.add(ocrObject);
-        }
         try {
             if(acrList.size() > 0){
                 insert acrList;
-            }
-            if(ocrList.size() > 0){
-                insert ocrList;
             }
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactasCOI', ex.getMessage());

@@ -10,7 +10,7 @@
 * 
 */
 public class NSP_AccountContactRelationTriggerHelper {
-    // test w/ NSP_AccountContactRelationTriggerHelperTest (79%)
+    // test w/ NSP_AccountContactRelationTriggerHelperTest (80%)
 
     private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final String NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER = 'NSP_AccountContactRelationTriggerHelper';
@@ -60,7 +60,7 @@ public class NSP_AccountContactRelationTriggerHelper {
                 }
               }
             
-            createContactRole(newList,newMap);
+            
             if(!ConIdACRMap.isEmpty()){
                 updateWorkPhoneEmailOnContact(ConIdACRMap);
             }
@@ -164,9 +164,7 @@ public class NSP_AccountContactRelationTriggerHelper {
                       oldAccountIdSet.add(acr.AccountId);
                 }
             }
-            
-            createContactRole(newMap.values(),oldMap);
-            
+                       
             Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
             accountIdSetToUpdateResyncFLag = sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_ACCOUNTCONTACTRELATION, contactNewMap, contactOldMap);
@@ -249,95 +247,6 @@ public class NSP_AccountContactRelationTriggerHelper {
             NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, BEFORE_UPSERT_DIRECTOR, ex.getMessage()); 
         }
      }
-
- /***********************************************************************************************
-    * MethodName: createContactRole
-    * Description : This method will create OCR
-    * Params:       List<AccountContactRelation> newList,Map<Id, AccountContactRelation> oldMap
-    * Author : Rahul Singh
-  * Created Date:10/26/22
-  * Created as part of User story - 128223
-    * ********************************************************************************************/   
-    
-   
-      public void createContactRole(List<AccountContactRelation> newList,Map<Id, AccountContactRelation> oldMap){
-        map<Id,Id> oppAndAcc = new map<Id,Id>();
-        map<id,AccountContactRelation> acrMap = new map<id,AccountContactRelation>();
-        map<id,OpportunityContactRole> ocrMap = new map<id,OpportunityContactRole>();
-        list<OpportunityContactRole> ocrInsertList = new list<OpportunityContactRole>();
-        list<OpportunityContactRole> ocrUpdateList = new list<OpportunityContactRole>(); 
-        for(AccountContactRelation newAcr: newList){
-           AccountContactRelation oldAcr = oldMap != null ? oldMap.get(newAcr.Id):null;
-            if((Trigger.isInsert&& newAcr.AccountId != null && newAcr.NSP_Is_Primary__c == TRUE) ||(Trigger.isUpdate && newAcr.NSP_Is_Primary__c != oldAcr.NSP_Is_Primary__c)  ){
-               
-                acrMap.put(newAcr.AccountId,newAcr);
-                
-            }
-            
-            
-        }
-        if(acrMap.Size() >0){   
-        
-         for(Opportunity oppList: [SELECT Id, AccountId FROM opportunity WHERE AccountId in : acrMap.keyset()]){
-           oppAndAcc.put(oppList.Id,oppList.AccountId);
-        }
-        }
-        
-        if(oppAndAcc.Size() > 0){   
-         for(OpportunityContactRole eachOCR : [SELECT Id, OpportunityId, ContactId
-                                               FROM OpportunityContactRole WHERE opportunityId in : oppAndAcc.keySet()]){
-              
-                if (eachOCR.ContactId == acrMap.get(oppAndAcc.get(eachOCR.OpportunityId)).ContactId ){
-                  ocrMap.put(eachOCR.OpportunityId,eachOCR);   
-                 
-                }
-
-            }
-        }
-        
-        if(oppAndAcc.Size() > 0 && acrMap.Size() >0 ){
-        for(id oppId : oppAndAcc.keySet() ){
-            
-            if(ocrMap.keySet().contains(oppId)){
-               OpportunityContactRole eachOcrList =  ocrMap.get(oppId);
-               AccountContactRelation eachACRList = acrMap.get(oppAndAcc.get(oppId));
-               OpportunityContactRole newOcrToUpdate = new OpportunityContactRole();
-                 newOcrToUpdate.Id = eachOcrList.Id;
-                 newOcrToUpdate.IsPrimary = eachACRList.NSP_Is_Primary__c;
-                 ocrUpdateList.add(newOcrToUpdate);
-            }
-            else {
-                 OpportunityContactRole newOcr = new OpportunityContactRole();
-                 AccountContactRelation eachACRList = acrMap.get(oppAndAcc.get(oppId));
-                 newOcr.OpportunityId = oppId;
-                 newOcr.ContactId = eachACRList.ContactId;
-                 newOcr.IsPrimary = eachACRList.NSP_Is_Primary__c;
-                 newOcr.CurrencyIsoCode = eachACRList.CurrencyIsoCode;
-                 newOcr.NSP_Nonprofit_Organization_Name__c = eachACRList.NSP_Nonprofit_Organization_Name__c;
-                 newOcr.NSP_Nonprofit_Organization_Tax_Id__c = eachACRList.NSP_Nonprofit_Organization_Tax_Id__c;
-                 newOcr.NSP_Referralbenefitsanonprofitorg__c = eachACRList.NSP_Referralbenefitsanonprofitorg__c;
-                 newOcr.NSP_isReferral__c = eachACRList.NSP_isReferral__c;
-                 ocrInsertList.add(newOcr);
-                 
-            }
-            
-            
-        }
-        }
-        
-        try{
-    if((ocrInsertList.Size() > 0 || ocrUpdateList.Size() >0)){  
-            update ocrUpdateList;
-            insert ocrInsertList;
-            
-                
-        }            
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        } 
-
-
-    }
     
     
      /***********************************************************************************************
