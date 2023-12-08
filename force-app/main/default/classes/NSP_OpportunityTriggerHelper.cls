@@ -16,7 +16,7 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    //  test w/ NSP_OpportunityTriggerHelperTest (78%)
+    //  test w/ NSP_OpportunityTriggerHelperTest (76%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -195,7 +195,7 @@ public class NSP_OpportunityTriggerHelper {
         }
         // added as a part of DF-01497
         getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
-        createContactRole(newList,opportunityNewMap);
+        
         // Send the list to publish event bus
         Id profileId=userinfo.getProfileId();
         //228901 - For fixing SOQL changed to metadata query
@@ -1211,76 +1211,6 @@ public class NSP_OpportunityTriggerHelper {
         
     }
     
-        /***********************************************************************************************
-    * MethodName: createContactRole
-    * Description : This method will create OCR
-    * Params:       List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap
-    * Author : Rahul Singh
-    * Created Date:10/26/22
-    * Created as part of User story - 128223
-    * ********************************************************************************************/   
-    
-    public void createContactRole(List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap)
-    {
-        set<Id> oppWithCon = new set<Id>();
-        map<Id,Id> accAndOpp = new map<Id,Id>();
-        map<id,AccountContactRelation> acrMap = new map<id,AccountContactRelation>();
-        list<OpportunityContactRole> ocrInsertList = new list<OpportunityContactRole>();
-   
-        for(Opportunity newOpportunity: newList)
-        {
-            if(Trigger.isInsert && newOpportunity.OwnerId != null && newOpportunity.NSP_Is_Originated_From_Lead_Conversion__c == False)
-            {
-
-                accAndOpp.put(newOpportunity.id, newOpportunity.AccountId);
-                }
-            
-            
-            }
-            
-       
-         if(accAndOpp.Size() > 0){
-             for(AccountContactRelation eachACR : [SELECT Id, AccountId, ContactId, Roles, IsDirect, IsActive, CurrencyIsoCode, NSP_ACCOUNTCONTACT_MERGE__c, Relationship_Strength__c, 
-                                                   NSP_Is_Primary__c, NSP_Nonprofit_Organization_Name__c, NSP_Nonprofit_Organization_Tax_Id__c, NSP_OneForce_External_ID__c, 
-                                                   NSP_Referralbenefitsanonprofitorg__c, NSP_isReferral__c FROM AccountContactRelation WHERE AccountId  in :accAndOpp.values() AND NSP_Is_Primary__c = True]){
-                    acrMap.put(eachACR.AccountId,eachACR);                       
-            
-        }
-            
-        }
-        
-        
-         if(accAndOpp.Size() > 0 && acrMap.Size() >0){   
-            for(id oppOnConv : accAndOpp.keySet() ){
-               
-                AccountContactRelation eachACR = acrMap.get(accAndOpp.get(oppOnConv));
-                 OpportunityContactRole newOcr = new OpportunityContactRole();
-                 newOcr.OpportunityId = oppOnConv;
-                 newOcr.ContactId = eachACR.ContactId;
-                 newOcr.IsPrimary = eachACR.NSP_Is_Primary__c;
-                 newOcr.CurrencyIsoCode = eachACR.CurrencyIsoCode;
-                 newOcr.NSP_Nonprofit_Organization_Name__c = eachACR.NSP_Nonprofit_Organization_Name__c;
-                 newOcr.NSP_Nonprofit_Organization_Tax_Id__c = eachACR.NSP_Nonprofit_Organization_Tax_Id__c;
-                 newOcr.NSP_Referralbenefitsanonprofitorg__c = eachACR.NSP_Referralbenefitsanonprofitorg__c;
-                 newOcr.NSP_isReferral__c = eachACR.NSP_isReferral__c;
-                 ocrInsertList.add(newOcr);   
-                
-            }
-        }
-        
-        try{
-            if(ocrInsertList.Size() > 0){
-                insert ocrInsertList;
-                    
-            }            
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        } 
-            
-            
-          
-    
-    }
     
          /***********************************************************************************************
     * MethodName: enrollmentFeeCheck
@@ -1518,4 +1448,3 @@ Created Date:12/05/2022
      }
     
 }
-
