@@ -36002,6 +36002,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.NSP_Queued_for_Delete__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.Additional_Billing_Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
