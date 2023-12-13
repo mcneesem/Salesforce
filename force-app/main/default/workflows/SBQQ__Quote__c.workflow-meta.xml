@@ -29,7 +29,8 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>no-reply@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/NSP_OnQuoteApproval</template>
     </alerts>
     <alerts>
@@ -50,7 +51,8 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>no-reply@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/NSP_Quote_Reject_Notification</template>
     </alerts>
     <alerts>
