@@ -88,7 +88,7 @@ public class NSP_CaseTriggerHelper {
             
             eachCase.NSP_Case_Sub_Status__c = (eachcase.recordTypeId == PEO_RECORDTYPEID && eachCase.Status == NSP_ServiceConstants.CLOSED_STATUS) ? NSP_ServiceConstants.RESOLVED : eachCase.NSP_Case_Sub_Status__c;
             
-            if(String.isNotBlank(eachCase.accountId) && String.isNotBlank(eachCase.contactId) && eachCase.recordTypeId == PEO_RECORDTYPEID){
+            if(isCorpEE(eachCase, null)){
                 acrAccIdSet.add(eachCase.accountId);
                 acrConIdSet.add(eachCase.contactId);
             }
@@ -140,7 +140,7 @@ public class NSP_CaseTriggerHelper {
         }
         
         //STY-03784
-        if(!acrAccIdSet.isEmpty() && !acrConIdSet.isEmpty()){
+        if(!acrConIdSet.isEmpty()){
             NSP_CorporateEmployeeCheck.stampCorporateEmployeeEECheckbox(acrAccIdSet, acrConIdSet, newList, false);
         }
         //STY-01785 mapping of NSP_CQA_Severity__c based on NSP_CQA_Resulting_Severity__c
@@ -346,6 +346,8 @@ Date        : 30/09/2021
         Set<String> categorySet = new Set<String>();
         Set<String> subCategorySet = new Set<String>();
         List<Case> inProgressCaseList = new List<Case>();
+        Set<Id> acrConIdSet = new Set<Id>();
+        Set<Id> acrAccIdSet = new Set<Id>();
         for(Case eachCase : caseNewMap.values()) {
             
             eachCase = updateFLSACaseDetails(eachCase,caseOldMap);
@@ -356,6 +358,12 @@ Date        : 30/09/2021
             eachCase = recordOwnerAssingedDateTime(eachCase,caseOldMap);
             // enable Juck checkbox will change the case status to Cancelled
             eachCase = markJunkCase(eachCase);
+
+            if(isCorpEE(eachCase, caseOldMap.get(eachCase.Id))){
+                acrConIdSet.add(eachCase.contactId);
+                acrAccIdSet.add(eachCase.AccountId);
+            }
+
             if(eachCase.NSP_SalesOffice__c != null && eachCase.NSP_SalesOffice__c != caseOldMap.get(eachCase.Id).NSP_SalesOffice__c) {
                 eachCase.NSP_SalesOffice__c = salesOfficePicklistValues.containsKey(eachCase.NSP_SalesOffice__c) ? salesOfficePicklistValues.get(eachCase.NSP_SalesOffice__c) : eachCase.NSP_SalesOffice__c;
             }
@@ -436,6 +444,11 @@ Date        : 30/09/2021
                    confidentailEligilbleList.add(eachCase);
                }
         }
+
+        //Bug-237020 Logic to check or uncheck Corporate EE flag on Case update.
+        if(!acrConIdSet.isEmpty() && !acrAccIdSet.isEmpty()){
+            NSP_CorporateEmployeeCheck.stampCorporateEmployeeEECheckbox(acrAccIdSet, acrConIdSet, caseNewMap.values(), false);
+        }
         
         if(escalationCaseList.size()>0){
             updateCaseOwnerWhenL2IsTrue(escalationCaseList);
@@ -486,7 +499,20 @@ Date        : 30/09/2021
         if(!inProgressCaseList.isEmpty()){
             updateInProgressTime(caseOldMap,inProgressCaseList);
         }
-    }     
+    }
+    
+    /**
+* @MethodName: isCorpEE
+* @Description:  This method determines wheather a contact qualifies for Corporate EE or not
+* @param : Case eachCase
+* @createdDate : 10/25/2023
+* @Story : Bug 237020
+* @return Boolean                         
+*/ 
+    private Boolean isCorpEE(Case eachCase, Case oldCase){
+        return String.isNotBlank(eachCase.contactId) && eachCase.recordTypeId == PEO_RECORDTYPEID;            
+    }
+
     /**
 * @MethodName: checkAccessToUpdatePrivateField
 * @Description:  This method describes about of NSP_Private__c checkbox based on the user access and Category.
