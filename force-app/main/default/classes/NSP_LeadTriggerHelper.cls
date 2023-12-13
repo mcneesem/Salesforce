@@ -688,9 +688,25 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
             acrList.add(acrObject);
         }
+        for (String opportunityId: opportunityLeadMap.keySet()) {
+            Lead leadObject = opportunityLeadMap.get(opportunityId);
+            OpportunityContactRole ocrObject = new OpportunityContactRole();
+            ocrObject.OpportunityId = leadObject.convertedOpportunityId;
+            ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
+            ocrObject.Role = leadObject.NSP_Referral_Source__c;
+            ocrObject.NSP_isReferral__c = true;
+			ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+            ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
+                                                          
+            ocrList.add(ocrObject);
+        }
         try {
             if(acrList.size() > 0){
                 insert acrList;
+            }
+            if(ocrList.size() > 0){
+                insert ocrList;
             }
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactasCOI', ex.getMessage());
