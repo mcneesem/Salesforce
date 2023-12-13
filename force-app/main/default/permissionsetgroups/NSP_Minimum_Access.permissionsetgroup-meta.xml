@@ -12,6 +12,7 @@
     <permissionSets>Lead_View_All</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>Minimum_Access_Elevated_Read</permissionSets>
+    <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
