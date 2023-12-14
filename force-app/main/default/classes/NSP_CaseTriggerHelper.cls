@@ -439,15 +439,15 @@ Date        : 30/09/2021
             if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && eachCase.NSP_Level_2__c){
                 eachCase.NSP_Level_2_Assigned_Date__c = System.now();
             }
-            if(eachCase.RecordTypeId==bpsRecordTypeId &&
+            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_First_Level2_Assigned_Duration__c==null && eachCase.NSP_Level_2_Assigned_Date__c!=null &&
                ((eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && !eachCase.NSP_Level_2__c) ||
                     (caseOldMap.get(eachCase.Id).Status!=eachCase.Status && eachCase.Status=='Closed')
-                ) && eachCase.NSP_First_Level2_Assigned_Duration__c==null && eachCase.NSP_Level_2_Date__c!=null){
-                eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Date__c, System.Now());
+                )){
+                eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, System.Now());
             }
             if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c && caseOldMap.get(eachCase.Id).NSP_First_Level2_Reply_Date__c==null &&
-               eachCase.NSP_First_Level2_Reply_Date__c!=null && eachCase.NSP_Level_2_Date__c!=null){
-                eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
+               eachCase.NSP_First_Level2_Reply_Date__c!=null && eachCase.NSP_Level_2_Assigned_Date__c!=null){
+                eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
             }
         }
          
