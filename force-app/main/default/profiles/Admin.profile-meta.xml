@@ -8416,6 +8416,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.NSP_Level_2_Assigned_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NSP_Level_2_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

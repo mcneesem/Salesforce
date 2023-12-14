@@ -316,6 +316,7 @@ Date        : 30/09/2021
 *                
 */
     public void beforeUpdateDirector(Map<Id, Case> caseNewMap, Map<Id, Case> caseOldMap){
+        BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
         queueMap =  new Map<Id, Group> ([SELECT Id,DeveloperName, Name FROM Group WHERE Id != null]);
         closedCaseLst = new List<Case>();
         List<Case> escalationCaseList = new List<Case>();
@@ -434,14 +435,27 @@ Date        : 30/09/2021
                    categorySet.add(eachCase.NSP_Category__c);
                    subCategorySet.add(eachCase.NSP_SubCategory__c);
                    confidentailEligilbleList.add(eachCase);
-               }
+            }
+            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && eachCase.NSP_Level_2__c){
+                eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+            }
+            if(eachCase.RecordTypeId==bpsRecordTypeId &&
+               ((eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && !eachCase.NSP_Level_2__c) ||
+                    (caseOldMap.get(eachCase.Id).Status!=eachCase.Status && eachCase.Status=='Closed')
+                ) && eachCase.NSP_First_Level2_Assigned_Duration__c==null && eachCase.NSP_Level_2_Date__c!=null){
+                eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Date__c, System.Now());
+            }
+            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c && caseOldMap.get(eachCase.Id).NSP_First_Level2_Reply_Date__c==null &&
+               eachCase.NSP_First_Level2_Reply_Date__c!=null && eachCase.NSP_Level_2_Date__c!=null){
+                eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
+            }
         }
-
+         
         //Bug-237020 Logic to check or uncheck Corporate EE flag on Case update.
         if(!acrConIdSet.isEmpty() && !acrAccIdSet.isEmpty()){
             NSP_CorporateEmployeeCheck.stampCorporateEmployeeEECheckbox(acrAccIdSet, acrConIdSet, caseNewMap.values(), false);
         }
-        
+                
         if(escalationCaseList.size()>0){
             updateCaseOwnerWhenL2IsTrue(escalationCaseList);
         } 
@@ -491,8 +505,8 @@ Date        : 30/09/2021
         if(!inProgressCaseList.isEmpty()){
             updateInProgressTime(caseOldMap,inProgressCaseList);
         }
-    }
-    
+    }     
+
     /**
 * @MethodName: isCorpEE
 * @Description:  This method determines wheather a contact qualifies for Corporate EE or not
