@@ -437,12 +437,15 @@ public class NSP_AssetServiceTriggerHelper {
 * ReturnAssetRecordtypes()
 * UpdateLstAssets()
 * //Added as a part of <STY-02841>
+* Updated for RET_Client_ID Bug 12142023
 */
 
     private Asset updateAssets(Asset getAsst, Asset assLst){
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
-        getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
+        if(getAsst.RecordTypeId == RETWOAssetRecordTypeId){
+            getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
+        }
         getAsst.NSP_Client__c = null;
         getAsst.NSP_Company_Name__c = null;
         getAsst.NSP_Account_Status__c = assLst.NSP_Account_Status__c;
@@ -480,7 +483,7 @@ public class NSP_AssetServiceTriggerHelper {
                             NSP_DBA__c, NSP_Business_Type__c, NSP_FEIN__c, NSP_Business_Inception_Date__c,
                             NSP_SIC_Code__c, NSP_Legal_Entity_Description__c, NSP_NAICS_Code__c, NSP_AIMS_Original_First_Pay_Date__c,
                             NSP_Sales_Office__c,NSP_RET_Region__c,NSP_RET_AIMS_Original_Empl_Date__c,NSP_RET_NAICS_Description__c,
-                            NSP_Phone__c,NSP_RET_Phone_Ext__c,NSP_Email__c,NSP_Renewal_Date__c
+                            NSP_Phone__c,NSP_RET_Phone_Ext__c,NSP_Email__c,NSP_Renewal_Date__c,RecordTypeId
                             FROM Asset WHERE AccountId in : accountID AND
                             RecordType.DeveloperName IN: AssetRecTypeSet ]  ){
                                 RETBPSassets.add(assLst);
