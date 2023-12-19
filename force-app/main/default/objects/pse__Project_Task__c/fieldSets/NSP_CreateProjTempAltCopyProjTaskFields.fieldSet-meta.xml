@@ -107,5 +107,10 @@
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
+    <displayedFields>
+        <field>pse__Work_Calendar__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
     <label>NSP Create Project From Template Alt Copy Project Task Fields</label>
 </FieldSet>
