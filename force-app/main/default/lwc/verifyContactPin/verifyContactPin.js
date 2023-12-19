@@ -1,13 +1,5 @@
-import {
-    LightningElement,
-    api,
-    wire
-} from 'lwc';
-import {
-    getRecord,
-    createRecord,
-    updateRecord
-} from 'lightning/uiRecordApi';
+import { LightningElement, api, wire } from 'lwc';
+import { getRecord, createRecord ,updateRecord } from 'lightning/uiRecordApi';
 import PIN_LOG_OBJECT from '@salesforce/schema/NSP_Verification_Log__c';
 import CONTACT_FIELD from '@salesforce/schema/NSP_Verification_Log__c.NSP_Contact__c';
 import VERIFIED_FIELD from '@salesforce/schema/NSP_Verification_Log__c.NSP_PIN_Verified__c';
@@ -18,21 +10,18 @@ import PIN_VALIDATED from '@salesforce/schema/Contact.NSP_Pin_Validated__c';
 import SERVICE_REQUEST_CHANNEL from '@salesforce/schema/Contact.NSP_Service_Request_Channel__c';
 import ACCOUNT_FIELD from '@salesforce/schema/Contact.AccountId';
 import CONTACT_ID from '@salesforce/schema/Contact.Id';
-import CONTACT_NOTES from '@salesforce/schema/Contact.Pin_Dismiss_Notes__c';
-import CONTACT_PIN_UPDATED from '@salesforce/schema/Contact.Contact_Pin_Updated__c';
 
 export default class VerifyContactPin extends LightningElement {
 
     @api recordId;
     @api acctId;
     @api contactId;
-   // @api serviceChannel;
+    // @api serviceChannel;
     contact;
     name;
     contactPin;
     pin
     showErr;
-    showErrNote;
     verified = false;
     note;
     submitLabel = 'Validate PIN';
@@ -42,8 +31,7 @@ export default class VerifyContactPin extends LightningElement {
     showPinModal = false;
     pinValidated;
     serviceChannel;
-    contactPinUpdated;
-    createLogRecord() {
+    createLogRecord(){
         const fields = {};
         fields[CONTACT_FIELD.fieldApiName] = this.recordId;
         fields[VERIFIED_FIELD.fieldApiName] = this.verified;
@@ -59,7 +47,7 @@ export default class VerifyContactPin extends LightningElement {
             });
     }
 
-    @wire(getRecord, { recordId: '$recordId', fields: [NAME_FIELD, PIN_FIELD, ACCOUNT_FIELD, CONTACT_ID,PIN_VALIDATED,SERVICE_REQUEST_CHANNEL,CONTACT_PIN_UPDATED] })
+    @wire(getRecord, { recordId: '$recordId', fields: [NAME_FIELD, PIN_FIELD, ACCOUNT_FIELD, CONTACT_ID,PIN_VALIDATED,SERVICE_REQUEST_CHANNEL] })
     wiredRecord({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -76,16 +64,14 @@ export default class VerifyContactPin extends LightningElement {
             this.contactId = this.contact.fields.Id.value;
             this.pinValidated = this.contact.fields.NSP_Pin_Validated__c.value;
             this.serviceChannel = this.contact.fields.NSP_Service_Request_Channel__c.value;
-            this.contactPinUpdated = this.contact.fields.Contact_Pin_Updated__c.value;
 
-            if (!this.showDismissNote && !this.contactPinUpdated && this.contactPin != null) {
+            if (this.contactPin != null && ((!this.pinValidated && this.serviceChannel == 'Phone')||this.serviceChannel != 'Chat')){
                 this.showPinModal = true;
-                this.showCancel = true;               
+                this.showCancel = true;
             }
             else {
                 this.showPinModal = false;
                 this.showContractExceptions = true;
-                this.updateContactPinSaveDetails();
             }
         }
     }
@@ -94,7 +80,8 @@ export default class VerifyContactPin extends LightningElement {
        //present note
        this.showDismissNote = true;
        this.showCancel = false;
-       this.showErr = false;
+       this.submitLabel = 'Dismiss';
+       this.showContractExceptions = true;
     }
 
     closeModal() {
@@ -107,31 +94,24 @@ export default class VerifyContactPin extends LightningElement {
     submitDetails() {
         // to close modal set isModalOpen tarck value as false
         //Add your code to call apex method or do some processing
-        if ((this.pin == this.contactPin)) {
-            this.showPinModal = false;
-            this.showContractExceptions = true;
-            this.contactPinUpdated = true;
+        if ((this.pin == this.contactPin) ){ 
+            this.verified = true;
+          
+            if(this.serviceChannel == 'Phone'){
+                this.updateContactRecord();
+                this.pinValidated = true;
+            }
+            
         } else {
+            this.errMsg = 'No Match';
             this.showErr = true;
+            this.verified = false;
+            var inp=this.template.querySelector('lightning-textarea');
+            this.note=inp.value;
         }
-        
-        
-    }
-
-    SubmitNotes() {
-        var inp = this.template.querySelector('lightning-textarea');
-        this.note = inp.value;
-        if(this.note == undefined){
-            this.showErrNote = true;
-        }else{
-            this.showPinModal = false;
-            this.contactPinUpdated = true;
-            this.showContractExceptions = true;
-            this.updateContactPinDismissDetails();
-        }
-        
-        // this.createLogRecord();
-
+        this.createLogRecord();
+        this.showPinModal = false;
+        this.showContractExceptions = true;
     }
 
     createPin() {
@@ -139,7 +119,7 @@ export default class VerifyContactPin extends LightningElement {
         this.note = 'User has already authenticated through the Portal';
         this.createLogRecord();
         this.showPinModal = false;
-        //this.showContractExceptions = true;
+        this.showContractExceptions = true;
     }
 
     handleChange(event){
@@ -168,63 +148,7 @@ export default class VerifyContactPin extends LightningElement {
                     );
                     
                 });
-            }
-                    
         }
-
-    updateContactPinDismissDetails() {
-
-        const fields = {};
-        if (this.contactId != null) {
-            fields[CONTACT_ID.fieldApiName] = this.contactId;
-            fields[CONTACT_NOTES.fieldApiName] = this.note;
-            const recordInput = {
-                fields
-            };
-            updateRecord(recordInput)
-                .then(() => {
-                    this.showPinModal = false;
-                    this.showContractExceptions = true;
-                })
-                .catch(error => {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error Updating Record',
-                            message: error.body.message,
-                            variant: 'error'
-                        })
-                    );
-
-                });
-        }
-
     }
-
-    updateContactPinSaveDetails() {
-
-        const fields = {};
-        if (this.contactId != null) {
-            fields[CONTACT_ID.fieldApiName] = this.contactId;
-            fields[CONTACT_PIN_UPDATED.fieldApiName] = false;
-            const recordInput = {
-                fields
-            };
-            updateRecord(recordInput)
-                .then(() => {
-                    
-                })
-                .catch(error => {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error Updating Record',
-                            message: error.body.message,
-                            variant: 'error'
-                        })
-                    );
-                    
-                });
-            }
-                    
-        }
     
 }
