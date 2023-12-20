@@ -269,7 +269,7 @@
         <platformActionListItems>
             <actionName>Share</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>12</sortOrder>
+<sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>NewLead</actionName>
@@ -406,12 +406,7 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Note_Type__c</fields>
-        <fields>Note__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
-        <relatedList>NSP_Note__c.Case__c</relatedList>
+        <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -432,7 +427,7 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
-    <relatedLists>
+<relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Contact_Name__c</fields>
         <fields>NSP_Work_Phone__c</fields>
