@@ -31,7 +31,7 @@
         </recipients>
         <senderAddress>no-reply@insperity.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/NSP_OnQuoteApproval</template>
+        <template>All/NSP_OnQuoteApproval</template>
     </alerts>
     <alerts>
         <fullName>NSP_Email_Alert_for_Quote_AutoApproved</fullName>
@@ -53,7 +53,7 @@
         </recipients>
         <senderAddress>no-reply@insperity.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/NSP_Quote_Reject_Notification</template>
+        <template>All/NSP_Quote_Reject_Notification</template>
     </alerts>
     <alerts>
         <fullName>NSP_Email_Alert_to_Quote_Owner_on_Creation_of_Renewal_Quote</fullName>
