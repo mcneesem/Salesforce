@@ -7,7 +7,7 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
-    <columns>NSP_Owner__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
     <filterScope>Queue</filterScope>
     <label>Retirement Services - Business Team</label>
     <queue>Retirement_Services_Business_Team</queue>
