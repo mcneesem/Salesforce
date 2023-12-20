@@ -8,7 +8,7 @@ IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&a
  IF(NSP_Lock_On_QLI__c,  IF(OR(SBQQ__Quote__r.NSP_Has_Renewable_Products__c &gt; 0,SBQQ__Quote__r.NSP_ListPriceProductCount__c &gt; 0), 
  IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos;, &apos;In Progress&apos;, 20, 20),
  IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos;, &apos;In Progress&apos;, 20, 20)) , &apos;&apos;) ) , &apos;&apos;)</formula>
-    <label>Clone Required?</label>
+    <label>Amend Required?</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
