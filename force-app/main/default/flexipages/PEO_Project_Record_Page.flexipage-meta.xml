@@ -383,7 +383,7 @@
                     <name>columns</name>
                     <value>Facet-2d5fccf0-8c5e-4652-9260-a331ae44c8c3</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -397,7 +397,7 @@
                     <name>columns</name>
                     <value>Facet-5007d73e-2008-4cce-a7fe-f89ce81d253e</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Account</value>
                 </componentInstanceProperties>
@@ -411,7 +411,7 @@
                     <name>columns</name>
                     <value>Facet-056c1690-d26b-43ec-8615-4bfb6256a4dd</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Employee Enrollment</value>
                 </componentInstanceProperties>
@@ -694,7 +694,7 @@
                     <name>columns</name>
                     <value>Facet-c6539f75-cca7-45a6-a2f9-8e6baa217151</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>System Information</value>
                 </componentInstanceProperties>
