@@ -1231,7 +1231,7 @@
                     <name>columns</name>
                     <value>Facet-6e9e709f-ebfa-4a85-ba67-39db1ae7f76f</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -1245,7 +1245,7 @@
                     <name>columns</name>
                     <value>Facet-21098d79-a22b-4e76-9b1d-57059d73d0ab</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Additional Term Analysis Information</value>
                 </componentInstanceProperties>
@@ -1282,7 +1282,7 @@
                     <name>columns</name>
                     <value>Facet-9771f64d-2d53-4d38-856d-81e2e3ae95de</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Account</value>
                 </componentInstanceProperties>
@@ -1296,7 +1296,7 @@
                     <name>columns</name>
                     <value>Facet-ac1910da-693b-43c9-98dc-9cb7087de787</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Field Service</value>
                 </componentInstanceProperties>
@@ -1317,7 +1317,7 @@
                     <name>columns</name>
                     <value>Facet-58624caf-f721-418d-86c3-f8fb079df205</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Task Hierarchy</value>
                 </componentInstanceProperties>
@@ -1331,7 +1331,7 @@
                     <name>columns</name>
                     <value>Facet-465ba932-8e04-4f8c-b371-ec189f40450b</value>
                 </componentInstanceProperties>
-                                <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>System Information</value>
                 </componentInstanceProperties>
