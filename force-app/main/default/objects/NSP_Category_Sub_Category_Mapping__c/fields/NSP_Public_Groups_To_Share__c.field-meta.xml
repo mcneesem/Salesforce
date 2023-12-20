@@ -72,6 +72,11 @@
                 <default>false</default>
                 <label>Leave Admin Data Visibility</label>
             </value>
+            <value>
+                <fullName>Separation Agreement Requests Data Visib</fullName>
+                <default>false</default>
+                <label>Separation Agreement Requests Data Visib</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
