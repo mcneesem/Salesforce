@@ -10,7 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <controllingField>NSP_RET_Process_Area__c</controllingField>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
