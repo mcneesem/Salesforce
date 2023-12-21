@@ -118,7 +118,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if (accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
-        }
+    }
         
     /**
     * @MethodName: updateDocusignAsset
