@@ -165,11 +165,11 @@
     <nameField>
         <encryptionScheme>None</encryptionScheme>
         <label>Account Group Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Account Groups</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
         <searchResultsAdditionalFields>NSP_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>NSP_Watchlist__c</searchResultsAdditionalFields>
