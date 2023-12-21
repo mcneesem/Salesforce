@@ -7,7 +7,7 @@
     <referenceTo>User</referenceTo>
     <relationshipName>Account_Groups</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
