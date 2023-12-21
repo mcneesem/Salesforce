@@ -43,6 +43,13 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>BTCoreEgMinMaxRange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BTCoreEgMinMaxRange</shortDescription>
+        <value>-7;-14</value>
+    </labels>
+    <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -139,6 +146,13 @@
         <protected>false</protected>
         <shortDescription>Does_the_client_offer_a_Stock_Purchase__c</shortDescription>
         <value>Does the client offer a Stock Purchase Plan?</value>
+    </labels>
+    <labels>
+        <fullName>EGMMMinMaxRange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EGMMMinMaxRange</shortDescription>
+        <value>-22;-28</value>
     </labels>
     <labels>
         <fullName>ErrorMessageWhenPrimaryResourceAlreadyExist</fullName>
@@ -6047,6 +6061,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>Regional Manager,Regional Administrator,District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
+    <labels>
+        <fullName>Segment_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Segment Days</shortDescription>
+        <value>-28</value>
     </labels>
     <labels>
         <fullName>Separation_Agreement_Terms_List</fullName>
