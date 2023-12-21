@@ -11,6 +11,13 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
    	private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
    	private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
+    private static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+    private static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
+    private static final string BACKOUT= 'Backout';
+    private static final string TERMINATED= 'Terminated';
+    private static final string RETURNED= 'Returned';
+    private static final string INACTIVE= 'Inactive';
+    private static final string PRJ_TASK_NAME = 'Complete termination analysis';
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
     * @param projectTaskNewMap Map of New project. 
@@ -94,14 +101,77 @@ public class NSP_ProjectTasksTriggerHelper {
     public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
         List<pse__Project_Task__c> cobraProjectTaskList = new List<pse__Project_Task__c>();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
+        List<ID> accountIdList = new List<ID>();    
         for(pse__Project_Task__c pTask : listProjectTasks){
             //Checking for COBRA Parent Task
             if(pTask.Name==pta.NSP_Task_Name__c){
                 cobraProjectTaskList.add(pTask);
             }
+            //Checking for Project Task Account
+            if (pTask.NSP_Account_Id__c != null && pTask.Name == PRJ_TASK_NAME){
+                accountIdList.add(pTask.NSP_Account_Id__c);
+            }
         }
         if(cobraProjectTaskList.size() > 0){
             createCobraSubTasks(cobraProjectTaskList);
+        }
+        if (accountIdList.size() > 0){
+            updateDocusignAsset(accountIdList);
+        }
+        }
+        
+    /**
+    * @MethodName: updateDocusignAsset
+    * @Description: Populate related Active asset for docusign use
+    * @param :List<Id> accountList
+    * @return void                          
+    */    
+    public static void updateDocusignAsset(List<ID> accountList) {
+        Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
+        Map<Id, RecordTypeInfo> recTypeMap = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
+        List<Asset> assetList = new List<Asset>();
+        List<Account> acctList = new List<Account>();
+        List<String> ActiveAssetList = new List<String>();
+        
+        try {
+            assetList = [SELECT ID, recordtypeId, recordtype.name, AccountId, Status from Asset WHERE AccountId IN:accountList
+                         AND RecordTypeId != :WOAssetRecordTypeId AND RecordTypeId != :CPQAssetRecordTypeId AND Status != :TERMINATED AND Status != :BACKOUT AND Status != :RETURNED AND Status != :INACTIVE
+                         ];
+    
+            for (Asset eachAsset : assetList) {
+                if (eachAsset.AccountId != null) { 
+                    if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
+                        accountToAssetRecordtypeMap.put(eachAsset.AccountId, new Set<String>());
+                    }
+                    String recordTypeName;
+                    if (recTypeMap.containsKey(eachAsset.RecordTypeId)) {
+                        recordTypeName = recTypeMap.get(eachAsset.RecordTypeId).getName();
+                    }
+                    // Adding recordtypes from all related assets
+                    accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(recordTypeName.split(','));
+                }
+            }
+            
+            for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
+                //Clearing old value for Docusign_Assets__c
+                eachAccount.Docusign_Assets__c = Null;
+                if (accountToAssetRecordtypeMap.containsKey(eachAccount.Id)) {
+                    //Adding value into Set for deduplication
+                    Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
+                    //Adding value from set to List
+                    ActiveAssetList.addAll(existingassetsrecordtype);
+                    //Updating the Docusign_Assets__c
+                    if (ActiveAssetList.size() > 0){
+                        eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+                    }
+                }
+                acctList.add(eachAccount);
+            }
+            if (acctList.size() > 0){
+                update acctList;
+            }
+        }catch (exception ex) {
+            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'updateAssetInDocusign', ex.getMessage());
         }
     }
 
@@ -820,7 +890,11 @@ public class NSP_ProjectTasksTriggerHelper {
         Set<Id>newTaxIMPLSubProjectSet =new Set<Id>(); 
         Set<Id>wXWADataMigrationSubProject =new Set<Id>();
         Set<Id> goLiveProjectTaskIds = new Set<Id>();
+        List<Id> accountIdList = new List<Id>();
         for(pse__Project_Task__c oProjectTask : mNewProjectTasks.values()){
+            if (oProjectTask.Name == PRJ_TASK_NAME && oProjectTask.NSP_Account_Id__c != NULL &&oldMapProjecttasks.get(oProjectTask.Id).NSP_Account_Id__c != oProjectTask.NSP_Account_Id__c){
+                accountIdList.add(oProjectTask.NSP_Account_Id__c);
+            }
             // FILTER COMPLETED PROJECTS
             if(oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED){
                 sProjectTasksIds.add(oProjectTask.Id);
@@ -914,6 +988,9 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if(!projectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
+        }
+        if (accountIdList.size() > 0){
+            updateDocusignAsset(accountIdList);
         }
         if(!fundingprojectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFundingDocuments(fundingprojectTaskIdSet,mapofFundingProjecttasks);
