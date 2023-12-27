@@ -12,6 +12,8 @@ Modification Log     :
 * Anil                      8/19/2022               First Iteration
 */
 public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject> {
+    // test w/ NSP_AccountRegulatedAreaBatch_Test (86%)
+
     private static final String CASE_SUBJECT = 'Employees work in ';
     private static List<NSP_Account_Regulated_area__c> accRegulatedAreaList = new List<NSP_Account_Regulated_area__c>();
     private static Map<String, List<String>> accWithCaseSubjStates = new Map<String, List<String>>();
@@ -27,11 +29,15 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
     private static Set<String> setCases = new Set<String>();
     private static Set<String> setAddressId = new Set<String>();
     private static Map<Id, Map<String,Id>> accountWithTeamMemberId = new Map<Id, Map<String,Id>>();
+    private static List<Group> lstHRImplementationqueue = new List<Group>();
+    private static Map<Id, String> accountWithRoleMap = new Map<Id, String>();
     private static List<Case> lstCases = new List<Case>();
+    private static List<Case> lstCasesToUpdate = new List<Case>();
     private static Id recordTypePEOID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     @TestVisible private static Set<Id> setAccountIds = new Set<Id>();
     @TestVisible NSP_AccountRegulatedAreaBatch.Selector selector = new NSP_AccountRegulatedAreaBatch.Selector();
-
+    private static Map<String, String> accIdWithCase = new Map<String, String>();
+    private static Map<ID, String> caseWithSubject = new Map<ID, String>();
     public Set<String> setRegulatedStates = new Set<String>();
     public Map<String, NSP_Regulated_Area__c> stateWithRegulatedArea = new Map<String, NSP_Regulated_Area__c>();
     public Map<String, NSP_Regulated_Area__c> zipCodesWithRegArea = new Map<String, NSP_Regulated_Area__c>(); 
@@ -43,18 +49,28 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
         this.setRegulatedStates =  (Set<String>) data.get('setRegulatedStates');
         this.stateWithRegulatedArea = (Map<String, NSP_Regulated_Area__c>) data.get('stateWithRegulatedArea');
         this.zipCodesWithRegArea = (Map<String, NSP_Regulated_Area__c>) data.get('zipCodesWithRegArea');
+        String regulatedStatesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( new List<String>(setRegulatedStates) , '\',\'') });
+        String zipCodesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( new List<String>(zipCodesWithRegArea.keySet()) , '\',\'') });
 
-       	if(counter == 1){
-
-            String regulatedStatesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( new List<String>(setRegulatedStates) , '\',\'') });
-            String zipCodesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( new List<String>(zipCodesWithRegArea.keySet()) , '\',\'') });
-        
+        //Added this if condition as part of STY - STY-04472
+        if(counter == 0){
+            query = 'SELECT Id, NSP_City__c, NSP_Postal_Code__c, NSP_Postal_Code_New__c, NSP_State__c, NSP_Address_Type__c, ' 
+                + ' NSP_Asset__c, NSP_Contact__c, NSP_Contact__r.Name, NSP_Related_Site__c, NSP_Contact__r.AccountId '
+                + ' FROM NSP_Address__c '
+                + ' WHERE NSP_Contact__c  != NULL'
+                + ' AND NSP_Label_Code__c like \'%PW1%\'' 
+                + ' AND (NSP_Address_Type__c = \''+ NSP_ServiceConstants.WORK_SITE + '\' OR NSP_Address_Type__c =\''+ NSP_ServiceConstants.US_MAIL +'\')'
+                + ' AND NSP_Regulated_Batch__c = FALSE '
+                + ' AND (NSP_State__c != NULL OR NSP_Postal_Code_New__c != NULL) '
+                + ' AND (NSP_State__c IN '+regulatedStatesString+' OR NSP_Postal_Code_New__c IN '+zipCodesString+')';
+        } else if(counter == 1){
             query = 'SELECT Id, NSP_Address__c,  NSP_Address__r.NSP_Related_Site__c, NSP_City__c, NSP_State__c,'
                 + ' NSP_Postal_Code__c,NSP_Postal_Code_New__c, NSP_Address_Type__c, NSP_Contact__c, NSP_Contact__r.AccountId, NSP_Sub_Client_Contact__c,'
-                + ' NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c'
+                + ' NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c, NSP_Sub_Client_Contact__r.NSP_Employee_Status__c'
                 + ' FROM NSP_Sub_Client_Contact_Address__c'
                 + ' WHERE (NSP_Address_Type__c =\''+ NSP_ServiceConstants.WORK_SITE +'\' OR NSP_Address_Type__c =\''+ NSP_ServiceConstants.US_MAIL +'\')'
                 + ' AND NSP_Contact__c != NULL'
+                + ' AND (NSP_Sub_Client_Contact__r.NSP_Employee_Status__c !=\''+ NSP_ServiceConstants.PRIMED_STATUS +'\' OR NSP_Sub_Client_Contact__r.NSP_Employee_Status__c !=\''+ NSP_ServiceConstants.TERMINATED_STATUS +'\')'
                 + ' AND NSP_Address__r.NSP_Regulated_Batch__c = FALSE'
                 + ' AND (NSP_City__c != NULL OR NSP_State__c != NULL OR NSP_Postal_Code_New__c != NULL)'
                 + ' AND (NSP_State__c IN '+regulatedStatesString+' OR NSP_Postal_Code_New__c IN '+zipCodesString+')';
@@ -67,8 +83,11 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
 
     public void execute(Database.BatchableContext bc, List<sObject> lstRecords) {
         try {
-
-            getSubClientContactAddress((List<NSP_Sub_Client_Contact_Address__c>) lstRecords);
+            if(lstRecords instanceOf List<NSP_Address__c>){
+                getContactAddress((List<NSP_Address__c>) lstRecords);
+            } else if(lstRecords instanceOf List<NSP_Sub_Client_Contact_Address__c>){
+                getSubClientContactAddress((List<NSP_Sub_Client_Contact_Address__c>) lstRecords);
+            }
             getAccountRecords();
             getAccountTeams();
             prepareAccRegAreaAndCase();
@@ -83,23 +102,16 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
      * @description insert AccountRegulatedArea Records and Cases into the database
      */
     private void createRecords() {
-
         Map<String, String> subjectWithCaseId = new Map<String, String>();
         Set<Id> setAccRegAreas = new Set<Id>();
-
         if (!accRegulatedAreaList.isEmpty()) {
             Database.insert(accRegulatedAreaList, false);
-
             for (NSP_Account_Regulated_area__c accRegArea : accRegulatedAreaList) {
                 setAccRegAreas.add(accRegArea.Id);
             }
         }
-
-
         if (!lstCases.isEmpty()) {
-
             Database.insert(lstCases, false);
-
             for (Case cse : lstCases) {
                 String subject = cse.Subject?.replace(CASE_SUBJECT, '');
                 List<String> lstDescription = new List<String>();
@@ -117,9 +129,26 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                 }
             }
         }
-
+        if (!lstCasesToUpdate.isEmpty()) {
+            Database.update(lstCasesToUpdate, false);
+            for (Case cse : lstCasesToUpdate) {
+                String subject = cse.Subject?.replace(CASE_SUBJECT, '');
+                List<String> lstDescription = new List<String>();
+                if (subject?.contains('/ ')) {
+                    List<String> localCities = subject?.Split('/');
+                    lstDescription.add(localCities[0]);
+                    if (localCities[1] != null) {
+                        lstDescription.addAll(localCities[1].split(', '));
+                    }
+                } else {
+                    lstDescription.addAll(subject?.split(', '));
+                }
+                for (String str : lstDescription) {
+                    subjectWithCaseId.put(cse.AccountId + '_' + str, cse.Id);
+                }
+            }
+        }
         connectAccRegAreaWithCase(subjectWithCaseId, setAccRegAreas);
-        
         if (!lstAddressToUpdate.isEmpty()) {
             Database.update(lstAddressToUpdate, false);
         }
@@ -127,25 +156,20 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
 
     private void connectAccRegAreaWithCase(Map<String, String> subjectWithCaseId, Set<Id> setAccRegAreas){
         if (!setAccRegAreas.isEmpty()) {
-
             List<NSP_Account_Regulated_area__c> lstToUpdate = new List<NSP_Account_Regulated_area__c>();
-
             for (NSP_Account_Regulated_area__c accRegArea : selector.getAccountsRegulatedAreaRecords(setAccRegAreas)) {
-
                 if (accRegArea.NSP_State__c != null &&
                     subjectWithCaseId.containsKey(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_State__c)) {
                     accRegArea.NSP_Case__c = subjectWithCaseId?.get(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_State__c);
                 }
-
                 if (accRegArea.NSP_City__c != null &&
                     subjectWithCaseId.containsKey(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_City__c)) {
                     accRegArea.NSP_Case__c = subjectWithCaseId?.get(accRegArea.NSP_Account__c + '_' + accRegArea.NSP_City__c);
                 }
-               
                 lstToUpdate.add(accRegArea);
             }
             if (!lstToUpdate.isEmpty()) {
-                Database.update(lstToUpdate, false);                
+                Database.update(lstToUpdate, false);
             }
         }
     }
@@ -249,6 +273,11 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
 
         //preparing Case for Account to create
         if (!accIdWithCaseSubjToCreate.isEmpty()) {
+            List<Case> insertedCase = selector.getExistingCase(accIdWithCaseSubjToCreate.keySet());
+            for(Case existCase : insertedCase){
+               accIdWithCase.put(existCase.AccountId,existCase.Id);
+                caseWithSubject.put(existCase.Id,existCase.Subject);
+            }
             for (String accountId : accIdWithCaseSubjToCreate.keySet()) {
                 List<String> lstSubj = new List<String>();
                 lstSubj.addAll(accIdWithCaseSubjToCreate.get(accountId));
@@ -256,7 +285,11 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                     accountId,
                     CASE_SUBJECT + String.join(lstSubj, ', ')
                 );
-                newCase(accountId, CASE_SUBJECT + String.join(lstSubj, ', '));
+                if(!accIdWithCase.containsKey(accountId)){
+                    newCase(accountId, CASE_SUBJECT + String.join(lstSubj, ', '));
+                }else{
+                    updateCase(accIdWithCase.get(accountId),accountId,caseWithSubject.get(accIdWithCase.get(accountId))+', ' + String.join(lstSubj, ', '));    
+                }
             }
         }
     }
@@ -313,6 +346,79 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
         }
     }
 
+    // ********************************************************************************************
+    // MethodName  : getFilteredContactWorkAddressRecords 
+    // Description : This method will filter address records based on sub clients contacts employee status
+    // Params      : List < NSP_Address__c > List of Address records
+    // Story       : STY-04472
+    // createdDate : 8/3/2023
+    // ********************************************************************************************
+    private List<NSP_Address__c> getFilteredContactWorkAddressRecords(List<NSP_Address__c> lstRecords){
+        Set<Id> setContactID = new Set<Id>();
+        Set<Id> setSCCContactID = new Set<Id>();
+        Map<Id, NSP_Sub_Client_Contact__c> contactIdSubClient = new Map<Id, NSP_Sub_Client_Contact__c>();
+        List<NSP_Address__c> filteredRecords = new List<NSP_Address__c>();
+        Integer addressSize = 0;
+        for(NSP_Address__c address : lstRecords){
+            setContactID.add(address.NSP_Contact__c);
+        }
+        for(NSP_Sub_Client_Contact__c subClientContact : [
+            Select Id, NSP_Employee_Status__c, NSP_Contact__c, NSP_Contact__r.AccountId
+            from NSP_Sub_Client_Contact__c 
+            where NSP_Employee_Status__c =: NSP_ServiceConstants.PRIMED_STATUS and NSP_Contact__c IN : setContactID
+            ])
+        {
+            setSCCContactID.add(subClientContact.NSP_Contact__c);
+        }
+        while (addressSize < lstRecords.size()){
+            NSP_Address__c addressRecord = lstRecords.get(addressSize);
+            if(!setSCCContactID.contains(addressRecord.NSP_Contact__c)){
+                lstRecords.remove(addressSize);
+            } else {
+                addressSize++;
+            }
+        }
+        if(!lstRecords.isEmpty()){
+            filteredRecords = getFilteredContactWorkAddressBasedOnAsset(lstRecords);
+        }
+        return filteredRecords;
+    }
+
+    // ********************************************************************************************
+    // MethodName  : getFilteredContactWorkAddressBasedOnAsset 
+    // Description : This method will filter address records based on WO asset for that particular account on address records
+    // Params      : List < NSP_Address__c > List of Address records
+    // Story       : STY-04472
+    // createdDate : 8/3/2023
+	// ********************************************************************************************
+    private List<NSP_Address__c> getFilteredContactWorkAddressBasedOnAsset(List<NSP_Address__c> lstAddress){
+        Set<Id> setAccountIds = new Set<Id>();
+        Set<Id> setWoAssetAccountIds = new Set<Id>();
+        for (NSP_Address__c oAddress : lstAddress) {
+            setAccountIds.add(oAddress.NSP_Contact__r.AccountId);
+        }
+        for(Asset oAsset : [
+            SELECT Id, AccountId FROM Asset 
+            WHERE AccountId IN: setAccountIds
+            AND RecordType.DeveloperName =: NSP_ServiceConstants.WO_ASSET_RECORDTYPE 
+            AND NSP_AIMS_First_Pay_Date__c = NULL 
+            AND NSP_Account_Status__c= :NSP_ServiceConstants.ASSET_ACTIVE_STATUS
+            ])
+        {
+            setWoAssetAccountIds.add(oAsset.AccountId);
+        }
+        Integer addressSize = 0;
+        while (addressSize < lstAddress.size()){
+            NSP_Address__c workAddress = lstAddress.get(addressSize);
+            if(!setWoAssetAccountIds.contains(workAddress.NSP_Contact__r.AccountId)){
+                lstAddress.remove(addressSize);
+            } else {
+                addressSize++;
+            }
+        }
+        return lstAddress;
+    }
+    
     private List<NSP_Sub_Client_Contact_Address__c> getFilteredContactAddress(List<NSP_Sub_Client_Contact_Address__c> lstAddress){
         Set<Id> setAccountIds = new Set<Id>();
         Set<Id> setWoAssetAccountIds = new Set<Id>();
@@ -338,6 +444,84 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
         }
 
         return lstAddress;
+    }
+
+    // ********************************************************************************************
+    // MethodName  : getContactAddress 
+    // Description : This method will create a map for accWithAddressStates and accWithAddressZipCodes
+    // Params      : List < NSP_Address__c > List of Address records
+    // Story       : STY-04472
+    // createdDate : 8/3/2023
+    // ********************************************************************************************
+    private void getContactAddress(List<NSP_Address__c> lstAddress) {
+        for (NSP_Address__c oAddress : getFilteredContactWorkAddressRecords(lstAddress)) {
+            String state = oAddress.NSP_State__c;
+            String postalCode = oAddress.NSP_Postal_Code_New__c;
+            setAccountIds.add(oAddress.NSP_Contact__r.AccountId);
+            if (stateWithRegulatedArea.containsKey(state)) {
+                if (accIdWithStateAddress.containsKey(oAddress.NSP_Contact__r.AccountId)) {
+                    accWithAddressStates.get(oAddress.NSP_Contact__r.AccountId).add(state);
+                    accIdWithStateAddress.get(oAddress.NSP_Contact__r.AccountId)
+                        .add(
+                            new Address(
+                                oAddress.Id,
+                                oAddress.NSP_Contact__r.AccountId,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                postalCode
+                            )
+                        );
+                } else {
+                    accIdWithStateAddress.put(
+                        oAddress.NSP_Contact__r.AccountId,
+                        new List<Address>{
+                            new Address(
+                                oAddress.Id,
+                                oAddress.NSP_Contact__r.AccountId,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                postalCode
+                            )
+                        }
+                    );
+                    accWithAddressStates.put(oAddress.NSP_Contact__r.AccountId,new Set<String>{ state });
+                }
+            }
+            //Zip matches with the regulated Area
+            if (zipCodesWithRegArea.containsKey(postalCode)) {
+                if (accIdWithZipAddress.containsKey(oAddress.NSP_Contact__r.AccountId)) {
+                    accIdWithZipAddress.get(oAddress.NSP_Contact__r.AccountId)
+                        .add(
+                            new Address(
+                                oAddress.Id,
+                                oAddress.NSP_Contact__r.AccountId,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                postalCode
+                            )
+                        );
+                    accWithAddressZipCodes.get(oAddress.NSP_Contact__r.AccountId).add(postalCode);
+                } else {
+                    accIdWithZipAddress.put(
+                        oAddress.NSP_Contact__r.AccountId,
+                        new List<Address>{
+                            new Address(
+                                oAddress.Id,
+                                oAddress.NSP_Contact__r.AccountId,
+                                oAddress.NSP_Contact__c,
+                                state,
+                                oAddress.NSP_City__c,
+                                postalCode
+                            )
+                        }
+                    );
+                    accWithAddressZipCodes.put(oAddress.NSP_Contact__r.AccountId,new Set<String>{ postalCode });
+                }
+            }
+        }
     }
 
     private void getSubClientContactAddress(List<NSP_Sub_Client_Contact_Address__c> lstSubClientContactAddress){
@@ -447,17 +631,20 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
         newCase.NSP_Category__c = NSP_ServiceConstants.INFRASTRUCTURE;
         newCase.NSP_SubCategory__c = NSP_ServiceConstants.SUBCATEGORY_PAID_SICK_LEAVE;
         newCase.Status = NSP_SalesConstants.OPEN;
+        newCase.Regulated_Batch_Date__c=system.today();
         if(accountWithTeamMemberId?.get(accountId)!=null){
             roleMap.putAll(accountWithTeamMemberId?.get(accountId));
         }
-        if(roleMap?.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)){
-            newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
-        }else if(roleMap?.containsKey(NSP_SalesConstants.HRSpecialist)){
-            newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.HRSpecialist);
-        }else{
-            newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.MANAGER_HRSERVICES);
+        if ( newCase.OwnerId == null ) {
+            if ( ( roleMap?.containsKey(NSP_SalesConstants.HRSpecialist) || roleMap?.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) ) && accountWithRoleMap.containsKey(accountId) ) {
+                newCase.OwnerId = roleMap?.get(accountWithRoleMap.get(accountId));
+            }else if ( roleMap?.containsKey(NSP_SalesConstants.HRSpecialist) ) {
+                newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.HRSpecialist);
+            }else if ( roleMap?.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) ) {
+                newCase.OwnerId = roleMap?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
+            }
         }
-        newCase.OwnerId = newCase.OwnerId!=null ? newCase.OwnerId : UserInfo.getUserId();
+        newCase.OwnerId = newCase.OwnerId!=null ? newCase.OwnerId : lstHRImplementationqueue[0].Id;
         newCase.Subject = caseSubject?.replace('/,', '/');
         String caseString =
             newCase.RecordTypeId + '_' + newCase.AccountId + '_' + newCase.NSP_Category__c +
@@ -466,15 +653,40 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
             setCases.add(caseString);
             lstCases.add(newCase);
         }
+    }
 
+    private void updateCase(String caseId, String accId, String caseSubject) {
+        Case updateCaseRecord = new Case();
+        updateCaseRecord.id =caseId;
+        updateCaseRecord.subject =caseSubject;
+        updateCaseRecord.AccountId = accId;
+        lstCasesToUpdate.add(updateCaseRecord);
     }
 
     /**
      * @description get Account Team Records based on the AccountId and Role
      */
     private void getAccountTeams() {
+        List<String> QUEUE_FIELDS = new List<String>{'Id','DeveloperNAME'};
+        String queryQueue = new NSP_QueryBuilder('Group', QUEUE_FIELDS)
+            .addFilter('Type', NSP_ServiceConstants.GroupType)
+            .addFilter('DeveloperNAME', NSP_ServiceConstants.HR_CLIENT_IMPLEMENTATION_QUEUE)
+            .addLimit(1).build();
+        lstHRImplementationqueue = Database.query(queryQueue);
         for (NSP_Account_Team__c accTeamMember : selector.getAccountTeamRecords()) {
-            accountWithTeamMemberId.put(accTeamMember.NSP_Account__c, new Map<String,Id>{accTeamMember.NSP_Role__c => accTeamMember.NSP_User__c});
+            if(accTeamMember.NSP_Account__r.NSP_Service_Segment__c == NSP_ServiceConstants.MIDDLEMARKET || accTeamMember.NSP_Account__r.NSP_Service_Segment__c == NSP_ServiceConstants.MMEAssetSegment){
+                if ( !accountWithTeamMemberId.containsKey(accTeamMember.NSP_Account__c) ) {
+                    accountWithTeamMemberId.put(accTeamMember.NSP_Account__c, new Map<String,Id>());
+                }
+                accountWithTeamMemberId.get(accTeamMember.NSP_Account__c).put(accTeamMember.NSP_Role__c, accTeamMember.NSP_User__c);
+            } 
+            if ( accTeamMember.NSP_Primary__c && !accountWithRoleMap.containsKey(accTeamMember.NSP_Account__c) ) {
+                if ( accTeamMember.NSP_Role__c == NSP_SalesConstants.HRSpecialist ) {
+                    accountWithRoleMap.put(accTeamMember.NSP_Account__c, accTeamMember.NSP_Role__c);
+                } else if ( accTeamMember.NSP_Role__c == NSP_ServiceConstants.BUS_TEAM_HRSP_CL ) {
+                    accountWithRoleMap.put(accTeamMember.NSP_Account__c, accTeamMember.NSP_Role__c);
+                }
+            }
         }
     }
 
@@ -486,16 +698,13 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
          */
         public List<NSP_Account_Team__c> getAccountTeamRecords() {
             String accTeamQuery = new NSP_QueryBuilder(
-                        'NSP_Account_Team__c',
-                        new List<String> { 'Id', 'NSP_Role__c', 'NSP_Account__c', 'NSP_Email__c', 'NSP_User__c' }
-                    )
-                    .setSecurityEnforce(false)
-                    .build();
-                    accTeamQuery += ' WHERE NSP_Account__c IN :setAccountIds AND NSP_User__c != NULL '+
-                    ' AND (NSP_Role__c = \''+NSP_ServiceConstants.MANAGER_HRSERVICES+'\''+
-                    ' OR NSP_Role__c = \''+NSP_ServiceConstants.BUS_TEAM_HRSP_CL+'\''+
-                    ' OR (NSP_Role__c = \''+NSP_SalesConstants.HRSpecialist+'\' AND NSP_Primary__c = true) )'+
-                    ' ORDER BY NSP_Role__c DESC';
+                    'NSP_Account_Team__c',
+                    new List<String> { 'Id', 'NSP_Role__c', 'NSP_Account__c', 'NSP_Account__r.NSP_Service_Segment__c', 'NSP_Email__c', 'NSP_User__c', 'NSP_Primary__c' }
+                )
+                .setSecurityEnforce(false)
+                .build();
+            accTeamQuery += ' WHERE NSP_Account__c IN :setAccountIds AND NSP_User__c != NULL '+
+                ' ORDER BY NSP_Primary__c ASC';
             return Database.query(accTeamQuery);
         }
 
@@ -531,10 +740,25 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                         .build();
             return Database.Query(query);
         }
+        public  List<Case> getExistingCase(Set<String> accid ) {
+            return [ SELECT Subject, AccountId, Id, Regulated_Batch_Date__c FROM Case Where Regulated_Batch_Date__c = Today ];
+        }
 
     }
 
-    public void finish(Database.BatchableContext bc) { }
+    public void finish(Database.BatchableContext bc) {
+        counter++; 
+        if(counter <= 1){
+            Map<String,Object> data = new Map<String,Object>{
+                'counter' => counter,
+                'setRegulatedStates'=> setRegulatedStates,
+                'stateWithRegulatedArea'=> stateWithRegulatedArea,
+                'zipCodesWithRegArea'=> zipCodesWithRegArea
+            };
+            NSP_AccountRegulatedAreaBatch batchObject = new NSP_AccountRegulatedAreaBatch(data);
+            Database.executeBatch(batchObject, 2000);
+        }
+    }
 
     class Address {
         String id;
