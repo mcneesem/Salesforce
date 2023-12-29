@@ -295,7 +295,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Credit_Specialist__c</fieldItem>
                 <identifier>RecordNSP_Credit_Specialist_cField</identifier>
@@ -349,7 +349,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Credit_Specialist_Phone__c</fieldItem>
                 <identifier>RecordNSP_Credit_Specialist_Phone__cField</identifier>
