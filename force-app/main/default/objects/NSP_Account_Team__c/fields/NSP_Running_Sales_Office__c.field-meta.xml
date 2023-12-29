@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <formula>TEXT($User.NSP_Sales_Office__c) = TEXT( NSP_User__r.NSP_Sales_Office__c)</formula>
     <label>Running Sales Office</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
