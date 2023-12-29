@@ -32,6 +32,10 @@
         <name>EditBillingInfo</name>
     </userPermissions>
     <userPermissions>
+        <enabled>true</enabled>
+        <name>ForceTwoFactor</name>
+    </userPermissions>
+    <userPermissions>
         <enabled>false</enabled>
         <name>InboundMigrationToolsUser</name>
     </userPermissions>
@@ -129,6 +133,14 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
+        <name>QueryAllFiles</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>ResetPasswords</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ViewAllData</name>
     </userPermissions>
 </Profile>
