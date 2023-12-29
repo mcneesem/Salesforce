@@ -843,7 +843,7 @@
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_SubscriptionStartDate__c</valueName>
         </valueSettings>
-                <valueSettings>
+        <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
             <valueName>Target</valueName>
         </valueSettings>
@@ -859,7 +859,7 @@
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
             <valueName>Explanation</valueName>
         </valueSettings>
-<valueSettings>
+        <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_TCFullUserLicenseQty__c</valueName>
         </valueSettings>
