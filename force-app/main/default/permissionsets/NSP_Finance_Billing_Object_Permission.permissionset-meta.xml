@@ -24,7 +24,7 @@
         <apexClass>NSP_Quote_Service</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-        <classAccesses>
+    <classAccesses>
         <apexClass>QuoteExtController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4269,7 +4269,7 @@
         <field>SBQQ__QuoteLine__c.NSP_Action_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.NSP_OrderProductStartDate__c</field>
         <readable>true</readable>
@@ -4614,7 +4614,7 @@
         <field>SBQQ__QuoteLine__c.NSP_On_Demand_List_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.NSP_Order_Activation_Trigger_Amend__c</field>
         <readable>true</readable>
