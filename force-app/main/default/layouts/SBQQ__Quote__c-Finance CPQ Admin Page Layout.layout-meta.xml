@@ -165,10 +165,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Termination__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Terminating_WO_WS__c</field>
             </layoutItems>
             <layoutItems>
