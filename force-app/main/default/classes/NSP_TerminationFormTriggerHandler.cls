@@ -2,6 +2,7 @@
 * Represents the Termination Form trigger handler.
 */
 public class NSP_TerminationFormTriggerHandler implements NSP_ITriggerHandler {
+    // test w/ NSP_TerminationFormTriggerHelperTest (90%)
 	//Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
     /**
@@ -50,6 +51,7 @@ public class NSP_TerminationFormTriggerHandler implements NSP_ITriggerHandler {
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         NSP_TerminationFormTriggerHelper oTerminationFormTriggerHelper =new NSP_TerminationFormTriggerHelper();
         oTerminationFormTriggerHelper.updateAccountOnTerm(newMap.values(),(Map<Id,NSP_Termination_Form__c>)oldMap);
+        oTerminationFormTriggerHelper.beforeTerminationFormUpdate((Map<Id,NSP_Termination_Form__c>)newMap, (Map<Id,NSP_Termination_Form__c>)oldMap);
     }
     
     

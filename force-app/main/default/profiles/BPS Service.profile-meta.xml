@@ -30938,12 +30938,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner_Email__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner_Email__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner_Phone__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner_Phone__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -36681,11 +36681,6 @@
         <field>pse__Proj__c.NSP_BPS_Project_Template__c</field>
         <readable>true</readable>
     </fieldPermissions>	
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Proj__c.NSP_Queued_for_Delete__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Access_List__c</field>
