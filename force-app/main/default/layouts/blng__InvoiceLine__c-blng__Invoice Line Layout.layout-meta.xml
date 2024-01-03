@@ -35,7 +35,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__Notes__c</field>
             </layoutItems>
-        </layoutColumns>
+                    </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -74,6 +74,14 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Project_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Amendment_Unit_Price__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Amendment_Amount_Due__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -91,6 +99,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Reason_For_Zero_Invoice_Line__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Net_Amendment_Unit_Price__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Net_Amendment_Amount_Due__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -335,7 +351,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__AllocatedRevenueAmount__c</field>
             </layoutItems>
-        </layoutColumns>
+                    </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -345,7 +361,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__RevenueLiabilityAmount__c</field>
             </layoutItems>
-        </layoutColumns>
+                    </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -447,7 +463,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__InvoiceRun__c</field>
             </layoutItems>
-        </layoutColumns>
+                    </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
