@@ -37854,9 +37854,6 @@ m   <fieldPermissions>
         <layout>ReportAnomalyEventStore-Report Anomaly Event Store Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__QuoteLine__c-Finance CPQ Admin Quote Line Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -37902,6 +37899,9 @@ m   <fieldPermissions>
     <layoutAssignments>
         <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_WX_WA_Locked</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SBQQ__QuoteLine__c-Finance CPQ Admin Quote Line Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SBQQ__Subscription__c-Billing Subscription Layout</layout>
