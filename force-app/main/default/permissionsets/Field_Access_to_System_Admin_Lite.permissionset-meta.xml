@@ -75,6 +75,11 @@
         <field>NSP_Termination_Form__c.NSP_What_competitor__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Field Access to System Admin Lite</label>
 </PermissionSet>
