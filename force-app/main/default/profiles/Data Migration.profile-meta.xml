@@ -35070,11 +35070,6 @@
 		<field>blng__Payment__c.Payment_ID_18__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ResourceAbsence.Event_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
