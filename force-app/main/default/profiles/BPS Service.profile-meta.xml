@@ -36683,6 +36683,11 @@
     </fieldPermissions>	
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.NSP_Queued_for_Delete__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.Access_List__c</field>
         <readable>false</readable>
     </fieldPermissions>
