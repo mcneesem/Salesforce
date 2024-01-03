@@ -4,7 +4,7 @@
 *    @date: 06/07/2021
 *    @author: Tejas
 */
-
+// test w/ NSP_ContactTriggerHelperTest (78%)
 public class NSP_ContactTriggerHelper {
     public static final String INSPERITYROLE = 'Insperity';
     public static final String CUSTOMERROLE = 'Customer';
@@ -140,6 +140,15 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
         createTaskforClientReference(clientRefernceContactList);
       }
     }
+    if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        System.enqueueJob(
+            new QueueableTermFormJunctionObjects(
+                newList,
+                null,
+                NSP_ServiceConstants.INSERT_TRIGGER
+            )
+        );
+    } 
 }
     
     
@@ -300,9 +309,22 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
             }
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
-        } 
+        }
+        List<Contact> contactList = new List<Contact>();
+        contactList.addAll(newMap.values());
+        for(Contact addContact: newMap.values()){
+            contactList.add(addContact); 
+        }
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    contactList,
+                    oldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
+        }
     }
-    
     /**
 * Iterates throught the list of new Contact and passes the required attributes to other methods.
 * @param newList List of New Contact.

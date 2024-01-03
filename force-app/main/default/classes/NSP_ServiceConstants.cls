@@ -1002,7 +1002,9 @@ public static final String PHONE_CHANNEL = 'Phone';
 public static final String GARNISH_API_NAME='Do_any_EEs_have_garnishments__c';  
 public static final String LEVIES_API_NAME='Do_any_EEs_have_tax_levies__c'; 
 
-public static final String ONBOARDING_MEETING_REQUEST= 'Onboarding_Meeting_Request';
-public final static string ORIENTATION_MEETING_REQUEST = 'Orientation_Meeting_Request';
-public final static string HR_CLIENT_IMPLEMENTATION_QUEUE = 'NSP_HR_Client_Implementation';
+  public static final String ONBOARDING_MEETING_REQUEST= 'Onboarding_Meeting_Request';
+  public final static string ORIENTATION_MEETING_REQUEST = 'Orientation_Meeting_Request';
+  public final static string HR_CLIENT_IMPLEMENTATION_QUEUE = 'NSP_HR_Client_Implementation';
+  public static final string UPDATE_TRIGGER = 'update';
+  public static final string INSERT_TRIGGER = 'insert';
 }

@@ -2,6 +2,8 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
+    // test w/ NSP_TerminationFormTriggerHelperTest (92%)
+
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
     private static final string TERM_TEAM_APPROVED = 'Term Team Approved';
@@ -156,17 +158,25 @@ public class NSP_TerminationFormTriggerHelper {
     }
 
 
-    /**
-    * Iterates throught the list of new Asset and passes the required attributes to other methods.
-    * @param newList List of New Termination Forms.
-    * @param newList Map of New Termination Forms.
-    * @return void             
-    *                
-    */
+    //
+    // Iterates throught the list of new Asset and passes the required attributes to other methods.
+    // @param newList List of New Termination Forms.
+    // @param newList Map of New Termination Forms.
+    // @return void
+    //
     public void afterInsertFilter(List<NSP_Termination_Form__c> lTerminationForms , Map<Id,NSP_Termination_Form__c> mTerminationForms){
-        
+        if(lTerminationForms != null){ 
+            if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+                System.enqueueJob(
+                    new QueueableTermFormJunctionObjects(
+                        lTerminationForms,
+                        null,
+                        NSP_ServiceConstants.INSERT_TRIGGER
+                    )
+                );
+            }
+        }
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
-      
         for(NSP_Termination_Form__c oTerminationForm : lTerminationForms){
             mTFToUsers.put(oTerminationForm.Id,new Set<Id>());
             checkLookupChange(mTFToUsers,oTerminationForm.Id,oTerminationForm.OwnerId,oTerminationForm.NSP_Payroll_Specialist__c);
@@ -176,7 +186,6 @@ public class NSP_TerminationFormTriggerHelper {
                 mTFToUsers.remove(oTerminationForm.Id);
             }
         }
-
         if(mTFToUsers.keySet().size() > 0){
             shareTerminationFormsWithUsers(mTFToUsers,'Edit');
         }
@@ -202,6 +211,18 @@ public class NSP_TerminationFormTriggerHelper {
         Set<ID> terminationFormBellNotificationSet = new Set<ID>();
         String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
         String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
+        
+        if(!terminationFormList.isEmpty()){ 
+            if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+                System.enqueueJob(
+                    new QueueableTermFormJunctionObjects(
+                        terminationFormList,
+                        oldMap,
+                        NSP_ServiceConstants.UPDATE_TRIGGER
+                    )
+                );
+            }
+        }
         
         for(NSP_Termination_Form__c terminationForm : terminationFormList){
             if(terminationForm.NSP_Project_Task__c != null 

@@ -39,6 +39,8 @@ public class NSP_AddressTriggerHandler implements NSP_ITriggerHandler{
     public void afterInsert(List < sObject > newList, Map < Id, sObject > newMap) {
         //Added as a part of <STY-02841>
      //   NSP_AddressTriggerHelper.deleteAddressRelatedRecords((List<NSP_Address__c>)newList);
+     NSP_AddressTriggerHelper oAddressTriggerHelper =new NSP_AddressTriggerHelper();
+        oAddressTriggerHelper.afterInsertDirector((List<NSP_Address__c>)newList,(Map<Id,NSP_Address__c>)newMap);
     }
     
     

@@ -10,6 +10,7 @@ Modification Log     :
 * Developer                   Date                   Description                                    
 * -----------------------------------------------------------------------------------------------
 */
+// test w/ NSP_AddressTriggerHelperTest (85%)
 public class NSP_AddressTriggerHelper {
     
     public static void updateSCCAddressWithStreet(List<NSP_Address__c> newAddress, Map<Id, NSP_Address__c> oldMap) {
@@ -40,6 +41,27 @@ public class NSP_AddressTriggerHelper {
                 update sccAddressToUpdate;
             }
             
+        }
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    newAddress,
+                    oldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
+        }
+    }
+    
+    public void afterInsertDirector(List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap){
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    newList,
+                    null,
+                    NSP_ServiceConstants.INSERT_TRIGGER
+                )
+            );
         }
     }
     
