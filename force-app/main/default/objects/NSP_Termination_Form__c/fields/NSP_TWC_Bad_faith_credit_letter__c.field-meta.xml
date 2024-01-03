@@ -4,7 +4,7 @@
     <description>Does TWC Bad faith credit letter need to be used?</description>
     <externalId>false</externalId>
     <inlineHelpText>Does TWC Bad faith credit letter need to be issued?</inlineHelpText>
-    <label>TWC Bad faith credit letter</label>
+    <label>TWC Bad faith credit letter?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
