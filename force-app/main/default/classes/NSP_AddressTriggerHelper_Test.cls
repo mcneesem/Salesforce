@@ -11,6 +11,11 @@ public class NSP_AddressTriggerHelper_Test {
         acc.Name = 'Test Acc';
         insert acc;
         
+        Account acc1 = new Account();
+        acc1.Name = 'Test Acc1';
+        insert acc1;
+       
+        
         // Create Contact record
         Contact con = new Contact();
         con.AccountId = acc.Id ;
@@ -72,7 +77,6 @@ public class NSP_AddressTriggerHelper_Test {
         subClientConAdd.NSP_Sub_Client_Contact__c = subClientCon.Id;
         insert subClientConAdd ;
         
-        
     }
     
     public static testmethod void testDeleteAddressRelatedRecords() {
@@ -103,4 +107,18 @@ public class NSP_AddressTriggerHelper_Test {
         }
         
     }
+    
+   @isTest
+   public static void updateContact() {
+      Test.startTest();
+       Account acc = new Account();
+       acc.Name = 'Test Acc2';
+       insert acc;	
+       NSP_Address__c addr = [SELECT Id, NSP_Related_Site__c FROM NSP_Address__c LIMIT 1];
+       addr.NSP_Related_Site__c = acc.Id;
+       update addr;
+      Test.stopTest();
+      System.assertEquals(1,[SELECT count() FROM NSP_Address__c WHERE NSP_Related_Site__c =: acc.Id]);
+    }
+    
 }

@@ -1490,7 +1490,32 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
-	<fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Address__c.Field_For_Search__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Mail_Address__c.USAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Contact__c.Work_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Contact__c.Work_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Contact__c.Job_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Assign_permission_set_to_Community__mdt.NSP_Permission_Set_Name__c</field>
         <readable>true</readable>
@@ -24441,7 +24466,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35065,6 +35090,33 @@
 		<field>blng__Payment__c.Payment_ID_18__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>US_Contact__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>NSP_Termination_Form__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>US_Mail_Address__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
