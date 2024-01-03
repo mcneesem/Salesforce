@@ -4,40 +4,41 @@
 *    @date: 12/19/2023
 *    @author: Roberto
 */
-// test w/ NSP_TerminationFormTriggerHelperTest (97%)
-public class QueueableTermFormJunctionObjects implements Queueable {  
-	private List<SObject> newTerm;
+public class QueueableTermFormJunctionObjects implements Queueable {
+    // test w/ NSP_TerminationFormTriggerHelperTest (97%)
+
+    private List<SObject> newTerm;
     private Map<Id,SObject> oldTerm;
     private String triggerEventType;
-    
-    public QueueableTermFormJunctionObjects(List<SObject> newList, Map<Id, SObject> oldMap, String triggerEventType) {  
-        this.newTerm = newList.deepClone(true,false,false);  
+
+    public QueueableTermFormJunctionObjects(List<SObject> newList, Map<Id, SObject> oldMap, String triggerEventType) {
+        this.newTerm = newList.deepClone(true,false,false);
         this.oldTerm = oldMap; 
         this.triggerEventType = triggerEventType;
     }
-        
+
     public void execute(QueueableContext context) {
-        
          if (newTerm != null && !newTerm.isEmpty()) {
-
             // Process the first record
-
             SObject firstRecord = newTerm.remove(0);
-			SObject oldEvent = oldTerm != null ? oldTerm.get(firstRecord.Id):null;
-             System.debug('oldEvent: '+oldEvent);
-             System.debug('firstRecord: '+firstRecord);
+            SObject oldEvent = oldTerm != null ? oldTerm.get(firstRecord.Id):null;
             processFirstRecord(firstRecord,oldEvent,triggerEventType);			
             // Check if there are remaining records to be re-enqueued
-
             if (!newTerm.isEmpty()) {
-
                 // Re-enqueue the remaining records
                 if(!Test.isRunningTest()){
-                	System.enqueueJob(new QueueableTermFormJunctionObjects(newTerm,oldTerm,triggerEventType));    
+                    System.enqueueJob(
+                        new QueueableTermFormJunctionObjects(
+                            newTerm ,
+                            oldTerm ,
+                            triggerEventType
+                        )
+                    );
                 }
             }
-        }        
+        }
     }
+
     private void processFirstRecord(SObject lTerminationForms,SObject oldTerminationForms,String triggerEventType ) {
     
 		Map<Id,Id> oldAccountId = new Map<Id,Id>();
