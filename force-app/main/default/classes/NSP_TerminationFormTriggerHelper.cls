@@ -2,28 +2,38 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
+    // test w/ NSP_TerminationFormTriggerHelperTest (92%)
+
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
     private static final string TERM_TEAM_APPROVED = 'Term Team Approved';
     public static final String NSP_Credit_Specialist_Form = 'NSP_Credit_Specialist_Form';
     public static final String Termination_Form_Approved = 'Termination_Form_Approved';
-    /* Description : This method will run before inserting Termination Form
-       Date        : 13/10/2021 */
-    public void beforeTerminationFormInsert(List<NSP_Termination_Form__c> terminationFormList){
+
+    // Description : This method will run before inserting Termination Form
+    // Date        : 13/10/2021
+    public void beforeTerminationFormInsert(List<NSP_Termination_Form__c> terminationFormList) {
         set<Id> setOfProjectTaskId = new set<Id>();
+        set<Id> setOfClientOwnerId = new set<Id>();
         updateAccountOnTerm(terminationFormList,null);
         List<NSP_Termination_Form__c> lTerminationForms = new List<NSP_Termination_Form__c>();
-
+        List<NSP_Termination_Form__c> clientTerminationForms = new List<NSP_Termination_Form__c>();
         for(NSP_Termination_Form__c terminationForm : terminationFormList){
             if(terminationForm.NSP_Project_Task__c != null){
                 setOfProjectTaskId.add(terminationForm.NSP_Project_Task__c);
                 lTerminationForms.add(terminationForm);
             }
+            if(terminationForm.NSP_Client_Owner__c != null){
+                setOfClientOwnerId.add(terminationForm.NSP_Client_Owner__c);
+                clientTerminationForms.add(terminationForm);
+            }
         }
-
         if(!setOfProjectTaskId.isEmpty()){
             updateUserLookups(setOfProjectTaskId, terminationFormList);
             populateSubClientandAssetValues(setOfProjectTaskId, lTerminationForms);
+        }
+        if(!setOfClientOwnerId.isEmpty()){
+            populateClientOwnerEmailAndPhone(setOfClientOwnerId, clientTerminationForms);
         }
     }
 
@@ -193,6 +203,26 @@ public class NSP_TerminationFormTriggerHelper {
             insert lTerminationFormShares;
         }
     }
+    
+    public void beforeTerminationFormUpdate( Map<Id,NSP_Termination_Form__c> newMap , Map<Id,NSP_Termination_Form__c> oldMap ) {
+        set<Id> setOfClientOwnerId = new set<Id>();
+        List<NSP_Termination_Form__c> clientTerminationForms = new List<NSP_Termination_Form__c>();
+        if(newMap != null){
+            for(NSP_Termination_Form__c terminationForm : newMap.values()){
+                if ( terminationForm.NSP_Client_Owner__c != null
+                    && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c
+                    )
+                {
+                    setOfClientOwnerId.add(terminationForm.NSP_Client_Owner__c);
+                    clientTerminationForms.add(terminationForm);
+                }
+            }
+        }
+        if(!setOfClientOwnerId.isEmpty()){
+            populateClientOwnerEmailAndPhone(setOfClientOwnerId, clientTerminationForms);
+        }
+    }
+    
     public void afterUpdateTerminationForm(List<NSP_Termination_Form__c> terminationFormList, map<Id, NSP_Termination_Form__c> oldMap){
         set<Id> setOfProjectTaskId = new set<Id>();
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
@@ -494,12 +524,30 @@ public class NSP_TerminationFormTriggerHelper {
             }
 
         } 
-			for(NSP_Termination_Form__c newTerm : newList){
-                if(termAccountIdMap.keyset().contains(newTerm.id)){
-                    newTerm.NSP_Account__c = accountIdMap.get(termAccountIdMap.get(newTerm.id));
-              }
-			        
-			}
+        for(NSP_Termination_Form__c newTerm : newList){
+            if(termAccountIdMap.keyset().contains(newTerm.id)){
+                newTerm.NSP_Account__c = accountIdMap.get(termAccountIdMap.get(newTerm.id));
+            }
+        }
+    }
+    
+    /**
+    * Populates email and phone from client Owner lookup when user selects client owner
+    * @param setOfClientOwnerId set of Client Owner(Contact) Ids
+    * @param clientTerminationForms termination form list.
+    * @return void
+    *
+    */
+    private void populateClientOwnerEmailAndPhone( Set<Id> setOfClientOwnerId , List<NSP_Termination_Form__c> clientTerminationForms ) {
+        Map<Id,Contact> contactMap = new Map<Id,Contact>([
+            SELECT Id , NSP_Work_email__c , NSP_Work_Phone__c
+            FROM Contact
+            WHERE Id IN: setOfClientOwnerId
+        ]);
+        for(NSP_Termination_Form__c termForm : clientTerminationForms){
+            termForm.Client_Owner_Email__c = contactMap.get(termForm.NSP_Client_Owner__c).NSP_Work_email__c;
+            termForm.Client_Owner_Phone__c = contactMap.get(termForm.NSP_Client_Owner__c).NSP_Work_Phone__c;
+        }
+    }
 
-	}
 }

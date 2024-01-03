@@ -31,12 +31,12 @@
                 <field>NSP_Client_Owner__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Client_Owner_Email__c</field>
+                <behavior>Edit</behavior>
+                <field>Client_Owner_Email__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Client_Owner_Phone__c</field>
+                <behavior>Edit</behavior>
+                <field>Client_Owner_Phone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
