@@ -3662,6 +3662,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__InvoiceLine__c.Amendment_Amount_Due__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Amendment_Unit_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__InvoiceLine__c.NSP_TemplateUnitPrice__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3703,27 +3713,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__InvoiceLine__c.NSP_AIMS_Item_Code_5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>blng__InvoiceLine__c.Amendment_Amount_Due__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>blng__InvoiceLine__c.Amendment_Unit_Price__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	</fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>blng__InvoiceLine__c.Net_Amendment_Amount_Due__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>blng__InvoiceLine__c.Net_Amendment_Unit_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3854,6 +3843,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__InvoiceLine__c.NSP_Tax_Debit_GL_Account_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Net_Amendment_Amount_Due__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Net_Amendment_Unit_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
