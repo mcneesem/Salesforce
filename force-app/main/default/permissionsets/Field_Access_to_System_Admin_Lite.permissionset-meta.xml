@@ -22,7 +22,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Address__c.Field_For_Search__</field>
+        <field>NSP_Address__c.Field_For_Search__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
