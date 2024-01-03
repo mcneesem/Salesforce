@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test coverage from NSP_PrepSandboxTest: 79%
+    // test w/ NSP_PrepSandboxTest (79%)
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
