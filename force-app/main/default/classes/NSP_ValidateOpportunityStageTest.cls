@@ -107,7 +107,7 @@ public class NSP_ValidateOpportunityStageTest {
         objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
         objproduct.blng__TaxRule__c = objTaxRule.Id;
         objproduct.SBQQ__ChargeType__c = 'Recurring';
-		objproduct.blng__BillingRule__c = objBillingRule.Id;
+        objproduct.blng__BillingRule__c = objBillingRule.Id;
         objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
         objproduct.blng__TaxRule__c = objTaxRule.Id;
         objproduct.SBQQ__BillingType__c = 'Arrears';
@@ -125,7 +125,7 @@ public class NSP_ValidateOpportunityStageTest {
         //objQuote.NSP_Billing_Address__c   = [SELECT id from NSP_Address__c where NSP_Address_Type__c = 'Bill To' AND NSP_Related_Site__c =: acnt.Id ].Id;
         update objQuote;
         
-       
+        
         //insert OpportunityLineItem        
         OpportunityLineItem OLI = new OpportunityLineItem();
         OLI.OpportunityId = objOpprtunity.Id; //Opportunity Id has to be assigned
@@ -148,7 +148,7 @@ public class NSP_ValidateOpportunityStageTest {
             LanguageLocaleKey = 'en_US',
             NSP_Sales_Office_Membership__c = '301',
             LocaleSidKey = 'en_US'
-            );
+        );
         insert userRecord1; 
         
         Opportunity opp3=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
@@ -190,7 +190,7 @@ public class NSP_ValidateOpportunityStageTest {
         gp2.Name='0601 Denver 1';
         // Inserting groups
         List<Group> groups= new List<Group>{gp1, gp2};
-        Insert groups;
+            Insert groups;
         
         
     }
@@ -207,7 +207,7 @@ public class NSP_ValidateOpportunityStageTest {
         oppty.StageName='Analysis';        
         oppty.Type = 'New Product';
         
-       
+        
         try{
             update oppty; 
         }catch(Exception ex){
@@ -239,7 +239,7 @@ public class NSP_ValidateOpportunityStageTest {
             update oppty; 
         }catch(Exception ex){
             ex.getStackTraceString();
-    }
+        }
         test.stopTest();
         System.assertEquals('Closed Won', oppty.StageName);
         
@@ -271,7 +271,7 @@ public class NSP_ValidateOpportunityStageTest {
         List<Opportunity> oppList = [SELECT Id,OwnerId,NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
         //NSP_ValidateOpportunityStage.getSalesOfficeGroup(oppList[0].OwnerId,oppList[0].NSP_Sales_Office__c);
         Opportunity oppty = oppList[0];
-       
+        
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'WO';
             oppty.StageName='Proposal';
@@ -287,7 +287,7 @@ public class NSP_ValidateOpportunityStageTest {
         System.assertEquals('Proposal', oppty.StageName);
     }
     
-     @isTest
+    @isTest
     public static void checkQuoteCriteria(){
         test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
@@ -330,7 +330,7 @@ public class NSP_ValidateOpportunityStageTest {
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
-          
+            
         }
         test.stopTest();
         System.assertEquals('Proposal', oppty.StageName);
@@ -351,7 +351,7 @@ public class NSP_ValidateOpportunityStageTest {
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
-          
+            
         }
         test.stopTest();
         System.assertEquals('Closing', oppty.StageName);
@@ -381,7 +381,7 @@ public class NSP_ValidateOpportunityStageTest {
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
                                                        NSP_ProductType__c,NSP_ProductBundle__c,//if its required on Asset then we create a formula for it
                                                        NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c from OpportunityLineItem limit 1];
-       
+        
         
         List<String> fieldsToQueryList = new List<String>();
         fieldsToQueryList.add('Id');
@@ -389,7 +389,7 @@ public class NSP_ValidateOpportunityStageTest {
         filterMap.put('Name','testAsset, test Asset1');
         New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;
         try{
-        NSP_SrcToTargetObjectDataMover.constructSourceQuery(fieldsToQueryList,filterMap);
+            NSP_SrcToTargetObjectDataMover.constructSourceQuery(fieldsToQueryList,filterMap);
         }catch(Exception ex){
             ex.getStackTraceString();
         }
@@ -401,7 +401,7 @@ public class NSP_ValidateOpportunityStageTest {
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' Limit 1];
         Opportunity oppty = oppList[0];
-       
+        
         if(oppty!=null){
             oppty.StageName='Closed Lost';
             //oppty.Loss_Reason__c='';
@@ -410,34 +410,34 @@ public class NSP_ValidateOpportunityStageTest {
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
-          
+            
         }
         test.stopTest();
-}
+    }
     @isTest
     public static void evaluateClosedLostStageCriteria2_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
-         Opportunity oppty = oppList[0];
-       
+        Opportunity oppty = oppList[0];
+        
         if(oppty!=null){
             try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
+                oppty.StageName='Closed Lost';
+                //oppty.Loss_Reason__c='';
                 Update oppty;
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
-          
+            
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_BPC_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
-       
+        
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@insperity.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Business Performance Consultant'][0].Id;
@@ -447,20 +447,20 @@ public class NSP_ValidateOpportunityStageTest {
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
         update userRecord2;
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_RSC_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -474,20 +474,20 @@ public class NSP_ValidateOpportunityStageTest {
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Retirement Sales Manager'][0].Id;
         update userRecord2;
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_IC_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -501,20 +501,20 @@ public class NSP_ValidateOpportunityStageTest {
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Insurance Sales Manager'][0].Id;
         update userRecord2;
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_RS_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -529,20 +529,20 @@ public class NSP_ValidateOpportunityStageTest {
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'Recruiting Manager'][0].Id;
         update userRecord2;
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_TS_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -557,20 +557,20 @@ public class NSP_ValidateOpportunityStageTest {
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'BPS Sales Manager'][0].Id;
         update userRecord2;
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_AS_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -579,22 +579,22 @@ public class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'MidMarket Administrator'][0].Id;
         update userRecord2;
-      
+        
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_PublicGroup(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -608,24 +608,24 @@ public class NSP_ValidateOpportunityStageTest {
         Group gp1 = GroupList[0];
         GroupMember bpagm = new GroupMember (UserOrGroupId = userRecord2.Id, GroupId = gp1.Id);
         List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
-        // Inserting Group Members
-        Insert groupMemberList;
-       
+            // Inserting Group Members
+            Insert groupMemberList;
+        
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
-@isTest
+    }
+    @isTest
     public static void evaluateClosedLost_PublicGroup2(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
@@ -644,20 +644,46 @@ public class NSP_ValidateOpportunityStageTest {
         Group gp1 = GroupList[0];
         GroupMember bpagm = new GroupMember (UserOrGroupId = userRecord2.Id, GroupId = gp1.Id);
         List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
-        // Inserting Group Members
-        Insert groupMemberList;
+            // Inserting Group Members
+            Insert groupMemberList;
         System.runAs(userRecord2){
-        if(oppty!=null){
-            try{            
-            oppty.StageName='Closed Lost';
-            //oppty.Loss_Reason__c='';
-                Update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
+            if(oppty!=null){
+                try{            
+                    oppty.StageName='Closed Lost';
+                    //oppty.Loss_Reason__c='';
+                    Update oppty;
+                }catch(Exception ex){
+                    ex.getStackTraceString();
+                }
+                
             }
-          
-        }
         }
         test.stopTest();
-}
+    }
+    
+    @isTest
+    public static void isStageNameNull(){
+		
+        test.startTest();
+        
+        boolean inserted = false;
+        Opportunity opp = new Opportunity(Name = 'Test Opportunity');
+        
+        List<Opportunity> oppList = new  List<Opportunity>();
+        oppList.add(opp);
+        
+        try{
+        	NSP_ValidateOpportunityStage.validateOpportunityStage(oppList);
+            insert oppList;   
+            inserted = true;
+        }
+        catch(Exception e){
+            e.getStackTraceString();
+        }
+        
+        Assert.areEqual(false, inserted, 'StageName is missing');
+
+        test.stopTest();
+    }
+    
 }
