@@ -30417,11 +30417,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Termination_Form__c.NSP_Next_Scheduled_Pay_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_NoOfEmployeesClientGoingToBring__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30433,11 +30428,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_Notes_Comments__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Notes_Regarding_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -36043,6 +36033,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Sub_Plan_Relationship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Queued_for_Delete__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
