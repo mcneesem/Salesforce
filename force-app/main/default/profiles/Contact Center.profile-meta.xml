@@ -31978,6 +31978,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_1900_Merger_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_2700_FEIN_Letter_of_Assignment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_CSA__c</field>
         <readable>true</readable>
@@ -32169,6 +32179,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.NSP_Next_Scheduled_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_NoOfEmployeesClientGoingToBring__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32180,6 +32195,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_Notes_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_Notes_Regarding_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32253,7 +32273,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>

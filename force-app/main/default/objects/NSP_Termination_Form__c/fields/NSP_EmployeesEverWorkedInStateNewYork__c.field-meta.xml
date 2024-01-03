@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_EmployeesEverWorkedInStateNewYork__c</fullName>
-    <description>Has the client had employees that have EVER worked in the states of Virginia or New York?</description>
+    <description>Has the client had employees that have EVER worked in the states of New York?</description>
     <externalId>false</externalId>
-    <inlineHelpText>Has the client had employees that have EVER worked in the states of Virginia or New York?</inlineHelpText>
-    <label>EEs EVER worked in Virginia/New York?</label>
+    <inlineHelpText>Has the client had employees that have EVER worked in the states of New York?</inlineHelpText>
+    <label>Any EEs EVER worked in New York?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
