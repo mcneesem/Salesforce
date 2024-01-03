@@ -30211,16 +30211,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_1900_Merger_CSA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_2700_FEIN_Letter_of_Assignment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_CSA__c</field>
         <readable>true</readable>
