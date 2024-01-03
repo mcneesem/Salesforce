@@ -37764,13 +37764,40 @@ m   <fieldPermissions>
         <layout>OpportunityTeamMember-Opportunity Team Member Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-blng__Billing Order Layout</layout>
+        <layout>Order-Finance Billing Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>OrderItem-blng__Billing Order Product Layout</layout>
+        <layout>OrderItem-Finance Billing Order Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__CreditNote__c-Finance Credit Note Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__CreditNoteLine__c-Finance Credit Note Line Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__DebitNote__c-Finance Debit Note Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__DebitNoteLine__c-Finance Debit Note Line Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__Payment__c-Finance Payment Layout</layout>
     </layoutAssignments>
      <layoutAssignments>
-        <layout>blng__Invoice__c-blng__Invoice Layout</layout>
+        <layout>blng__Invoice__c-Finance Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__InvoiceLine__c-Finance Invoice Line Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__Usage__c-Finance Usage Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>blng__UsageSummary__c-Finance Usage Summary Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Product2-Finance Billing Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Outlook-Outlook Layout</layout>
@@ -37847,54 +37874,54 @@ m   <fieldPermissions>
         <layout>ReportAnomalyEventStore-Report Anomaly Event Store Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__QuoteLine__c-CPQ Admin Quote Line Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Quote_Locked</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Recruiting_and_Talent_Connect</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Recruiting_and_Talent_Connect_Locked</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Retirement_Services</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Retirement_Services_Locked</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Standard</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_Standard_Locked</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_WO_WS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_WO_WS_Locked</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_WX_WA</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-CPQ Admin Page Layout</layout>
+        <layout>SBQQ__Quote__c-Finance CPQ Admin Page Layout</layout>
         <recordType>SBQQ__Quote__c.NSP_WX_WA_Locked</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SBQQ__QuoteLine__c-Finance CPQ Admin Quote Line Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SBQQ__Subscription__c-Billing Subscription Layout</layout>
