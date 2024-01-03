@@ -78,16 +78,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Revision__c</fieldItem>
-                <identifier>RecordNSP_Revision__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Client_Name__c</fieldItem>
                 <identifier>RecordNSP_Client_Name_cField</identifier>
             </fieldInstance>
@@ -397,129 +387,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_CSA_Effective_Date__c</fieldItem>
-                <identifier>RecordNSP_CSA_Effective_Date__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-330f59f2-8be7-48c4-8678-4558d19f1152</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_EmployeesEverWorkedInStateNewYork__c</fieldItem>
-                <identifier>RecordNSP_EmployeesEverWorkedInStateNewYork_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Virginia__c</fieldItem>
-                <identifier>RecordNSP_Virginia_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_EmployeesEverWorkedInStateNewYork__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_New_York__c</fieldItem>
-                <identifier>RecordNSP_New_York_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_EmployeesEverWorkedInStateNewYork__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_TWC_Bad_faith_credit_letter__c</fieldItem>
-                <identifier>RecordNSP_TWC_Bad_faith_credit_letter__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-12d19d2c-628d-4743-b2a3-60004ab55721</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-330f59f2-8be7-48c4-8678-4558d19f1152</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column5</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-12d19d2c-628d-4743-b2a3-60004ab55721</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column6</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-12de597e-cb59-4cb8-b5e8-7fde74b1aab3</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_TerminatingDueToNaturalDisaster__c</fieldItem>
-                <identifier>RecordNSP_TerminatingDueToNaturalDisaster__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_How_many_employees_were_moved__c</fieldItem>
-                <identifier>RecordNSP_How_many_employees_were_moved__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>1600 Void</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_New_Client_Name__c</fieldItem>
@@ -801,6 +668,162 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_CSA_Effective_Date__c</fieldItem>
+                <identifier>RecordNSP_CSA_Effective_Date__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_ClientEndingCoEmploymentRelationship__c</fieldItem>
+                <identifier>RecordNSP_ClientEndingCoEmploymentRelationship__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Insperity_offering__c</fieldItem>
+                <identifier>RecordNSP_Insperity_offering_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_ClientEndingCoEmploymentRelationship__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-330f59f2-8be7-48c4-8678-4558d19f1152</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_EmployeesEverWorkedInStateVirginia__c</fieldItem>
+                <identifier>RecordNSP_EmployeesEverWorkedInStateVirginia_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_EmployeesEverWorkedInStateNewYork__c</fieldItem>
+                <identifier>RecordNSP_EmployeesEverWorkedInStateNewYork_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TWC_Bad_faith_credit_letter__c</fieldItem>
+                <identifier>RecordNSP_TWC_Bad_faith_credit_letter__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Client_moved_to_a_competitor__c</fieldItem>
+                <identifier>RecordNSP_Client_moved_to_a_competitor_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client Requested Termination Codes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_What_competitor__c</fieldItem>
+                <identifier>RecordNSP_What_competitor_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Client_moved_to_a_competitor__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Other__c</fieldItem>
+                <identifier>RecordNSP_Other__cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_What_competitor__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>OTHER</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client Requested Termination Codes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-12d19d2c-628d-4743-b2a3-60004ab55721</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-330f59f2-8be7-48c4-8678-4558d19f1152</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-12d19d2c-628d-4743-b2a3-60004ab55721</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-12de597e-cb59-4cb8-b5e8-7fde74b1aab3</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Last_Date_Wages_Paid_Through__c</fieldItem>
                 <identifier>RecordNSP_Last_Date_Wages_Paid_Through__cField</identifier>
             </fieldInstance>
@@ -814,16 +837,11 @@
                 <fieldItem>Record.NSP_Pay_Date__c</fieldItem>
                 <identifier>RecordNSP_Pay_Date__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Client Requested Termination Codes</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>1400 Financial Default</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
@@ -848,146 +866,7 @@
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>3200 Non-Renewal</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Client_moved_to_a_competitor__c</fieldItem>
-                <identifier>RecordNSP_Client_moved_to_a_competitor__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client Requested Termination Codes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_What_competitor__c</fieldItem>
-                <identifier>RecordNSP_What_competitor__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client Requested Termination Codes</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Client_moved_to_a_competitor__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Other__c</fieldItem>
-                <identifier>RecordNSP_Other__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_What_competitor__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Other</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client Requested Termination Codes</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Client_moved_to_a_competitor__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_ClientEndingCoEmploymentRelationship__c</fieldItem>
-                <identifier>RecordNSP_ClientEndingCoEmploymentRelationship__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Insperity_offering__c</fieldItem>
-                <identifier>RecordNSP_Insperity_offering_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client Requested Termination Codes</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ClientEndingCoEmploymentRelationship__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-7895ec04-5238-4b31-abad-be6ccb105ce4</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Date_of_email_from_Termination__c</fieldItem>
-                <identifier>RecordNSP_Date_of_email_from_Termination__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client Requested Termination Codes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Date_of_email_30_Days_from_Today__c</fieldItem>
-                <identifier>RecordNSP_Date_of_email_30_Days_from_Today__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client Requested Termination Codes</rightValue>
+                        <rightValue>1400 Financial Default</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -998,10 +877,21 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Client_Term_Date__c</fieldItem>
-                <identifier>RecordNSP_Client_Term_Date__cField</identifier>
+                <fieldItem>Record.NSP_Next_Scheduled_Pay_Date__c</fieldItem>
+                <identifier>RecordNSP_Next_Scheduled_Pay_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_TWC_Bad_faith_credit_letter__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-7895ec04-5238-4b31-abad-be6ccb105ce4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1043,9 +933,9 @@
                         <rightValue>3100 Non-Compliance of Client</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>3200 Non-Renewal</rightValue>
+                        <rightValue>Insperity Requested Termination Codes</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1123,65 +1013,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-09159e0c-69c6-43e9-a1d8-6adf55b3aecf</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_CSA__c</fieldItem>
-                <identifier>RecordNSP_CSA_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-917561b3-e03a-4cb3-b599-4a6087f81885</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_NY_VA_Report__c</fieldItem>
-                <identifier>RecordNSP_NY_VA_Report_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_EmployeesEverWorkedInStateNewYork__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-c87f8d41-6db2-4a06-8dfc-b0963764cc58</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-917561b3-e03a-4cb3-b599-4a6087f81885</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column14</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-c87f8d41-6db2-4a06-8dfc-b0963764cc58</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column15</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-60d93e8a-23f2-4b22-ba7f-e38be7043844</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1306,6 +1137,10 @@
                     <value>Facet-1532e257-8fac-4e55-8b89-e3fd244ed398</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -1320,6 +1155,10 @@
                     <value>Facet-c97fe50f-ead7-4215-a379-580dca1891dc</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Contact Information</value>
                 </componentInstanceProperties>
@@ -1331,21 +1170,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-12de597e-cb59-4cb8-b5e8-7fde74b1aab3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Termination Details</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-b5815a8b-b561-4d8b-95e2-273dfba7d51b</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1359,7 +1188,29 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-12de597e-cb59-4cb8-b5e8-7fde74b1aab3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Termination Details</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-30489c17-91bc-4e8b-b6ab-881569a94dd9</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1376,6 +1227,10 @@
                     <value>Facet-09159e0c-69c6-43e9-a1d8-6adf55b3aecf</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Additional Details</value>
                 </componentInstanceProperties>
@@ -1387,21 +1242,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-60d93e8a-23f2-4b22-ba7f-e38be7043844</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Required Attachments</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection8</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-2a8e1c47-b4c5-4342-b23e-e8cd48517d9a</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1416,6 +1261,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-11da5c8b-d640-424d-b167-2490858bd506</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
