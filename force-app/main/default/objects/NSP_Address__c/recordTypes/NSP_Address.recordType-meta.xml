@@ -36,6 +36,14 @@
             <fullName>Ship To</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>U%2ES%2E Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Worksite</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Contact_Address_Type__c</picklist>
@@ -1131,6 +1139,17 @@
         <values>
             <fullName>Work</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Source__c</picklist>
+        <values>
+            <fullName>AIMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
