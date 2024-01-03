@@ -384,6 +384,7 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>NSP_Approver_Formula__c</fields>
         <fields>NSP_Status__c</fields>
