@@ -4,7 +4,8 @@
 * Created Date : 11/09/2022
 */
 public class NSP_AddressTriggerHandler implements NSP_ITriggerHandler{
-    
+    // test w/ NSP_AddressTriggerHelper_Test (100%)
+
     //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
     
@@ -28,22 +29,20 @@ public class NSP_AddressTriggerHandler implements NSP_ITriggerHandler{
     public void beforeInsert(List<sObject> newList) {
     }
     
-    /**
-* Handles after insert for Address
-* @param newList List of New Address.
-* @param newMap Map of New Address. 
-* @return void             
-*                
-*/
-    
-    public void afterInsert(List < sObject > newList, Map < Id, sObject > newMap) {
-        //Added as a part of <STY-02841>
-     //   NSP_AddressTriggerHelper.deleteAddressRelatedRecords((List<NSP_Address__c>)newList);
-     NSP_AddressTriggerHelper oAddressTriggerHelper =new NSP_AddressTriggerHelper();
-        oAddressTriggerHelper.afterInsertDirector((List<NSP_Address__c>)newList,(Map<Id,NSP_Address__c>)newMap);
+    //
+    // Handles after insert for Address
+    // @param newList List of New Address.
+    // @param newMap Map of New Address. 
+    // @return void
+    //
+    public void afterInsert( List<sObject> newList , Map<Id,sObject> newMap ) {
+        NSP_AddressTriggerHelper oAddressTriggerHelper = new NSP_AddressTriggerHelper();
+        oAddressTriggerHelper.afterInsertDirector(
+            (List<NSP_Address__c>)newList ,
+            (Map<Id,NSP_Address__c>)newMap
+        );
     }
-    
-    
+
     /**
 * Handles before update for Address
 * @param newMap Map of New Address.
