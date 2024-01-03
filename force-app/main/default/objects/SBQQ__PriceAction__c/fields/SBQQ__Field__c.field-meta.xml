@@ -472,6 +472,11 @@
                 <default>false</default>
                 <label>NSP_TCFullUserLicenseQty__c</label>
             </value>
+            <value>
+                <fullName>Amendment_Total_Annual_Freq_Fees__c</fullName>
+                <default>false</default>
+                <label>Amendment_Total_Annual_Freq_Fees__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -661,6 +666,10 @@
             <valueName>NSP_Terminate_All__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Amendment_Total_Annual_Freq_Fees__c</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>SBQQ__NetPrice__c</valueName>
         </valueSettings>
@@ -834,7 +843,7 @@
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_SubscriptionStartDate__c</valueName>
         </valueSettings>
-        <valueSettings>
+                <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
             <valueName>Target</valueName>
         </valueSettings>
@@ -850,7 +859,7 @@
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
             <valueName>Explanation</valueName>
         </valueSettings>
-        <valueSettings>
+<valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_TCFullUserLicenseQty__c</valueName>
         </valueSettings>
