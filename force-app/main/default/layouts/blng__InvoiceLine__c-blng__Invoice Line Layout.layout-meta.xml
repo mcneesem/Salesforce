@@ -35,7 +35,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__Notes__c</field>
             </layoutItems>
-                    </layoutColumns>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -351,7 +351,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__AllocatedRevenueAmount__c</field>
             </layoutItems>
-                    </layoutColumns>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -361,7 +361,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__RevenueLiabilityAmount__c</field>
             </layoutItems>
-                    </layoutColumns>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -463,7 +463,7 @@
                 <behavior>Edit</behavior>
                 <field>blng__InvoiceRun__c</field>
             </layoutItems>
-                    </layoutColumns>
+        </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
