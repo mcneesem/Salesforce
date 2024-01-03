@@ -36,6 +36,14 @@
             <fullName>Ship To</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>U%2ES%2E Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Worksite</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Contact_Address_Type__c</picklist>
