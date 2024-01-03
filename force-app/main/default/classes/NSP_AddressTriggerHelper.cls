@@ -10,9 +10,9 @@ Modification Log     :
 * Developer                   Date                   Description                                    
 * -----------------------------------------------------------------------------------------------
 */
-// test w/ NSP_AddressTriggerHelperTest (85%)
 public class NSP_AddressTriggerHelper {
-    
+    // test w/ NSP_AddressTriggerHelper_Test (85%)
+
     public static void updateSCCAddressWithStreet(List<NSP_Address__c> newAddress, Map<Id, NSP_Address__c> oldMap) {
         Map<Id, String> addressByStreet = new Map<Id, String>();
         List<NSP_Sub_Client_Contact_Address__c> sccAddressToUpdate = new List<NSP_Sub_Client_Contact_Address__c>();
