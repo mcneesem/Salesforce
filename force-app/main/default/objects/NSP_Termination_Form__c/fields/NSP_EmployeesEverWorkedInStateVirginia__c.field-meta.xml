@@ -4,7 +4,7 @@
     <description>Has the Client had Employees that have ever worked in State of Virginia?</description>
     <externalId>false</externalId>
     <inlineHelpText>Has the Client had Employees that have ever worked in State of Virginia?</inlineHelpText>
-    <label>Employees worked in Virginia EVER</label>
+    <label>Any EEs EVER worked in Virginia?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

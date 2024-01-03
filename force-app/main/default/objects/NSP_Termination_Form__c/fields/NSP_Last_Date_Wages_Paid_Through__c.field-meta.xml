@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Last_Date_Wages_Paid_Through__c</fullName>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Last Date Wages Paid Through</label>
+    <label>Last Date Wages Paid/Client Term Date</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

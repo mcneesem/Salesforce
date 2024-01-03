@@ -20378,6 +20378,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_Notes_Regarding_Attachment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_Number_of_Active_Employees__c</field>
         <readable>false</readable>
     </fieldPermissions>
