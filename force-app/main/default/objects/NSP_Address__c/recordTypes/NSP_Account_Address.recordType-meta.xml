@@ -1142,6 +1142,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Source__c</picklist>
+        <values>
+            <fullName>AIMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_State__c</picklist>
         <values>
             <fullName>AK</fullName>
