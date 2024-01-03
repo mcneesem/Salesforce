@@ -9,6 +9,11 @@
         <editable>true</editable>
         <field>NSP_Termination_Form__c.Client_Owner_Phone__c</field>
         <readable>true</readable>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Field Access to System Admin Lite</label>
