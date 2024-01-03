@@ -32049,12 +32049,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner_Email__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner_Phone__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
