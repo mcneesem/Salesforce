@@ -1697,6 +1697,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Docusign_Assets__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.AVA_BLNG__Business_Identification_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
