@@ -2,7 +2,9 @@
  * Represents the Order trigger handler.
  */
 public class NSP_OrderTriggerHandler implements NSP_ITriggerHandler{
-	//Use this variable to disable this trigger from transaction
+    // test w/ NSP_OrderTriggerHelperTest (83%)
+
+    //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false; 
     
 	 /**
