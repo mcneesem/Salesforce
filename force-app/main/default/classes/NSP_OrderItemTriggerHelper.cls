@@ -309,6 +309,7 @@ public class NSP_OrderItemTriggerHelper {
                         && OrderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
                         && op.Order.Type == 'Amendment'
                         && op.SBQQ__QuoteLine__r.NSP_MergeProducts__c == FALSE
+                        )
                     {
                         OrderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
                         OrderItemNewMap.get(op.Id).blng__HoldBilling__c = 'Yes';
