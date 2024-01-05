@@ -3,7 +3,27 @@
     <fullName>NSP_SeparationRequest</fullName>
     <active>true</active>
     <label>Separation Request</label>
-        <picklistValues>
+    <picklistValues>
+        <picklist>COBRA_Amount_Type__c</picklist>
+        <values>
+            <fullName>Amount up to</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Through Date</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Action__c</picklist>
         <values>
             <fullName>Development</fullName>
@@ -254,6 +274,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Installments__c</picklist>
+        <values>
+            <fullName>Non-standard %28total number of installments not equal or not based on the regular payroll%29%2E PROVIDE INSTALLMENT STRUCTURE IN SPECIAL ITEMS BELOW%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard %28total number of equal payments based on the client%E2%80%99s regular pay periods%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Integration__c</picklist>
         <values>
             <fullName>Batch</fullName>
@@ -345,7 +376,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Standard Outplacement Service</fullName>
+            <fullName>Client to pay vendor directly</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Notary_Required__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Notary required for all signatures parties</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Notary required for all signatures parties</inlineHelpText>
+    <label>Notary Required</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

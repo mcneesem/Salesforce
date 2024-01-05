@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_TransitionOfDutiesValue__c</fullName>
     <externalId>false</externalId>
-    <label>Transition of Duties</label>
+    <label>Transition of Duties DEPRECATED</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
