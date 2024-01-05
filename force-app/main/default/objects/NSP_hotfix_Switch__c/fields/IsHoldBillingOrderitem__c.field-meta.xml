@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsHoldBillingOrderitem__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Hotfix switch for hold billing (AZD-252638). See Apex Class: NSP_OrderItemTriggerHelper</description>
+    <externalId>false</externalId>
+    <label>IsHoldBillingOrderitem</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
