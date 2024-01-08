@@ -5029,7 +5029,12 @@
         <editable>true</editable>
         <field>Opportunity.Total_Upfront_Amount__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Enrollment_fee_Subtotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Total_Upfront_fee_Tax__c</field>
