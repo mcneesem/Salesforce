@@ -2,7 +2,7 @@
 * Represents the Order trigger helper which handles all the logic.
 */
 public class NSP_OrderTriggerHelper {
-    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (79%)
+    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (77%)
 
     static final string STRING_ACCOUNT = 'Account';
     /**
@@ -274,7 +274,6 @@ public class NSP_OrderTriggerHelper {
         Set<Id> blngTypeIdSet = new Set<Id>();
         Set<Id> usageIdSet = new Set<Id>();
         Set<Id> woBillingOrder = new Set<Id>();
-        
         // STY-03797 Start
         Set<Id> reviewedOrdersAccountSet = new Set<Id>();
         Map<String, Order> uniqueAddressKeyMap = new Map<String, Order> ();
@@ -317,11 +316,15 @@ public class NSP_OrderTriggerHelper {
                 uniqueAddressKeyMap.put(ordUniqAddressKey, newOrder);
             }
             // STY-03797 Ends
-            if(oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED && newOrder.NSP_Billing_Account_Name__c!=null && newOrder.NSP_Billing_Account_Name__c=='Insperity WO Billing Account'){
+            if ( oldOrder.NSP_Rev_Rec_Rules_Reviewed__c == false
+                && newOrder.NSP_Rev_Rec_Rules_Reviewed__c == true
+                && newOrder.NSP_Billing_Account_Name__c != null
+                && newOrder.NSP_Billing_Account_Name__c == 'Insperity WO Billing Account'
+                )
+            {
                 woBillingOrder.add(newOrder.Id);
             }
-       }
-        
+        }
         if(orderIdNew.Size() >0){
             setProjNameNew(orderIdNew,newList);
         }
@@ -344,8 +347,8 @@ public class NSP_OrderTriggerHelper {
         if(woBillingOrder.size()>0){
             changeTaxRulesForWOOrders(woBillingOrder);
         }
-        
-     }
+    }
+
     /**
 * Method Name : createInvoice 
 * Description : Method to create Contract on activated Order
@@ -1297,6 +1300,5 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
                         List<Database.SaveResult> results = Database.update(updateList,false);
                         NSP_ErrorLogHandler.logSaveResultsException('NSP_OrderTriggerHelper','updateRevisedOrderProd', results);
                     }
-    }  
-    
+    }
 }
