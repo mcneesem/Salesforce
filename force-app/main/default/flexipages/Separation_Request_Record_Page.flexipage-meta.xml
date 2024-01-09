@@ -870,8 +870,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_RemoveNoRehireClause__c</fieldItem>
-                <identifier>RecordNSP_RemoveNoRehireClause_cField</identifier>
+                <fieldItem>Record.Is_Rehire_Clause_Required__c</fieldItem>
+                <identifier>RecordIs_Rehire_Clause_Required__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -880,8 +880,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_KeepNorehireParagraphForcompany__c</fieldItem>
-                <identifier>RecordNSP_KeepNorehireParagraphForcompany_cField</identifier>
+                <fieldItem>Record.Is_Notary_Required__c</fieldItem>
+                <identifier>RecordIs_Notary_Required__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -890,18 +890,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_RemoveNotaryRequirement__c</fieldItem>
-                <identifier>RecordNSP_RemoveNotaryRequirement_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Installments__c</fieldItem>
-                <identifier>RecordNSP_Installments_cField</identifier>
+                <fieldItem>Record.NSP_Installments_Check__c</fieldItem>
+                <identifier>RecordNSP_Installments_Check__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -911,18 +901,12 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_NumberOfpayments__c</fieldItem>
-                <identifier>RecordNSP_NumberOfpayments_cField</identifier>
+                <identifier>RecordNSP_NumberOfpayments__cField2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Installments__c}</leftValue>
+                        <leftValue>{!Record.NSP_Installments_Check__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Non-standard (total number of installments not equal or not based on the regular payroll). PROVIDE INSTALLMENT STRUCTURE IN SPECIAL ITEMS BELOW.</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Installments__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Standard (total number of equal payments based on the client’s regular pay periods)</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1004,13 +988,47 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_NumberOfMonthsCOBRA__c</fieldItem>
-                <identifier>RecordNSP_NumberOfMonthsCOBRA_cField</identifier>
+                <fieldItem>Record.NSP_COBRA_Amount__c</fieldItem>
+                <identifier>RecordNSP_COBRA_Amount__cField5</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_COBRA__c}</leftValue>
+                        <leftValue>{!Record.NSP_COBRASelectOne__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>COBRA2: &quot;The Company has also agreed to pay you an additional&quot; (amount for COBRA is stated separately in release)</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.COBRA_Amount_Type__c</fieldItem>
+                <identifier>RecordNSP_COBRA_Amount__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_COBRASelectOne__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>COBRA3:  The Company has agreed to reimburse you for</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_NumberOfMonthsCOBRA__c</fieldItem>
+                <identifier>RecordNSP_NumberOfMonthsCOBRA__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.COBRA_Amount_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Full Months</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1022,12 +1040,46 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_COBRA_Amount__c</fieldItem>
-                <identifier>RecordNSP_COBRA_Amount_cField</identifier>
+                <identifier>RecordNSP_COBRA_Amount__cField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_COBRA__c}</leftValue>
+                        <leftValue>{!Record.COBRA_Amount_Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>Amount up to</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Num_Of_Weeks_Count__c</fieldItem>
+                <identifier>RecordNum_Of_Weeks_Count__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.COBRA_Amount_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Full Weeks</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Through_Date__c</fieldItem>
+                <identifier>RecordThrough_Date__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.COBRA_Amount_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Through Date</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1039,7 +1091,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Commissions__c</fieldItem>
-                <identifier>RecordNSP_Commissions_cField</identifier>
+                <identifier>RecordNSP_Commissions__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1049,7 +1101,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_CommissionsSelectOne__c</fieldItem>
-                <identifier>RecordNSP_CommissionsSelectOne_cField</identifier>
+                <identifier>RecordNSP_CommissionsSelectOne__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Commissions__c}</leftValue>
@@ -1066,7 +1118,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_CommissionAmount__c</fieldItem>
-                <identifier>RecordNSP_CommissionAmount_cField</identifier>
+                <identifier>RecordNSP_CommissionAmount__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_CommissionsSelectOne__c}</leftValue>
@@ -1083,7 +1135,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Equipment__c</fieldItem>
-                <identifier>RecordNSP_Equipment_cField</identifier>
+                <identifier>RecordNSP_Equipment__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1093,7 +1145,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_EquipmentSelection__c</fieldItem>
-                <identifier>RecordNSP_EquipmentSelection_cField</identifier>
+                <identifier>RecordNSP_EquipmentSelection__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Equipment__c}</leftValue>
@@ -1110,7 +1162,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_ManufacturerNameandModel__c</fieldItem>
-                <identifier>RecordNSP_ManufacturerNameandModel_cField</identifier>
+                <identifier>RecordNSP_ManufacturerNameandModel__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Equipment__c}</leftValue>
@@ -1127,7 +1179,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_FairMarketValue__c</fieldItem>
-                <identifier>RecordNSP_FairMarketValue_cField</identifier>
+                <identifier>RecordNSP_FairMarketValue__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Equipment__c}</leftValue>
@@ -1135,16 +1187,6 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_MutualNonDisparagement__c</fieldItem>
-                <identifier>RecordNSP_MutualNonDisparagement_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1163,33 +1205,13 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_NonSolicitationofCustomers_Company__c</fieldItem>
-                <identifier>RecordNSP_NonSolicitationofCustomers_Company_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_IncludeTerminationDate__c</fieldItem>
-                <identifier>RecordNSP_IncludeTerminationDate_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Termination_Date_cField2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_IncludeTerminationDate__c}</leftValue>
+                        <leftValue>{!Record.NSP_Employee_Status__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>TERMINATED</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1250,7 +1272,7 @@
                     <criteria>
                         <leftValue>{!Record.NSP_OutplacementServicesValue__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Reimbursement of Outplacement Services</rightValue>
+                        <rightValue>Client to pay vendor directly</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1353,24 +1375,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_TransitionOfDuties__c</fieldItem>
-                <identifier>RecordNSP_TransitionOfDuties_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_TransitionOfDutiesValue__c</fieldItem>
-                <identifier>RecordNSP_TransitionOfDutiesValue_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_TransitionOfDuties__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <identifier>RecordNSP_TransitionOfDuties__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2079,14 +2084,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Termination_Date__c</fieldItem>
-                <identifier>RecordNSP_Termination_Date_cField4</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <identifier>RecordNSP_Termination_Date__cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2555,12 +2553,7 @@
                 <identifier>RecordNSP_RemoveNotaryRequirement__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_Installments__c</fieldItem>
-                <identifier>RecordNSP_Installments__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
+
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -2570,16 +2563,10 @@
                 <fieldItem>Record.NSP_NumberOfpayments__c</fieldItem>
                 <identifier>RecordNSP_NumberOfpayments__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Installments__c}</leftValue>
+                        <leftValue>{!Record.NSP_Installments_Check__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Non-standard (total number of installments not equal or not based on the regular payroll). PROVIDE INSTALLMENT STRUCTURE IN SPECIAL ITEMS BELOW.</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Installments__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Standard (total number of equal payments based on the client’s regular pay periods)</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2640,23 +2627,16 @@
                 <fieldItem>Record.NSP_NumberOfMonthsCOBRA__c</fieldItem>
                 <identifier>RecordNSP_NumberOfMonthsCOBRA__cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_COBRA__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_COBRA_Amount__c</fieldItem>
-                <identifier>RecordNSP_COBRA_Amount__cField</identifier>
-                <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_COBRA__c}</leftValue>
+                        <leftValue>{!Record.COBRA_Amount_Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>Full Months</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2664,13 +2644,13 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_Commissions__c</fieldItem>
-                <identifier>RecordNSP_Commissions__cField</identifier>
+                <identifier>RecordNSP_Commissions__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_CommissionsSelectOne__c</fieldItem>
-                <identifier>RecordNSP_CommissionsSelectOne__cField</identifier>
+                <identifier>RecordNSP_CommissionsSelectOne__cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Commissions__c}</leftValue>
@@ -2683,7 +2663,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_CommissionAmount__c</fieldItem>
-                <identifier>RecordNSP_CommissionAmount__cField</identifier>
+                <identifier>RecordNSP_CommissionAmount__cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_CommissionsSelectOne__c}</leftValue>
@@ -2696,13 +2676,13 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_Equipment__c</fieldItem>
-                <identifier>RecordNSP_Equipment__cField</identifier>
+                <identifier>RecordNSP_Equipment__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_EquipmentSelection__c</fieldItem>
-                <identifier>RecordNSP_EquipmentSelection__cField</identifier>
+                <identifier>RecordNSP_EquipmentSelection__cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Equipment__c}</leftValue>
@@ -2715,7 +2695,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_ManufacturerNameandModel__c</fieldItem>
-                <identifier>RecordNSP_ManufacturerNameandModel__cField</identifier>
+                <identifier>RecordNSP_ManufacturerNameandModel__cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Equipment__c}</leftValue>
@@ -2728,7 +2708,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_FairMarketValue__c</fieldItem>
-                <identifier>RecordNSP_FairMarketValue__cField</identifier>
+                <identifier>RecordNSP_FairMarketValue__cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Equipment__c}</leftValue>
@@ -2815,7 +2795,7 @@
                     <criteria>
                         <leftValue>{!Record.NSP_OutplacementServicesValue__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Standard Outplacement Service</rightValue>
+                        <rightValue>Client to pay vendor directly</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2886,7 +2866,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NSP_TransitionOfDuties__c</fieldItem>
-                <identifier>RecordNSP_TransitionOfDuties__cField</identifier>
+                <identifier>RecordNSP_TransitionOfDuties__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3117,7 +3097,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
-                <identifier>RecordLastModifiedByIdField2</identifier>
+                    <identifier>RecordLastModifiedByIdField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-686f7697-163b-42e4-aa6d-e3c6d1e4c53e</name>
