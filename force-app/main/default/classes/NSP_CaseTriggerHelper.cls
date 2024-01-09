@@ -126,6 +126,9 @@ public class NSP_CaseTriggerHelper {
             if(String.isNotBlank(eachcase.NSP_Topic__c) ){
                 eachcase.Origin = 'Inbox Email';
             }
+            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c && eachCase.NSP_Level_2_Assigned_Date__c==NULL){
+                eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+            }
         }
         
         if(findContactMap.size()>0){
@@ -436,19 +439,23 @@ Date        : 30/09/2021
                    subCategorySet.add(eachCase.NSP_SubCategory__c);
                    confidentailEligilbleList.add(eachCase);
             }
-            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && eachCase.NSP_Level_2__c){
-                eachCase.NSP_Level_2_Assigned_Date__c = System.now();
-            }
-            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_First_Level2_Assigned_Duration__c==null && eachCase.NSP_Level_2_Assigned_Date__c!=null &&
-               ((eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && !eachCase.NSP_Level_2__c) ||
-                    (caseOldMap.get(eachCase.Id).Status!=eachCase.Status && eachCase.Status=='Closed')
-                )){
-                eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, System.Now());
+            Id oldOwnerId = caseOldMap.get(eachCase.Id).OwnerId;
+            Id newOwnerId = eachCase.OwnerId;
+            if(eachCase.RecordTypeId==bpsRecordTypeId){
+                if(eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c && eachCase.NSP_Level_2__c && eachCase.NSP_Level_2_Assigned_Date__c==NULL){
+                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+                }
+                else if(eachCase.NSP_Level_2__c && newOwnerId  != oldOwnerId && oldOwnerId.getSobjectType()!=Schema.User.SObjectType  && newOwnerId.getSobjectType()==Schema.User.SObjectType){
+                    decimal l2AssignedDuration = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, System.Now());
+                    eachCase.NSP_First_Level2_Assigned_Duration__c = Math.floor(l2AssignedDuration*60);
+                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+                }
             }
             if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c && caseOldMap.get(eachCase.Id).NSP_First_Level2_Reply_Date__c==null &&
                eachCase.NSP_First_Level2_Reply_Date__c!=null && eachCase.NSP_Level_2_Assigned_Date__c!=null){
-                eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
-            }
+                   decimal l2ReplydDuration = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
+                   eachCase.NSP_First_Level2_Reply_Duration__c = Math.floor(l2ReplydDuration*60);
+               }
         }
          
         //Bug-237020 Logic to check or uncheck Corporate EE flag on Case update.

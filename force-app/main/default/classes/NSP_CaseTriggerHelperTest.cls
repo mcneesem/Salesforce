@@ -308,11 +308,13 @@ private class NSP_CaseTriggerHelperTest {
         Case newBPSCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
         newBPSCase.RecordTypeId = recordTypeBPSID;
         newBPSCase.Type = 'Mobile - WO';
+        newBPSCase.OwnerId = caseOwnerId;
         insert newBPSCase; 
         
         newBPSCase.NSP_Level_2__c = true;
         newBPSCase.NSP_Level_2_Assigned_Date__c = (system.now()).addDays(-3);
         newBPSCase.NSP_First_Level2_Reply_Date__c = (system.now()).addDays(-2);
+        newBPSCase.OwnerId = userinfo.getuserid();
         Update newBPSCase;
         
         Case newBPSCase1 = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
