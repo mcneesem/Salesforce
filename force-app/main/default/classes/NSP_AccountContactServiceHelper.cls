@@ -7,14 +7,14 @@
 * Rahul Singh        May  24 2023        Modified as part of DF-04216
 */
 public class NSP_AccountContactServiceHelper {
-    //test w/ NSP_AccountContactServiceHelperTest (95%)
+    // test w/ NSP_AccountContactServiceHelperTest (95%)
 
     /***********************************************************************************************
     * MethodName: createExternalUser
     * Description : This Method will create the Portal user and update the User Permissions
     * Params:       Map<Id, AccountContactRelation> newACRMap,Map<Id, AccountContactRelation> oldACRMap
     * Author :      Nischay Jindal
-	* ********************************************************************************************/
+    * ********************************************************************************************/
     public static void createExternalUser(Map<Id, AccountContactRelation> newACRMap,Map<Id, AccountContactRelation> oldACRMap){
         Set<Id> acrContactIdSet = new set<Id>();
         List<User> newUserList = new List<User>();
