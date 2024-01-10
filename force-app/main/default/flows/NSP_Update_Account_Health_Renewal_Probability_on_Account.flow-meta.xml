@@ -71,7 +71,7 @@
             <label>Renewal Probability Group Types</label>
         </rules>
     </decisions>
-    <description>This flow will update Account Health and Renewal Probability field on Account from Account Group object</description>
+    <description>This flow will update Account Health and Renewal Probability field on Account from Account Group object and Account Member</description>
     <environments>Default</environments>
     <interviewLabel>Update Account Health {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Account Health &amp; Renewal Probability on Account</label>
@@ -245,7 +245,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>accountIds</name>
         <dataType>String</dataType>
