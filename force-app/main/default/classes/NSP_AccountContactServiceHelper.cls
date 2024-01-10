@@ -7,7 +7,7 @@
 * Rahul Singh        May  24 2023        Modified as part of DF-04216
 */
 public class NSP_AccountContactServiceHelper {
-    // test w/ NSP_AccountContactServiceHelperTest (??%)
+    //test w/ NSP_AccountContactServiceHelperTest (95%)
 
     /***********************************************************************************************
     * MethodName: createExternalUser
@@ -157,7 +157,7 @@ public class NSP_AccountContactServiceHelper {
         String lastName=  contact.LastName.replaceAll( '\\s+', '_');
         String userName= contact.NSP_Work_email__c +'.'+ lastName;
         String alias =  NSP_ServiceConstants.userAlias + contact.LastName.substring(0, 2) ;
-        String communityNickname = contact.FirstName != null? contact.FirstName.substring(0, 2) + contact.LastName.substring(0, 2): alias;
+        String communityNickname = contact.NSP_Preferred_First_Name__c != null && contact.NSP_Per_ID__c != null? contact.NSP_Preferred_First_Name__c.substring(0, 1) + contact.LastName + contact.NSP_Per_ID__c : alias;
         User portalUser = new User();
         portalUser.UserName = userName;
         portalUser.FirstName = contact.NSP_Preferred_First_Name__c;//Modified as part of DF-04216
