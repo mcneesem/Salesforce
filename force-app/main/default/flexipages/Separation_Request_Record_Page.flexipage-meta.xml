@@ -1011,7 +1011,7 @@
                     <criteria>
                         <leftValue>{!Record.NSP_COBRASelectOne__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>COBRA3:  The Company has agreed to reimburse you for</rightValue>
+                        <rightValue>COBRA3:  &quot;The Company has agreed to reimburse you for&quot;</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
