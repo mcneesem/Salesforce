@@ -26346,12 +26346,12 @@
         <field>NSP_ReportRequest__c.Through_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	    <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.Num_Of_Weeks_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	    <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.COBRA_Amount_Type__c</field>
         <readable>true</readable>
