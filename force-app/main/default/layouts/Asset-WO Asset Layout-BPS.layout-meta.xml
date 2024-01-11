@@ -346,7 +346,7 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-                <platformActionListItems>
+        <platformActionListItems>
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -411,7 +411,7 @@
             <actionType>StandardButton</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
-<platformActionListItems>
+        <platformActionListItems>
             <actionName>ViewAssetHierarchy</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
