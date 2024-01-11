@@ -464,7 +464,7 @@
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
-<platformActionListItems>
+        <platformActionListItems>
             <actionName>ChangeRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>14</sortOrder>
@@ -484,7 +484,7 @@
             <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
         </platformActionListItems>
-                <platformActionListItems>
+        <platformActionListItems>
             <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>15</sortOrder>
