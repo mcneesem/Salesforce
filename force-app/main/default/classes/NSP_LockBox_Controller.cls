@@ -10,7 +10,9 @@
  *    Manikandan       Dec 1,22                  Update Payment Record GL_Entity field value Based LockBox Number
  ***************************************************************************************************
  */
-public class NSP_LockBox_Controller{
+public class NSP_LockBox_Controller {
+    // test w/ NSP_LockBox_ControllerTest (85%)
+
     public NSP_LockBox_Controller(){
     }
 
@@ -120,6 +122,7 @@ public class NSP_LockBox_Controller{
                         currPayment.blng__PaymentType__c = lb.NSP_Transaction_Type__c;
                         currPayment.blng__Amount__c = lb.NSP_Allocation_Amount__c;
                         currPayment.NSP_Created_From_Lock_Box__c = lb.Id;
+                        currPayment.blng__PaymentDate__c = lb.NSP_Deposit_Date__c;
 
                         if (lockBoxNumerGLRuleMap.containsKey(lb.NSP_LockBox_Number__c) || lockBoxNumerGLLegalEntityMap.containsKey(lb.NSP_LockBox_Number__c)){
                             currPayment.blng__LegalEntity__c = glLegalEntityMap.get(lockBoxNumerGLLegalEntityMap.get(lb.NSP_LockBox_Number__c));
@@ -128,8 +131,8 @@ public class NSP_LockBox_Controller{
                         }
 
                         /*
-			*Case 1 : When there is a matching invoice on lock box record
-			*/
+                        * Case 1 : When there is a matching invoice on lock box record
+                        */
                         if (lb.NSP_Invoice__c != null){
                             currPayment.blng__Invoice__c = lb.NSP_Invoice__c;
                             //currPayment.blng__Account__c = lb.NSP_Account__c;
@@ -165,10 +168,9 @@ public class NSP_LockBox_Controller{
                     //lb.NSP_Status__c = 'Success';
 
                 }
-		/*
-		* Creating blng__Payment__c Records
-		*/
-		
+                /*
+                * Creating blng__Payment__c Records
+                */
                 if (paymentRecsToInsert.size() > 0) {
                     insert paymentRecsToInsert;
                 }
@@ -178,8 +180,8 @@ public class NSP_LockBox_Controller{
 
                 }
                 /*
-		* Creating Allocations Records
-		*/
+                * Creating Allocations Records
+                */
                 if (allocationsToInsert.size() > 0){
                     for (blng__PaymentAllocationInvoice__c allocrec : allocationsToInsert){
                         if (lockBoxIdToPaymentIdMap.containsKey(allocrec.blng__Payment__c)){
