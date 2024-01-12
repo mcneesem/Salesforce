@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Mobile Investigation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Mobile Investigation</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Mobile Investigation</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+We understand that one of your employees is having trouble with the Insperity mobile app. In order to investigate this concern fully, we have a few questions: 
+
+Which employee is being affected? 
+
+What behavior do you expect they should see? 
+
+What behavior do they actually see? 
+
+What steps is the employee taking to obtain these results? 
+
+What device is the employee using? (i.e. Apple, Samsung, etc. and phone or tablet) 
+
+What is the name of the app the employee has downloaded and what version of the app does the employee have installed currently? (This can be found in the settings section of the mobile app.) 
+
+Any additional notes you think may be helpful, including screenshots from the employee&apos;s phone, would be greatly appreciated. 
+
+Thank you in advance for providing this information. Once we receive your responses, we will be happy to further investigate this concern and a member of our team will be in touch with more information as soon as possible. 
+ 
+As always, if you have additional questions or concerns in the meantime, please let us know and we will be happy to help.  
+ 
+Thank you,  
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

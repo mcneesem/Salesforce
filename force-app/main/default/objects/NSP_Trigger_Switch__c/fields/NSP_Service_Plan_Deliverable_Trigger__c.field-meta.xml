@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Service_Plan_Deliverable_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Switch on or off - Service Plan Deliverable Trigger</description>
+    <externalId>false</externalId>
+    <label>Service Plan Deliverable Trigger</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

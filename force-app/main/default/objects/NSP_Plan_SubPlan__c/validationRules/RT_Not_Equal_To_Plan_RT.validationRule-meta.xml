@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RT_Not_Equal_To_Plan_RT</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(RecordType.Name &lt;&gt; NSP_Parent_Plan_ID__r.RecordType.Name,
+ $Setup.NSP_Trigger_Switch__c.NSP_Plan_Sub_Plan__c = false
+)</errorConditionFormula>
+    <errorMessage>Sub plan record type should be same as plan record type.</errorMessage>
+</ValidationRule>

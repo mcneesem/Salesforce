@@ -17,7 +17,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
@@ -2369,8 +2369,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Multiple_FEINs__c</fieldItem>
-                <identifier>RecordNSP_Multiple_FEINs__cField3</identifier>
+                <fieldItem>Record.NSP_Multiple_Companies_or_FEINs__c</fieldItem>
+                <identifier>RecordNSP_Multiple_Companies_or_FEINs_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2441,6 +2441,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_WO_to_WX__c</fieldItem>
                 <identifier>RecordNSP_WO_to_WX__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Benefits_Broker_Information__c</fieldItem>
+                <identifier>RecordNSP_Benefits_Broker_Information_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2783,6 +2793,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
                 <identifier>RecordNSP_Sales_Office__cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2793,6 +2810,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Client_Website__c</fieldItem>
                 <identifier>RecordNSP_Client_Website__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2813,6 +2837,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Bid_Number__c</fieldItem>
                 <identifier>RecordNSP_Bid_Number__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2985,6 +3016,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Are_all_employees_paid_under_one_FEIN__c</fieldItem>
+                <identifier>RecordAre_all_employees_paid_under_one_FEIN_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Client_Contact_Name__c</fieldItem>
                 <identifier>RecordNSP_Client_Contact_Name__cField5</identifier>
             </fieldInstance>
@@ -3007,6 +3048,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Version_Number__c</fieldItem>
                 <identifier>RecordNSP_Version_Number__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3027,6 +3075,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billling_City__c</fieldItem>
                 <identifier>RecordNSP_Account_Billling_City__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3037,6 +3092,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_Street__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_Street__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3047,6 +3109,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_State_Code__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_State_Code__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3057,6 +3126,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_State__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_State__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3067,6 +3143,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Billing_Postal_Code__c</fieldItem>
                 <identifier>RecordNSP_Billing_Postal_Code_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3087,6 +3170,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Benefits_Waiting_Period__c</fieldItem>
                 <identifier>RecordNSP_Benefits_Waiting_Period__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Active_Benefit_Continuation_Period__c</fieldItem>
+                <identifier>RecordActive_Benefit_Continuation_Period_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3174,6 +3267,10 @@
                     <value>Facet-2b0g4wwk0xc</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -3199,6 +3296,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-zvypyjz23m</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3228,6 +3329,10 @@
                     <value>Facet-r690euxo7r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -3253,6 +3358,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-2n4vmbhm76t</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3282,6 +3391,10 @@
                     <value>Facet-95hw0dzkun</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -3309,6 +3422,10 @@
                     <value>Facet-kjdq6tz5wzc</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -3334,6 +3451,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-xy6ojv9tbyj</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -3426,6 +3547,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
             </componentInstance>

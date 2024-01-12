@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_status_cant_be_changed_to_Default</fullName>
+    <active>true</active>
+    <description>Show a validation message if user change the status of record from Active to status other than draft, inactive or cancelled.</description>
+    <errorConditionFormula>ISCHANGED(NSP_Status__c) &amp;&amp; ISPICKVAL(PRIORVALUE(NSP_Status__c), &apos;Active&apos;) 
+&amp;&amp; NOT(ISPICKVAL(NSP_Status__c, &apos;Draft&apos;)  || ISPICKVAL(NSP_Status__c, &apos;Inactive&apos;) || ISPICKVAL(NSP_Status__c, &apos;Cancelled&apos;))</errorConditionFormula>
+    <errorDisplayField>NSP_Status__c</errorDisplayField>
+    <errorMessage>Cancelled records status can be changed to draft / inactive / cancelled only.</errorMessage>
+</ValidationRule>

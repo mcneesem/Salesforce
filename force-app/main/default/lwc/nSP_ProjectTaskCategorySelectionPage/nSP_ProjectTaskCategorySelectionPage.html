@@ -1,0 +1,213 @@
+<!--
+  @description       : LWC Component to handle the category/sub-category mapping selection edit on Project task records.
+  @Created On        : November 12th 2021
+-->
+<template>
+    <template if:true={showPopUp}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Category/Subcategory Details</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="overflowContent slds-modal__content paddingBotton slds-var-p-around_medium"
+                    id="modal-content-id-1">
+                    <template if:true={showcategory}>
+                        <div class="slds-var-p-around_medium slds-form_horizontal">
+                            <lightning-combobox data-fname="category" name="Category" label="Category"
+                                value={selectedCategory} placeholder="Select a Category"
+                                options={categoryOptions} onchange={handleChange} >
+                            </lightning-combobox>
+                            <template if:true={showViewAll}>
+                                <span class="slds-text-link" onclick={showAllCategories}>
+                                    <lightning-formatted-text value={label.viewAll}></lightning-formatted-text>
+                                </span>
+                            </template>
+                            <template if:false={showViewAll}>
+                                <span class="slds-text-link" onclick={resetCategories}>
+                                    <lightning-formatted-text value={label.reset}></lightning-formatted-text>
+                                </span>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:true={showsubcategory}>
+                        <div class="slds-var-p-around_medium slds-form_horizontal">
+                            <lightning-combobox data-fname="subcategory" name="Subcategory" label={label.subcategory}
+                                value={selectedSubCategory} placeholder="Select a Subcategory"
+                                options={subCategoryOptions} onchange={handleChange} >
+                            </lightning-combobox>
+                            <template if:true={showingAllSubCategories}>
+                                <span class="slds-text-link" onclick={showAllSubCategories}>
+                                    <lightning-formatted-text value={label.viewAll}></lightning-formatted-text>
+                                </span>
+                            </template>
+                            <template if:true={showingResetSubCategories}>
+                                <span class="slds-text-link" onclick={resetSubCategories}>
+                                    <lightning-formatted-text value={label.reset}></lightning-formatted-text>
+                                </span>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:true={showdetail}>
+                        <div class="slds-var-p-around_medium slds-form_horizontal">
+                            <lightning-combobox data-fname="detail" name="Detail" label="Detail"
+                                value={selectedDetail} placeholder="Select a Detail"
+                                options={detailOptions} onchange={handleChange} >
+                            </lightning-combobox>
+                        </div>
+                    </template>
+                    
+                    <template if:true={showVersion}>
+                        <div class="slds-var-p-around_medium slds-form_horizontal">
+                            <lightning-combobox data-fname="version" name="Version" label="Version"
+                                value={selectedVersion} placeholder="Select a Version"
+                                options={versionOptions} onchange={handleChange} >
+                            </lightning-combobox>
+                        </div>
+                    </template>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                <lightning-button variant="brand"  if:false = {isFromCreationPage} label={submitLabel} title="Save" onclick={submitDetails}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+                <lightning-button variant="brand" if:false = {isFromCreationPage} label="Cancel" title="Cancel" onclick={cancelDetails}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+                <lightning-button variant="brand" if:true = {isFromCreationPage} label="Cancel" title="Cancel" onclick={handleCancelRecordCreation}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+                <lightning-button variant="brand"  if:true = {isFromCreationPage} label= "Next" title="Save" onclick={handleRecordCreation}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    
+    <template if:true={showEditComponent}>
+        <div class="container">
+            <template if:true={view}>
+                <div class="slds-grid slds-page-header slds-p-around_small">
+                    <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                        <div class="slds-media__body" data-aura-rendered-by="1233:0">
+                            <h2 class="slds-card__header-title">
+                                <lightning-formatted-text class="slds-text-heading_small" value="Task Category/Subcategory/Detail">
+                                </lightning-formatted-text>
+                            </h2>
+                        </div>
+                        <div class="slds-no-flex">
+                            <template if:true={showEditButton}>
+                                <lightning-button label="Edit" onclick={editCategory}></lightning-button>
+                            </template>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-p-around_medium slds-is-relative">
+                    <lightning-record-view-form record-id={recordId} object-api-name={objectApiName} density="compact">
+                        <lightning-output-field field-name="NSP_Category__c"></lightning-output-field>
+                            <lightning-output-field field-name="NSP_Sub_Category__c"></lightning-output-field>
+                        <template if:true={showdetail}>
+                            <lightning-output-field field-name="NSP_Detail__c"></lightning-output-field>
+                        </template>
+                        <template if:true={showVersion}>
+                            <lightning-output-field field-name="NSP_Version__c"></lightning-output-field>
+                        </template>
+                    </lightning-record-view-form>
+                </div>
+            </template>
+            <div class="slds-p-around_medium slds-is-relative">
+                <template if:true={isLoading}>
+                    <lightning-spinner></lightning-spinner>
+                </template>
+                <template if:false={view}>
+                    <lightning-layout multiple-rows=true>
+                        <!--Category start-->
+                        <lightning-layout-item size="4">
+                            <lightning-formatted-text class="slds-form-element__label" value={label.category}>
+                            </lightning-formatted-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="8" class="slds-m-bottom_small">
+                            <lightning-combobox label={label.category} variant="label-hidden" value={selectedCategory}
+                                placeholder="Select a Category" options={categoryOptions} onchange={handleChange1} required>
+                            </lightning-combobox>
+                            <template if:true={showViewAll}>
+                                <span class="slds-text-link" onclick={showAllCategories}>
+                                    <lightning-formatted-text value={label.viewAll}></lightning-formatted-text>
+                                </span>
+                            </template>
+                            <template if:false={showViewAll}>
+                                <span class="slds-text-link" onclick={resetCategories}>
+                                    <lightning-formatted-text value={label.reset}></lightning-formatted-text>
+                                </span>
+                            </template>
+                        </lightning-layout-item>
+                        <!--Category end-->
+
+                        <!--Sub-Category start -->
+                            <lightning-layout-item size="4">
+                                <lightning-formatted-text class="slds-form-element__label" value={label.subcategory}>
+                                </lightning-formatted-text>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="8" class="slds-m-bottom_small">
+                                <lightning-combobox label={label.subcategory} variant="label-hidden"
+                                    value={selectedSubCategory} placeholder="Select a Sub Category"
+                                    options={subCategoryOptions} onchange={handleChange2}>
+                                </lightning-combobox>
+                                <template if:true={showingAllSubCategories}>
+                                    <span class="slds-text-link" onclick={showAllSubCategories}>
+                                        <lightning-formatted-text value={label.viewAll}></lightning-formatted-text>
+                                    </span>
+                                </template>
+                                <template if:true={showingResetSubCategories}>
+                                    <span class="slds-text-link" onclick={resetSubCategories}>
+                                        <lightning-formatted-text value={label.reset}></lightning-formatted-text>
+                                    </span>
+                                </template>
+                            </lightning-layout-item>
+                      <!-- Sub-Category end-->
+
+                        <!--Detail start-->
+                        <template if:true={showdetail}>
+                            <lightning-layout-item size="4">
+                                <lightning-formatted-text class="slds-form-element__label" value={label.detail}>
+                                </lightning-formatted-text>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="8" class="slds-m-bottom_small">
+                                <lightning-combobox label={label.detail} variant="label-hidden" value={selectedDetail}
+                                    placeholder="Select a Detail" options={detailOptions} onchange={handleChange3} >
+                                </lightning-combobox>                                                                           
+                            </lightning-layout-item>
+                        </template>
+                        <!--Detail End-->
+
+                        <!--Version start-->
+                        <template if:true={showVersion}>
+                            <lightning-layout-item size="4">
+                                <lightning-formatted-text class="slds-form-element__label" value={label.version}>
+                                </lightning-formatted-text>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="8" class="slds-m-bottom_small">
+                                <lightning-combobox label={label.version} variant="label-hidden" value={selectedVersion}
+                                    placeholder="Select a Version" options={versionOptions} onchange={handleChange4} >
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                        </template>
+                        <!--Version End-->
+
+                        <div class="slds-align_absolute-center slds-m-top_small">
+                            <lightning-button variant="brand" label="Save" title="Save" onclick={saveDetails} 
+                                class="slds-m-left_x-small">
+                            </lightning-button>
+                            <lightning-button label="Cancel" onclick={cancel}></lightning-button>
+                        </div>
+                    </lightning-layout>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

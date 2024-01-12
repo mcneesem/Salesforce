@@ -1,0 +1,178 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.retirementServices}>
+    </lightning-formatted-text>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Client_has_existing_retirement_plan__c}
+      label={label.existingRetirementPlanQuestion}
+      field-api-name="Implementation_Profile__c.Client_has_existing_retirement_plan__c"
+      record-type-id={recordTypeId}
+      value={field.Client_has_existing_retirement_plan__c}
+      data-name="Client_has_existing_retirement_plan__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <div if:true={visibility.Type_of_retirement_plan_client_has_today__c}>
+      <c-nsp_selection-box
+        disabled={disabledFields.Type_of_retirement_plan_client_has_today__c}
+        label={label.retirementPlanClientHasToday}
+        field-api-name="Implementation_Profile__c.Type_of_retirement_plan_client_has_today__c"
+        record-type-id={recordTypeId}
+        value={field.Type_of_retirement_plan_client_has_today__c}
+        class={styles.Type_of_retirement_plan_client_has_today__c}
+        data-name="Type_of_retirement_plan_client_has_today__c"
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_submitting_apprvl_for_spreadsheet__c}
+        if:true={visibility.Client_submitting_apprvl_for_spreadsheet__c}
+        class={styles.Client_submitting_apprvl_for_spreadsheet__c}
+        label={label.submitApprovalForSpreadSheet}
+        field-api-name="Implementation_Profile__c.Client_submitting_apprvl_for_spreadsheet__c"
+        record-type-id={recordTypeId}
+        data-name="Client_submitting_apprvl_for_spreadsheet__c"
+        value={field.Client_submitting_apprvl_for_spreadsheet__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.ORK_Team_notified_about_the_new_client__c}
+        if:true={visibility.ORK_Team_notified_about_the_new_client__c}
+        class={styles.ORK_Team_notified_about_the_new_client__c}
+        label={label.orkTeamNotified}
+        field-api-name="Implementation_Profile__c.ORK_Team_notified_about_the_new_client__c"
+        record-type-id={recordTypeId}
+        data-name="ORK_Team_notified_about_the_new_client__c"
+        value={field.ORK_Team_notified_about_the_new_client__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.received_introductory_email_frm_ORK_Team__c}
+        if:true={visibility.received_introductory_email_frm_ORK_Team__c}
+        class={styles.received_introductory_email_frm_ORK_Team__c}
+        label={label.clientRecievedIntroEmail}
+        field-api-name="Implementation_Profile__c.received_introductory_email_frm_ORK_Team__c"
+        record-type-id={recordTypeId}
+        data-name="received_introductory_email_frm_ORK_Team__c"
+        value={field.received_introductory_email_frm_ORK_Team__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Emp_deferral_loan_amount__c}
+        if:true={visibility.Emp_deferral_loan_amount__c}
+        class={styles.Emp_deferral_loan_amount__c}
+        label={label.empDeferralAndLoanAmount}
+        field-api-name="Implementation_Profile__c.Emp_deferral_loan_amount__c"
+        record-type-id={recordTypeId}
+        data-name="Emp_deferral_loan_amount__c"
+        value={field.Emp_deferral_loan_amount__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+    </div>
+      
+        <c-nsp_selection-box
+          if:true={visibility.NSP_Is_the_client_working_an_NSP_RS_rep__c}
+          disabled={disabledFields.NSP_Is_the_client_working_an_NSP_RS_rep__c}
+          label={label.isClientWorkingwithNSPRSrep}
+          field-api-name="Implementation_Profile__c.NSP_Is_the_client_working_an_NSP_RS_rep__c"
+          record-type-id={recordTypeId}
+          value={field.NSP_Is_the_client_working_an_NSP_RS_rep__c}
+          class={styles.NSP_Is_the_client_working_an_NSP_RS_rep__c}
+          data-name="NSP_Is_the_client_working_an_NSP_RS_rep__c"
+          onchange={handleValueChange}>
+        </c-nsp_selection-box>
+
+        <div class={styles.NSP_Is_the_client_working_an_NSP_RS_rep__c}>
+        <c-nsp_employee-data
+          if:true={visibility.Contact_Details}
+          title={label.rsContactQuestion}
+          records={empData.NSP_Is_the_client_working_an_NSP_RS_rep__c}
+          fields={empTableFields.NSP_Is_the_client_working_an_NSP_RS_rep__c}
+          parent-field="NSP_Is_the_client_working_an_NSP_RS_rep__c"
+          disabled={checkIfIpisActive}>
+        </c-nsp_employee-data>
+    </div>
+
+      <c-nsp_selection-box
+        if:true={visibility.Client_want_to_begin_401k_w_NSP_setup__c}
+        disabled={disabledFields.Client_want_to_begin_401k_w_NSP_setup__c}
+        label={label.likeToSetupWithNSPQuestion}
+        field-api-name="Implementation_Profile__c.Client_want_to_begin_401k_w_NSP_setup__c"
+        record-type-id={recordTypeId}
+        value={field.Client_want_to_begin_401k_w_NSP_setup__c}
+        class={styles.Client_want_to_begin_401k_w_NSP_setup__c}
+        data-name="Client_want_to_begin_401k_w_NSP_setup__c"
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+        <c-nsp_selection-box
+          if:true={visibility.Client_working_with_an_NSP_RS_rep__c}
+          disabled={disabledFields.Client_working_with_an_NSP_RS_rep__c}
+          label={label.isClientWorkingwithNSPRSrep}
+          field-api-name="Implementation_Profile__c.Client_working_with_an_NSP_RS_rep__c"
+          record-type-id={recordTypeId}
+          value={field.Client_working_with_an_NSP_RS_rep__c}
+          class={styles.Client_working_with_an_NSP_RS_rep__c}
+          data-name="Client_working_with_an_NSP_RS_rep__c"
+          onchange={handleValueChange}>
+        </c-nsp_selection-box>
+
+        <div class={styles.Client_working_with_an_NSP_RS_rep__c}>
+          <c-nsp_employee-data
+            if:true={visibility.SHOW_Contact_Details}
+            title={label.rsContactQuestion}
+            records={empData.Client_working_with_an_NSP_RS_rep__c}
+            fields={empTableFields.Client_working_with_an_NSP_RS_rep__c}
+            parent-field="Client_working_with_an_NSP_RS_rep__c"
+            disabled={checkIfIpisActive}>
+        </c-nsp_employee-data>
+        </div>
+        <div if:true={visibility.NSP_RS_Doc_Contact_Info__c}>
+          <div class="slds-form-element__label">
+            <lightning-formatted-text
+              class={styles.NSP_RS_Doc_Contact_Info__c}
+              value={label.RSDocument}
+              data-field="NSP_RS_Doc_Contact_Info__c">
+            </lightning-formatted-text>
+        </div>
+          <lightning-input-field
+            class={styles.NSP_RS_Doc_Contact_Info__c}
+            value={field.NSP_RS_Doc_Contact_Info__c}
+            disabled={disabledFields.NSP_RS_Doc_Contact_Info__c}
+            field-name="NSP_RS_Doc_Contact_Info__c"
+            data-name="NSP_RS_Doc_Contact_Info__c"
+            variant="label-hidden"
+            onchange={handleValueChange}>
+          </lightning-input-field>
+        </div>
+
+        <c-nsp_selection-box
+          if:true={visibility.Confirm_w_RS_when_each_step_is_completed__c}
+          class={styles.Confirm_w_RS_when_each_step_is_completed__c}
+          label={objFields.Confirm_w_RS_when_each_step_is_completed__c.label}
+          field-api-name="Implementation_Profile__c.Confirm_w_RS_when_each_step_is_completed__c"
+          record-type-id={recordTypeId}
+          data-name="Confirm_w_RS_when_each_step_is_completed__c"
+          value={field.Confirm_w_RS_when_each_step_is_completed__c}
+          onchange={handleValueChange}
+          multiple>
+        </c-nsp_selection-box>
+
+    <lightning-input-field
+      value={field.Retirement_services_notes__c}
+      disabled={disabledFields.Retirement_services_notes__c}
+      field-name="Retirement_services_notes__c"
+      data-name="Retirement_services_notes__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+  </lightning-record-edit-form>
+</template>
+

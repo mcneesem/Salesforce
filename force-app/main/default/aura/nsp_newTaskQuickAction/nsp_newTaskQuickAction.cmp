@@ -1,0 +1,14 @@
+<!--
+    This aura component calls an LWC nsp_newTask which is in turn called in quick action
+    on Asset object. The main purpose of doing this is because adding a quick action 
+    button that launches an LWC on the Asset detail page is not supported for Asset object yet.
+
+    Supporting document - 
+    https://help.salesforce.com/s/articleView?id=sf.lightning_web_component_actions_create.htm&type=5
+-->
+
+
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+	<aura:attribute name="recordId" type="String"/>
+    <c:nsp_newTask aura:id='newTask' recordId="{!v.recordId}" onclose="{!c.handleCancel}"/>
+</aura:component>

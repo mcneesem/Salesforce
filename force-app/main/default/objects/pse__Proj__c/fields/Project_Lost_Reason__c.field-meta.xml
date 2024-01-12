@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_Lost_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Project Lost Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Benefits not currently offered</fullName>
+                <default>false</default>
+                <label>Benefits not currently offered</label>
+            </value>
+            <value>
+                <fullName>Cancelled at Intake</fullName>
+                <default>false</default>
+                <label>Cancelled at Intake</label>
+            </value>
+            <value>
+                <fullName>Client Termed with WO</fullName>
+                <default>false</default>
+                <label>Client Termed with WO</label>
+            </value>
+            <value>
+                <fullName>COVID-19</fullName>
+                <default>false</default>
+                <label>COVID-19</label>
+            </value>
+            <value>
+                <fullName>Didn&apos;t align with Insperity Values</fullName>
+                <default>false</default>
+                <label>Didn&apos;t align with Insperity Values</label>
+            </value>
+            <value>
+                <fullName>Duplicate Project</fullName>
+                <default>false</default>
+                <label>Duplicate Project</label>
+            </value>
+            <value>
+                <fullName>Feature/Functionality Limitation</fullName>
+                <default>false</default>
+                <label>Feature/Functionality Limitation</label>
+            </value>
+            <value>
+                <fullName>Funding Issue (Payroll)</fullName>
+                <default>false</default>
+                <label>Funding Issue (Payroll)</label>
+            </value>
+            <value>
+                <fullName>Key Decision Maker Change</fullName>
+                <default>false</default>
+                <label>Key Decision Maker Change</label>
+            </value>
+            <value>
+                <fullName>No Longer Wants Product</fullName>
+                <default>false</default>
+                <label>No Longer Wants Product</label>
+            </value>
+            <value>
+                <fullName>Non Responsive</fullName>
+                <default>false</default>
+                <label>Non Responsive</label>
+            </value>
+            <value>
+                <fullName>Non-Payment</fullName>
+                <default>false</default>
+                <label>Non-Payment</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Service/Implementation Issue</fullName>
+                <default>false</default>
+                <label>Service/Implementation Issue</label>
+            </value>
+            <value>
+                <fullName>Thought Service Level was PEO Like</fullName>
+                <default>false</default>
+                <label>Thought Service Level was PEO Like</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

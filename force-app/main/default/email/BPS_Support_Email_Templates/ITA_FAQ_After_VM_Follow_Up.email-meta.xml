@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ After VM Follow-Up</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ After VM Follow-Up</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ After VM Follow-Up</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+I tried calling and was unable to reach you. Please call 800-314-8223 at your convenience and reference this case number ({!Case.CaseNumber}). A member of our live support team will be happy to assist. 
+ 
+Our business hours are Monday-Friday from 7:00 am-7:00 pm CST.  
+ 
+Thank you in advance, 
+ 
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

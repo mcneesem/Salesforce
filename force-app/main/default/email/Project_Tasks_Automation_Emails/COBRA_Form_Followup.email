@@ -1,0 +1,12 @@
+<messaging:emailTemplate subject="{!SUBSTITUTE(SUBSTITUTE( SUBSTITUTE(relatedTo.Name, 'Need', ''), 'verify eligibility', '' ), 'collected', '')} ({!relatedTo.pse__Project__r.pse__Account__r.Name}) ({!relatedTo.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c}) " recipientType="User" relatedToType="pse__Project_Task__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<p>The &nbsp;<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE( SUBSTITUTE(relatedTo.Name, 'Need', ''), 'verify eligibility', '' ), 'collected', '')}" escape="false"/> for ({!relatedTo.pse__Project__r.pse__Account__r.Name}) ({!relatedTo.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c}) is attached.</p>
+</body>
+<apex:outputPanel >
+<c:NSP_RelatedProjectTeams currentRecordId="{!relatedTo.pse__Project__c}"/>
+</apex:outputPanel>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

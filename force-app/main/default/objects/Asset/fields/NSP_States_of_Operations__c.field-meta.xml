@@ -3,9 +3,9 @@
     <fullName>NSP_States_of_Operations__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>States of Operations</label>
-    <length>500</length>
-    <trackHistory>false</trackHistory>
-    <type>LongTextArea</type>
-    <visibleLines>3</visibleLines>
+    <label>States EEs work in</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>TextArea</type>
 </CustomField>

@@ -1,0 +1,22 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) – Form 8973 Contact Information " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+   <c:InsperityEmailHeader ></c:InsperityEmailHeader>
+  <p>The Form 8973 contact information for {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) – is below. </p>
+  <p>Form 8973 Contact:{!relatedTo.Form_8973_Contact__c}  <br/>
+  Contact Information:{!relatedTo.Contact_Information__c } </p>
+  
+  <p>If you have any questions, please contact me. </p>
+  
+  
+  
+<p>Regards,<br/>
+    {!relatedTo.NSP_Project_Manager__r.Name}<br/>
+    {!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+     <c:InsperityEmailFooter ></c:InsperityEmailFooter>
+</body>
+</html>
+</messaging:HtmlEmailBody>
+  
+</messaging:emailTemplate>

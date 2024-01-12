@@ -1,0 +1,15 @@
+<messaging:emailTemplate subject="Onboarding Meeting Information" recipientType="User" relatedToType="ServiceAppointment">
+<messaging:htmlEmailBody >
+<html>
+<body>
+Additional information has been added or a change has been made to the details of this Meeting for {!relatedTo.Account.Name}.<br/>  <br/>
+Please review the comments in the body of this email to learn what has changed. The changes are also reflected on the Project Task in Salesforce.<br/>
+
+<c:NSP_SAEmail_DateTime currentRecordId="{!relatedTo.Id}" date_time_value="{!relatedTo.SchedStartTime}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.SchedEndTime}"/><br/>
+Address : {!relatedTo.NSP_Orientation_Address__c} <br/>
+Orientation Rep: {!relatedTo.Owner.Name} <br/>
+Comments : {!relatedTo.Description}
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

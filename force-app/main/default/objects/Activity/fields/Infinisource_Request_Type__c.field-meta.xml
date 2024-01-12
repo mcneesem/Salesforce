@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Infinisource_Request_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Infinisource Request Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>COBRA cancellation request</fullName>
+                <default>false</default>
+                <label>COBRA cancellation request</label>
+            </value>
+            <value>
+                <fullName>COBRA Error</fullName>
+                <default>false</default>
+                <label>COBRA Error</label>
+            </value>
+            <value>
+                <fullName>COBRA Sync</fullName>
+                <default>false</default>
+                <label>COBRA Sync</label>
+            </value>
+            <value>
+                <fullName>Fringe cancellation request</fullName>
+                <default>false</default>
+                <label>Fringe cancellation request</label>
+            </value>
+            <value>
+                <fullName>FRINGE Error</fullName>
+                <default>false</default>
+                <label>FRINGE Error</label>
+            </value>
+            <value>
+                <fullName>FRINGE Sync</fullName>
+                <default>false</default>
+                <label>FRINGE Sync</label>
+            </value>
+            <value>
+                <fullName>New COBRA Integration request</fullName>
+                <default>false</default>
+                <label>New COBRA Integration request</label>
+            </value>
+            <value>
+                <fullName>New Fringe Integration request</fullName>
+                <default>false</default>
+                <label>New Fringe Integration request</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

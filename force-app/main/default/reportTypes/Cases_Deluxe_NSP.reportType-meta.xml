@@ -199,11 +199,6 @@
             <field>Account.NSP_Account_Status__c</field>
             <table>Case</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account.NSP_Account_Risk_Level__c</field>
-            <table>Case</table>
-        </columns>
         <masterLabel>Case-Account</masterLabel>
     </sections>
     <sections>

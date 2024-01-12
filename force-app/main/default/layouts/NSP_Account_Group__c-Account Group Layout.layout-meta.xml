@@ -15,6 +15,18 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Tag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Watchlist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Group_Member_Count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -41,6 +53,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_OneVoice_External_ID__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
@@ -57,11 +73,30 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>NSP_Type__c</fields>
+        <fields>NSP_Tag__c</fields>
+    </miniLayout>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>NSP_Account_Group__c.Add_Account_Group_Members</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Account.NAME</fields>
+        <fields>NSP_AIMS_Client_ID__c</fields>
+        <fields>NSP_Insperity_Client__c</fields>
         <fields>NSP_Primary__c</fields>
-        <fields>NSP_Bill_To_Account__c</fields>
+        <fields>NSP_Type__c</fields>
+        <fields>NSP_Enter_Date__c</fields>
+        <fields>NSP_Hicomp_EEs__c</fields>
+        <fields>NSP_Total_EEs__c</fields>
+        <fields>NSP_Payroll_Employees__c</fields>
         <relatedList>NSP_Account_Group_Member__c.NSP_Group__c</relatedList>
     </relatedLists>
     <relatedLists>

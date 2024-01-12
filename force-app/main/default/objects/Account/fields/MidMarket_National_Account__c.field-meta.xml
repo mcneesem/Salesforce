@@ -17,6 +17,11 @@
                 <label>MidMarket</label>
             </value>
             <value>
+                <fullName>MMNA Prospect</fullName>
+                <default>false</default>
+                <label>MMNA Prospect</label>
+            </value>
+            <value>
                 <fullName>AAA - The Auto Group</fullName>
                 <default>false</default>
                 <label>AAA - The Auto Group</label>
@@ -40,6 +45,11 @@
                 <fullName>Best Western Hotels &amp; Resorts</fullName>
                 <default>false</default>
                 <label>Best Western Hotels &amp; Resorts</label>
+            </value>
+            <value>
+                <fullName>Brunswick</fullName>
+                <default>false</default>
+                <label>Brunswick</label>
             </value>
             <value>
                 <fullName>Charles Schwab</fullName>
@@ -72,6 +82,16 @@
                 <label>Independent Agency/ Allstate</label>
             </value>
             <value>
+                <fullName>Independent Tire Dealers</fullName>
+                <default>false</default>
+                <label>Independent Tire Dealers</label>
+            </value>
+            <value>
+                <fullName>MDVIP</fullName>
+                <default>false</default>
+                <label>MDVIP</label>
+            </value>
+            <value>
                 <fullName>PREVEER (UFG franchise)</fullName>
                 <default>false</default>
                 <label>PREVEER (UFG franchise)</label>
@@ -85,6 +105,11 @@
                 <fullName>Raymond James Advisors</fullName>
                 <default>false</default>
                 <label>Raymond James Advisors</label>
+            </value>
+            <value>
+                <fullName>TechStars</fullName>
+                <default>false</default>
+                <label>TechStars</label>
             </value>
             <value>
                 <fullName>Trane U.S. Inc.</fullName>
@@ -114,6 +139,7 @@
             <value>
                 <fullName>Worldcom PR</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Worldcom PR</label>
             </value>
         </valueSetDefinition>

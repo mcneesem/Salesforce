@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_Top_Tier__c</fullName>
+    <externalId>false</externalId>
+    <label>RET - Top Tier</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>I = Insperity Top 25</fullName>
+                <default>false</default>
+                <label>I = Insperity Top 25</label>
+            </value>
+            <value>
+                <fullName>IK = Insperity Top 25 and 401k Product</fullName>
+                <default>false</default>
+                <label>IK = Insperity Top 25 and 401k Product</label>
+            </value>
+            <value>
+                <fullName>K= NSP 401k Product</fullName>
+                <default>false</default>
+                <label>K= NSP 401k Product</label>
+            </value>
+            <value>
+                <fullName>S = Special Handle</fullName>
+                <default>false</default>
+                <label>S = Special Handle</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

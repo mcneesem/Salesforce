@@ -8,5 +8,6 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>NSP_Finance_CPQ_Permission</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

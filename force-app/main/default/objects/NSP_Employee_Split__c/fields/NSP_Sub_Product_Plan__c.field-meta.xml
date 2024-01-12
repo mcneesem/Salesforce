@@ -26,6 +26,16 @@
                 <label>Choice Startup</label>
             </value>
             <value>
+                <fullName>NSPK Association</fullName>
+                <default>false</default>
+                <label>NSPK Association</label>
+            </value>
+            <value>
+                <fullName>NSPK Association w/ merger</fullName>
+                <default>false</default>
+                <label>NSPK Association w/ merger</label>
+            </value>
+            <value>
                 <fullName>NSPK Merger</fullName>
                 <default>false</default>
                 <label>NSPK Merger</label>
@@ -88,31 +98,37 @@
             <value>
                 <fullName>Tier 1</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Tier 1</label>
             </value>
             <value>
                 <fullName>Tier 2</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Tier 2</label>
             </value>
             <value>
                 <fullName>Tier 3</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Tier 3</label>
             </value>
             <value>
                 <fullName>Tier 4</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Tier 4</label>
             </value>
             <value>
                 <fullName>Tier 5</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Tier 5</label>
             </value>
             <value>
                 <fullName>Tier 6</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Tier 6</label>
             </value>
         </valueSetDefinition>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Competitor_HCM_System__c</fullName>
+    <externalId>false</externalId>
+    <label>Competitor HCM System</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADP</fullName>
+                <default>false</default>
+                <label>ADP</label>
+            </value>
+            <value>
+                <fullName>ADP Resource</fullName>
+                <default>false</default>
+                <label>ADP Resource</label>
+            </value>
+            <value>
+                <fullName>ADP RUN</fullName>
+                <default>false</default>
+                <label>ADP RUN</label>
+            </value>
+            <value>
+                <fullName>ADP Totalsource</fullName>
+                <default>false</default>
+                <label>ADP Totalsource</label>
+            </value>
+            <value>
+                <fullName>Bamboo HR</fullName>
+                <default>false</default>
+                <label>Bamboo HR</label>
+            </value>
+            <value>
+                <fullName>BrightHR</fullName>
+                <default>false</default>
+                <label>BrightHR</label>
+            </value>
+            <value>
+                <fullName>CakeHR</fullName>
+                <default>false</default>
+                <label>CakeHR</label>
+            </value>
+            <value>
+                <fullName>Ceridian</fullName>
+                <default>false</default>
+                <label>Ceridian</label>
+            </value>
+            <value>
+                <fullName>CheckPointHR</fullName>
+                <default>false</default>
+                <label>CheckPointHR</label>
+            </value>
+            <value>
+                <fullName>Compass</fullName>
+                <default>false</default>
+                <label>Compass</label>
+            </value>
+            <value>
+                <fullName>Epicor</fullName>
+                <default>false</default>
+                <label>Epicor</label>
+            </value>
+            <value>
+                <fullName>Full sail</fullName>
+                <default>false</default>
+                <label>Full sail</label>
+            </value>
+            <value>
+                <fullName>Infor</fullName>
+                <default>false</default>
+                <label>Infor</label>
+            </value>
+            <value>
+                <fullName>iSolved (third party)</fullName>
+                <default>false</default>
+                <label>iSolved (third party)</label>
+            </value>
+            <value>
+                <fullName>Kronos</fullName>
+                <default>false</default>
+                <label>Kronos</label>
+            </value>
+            <value>
+                <fullName>Local Provider</fullName>
+                <default>false</default>
+                <label>Local Provider</label>
+            </value>
+            <value>
+                <fullName>Namely</fullName>
+                <default>false</default>
+                <label>Namely</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Oracle / Fusion HCM</fullName>
+                <default>false</default>
+                <label>Oracle / Fusion HCM</label>
+            </value>
+            <value>
+                <fullName>OrangeHRM</fullName>
+                <default>false</default>
+                <label>OrangeHRM</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>PayChex</fullName>
+                <default>false</default>
+                <label>PayChex</label>
+            </value>
+            <value>
+                <fullName>PayChex Flex</fullName>
+                <default>false</default>
+                <label>PayChex Flex</label>
+            </value>
+            <value>
+                <fullName>Paycom</fullName>
+                <default>false</default>
+                <label>Paycom</label>
+            </value>
+            <value>
+                <fullName>PayCor</fullName>
+                <default>false</default>
+                <label>PayCor</label>
+            </value>
+            <value>
+                <fullName>Paylocity</fullName>
+                <default>false</default>
+                <label>Paylocity</label>
+            </value>
+            <value>
+                <fullName>PDS</fullName>
+                <default>false</default>
+                <label>PDS</label>
+            </value>
+            <value>
+                <fullName>PurelyHR</fullName>
+                <default>false</default>
+                <label>PurelyHR</label>
+            </value>
+            <value>
+                <fullName>Quickbooks</fullName>
+                <default>false</default>
+                <label>Quickbooks</label>
+            </value>
+            <value>
+                <fullName>Sage</fullName>
+                <default>false</default>
+                <label>Sage</label>
+            </value>
+            <value>
+                <fullName>SAP / Success Factors HCM</fullName>
+                <default>false</default>
+                <label>SAP / Success Factors HCM</label>
+            </value>
+            <value>
+                <fullName>Silk road</fullName>
+                <default>false</default>
+                <label>Silk road</label>
+            </value>
+            <value>
+                <fullName>Simple HR</fullName>
+                <default>false</default>
+                <label>Simple HR</label>
+            </value>
+            <value>
+                <fullName>Thrive</fullName>
+                <default>false</default>
+                <label>Thrive</label>
+            </value>
+            <value>
+                <fullName>TriNet</fullName>
+                <default>false</default>
+                <label>TriNet</label>
+            </value>
+            <value>
+                <fullName>Ultimate</fullName>
+                <default>false</default>
+                <label>Ultimate</label>
+            </value>
+            <value>
+                <fullName>UltiPro</fullName>
+                <default>false</default>
+                <label>UltiPro</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>VibeHCM</fullName>
+                <default>false</default>
+                <label>VibeHCM</label>
+            </value>
+            <value>
+                <fullName>Workday</fullName>
+                <default>false</default>
+                <label>Workday</label>
+            </value>
+            <value>
+                <fullName>Workforce Administration</fullName>
+                <default>false</default>
+                <label>Workforce Administration</label>
+            </value>
+            <value>
+                <fullName>Workforce Optimization</fullName>
+                <default>false</default>
+                <label>Workforce Optimization</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

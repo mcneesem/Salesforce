@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Accurate__c</fullName>
+    <description>Indicates accuracy of match</description>
+    <externalId>false</externalId>
+    <formula>IF (
+INCLUDES( NSP_Match_Status__c , &quot;Allocation Match&quot;) &amp;&amp;
+INCLUDES( NSP_Match_Status__c , &quot;Account Match&quot;),
+IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos;, &apos;Accurate&apos;, 20, 20),
+IF(
+ISBLANK(NSP_Match_Status__c),
+IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos;, &apos;Not Accurate&apos;, 20, 20),
+IMAGE(&apos;/resource/1670261038000/NSP_Lockbox_status&apos;, &apos;Not Accurate&apos;, 20, 20)
+)
+)</formula>
+    <label>Accurate</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

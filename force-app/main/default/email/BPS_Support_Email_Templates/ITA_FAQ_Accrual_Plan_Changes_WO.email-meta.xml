@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Accrual Plan Changes - WO</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Accrual Plan Changes - WO</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Accrual Plan Changes - TES</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance support. We understand that you are interested in making changes to the accrual plan set up in your system. In order for us to determine the extent of the changes, we need your Human Resources Specialist to submit an updated policy. 
+ 
+HRS - Please work with {Case Contact First Name} to make updates regarding the accruals for (COMPANY NAME) and submit an updated necessary form. 
+ 
+Once we receive the approved policy, our team will determine the next steps and be in touch as soon as they’re able. 
+ 
+Thank you,  
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

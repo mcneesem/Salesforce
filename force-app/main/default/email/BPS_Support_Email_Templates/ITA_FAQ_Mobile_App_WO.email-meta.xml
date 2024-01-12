@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Mobile App (WO)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Mobile App (WO)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Mobile App (WO)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+We understand that you&apos;re interested in the process of utilizing mobile devices for your Time &amp; Attendance program. To best accommodate mobile devices, we have the Insperity Mobile App, which is available at both Google Play (Android), and the Apple Store. Search for &quot;Insperity Mobile&quot; and you can download the application for free. Some things you&apos;ll need to know about the mobile app are: 
+
+You need to be on the most current version of the Time &amp; Attendance software. 
+
+Employees need to be set up for web punching if you wish to allow them to punch. 
+
+Currently, the mobile app has punching and request capabilities, as well as timesheet approval options, based on the setup of your company. More functionality is in development at this time. 
+
+Please let us know if you have any further questions and we will be happy to help. 
+ 
+ 
+Thank you,  
+ 
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

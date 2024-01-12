@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Attached Documents</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Attached Documents</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Attached Documents</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+It was a pleasure working with you earlier. As a follow-up to the conversation we had today, please find the documentation I mentioned attached here. If you have additional questions or concerns, please let us know and we will be happy to help.  
+ 
+ 
+Thank you, 
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

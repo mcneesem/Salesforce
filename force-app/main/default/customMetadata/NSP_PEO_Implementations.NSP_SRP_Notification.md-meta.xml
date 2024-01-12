@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SRP Notification</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">MM From Automation emails
+Automation Section: Retirement Services
+Automation Name: SRP Notification
+Automation icon: envelope
+Email: Stateretprograms@insperity.com</value>
+    </values>
+    <values>
+        <field>NSP_Email_Address__c</field>
+        <value xsi:type="xsd:string">stateretprograms@insperity.com</value>
+    </values>
+    <values>
+        <field>NSP_Name__c</field>
+        <value xsi:type="xsd:string">SRP Notification</value>
+    </values>
+</CustomMetadata>

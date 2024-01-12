@@ -26,6 +26,7 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
     public void beforeInsert(List<sObject> newList) {
         NSP_AccountTeamTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamTriggerHelper();
         accountTeamMemberTriggerHelperObject.beforeInsertDirector((List<NSP_Account_Team__c>) newList);
+        
     }
 
     /**
@@ -40,6 +41,8 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
         accountTeamMemberTriggerHelperObject.afterInsertDirector((List<NSP_Account_Team__c>) newList, (Map<Id, NSP_Account_Team__c>) newMap);
        // Added as a part of STY-02768
        NSP_salesOfficeRecordSharing.accountTeamRecordSharing((Map<Id, NSP_Account_Team__c>) newMap);
+       NSP_AccountTeamTriggerHelper.updateProjectTaskEmailFields((List<NSP_Account_Team__c>) newList,null);
+       NSP_AccountTeamTriggerHelper.updateAssetServiceRegion((List<NSP_Account_Team__c>) newList, null);
     }
 
     /**
@@ -51,7 +54,9 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
      */
 
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        
+        NSP_AccountTeamTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamTriggerHelper();
+        accountTeamMemberTriggerHelperObject.beforeUpdateDirector((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap);
+	       
     }
 
     /**
@@ -65,6 +70,8 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         NSP_AccountTeamTriggerHelper  accountTeamMemberTriggerHelperObject =  new NSP_AccountTeamTriggerHelper();
         accountTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap);
+        NSP_AccountTeamTriggerHelper.updateProjectTaskEmailFields((List<NSP_Account_Team__c>) newMap.values(),(Map<Id,NSP_Account_Team__c>) oldMap);
+        NSP_AccountTeamTriggerHelper.updateAssetServiceRegion((List<NSP_Account_Team__c>) newMap.values(),(Map<Id,NSP_Account_Team__c>) oldMap);
     }
     
     /**
@@ -74,6 +81,7 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
      * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
     **/
     public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+        NSP_AccountTeamTriggerHelper.validationOnDeletionOfAccountTeam((Map<Id,NSP_Account_Team__c>) oldMap);
     }
     
     

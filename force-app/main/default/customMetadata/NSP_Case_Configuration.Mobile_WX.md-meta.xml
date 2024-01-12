@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Mobile – WX</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Assigned_To__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Category__c</field>
+        <value xsi:type="xsd:string">Time &amp; Attendance</value>
+    </values>
+    <values>
+        <field>NSP_Contact__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Covid_19__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Detail__c</field>
+        <value xsi:type="xsd:string">Mobile App</value>
+    </values>
+    <values>
+        <field>NSP_Email_Sent__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_Email__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_External_Id__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Level_2__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_Origin__c</field>
+        <value xsi:type="xsd:string">Other</value>
+    </values>
+    <values>
+        <field>NSP_Phone__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Priority__c</field>
+        <value xsi:type="xsd:string">Medium</value>
+    </values>
+    <values>
+        <field>NSP_Root_Cause__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Status__c</field>
+        <value xsi:type="xsd:string">Open</value>
+    </values>
+    <values>
+        <field>NSP_Sub_Category__c</field>
+        <value xsi:type="xsd:string">TimeStar WX</value>
+    </values>
+    <values>
+        <field>NSP_Sub_Status__c</field>
+        <value xsi:type="xsd:string">Not Started</value>
+    </values>
+    <values>
+        <field>NSP_Subject__c</field>
+        <value xsi:type="xsd:string">Mobile Assistance</value>
+    </values>
+    <values>
+        <field>NSP_Time_Entry__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_User_Notes__c</field>
+        <value xsi:type="xsd:string">REQUIRED INFORMATION:
+Issue Description:
+Expected Behavior:
+Observed Behavior:
+Employee Number:
+Employee Name:
+Employee Email:
+Company ID:
+Company Name:
+Device Type (Apple, Samsung, etc. AND tablet, phone):
+App Version (found in settings of mobile app):
+TimeStar User Type (i.e. Employee, Supervisor, Administrator):
+Steps to Reproduce:
+
+OPTION INFORMATION:
+Screenshots
+Additional Notes
+Crash Log (L2)</value>
+    </values>
+</CustomMetadata>

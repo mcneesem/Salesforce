@@ -1,0 +1,10 @@
+<messaging:emailTemplate subject="Insperity Invoice"  relatedToType="Account" recipientType="Contact">
+<messaging:htmlEmailBody >
+<p>Perhaps you missed an invoice?</p>
+<p>Your attention is needed in resolving the past due status of the attached invoice. Per the terms of your agreement with Insperity invoices are due net 30.
+If you would like to pay by credit card, please use the link below to access our online payment portal or contact us directly.</p>
+<c:NSP_dunningInvoicesList caseId="{!relatedTo.Id}" caseAccId="{!relatedTo.Id}"> </c:NSP_dunningInvoicesList>  
+<p>Thank you for your prompt attention to this matter.</p>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Holiday Admin Relief</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Assigned_To__c</field>
+        <value xsi:type="xsd:string">{
+&quot;object&quot; : &quot;User&quot;,
+&quot;value&quot; : &quot;Iris Hutchins&quot;
+}</value>
+    </values>
+    <values>
+        <field>NSP_Category__c</field>
+        <value xsi:type="xsd:string">Time &amp; Attendance</value>
+    </values>
+    <values>
+        <field>NSP_Contact__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Covid_19__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Detail__c</field>
+        <value xsi:type="xsd:string">Holiday</value>
+    </values>
+    <values>
+        <field>NSP_Email_Sent__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>NSP_Email__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_External_Id__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Level_2__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_Origin__c</field>
+        <value xsi:type="xsd:string">Non SLA</value>
+    </values>
+    <values>
+        <field>NSP_Phone__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Priority__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Root_Cause__c</field>
+        <value xsi:type="xsd:string">Administrative Relief</value>
+    </values>
+    <values>
+        <field>NSP_Status__c</field>
+        <value xsi:type="xsd:string">Closed</value>
+    </values>
+    <values>
+        <field>NSP_Sub_Category__c</field>
+        <value xsi:type="xsd:string">TimeStar WO</value>
+    </values>
+    <values>
+        <field>NSP_Sub_Status__c</field>
+        <value xsi:type="xsd:string">Resolved</value>
+    </values>
+    <values>
+        <field>NSP_Subject__c</field>
+        <value xsi:type="xsd:string">Generate Holidays</value>
+    </values>
+    <values>
+        <field>NSP_Time_Entry__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_User_Notes__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

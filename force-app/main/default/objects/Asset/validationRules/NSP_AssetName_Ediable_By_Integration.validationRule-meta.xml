@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_AssetName_Ediable_By_Integration</fullName>
+    <active>true</active>
+    <description>Asset Name cannot be editable by any profile other than Integration</description>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &apos;Integration User&apos; ,
+  NOT( ISNEW() ) ,
+  OR(
+    RecordType.Name = &quot;CPQ Asset&quot; ,
+    RecordType.Name = &quot;WO&quot; ,
+    RecordType.Name = &quot;RET WO&quot;
+  ) ,
+  ISCHANGED( Name )
+)</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Asset name can only be edited by integration</errorMessage>
+</ValidationRule>

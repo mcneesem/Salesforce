@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cancelled_Reason_is_required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.ProjectValidations__c != true,
+   NOT(CONTAINS(RecordType.DeveloperName, &apos;RET&apos;)) , 
+$Profile.Name &lt;&gt; &apos;Sysyem Adminstrator&apos;, ISPICKVAL( pse__Project_Status__c , &apos;Cancelled&apos;), ISBLANK(TEXT( NSP_Cancelled_Reason__c ))
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Cancelled_Reason__c</errorDisplayField>
+    <errorMessage>Cancelled Reason is required when Status is set to Cancelled</errorMessage>
+</ValidationRule>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Delay__c</fullName>
+    <externalId>false</externalId>
+    <label>Delay</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Developer</fullName>
+                <default>false</default>
+                <label>Developer</label>
+            </value>
+            <value>
+                <fullName>New Client/1st Payroll</fullName>
+                <default>false</default>
+                <label>New Client/1st Payroll</label>
+            </value>
+            <value>
+                <fullName>No Delay</fullName>
+                <default>false</default>
+                <label>No Delay</label>
+            </value>
+            <value>
+                <fullName>Project</fullName>
+                <default>false</default>
+                <label>Project</label>
+            </value>
+            <value>
+                <fullName>Service Provider</fullName>
+                <default>false</default>
+                <label>Service Provider</label>
+            </value>
+            <value>
+                <fullName>System / Outside Dept</fullName>
+                <default>false</default>
+                <label>System / Outside Dept</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

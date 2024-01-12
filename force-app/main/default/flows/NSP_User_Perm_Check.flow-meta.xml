@@ -246,13 +246,6 @@
             <stringValue>Sales_Engineer_Manager</stringValue>
         </value>
     </constants>
-    <constants>
-        <name>conSystemAdmin</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>System Administrator</stringValue>
-        </value>
-    </constants>
     <decisions>
         <name>BPA_User_Type_Check</name>
         <label>BPA/BPS-User Type Check</label>

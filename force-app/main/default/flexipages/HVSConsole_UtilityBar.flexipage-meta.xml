@@ -4,12 +4,20 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>voice:callHandlerContainer</componentName>
+                <identifier>voice_callHandlerContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>console:history</componentName>
+                <identifier>console_history</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>notes:utilityBarNoteList</componentName>
+                <identifier>notes_utilityBarNoteList</identifier>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>

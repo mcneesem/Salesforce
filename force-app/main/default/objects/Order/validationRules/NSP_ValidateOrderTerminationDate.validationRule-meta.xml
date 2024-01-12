@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ValidateOrderTerminationDate</fullName>
+    <active>true</active>
+    <description>Termination Date must be last day of the month</description>
+    <errorConditionFormula>AND(NSP_Has_Evergreen_Products__c&gt;0, DAY( NSP_TerminationDate__c ) &lt;&gt;
+IF(Month(NSP_TerminationDate__c )=12, 31, DAY(DATE(YEAR(NSP_TerminationDate__c ),MONTH(NSP_TerminationDate__c )+1,1) - 1)),ISPICKVAL(Type ,&apos;Termination&apos;),ISCHANGED(NSP_TerminationDate__c ))</errorConditionFormula>
+    <errorDisplayField>NSP_TerminationDate__c</errorDisplayField>
+    <errorMessage>Termination Date must be last day of the month</errorMessage>
+</ValidationRule>

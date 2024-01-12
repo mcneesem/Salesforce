@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This field is created as part of STY-02804. The users in this perm set should be in sync with Section 125 Private Case Visibility public group</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_Private__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Section 125 Private Case Visibility</label>
+</PermissionSet>

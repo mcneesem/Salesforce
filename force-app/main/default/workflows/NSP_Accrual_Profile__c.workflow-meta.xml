@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Change_Status_to_Active</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Active</literalValue>
+        <name>Change Status to Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Active_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Active</literalValue>
+        <name>Change Status to Active AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_ReSubmitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted</literalValue>
+        <name>Change Status to ReSubmitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_ReSubmitted_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted</literalValue>
+        <name>Change Status to ReSubmitted AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Rejected</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Change Status to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Rejected_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Change Status to Rejected AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Submitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Change Status to Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Submitted_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Change Status to Submitted AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Email_Field</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Email Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Email_Field2</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Email Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Field</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Field2</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <alerts>
+        <fullName>NSP_Accrual_Profile_Approval_AIMS</fullName>
+        <description>Accrual Profile Approval AIMS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Accrual_Profile_Approval_Alert2</fullName>
+        <description>Accrual Profile Approval Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Approval_Process_Approval</fullName>
+        <description>Approval Process Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Approval_Process_Rejection_1</fullName>
+        <description>Approval Process Rejection 1</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_ITA_Accrual_Profile_Final_Rejection_Alert</fullName>
+        <description>ITA Accrual Profile Final Rejection Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_ITA_Accrual_Profile_Rejection_Alert_2</fullName>
+        <description>ITA Accrual Profile Rejection Alert 2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_New_ITA_Approval_Process_Rejection</fullName>
+        <description>New ITA Approval Process Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Accrual_Profile_Approval_Alert</fullName>
+        <description>Accrual Profile Approval Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
+    </alerts>
+</Workflow>

@@ -1,0 +1,18 @@
+<aura:component implements="force:hasSObjectName,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+    access="global">
+    <!-- ATTRIBUTES -->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectName" type="String" />
+    
+    <lightning:navigation aura:id="navService"/>
+
+    <aura:html tag="style">
+        .slds-modal__container{
+            max-width:60vw;
+            width:100%;
+        }
+    </aura:html>
+    <!-- MARK UP -->
+    <c:nsp_createProjectFromTemplate recordId="{!v.recordId}" objectApiName="{!v.sObjectName}"
+        oncloseaction="{!c.closeQuickAction}" onsuccess="{!c.navigateToRecord}"/>
+</aura:component>

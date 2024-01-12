@@ -1,0 +1,62 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-12-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:true={showPinModal}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button> -->
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Validate Contact PIN</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                        <lightning-input type="text" label="PIN" pattern="[0-9]+" max-length="4"
+                            message-when-pattern-mismatch="Numbers Only" onchange={handleChange}>
+                        </lightning-input>
+                    </p>
+                    <template if:true={showErr}>
+                        <p>Pin Mismatch!</p>
+                    </template>
+                    <!-- <p><b>Pin will be verified and response logged.  
+                    </b></p> -->
+                    <template if:true={showDismissNote}>
+                        <lightning-textarea name="reason" label="Enter note"></lightning-textarea>
+                    </template>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <template if:true={showCancel}>
+                        <lightning-button variant="destructive" label="Dismiss Without Validation" title="Cancel"
+                            onclick={handleDismiss} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <lightning-button variant="brand" label={submitLabel} title="Validate PIN" onclick={submitDetails}
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                    <lightning-button variant="brand" label="User Already Authenticated" title="User Already Authenticated" 
+                        onclick={createPin}
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={showContractExceptions}>
+        <c-show-contract-exceptions contact-id={contactId}></c-show-contract-exceptions>
+    </template>
+</template>

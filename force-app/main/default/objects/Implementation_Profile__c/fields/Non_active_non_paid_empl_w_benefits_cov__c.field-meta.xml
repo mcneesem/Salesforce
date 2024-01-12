@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_active_non_paid_empl_w_benefits_cov__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Any non-active/non-paid employees with benefit coverage?</inlineHelpText>
+    <label>Non-active/non-paid empl w benefits cov</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Yes_or_No</valueSetName>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Dispatcher_Change_Status_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+     NOT($Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c),
+     ISCHANGED( pse__Status__c  ),
+     OR(
+         ISPICKVAL( pse__Status__c , &apos;Dispatched&apos;),
+         ISPICKVAL( pse__Status__c , &apos;Scheduled&apos;)
+        ),
+     NSP_Create_Work_Order__c = True,
+     NOT( ISPICKVAL( NSP_Dispatch_Region__c ,&quot;&quot; ) ) ,
+     NOT( 
+           OR(
+                ISPICKVAL( $User.NSP_Salesforce_Field_Service__c ,&quot;Dispatcher&quot; ),
+                ISPICKVAL( $User.NSP_Salesforce_Field_Service__c ,&quot;Dispatcher + Resource&quot; )
+              ) 
+    ) 
+
+)</errorConditionFormula>
+    <errorDisplayField>pse__Status__c</errorDisplayField>
+    <errorMessage>Only a SFS dispatcher can select this status.</errorMessage>
+</ValidationRule>

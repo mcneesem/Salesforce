@@ -1,0 +1,7 @@
+.backgroundInverse{
+    position: relative;
+    display: inherit;
+    vertical-align: inherit;
+    background-color: #16325c;
+    bottom: 130px;
+}

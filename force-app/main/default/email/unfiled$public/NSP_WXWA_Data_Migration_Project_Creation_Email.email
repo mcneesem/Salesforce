@@ -1,0 +1,15 @@
+Hello, Please note the projects below have been created.<br/>
+A new project have been created in Salesforce and you have been assigned to it. See the project and customer information below. <br/><br/>
+
+Project Number: {!pse__Proj__c.pse__Project_ID__c} <br/>
+Project Name: {!pse__Proj__c.Name} <br/>
+Account: {!pse__Proj__c.pse__Account__c} <br/>
+Project Implementer: {!pse__Proj__c.Project_Implementer__c} <br/>
+Project Coordinator: {!pse__Proj__c.Project_Coordinator__c} <br/>
+Start Date: {!pse__Proj__c.pse__Start_Date__c} <br/><br/>
+
+Click below to view record <br/>
+<a href="{!pse__Proj__c.Link}">View Record</a> <br/><br/>
+
+Regards, <br/>
+Insperity BPS

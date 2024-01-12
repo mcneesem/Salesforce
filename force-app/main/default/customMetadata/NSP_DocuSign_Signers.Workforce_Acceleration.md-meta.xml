@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>NSP_Signer_Username__c</field>
-        <value xsi:type="xsd:string">mary.massad@insperity.com.sftest</value>
+        <value xsi:type="xsd:string">mary.massad@insperity.com</value>
     </values>
 </CustomMetadata>

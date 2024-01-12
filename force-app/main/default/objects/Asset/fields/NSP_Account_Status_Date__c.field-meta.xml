@@ -3,8 +3,9 @@
     <fullName>NSP_Account_Status_Date__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Account Status Date</label>
+    <label>AIMS Status Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

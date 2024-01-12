@@ -4,17 +4,24 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>L1 Support</label>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
+    <permissionSets>Advanced_Salesforce_Administrator</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Correspondence</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
+    <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
+    <permissionSets>NSP_Main_Service_Contacts</permissionSets>
+    <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>New_Client_Sales</permissionSets>
     <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
+    <permissionSets>Opportunity_Lock_Enrollment_Fee_Read_Access</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Rewards_Elevated</permissionSets>
+    <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>

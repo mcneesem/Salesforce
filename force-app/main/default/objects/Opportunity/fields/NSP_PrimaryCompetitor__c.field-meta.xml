@@ -13,11 +13,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Able</fullName>
-                <default>false</default>
-                <label>Able</label>
-            </value>
-            <value>
                 <fullName>ADP</fullName>
                 <default>false</default>
                 <label>ADP</label>
@@ -26,6 +21,11 @@
                 <fullName>ADP Total Source</fullName>
                 <default>false</default>
                 <label>ADP Total Source</label>
+            </value>
+            <value>
+                <fullName>Able</fullName>
+                <default>false</default>
+                <label>Able</label>
             </value>
             <value>
                 <fullName>Advanstaff</fullName>
@@ -163,14 +163,14 @@
                 <label>None</label>
             </value>
             <value>
-                <fullName>Odyssey OneSource</fullName>
-                <default>false</default>
-                <label>Odyssey OneSource</label>
-            </value>
-            <value>
                 <fullName>OEM PEO</fullName>
                 <default>false</default>
                 <label>OEM PEO</label>
+            </value>
+            <value>
+                <fullName>Odyssey OneSource</fullName>
+                <default>false</default>
+                <label>Odyssey OneSource</label>
             </value>
             <value>
                 <fullName>Other</fullName>

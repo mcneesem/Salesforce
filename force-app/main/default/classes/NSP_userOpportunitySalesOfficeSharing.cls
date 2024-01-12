@@ -36,7 +36,7 @@ public class NSP_userOpportunitySalesOfficeSharing implements Queueable {
         Map<String,String> mapSalesOfficePublicGroupId = new Map<String,String> (); 
         try{
             List<OpportunityShare> oldOpportunityShareList =[Select Id, OpportunityId ,Opportunity.OwnerId, UserorGroup.Name , UserorGroupId, ToLabel(Opportunity.NSP_Sales_Office__c)  from OpportunityShare WHERE 
-                                                             Opportunity.OwnerId  IN: this.mapUserIdSetOldSalesOffice.KeySet() AND Rowcause =:NSP_SalesConstants.manualRowCause ];
+                                                             Opportunity.OwnerId IN: this.mapUserIdSetOldSalesOffice.KeySet() AND Rowcause =:NSP_SalesConstants.manualRowCause];
             if(mapnewSalesofficeSetUserId != null){
                 mapSalesOfficePublicGroupId = NSP_salesOfficeRecordSharing.mapSalesOfficePublicGroup(mapnewSalesofficeSetUserId.KeySet());
             }

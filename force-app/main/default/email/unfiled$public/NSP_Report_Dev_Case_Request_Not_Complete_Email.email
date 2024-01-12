@@ -1,0 +1,4 @@
+Case <a href="{!Case.Link}"> {!Case.CaseNumber}</a> has been returned to you and requires your attention. <br/>
+The Report Request form is incomplete. Consult the Case notes for details.<br/><br/>
+
+If you wish to respond, add a chatter to the Case. Do not reply to this email.<br/><br/>

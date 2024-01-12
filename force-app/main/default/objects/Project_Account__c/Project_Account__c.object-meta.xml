@@ -157,7 +157,7 @@
     <nameField>
         <displayFormat>ProjAcc-{000000}</displayFormat>
         <label>Project Account Number</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Project Accounts</pluralLabel>

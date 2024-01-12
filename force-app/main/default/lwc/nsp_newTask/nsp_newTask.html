@@ -1,0 +1,19 @@
+<template>
+    <lightning-quick-action-panel header="New Task">
+        <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_none">
+        <lightning-radio-group name="radioGroup"
+                          label="Select a record type"
+                          options={recordTypes}
+                          value={value}
+                          type="radio"
+                          onchange={handleChange}>
+        </lightning-radio-group>
+    </div>
+    <div class="slds-align_absolute-center slds-border_top">
+        <div class="slds-p-top_medium">
+            <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+            <lightning-button variant="brand" label="Next" class="slds-m-left_x-small" onclick={handleNext}></lightning-button>
+            </div>
+            </div>
+    </lightning-quick-action-panel>
+</template>

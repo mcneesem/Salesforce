@@ -1,0 +1,32 @@
+<template>
+  <c-nsp_modal-dialog
+    heading="Copy Data"
+    buttons={buttonConfig}
+    modal-content-style="overflow: visible;"
+    onbuttonclick={handleButtonClick}>
+    <c-nsp_multi-select-lookup
+      options={searchOptions}
+      selected-options={selectedOptions}
+      label={lookupLabel}
+      filter-label={filterLabel}
+      filter-types={filterTypes}
+      filter-by={filterBy}
+      placeholder={lookupPlaceholder}
+      onsearchtermchange={handleSearchTermChange}
+      onlookupselect={handleOptionSelection}
+      onlookupdeselect={handleOptionDeselection}
+      onfiltertypechange={handleFilterTypeChange}>
+    </c-nsp_multi-select-lookup>
+
+    <lightning-formatted-text class="slds-form-element__label slds-var-m-top_small" value="Sections">
+    </lightning-formatted-text>
+    <lightning-checkbox-group
+      label="Sections"
+      options={sections}
+      value={selectedSections}
+      variant="label-hidden"
+      style="columns: 2"
+      onchange={handleSectionChange}>
+    </lightning-checkbox-group>
+  </c-nsp_modal-dialog>
+</template>

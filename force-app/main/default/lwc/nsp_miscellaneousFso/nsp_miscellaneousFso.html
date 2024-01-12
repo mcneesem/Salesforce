@@ -1,0 +1,104 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.miscellaneous}>
+    </lightning-formatted-text>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_Is_there_an_Enrollment_fee__c}
+      label={objFields.NSP_Is_there_an_Enrollment_fee__c.label}
+      class={styles.NSP_Is_there_an_Enrollment_fee__c}
+      field-api-name="Implementation_Profile__c.NSP_Is_there_an_Enrollment_fee__c"
+      value={field.NSP_Is_there_an_Enrollment_fee__c}
+      record-type-id={recordTypeId}
+      data-name="NSP_Is_there_an_Enrollment_fee__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <div if:true={visibility.NSP_Provide_Details_Enrollment_fee__c}>
+      <lightning-formatted-text
+        data-field="NSP_Provide_Details_Enrollment_fee__c"
+        value={label.provideDetailMultipleAddendum}
+        class={styles.NSP_Provide_Details_Enrollment_fee__c}>
+      </lightning-formatted-text>
+      <lightning-input-field
+        value={field.NSP_Provide_Details_Enrollment_fee__c}
+        disabled={disabledFields.NSP_Provide_Details_Enrollment_fee__c}
+        field-name="NSP_Provide_Details_Enrollment_fee__c"
+        data-name="NSP_Provide_Details_Enrollment_fee__c"
+        variant="label-hidden"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <div class="slds-var-p-left_x-small">
+      <lightning-formatted-text
+        class={styles.NSP_Discussed_E_Verify_with_the_client__c}
+        data-field="NSP_Discussed_E_Verify_with_the_client__c"
+        value={label.DiscussedVerifytheclient}>
+      </lightning-formatted-text>
+      <lightning-input-field
+        value={field.NSP_Discussed_E_Verify_with_the_client__c}
+        disabled={disabledFields.NSP_Discussed_E_Verify_with_the_client__c}
+        variant="label-hidden"
+        data-name="NSP_Discussed_E_Verify_with_the_client__c"
+        field-name="NSP_Discussed_E_Verify_with_the_client__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <lightning-input-field
+      value={field.NSP_Check_to_create_the_RRP_Case__c}
+      disabled={disabledFields.NSP_Check_to_create_the_RRP_Case__c}
+      data-name="NSP_Check_to_create_the_RRP_Case__c"
+      field-name="NSP_Check_to_create_the_RRP_Case__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+
+    <div class="slds-var-p-left_x-small">
+      <lightning-formatted-text
+        class={styles.NSP_CheckToSendTheClient_Summary_email__c}
+        data-field="NSP_CheckToSendTheClient_Summary_email__c"
+        value={label.CheckToSendTheClientSummaryemail}>
+      </lightning-formatted-text>
+      <lightning-input-field
+        value={field.NSP_CheckToSendTheClient_Summary_email__c}
+        disabled={disabledFields.NSP_CheckToSendTheClient_Summary_email__c}
+        variant="label-hidden"
+        data-name="NSP_CheckToSendTheClient_Summary_email__c"
+        field-name="NSP_CheckToSendTheClient_Summary_email__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <div class="slds-var-p-left_x-small">
+      <lightning-formatted-text
+        class={styles.NSP_CheckToSendPayrollSpecialist_Summary__c}
+        data-field="NSP_CheckToSendPayrollSpecialist_Summary__c"
+        value={label.checkToSendPayrollSpecialistSummary}>
+      </lightning-formatted-text>
+      <lightning-input-field
+        value={field.NSP_CheckToSendPayrollSpecialist_Summary__c}
+        disabled={disabledFields.NSP_CheckToSendPayrollSpecialist_Summary__c}
+        variant="label-hidden"
+        data-name="NSP_CheckToSendPayrollSpecialist_Summary__c"
+        field-name="NSP_CheckToSendPayrollSpecialist_Summary__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <lightning-input-field
+      value={field.NSP_Payroll_Onboarding_Notes__c}
+      disabled={disabledFields.NSP_Payroll_Onboarding_Notes__c}
+      data-name="NSP_Payroll_Onboarding_Notes__c"
+      field-name="NSP_Payroll_Onboarding_Notes__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+  </lightning-record-edit-form>
+</template>

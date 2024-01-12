@@ -1,0 +1,20 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) / Special Reports  " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<c:InsperityEmailHeader ></c:InsperityEmailHeader>
+<p>{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has requested the following special
+ reporting.<br/>
+  Please review Implementation Profile and EDC for additional information. </p>
+ 
+<p><apex:outputText escape="false" value="<li>{!SUBSTITUTE(relatedTo.Select_all_payroll_needs_that_apply__c,';','<li/>')}"/></p>
+  
+  
+<p>Regards,<br/>
+    {!relatedTo.NSP_Project_Manager__r.Name}<br/>
+   {!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+   <c:InsperityEmailFooter ></c:InsperityEmailFooter>
+    </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

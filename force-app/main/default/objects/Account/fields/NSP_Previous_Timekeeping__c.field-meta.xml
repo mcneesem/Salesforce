@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Previous_Timekeeping__c</fullName>
+    <externalId>false</externalId>
+    <label>Previous Timekeeping</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADI Time</fullName>
+                <default>false</default>
+                <label>ADI Time</label>
+            </value>
+            <value>
+                <fullName>ADP Etime</fullName>
+                <default>false</default>
+                <label>ADP Etime</label>
+            </value>
+            <value>
+                <fullName>ADP EZLabor</fullName>
+                <default>false</default>
+                <label>ADP EZLabor</label>
+            </value>
+            <value>
+                <fullName>Ceridian Cybershift</fullName>
+                <default>false</default>
+                <label>Ceridian Cybershift</label>
+            </value>
+            <value>
+                <fullName>Ceridian Source Time</fullName>
+                <default>false</default>
+                <label>Ceridian Source Time</label>
+            </value>
+            <value>
+                <fullName>Custom/Manual</fullName>
+                <default>false</default>
+                <label>Custom/Manual</label>
+            </value>
+            <value>
+                <fullName>Cybershift</fullName>
+                <default>false</default>
+                <label>Cybershift</label>
+            </value>
+            <value>
+                <fullName>Empower BAC</fullName>
+                <default>false</default>
+                <label>Empower BAC</label>
+            </value>
+            <value>
+                <fullName>Empower Unitime</fullName>
+                <default>false</default>
+                <label>Empower Unitime</label>
+            </value>
+            <value>
+                <fullName>iEmployee Online Timesheets</fullName>
+                <default>false</default>
+                <label>iEmployee Online Timesheets</label>
+            </value>
+            <value>
+                <fullName>InfiniTime by Inception Technologies</fullName>
+                <default>false</default>
+                <label>InfiniTime by Inception Technologies</label>
+            </value>
+            <value>
+                <fullName>Infor Workbrain</fullName>
+                <default>false</default>
+                <label>Infor Workbrain</label>
+            </value>
+            <value>
+                <fullName>Infotronics / Attendance Enterprise</fullName>
+                <default>false</default>
+                <label>Infotronics / Attendance Enterprise</label>
+            </value>
+            <value>
+                <fullName>Insperity CompuPayTime</fullName>
+                <default>false</default>
+                <label>Insperity CompuPayTime</label>
+            </value>
+            <value>
+                <fullName>Insperity TimeStar</fullName>
+                <default>false</default>
+                <label>Insperity TimeStar</label>
+            </value>
+            <value>
+                <fullName>Kronos ShopTrac Pro</fullName>
+                <default>false</default>
+                <label>Kronos ShopTrac Pro</label>
+            </value>
+            <value>
+                <fullName>Kronos Timekeeper Central</fullName>
+                <default>false</default>
+                <label>Kronos Timekeeper Central</label>
+            </value>
+            <value>
+                <fullName>Kronos Workforce Central</fullName>
+                <default>false</default>
+                <label>Kronos Workforce Central</label>
+            </value>
+            <value>
+                <fullName>Legiant Express</fullName>
+                <default>false</default>
+                <label>Legiant Express</label>
+            </value>
+            <value>
+                <fullName>Legiant Timecard</fullName>
+                <default>false</default>
+                <label>Legiant Timecard</label>
+            </value>
+            <value>
+                <fullName>Microix</fullName>
+                <default>false</default>
+                <label>Microix</label>
+            </value>
+            <value>
+                <fullName>NETtime</fullName>
+                <default>false</default>
+                <label>NETtime</label>
+            </value>
+            <value>
+                <fullName>NOVAtime 1000</fullName>
+                <default>false</default>
+                <label>NOVAtime 1000</label>
+            </value>
+            <value>
+                <fullName>NOVAtime 2000</fullName>
+                <default>false</default>
+                <label>NOVAtime 2000</label>
+            </value>
+            <value>
+                <fullName>NOVAtime 3000</fullName>
+                <default>false</default>
+                <label>NOVAtime 3000</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paychex TOL</fullName>
+                <default>false</default>
+                <label>Paychex TOL</label>
+            </value>
+            <value>
+                <fullName>Qquest MyTimeForce</fullName>
+                <default>false</default>
+                <label>Qquest MyTimeForce</label>
+            </value>
+            <value>
+                <fullName>RMBS / Timesheets for MIP</fullName>
+                <default>false</default>
+                <label>RMBS / Timesheets for MIP</label>
+            </value>
+            <value>
+                <fullName>Sage Timesheets</fullName>
+                <default>false</default>
+                <label>Sage Timesheets</label>
+            </value>
+            <value>
+                <fullName>Stromberg Enterprise</fullName>
+                <default>false</default>
+                <label>Stromberg Enterprise</label>
+            </value>
+            <value>
+                <fullName>Time Clock Plus</fullName>
+                <default>false</default>
+                <label>Time Clock Plus</label>
+            </value>
+            <value>
+                <fullName>Ultimate / Novatime</fullName>
+                <default>false</default>
+                <label>Ultimate / Novatime</label>
+            </value>
+            <value>
+                <fullName>Ultimate / Workbrain</fullName>
+                <default>false</default>
+                <label>Ultimate / Workbrain</label>
+            </value>
+            <value>
+                <fullName>Workforce Software</fullName>
+                <default>false</default>
+                <label>Workforce Software</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

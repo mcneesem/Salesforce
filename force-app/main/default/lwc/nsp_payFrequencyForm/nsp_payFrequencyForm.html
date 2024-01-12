@@ -1,0 +1,138 @@
+<template>
+  <div class="slds-p-around_medium slds-border_right">
+    <lightning-record-edit-form
+      object-api-name="Implementation_Pay_Period__c"
+      record-id={recordId}
+      onload={handleLoad}>
+      <lightning-input-field disabled={disabled} field-name="Id" class="slds-hide">
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Client_number__c"
+        data-name="Client_number__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Frequency__c"
+        data-name="Frequency__c"
+        value={fieldValues.Frequency__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Insperity_first_day_of_1st_pay_period__c"
+        data-name="Insperity_first_day_of_1st_pay_period__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Insperity_last_day_of_1st_pay_period__c"
+        data-name="Insperity_last_day_of_1st_pay_period__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Insperity_1st_pay_date__c"
+        data-name="Insperity_1st_pay_date__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Insperity_first_day_of_2nd_pay_period__c"
+        data-name="Insperity_first_day_of_2nd_pay_period__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Insperity_last_day_of_2nd_pay_period__c"
+        data-name="Insperity_last_day_of_2nd_pay_period__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Insperity_2nd_pay_date__c"
+        data-name="Insperity_2nd_pay_date__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Is_arrearage_7_days__c"
+        data-name="Is_arrearage_7_days__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <template if:true={visibility.Have_credit_services_approved__c}>
+        <lightning-input-field
+          disabled={disabled}
+          field-name="Have_credit_services_approved__c"
+          data-name="Have_credit_services_approved__c"
+          class={styles.Have_credit_services_approved__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+
+        <lightning-input-field
+        disabled={disabled}
+          if:true={visibility.Provide_credit_services_detaIls__c}
+          field-name="Provide_credit_services_detaIls__c"
+          data-name="Provide_credit_services_detaIls__c"
+          class={styles.Provide_credit_services_detaIls__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </template>
+
+      <template if:true={visibility.Does_arrearage_comply_with_state_laws__c}>
+        <lightning-input-field
+          disabled={disabled}
+          field-name="Does_arrearage_comply_with_state_laws__c"
+          data-name="Does_arrearage_comply_with_state_laws__c"
+          class={styles.Does_arrearage_comply_with_state_laws__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+
+        <lightning-input-field
+          disabled={disabled}
+          if:true={visibility.Provide_arrearage_details__c}
+          field-name="Provide_arrearage_details__c"
+          data-name="Provide_arrearage_details__c"
+          class={styles.Provide_arrearage_details__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </template>
+
+      <lightning-input-field
+        disabled={disabled}
+        field-name="Does_the_client_have_prior_wages__c"
+        data-name="Does_the_client_have_prior_wages__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        if:true={visibility.Final_pay_period_prior_to_Insperity__c}
+        field-name="Final_pay_period_prior_to_Insperity__c"
+        data-name="Final_pay_period_prior_to_Insperity__c"
+        class={styles.Final_pay_period_prior_to_Insperity__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled}
+        if:true={visibility.Final_pay_date_prior_to_Insperity__c}
+        field-name="Final_pay_date_prior_to_Insperity__c"
+        data-name="Final_pay_date_prior_to_Insperity__c"
+        class={styles.Final_pay_date_prior_to_Insperity__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </lightning-record-edit-form>
+  </div>
+</template>

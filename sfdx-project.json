@@ -5,8 +5,8 @@
       "default": true
     }
   ],
-  "name": "insperity_sfdevph1",
+  "name": "insperity",
   "namespace": "",
   "sfdcLoginUrl": "https://test.salesforce.com/",
-  "sourceApiVersion": "56.0"
+  "sourceApiVersion": "57.0"
 }

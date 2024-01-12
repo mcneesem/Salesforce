@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_time_accrue_under_plan_fiscal_year__c</fullName>
+    <externalId>false</externalId>
+    <label>How does time accrue under the plan?</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Fiscal Year Frontload: Full benefit year amount provided on day 1 of the Fiscal year</fullName>
+                <default>false</default>
+                <label>Fiscal Year Frontload: Full benefit year amount provided on day 1 of the Fiscal year</label>
+            </value>
+            <value>
+                <fullName>First of Quarter: Accrual is added on the first day of each quarter</fullName>
+                <default>false</default>
+                <label>First of Quarter: Accrual is added on the first day of each quarter</label>
+            </value>
+            <value>
+                <fullName>First of Month: Accrual is added on the first day of each month</fullName>
+                <default>false</default>
+                <label>First of Month: Accrual is added on the first day of each month</label>
+            </value>
+            <value>
+                <fullName>Last of Pay Period: Accrual is added on the last day of each pay period</fullName>
+                <default>false</default>
+                <label>Last of Pay Period: Accrual is added on the last day of each pay period</label>
+            </value>
+            <value>
+                <fullName>Hours Worked: Accrual is added based on actual hours worked</fullName>
+                <default>false</default>
+                <label>Hours Worked: Accrual is added based on actual hours worked</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

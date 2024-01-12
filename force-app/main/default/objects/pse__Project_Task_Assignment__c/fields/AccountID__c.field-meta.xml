@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AccountID__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+ AND(pse__Project_Task__c != null, pse__Project_Task__r.pse__Project__r.NSP_Auto_Resource_Project__c ),
+CASESAFEID(pse__Project_Task__r.pse__Project__r.pse__Account__r.Id),
+&apos;&apos;
+)</formula>
+    <label>AccountID</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

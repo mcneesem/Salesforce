@@ -3,9 +3,14 @@
     <fullName>NSP_On_ParentLead_Update</fullName>
     <active>true</active>
     <description>This validation rule is created as part of CR-027. Only Users with DA/DM role can update Parent Lead lookup</description>
-    <errorConditionFormula>AND($UserRole.Name != &apos;District Manager&apos;, 
-$UserRole.Name != &apos;District Administrator&apos;,
-$UserRole.Name != &apos;Inbound Manager&apos;,
-$UserRole.Name != &apos;Inbound Rep&apos;, ISCHANGED( NSP_Parent_Lead__c),$Profile.Name &lt;&gt; &quot;System Administrator&quot;)</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  $Profile.Name &lt;&gt; &quot;Data Migration&quot; ,
+  $UserRole.Name != &apos;District Manager&apos;,
+  $UserRole.Name != &apos;District Administrator&apos;,
+  $UserRole.Name != &apos;Inbound Manager&apos;,
+  $UserRole.Name != &apos;Inbound Rep&apos;, 
+  ISCHANGED( NSP_Parent_Lead__c )
+)</errorConditionFormula>
     <errorMessage>Only Users with District Administrator, District Manager, Inbound Manager or Inbound Rep Role can update Parent Lead</errorMessage>
 </ValidationRule>

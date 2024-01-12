@@ -39,10 +39,6 @@
                 <field>NSP_Task_Subtype__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Submission_type__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Completed_Date__c</field>
             </layoutItems>

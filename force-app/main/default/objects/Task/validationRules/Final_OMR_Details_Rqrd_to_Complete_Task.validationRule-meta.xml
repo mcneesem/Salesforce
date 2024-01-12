@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Final_OMR_Details_Rqrd_to_Complete_Task</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT ($Setup.NSP_Trigger_Switch__c.TaskValidations__c), RecordType.DeveloperName = &quot;Orientation_Meeting_Request&quot;,  ISBLANK(NSP_What_needs_to_get_done__c),  TEXT(Status) = &quot;Completed&quot; )</errorConditionFormula>
+    <errorMessage>Please enter final meeting details before Completing Task</errorMessage>
+</ValidationRule>

@@ -3,7 +3,6 @@
     <fullName>NSP_OneForce_External_ID__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Stores the legacy contact ID.</description>
-    <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>OneForce_External_ID</label>
     <length>50</length>

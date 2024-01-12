@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Leave of Absence Audit</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Leave of Absence Audit</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Leave of Absence Audit</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+We periodically perform audits for on-leave employees and found that one of your employees, EMPLOYEE NAME, started a leave of absence on DATE. There are three areas to consider in Time &amp; Attendance when an employee is on leave:
+
+Active Status
+This change allows for accurate active status reporting and is reflected in Time &amp; Attendance automatically once updated in the Payroll system. No action is needed on your part.  
+Pay Group Assignment
+This change will ensure that no time is being populated or calculated for payroll during the employee’s leave of absence.
+If the employee is not utilizing any paid time off (PTO, Vacation, Sick, etc.) during their leave, this change should take effect as of the first full on-leave pay period.
+If the employee is utilizing any paid time off (PTO, Vacation, Sick, etc.) during their leave, this change should be made once that paid time off is exhausted and within their first full on-leave, non-paid time off pay period
+Accrual Group Assignment
+This change will prevent the employee from accruing additional time off during his/her leave of absence and should generally be made within their first full on-leave pay period.
+This change will prevent the employee from accruing additional time off during his/her leave of absence and should generally be made within their first full on-leave pay period.
+This change will prevent the employee from accruing additional time off during his/her leave of absence and should generally be made within their first full on-leave pay period.
+
+You can find instructions for making these changes, as well as for how to move the employee back to an active status upon their return from leave, here:
+
+ 
+
+You can find instructions for making these changes, as well as for how to move the employee back to an active status upon their return from leave, here:
+
+https://help.insperity.com/bps/knowledge-base/leave-of-absence/
+
+If you have questions as you perform these changes, please let us know and we will be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

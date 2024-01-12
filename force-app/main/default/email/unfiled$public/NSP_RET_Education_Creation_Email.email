@@ -1,0 +1,17 @@
+<messaging:emailTemplate subject="New RET Education record created for S2I onboarding" recipientType="User" relatedToType="NSP_RET_Education__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+ <p>
+A new RET Education record has been created 
+                    <apex:outputPanel rendered="{!relatedTo.NSP_AssetRETEducationAssociation__r.NSP_Education_Client__c != '' }">
+                      for {!relatedTo.NSP_AssetRETEducationAssociation__r.NSP_Education_Client__r.name}
+                    </apex:outputPanel>               
+. This client is ready for their "Welcome plan coming soon" email to be delivered. 
+ </p>
+<p> The RET Education record can be found at the following link:  <apex:outputLink value="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))+relatedTo.Id}" target="_parent"> {!relatedTo.Name} </apex:outputLink> </p>
+
+  </body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

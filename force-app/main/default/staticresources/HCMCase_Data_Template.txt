@@ -1,0 +1,36 @@
+Subject: New iSolved Client | [Client Name] | [Client ID]
+
+The following client has been configured in iSolved.   Please begin Client/EE Audit and Tax Audit:
+
+Company Name: 
+Company ID: 
+Employee Count [Active & Termed]:
+First Check Date: 
+Requested Completion Date:
+Client Scheduled Training Date:
+Payroll Processing Frequency: [Weekly, Biweekly, Monthly, etc.]
+Client Payroll Type: [Standard, WOSS, 1099]
+*Please note:  1099 must also have W-2 employees*
+Prior Compensation: [Yes/No]
+Estimated date Prior Compensation will be loaded: [DD/MM/YY]
+
+**Please note:  Tax must be notified prior compensation has been loaded – Please reply all upon completion of prior comp**
+
+Prior Compensation applicable quarters: [Q1, Q2, Q3, Q4]
+Mid Quarter start:  [Yes/No]
+Additional Notes: [Anything relevant to data being reviewed]
+
+IMPORTANT | Please Note:
+Audit Request Completion Timeline Requirements [Responsible Party: Payroll & HR HCM Analyst]
+
+One FEIN:
+Client with less than 100 EE’s:  2 Business Days
+Client with more than 100 EE’s:  3 Business Days
+
+Multiple FEIN’s
+Client with less than 100 EE’s:  3 Business Days
+Client with more than 100 EE’s:  5 Business Days
+
+**Any requests outside of the below guidelines requires approval.  Please request approval prior to submission to:  Robi Vick, cc Jennifer Rodriguez** 
+
+Please do not alter the template when submitting a request.  If a line item is not applicable, please leave blank or mark as N/A.

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_SurveyRequest</fullName>
+    <active>true</active>
+    <label>HR Survey Request</label>
+    <picklistValues>
+        <picklist>NSP_Action__c</picklist>
+        <values>
+            <fullName>Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maintenance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_BargainingUnitEmployeesComplete__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ClientWantsToincludeCustomQuestion__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question10_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question1_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question2_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question3_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question4_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question5_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question6_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question7_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question8_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Custom_Question9_Type__c</picklist>
+        <values>
+            <fullName>Matrix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Ended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly Agree to Strongly Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2FNo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_HRSurveyStatusSelection__c</picklist>
+        <values>
+            <fullName>Full Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Part Time</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ReportLocation__c</picklist>
+        <values>
+            <fullName>Premier Reporting %28WIRE%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WebFocus %28MRE%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_RoleOptionSelection__c</picklist>
+        <values>
+            <fullName>Custom Role Options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Executive Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supervisor%2FTeam Lead</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ServiceLengthSelection__c</picklist>
+        <values>
+            <fullName>0-12%C2%A0Months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1-2%C2%A0Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11-15%C2%A0Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16-20%C2%A0Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20%2B%C2%A0Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3-5%C2%A0Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6-10%C2%A0Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom%C2%A0Service%C2%A0Length</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Survey_Filters__c</picklist>
+        <values>
+            <fullName>Client Departments or Divisions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Locations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Role Options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Length</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Status</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Survey_Type__c</picklist>
+        <values>
+            <fullName>COVID-19 Well-Being %26 Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Climate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Climate Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diversity%2C Equity %26 Inclusion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Well-Being</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding - One-time survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding - Week 2%2FWeek 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return to Work Readiness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work from Home</fullName>
+            <default>false</default>
+        </values>		
+    </picklistValues>
+</RecordType>

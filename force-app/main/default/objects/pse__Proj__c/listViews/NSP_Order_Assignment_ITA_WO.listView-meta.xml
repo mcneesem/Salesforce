@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Order_Assignment_ITA_WO</fullName>
+    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+    <columns>NAME</columns>
+    <columns>pse__Account__c</columns>
+    <columns>NSP_BPS_Project_Template__c</columns>
+    <columns>pse__Start_Date__c</columns>
+    <columns>pse__Project_Status__c</columns>
+    <columns>Go_Live_Date__c</columns>
+    <columns>Project_Implementer__c</columns>
+    <columns>Project_Coordinator__c</columns>
+    <columns>NSP_Owner__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>pse__Project_Status__c</field>
+        <operation>equals</operation>
+        <value>Intake</value>
+    </filters>
+    <filters>
+        <field>Project_Coordinator__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>Project_Implementer__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Order Assignment(ITA-WO)</label>
+    <queue>NSP_Order_Assignment_ITA_WO</queue>
+    <sharedTo>
+        <role>BPS_Administrator</role>
+        <role>BPS_Sales_Manager</role>
+        <role>BPS_Service_User</role>
+    </sharedTo>
+</ListView>

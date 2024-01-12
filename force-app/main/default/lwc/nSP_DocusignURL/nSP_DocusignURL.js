@@ -14,6 +14,7 @@ import BYPASS_DOCUSIGN from "@salesforce/schema/Opportunity.NSP_Bypass_Docusign_
 import CLIENT_FOR_LIFE from "@salesforce/schema/Opportunity.NSP_Client_For_Life__c";
 import BILLING_ACCOUNT from "@salesforce/schema/Opportunity.NSP_Billing_Account__c";
 import DO_SIGNED from "@salesforce/schema/Opportunity.NSP_DO_Sign_By_Billing_Account__c";
+import BUDGETARY_QUOTE from "@salesforce/schema/Opportunity.NSP_Budgetary_Quote__c";
 import getDocuSignUrl from "@salesforce/apex/NSP_Quote_Service.getDocuSignUrl";
 import validateCustomerSigner from "@salesforce/apex/NSP_Quote_Service.validateCustomerSigner";
 import { CloseActionScreenEvent } from "lightning/actions";
@@ -51,6 +52,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   @api clientForLife;
   @api billingAccount;
   @api doSigned;
+  @api budgetaryQuote;
   @api accountId;
   isValid;
   contact;
@@ -84,6 +86,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       CLIENT_FOR_LIFE,
       BILLING_ACCOUNT,
       DO_SIGNED,
+      BUDGETARY_QUOTE,
       ACCOUNT_ID,
     ],
   })
@@ -101,6 +104,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       this.clientForLife = data.fields.NSP_Client_For_Life__c.value;
       this.billingAccount = data.fields.NSP_Billing_Account__c.value;
       this.doSigned = data.fields.NSP_DO_Sign_By_Billing_Account__c.value;
+      this.budgetaryQuote = data.fields.NSP_Budgetary_Quote__c.value;
       this.accountId = data.fields.AccountId.value;
 
       if (
@@ -159,7 +163,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
           this.fetchDocusignURL();
         }
       }
-
+      
       this.closeAction();
     }
 

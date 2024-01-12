@@ -38,7 +38,8 @@ public class NSP_OrderTriggerHandler implements NSP_ITriggerHandler{
    *                
    */
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
-         
+        NSP_OrderTriggerHelper orderHelper = new NSP_OrderTriggerHelper();
+        orderHelper.setProjectDatesForInfightOrders((List<Order>)newList);
     }
     
   /**
@@ -62,6 +63,8 @@ public class NSP_OrderTriggerHandler implements NSP_ITriggerHandler{
    *                
    */
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
+        NSP_OrderTriggerHelper orderHelper = new NSP_OrderTriggerHelper();
+        orderHelper.afterUpdateDirector((Map<Id, Order>) newMap,(Map<Id, Order>) oldMap);
       
     }
     

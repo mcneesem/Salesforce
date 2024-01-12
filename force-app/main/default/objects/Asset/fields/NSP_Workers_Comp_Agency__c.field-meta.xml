@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Workers_Comp_Agency__c</fullName>
+    <externalId>false</externalId>
+    <label>Workers Comp Agency</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Insperity Insurance Services</fullName>
+                <default>false</default>
+                <label>Insperity Insurance Services</label>
+            </value>
+            <value>
+                <fullName>Mylo</fullName>
+                <default>false</default>
+                <label>Mylo</label>
+            </value>
+            <value>
+                <fullName>Outside</fullName>
+                <default>false</default>
+                <label>Outside</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

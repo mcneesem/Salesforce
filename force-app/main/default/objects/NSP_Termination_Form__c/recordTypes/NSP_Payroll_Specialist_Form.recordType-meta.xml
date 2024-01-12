@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payroll_Specialist_Form</fullName>
+    <active>true</active>
+    <label>Payroll Specialist Form</label>
+    <picklistValues>
+        <picklist>NSP_ClientEndingCoEmploymentRelationship__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Client_moved_to_a_competitor__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Date_of_email_30_Days_from_Today__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_EmployeesEverWorkedInStateNewYork__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_EmployeesEverWorkedInStateVirginia__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_HasTheClientAwareOfTheTermination__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Insperity_offering__c</picklist>
+        <values>
+            <fullName>Advance Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Human Capital Management%2FWorkforce Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services%2F401%28k%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_JohnCarney_been_provided_information__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Revision__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Status__c</picklist>
+        <values>
+            <fullName>Draft</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>PR Supervisor Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PR Supervisor Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resubmitted by PR Supervisor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resubmitted by PS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Term Team Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Term Team Denied</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_SubTerm_reason__c</picklist>
+        <values>
+            <fullName>5201 Dissatisfied with healthcare vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5202 Dissatisfied with network of physicians</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5203 Dissatisfied with network of hospitals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5204 Lack of network providers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5301 Sales unresponsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5302 Luck of experience%2Fknowledge service team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5303 No Dedicated Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5304 High service team turnover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5305 Lack of Industry Knowledge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5306 Service team unresponsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5307 Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5308 Online Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5401 Needs not met Selected Services offered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5402 Selected Services not provided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5403 Services%2Fproducts too generic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5501 All Services not used</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5502 Mismatch between purchased and received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5503 Lack of understanding in cost of service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5504 Cannot afford</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5505 Too expensive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5601 Change in ownership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5602 Acquired</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5603 Closed%2FSold Business</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_TWC_Bad_faith_credit_letter__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Term_Code__c</picklist>
+        <values>
+            <fullName>Client Requested Termination Codes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Requested Termination Codes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Term_Reason__c</picklist>
+        <values>
+            <fullName>1400 Financial Default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1600 Void</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1900 Merger with Insperity Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2100 Confirmation %E2%80%93 client has 0 employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2200 Insperity Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2300 Mutual Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2700 Change in FEIN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3100 Non-Compliance of Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3200 Non-Renewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5200 Health Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5300 Poor Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5400 Dissatisfied with Service%2FProduct Offering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5500 Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5600 Internal Company Reason</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5700 Alternate Reasons</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5900 Client Delay CSA Start Date</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_TerminatingDueToNaturalDisaster__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Terminating_due_to_COVID__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_What_competitor__c</picklist>
+        <values>
+            <fullName>ADP Total Source</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employer Flexible</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oasis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paychex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trinet</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

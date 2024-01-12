@@ -1,0 +1,65 @@
+{
+  "appPageId" : "4329045a-0ee7-4781-a21f-030a49949741",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "e181333c-a3dd-437a-a80b-1b95ad82292a",
+  "label" : "Project Detail",
+  "regions" : [ {
+    "id" : "1605467d-e677-47fd-9be8-a524d427061b",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "forceCommunity:recordHeadline",
+      "id" : "5326acf7-0122-47d6-a33c-6df616d0287d",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "detailsTabLabel" : "Details",
+        "discussionsTabLabel" : "Feed",
+        "recordId" : "{!recordId}",
+        "relatedTabLabel" : "Related",
+        "tab1Type" : "details",
+        "tab2Type" : "related",
+        "tab3Type" : "none",
+        "tab4Type" : "none",
+        "timelineTabLabel" : "Activity"
+      },
+      "componentName" : "forceCommunity:recordHomeTabs",
+      "id" : "2f0d4e2d-7e45-4157-9e12-59d2a3d819b5",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d7d4b65d-fe3c-495a-8494-17a0edd2752a",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "04ba1ed5-83f8-467c-8c77-e161da1f8971",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "f16d2ac8-c06a-42b1-b8bf-f1850757db26",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "b621a0bf-7ab5-4332-b04a-9dfad06f6b5d",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-a2o"
+}

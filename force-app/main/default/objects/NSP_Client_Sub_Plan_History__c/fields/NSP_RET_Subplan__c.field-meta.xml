@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_Subplan__c</fullName>
+    <externalId>false</externalId>
+    <formula>NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Name__c</formula>
+    <label>RET-Subplan</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

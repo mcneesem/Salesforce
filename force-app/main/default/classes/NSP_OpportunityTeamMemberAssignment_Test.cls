@@ -19,7 +19,7 @@ public class NSP_OpportunityTeamMemberAssignment_Test {
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',
-            Email = 'testuser@test.com',
+            Email = 'testuser@insperity.com',
             Username = 'testuser@test.com' + System.currentTimeMillis(),
             CompanyName = 'TEST',
             Title = 'title',
@@ -90,7 +90,7 @@ public class NSP_OpportunityTeamMemberAssignment_Test {
                         Email,
                         Name 
                         FROM User 
-                        WHERE Email = 'testuser@test.com' 
+                        WHERE Email = 'testuser@insperity.com' 
                         LIMIT 1 ];
         Test.startTest();
         opp.OwnerId = getUser.Id;

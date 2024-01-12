@@ -194,7 +194,8 @@
         <recipients>
             <type>accountOwner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>no-reply@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>NSP_Sales/NSP_NotifyAccountOwnersonOpportunityCreation</template>
     </alerts>
     <alerts>
@@ -204,7 +205,8 @@
         <recipients>
             <type>accountOwner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>no-reply@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>NSP_Sales/NSP_NotifyAccountOwneronCreationofRenewalOpportunity</template>
     </alerts>
     <alerts>
@@ -270,7 +272,8 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>no-reply@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>NSP_Sales/NSP_NotificationforOpportunityOwner</template>
     </alerts>
     <alerts>
@@ -370,6 +373,7 @@
     <rules>
         <fullName>Demo Activity on Opportunity at Analysis stage</fullName>
         <active>false</active>
+        <description>.....</description>
         <formula>ISPICKVAL(StageName  , &apos;Analysis&apos;) &amp;&amp;  NOT(NSP_Has_Demo_Activity__c )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
@@ -393,9 +397,7 @@
         </actions>
         <active>true</active>
         <description>Opportunity record is locked once the status is changed to Closed Won</description>
-        <formula>OR(AND(ISNEW(),ISPICKVAL(StageName , &quot;Closed Won&quot;)),
-AND( ISPICKVAL(StageName , &quot;Closed Won&quot;), ISCHANGED(StageName))
-)</formula>
+        <formula>OR(AND(ISNEW(),ISPICKVAL(StageName , &quot;Closed Won&quot;)), AND( ISPICKVAL(StageName , &quot;Closed Won&quot;), ISCHANGED(StageName)) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

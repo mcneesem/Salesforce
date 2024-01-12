@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject=" {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) / SCA " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+  <body>
+  <c:InsperityEmailHeader />
+  <p>{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has SCA employees, please see below: </p>
+    <p>•  Has the SCA EEs been approved? {!relatedTo.Have_the_SCA_EEs_been_approved__c} </p>
+    <p>•  Do SCA EEs receive wages in lieu of benefits? {!relatedTo.SCA_EEs_get_wages_in_lieu_of_benefits__c}</p>
+  
+  
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</body>
+</html>
+</messaging:HtmlEmailBody>
+  
+</messaging:emailTemplate>

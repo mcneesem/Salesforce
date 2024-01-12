@@ -1,0 +1,45 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has an existing Retirement Plan" recipientType="User" relatedToType="Implementation_Profile__c" >
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<table border="0" width="550">
+<c:InsperityEmailHeader />
+<p>{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has the following existing retirement plan: 
+{!relatedTo.Type_of_retirement_plan_client_has_today__c}. </p>
+
+<apex:outputPanel rendered="{!relatedTo.NSP_Is_the_client_working_an_NSP_RS_rep__c= 'Yes'}">
+<p>The Client is already working with an NSP RS rep.</p>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(relatedTo.NSP_Is_the_client_working_an_NSP_RS_rep__c= 'No', relatedTo.recordType.Name='FSO')}">
+<p>The Client is not currently working with an NSP RS rep.</p>
+<apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.NSP_RS_Contact__c))}">
+   <p> Please reach out to {!relatedTo.NSP_RS_Contact__c} to discuss setting up the ORK.</p>
+</apex:outputPanel>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(relatedTo.NSP_Is_the_client_working_an_NSP_RS_rep__c= 'No', relatedTo.recordType.Name='Middle Market')}">
+<p>The Client is not currently working with an NSP RS rep. Please contact me to schedule a time to begin the process with the Client.</p>
+<apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.NSP_RS_Contact__c))}">
+<p>   Please reach out to {!relatedTo.NSP_RS_Contact__c} to discuss setting up the ORK.</p>
+</apex:outputPanel>
+</apex:outputPanel>
+
+
+<apex:outputPanel >
+<c:NSP_RelatedClients currentRecordId="{!relatedTo.Id}"/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.Retirement_services_notes__c))}">
+<p>Onboarding Notes:<br/><apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(JSENCODE(relatedTo.Retirement_services_notes__c), '\\r\\n', '\\n'),'\\n','<br/>')}" style="white-space:pre;" escape="false"  /></p>
+</apex:outputPanel>
+
+</table>
+</body>
+<p><span>Regards,</span><br/>
+<span>{!relatedTo.NSP_Project_Manager__r.Name}</span><br/>
+<span>{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</span><br/>
+<span>{!relatedTo.NSP_Project_Manager__r.NSP_Work_email__c}</span></p>
+<c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

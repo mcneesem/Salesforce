@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ValidateTerminationStartDate</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND( OR(NSP_Has_WX_product__c, NSP_Has_WA_product__c , NSP_Has_iSolvedHardware__c),DAY(SBQQ__StartDate__c) != 1,ISPICKVAL(SBQQ__Type__c ,&apos;Termination&apos;),NOT(ISNEW()))</errorConditionFormula>
+    <errorDisplayField>NSP_Access_Fees_Annual__c</errorDisplayField>
+    <errorMessage>Quote Start Date must be first day of the month</errorMessage>
+</ValidationRule>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expenses__c</fullName>
+    <externalId>false</externalId>
+    <label>Post-Tax Deductions Select All</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Auto</fullName>
+                <default>false</default>
+                <label>Auto</label>
+            </value>
+            <value>
+                <fullName>Loan</fullName>
+                <default>false</default>
+                <label>Loan</label>
+            </value>
+            <value>
+                <fullName>Uniforms</fullName>
+                <default>false</default>
+                <label>Uniforms</label>
+            </value>
+            <value>
+                <fullName>Advances</fullName>
+                <default>false</default>
+                <label>Advances</label>
+            </value>
+            <value>
+                <fullName>Charitable Contributions</fullName>
+                <default>false</default>
+                <label>Charitable Contributions</label>
+            </value>
+            <value>
+                <fullName>Supplemental Insurance (Aflac)</fullName>
+                <default>false</default>
+                <label>Supplemental Insurance (Aflac)</label>
+            </value>
+            <value>
+                <fullName>Credit Union</fullName>
+                <default>false</default>
+                <label>Credit Union</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

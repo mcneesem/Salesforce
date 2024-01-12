@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WO</fullName>
+    <active>true</active>
+    <label>WO</label>
+    <picklistValues>
+        <picklist>NSP_Annual_Profit_Sharing__c</picklist>
+        <values>
+            <fullName>Both</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profit Sharing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QNEC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_DM_Active_EE_Requirements__c</picklist>
+        <values>
+            <fullName>0 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1%2C000 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>500 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>570 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>750 hrs</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_DM_Term_EE_Requirement__c</picklist>
+        <values>
+            <fullName>0 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1%2C000 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>500 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>750 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Last Day Rule</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Discretionary__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_PS_Allocation_Method__c</picklist>
+        <values>
+            <fullName>Permitted Disparity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pro-Rata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_PS_QNEC_Active_EE_Requirements__c</picklist>
+        <values>
+            <fullName>0 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1 hr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1%2C000 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>480 Hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>500 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>501 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>520 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>570 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>750 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>900</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>960 hrs</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_PS_Term_EE_Requirements__c</picklist>
+        <values>
+            <fullName>0 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1 hr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1%2C000 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>500 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>750 hrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Last Day Rule</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Plan_Type__c</picklist>
+        <values>
+            <fullName>401K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>403b</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>414h Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Qualified Deferral Compensation Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SRP ROTH IRA- ASCENSUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safe Harbor 401K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Simple 401K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Simple IRA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Frozen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suspended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transferred</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Test_Plan_Status__c</picklist>
+        <values>
+            <fullName>Coverage - Outside Employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coverage Transition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deconversion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Frozen Outside Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP Plan Frozen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP Plan Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Qualified Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prior Plan Year Merge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Startup Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undefined</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_if_QNEC__c</picklist>
+        <values>
+            <fullName>All Eligible at end of Plan year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NHCE only</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

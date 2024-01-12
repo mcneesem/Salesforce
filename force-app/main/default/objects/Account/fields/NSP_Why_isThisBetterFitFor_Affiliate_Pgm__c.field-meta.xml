@@ -8,7 +8,7 @@
     <label>Why is This Better Fit For Affiliate Pgm</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
 </CustomField>

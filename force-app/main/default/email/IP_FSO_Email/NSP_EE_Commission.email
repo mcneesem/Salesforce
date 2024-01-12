@@ -1,0 +1,27 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) : Client has commission only employees" recipientType="User" relatedToType="Implementation_Profile__c">
+
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<table border="0" width="550">
+<c:InsperityEmailHeader />
+<p>{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) has commission-only employees. You will need to get approval from Insperity’s FLSA department.
+ Please fill out the attached questionnaire and save as a Word document. </p>
+ 
+ <p>When complete, forward to <a href="mailto:FLSA_specialists@insperity.com">FLSA_specialists@insperity.com</a> or fax to (800) 547-6783. 
+If the employees are not commission only then you will need to update the Schedule A to
+ reflect Salary or Hourly and notify Pricing and Review of the corrected version number.</p>
+ 
+ 
+ 
+
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</table>
+</body>
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

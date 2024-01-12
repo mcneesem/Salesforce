@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Estimate__c</fullName>
+    <description>Indicates if the opportunity is an estimate</description>
+    <externalId>false</externalId>
+    <formula>SBQQ__PrimaryQuote__r.NSP_Estimate__c</formula>
+    <label>Estimate</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

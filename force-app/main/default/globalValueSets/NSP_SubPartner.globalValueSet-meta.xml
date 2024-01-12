@@ -21,6 +21,11 @@
         <label>ACG Atlanta</label>
     </customValue>
     <customValue>
+        <fullName>ACG Austin</fullName>
+        <default>false</default>
+        <label>ACG Austin</label>
+    </customValue>
+    <customValue>
         <fullName>ACG Birmingham Network</fullName>
         <default>false</default>
         <label>ACG Birmingham Network</label>
@@ -326,6 +331,11 @@
         <label>Acrisure, PGM LLC</label>
     </customValue>
     <customValue>
+        <fullName>Acrisure, Star Group</fullName>
+        <default>false</default>
+        <label>Acrisure, Star Group</label>
+    </customValue>
+    <customValue>
         <fullName>Acrisure, TASK Group LLC, dba</fullName>
         <default>false</default>
         <label>Acrisure, TASK Group LLC, dba</label>
@@ -614,6 +624,11 @@
         <fullName>DKG Insurance &amp; Financial</fullName>
         <default>false</default>
         <label>DKG Insurance &amp; Financial</label>
+    </customValue>
+    <customValue>
+        <fullName>DKG Insurance Services, Summit Park (PE Firm)</fullName>
+        <default>false</default>
+        <label>DKG Insurance Services, Summit Park (PE Firm)</label>
     </customValue>
     <customValue>
         <fullName>EO Albany</fullName>
@@ -976,6 +991,16 @@
         <label>FSI- AE Wealth Management, LLC</label>
     </customValue>
     <customValue>
+        <fullName>FSI- AFS Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI- AFS Wealth Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Alternativ Wealth</fullName>
+        <default>false</default>
+        <label>FSI- Alternativ Wealth</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- American Portfolios Financial Services, Inc.</fullName>
         <default>false</default>
         <label>FSI- American Portfolios Financial Services, Inc.</label>
@@ -984,6 +1009,11 @@
         <fullName>FSI- Atlas Brown</fullName>
         <default>false</default>
         <label>FSI- Atlas Brown</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Atria</fullName>
+        <default>false</default>
+        <label>FSI- Atria</label>
     </customValue>
     <customValue>
         <fullName>FSI- Auctus Advisors LLC</fullName>
@@ -1006,14 +1036,19 @@
         <label>FSI- Berthel Fisher &amp; Company</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Brokers International</fullName>
+        <default>false</default>
+        <label>FSI- Brokers International</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Byerly Investments</fullName>
+        <default>false</default>
+        <label>FSI- Byerly Investments</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Cadaret, Grant &amp; Co.</fullName>
         <default>false</default>
         <label>FSI- Cadaret, Grant &amp; Co.</label>
-    </customValue>
-    <customValue>
-        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
-        <default>false</default>
-        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <customValue>
         <fullName>FSI- Camarda Wealth Advisory Group</fullName>
@@ -1061,6 +1096,16 @@
         <label>FSI- cfd Investments, Inc.</label>
     </customValue>
     <customValue>
+        <fullName>FSI- CJE Financial</fullName>
+        <default>false</default>
+        <label>FSI- CJE Financial</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Cleveland Research Company</fullName>
+        <default>false</default>
+        <label>FSI- Cleveland Research Company</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Coastal Equities, Inc.</fullName>
         <default>false</default>
         <label>FSI- Coastal Equities, Inc.</label>
@@ -1079,6 +1124,16 @@
         <fullName>FSI- Concourse Financial Group Securities</fullName>
         <default>false</default>
         <label>FSI- Concourse Financial Group Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Coordinated Capital</fullName>
+        <default>false</default>
+        <label>FSI- Coordinated Capital</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Creative Financial Design</fullName>
+        <default>false</default>
+        <label>FSI- Creative Financial Design</label>
     </customValue>
     <customValue>
         <fullName>FSI- Crown Capital Securities, LP</fullName>
@@ -1141,6 +1196,21 @@
         <label>FSI- Geneos Wealth Management</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Gradient Financial Group, LLC</fullName>
+        <default>false</default>
+        <label>FSI- Gradient Financial Group, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Gradient Securities</fullName>
+        <default>false</default>
+        <label>FSI- Gradient Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Grove Point Investments</fullName>
+        <default>false</default>
+        <label>FSI- Grove Point Investments</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Independence Square Holdings</fullName>
         <default>false</default>
         <label>FSI- Independence Square Holdings</label>
@@ -1156,6 +1226,16 @@
         <label>FSI- Independent Wealth Network Inc</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Infinex Investments</fullName>
+        <default>false</default>
+        <label>FSI- Infinex Investments</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Intervest International Equities Corporation</fullName>
+        <default>false</default>
+        <label>FSI- Intervest International Equities Corporation</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Invenio Wealth Partners, LLC</fullName>
         <default>false</default>
         <label>FSI- Invenio Wealth Partners, LLC</label>
@@ -1169,11 +1249,6 @@
         <fullName>FSI- J.W. Cole Financial Inc.</fullName>
         <default>false</default>
         <label>FSI- J.W. Cole Financial Inc.</label>
-    </customValue>
-    <customValue>
-        <fullName>FSI-  JW Cole</fullName>
-        <default>false</default>
-        <label>FSI-  JW Cole</label>
     </customValue>
     <customValue>
         <fullName>FSI- Kestra Financial, Inc.</fullName>
@@ -1231,9 +1306,19 @@
         <label>FSI- MML Investors Services, Inc.</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Money Concepts</fullName>
+        <default>false</default>
+        <label>FSI- Money Concepts</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Mutual Securities Inc</fullName>
         <default>false</default>
         <label>FSI- Mutual Securities Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Natural Investments</fullName>
+        <default>false</default>
+        <label>FSI- Natural Investments</label>
     </customValue>
     <customValue>
         <fullName>FSI- NEXT Financial Group</fullName>
@@ -1241,14 +1326,14 @@
         <label>FSI- NEXT Financial Group</label>
     </customValue>
     <customValue>
+        <fullName>FSI- NFP</fullName>
+        <default>false</default>
+        <label>FSI- NFP</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- NOT CURRENTLY REGISTERED</fullName>
         <default>false</default>
         <label>FSI- NOT CURRENTLY REGISTERED</label>
-    </customValue>
-    <customValue>
-        <fullName>FSI- Not Registered with FSI</fullName>
-        <default>false</default>
-        <label>FSI- Not Registered with FSI</label>
     </customValue>
     <customValue>
         <fullName>FSI-  Optivise Advisory Services</fullName>
@@ -1259,6 +1344,11 @@
         <fullName>FSI-  Our House Wealth Advisors</fullName>
         <default>false</default>
         <label>FSI-  Our House Wealth Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Pacific Financial Advisors</fullName>
+        <default>false</default>
+        <label>FSI- Pacific Financial Advisors</label>
     </customValue>
     <customValue>
         <fullName>FSI- Paladin Wealth Partners</fullName>
@@ -1296,6 +1386,11 @@
         <label>FSI- Principal Securities, Inc.</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Private Advisor Group</fullName>
+        <default>false</default>
+        <label>FSI- Private Advisor Group</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Private Client Services</fullName>
         <default>false</default>
         <label>FSI- Private Client Services</label>
@@ -1321,6 +1416,16 @@
         <label>FSI- RBC CAPITAL MARKETS, LLC</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Revolution Capital LLC</fullName>
+        <default>false</default>
+        <label>FSI- Revolution Capital LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- RFG Advisory</fullName>
+        <default>false</default>
+        <label>FSI- RFG Advisory</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- RIA (NO BD Affiliation)</fullName>
         <default>false</default>
         <label>FSI- RIA (NO BD Affiliation)</label>
@@ -1331,6 +1436,16 @@
         <label>FSI- Rittman Capital Management</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Robbins Farley LLC</fullName>
+        <default>false</default>
+        <label>FSI- Robbins Farley LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Rockcrest Financial</fullName>
+        <default>false</default>
+        <label>FSI- Rockcrest Financial</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Royal Alliance Associates</fullName>
         <default>false</default>
         <label>FSI- Royal Alliance Associates</label>
@@ -1339,6 +1454,11 @@
         <fullName>FSI- SagePoint Financial Inc.</fullName>
         <default>false</default>
         <label>FSI- SagePoint Financial Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- SA Stone</fullName>
+        <default>false</default>
+        <label>FSI- SA Stone</label>
     </customValue>
     <customValue>
         <fullName>FSI- SCF Securities, Inc.</fullName>
@@ -1361,9 +1481,24 @@
         <label>FSI- Securities America, Inc.</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Silicon Valley Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI- Silicon Valley Wealth Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Skybox Financial Group</fullName>
+        <default>false</default>
+        <label>FSI- Skybox Financial Group</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Sound Income Strategies, LLC</fullName>
         <default>false</default>
         <label>FSI- Sound Income Strategies, LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Spectrum Wealth Management LLC</fullName>
+        <default>false</default>
+        <label>FSI- Spectrum Wealth Management LLC</label>
     </customValue>
     <customValue>
         <fullName>FSI- Spire Investment Partners, LLC</fullName>
@@ -1374,6 +1509,16 @@
         <fullName>FSI- Stifel Independent Advisors</fullName>
         <default>false</default>
         <label>FSI- Stifel Independent Advisors</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Synergistic Wealth Management LLC</fullName>
+        <default>false</default>
+        <label>FSI- Synergistic Wealth Management LLC</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- The Benchmark Company LLC</fullName>
+        <default>false</default>
+        <label>FSI- The Benchmark Company LLC</label>
     </customValue>
     <customValue>
         <fullName>FSI-  The Knox Group Wealth Management</fullName>
@@ -1461,6 +1606,11 @@
         <label>FSI- Yarger Wealth Strategies</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Yuma Investment Group Wealth Management</fullName>
+        <default>false</default>
+        <label>FSI- Yuma Investment Group Wealth Management</label>
+    </customValue>
+    <customValue>
         <fullName>Gallagher Benefit Service</fullName>
         <default>false</default>
         <label>Gallagher Benefit Service</label>
@@ -1479,6 +1629,11 @@
         <fullName>Hanna Global Solutions</fullName>
         <default>false</default>
         <label>Hanna Global Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Harris Northwest Advisors</fullName>
+        <default>false</default>
+        <label>Harris Northwest Advisors</label>
     </customValue>
     <customValue>
         <fullName>Heritage Companies, Inc</fullName>
@@ -1516,9 +1671,139 @@
         <label>HTG-HEARTLAND TECH GROUP, LLC</label>
     </customValue>
     <customValue>
+        <fullName>HUB California – Central Coast</fullName>
+        <default>false</default>
+        <label>HUB California – Central Coast</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB California – Los Angeles/OC</fullName>
+        <default>false</default>
+        <label>HUB California – Los Angeles/OC</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Carolinas</fullName>
+        <default>false</default>
+        <label>HUB Carolinas</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Colorado</fullName>
+        <default>false</default>
+        <label>HUB Colorado</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Florida</fullName>
+        <default>false</default>
+        <label>HUB Florida</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Great Plains</fullName>
+        <default>false</default>
+        <label>HUB Great Plains</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Gulf South</fullName>
+        <default>false</default>
+        <label>HUB Gulf South</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB HDH</fullName>
+        <default>false</default>
+        <label>HUB HDH</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB International (Northeast)</fullName>
+        <default>false</default>
+        <label>HUB International (Northeast)</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB International Limited - Pacific Division</fullName>
+        <default>false</default>
+        <label>HUB International Limited - Pacific Division</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB International Limited - San Diego, CA</fullName>
+        <default>false</default>
+        <label>HUB International Limited - San Diego, CA</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB International Midwest Limited - Chicago, IL</fullName>
+        <default>false</default>
+        <label>HUB International Midwest Limited - Chicago, IL</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Mid-America</fullName>
+        <default>false</default>
+        <label>HUB Mid-America</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Mid-Atlantic</fullName>
+        <default>false</default>
+        <label>HUB Mid-Atlantic</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Mid-South</fullName>
+        <default>false</default>
+        <label>HUB Mid-South</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Midwest East</fullName>
+        <default>false</default>
+        <label>HUB Midwest East</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Midwest West</fullName>
+        <default>false</default>
+        <label>HUB Midwest West</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Mountain</fullName>
+        <default>false</default>
+        <label>HUB Mountain</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB New England</fullName>
+        <default>false</default>
+        <label>HUB New England</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Northeast</fullName>
+        <default>false</default>
+        <label>HUB Northeast</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Northwest</fullName>
+        <default>false</default>
+        <label>HUB Northwest</label>
+    </customValue>
+    <customValue>
         <fullName>HUB Pittsburgh</fullName>
         <default>false</default>
         <label>HUB Pittsburgh</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Puerto Rico</fullName>
+        <default>false</default>
+        <label>HUB Puerto Rico</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Southern California</fullName>
+        <default>false</default>
+        <label>HUB Southern California</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB South Florida</fullName>
+        <default>false</default>
+        <label>HUB South Florida</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Southwest</fullName>
+        <default>false</default>
+        <label>HUB Southwest</label>
+    </customValue>
+    <customValue>
+        <fullName>HUB Texas</fullName>
+        <default>false</default>
+        <label>HUB Texas</label>
     </customValue>
     <customValue>
         <fullName>IBTX</fullName>
@@ -2101,10 +2386,22 @@
         <label>Vistage Worldwide</label>
     </customValue>
     <customValue>
-        <fullName>Acisure</fullName>
+        <fullName>FSI- Grove Point Invesmtents</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Acisure</label>
+        <label>FSI- Grove Point Invesmtents</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Atlas Brown, Inc.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- Atlas Brown, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <customValue>
         <fullName>Alera Group – TRISURE</fullName>
@@ -2113,10 +2410,28 @@
         <label>Alera Group – TRISURE</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Not Registered with FSI</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- Not Registered with FSI</label>
+    </customValue>
+    <customValue>
+        <fullName>Acisure</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Acisure</label>
+    </customValue>
+    <customValue>
         <fullName>Alera Group – Forum</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Alera Group – Forum</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI-  JW Cole</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI-  JW Cole</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>

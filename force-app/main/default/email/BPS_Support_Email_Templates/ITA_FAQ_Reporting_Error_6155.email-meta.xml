@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Reporting Error -6155</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Reporting Error -6155</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Reporting Error -6155</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+
+
+Thank you for contacting Insperity Time &amp; Attendance Support. We understand that you are receiving an error message, &quot;Report instance does not exist -6155&quot;, when generating reports from Time &amp; Attendance. This error message indicates the report is being blocked by your browser. This could be related to outdated saved data in the cache (where clearing the cache would resolve the concern), the browser or workstation itself (where trying to generate reports via a different browser or workstation would resolve the concern), or pop-up blockers or firewalls set up by your IT group. 
+
+In particular, we have seen this error recently in association with an Adobe Reader extension in Chrome, where that plugin is preventing the report from generating. If that&apos;s something you have enabled, you can disable or remove that plugin to proceed with report processing in Chrome or use another browser for reporting. 
+
+We have also found that selecting a &quot;Save As&quot; option in the Output Format field rather than previewing the report in your browser will typically bypass whatever is blocking the report from generating in preview mode. 
+
+If you have additional questions or concerns, please let us know and we will be happy to help. 
+
+Thank you,
+
+Insperity Time &amp; Attendance Technical Support Team
+
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

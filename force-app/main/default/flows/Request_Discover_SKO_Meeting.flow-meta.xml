@@ -1,0 +1,1542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>56.0</apiVersion>
+    <choices>
+        <name>Biweekly</name>
+        <choiceText>Biweekly</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Biweekly</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Basic</name>
+        <choiceText>Freedom Basic</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Basic</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Choice</name>
+        <choiceText>Freedom Choice</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Choice</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Pacific_Northwest</name>
+        <choiceText>Freedom Pacific Northwest</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Pacific Northwest</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Premier</name>
+        <choiceText>Freedom Premier</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Premier</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Saver</name>
+        <choiceText>Freedom Saver</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Saver</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Savor</name>
+        <choiceText>Freedom Savor</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Savor</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freedom_Select</name>
+        <choiceText>Freedom Select</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freedom Select</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Basic</name>
+        <choiceText>Independence Basic</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Basic</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Choice</name>
+        <choiceText>Independence Choice</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Choice</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Pacific_Northwest</name>
+        <choiceText>Independence Pacific Northwest</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Pacific Northwest</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Premier</name>
+        <choiceText>Independence Premier</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Premier</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Saver</name>
+        <choiceText>Independence Saver</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Saver</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Independence_Select</name>
+        <choiceText>Independence Select</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Independence Select</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Basic</name>
+        <choiceText>Liberty Basic</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Basic</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Choice</name>
+        <choiceText>Liberty Choice</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Choice</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Pacific_Northwest</name>
+        <choiceText>Liberty Pacific Northwest</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Pacific Northwest</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Premier</name>
+        <choiceText>Liberty Premier</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Premier</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Saver</name>
+        <choiceText>Liberty Saver</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Saver</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Liberty_Select</name>
+        <choiceText>Liberty Select</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Liberty Select</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Monthly</name>
+        <choiceText>Monthly</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Monthly</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Premier_Time</name>
+        <choiceText>Premier Time</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Premier Time</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Revolution</name>
+        <choiceText>Revolution</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Revolution</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Semi_Monthly</name>
+        <choiceText>Semi-Monthly</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Semi-Monthly</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>WebPayroll</name>
+        <choiceText>WebPayroll</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WebPayroll</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Weekly</name>
+        <choiceText>Weekly</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Weekly</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>XML</name>
+        <choiceText>XML</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>XML</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <collectionProcessors>
+        <name>Sort_client_transition_OMRs_by_date_and_time</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Sort client transition OMRs by date and time</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_OMR_records</collectionReference>
+        <connector>
+            <targetReference>Get_Triggering_Account_Record</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Date_Valid__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Start_Time_Number__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
+    <constants>
+        <name>flowName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Request Client Transition Meeting</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Does_Active_WO_Asset_exist</name>
+        <label>Does Active WO Asset exist?</label>
+        <locationX>314</locationX>
+        <locationY>1538</locationY>
+        <defaultConnector>
+            <targetReference>Request_Discover_SKO_Meeting</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Active_WO_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Related_Asset.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_when_no_Active_WO_Asset</targetReference>
+            </connector>
+            <label>No Active WO Asset</label>
+        </rules>
+        <rules>
+            <name>OMR_Discovery_SKO_Task_already_exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Related_Discovery_SKO_Task.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Discovery_SKO_Meeting_has_Already_been_Requested</targetReference>
+            </connector>
+            <label>OMR Discovery/SKO Task already exists</label>
+        </rules>
+    </decisions>
+    <description>Updated Medical plan to Checklist.WO Benefit Plan picklist vs hardcoded choices. Updated with Fault Handler subflow.</description>
+    <dynamicChoiceSets>
+        <name>checklistWOBenefitPlanPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>WO_Benefit_Package__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>bidversionformula</name>
+        <dataType>Number</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})), {!Get_Checklist_from_Open_Opportunity.NSP_Version_Number__c}, IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),{!Get_Closed_Won_Opportunity_Checklist.NSP_Version_Number__c},null))</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>eecountformula</name>
+        <dataType>Number</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),{!Get_Checklist_from_Open_Opportunity.NSP_Number_of_Employees__c}, IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),{!Get_Closed_Won_Opportunity_Checklist.NSP_Number_of_Employees__c},null))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>first_available_block</name>
+        <dataType>Date</dataType>
+        <expression>CASE(WEEKDAY(TODAY()), 1, TODAY()+4, 2, TODAY()+4, 3, TODAY()+6, 4, TODAY()+6, 5, TODAY()+6, 6, TODAY()+6, 7, TODAY()+5, TODAY()+4)</expression>
+    </formulas>
+    <formulas>
+        <name>first_pay_period_formula</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(MONTH({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(MONTH({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(DAY({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(DAY({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(YEAR({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(YEAR({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot; - &quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(MONTH({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(MONTH({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(DAY({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(DAY({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT(YEAR({!Get_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT(YEAR({!Get_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null))</expression>
+    </formulas>
+    <formulas>
+        <name>firstpaydateformula</name>
+        <dataType>Date</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),{!Get_Checklist_from_Open_Opportunity.NSP_Requested_First_Pay_Date__c}, IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),{!Get_Closed_Won_Opportunity_Checklist.NSP_Requested_First_Pay_Date__c},null))</expression>
+    </formulas>
+    <formulas>
+        <name>formuladecrementOMRrecord</name>
+        <dataType>Number</dataType>
+        <expression>{!OMRdatatable.firstSelectedRow.Available_Reps__c}-1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>last_available_block</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()+183</expression>
+    </formulas>
+    <formulas>
+        <name>medical_plan_formula</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT({!Get_Checklist_from_Open_Opportunity.WO_Benefit_Package__c}), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT({!Get_Closed_Won_Opportunity_Checklist.WO_Benefit_Package__c}),null))</expression>
+    </formulas>
+    <formulas>
+        <name>medicaleffectivedateformula</name>
+        <dataType>Date</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),{!Get_Checklist_from_Open_Opportunity.NSP_Requested_Medical_Effective_Date__c}, IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),{!Get_Closed_Won_Opportunity_Checklist.NSP_Requested_Medical_Effective_Date__c},null))</expression>
+    </formulas>
+    <formulas>
+        <name>nspeffectivedateformula</name>
+        <dataType>Date</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),{!Get_Checklist_from_Open_Opportunity.NSP_Requested_Insperity_Effective_Date__c}, IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),{!Get_Closed_Won_Opportunity_Checklist.NSP_Requested_Insperity_Effective_Date__c},null))</expression>
+    </formulas>
+    <formulas>
+        <name>omr_task_subject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Client Transition Meeting Request | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
+    </formulas>
+    <formulas>
+        <name>payfrequencyformula</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!Get_Checklist_from_Open_Opportunity.Id})),TEXT({!Get_Checklist_from_Open_Opportunity.NSP_Pay_Frequency__c}), IF(NOT(ISBLANK({!Get_Closed_Won_Opportunity_Checklist.Id})),TEXT({!Get_Closed_Won_Opportunity_Checklist.NSP_Pay_Frequency__c}),null))</expression>
+    </formulas>
+    <formulas>
+        <name>selectedblockdatetotext</name>
+        <dataType>String</dataType>
+        <expression>TEXT(YEAR({!OMRdatatable.firstSelectedRow.Date_Valid__c})) + IF(MONTH({!OMRdatatable.firstSelectedRow.Date_Valid__c}) &gt; 9, TEXT(MONTH({!OMRdatatable.firstSelectedRow.Date_Valid__c})), &apos;0&apos;+ TEXT(MONTH({!OMRdatatable.firstSelectedRow.Date_Valid__c}))) + IF(DAY({!OMRdatatable.firstSelectedRow.Date_Valid__c}) &gt; 9, TEXT(DAY({!OMRdatatable.firstSelectedRow.Date_Valid__c})),&apos;0&apos;+TEXT(DAY({!OMRdatatable.firstSelectedRow.Date_Valid__c})))</expression>
+    </formulas>
+    <formulas>
+        <name>triggering_User</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Id}</expression>
+    </formulas>
+    <interviewLabel>Request Discover/SKO Meeting {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>Request Client Transition Meeting</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_OMR_Task</name>
+        <label>Create OMR Task</label>
+        <locationX>578</locationX>
+        <locationY>2186</locationY>
+        <connector>
+            <targetReference>Stamp_Account_with_Selected_OMR_ID</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>omrtaskdescriptiontemplate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>populate_notes_field_on_task</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_OMR_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>omr_task_subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Client Transition Meeting Request</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Checklist_from_Open_Opportunity</name>
+        <label>Get Checklist from Open Opportunity</label>
+        <locationX>314</locationX>
+        <locationY>1106</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Most_Recent_Closed_Won_Opportunity</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Most_Recent_Open_Opportunity.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_STP_Checklist_RT.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Checklist__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Closed_Won_Opportunity_Checklist</name>
+        <label>Get Closed Won Opportunity Checklist</label>
+        <locationX>314</locationX>
+        <locationY>1322</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_OMR_Queue</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Most_Recent_Closed_Won_Opportunity.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_STP_Checklist_RT.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Checklist__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_entity_definition_of_account</name>
+        <label>Get entity definition of account</label>
+        <locationX>578</locationX>
+        <locationY>1754</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_field_definition_of_sales_office_on_account</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EntityDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_field_definition_of_sales_office_on_account</name>
+        <label>Get field definition of sales office on account</label>
+        <locationX>578</locationX>
+        <locationY>1862</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QualifiedApiName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Sales_Office__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EntityDefinitionId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_entity_definition_of_account.DurableId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>FieldDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Most_Recent_Closed_Won_Opportunity</name>
+        <label>Get Most Recent Closed Won Opportunity</label>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Closed_Won_Opportunity_Checklist</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Most_Recent_Open_Opportunity</name>
+        <label>Get Most Recent Open Opportunity</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Checklist_from_Open_Opportunity</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Queue</name>
+        <label>Get OMR Queue</label>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_Active_WO_Asset_exist</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Onboarding_Meeting_Request</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_records</name>
+        <label>Get OMR records</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sort_client_transition_OMRs_by_date_and_time</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>first_available_block</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Date_Valid__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>last_available_block</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Available_Reps__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Meeting_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Discovery/SKO</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Onboarding_Meeting_Request__c</object>
+        <sortField>Date_Valid__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Task_Record_Type_ID</name>
+        <label>Get OMR Task Record Type ID</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Related_Discovery_SKO_Task</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Orientation_Meeting_Request</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_picklistvalueinfo_of_sales_office_on_account</name>
+        <label>Get picklistvalueinfo of sales office on account</label>
+        <locationX>578</locationX>
+        <locationY>1970</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decrement_Selected_OMR_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityParticleId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_field_definition_of_sales_office_on_account.DurableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.NSP_Sales_Office__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PicklistValueInfo</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Related_Asset</name>
+        <label>Get Related Asset</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_OMR_Task_Record_Type_ID</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_WO_Asset_RT.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Asset</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Related_Discovery_SKO_Task</name>
+        <label>Get Related Discovery/SKO Task</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_STP_Checklist_RT</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Client Transition Meeting Request</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_OMR_Task_Record_Type_ID.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_STP_Checklist_RT</name>
+        <label>Get STP Checklist RT</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Most_Recent_Open_Opportunity</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Sold_to_Paid_Checklist</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Checklist__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Triggering_Account_Record</name>
+        <label>Get Triggering Account Record</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_WO_Asset_RT</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_WO_Asset_RT</name>
+        <label>Get WO Asset RT</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Related_Asset</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Asset</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Decrement_Selected_OMR_Record</name>
+        <label>Decrement Selected OMR Record</label>
+        <locationX>578</locationX>
+        <locationY>2078</locationY>
+        <connector>
+            <targetReference>Create_OMR_Task</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OMRdatatable.firstSelectedRow.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Available_Reps__c</field>
+            <value>
+                <elementReference>formuladecrementOMRrecord</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Meeting_Request__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Stamp_Account_with_Selected_OMR_ID</name>
+        <label>Stamp Account with Selected OMR ID</label>
+        <locationX>578</locationX>
+        <locationY>2294</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Account_Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Discovery_SKO_OMR_ID__c</field>
+            <value>
+                <elementReference>OMRdatatable.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Discovery_SKO_Meeting_has_Already_been_Requested</name>
+        <label>Discovery/SKO Meeting has Already been Requested</label>
+        <locationX>314</locationX>
+        <locationY>1646</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>discoveryskoalreadyrequested</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(244, 4, 4); font-size: 14px;&quot;&gt;Client Transition Meeting has already been requested for Account ({!Get_Triggering_Account_Record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_when_no_Active_WO_Asset</name>
+        <label>Error when no Active WO Asset</label>
+        <locationX>50</locationX>
+        <locationY>1646</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errornowoasset</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(244, 7, 7);&quot;&gt;Client Transition Meeting cannot be requested until a WO Asset is created for Account ({!Get_Triggering_Account_Record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Request_Discover_SKO_Meeting</name>
+        <label>Request Discovery/SKO Meeting</label>
+        <locationX>578</locationX>
+        <locationY>1646</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_entity_definition_of_account</targetReference>
+        </connector>
+        <fields>
+            <name>Central_time_zone_warning</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(244, 3, 3);&quot;&gt;&lt;em&gt;All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Request_Discover_SKO_Meeting_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Request_Discover_SKO_Meeting_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>OMRdatatable</name>
+                    <dataTypeMappings>
+                        <typeName>T</typeName>
+                        <typeValue>Onboarding_Meeting_Request__c</typeValue>
+                    </dataTypeMappings>
+                    <extensionName>flowruntime:datatable</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Select a Time Block</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>selectionMode</name>
+                        <value>
+                            <stringValue>SINGLE_SELECT</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>minRowSelection</name>
+                        <value>
+                            <numberValue>1.0</numberValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>shouldDisplayLabel</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>tableData</name>
+                        <value>
+                            <elementReference>Get_OMR_records</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>maxRowSelection</name>
+                        <value>
+                            <numberValue>1.0</numberValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>columns</name>
+                        <value>
+                            <stringValue>[{&quot;apiName&quot;:&quot;NSP_Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-d5e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-2b52&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Start Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-9aa3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;End Time&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Available_Reps__c&quot;,&quot;guid&quot;:&quot;column-bcbb&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Available Slots&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>Preferred_SKO_Meeting_Time_within_Selected_Time_Block</name>
+                    <dataType>String</dataType>
+                    <fieldText>Preferred Transition Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Alternate_SKO_Meeting_Date_Time_s</name>
+                    <dataType>String</dataType>
+                    <fieldText>Alternate Transition Meeting Date/Time(s)</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>Account</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Account: &lt;/strong&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;{!Get_Triggering_Account_Record.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>aimsclientnumberfromasset</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Client Number:&lt;/strong&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt; {!Get_Related_Asset.NSP_Client__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>bidversion</name>
+            <dataType>Number</dataType>
+            <defaultValue>
+                <elementReference>bidversionformula</elementReference>
+            </defaultValue>
+            <fieldText>Bid Version</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>eecount</name>
+            <dataType>Number</dataType>
+            <defaultValue>
+                <elementReference>eecountformula</elementReference>
+            </defaultValue>
+            <fieldText>EE Count</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>ossname</name>
+            <dataType>String</dataType>
+            <fieldText>OSS Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>ossphone</name>
+            <extensionName>flowruntime:phone</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>OSS Phone</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>(xxx) xxx-xxxx</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>readonly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>ossemail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>readonly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>OSS Email</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>nspeffectivedate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>nspeffectivedateformula</elementReference>
+            </defaultValue>
+            <fieldText>NSP Effective Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>medicaleffectivedate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>medicaleffectivedateformula</elementReference>
+            </defaultValue>
+            <fieldText>Medical Effective Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Medical_Plan</name>
+            <choiceReferences>checklistWOBenefitPlanPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>medical_plan_formula</elementReference>
+            </defaultValue>
+            <fieldText>Medical Plan</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Translator_Needed_for_OT</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Translator Needed for OT?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Language_s_Needed</name>
+            <dataType>String</dataType>
+            <fieldText>Language(s) Needed?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Translator_Needed_for_OT</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Yes</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>payfrequency</name>
+            <choiceReferences>Weekly</choiceReferences>
+            <choiceReferences>Biweekly</choiceReferences>
+            <choiceReferences>Semi_Monthly</choiceReferences>
+            <choiceReferences>Monthly</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>payfrequencyformula</elementReference>
+            </defaultValue>
+            <fieldText>Pay Frequency</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>First_Pay_Period</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>first_pay_period_formula</elementReference>
+            </defaultValue>
+            <fieldText>First Pay Period</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>FirstPayDate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>firstpaydateformula</elementReference>
+            </defaultValue>
+            <fieldText>First Pay Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Time_Entry_Method</name>
+            <choiceReferences>XML</choiceReferences>
+            <choiceReferences>WebPayroll</choiceReferences>
+            <choiceReferences>Premier_Time</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Time Entry Method</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Special_Instructions</name>
+            <fieldText>Special Instructions</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Submit</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_OMR_records</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>1106</locationX>
+        <locationY>2294</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <elementReference>flowName</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>omrtaskdescriptiontemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Client Transition Meeting Request for {!Get_Triggering_Account_Record.Name}
+-
+Client Number: {!Get_Related_Asset.NSP_Client__c}
+-
+Time Block Selected: {!OMRdatatable.firstSelectedRow.Date_Valid__c}, {!OMRdatatable.firstSelectedRow.Start_Time_picklist__c} - {!OMRdatatable.firstSelectedRow.End_Time_picklist__c}
+-
+Preferred Transition Meeting Time within Selected Block: {!Preferred_SKO_Meeting_Time_within_Selected_Time_Block}
+-
+Alternate Transition Meeting Date/Time(s): {!Alternate_SKO_Meeting_Date_Time_s}
+-
+Bid Version: {!bidversion}
+-
+EE Count: {!eecount}
+-
+OSS Name: {!ossname}
+-
+OSS Phone: {!ossphone.value}
+-
+OSS Email: {!ossemail.value}
+-
+NSP Effective Date: {!nspeffectivedate}
+-
+Medical Effective Date: {!medicaleffectivedate}
+-
+Medical Plan: {!Medical_Plan}
+-
+Translator Needed for OT: {!Translator_Needed_for_OT}
+If yes to above question, language(s) needed: {!Language_s_Needed}
+-
+Pay Frequency: {!payfrequency}
+-
+First Pay Period: {!First_Pay_Period}
+-
+First Pay Date: {!FirstPayDate}
+-
+Time Entry Method: {!Time_Entry_Method}
+-
+Special Instructions: {!Special_Instructions}</text>
+    </textTemplates>
+    <textTemplates>
+        <description>Template to populate the &apos;Notes&apos; field on Task. This is to allow for creation of an Orientation Meeting Request Task and to bypass &apos;Prevent_Manual_Creation_of_OMR_Tasks&apos; validation rule.</description>
+        <name>populate_notes_field_on_task</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Task created by &apos;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Request_Discover_SKO_Meeting&apos; flow.&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>testtexttemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Client Number: {!Get_Related_Asset.NSP_Client__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>texttemplatetest</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account: {!Alternate_SKO_Meeting_Date_Time_s} 
+Client Number: {!bidversion}</text>
+    </textTemplates>
+    <variables>
+        <name>omr_task_record_type_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>assign_the_variable</name>
+        <label>Human Capital Assignment</label>
+        <locationX>874</locationX>
+        <locationY>444</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_PEO_Human_Capital_Goals__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Goal_Records.NSP_Goal_Details__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Goal_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Business_Asignment</name>
+        <label>Business Asignment</label>
+        <locationX>1003</locationX>
+        <locationY>557</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_PEO_Business_Goals__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Goal_Records.NSP_Goal_Details__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Goal_Records</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check</name>
+        <label>Check</label>
+        <locationX>1105</locationX>
+        <locationY>257</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PEO_Business</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Goal_Records.NSP_Goal_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PEO Business Goal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Goal_Records.NSP_Goal_Details__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Business_Asignment</targetReference>
+            </connector>
+            <label>PEO Business</label>
+        </rules>
+        <rules>
+            <name>PEO_Human_Capital</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Goal_Records.NSP_Goal_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PEO Human Capital Goal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Goal_Records.NSP_Goal_Details__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assign_the_variable</targetReference>
+            </connector>
+            <label>PEO Human Capital</label>
+        </rules>
+    </decisions>
+    <interviewLabel>NSP_Relationship Strategy {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NSP_Relationship Strategy</label>
+    <loops>
+        <name>Loop_Goal_Records</name>
+        <label>Loop Goal Records</label>
+        <locationX>537</locationX>
+        <locationY>349</locationY>
+        <collectionReference>Get_Client_Goal</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Client_Goal</name>
+        <label>Get Client Goal</label>
+        <locationX>175</locationX>
+        <locationY>304</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Goal_Records</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>NSP_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Account__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Goal_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PEO Business Goal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Goal_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PEO Human Capital Goal</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>NSP_ClientGoal__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Goal_Type__c</queriedFields>
+        <queriedFields>NSP_Goal_Details__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>48</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Client_Goal</targetReference>
+        </connector>
+        <object>NSP_Relationship_Strategy_Action_Plan__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>GoalDetail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

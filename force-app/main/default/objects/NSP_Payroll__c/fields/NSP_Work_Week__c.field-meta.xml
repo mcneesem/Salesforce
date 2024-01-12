@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Work_Week__c</fullName>
+    <externalId>false</externalId>
+    <label>Work Week</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sunday - Saturday</fullName>
+                <default>false</default>
+                <label>Sunday - Saturday</label>
+            </value>
+            <value>
+                <fullName>Monday - Sunday</fullName>
+                <default>false</default>
+                <label>Monday - Sunday</label>
+            </value>
+            <value>
+                <fullName>Tuesday - Monday</fullName>
+                <default>false</default>
+                <label>Tuesday - Monday</label>
+            </value>
+            <value>
+                <fullName>Wednesday - Tuesday</fullName>
+                <default>false</default>
+                <label>Wednesday - Tuesday</label>
+            </value>
+            <value>
+                <fullName>Thursday - Wednesday</fullName>
+                <default>false</default>
+                <label>Thursday - Wednesday</label>
+            </value>
+            <value>
+                <fullName>Friday - Thursday</fullName>
+                <default>false</default>
+                <label>Friday - Thursday</label>
+            </value>
+            <value>
+                <fullName>Saturday - Friday</fullName>
+                <default>false</default>
+                <label>Saturday - Friday</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

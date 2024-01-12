@@ -11,6 +11,7 @@ Modification Log     :
 * Rakesh                 	07/02/2021            First Iteration
 */
 public class NSP_OpportunityTriggerHelperFunctions {
+    // test w/ NSP_OpportunityTriggerHelperTest,NSP_AccountTriggerHelperTest (88%)
 
     public NSP_OpportunityTriggerHelperFunctions() {
 
@@ -24,8 +25,8 @@ public class NSP_OpportunityTriggerHelperFunctions {
      *                
      */
     public void setDirectOpptyFieldsAssignments(List < Opportunity > opportunityList) {
-        List < Pricebook2 > priceBookList = [SELECT id, name FROM pricebook2 WHERE name =: NSP_SalesConstants.NON_CPQ_PRICEBOOK];
-
+        List < Pricebook2 > priceBookList = new List < Pricebook2 >();
+		
         for (Opportunity opportunityObject: opportunityList) {
             //stamping Mid-Market sales team email on opportunity record
             opportunityObject.NSP_Mid_Market_Sales_Email__c = Label.NSP_Mid_Market_Sales_Email; //'midmarketleads@insperity.com'
@@ -33,8 +34,21 @@ public class NSP_OpportunityTriggerHelperFunctions {
             //DF-01858
             //opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_New_Client_Sales_Email;
              /*Added if condition as part of DF-01369 */
+            
+            if(opportunityObject.NSP_Account_Name__c != null){
+            String accountName = opportunityObject.NSP_Account_Name__c;
+        	Integer accountNameLength = accountName.length();
+            String trimmedAccountName;
             if(trigger.isBefore && trigger.isInsert){
-            opportunityObject.Name = opportunityObject.NSP_Account_Name__c + ' - ' + DateTime.now().format();
+                if(accountNameLength > 97) {
+                    trimmedAccountName = accountName.left(94) + '...';
+                }
+                else{
+                    trimmedAccountName = accountName;
+                }
+                opportunityObject.Name = trimmedAccountName + ' - ' + DateTime.now().format();
+            
+            }
             }
             //STY-01818 - Setting Client for Life
             opportunityObject.NSP_Client_For_Life__c = setClientForLifeOnOppty(opportunityObject.NSP_Client_For_Life__c, opportunityObject.NSP_PrimaryProduct__c);
@@ -61,7 +75,8 @@ public class NSP_OpportunityTriggerHelperFunctions {
             }
            
             //When Opportunity has primary product as WO then price is set to WO price book
-            if (String.isNotBlank(opportunityObject.NSP_PrimaryProduct__c) && opportunityObject.NSP_PrimaryProduct__c.equals('WO')) {
+            if (String.isNotBlank(opportunityObject.NSP_PrimaryProduct__c) && 'WO'.equals(opportunityObject.NSP_PrimaryProduct__c)) {
+                priceBookList = [SELECT id, name FROM pricebook2 WHERE name =: NSP_SalesConstants.NON_CPQ_PRICEBOOK];
                 if (priceBookList.size() > 0) {
                     opportunityObject.Pricebook2id = priceBookList[0].id;
                 }
@@ -226,8 +241,7 @@ public static void getAccountOwnerEmail(Set<Id> accountId) {
         set<Id> accountIdSet = new set<Id>();
         for(Account newAccount: newMap.values()){
         Account oldAccount = oldMap != null ? oldMap.get(newAccount.Id):null;
-            if(newAccount.OwnerId != oldAccount.OwnerId && newAccount.OwnerId != null)
-            {
+            if(newAccount.OwnerId != oldAccount.OwnerId && newAccount.OwnerId != null){
                               accountIdSet.add(newAccount.Id);                              
             }
         
@@ -254,11 +268,9 @@ public static void getAccountOwnerEmail(Set<Id> accountId) {
   
     }
     public static void publishEventBus(List<Integration_Opportunity_Event__e> eventList, List<Opportunity> objectList) {
-        List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         if(!eventList.isEmpty()) {
             // Publishing records Event 
             List<Database.SaveResult> results = EventBus.publish(eventList);
-            System.debug('result'+eventList);
             // Inspect publishing result for each event
             List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
             for (Database.SaveResult sr : results) {

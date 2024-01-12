@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>NSP_CaseCreated_EmployementScreeningBottom</letterhead>
+    <name>NSP_Employment Screening</name>
+    <style>freeForm</style>
+    <subject>Case Received – Case Number # {!Case.CaseNumber} : {!Case.Subject}</subject>
+    <textOnly>Thank you for contacting Insperity Employment Screening customer support.
+
+Your request has been received.  Case {!Case.CaseNumber} – &quot;{!Case.Subject}&quot; has been created for you.  A customer liaison will respond as soon as possible.
+
+If you have additional information or questions related to this topic, please reply to this email.
+
+Insperity Employment Screening Customer Service
+1300 Rollingbrook Dr., Suite 300, Baytown, TX 77521</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,29 @@
+<template >
+    <div style='display:none'>Active Step : {currentStep}</div>
+  <div class="slds-path" >
+        <div class="slds-grid slds-path__track">
+            <div class="slds-grid slds-path__scroller-container">
+                <div class="slds-path__scroller">
+                    <div class="slds-path__scroller_inner">
+                        <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                            <template for:each={activeSteps} for:item="step" >
+                            <li class="slds-path__item slds-is-incomplete" data-name={step.Name} role="presentation" id={step.value} key={step.value}>
+                                <a aria-selected="true" class="slds-path__link" role="option"
+                                    tabindex="0">
+                                    <span class="slds-path__stage">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Current Stage:</span>
+                                    </span>
+                                    <span class="slds-path__title">{step.label}</span>
+                                </a>
+                            </li>   
+                        </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

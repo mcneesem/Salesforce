@@ -7,6 +7,16 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Account.One_Time_Sync_Single_Record</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.One_Time_Sync_Single_Record}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Generate_Document</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
@@ -22,8 +32,8 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
@@ -39,6 +49,22 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Account.Send_For_Signature</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.NSP_Detailed_Data</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Admin</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Add_team_member</value>
@@ -79,6 +105,21 @@
                         <valueListItems>
                             <value>ChangeRecordType</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.blng__PaymentVirtualTerminal</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.DunningManual</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.blng__CreditCenter</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Request_a_Discover_SKO_Meeting</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Request_an_Employee_Orientation_Meeting</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -95,7 +136,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -117,6 +158,12 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_mainServiceContacts</componentName>
+                <identifier>c_nsp_mainServiceContacts</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -190,7 +237,7 @@
                 <identifier>runtime_sales_linkedin_companyMatchContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-797b92f7-becb-4a11-bce8-67e26ce5dd8e</name>
+        <name>Facet-f162d168-a66f-4252-94ce-ac8773059cb1</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -244,6 +291,20 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
+                    <value>Facet-f162d168-a66f-4252-94ce-ac8773059cb1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Sales Navigator</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
                     <value>Facet-68dc9019-5dc3-464e-8b6a-878eece3cc1c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -282,6 +343,12 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_implementationGetParentRecord</componentName>
+                <identifier>c_nsp_implementationGetParentRecord</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -345,6 +412,12 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
                 <identifier>runtime_sales_merge_mergeCandidatesPreviewCard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_visualIndicator</componentName>
+                <identifier>c_nsp_visualIndicator</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

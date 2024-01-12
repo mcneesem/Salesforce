@@ -1,0 +1,135 @@
+<template>
+    <div class="assignmentAndMeetings slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}
+            object-api-name={objectApiName} record-id={recordId} density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.assignmentMeetings}>
+            </lightning-formatted-text>
+            <lightning-layout class="ipProfile" multiple-rows>
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="Legal_Name__c"></lightning-input-field>
+                    <lightning-input-field field-name="DBA__c"></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <lightning-input-field field-name="BPA__c"></lightning-input-field>
+                    <lightning-input-field field-name="Onboarding_Specialist__c"></lightning-input-field>
+                    <lightning-input-field field-name="NSP_Project_Manager__c"></lightning-input-field>
+                    <lightning-input-field field-name="Client_Liaison__c"></lightning-input-field>
+                    <lightning-input-field field-name="Manager_HR_Services__c"></lightning-input-field>
+                    <lightning-input-field field-name="Onboarding_Specialist_Coordinator__c"></lightning-input-field>
+                    <lightning-input-field field-name="Orientation_Planner__c"></lightning-input-field>
+                    <lightning-input-field field-name="OT_Representative__c"></lightning-input-field>
+                    <lightning-input-field field-name="HR_Quality_Support_Team_Member__c"></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <lightning-input-field field-name="Sales_Office__c"></lightning-input-field>
+                    <lightning-input-field field-name="Payroll_Specialist__c"></lightning-input-field>
+                    <lightning-input-field field-name="Payroll_Supervisor__c"></lightning-input-field>
+                    <lightning-input-field field-name="HR_Specialist__c"></lightning-input-field>
+                    <lightning-input-field field-name="Orientation_Coordinator__c"></lightning-input-field>
+                </lightning-layout-item>
+
+                <!-- Worksite Employees -->
+                <lightning-layout-item size="12">
+                    <lightning-formatted-text class="slds-text-heading_small" value={label.numberOfWorkSiteEmployees}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="2">
+                    <span class="question">{label.fullTime}</span>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-m-top_xx-small">
+                    <lightning-input-field field-name="Num_of_Worksite_Employees_Full_Time__c" variant="label-hidden">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                </lightning-layout-item>
+                <lightning-layout-item size="2">
+                    <span class="question">{label.partTime}</span>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-m-top_xx-small">
+                    <lightning-input-field field-name="Num_of_Worksite_Employees_Part_Time__c" variant="label-hidden">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                </lightning-layout-item>
+                <lightning-layout-item size="2">
+                    <span class="question">{label.seasonal}</span>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-m-top_xx-small">
+                    <lightning-input-field field-name="Num_of_Worksite_Employees_Seasonal__c" variant="label-hidden">
+                    </lightning-input-field>
+                </lightning-layout-item>
+
+                <!-- Service Kick off Meetigs -->
+                <lightning-layout-item size="12">
+                    <lightning-formatted-text class="slds-text-heading_small" value={label.serviceKickoffMeetings}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="3">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.dateTime}>
+                    </lightning-formatted-text>
+                    <lightning-input-field field-name="Date_and_Time__c" variant="label-hidden">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <lightning-input-field field-name="Duration__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <lightning-input-field field-name="Orientation_Rep__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows>
+                <!-- Employee Orientation -->
+                <lightning-layout-item size="12">
+                    <lightning-formatted-text class="slds-text-heading_small" value={label.employeeOrientation}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <template for:each={lEmployeeOrientations} for:item="oEmployeeOrientation" for:index="index">
+                        <lightning-record-edit-form key={oEmployeeOrientation.Id}
+                            object-api-name={employeeObjectApiName} record-id={oEmployeeOrientation.Id} density="comfy">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="3">
+                                    <lightning-formatted-text class="slds-form-element__label" value={label.dateTime}>
+                                    </lightning-formatted-text>
+                                    <lightning-input-field field-name="Date_and_Time__c" data-index={index}
+                                        variant="label-hidden" onchange={handleEOChange}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name="Meeting_Type__c" data-index={index}
+                                        onchange={handleEOChange}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name="Orientation_Rep__c" data-index={index}
+                                        onchange={handleEOChange}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3" class="slds-m-top_large">
+                                    <lightning-button-icon icon-name="utility:delete" variant="border-filled"
+                                        alternative-text="Delete" data-id={oEmployeeOrientation.Id} data-index={index} onclick={deleteOrientationRow}>
+                                    </lightning-button-icon>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-record-edit-form>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="8">
+                    <lightning-button label={label.add} onclick={addMoreOrientation}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item class="ipProfile" size="7">
+                    <lightning-input-field field-name="NSP_Pre_SKO_Notes__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

@@ -1,0 +1,338 @@
+<template>
+    <div class="general slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} onsuccess={handleSuccess} onsubmit={handleSubmit}
+            onerror={handleError} object-api-name={objectApiName} density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.general}></lightning-formatted-text>
+
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="Brief_description_of_client__c"></lightning-input-field>
+                    <lightning-input-field field-name="Why_did_the_client_join_Insperity__c"></lightning-input-field>
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                        value={label.isClientComingFromAnotherPEO}></lightning-formatted-text>
+                    <lightning-radio-group name="Is_the_client_coming_from_another_PEO__c" variant="label-hidden"
+                        label={label.isClientComingFromAnotherPEO} options={pickValueYesNo} class="slds-m-bottom_xx-small slds-m-left_xx-small"
+                        value={fields.Is_the_client_coming_from_another_PEO__c} onchange={handleChange} type="radio">
+                    </lightning-radio-group>
+                    <lightning-input-field if:true={showPEOName} class="slds-m-left_medium" data-id="PEO_Name__c" value={fields.PEO_Name__c} field-name="PEO_Name__c" onchange={handleSyncChange}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="Client_s_previous_payroll_provider__c">
+                    </lightning-input-field>
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                        value={label.isClientComingImplementingPerformance}></lightning-formatted-text>
+                    <lightning-radio-group name="Client_Implementing_Premier_Performance__c" variant="label-hidden"
+                        label={label.isClientComingImplementingPerformance} options={pickValueYesNo}
+                        value={fields.Client_Implementing_Premier_Performance__c} onchange={handleChange} type="radio"
+                        class="slds-m-bottom_xx-small slds-m-left_xx-small">
+                    </lightning-radio-group>
+                    <div class="slds-m-left_medium" if:true={showHowSoonClientLikeSolutionImplemntedfield}>
+                        <lightning-formatted-text class="slds-form-element__label"
+                        value={label.whenClientLikeSolutionImplemented}></lightning-formatted-text>
+                        <lightning-input-field variant="label-hidden"
+                        field-name="When_Client_Wants_Solution_implemented__c"></lightning-input-field>
+                    </div>
+
+                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                        value={label.isClientImplementingAnyOtherBusinessSolutions}></lightning-formatted-text>
+                    <lightning-radio-group name="Implementing_biz_Performance_solutions__c" variant="label-hidden"
+                        label={label.isClientImplementingAnyOtherBusinessSolutions} options={pickValueYesNo}
+                        value={fields.Implementing_biz_Performance_solutions__c} onchange={handleChange}
+                        type="radio" class="slds-m-bottom_xx-small slds-m-left_xx-small">
+                    </lightning-radio-group>
+                    <div class="slds-m-left_medium" if:true={showClientAnyOtherBusinessSolutions}>
+                        <lightning-input-field field-name="Select_BPSes__c"></lightning-input-field>
+                        <lightning-input-field field-name="NSP_List_BPS_Implementation_Timeframe__c">
+                        </lightning-input-field>
+                    </div>
+                    <template if:true={timeEntryMethod.data}>
+                        <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.timeEntryMethod}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Time_Entry_Method__c" label={label.timeEntryMethod}
+                            variant="label-hidden" options={timeEntryMethod.data.values}
+                            value={fields.Time_Entry_Method__c} onchange={handleChange} type="radio"
+                            class="slds-m-bottom_xx-small slds-m-left_xx-small">
+                        </lightning-radio-group>
+                    </template>
+
+                    <!-- CLIENT PROFILE INFORMATION -->
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12">
+                            <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small" value={label.clientProfileInformation}></lightning-formatted-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12">
+                            <div class="slds-m-left_xx-small">
+                                <lightning-input type="checkbox" name="Client_Profile_Information__c" label={label.camLabel}
+                                    value={label.camValue} checked={isCAMClient} onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                                <lightning-input type="checkbox" name="Client_Profile_Information__c"
+                                    label={label.wsClientLabel} value={label.wsClientValue} checked={isWSClient}
+                                    onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                                <lightning-input type="checkbox" name="Client_Profile_Information__c"
+                                    label={label.woClientLabel} value={label.woClientValue} checked={isWOClient}
+                                    onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                                <lightning-input type="checkbox" name="Client_Profile_Information__c"
+                                    label={label.formerClientReturningLabel} value={label.formerClientReturningValue}
+                                    checked={isFormerClientReturning} onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                                <lightning-input type="checkbox" name="Client_Profile_Information__c"
+                                    label={label.wxClientLabel} value={label.wxClientValue} checked={isWXClient}
+                                    onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                                <lightning-input type="checkbox" name="Client_Profile_Information__c"
+                                    label={label.relatedClientLabel} value={label.relatedClientValue}
+                                    checked={isRelatedClients} onchange={handleCustomCheckboxChange}>
+                                </lightning-input>
+                            </div>
+                            <div if:true={showListofRelatedClients} class="slds-m-left_medium">
+                                <lightning-record-edit-form object-api-name={ipRelatedClientName} density="comfy">
+                                    <template if:true={reloadField}>
+                                        <lightning-input-field value={tempRelatedClientId} field-name="NSP_Related_Client__c" onchange={handleRelatedClients}>
+                                        </lightning-input-field>
+                                    </template>
+                                </lightning-record-edit-form>
+                                <lightning-pill-container items={relatedClientPills} onitemremove={handleItemRemove}></lightning-pill-container>
+                            </div>
+                            <lightning-input type="checkbox" name="Client_Profile_Information__c"
+                                label={label.nationalAccountLabel} value={label.nationalAccountValue}
+                                checked={isNationalAccount} onchange={handleCustomCheckboxChange}
+                                class="slds-m-left_xx-small">
+                            </lightning-input>
+                            <div if:true={showNationalAccount} class="slds-m-left_medium">
+                                <lightning-input-field field-name="Account_Executive__c">
+                                </lightning-input-field>
+                                <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
+                                    value={label.hushProtocol}>
+                                </lightning-formatted-text>
+                                <lightning-radio-group name="Hush_Protocol__c" class="slds-m-left_xx-small"
+                                    variant="label-hidden" label={label.hushProtocol} options={pickValueYesNo}
+                                    value={fields.Hush_Protocol__c} onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                    <!-- <template if:true={clientProfileInformation.data}>
+                        <lightning-formatted-text class="slds-form-element__label"
+                            value={label.clientProfileInformation}>
+                        </lightning-formatted-text>
+                        <lightning-checkbox-group name="Client_Profile_Information__c"
+                            label={label.clientProfileInformation} variant="label-hidden"
+                            options={clientProfileInformation.data.values} value={clientInformations}
+                            onchange={handleCheckboxChange}>
+                        </lightning-checkbox-group>
+                        <template if:true={showListofRelatedClients}>
+                            LIST OF RELATED CLIENTS
+                        </template>
+                        <template if:true={showNationalAccount}>
+                            <lightning-input-field class="slds-m-left_medium" field-name="Account_Executive__c">
+                            </lightning-input-field>
+                            <lightning-formatted-text class="slds-m-left_medium slds-form-element__label"
+                                value={label.hushProtocol}>
+                            </lightning-formatted-text>
+                            <lightning-radio-group class="slds-m-left_medium" name="Hush_Protocol__c"
+                                variant="label-hidden" label={label.hushProtocol} options={pickValueYesNo}
+                                value={fields.Hush_Protocol__c} onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                        </template>
+                    </template> -->
+                    <div if:true={willBPABeAttendingSKO.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label" value={label.willBPABeAttendingSKO}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Will_the_BPA_s_Be_attending_the_SKO__c" variant="label-hidden"
+                            label={label.willBPABeAttendingSKO} options={willBPABeAttendingSKO.data.values}
+                            value={fields.Will_the_BPA_s_Be_attending_the_SKO__c} onchange={handleChange}
+                            type="radio" class="slds-m-bottrom_xx-small">
+                        </lightning-radio-group>
+                    </div>
+                    <div if:true={clientLogoBeenCollected.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label NSP_Has_the_client_s_logo_been_collected__c"
+                            value={label.hasClientLogoBeenCollected}></lightning-formatted-text>
+                        <lightning-radio-group name="NSP_Has_the_client_s_logo_been_collected__c"
+                            variant="label-hidden" label={label.hasClientLogoBeenCollected}
+                            options={clientLogoBeenCollected.data.values}
+                            value={fields.NSP_Has_the_client_s_logo_been_collected__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </div>
+                    <lightning-formatted-text class="slds-form-element__label remove_employee_directory_from_premier__c"
+                        value="Would the client like to have the employee directory removed from Premier?"></lightning-formatted-text>
+                    <lightning-radio-group name="remove_employee_directory_from_premier__c"
+                        variant="label-hidden" label=""
+                        options={pickValueYesNo}
+                        value={fields.remove_employee_directory_from_premier__c} onchange={handleChange} type="radio">
+                    </lightning-radio-group>
+                    <lightning-input-field field-name="Business_Inception_Date__c">
+                    </lightning-input-field>
+                    <lightning-input name="Client_FEIN__c" label="Client’s Federal Employer Identification Number (FEIN)" type="number" 
+                        onchange={handleChange} value={fields.Client_FEIN__c} max="999999999" class="question slds-p-left_xxx-small"></lightning-input>
+
+                    <div if:true={hasFEINDocumentsCollected.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label Has_FEIN_documentation_been_collected__c"
+                            value={label.hasTheFEINDocumentsCollected}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Has_FEIN_documentation_been_collected__c" variant="label-hidden"
+                            label={label.hasTheFEINDocumentsCollected} options={hasFEINDocumentsCollected.data.values}
+                            value={fields.Has_FEIN_documentation_been_collected__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                    </div>
+
+                    <div class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label"
+                            value={label.allEEsPaidToSameFEIN}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="All_EEs_paid_under_same_FEIN_currently__c" variant="label-hidden"
+                            label="" options={pickValueYesNo}
+                            value={fields.All_EEs_paid_under_same_FEIN_currently__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                    </div>
+
+                    <lightning-input-field if:true={showAdditionalFEINField} class="slds-m-left_medium"
+                        field-name="List_additional_FEIN_s__c"></lightning-input-field>
+                    <div class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label" value={label.doesClientHaveMoreFEIN}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="NSP_Does_the_client_more_FEIN__c" variant="label-hidden"
+                            label={label.doesClientHaveMoreFEIN} options={pickValueYesNo}
+                            value={fields.NSP_Does_the_client_more_FEIN__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </div>
+
+                    <lightning-input-field if:true={showFEINAdditionalField} class="slds-m-left_medium" 
+                        field-name='List_additional_FEIN_s__c'></lightning-input-field>
+
+                    <lightning-input-field field-name="State_Unemployment_Insurance_SUI_Num__c">
+                    </lightning-input-field>
+
+                    <div if:true={hasSUITaxRateCollected.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label SUI_Tax_rate_notice_s_collected__c"
+                            value={label.hasSUITaxRateBeenCollected}></lightning-formatted-text>
+                        <lightning-radio-group name="SUI_Tax_rate_notice_s_collected__c" variant="label-hidden"
+                            label={label.hasSUITaxRateBeenCollected} options={hasSUITaxRateCollected.data.values}
+                            value={fields.SUI_Tax_rate_notice_s_collected__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </div>
+
+                    <div if:true={coverageCertGeneralLiability.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
+                            value={label.certCoverForGeneralLiability}></lightning-formatted-text>
+                        <lightning-radio-group name="Gotten_Cvrg_Cert_Gen_Liability_Auto__c" variant="label-hidden"
+                            label={label.certCoverForGeneralLiability} options={coverageCertGeneralLiability.data.values}
+                            value={fields.Gotten_Cvrg_Cert_Gen_Liability_Auto__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                        <div if:true={showGenLiabilityField} class="slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
+                                value={label.provideDetails}></lightning-formatted-text>
+                           <lightning-input-field variant="label-hidden"
+                               field-name="Gen_liability_auto_coverage_details__c"></lightning-input-field>
+                        </div>
+                    </div>
+                    <div if:true={recentPayrollCollected.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label Recent_Payroll_Register_Collected__c"
+                            value={label.recentPayrollCollected}></lightning-formatted-text>
+                        <lightning-radio-group name="Recent_Payroll_Register_Collected__c" variant="label-hidden"
+                            label={label.recentPayrollCollected} options={recentPayrollCollected.data.values}
+                            value={fields.Recent_Payroll_Register_Collected__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+                    </div>
+
+                    <div if:true={employeeDataCollected.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label Employee_Data_Collection_EDC_collected__c"
+                            value={label.employeeDataCollected}></lightning-formatted-text>
+                        <lightning-radio-group name="Employee_Data_Collection_EDC_collected__c" variant="label-hidden"
+                            label={label.employeeDataCollected} options={employeeDataCollected.data.values}
+                            value={fields.Employee_Data_Collection_EDC_collected__c} onchange={handleChange}
+                            type="radio">
+                        </lightning-radio-group>
+                        <lightning-input-field if:true={showDeadLineDate} class="slds-m-left_medium" field-name="Provide_deadline_date__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <div if:true={willOwnerByPayroll.data} class="slds-m-left_xx-small slds-m-bottom_xx-small">
+                        <lightning-formatted-text class="slds-form-element__label" value={label.willOwnerByPayroll}>
+                        </lightning-formatted-text>
+                        <lightning-radio-group name="Will_the_owner_s_be_on_payroll__c" variant="label-hidden"
+                            label={label.willOwnerByPayroll} options={willOwnerByPayroll.data.values}
+                            value={fields.Will_the_owner_s_be_on_payroll__c} onchange={handleChange} type="radio">
+                        </lightning-radio-group>
+
+                        <div if:true={showClientBusinessTypeSole} class="slds-m-top_xx-small slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label"
+                                value={label.businessTypeSolePartnership}></lightning-formatted-text>
+                            <lightning-radio-group name="Sole_Proprietorship_or_partnership__c"
+                                variant="label-hidden" label={label.businessTypeSolePartnership}
+                                options={pickValueYesNo} value={fields.Sole_Proprietorship_or_partnership__c}
+                                onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+
+                            <div if:true={showIsOwnerAwareWages} class="slds-m-top_xx-small slds-m-left_medium">
+                                <lightning-formatted-text class="slds-form-element__label"
+                                    value={label.ownerAwareTheyWillNotRecieveWages}></lightning-formatted-text>
+                                <lightning-radio-group name="Owner_aware_they_will_not_get_W2_wages__c"
+                                    variant="label-hidden" label={label.ownerAwareTheyWillNotRecieveWages}
+                                    options={pickValueYesNo}
+                                    value={fields.Owner_aware_they_will_not_get_W2_wages__c}
+                                    onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </div>
+                        </div>
+
+                        <div if:true={showClientBusinessTypeNo} class="slds-m-top_xx-small slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label"
+                                value="Has the 'owner not on payroll' addendum been collected?">
+                            </lightning-formatted-text>
+                            <lightning-radio-group if:true={employeeDataCollected.data}
+                                name="Owner_not_on_payroll_addendum_collected__c"
+                                variant="label-hidden" label=""
+                                options={employeeDataCollected.data.values}
+                                value={fields.Owner_not_on_payroll_addendum_collected__c}
+                                onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                        </div>
+
+                        <div if:true={showClientBusinessTypeNA} class="slds-m-top_xx-small slds-m-left_medium">
+                            <lightning-formatted-text class="slds-form-element__label"
+                                value="Is client entity owned or a non-profit?"></lightning-formatted-text>
+                            <lightning-radio-group if:true={clientOwnedEntity.data}
+                                name="Client_entity_owned_or_a_non_profit__c"
+                                variant="label-hidden" label=""
+                                options={clientOwnedEntity.data.values}
+                                value={fields.Client_entity_owned_or_a_non_profit__c}
+                                onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                        </div>
+
+                        <div class="slds-m-left_xx-small slds-m-top_xx-small">
+                            <lightning-formatted-text class="slds-form-element__label"
+                                value={label.changesNeededforCafeteriaPlan}></lightning-formatted-text>
+                            <lightning-radio-group name="Chngs_for_cafeteria_plan_questionnaire__c" variant="label-hidden"
+                                label={label.changesNeededforCafeteriaPlan} options={pickValueYesNo}
+                                value={fields.Chngs_for_cafeteria_plan_questionnaire__c} onchange={handleChange}
+                                type="radio">
+                            </lightning-radio-group>
+                        </div>
+
+                        <lightning-input-field if:true={showListofChanges} class="slds-m-left_medium slds-m-top_xx-small" field-name="List_change_s__c">
+                        </lightning-input-field>
+
+                        <div class="slds-m-left_xx-small slds-m-top_xx-small">
+                            <lightning-formatted-text class="slds-form-element__label" value={label.clientNotWithNSP}>
+                            </lightning-formatted-text>
+
+                            <lightning-radio-group name="Client_have_EEO_filing_under__c" variant="label-hidden"
+                                label={label.clientNotWithNSP} options={pickValueYesNo}
+                                value={fields.Client_have_EEO_filing_under__c} onchange={handleChange} type="radio">
+                            </lightning-radio-group>
+                        </div>
+                        <lightning-input-field field-name="Payroll_general_notes__c"></lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

@@ -1,0 +1,4 @@
+Termination Form has been assigned to you for approval.
+{!NSP_Termination_Form__c.Link}
+
+{!ApprovalRequest.Internal_URL}

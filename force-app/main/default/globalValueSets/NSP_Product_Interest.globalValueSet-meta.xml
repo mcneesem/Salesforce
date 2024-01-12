@@ -71,6 +71,11 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
+        <fullName>Integra</fullName>
+        <default>false</default>
+        <label>Integra (need to check)</label>
+    </customValue>
+    <customValue>
         <fullName>Bookkeeping Services</fullName>
         <default>false</default>
         <isActive>false</isActive>

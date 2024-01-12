@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Deconversion__c</fullName>
+    <externalId>false</externalId>
+    <label>Deconversion</label>
+    <referenceTo>NSP_Deconversion__c</referenceTo>
+    <relationshipLabel>RET-Deconversion Assets</relationshipLabel>
+    <relationshipName>RET_Deconversion_Assets</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

@@ -12,49 +12,104 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Architect</fullName>
+                <fullName>Insperity</fullName>
                 <default>false</default>
-                <label>Architect</label>
+                <label>Insperity</label>
             </value>
             <value>
-                <fullName>Business Analyst</fullName>
+                <fullName>Customer</fullName>
                 <default>false</default>
-                <label>Business Analyst</label>
+                <label>Customer</label>
             </value>
             <value>
-                <fullName>Client Manager</fullName>
+                <fullName>RET Compliance</fullName>
                 <default>false</default>
-                <label>Client Manager</label>
+                <label>RET Compliance</label>
             </value>
             <value>
-                <fullName>Consultant</fullName>
+                <fullName>RET Executive &amp; Project</fullName>
                 <default>false</default>
-                <label>Consultant</label>
+                <label>RET Executive &amp; Project</label>
             </value>
             <value>
-                <fullName>Contractor</fullName>
+                <fullName>RET Finance</fullName>
                 <default>false</default>
-                <label>Contractor</label>
+                <label>RET Finance</label>
             </value>
             <value>
-                <fullName>Executive</fullName>
+                <fullName>RET NBI - Conversion &amp; Ork</fullName>
                 <default>false</default>
-                <label>Executive</label>
+                <label>RET NBI - Conversion &amp; Ork</label>
             </value>
             <value>
-                <fullName>Project Manager</fullName>
+                <fullName>RET NBI - Implementation</fullName>
                 <default>false</default>
-                <label>Project Manager</label>
+                <label>RET NBI - Implementation</label>
             </value>
             <value>
-                <fullName>Senior Consultant</fullName>
+                <fullName>RET NBI - QC Analyst</fullName>
                 <default>false</default>
-                <label>Senior Consultant</label>
+                <label>RET NBI - QC Analyst</label>
             </value>
             <value>
-                <fullName>Trainer</fullName>
+                <fullName>RET Ops - OMNI</fullName>
                 <default>false</default>
-                <label>Trainer</label>
+                <label>RET Ops - OMNI</label>
+            </value>
+            <value>
+                <fullName>RET Ops - Processing</fullName>
+                <default>false</default>
+                <label>RET Ops - Processing</label>
+            </value>
+            <value>
+                <fullName>RET Plan Consulting</fullName>
+                <default>false</default>
+                <label>RET Plan Consulting</label>
+            </value>
+            <value>
+                <fullName>RET Sales</fullName>
+                <default>false</default>
+                <label>RET Sales</label>
+            </value>
+            <value>
+                <fullName>RET Sec 125</fullName>
+                <default>false</default>
+                <label>RET Sec 125</label>
+            </value>
+            <value>
+                <fullName>RET CSP Processing</fullName>
+                <default>false</default>
+                <label>RET CSP Processing</label>
+            </value>
+            <value>
+                <fullName>RET CSP Implementation</fullName>
+                <default>false</default>
+                <label>RET CSP Implementation</label>
+            </value>
+            <value>
+                <fullName>RET CSP Compliance</fullName>
+                <default>false</default>
+                <label>RET CSP Compliance</label>
+            </value>
+            <value>
+                <fullName>RET CSP Plan Consulting</fullName>
+                <default>false</default>
+                <label>RET CSP Plan Consulting</label>
+            </value>
+            <value>
+                <fullName>RET SRP</fullName>
+                <default>false</default>
+                <label>RET SRP</label>
+            </value>
+            <value>
+                <fullName>RET ORK</fullName>
+                <default>false</default>
+                <label>RET ORK</label>
+            </value>
+            <value>
+                <fullName>RET CSP Conversion</fullName>
+                <default>false</default>
+                <label>RET CSP Conversion</label>
             </value>
         </valueSetDefinition>
     </valueSet>

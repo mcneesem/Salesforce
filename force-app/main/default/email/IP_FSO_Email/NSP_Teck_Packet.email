@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="Tech Package needed for   {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})" recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:HtmlEmailBody >
+<html>
+<body>
+<c:InsperityEmailHeader />
+<p>{!relatedTo.NSP_AIMS_Client_Name__c} has requested a technology packet. Please find details below. 
+
+{!relatedTo.Tech_pack_when_where_quantity_needed__c}</p>
+
+
+</body>
+
+<p>Regards,<br/>
+{!relatedTo.NSP_Project_Manager__r.Name}<br/>
+{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+<c:InsperityEmailFooter />
+</html>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

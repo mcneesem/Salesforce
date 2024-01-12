@@ -14,6 +14,21 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Share_Enrollment_Fee_When_Doucpay_is_greater_than_0</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This rule will share the Enrollment Fee records with all the internal users when Docu Pay Up Front Fee is greater than 0</description>
+        <label>Share Enrollment Fee When Doucpay is greater than 0</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_Docupay_Upfront_fee__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>Enrollment_Fee_NCS_Access</fullName>
         <accessLevel>Edit</accessLevel>
@@ -32,6 +47,18 @@
         <label>Sales Compensation- EFP Read_Edit</label>
         <sharedTo>
             <group>NSP_Sales_Compensation</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_Enrollment_Fee_Finance_Lead_Node_All_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing enrollment fee with Finance leader, Finance Manager, Finance supervisor, Finance user</description>
+        <label>Enrollment Fee Finance Lead Node All Access</label>
+        <sharedTo>
+            <group>Finance_leader_For_Enrollment_Fee_Group</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>

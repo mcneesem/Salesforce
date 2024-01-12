@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Project_Rating_Validation</fullName>
+    <active>true</active>
+    <description>This validation is created as part of STY-00853 which describes Rating is required to close the Project.</description>
+    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.ProjectValidations__c != true,
+ISPICKVAL(pse__Project_Status__c, &apos;Complete&apos;),
+ISBLANK(TEXT(NSP_Rating__c)))</errorConditionFormula>
+    <errorMessage>Update Quick Rate in order to close the Project.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_Business_Information</letterhead>
+    <name>Transition to Service</name>
+    <style>formalLetter</style>
+    <subject>Transition to Service for Asset {!pse__Proj__c.NSP_RET_Client_ID__c}</subject>
+    <textOnly>Hi CLIENT CONTACT,
+I want to take a moment to thank you for the opportunity to serve as your Insperity Onboarding Specialist. I know the transition process can feel overwhelming at times and I hope we have made you feel at ease throughout. In order to make sure we are providing the highest level of service possible, we will be sending you a brief survey and I would love to hear your feedback.
+
+Now that your transition is complete, your dedicated Insperity Client Liaison/HR Specialist is ready to serve as your main point of contact and will reach out to schedule a welcome and introduction call. If you need assistance sooner or have any questions, outside of payroll, please direct them to:
+
+Insperity Client Liaison
+CL NAME
+CL EMAIL
+Insperity HR Specialist
+HRS NAME
+HRS EMAIL
+
+Once again, it has been a pleasure to serve you and I wish you all the best!
+Warmest Regards,
+Signature</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

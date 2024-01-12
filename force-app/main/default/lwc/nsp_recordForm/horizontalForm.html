@@ -1,0 +1,76 @@
+<template>
+  <lightning-formatted-text
+    if:true={title}
+    value={title}
+    class="slds-text-heading_small"></lightning-formatted-text>
+  <div class="slds-p-horizontal_x-small">
+    <template for:each={recordIDs} for:item="record" for:index="i">
+      <lightning-record-edit-form
+        object-api-name={objectApiName}
+        record-id={record}
+        key={record}
+        data-index={i}
+        data-id={record}>
+        <lightning-input-field
+          field-name="Id"
+          class="slds-hide"></lightning-input-field>
+
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_10-of-12 slds-var-m-top_xx-small">
+            <div if:false={fieldsGroup} class="slds-grid slds-gutters">
+              <template for:each={fields} for:item="fieldName">
+                <lightning-input-field
+                  field-name={fieldName}
+                  key={fieldName}
+                  variant="label-stacked"
+                  data-name={fieldName}
+                  onchange={handleValueChange}
+                  disabled={disabled}></lightning-input-field>
+              </template>
+            </div>
+            <div
+              if:true={fieldsGroup}
+              class="nsp-border_bottom slds-var-p-vertical_large">
+              <div class="slds-grid slds-wrap">
+                <template for:each={fieldsGroup} for:item="fields">
+                  <template for:each={fields} for:item="fieldName">
+                    <lightning-input-field
+                      field-name={fieldName}
+                      key={fieldName}
+                      variant="label-stacked"
+                      data-name={fieldName}
+                      onchange={handleValueChange}
+                      disabled={disabled}
+                      class="slds-col slds-size_6-of-12"></lightning-input-field>
+                  </template>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-col slds-size_2-of-12 slds-var-m-top_xx-large">
+            <lightning-button-icon
+              icon-name="utility:add"
+              data-index={i}
+              alternative-text="Add"
+              onclick={handleAddRow}
+              variant="border-filled"
+              class="slds-var-m-left_small"
+              disabled={disabled}>
+            </lightning-button-icon>
+
+            <lightning-button-icon
+              icon-name="utility:delete"
+              data-index={i}
+              alternative-text="Delete"
+              onclick={handleDeleteRow}
+              variant="border-filled"
+              class="slds-var-m-left_small"
+              disabled={disabled}>
+            </lightning-button-icon>
+          </div>
+        </div>
+      </lightning-record-edit-form>
+    </template>
+  </div>
+</template>

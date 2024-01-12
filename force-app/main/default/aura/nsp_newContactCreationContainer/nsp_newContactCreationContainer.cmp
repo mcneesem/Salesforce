@@ -1,0 +1,3 @@
+<aura:component implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <c:nsp_newContactCreationForm></c:nsp_newContactCreationForm>
+</aura:component>

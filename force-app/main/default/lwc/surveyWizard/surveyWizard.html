@@ -1,0 +1,52 @@
+<template>
+    <template if:true={showDisclaimer}>
+        <div class="slds-var-m-around_medium">
+
+            <p class="slds-text-heading_medium">Before you get started, make sure you have everything you need<br>
+                <span class="slds-text-body_small">(Don't worry, you can always exit the wizard and come back if you
+                    need to.)</span>
+            </p>
+          
+            <p class="slds-var-m-around_medium">*Have you spoken with the client to understand any filters or custom questions they may want to include?
+            </p>
+            <p class="slds-var-m-around_medium">*If the client wants to remove/revise any of the standard questions do you have the appropriate&nbsp;
+                <a href={customLabel.SurveyRevisionRequestForm} target="_blank"  rel="noopener noreferrer" >survey revision request form</a>? 
+            </p>
+            </div>
+            <div class="slds-var-m-around_medium">
+            <lightning-button class="slds-m-top_small" variant="brand" label="I'M READY" title="submit" onclick={handleNext}></lightning-button>
+            <lightning-button  label=" I'LL COME BACK LATER"  onclick={handleCancel}
+                class="slds-m-top_small slds-m-left_medium"></lightning-button>
+            </div> 
+    </template>
+    <template if:false={showDisclaimer}>
+        <template if:true={showProgress}>
+            <c-progress-bar steps={steps} type="indicator" current-step={currentStep}></c-progress-bar>
+            <div onsaveexit={handleSave} class="slds-p-around_medium">
+                <template if:true={step1}>
+                     <c-wizard-survey-page-info re-req-id={reReqId} record-obj={repReqObj} onnext={handleNext}
+                        onprev={handlePrev}></c-wizard-survey-page-info> 
+                       
+                    </template>
+                <template if:true={step2}>
+                    <c-wizard-survey-page-filters re-req-id={reReqId} onnext={handleNext}
+                        onprev={handlePrev}></c-wizard-survey-page-filters>
+                </template>
+                <template if:true={step3}>
+                    <c-wizard-survey-page-questions re-req-id={reReqId}  onnext={handleNext}
+                        onprev={handlePrev}></c-wizard-survey-page-questions>
+                </template>
+                <template if:true={step4}>
+                    <c-wizard-survey-additional-info re-req-id={reReqId}  onnext={handleNext}
+                        onprev={handlePrev}></c-wizard-survey-additional-info>
+                </template>
+                </div> 
+        </template>
+        <template if:false={showProgress}>
+            <div onsaveexit={handleSave} > 
+            <c-wizard-case-creation re-req-obj={repReqObj}  record-input={recordInputForCreate} oncreatedcase={handleSummery} ></c-wizard-case-creation>
+         </div>
+        </template>
+    </template>
+
+</template>

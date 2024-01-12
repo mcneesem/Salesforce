@@ -423,6 +423,11 @@
                 <label>NSP_Total_Annual_Freq_Fees__c</label>
             </value>
             <value>
+                <fullName>NSP_Terminate_All__c</fullName>
+                <default>false</default>
+                <label>NSP_Terminate_All__c</label>
+            </value>
+            <value>
                 <fullName>NSP_Secoundry_Scholarship_Minimum_Fee__c</fullName>
                 <default>false</default>
                 <label>NSP_Secoundry_Scholarship_Minimum_Fee__c</label>
@@ -446,6 +451,26 @@
                 <fullName>NSP_Positions__c</fullName>
                 <default>false</default>
                 <label>NSP_Positions__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Total_Free_Periods__c</fullName>
+                <default>false</default>
+                <label>NSP_Total_Free_Periods__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Free_Months__c</fullName>
+                <default>false</default>
+                <label>NSP_Free_Months__c</label>
+            </value>
+            <value>
+                <fullName>NSP_SubscriptionStartDate__c</fullName>
+                <default>false</default>
+                <label>NSP_SubscriptionStartDate__c</label>
+            </value>
+            <value>
+                <fullName>NSP_TCFullUserLicenseQty__c</fullName>
+                <default>false</default>
+                <label>NSP_TCFullUserLicenseQty__c</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -632,6 +657,10 @@
             <valueName>NSP_Total_Annual_Freq_Fees__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Terminate_All__c</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>SBQQ__NetPrice__c</valueName>
         </valueSettings>
@@ -794,6 +823,18 @@
             <valueName>NSP_Positions__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Total_Free_Periods__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Free_Months__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_SubscriptionStartDate__c</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
             <valueName>Target</valueName>
         </valueSettings>
@@ -808,6 +849,10 @@
         <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
             <valueName>Explanation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_TCFullUserLicenseQty__c</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

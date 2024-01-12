@@ -5,7 +5,8 @@
     <externalId>false</externalId>
     <label>National Account Group</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -50,11 +51,6 @@
                 <fullName>39</fullName>
                 <default>false</default>
                 <label>FSI</label>
-            </value>
-            <value>
-                <fullName>45</fullName>
-                <default>false</default>
-                <label>Gradient</label>
             </value>
             <value>
                 <fullName>26</fullName>
@@ -110,6 +106,11 @@
                 <fullName>24</fullName>
                 <default>false</default>
                 <label>YHN Practices</label>
+            </value>
+            <value>
+                <fullName>45</fullName>
+                <default>false</default>
+                <label>Gradient</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Commission_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Commission Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Commission ONLY EEs</fullName>
+                <default>false</default>
+                <label>Commission ONLY EEs</label>
+            </value>
+            <value>
+                <fullName>Non-FT Commission ONLY EEs</fullName>
+                <default>false</default>
+                <label>Non-FT Commission ONLY EEs</label>
+            </value>
+            <value>
+                <fullName>Commission paid to OT eligible EEs</fullName>
+                <default>false</default>
+                <label>Commission paid to OT eligible EEs</label>
+            </value>
+            <value>
+                <fullName>Commission EEs are paid a draw</fullName>
+                <default>false</default>
+                <label>Commission EEs are paid a draw</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

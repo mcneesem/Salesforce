@@ -1,7 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
-    <description>Use for mapping of custom field of lead to standard fields of account</description>
+    <assignments>
+        <description>map the existing Account Status from Account to the variable so it doesn&apos;t get changed</description>
+        <name>Set_varAccountStatus_to_current_Account_Status</name>
+        <label>Set varAccountStatus to current Account Status</label>
+        <locationX>66</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_related_account_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_varAccountStatus_to_Networking</name>
+        <label>Set varAccountStatus to Networking</label>
+        <locationX>594</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Networking</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_related_account_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_varAccountStatus_to_Prospecting</name>
+        <label>Set varAccountStatus to Prospecting</label>
+        <locationX>330</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prospecting</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_related_account_record</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>flowName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Lead Conversion - Update Fields on Account</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>If current Account Status (NSP_Sales_Service_Account_Status__c) is: Active, Onboarding, On Demand, Prospecting then don&apos;t update Account Status,
+
+If current Account Status is: Blank, Terminated, or Lost, then update Account Status.
+
+Further consideration in another node: if current Account Status is Networking, and Opportunity DOES exist on Lead Conversion then update to Prospecting</description>
+        <name>Does_Account_have_an_Account_Status_that_should_be_updated</name>
+        <label>Does Account have an Account Status that should be updated?</label>
+        <locationX>550</locationX>
+        <locationY>384</locationY>
+        <defaultConnector>
+            <targetReference>Update_related_account_record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Applicable</defaultConnectorLabel>
+        <rules>
+            <name>No_Account_Status_should_NOT_be_updated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Onboarding</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>On Demand</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prospecting</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_varAccountStatus_to_current_Account_Status</targetReference>
+            </connector>
+            <label>No - Account Status should NOT be updated</label>
+        </rules>
+        <rules>
+            <name>Yes_Account_Status_SHOULD_be_updated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lost</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Networking</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_there_an_Opportunity_attached_to_this_Lead</targetReference>
+            </connector>
+            <label>Yes - Account Status SHOULD be updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If current Account Status is Networking, and Opportunity DOES exist on Lead Conversion then update to Prospecting</description>
+        <name>Is_there_an_Opportunity_attached_to_this_Lead</name>
+        <label>Is there an Opportunity attached to this Lead?</label>
+        <locationX>594</locationX>
+        <locationY>492</locationY>
+        <defaultConnector>
+            <targetReference>Update_related_account_record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Applicable</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_DOES_exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ConvertedOpportunityId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_varAccountStatus_to_Prospecting</targetReference>
+            </connector>
+            <label>Opportunity DOES exist</label>
+        </rules>
+        <rules>
+            <name>Opportunity_DOES_NOT_exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ConvertedOpportunityId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_varAccountStatus_to_Networking</targetReference>
+            </connector>
+            <label>Opportunity DOES NOT exist</label>
+        </rules>
+    </decisions>
+    <description>Updated to include Account Status considerations. Use for mapping of custom field of lead to standard fields of account when Lead is converted. Updated to run asynchronously</description>
+    <environments>Default</environments>
     <interviewLabel>Lead Conversion - Update Fields on Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Conversion - Update Fields on Account</label>
     <processMetadataValues>
@@ -23,11 +208,20 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_related_account_record</name>
-        <label>Update related account record</label>
-        <locationX>176</locationX>
-        <locationY>335</locationY>
+    <recordLookups>
+        <description>Get the Account related to this Lead record</description>
+        <name>Get_Account_Record</name>
+        <label>Get Account Record</label>
+        <locationX>550</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_Account_have_an_Account_Status_that_should_be_updated</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -36,6 +230,32 @@
                 <elementReference>$Record.ConvertedAccountId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_related_account_record</name>
+        <label>Update related account record</label>
+        <locationX>550</locationX>
+        <locationY>876</locationY>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ConvertedAccountId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NSP_Sales_Service_Account_Status__c</field>
+            <value>
+                <elementReference>varAccountStatus</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Sic</field>
             <value>
@@ -53,9 +273,6 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Update_related_account_record</targetReference>
-        </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
@@ -67,7 +284,39 @@
         </filters>
         <object>Lead</object>
         <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_Account_Record</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>1210</locationX>
+        <locationY>984</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <elementReference>flowName</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varAccountStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

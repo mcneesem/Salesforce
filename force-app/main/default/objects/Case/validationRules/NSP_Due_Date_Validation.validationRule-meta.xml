@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Due_Date_Validation</fullName>
+    <active>true</active>
+    <description>If Type of the Case is any of the following mentioned in the Condition through error.</description>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ) ,
+  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  OR(
+    ISPICKVAL( Type , &apos;Outage – WX&apos; ) ,
+    ISPICKVAL( Type , &apos;TimeStar Termination&apos; ) ,
+    ISPICKVAL( Type , &apos;WO Termination&apos; ) ,
+    ISPICKVAL( Type , &apos;WO/WA Transition&apos; ) ,
+    ISPICKVAL( Type , &apos;CASPSL&apos; ) ,
+    ISPICKVAL( Type , &apos;New Jurisdiction&apos; )
+  ) ,
+  ISNULL( NSP_Due_Date__c )
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Due_Date__c</errorDisplayField>
+    <errorMessage>Due Date is required for this Case Type</errorMessage>
+</ValidationRule>

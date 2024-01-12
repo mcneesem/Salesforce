@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Profile_Information__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Profile Information</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Account Management (CAM) Client</fullName>
+                <default>false</default>
+                <label>Client Account Management (CAM) Client</label>
+            </value>
+            <value>
+                <fullName>Former client returning within 12 months</fullName>
+                <default>false</default>
+                <label>Former client returning within 12 months</label>
+            </value>
+            <value>
+                <fullName>National Account - No Hush Protocol</fullName>
+                <default>false</default>
+                <label>National Account</label>
+            </value>
+            <value>
+                <fullName>Related Clients</fullName>
+                <default>false</default>
+                <label>Related Clients</label>
+            </value>
+            <value>
+                <fullName>Workforce Synchronization (WS) Client</fullName>
+                <default>false</default>
+                <label>Workforce Synchronization (WS) Client</label>
+            </value>
+            <value>
+                <fullName>Workforce Acceleration (WX) to Workforce</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration (WX) to Workforce Optimization (WO) Client</label>
+            </value>
+            <value>
+                <fullName>Optimization (WO) Client</fullName>
+                <default>false</default>
+                <label>Optimization (WO) Client</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

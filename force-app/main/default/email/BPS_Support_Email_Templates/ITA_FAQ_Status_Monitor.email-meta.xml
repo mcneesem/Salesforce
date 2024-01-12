@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Status Monitor</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Status Monitor</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Status Monitor</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time and Attendance Support. You can set up an alternate Status Monitor by following the steps below:
+
+Navigate to System Setup &gt; Status Monitor Setup
+
+Click the ADD button at the bottom of the page
+
+
+Name / Description:
+
+
+These can be set to whatever value you desire; the Name will display when selecting which monitor you wish to view in the Daily Procedures &gt; Status Monitor page.
+
+
+Automatically filter employee list for each supervisor:
+
+
+Set to No to show all employee results
+
+Set Yes to filter to each viewer&apos;s direct reports
+
+
+Monitor Columns to Display:
+
+
+Select the column you wish to view from the Add Column drop-down menu and click the blue plus (+) button to the right of that menu
+
+
+Repeat that step until all desired columns are listed below
+
+
+You can adjust the order (sequence) of the columns, and other settings as desired
+
+
+Monitor Filters:
+
+
+Select ONE filter type to utilize and move the desired items from the Available box on the right to the Assigned box on the left
+
+
+We typically recommend NOT filtering by Employee here, as new employees would need to be added manually each time someone is hired. Rather, utilizing a filter that would be assigned to all employees (like a pay group), will allow new employees to be pulled into the Status Monitor automatically.
+
+
+Please let us know if you have any questions, and we would be happy to help.
+
+
+Thank you,
+
+
+Technical Support Team
+
+
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

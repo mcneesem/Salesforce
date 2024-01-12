@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Segment_Exception_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Segment Exception Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client growth in 90 days</fullName>
+                <default>false</default>
+                <label>Client growth in 90 days</label>
+            </value>
+            <value>
+                <fullName>Could jeopardize relationship</fullName>
+                <default>false</default>
+                <label>Could jeopardize relationship</label>
+            </value>
+            <value>
+                <fullName>Future Trans Planned - Core/EG</fullName>
+                <default>false</default>
+                <label>Future Trans Planned - Core/EG</label>
+            </value>
+            <value>
+                <fullName>Future Transition Planned - BT</fullName>
+                <default>false</default>
+                <label>Future Transition Planned - BT</label>
+            </value>
+            <value>
+                <fullName>Future Transition Planned - MM</fullName>
+                <default>false</default>
+                <label>Future Transition Planned - MM</label>
+            </value>
+            <value>
+                <fullName>Linked to other accounts</fullName>
+                <default>false</default>
+                <label>Linked to other accounts</label>
+            </value>
+            <value>
+                <fullName>Multiple service transitions</fullName>
+                <default>false</default>
+                <label>Multiple service transitions</label>
+            </value>
+            <value>
+                <fullName>Service Utilization</fullName>
+                <default>false</default>
+                <label>Service Utilization</label>
+            </value>
+            <value>
+                <fullName>Term notice received</fullName>
+                <default>false</default>
+                <label>Term notice received</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

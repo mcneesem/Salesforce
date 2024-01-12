@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template is used for sending email to Non-Insperity Employee</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>NSP Case Contact Email Notification</name>
+    <style>freeForm</style>
+    <subject>Non-Insperity Employee</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

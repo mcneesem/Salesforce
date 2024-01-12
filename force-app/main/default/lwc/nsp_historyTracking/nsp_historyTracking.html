@@ -1,0 +1,62 @@
+<template>
+	<lightning-formatted-text class="slds-page-header__title slds-var-p-bottom_medium" value={label.auditLog}>
+	</lightning-formatted-text>
+
+
+	<lightning-datatable key-field="NSP_Index__c" columns={columns} data={data} hide-checkbox-column
+		default-sort-direction={defaultSortDirection} sorted-direction={sortDirection} sorted-by={sortedBy}
+		onsort={onHandleSort}>
+	</lightning-datatable>
+
+	<div if:true={state.isLoading} class="backgroundInverse">
+		<lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+	</div>
+
+	<div if:true={isPageButtonsAvailable} class="slds-align_absolute-center slds-var-p-top_medium">
+		<div class="slds-var-p-right_xx-small">
+			<lightning-button label="First" disabled={disablePreviousButtons} onclick={handleNavigation}
+				variant="Netural" icon-name="utility:back" name="first"></lightning-button>
+			<lightning-button label="Previous" disabled={disablePreviousButtons} onclick={handleNavigation}
+				variant="Netural" icon-name="utility:back" name="previous"></lightning-button>
+		</div>
+		<span class="slds-badge slds-badge_lightest">
+			{state.recordStart}-{state.recordEnd} of {state.totalRecords} | Page {state.pageNumber} of
+			{state.totalPages}
+		</span>
+		<div class="slds-var-p-left_xx-small">
+			<lightning-button label="Next" disabled={disableNextButtons} onclick={handleNavigation} variant="Netural"
+				icon-name="utility:forward" icon-position="right" name="next"></lightning-button>
+			<lightning-button label="Last" disabled={disableNextButtons} onclick={handleNavigation} variant="Netural"
+				icon-name="utility:forward" icon-position="right" name="last"></lightning-button>
+		</div>
+	</div>
+
+	<div if:true={isPagePayButtonsAvailable}>
+		<p class="slds-text-heading_small slds-var-p-top_medium slds-var-p-bottom_medium"><b>Implementation Pay
+				Frequency</b></p>
+		<lightning-datatable key-field="Id" columns={payPeriodcolumns} data={payPeriodHistoriesData}
+			hide-checkbox-column default-sort-direction={defaultSortDirection} sorted-direction={sortDirection}
+			sorted-by={sortedBy} onsort={onHandleSort}>
+		</lightning-datatable>
+
+		<div class="slds-align_absolute-center slds-var-p-top_medium">
+			<div class="slds-var-p-right_xx-small">
+				<lightning-button label="First" disabled={disablePayPreviousButtons} onclick={handlePayNavigation}
+					variant="Netural" icon-name="utility:back" name="first"></lightning-button>
+				<lightning-button label="Previous" disabled={disablePayPreviousButtons} onclick={handlePayNavigation}
+					variant="Netural" icon-name="utility:back" name="previous"></lightning-button>
+			</div>
+			<span class="slds-badge slds-badge_lightest">
+				{statePayRecords.recordStart}-{statePayRecords.recordEnd} of {statePayRecords.totalRecords} | Page
+				{statePayRecords.pageNumber} of
+				{statePayRecords.totalPages}
+			</span>
+			<div class="slds-var-p-left_xx-small">
+				<lightning-button label="Next" disabled={disablePayNextButtons} onclick={handlePayNavigation}
+					variant="Netural" icon-name="utility:forward" icon-position="right" name="next"></lightning-button>
+				<lightning-button label="Last" disabled={disablePayNextButtons} onclick={handlePayNavigation}
+					variant="Netural" icon-name="utility:forward" icon-position="right" name="last"></lightning-button>
+			</div>
+		</div>
+	</div>
+</template>

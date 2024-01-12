@@ -20,6 +20,10 @@
                 <field>Title</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Number_of_Employees__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Email</field>
             </layoutItems>
@@ -219,6 +223,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Most_Recent_Activity_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

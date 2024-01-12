@@ -32,23 +32,13 @@
         <label>Returned</label>
     </standardValue>
     <standardValue>
-        <fullName>Shipped</fullName>
+        <fullName>Inactive</fullName>
         <default>false</default>
-        <label>Shipped</label>
+        <label>Inactive</label>
     </standardValue>
     <standardValue>
-        <fullName>Installed</fullName>
+        <fullName>Backout</fullName>
         <default>false</default>
-        <label>Installed</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Registered</fullName>
-        <default>false</default>
-        <label>Registered</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Obsolete</fullName>
-        <default>false</default>
-        <label>Obsolete</label>
+        <label>Backout</label>
     </standardValue>
 </StandardValueSet>

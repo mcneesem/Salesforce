@@ -2,7 +2,7 @@
  * Represents the Contact trigger handler.
  */
 
-public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
+public class NSP_ContactTriggerHandler extends NSP_TriggerAction implements NSP_ITriggerHandler  {
     
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
@@ -25,8 +25,16 @@ public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
      *
      */
     public void beforeInsert(List<sObject> newList) {
-        NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
+        NSP_ContactServiceTriggerHelper  contactServiceTriggerHelperObject =  new NSP_ContactServiceTriggerHelper();
+        // added as a part of STY-02659
+        contactServiceTriggerHelperObject.updateSSNField((List<Contact>) newList, null);
+
+        NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();        
         contactTriggerHelperObject.beforeInsertDirector((List<Contact>) newList);
+        
+        contactServiceTriggerHelperObject.beforeInsertDirector((List<Contact>) newList);       
+       // added as a part of STY-02659
+        contactServiceTriggerHelperObject.updateBirthday((List<Contact>) newList, null);
     }
 
     /**
@@ -50,8 +58,22 @@ public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
      */
 
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
-        contactTriggerHelperObject.beforeUpdateDirector((Map<Id, Contact>) newMap, (Map<Id, Contact>) oldMap);
+
+        if (!this.hasRun()) {
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledMarkRun__c){
+                this.markRun();
+            }
+            NSP_ContactServiceTriggerHelper  contactServiceTriggerHelperObject =  new NSP_ContactServiceTriggerHelper();
+            // added as a part of STY-02659
+            contactServiceTriggerHelperObject.updateSSNField((List<Contact>) newMap.values(), (Map<Id, Contact>) oldMap);
+
+            NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
+            contactTriggerHelperObject.beforeUpdateDirector((Map<Id, Contact>) newMap, (Map<Id, Contact>) oldMap);
+        
+            contactServiceTriggerHelperObject.beforeUpdateDirector((Map<Id, Contact>) newMap, (Map<Id, Contact>) oldMap);
+            // added as a part of STY-02659
+            contactServiceTriggerHelperObject.updateBirthday((List<Contact>) newMap.values(), (Map<Id, Contact>) oldMap);
+        }
     }
 
     /**
@@ -63,8 +85,13 @@ public class NSP_ContactTriggerHandler  implements NSP_ITriggerHandler  {
      */
 
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
-        contactTriggerHelperObject.afterUpdateDirector((Map<Id, Contact>) newMap,(Map<Id, Contact>) oldMap);
+        if (!this.hasRun() || this.timesRun() <2 ) {
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledMarkRun__c){
+                this.markRun();
+            }
+            NSP_ContactTriggerHelper  contactTriggerHelperObject =  new NSP_ContactTriggerHelper();
+            contactTriggerHelperObject.afterUpdateDirector((Map<Id, Contact>) newMap,(Map<Id, Contact>) oldMap);
+        }
     }
     
     /**

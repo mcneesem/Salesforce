@@ -32,6 +32,8 @@ public class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
 *                
 */
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
+        NSP_UserTriggerHelper  userTriggerHelperObject =  new NSP_UserTriggerHelper();
+        userTriggerHelperObject.afterInsertUser((List<User>) newList); 
     }
     
     /**
@@ -57,6 +59,10 @@ public class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
         NSP_userSalesOfficeRecordSharing.ownerSalesofficeSharing((Map<Id, User>) newMap, (Map<Id, User>) oldMap);
         NSP_UserTriggerHelper  userTriggerHelperObject =  new NSP_UserTriggerHelper();
         userTriggerHelperObject.afterUpdateUser((Map<Id, User>) newMap, (Map<Id, User>) oldMap);
+        //NSP_portalUserSharing.shareProjects((List<User>) newMap.values());
+
+        // Added as a part of STY-02108
+        NSP_UserTriggerHelper.updateAssetServiceRegion((Map<Id, User>) newMap, (Map<Id, User>) oldMap);
     }
     
     /**

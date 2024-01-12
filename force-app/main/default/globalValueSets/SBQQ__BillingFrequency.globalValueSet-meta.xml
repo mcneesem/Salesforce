@@ -18,14 +18,18 @@
     <customValue>
         <fullName>Invoice Plan</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Invoice Plan</label>
     </customValue>
     <customValue>
         <fullName>Semiannual</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Semiannual</label>
+    </customValue>
+    <customValue>
+        <fullName>Semi-Annual</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Semi-Annual</label>
     </customValue>
     <description>The billing frequency.</description>
     <masterLabel>Billing Frequency</masterLabel>

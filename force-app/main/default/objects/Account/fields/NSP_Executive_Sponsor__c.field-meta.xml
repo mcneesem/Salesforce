@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Executive_Sponsor__c</fullName>
+    <description>This field is used to tell who is executive sponsor for account.</description>
+    <externalId>false</externalId>
+    <label>Executive Sponsor</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Paul Sarvadi</fullName>
+                <default>false</default>
+                <label>Paul Sarvadi</label>
+            </value>
+            <value>
+                <fullName>Steve Arizpe</fullName>
+                <default>false</default>
+                <label>Steve Arizpe</label>
+            </value>
+            <value>
+                <fullName>Jim Allison</fullName>
+                <default>false</default>
+                <label>Jim Allison</label>
+            </value>
+            <value>
+                <fullName>Kathy Johnson</fullName>
+                <default>false</default>
+                <label>Kathy Johnson</label>
+            </value>
+            <value>
+                <fullName>Sam Larson</fullName>
+                <default>false</default>
+                <label>Sam Larson</label>
+            </value>
+            <value>
+                <fullName>Larry Schaffer</fullName>
+                <default>false</default>
+                <label>Larry Schaffer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OPRT - Box Type Creation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>OPRT - Box Type Creation</name>
+    <style>freeForm</style>
+    <subject>OPRT - Box Type Creation</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for your email. Insperity Organizational Planning allows you to create multiple box types in your chart. Within each box type you’re able to apply different color coding depending on chart level, department, or Job Title.
+
+You can view our job aid here for step-by-step instructions on configuring different box styles.  If you have any additional questions or if I can be of further assistance, please let me know.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

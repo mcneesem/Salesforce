@@ -1,0 +1,9 @@
+The following case has been completed
+
+Information regarding the case has been posted below. To view the case record, log in to Salesforce then navigate to:  {!Case.Link}
+
+Task: First Live Payroll Processed Support Case
+Priority: Medium
+Status: Completed
+Start Date: {!Case.NSP_Opened_Date__c}
+Date case Completed: {!Case.NSP_Date_Closed__c}

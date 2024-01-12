@@ -24,6 +24,7 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
         if(NSP_TaskTriggerHandler.runOnce){
             NSP_TaskTriggerHelper  taskTriggerHelperObject =  new NSP_TaskTriggerHelper();  
             taskTriggerHelperObject.beforeInsertDirector((List<Task>)newList);
+            taskTriggerHelperObject.preventInsertOnClosedCase((List<Task>) newList);
         }
     }
     
@@ -36,7 +37,8 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
    */
   public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
     NSP_TaskTriggerHelper  taskTriggerHelperObject =  new NSP_TaskTriggerHelper();
-    taskTriggerHelperObject.afterInsertDirector((List<Task>) newList,(Map<Id, Task>) newMap);
+    taskTriggerHelperObject.afterInsertDirector((List<Task>) newList,(Map<Id, Task>) newMap);      
+    taskTriggerHelperObject.sumUpTaskTimeSpent((Map<Id, task>) newMap,(Map<Id, task>) newMap);
    
 }
     
@@ -51,7 +53,6 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
         if(NSP_TaskTriggerHandler.runOnce){
             NSP_TaskTriggerHelper  taskTriggerHelperObject =  new NSP_TaskTriggerHelper();        
             taskTriggerHelperObject.beforeUpdateDirector((Map<Id, Task>) newMap,(Map<Id, Task>) oldMap);
-            
         }
     }
     
@@ -65,7 +66,8 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
    */
   public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
     NSP_TaskTriggerHelper  taskTriggerHelperObject =  new NSP_TaskTriggerHelper();     
-    taskTriggerHelperObject.afterUpdateDirector((Map<Id, Task>) newMap,(Map<Id, Task>) oldMap);
+    taskTriggerHelperObject.afterUpdateDirector((Map<Id, Task>) newMap,(Map<Id, Task>) oldMap);      
+    taskTriggerHelperObject.sumUpTaskTimeSpent((Map<Id, task>) newMap,(Map<Id, task>) oldMap);
 }
 
 
@@ -76,6 +78,8 @@ public class NSP_TaskTriggerHandler implements NSP_ITriggerHandler{
      * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
     **/
     public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+        // added as a part of STY-01741
+        NSP_TaskTriggerHelper.beforeDeleteDirector((List<Task>) oldList);
     }
 
     /**

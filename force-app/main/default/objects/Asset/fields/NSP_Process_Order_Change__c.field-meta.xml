@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Process_Order_Change__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field to indicate process of Order Change On Asset</description>
+    <externalId>false</externalId>
+    <label>Process Order Change</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,94 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title slds-var-p-bottom_small"
+      value={label.reporting}>
+    </lightning-formatted-text>
+
+    <div>
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Select_all_that_apply__c}
+        no-of-columns="2"
+        label={_objectInfo.NSP_Select_all_that_apply__c.label}
+        class={styles.NSP_Select_all_that_apply__c}
+        multiple
+        field-api-name="Implementation_Profile__c.NSP_Select_all_that_apply__c"
+        record-type-id={recordTypeId}
+        value={field.NSP_Select_all_that_apply__c}
+        data-name="NSP_Select_all_that_apply__c"
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+        <lightning-formatted-text
+          if:true={visibility.showIntegraMessage}
+          class="slds-form-element__label headerMessage"
+          value={label.NSP_ReportingIntegraMessage}>
+        </lightning-formatted-text>
+    </div>
+
+    <div class="slds-form-element__label">
+      <lightning-formatted-text
+        class={styles.What_current_payroll_reports_being_used__c}
+        data-field="What_current_payroll_reports_being_used__c"
+        value={label.CurPayrollReprts}>
+      </lightning-formatted-text></div>
+      <lightning-input-field
+        value={field.What_current_payroll_reports_being_used__c}
+        disabled={disabledFields.What_current_payroll_reports_being_used__c}
+        variant="label-hidden"
+        data-name="What_current_payroll_reports_being_used__c"
+        field-name="What_current_payroll_reports_being_used__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Is_there_a_need_for_a_GL_interface__c}
+      label={_objectInfo.Is_there_a_need_for_a_GL_interface__c.label}
+      class={styles.Is_there_a_need_for_a_GL_interface__c}
+      field-api-name="Implementation_Profile__c.Is_there_a_need_for_a_GL_interface__c"
+      record-type-id={recordTypeId}
+      value={field.Is_there_a_need_for_a_GL_interface__c}
+      data-name="Is_there_a_need_for_a_GL_interface__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <template if:true={visibility.NSP_Chart_of_Accounts_GL_codes__c}>
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Chart_of_Accounts_GL_codes__c}
+        label={_objectInfo.NSP_Chart_of_Accounts_GL_codes__c.label}
+        field-api-name="Implementation_Profile__c.NSP_Chart_of_Accounts_GL_codes__c"
+        record-type-id={recordTypeId}
+        value={field.NSP_Chart_of_Accounts_GL_codes__c}
+        data-name="NSP_Chart_of_Accounts_GL_codes__c"
+        class={styles.NSP_Chart_of_Accounts_GL_codes__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.NSP_Sample_of_current_GL_report__c}
+        label={_objectInfo.NSP_Sample_of_current_GL_report__c.label}
+        field-api-name="Implementation_Profile__c.NSP_Sample_of_current_GL_report__c"
+        record-type-id={recordTypeId}
+        value={field.NSP_Sample_of_current_GL_report__c}
+        data-name="NSP_Sample_of_current_GL_report__c"
+        class={styles.NSP_Sample_of_current_GL_report__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+
+      <lightning-input-field
+        disabled={disabledFields.NSP_Name_of_accounting_software__c}
+        data-name="NSP_Name_of_accounting_software__c"
+        value={field.NSP_Name_of_accounting_software__c}
+        field-name="NSP_Name_of_accounting_software__c"
+        class={styles.NSP_Name_of_accounting_software__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </template>
+  </lightning-record-edit-form>
+</template>

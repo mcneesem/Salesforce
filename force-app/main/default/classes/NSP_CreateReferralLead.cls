@@ -1,5 +1,6 @@
 public without sharing class NSP_CreateReferralLead {
-    
+ // test w/ NSP_CreateReferralLeadTest (83%)
+
  private static final String ErrorOccured=' Error occured: ';   
  private static final String ReferralTask='Referral_Task';  
  private static final String objectName='Lead';  
@@ -21,6 +22,7 @@ public without sharing class NSP_CreateReferralLead {
             
             taskObject.recordOwnerId = accountObject.ownerid;
             taskObject.taskrecordtypeId =Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get(ReferralTask).getRecordTypeId();
+            taskReferralRecord(taskObject.taskrecordtypeId);
             return taskObject ;
         }catch(Exception Ex){
             throw new AuraHandledException(ErrorOccured + ex.getMessage());
@@ -77,7 +79,6 @@ public without sharing class NSP_CreateReferralLead {
             //Passing the sobject name and field API name
             picklistValueClassObject.industry = NSP_CreatePartnerAccount.getPiklistValues(objectName,Industry);
             picklistValueClassObject.potentialCustomer = NSP_CreatePartnerAccount.getPiklistValues(objectName,Customerpotential);
-            picklistValueClassObject.productofinterest = NSP_CreatePartnerAccount.getPiklistValues(objectName,Productinterted);
         }Catch(Exception Ex){
             throw new AuraHandledException(ex.getMessage());
         }
@@ -223,6 +224,55 @@ public without sharing class NSP_CreateReferralLead {
         @AuraEnabled public String recordOwnerId;
         @AuraEnabled public  String taskrecordtypeId;
         
+        
+    }
+    /**
+    * @MethodName: taskReferralRecord
+    * @Description: Created to provide permission set on click of UPSELL button 
+    * @createdDate : 1/23/2023
+    * @Defect : DF-02737
+    * @return void                          
+    */
+    @AuraEnabled 
+    public static void taskReferralRecord(String recordTypeId){
+        PermissionSet permSet = [SELECT Id, Name, Label FROM PermissionSet WHERE Name = 'NSP_Task_Referral_Task'];
+        Schema.DescribeSObjectResult R = Task.SObjectType.getDescribe();
+        List<Schema.RecordTypeInfo> recrdType = R.getRecordTypeInfos();
+        Boolean hasRecordTypePermission = false;
+        //Permission to the record type is not assigned but need to create a Referral Task Record -->Upsell Button
+        for (Schema.RecordTypeInfo rTI : recrdType) {
+            if (!rTI.isAvailable() && rTI.getRecordTypeId() == recordTypeId){
+                hasRecordTypePermission = true;
+            }
+        }
+        if(hasRecordTypePermission){
+            List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
+            Map<Id,User> users = new Map<Id,user>([SELECT id,profile.Name from user where id=:userInfo.getUserId()]);
+            if(users.containsKey(userInfo.getUserId())){
+                PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = permSet.Id, AssigneeId = userInfo.getUserId());
+                permissionSetList.add(psa);
+            }
+            //assignment of Permission set to the user
+            try{
+                if(!permissionSetList.isEmpty()){
+                    insert permissionSetList; 
+                }
+            }catch (Exception ex) {
+                NSP_ErrorLogHandler.logSaveException('NSP_CaseTriggerHelper', 'taskReferralRecord', ex.getMessage());
+            }  
+        }
+    }
+    /**
+    * @MethodName: deletePermissionSet
+    * @Description: Create to remove permission set on click of UPSELL button
+    * @createdDate : 1/23/2023
+    * @Defect : DF-02737
+    * @return void                          
+    */
+    @AuraEnabled
+    public static void deletePermissionSet(){
+
+       NSP_TaskTriggerHelper.removePermissionSet();
         
     }
 }

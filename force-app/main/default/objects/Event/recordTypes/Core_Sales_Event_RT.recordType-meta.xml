@@ -4,143 +4,6 @@
     <active>true</active>
     <label>Core Sales Event RT</label>
     <picklistValues>
-        <picklist>NSP_Activity_type__c</picklist>
-        <values>
-            <fullName>Client reference</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Demo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email Click</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email Open</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email send</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EmailBounced</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Form Submission</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Required for Booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Website visit</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Documents_Missing__c</picklist>
-        <values>
-            <fullName>BPA Commission Checklist</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CSA addendums</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Enrollment Fee Payment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FLSA Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Final Pricing and Review approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Owner outside Payroll</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pricing and Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Renewal Addendum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Revolution Addendum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rush Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales Engineer Questionnaire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Service Intake Form</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Signed CPQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Signed CSA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Signed Delivery Order</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Signed Schedule B</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Tech Solution docs</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Total monthly fees</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Union Agreement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Sold to Paid Checklist</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Engagement_Type__c</picklist>
-        <values>
-            <fullName>COI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Client</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Event_Subtype__c</picklist>
         <values>
             <fullName>Closing Appointment</fullName>
@@ -171,33 +34,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_Form_Name__c</picklist>
-        <values>
-            <fullName>InsperityBPSForm</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>InsperityLearnMoreForm</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>InsperityRSLearnMoreForm</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>InsperityRecruitingGetAQuoteForm</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>InsperitySalesChatbot</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>InsperityWOLearnMoreForm</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Method__c</picklist>
         <values>
             <fullName>In Person</fullName>
@@ -213,24 +49,13 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_Priority__c</picklist>
-        <values>
-            <fullName>High</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Low</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Medium</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Sales_Division__c</picklist>
         <values>
             <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate</fullName>
             <default>false</default>
         </values>
         <values>
@@ -249,10 +74,6 @@
             <fullName>Western</fullName>
             <default>false</default>
         </values>
-            <values>
-            <fullName>Corporate</fullName>
-            <default>false</default>
-        </values>    
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Sales_Office__c</picklist>
@@ -712,6 +533,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>    
+        <values>
             <fullName>Eastern 1</fullName>
             <default>false</default>
         </values>
@@ -771,10 +596,6 @@
             <fullName>Western 4</fullName>
             <default>false</default>
         </values>
-            <values>
-            <fullName>Corporate</fullName>
-            <default>false</default>
-        </values>    
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Status__c</picklist>
@@ -788,28 +609,6 @@
         </values>
         <values>
             <fullName>Open</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Sub_Type_BPS__c</picklist>
-        <values>
-            <fullName>Incorrect Client Name on BPS%2FRetirement booking spreadsheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Missing or closed opportunity in Salesforce</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Submission_type__c</picklist>
-        <values>
-            <fullName>Sales ready</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>White paper downloaded</fullName>
             <default>false</default>
         </values>
     </picklistValues>

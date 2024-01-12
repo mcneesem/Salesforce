@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable,force:appHostable">
+    <!-- Am invoking init hadler -->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="fullView" type="Boolean" />
+    <c:nsp_mainServiceContacts recordId="{!v.recordId}" fullView="{!v.fullView}"></c:nsp_mainServiceContacts>
+</aura:component>

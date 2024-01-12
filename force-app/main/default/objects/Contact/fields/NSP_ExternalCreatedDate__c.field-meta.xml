@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ExternalCreatedDate__c</fullName>
     <description>Used to store External Creation date</description>
-    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>ExternalCreatedDate</label>
     <required>false</required>

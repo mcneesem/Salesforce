@@ -2,7 +2,7 @@
  * Represents the AcccountContactRelation trigger handler.
  */
 
-public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHandler {
+public class NSP_AccountContactRelationTriggerHandler  extends NSP_TriggerAction  implements NSP_ITriggerHandler {
     
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
@@ -38,6 +38,10 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
         NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
         accContactTriggerHelperObject.afterInsertDirector((List<AccountContactRelation>) newList,(Map<Id, AccountContactRelation>) newMap);
+        accContactTriggerHelperObject.afterInsertJobTitle((List<AccountContactRelation>) newList,(Map<Id, AccountContactRelation>)newMap);
+        
+        //added as a part of STY-03783 AND STY-03782
+        NSP_AccountContactRelationTriggerHelper.createPlatformEventForACR((List<AccountContactRelation>) newList, (Map<Id, AccountContactRelation>) newMap);        
     }
 
     /**
@@ -49,7 +53,12 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
      */
 
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_AccountContactRelationTriggerHelper.beforeUpsertDirector((List<AccountContactRelation>) newMap.Values());
+        if (!this.hasRun() ) {
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledMarkRun__c){
+                this.markRun();
+            }
+            NSP_AccountContactRelationTriggerHelper.beforeUpsertDirector((List<AccountContactRelation>) newMap.Values());
+        }
     }
 
     /**
@@ -61,8 +70,19 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
      */
 
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
-        accContactTriggerHelperObject.afterUpdateDirector((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+        
+        if (!this.hasRun()  || this.timesRun() <2) {
+            if(NSP_hotfix_Switch__c.getOrgDefaults().IsEnabledMarkRun__c){
+                this.markRun();
+            }
+            NSP_AccountContactRelationTriggerHelper  accContactTriggerHelperObject =  new NSP_AccountContactRelationTriggerHelper();
+            accContactTriggerHelperObject.afterUpdateDirector((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+            accContactTriggerHelperObject.afterUpdateJobTitle((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+            //added as a part of STY-03658
+            NSP_AccountContactServiceHelper.createExternalUser((Map<Id, AccountContactRelation>) newMap,(Map<Id, AccountContactRelation>) oldMap);
+    
+            NSP_AccountContactRelationTriggerHelper.createPlatformEventForACR((List<AccountContactRelation>) newMap.Values(), (Map<Id, AccountContactRelation>) oldMap);
+        }
     }
     
     /**
@@ -72,6 +92,8 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
      * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
     **/
     public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+        //STY-03659 Community - Error Message if Deleting ACR for community user.
+        NSP_AccountContactRelationTriggerHelper.restrictDeletingACR((List < AccountContactRelation > ) oldList);
     }
     
     /**
@@ -82,5 +104,7 @@ public class NSP_AccountContactRelationTriggerHandler implements NSP_ITriggerHan
     *                
     */ 
      public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
-    }
+        //STY-03866 remove sharing of projects
+        NSP_AccountContactRelationTriggerHelper.afterDeleteDirector((List < AccountContactRelation > ) oldList);
+     }
 }

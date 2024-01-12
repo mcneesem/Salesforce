@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Contact Center 24</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_CategoryDescription__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Category__c</field>
+        <value xsi:type="xsd:string">401k</value>
+    </values>
+    <values>
+        <field>NSP_DetailDescription__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Detail__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Display_confidential_popup__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_RecordType__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_SubcategoryDescription__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Subcategory__c</field>
+        <value xsi:type="xsd:string">COVID</value>
+    </values>
+    <values>
+        <field>NSP_UserTitle__c</field>
+        <value xsi:type="xsd:string">Contact Center Agent</value>
+    </values>
+</CustomMetadata>

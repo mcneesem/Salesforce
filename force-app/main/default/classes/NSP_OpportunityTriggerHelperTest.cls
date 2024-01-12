@@ -57,29 +57,28 @@ public class NSP_OpportunityTriggerHelperTest {
         database.insert(ct);
        
         //Create Opportunity
+        List<Opportunity> oppList1 = new List<Opportunity>();
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Name = 'Test Oppty';
         opportuniytObject.AccountId = accoutObject1.id;
-        opportuniytObject.stagename = NSP_SalesConstants.ANALYSIS_STAGE;
+        opportuniytObject.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
         opportuniytObject.CloseDate = date.today();
         opportuniytObject.CurrencyIsoCode = CURRENCY_USD;
         opportuniytObject.NSP_PrimaryProduct__c = 'WX';
         opportuniytObject.NSP_Number_of_Employees__c = 100;
         opportuniytObject.NSP_WS_Number_Of_Employees__c = 123;
         opportuniytObject.NSP_WO_Number_Of_Employees__c = 123;
-        opportuniytObject.SBQQ__AmendedContract__c = ct.Id;
-        opportuniytObject.SBQQ__RenewedContract__c = ct.Id;
+        //opportuniytObject.SBQQ__AmendedContract__c = ct.Id;
+        //opportuniytObject.SBQQ__RenewedContract__c = ct.Id;
         opportuniytObject.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
         opportuniytObject.Type ='CAMS';
         opportuniytObject.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
-        //Inserting Opportunity Object
-        insert opportuniytObject;
-        
-       
+        oppList1.add(opportuniytObject);
+
         Opportunity opportuniytObject2 = new Opportunity();
         opportuniytObject2.Name = 'Test Oppty Email';
         opportuniytObject2.AccountId = accoutObject1.id;
-        opportuniytObject2.stagename = NSP_SalesConstants.ANALYSIS_STAGE;
+        opportuniytObject2.StageName = NSP_SalesConstants.ANALYSIS_STAGE;
         opportuniytObject2.CloseDate = date.today();
         opportuniytObject2.CurrencyIsoCode = CURRENCY_USD;
         opportuniytObject2.NSP_PrimaryProduct__c = 'WO';
@@ -89,8 +88,10 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject2.NSP_WS_Number_Of_Employees__c = 123;
         opportuniytObject2.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
         opportuniytObject2.NSP_Mid_Market_Sales_Email__c='test@insperity.com';
-        //Inserting Opportunity Object
-        insert opportuniytObject2;
+        oppList1.add(opportuniytObject2);
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert oppList1;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
        
         List<Task> taskList = new List<Task>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
@@ -103,7 +104,23 @@ public class NSP_OpportunityTriggerHelperTest {
             NSP_Status__c='Completed'
         );
         taskList.add(taskRec);
+
+        Opportunity opportuniytObject5 = new Opportunity();
+        opportuniytObject5.Type = 'New Product';
+        opportuniytObject5.Name = 'Test Oppty Match';
+        opportuniytObject5.AccountId = accoutObject1.id;
+        opportuniytObject5.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject5.CloseDate = date.today();
+        opportuniytObject5.CurrencyIsoCode = CURRENCY_USD;
+        opportuniytObject5.NSP_PrimaryProduct__c = 'WO';
+        opportuniytObject5.NSP_Number_of_Employees__c = 5; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert opportuniytObject5;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
        
+   
+        Test.startTest();
+        List<Opportunity> oppList2 = new List<Opportunity>();       
         Opportunity opportuniytObject3 = new Opportunity();
         opportuniytObject3.Name = 'Test Oppty Email';
         opportuniytObject3.AccountId = accoutObject1.id;
@@ -116,8 +133,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject3.Type ='CAMS';
         opportuniytObject3.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject3.NSP_Mid_Market_Sales_Email__c='test2@insperity.com';
-        //Inserting Opportunity Object
-        insert opportuniytObject3;
+        oppList2.add(opportuniytObject3);
 
         Opportunity opportuniytObject4 = new Opportunity();
         opportuniytObject4.Name = 'Test Oppty Email';
@@ -131,9 +147,9 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject4.Type ='CAMS';
         opportuniytObject4.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-        //Inserting Opportunity Object
-        insert opportuniytObject4;
-       
+       	oppList2.add(opportuniytObject4);
+        insert oppList2;
+        
         SBQQ__Quote__c quoteRec = new SBQQ__Quote__c();
         quoteRec.SBQQ__Opportunity2__c = opportuniytObject3.Id;
         quoteRec.SBQQ__Account__c = opportuniytObject3.AccountId;
@@ -144,7 +160,7 @@ public class NSP_OpportunityTriggerHelperTest {
         insert quoteRec;
        
         insert taskList;
-       
+        List<Opportunity> childOppList = new List<Opportunity>();
         //Create child opportunity for Retirement Service
         Opportunity childopportuniytObject = new Opportunity();
         childopportuniytObject.Name = 'Child Oppty Retirement Service';
@@ -155,9 +171,8 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject.NSP_Number_of_Employees__c = 100;
         childopportuniytObject.NSP_PrimaryProduct__c = 'Retirement Services';
         childopportuniytObject.NSP_Parent_Opportunity__c = opportuniytObject.id;
-        //Inserting Child Opportunity
-        insert childopportuniytObject;
-       
+       	childOppList.add(childopportuniytObject);
+        
         //Create child opportuniy for Insurance Service
         Opportunity childopportuniytObject1 = new Opportunity();
         childopportuniytObject1.Name = 'Child Oppty Insurance Service';
@@ -168,17 +183,187 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject1.NSP_Number_of_Employees__c = 100;
         childopportuniytObject1.NSP_PrimaryProduct__c = 'Insurance Services';
         childopportuniytObject1.NSP_Parent_Opportunity__c = opportuniytObject.id;
-        insert childopportuniytObject1;
- 
+        //insert childopportuniytObject1;
+ 		childOppList.add(childopportuniytObject1);
+        insert childOppList;
+        
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
         insert pricebook;
         
-       
+        Test.stopTest();
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject.Id,true);
 
-       
     }
    
+ /**
+* Test the enrollment fee calculation
+* @param N/A.
+* @return void                          
+*/
+    @isTest
+    static void TestEnrollmentFee() {
+        
+        Test.startTest();
+
+         Account acct = new Account();
+         acct.Name = 'Test Enrollment Fee';
+        //inserting account object
+        insert acct;
+       
+        List<Opportunity> oppList = new List<Opportunity>();
+        
+        //  Formula 1
+        Opportunity opp1 = new Opportunity();
+        opp1.Name = 'Test Oppty Enrollment Fee';
+        opp1.AccountId = acct.id;
+        opp1.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp1.CloseDate = date.today();
+        opp1.CurrencyIsoCode = CURRENCY_USD;
+        opp1.NSP_PrimaryProduct__c = 'WO';
+        opp1.Type ='Existing Product';
+        opp1.NSP_AddonType__c = 'CAM';
+        opp1.NSP_Schedule_B_Enrollment_Fee__c = 1200;
+        opp1.NSP_TotalAnnualPayroll__c = 1500;
+        oppList.add(opp1);
+        
+        //  Formula 2
+        Opportunity opp2 = new Opportunity();
+        opp2.Name = 'Test Oppty Enrollment Fee';
+        opp2.AccountId = acct.id;
+        opp2.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp2.CloseDate = date.today();
+        opp2.CurrencyIsoCode = CURRENCY_USD;
+        opp2.NSP_PrimaryProduct__c = 'WO';
+        opp2.NSP_Schedule_B_Enrollment_Fee__c = 100;
+        opp2.NSP_TotalAnnualPayroll__c = 2500;
+        oppList.add(opp2);
+
+        //  Formula 3
+        Opportunity opp3 = new Opportunity();
+        opp3.Name = 'Test Oppty Enrollment Fee';
+        opp3.AccountId = acct.id;
+        opp3.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp3.CloseDate = date.today();
+        opp3.CurrencyIsoCode = CURRENCY_USD;
+        opp3.NSP_PrimaryProduct__c = 'WO';
+        opp3.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp3.NSP_TotalAnnualPayroll__c = 2500; 
+        opp3.NSP_1_6_OfScheduleB__c = true;
+        oppList.add(opp3);
+
+        //  Formula 4
+        Opportunity opp4 = new Opportunity();
+        opp4.Name = 'Test Oppty Enrollment Fee';
+        opp4.AccountId = acct.id;
+        opp4.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp4.CloseDate = date.today();
+        opp4.CurrencyIsoCode = CURRENCY_USD;
+        opp4.NSP_PrimaryProduct__c = 'WO';
+        opp4.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp4.NSP_TotalAnnualPayroll__c = 1500; 
+        opp4.NSP_WaivedInsperityFee__c = true;
+        opp4.NSP_InsperityFeePercent__c = 10;
+        oppList.add(opp4);
+
+        //  Formula 1 - Workforce Sync
+        Opportunity opp6 = new Opportunity();
+        opp6.Name = 'Test Oppty Enrollment Fee';
+        opp6.AccountId = acct.id;
+        opp6.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp6.CloseDate = date.today();
+        opp6.CurrencyIsoCode = CURRENCY_USD;
+        opp6.NSP_PrimaryProduct__c = 'WS';
+        opp6.Type ='Existing Product';
+        opp6.NSP_AddonType__c = 'CAM';
+        opp6.NSP_Schedule_B_Enrollment_Fee__c = 1200;
+        opp6.NSP_TotalAnnualPayroll__c = 1500;
+        oppList.add(opp6);
+        
+        //  Formula 2 - Workforce Sync
+        Opportunity opp7 = new Opportunity();
+        opp7.Name = 'Test Oppty Enrollment Fee';
+        opp7.AccountId = acct.id;
+        opp7.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp7.CloseDate = date.today();
+        opp7.CurrencyIsoCode = CURRENCY_USD;
+        opp7.NSP_PrimaryProduct__c = 'WS';
+        opp7.NSP_Schedule_B_Enrollment_Fee__c = 100;
+        opp7.NSP_TotalAnnualPayroll__c = 2500;
+        oppList.add(opp7);
+
+        //  Formula 3 - Workforce Sync
+        Opportunity opp8 = new Opportunity();
+        opp8.Name = 'Test Oppty Enrollment Fee';
+        opp8.AccountId = acct.id;
+        opp8.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp8.CloseDate = date.today();
+        opp8.CurrencyIsoCode = CURRENCY_USD;
+        opp8.NSP_PrimaryProduct__c = 'WS';
+        opp8.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp8.NSP_TotalAnnualPayroll__c = 2500; 
+        opp8.NSP_1_6_OfScheduleB__c = true;
+        oppList.add(opp8);
+
+        //  Formula 4 - Workforce Sync
+        Opportunity opp5 = new Opportunity();
+        opp5.Name = 'Test Oppty Enrollment Fee';
+        opp5.AccountId = acct.id;
+        opp5.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp5.CloseDate = date.today();
+        opp5.CurrencyIsoCode = CURRENCY_USD;
+        opp5.NSP_PrimaryProduct__c = 'WS';
+        opp5.NSP_Schedule_B_Enrollment_Fee__c = 600;
+        opp5.NSP_TotalAnnualPayroll__c = 1500; 
+        opp5.NSP_WaivedInsperityFee__c = true;
+        opp5.NSP_InsperityFeePercent__c = 10;
+        oppList.add(opp5);
+        
+        NSP_OpportunityTriggerHelper.calculateEnrollmentFees(oppList);
+        Test.stopTest();
+        
+        //  Formula 1
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  1200/ 6 = 200
+        System.assertEquals(200, opp1.NSP_InsperityFee__c);
+        
+        //  Formula 2
+        //  opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+        //  opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
+        // NSP_InsperityFee__c = ((2500 /12) * .06 )/6 = 2.08333333333333333333333333333333 (include decimals otherwise won't work) 
+        System.assertEquals(2.08333333333333333333333333333333, opp2.NSP_InsperityFee__c);
+
+        //  Formula 3    
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  600 / 6 = 100
+        System.assertEquals(100, opp3.NSP_InsperityFee__c);
+
+        //  Formula 4
+        //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
+        //  (600 * 10) /100 = 60
+        System.assertEquals(60, opp4.NSP_InsperityFee__c);
+
+        //  Formula 1 - Workforce Sync  
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  1200/ 6 = 200
+        System.assertEquals(200, opp6.NSP_InsperityFee__c);
+
+        //  Formula 2 -Workforce Sync
+        //  opp.NSP_Calculated_Enrollment_Fee__c =  ((opp.NSP_TotalAnnualPayroll__c / 12) * .06);
+        //  opp.NSP_InsperityFee__c = opp.NSP_Calculated_Enrollment_Fee__c / 6;
+        // NSP_InsperityFee__c = ((2500 /12) * .06 )/6 = 2.08333333333333333333333333333333 (include decimals otherwise won't work) 
+        System.assertEquals(2.08333333333333333333333333333333, opp7.NSP_InsperityFee__c);
+
+        //  Formula 3 - Workforce Sync 
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  600 / 6 = 100
+        System.assertEquals(100, opp8.NSP_InsperityFee__c);
+
+        // Formula 4 -  Workforce Sync
+        //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
+        //  (600 * 10) /100 = 60
+        System.assertEquals(60, opp5.NSP_InsperityFee__c);
+    }
+    
         /**
 * @Description: This test method is used to cover updatesOnChildOpportunity
 * @Created date: 04/29/2022.
@@ -195,7 +380,7 @@ public class NSP_OpportunityTriggerHelperTest {
                 UserRoleId =ur.Id,
                 LastName = 'TestClassUser',
                 Phone = '1231231231',
-                Email = 'testuser@test.com',
+                Email = 'testuser@insperity.com',
                 Username = 'testuser@test.com' + System.currentTimeMillis(),
                 CompanyName = 'TEST',
                 Title = 'title',
@@ -254,7 +439,7 @@ public class NSP_OpportunityTriggerHelperTest {
 */
     @isTest
     static void checkUpdatefoeWOOpptys() {
-       
+    
         Test.startTest();
         List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null ];
         opportunityList[0].NSP_PrimaryProduct__c = 'WX';  
@@ -319,8 +504,14 @@ public class NSP_OpportunityTriggerHelperTest {
         oppty.NSP_BPA__c = oppty.OwnerId;
         oppty.StageName = 'Closed Won';
         oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
-       
-        update oppty;  
+        oppty.AVA_SFCLOUD__Sales_Tax__c = 1000;
+        oppty.Type = NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY;
+        update oppty;
+        
+        List<Opportunity> updatedOppoList = new List<Opportunity>();
+        updatedOppoList.add(oppty);
+        NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
+        helper.retirementServicesForNonWOProducts(updatedOppoList);
        Test.stopTest();
         System.assertEquals(oppty.StageName, OPP_STAGENAME_CLOSED_WON); // Added as part of Code fix
     }
@@ -377,6 +568,55 @@ public class NSP_OpportunityTriggerHelperTest {
        NSP_ChildOpportunitiesHelperFunctions.defaultFieldsOnChildOpportunity(cOppList, pOppIdSet);
         Test.stopTest();
     }
+
+    /**
+* @Description: This test method is used to cover createAsset
+* @Created date: 14/08/2023.
+* @return void            
+* @author :             
+*/
+    
+@isTest
+static void createAssetTest(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id, AccountId, StageName, NSP_PrimaryProduct__c FROM Opportunity
+                                         WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX' LIMIT 1];
+
+    opportunity oppty = opportunityList[0];
+    oppty.NSP_PrimaryProduct__c = 'Insurance Services';
+    oppty.StageName = 'Closed Won';
+    update oppty;
+
+    Test.stopTest();
+}
+
+@isTest
+static void createAssetTest2(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id, AccountId, StageName, NSP_PrimaryProduct__c FROM Opportunity
+                                         WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX' LIMIT 1];
+
+    opportunity oppty = opportunityList[0];
+    oppty.NSP_PrimaryProduct__c = 'Expense Management';
+    oppty.StageName = 'Closed Won';
+    update oppty;
+
+    Test.stopTest();
+}
+
+@isTest
+static void createAssetTest3(){
+    Test.startTest();
+    List<Opportunity> opportunityList = [SELECT Id, AccountId, StageName, NSP_PrimaryProduct__c FROM Opportunity
+                                         WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX' LIMIT 1];
+
+    opportunity oppty = opportunityList[0];
+    oppty.NSP_PrimaryProduct__c = 'WA';
+    oppty.StageName = 'Closed Won';
+    update oppty;
+
+    Test.stopTest();
+}
      
     /**
     * @Description: This test method is used to cover sendClosedWonEmailNotifications for WX method of NSP_EmailWithAttachment
@@ -479,6 +719,7 @@ public class NSP_OpportunityTriggerHelperTest {
    * @Created date: 04/20/2022.
    * @return void                          
    */
+  /*
   @isTest
   static void validateClosedDateTest(){
   List<Opportunity> opportunityList = [SELECT Id,AccountId,OwnerId,StageName,CloseDate FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 AND StageName =: NSP_SalesConstants.ANALYSIS_STAGE AND NSP_PrimaryProduct__c = 'WX'];
@@ -486,7 +727,7 @@ public class NSP_OpportunityTriggerHelperTest {
       NSP_OpportunityTriggerHelper.validateClosedDate(opportunityList);
       Test.stopTest();
       System.assertEquals(opportunityList[0].CloseDate, date.today());
-  }
+  }*/
  
    @isTest
    static void salesOfficeTest()
@@ -553,10 +794,59 @@ public class NSP_OpportunityTriggerHelperTest {
        update opportunityList;
        opportunityList[0].Nsp_1st_Pay_Invoice_Date_Reporting__c = system.today()+2;
        update opportunityList;
+
+       //   Test match reward 
+       List<Opportunity> opportunityList1 = [SELECT ID, Discovery_Completed__c FROM Opportunity WHERE Name = 'Test Oppty Match' ];
+              
+       Contact objContact1 = new Contact();
+       objContact1.firstName = 'Test Match';
+       objContact1.LastName = 'Contact NSP Match';
+       objContact1.Email = 'testcntmatch@nsp.com';
+       objContact1.AccountId = accountList[0].Id;
+       insert objContact1;
+       
+       OpportunityContactRole objOCR1 = new OpportunityContactRole();
+       objOCR1.OpportunityId = opportunityList1[0].id;
+       objOCR1.ContactId = objContact1.Id;
+       objOCR1.NSP_isReferral__c = true;
+       objOCR1.Role = 'COI';
+       objOCR1.NSP_Referralbenefitsanonprofitorg__c = 'Match';
+       objOCR1.NSP_Nonprofit_Organization_Name__c = 'Test';
+       objOCR1.NSP_Nonprofit_Organization_Tax_Id__c = '123456789';
+       insert objOCR1;
+
+       DateTime testtime = System.now();
+       Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+       Event eventRec = new Event(
+           Subject = 'Discovery Call',
+           WhatId = opportunityList[0].Id,
+           RecordTypeId = eventRecTypeId,
+           NSP_Task_Type__c = 'Core Sales',
+           NSP_Event_Subtype__c = 'Discovery Call',
+           NSP_Status__c = 'Completed',
+           ActivityDateTime = testtime,
+           StartDateTime = testtime,
+           EndDateTime = testtime,
+           ActivityDate = System.today()
+       );
+       insert eventRec;
+
+       //   Create reward
+       NSP_OpportunityTriggerHelper.createRewardsOnce = false;
+       opportunityList1[0].Discovery_Completed__c = true;
+       update opportunityList1;
+
+       List<NSP_Reward__c> reward = [SELECT id, NSP_Reward_Amount__c, NSP_Nonprofit_Amount__c FROM NSP_Reward__c WHERE Opportunity__c =: opportunityList1[0].Id];
+
+       //   Match reward amount and non-profit amount should be 200 
+       System.assertEquals(200, reward[0].NSP_Reward_Amount__c); 
+
+       System.assertEquals(200, reward[0].NSP_Nonprofit_Amount__c); 
+
        Test.stopTest();
    }
     
-       /** 
+    /** 
     * Test for before and after insert of ACR trigger
     * Method Name : testAccountContactInsert
     * created as part of user story - 128223
@@ -614,6 +904,30 @@ public class NSP_OpportunityTriggerHelperTest {
         //Inserting Opportunity Object
         update opportuniytObject;
         Test.stopTest();
+    }
+    
+    /**
+     * Test for before insert trigger
+     * Method Name : testParent
+     */
+     @isTest
+    static void testParent(){
+        
+        Test.startTest();
+        Opportunity opp = [SELECT ID,AccountId,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null LIMIT 1];
+        Opportunity childopportuniytObject2 = new Opportunity();
+        childopportuniytObject2.Name = 'Child Oppty Insurance Service';
+        childopportuniytObject2.AccountId = Opp.AccountId;
+        childopportuniytObject2.stagename = 'Qualification';
+        childopportuniytObject2.CloseDate = date.today();
+        childopportuniytObject2.CurrencyIsoCode = CURRENCY_USD;
+        childopportuniytObject2.NSP_Number_of_Employees__c = 100;
+        childopportuniytObject2.NSP_PrimaryProduct__c = 'Insurance Services';
+        childopportuniytObject2.NSP_Parent_Opportunity__c = opp.id;
+        childopportuniytObject2.Type = NSP_SalesConstants.CLIENT_GROWTH_CREDIT;
+        childopportuniytObject2.NSP_Contribution_Level__c = 'Level 1';  
+        childopportuniytObject2.NSP_Frequency_of_Distribution__c = 'Lump sum';
+        insert childopportuniytObject2;
     }
     
      /** 

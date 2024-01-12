@@ -1,0 +1,526 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title"
+      value={label.clientContacts}>
+    </lightning-formatted-text>
+
+    <!-- KDM -->
+    <div class="slds-grid slds-wrap">
+      <lightning-formatted-text
+        class="slds-text-heading_small slds-col slds-size_1-of-1"
+        value={label.KDM}>
+      </lightning-formatted-text>
+
+      <lightning-input-field
+        disabled={disabled.NSP_KDM_Client_Name__c}
+        field-name={fieldNames.clientNameKDM}
+        data-name={fieldNames.clientNameKDM}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_KDM_Job_Title__c}
+        field-name={fieldNames.clientJobTitleKDM}
+        data-name={fieldNames.clientJobTitleKDM}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+
+      <div class="slds-size_12-of-12">
+        <lightning-input-field
+          disabled={disabled.NSP_AIMS_ClientNo_KDM__c}
+          field-name={fieldNames.aimsClientNoKDM}
+          data-name={fieldNames.aimsClientNoKDM}
+          onchange={handleValueChange}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input-field>
+      </div>
+
+      <lightning-input
+        disabled={disabled.NSP_KDM_Client_Office_Phone__c}
+        label={objectInfo.NSP_KDM_Client_Office_Phone__c.label}
+        data-name={fieldNames.clientOfficePhoneKDM}
+        value={formattedValue.NSP_KDM_Client_Office_Phone__c}
+        onchange={handleValueChange}
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input>
+
+      <lightning-input
+        disabled={disabled.NSP_KDM_Client_Cell_Phone__c}
+        label={objectInfo.NSP_KDM_Client_Cell_Phone__c.label}
+        data-name={fieldNames.clientCellPhoneKDM}
+        value={formattedValue.NSP_KDM_Client_Cell_Phone__c}
+        onchange={handleValueChange}
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input>
+
+      <lightning-input-field
+        disabled={disabled.NSP_KDM_Client_Email__c}
+        field-name={fieldNames.clientEmailKDM}
+        data-name={fieldNames.clientEmailKDM}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_KDM_Client_Contact_Method__c}
+        field-name={fieldNames.clientContactMethodKDM}
+        data-name={fieldNames.clientContactMethodKDM}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+    </div>
+
+    <!-- OSS -->
+    <div class="slds-grid slds-wrap">
+      <lightning-formatted-text
+        class="slds-text-heading_small slds-col slds-size_6-of-12"
+        value={label.OSS}>
+      </lightning-formatted-text>
+
+      <lightning-input-field
+        disabled={disabled.NSP_OSS_contact_is_same_as_KDM__c}
+        field-name="NSP_OSS_contact_is_same_as_KDM__c"
+        data-name="NSP_OSS_contact_is_same_as_KDM__c"
+        class="slds-col slds-size_6-of-12"
+        onchange={handleCheckBoxChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_OSS_Client_Name__c}
+        field-name="NSP_OSS_Client_Name__c"
+        data-name="NSP_OSS_Client_Name__c"
+        value={field.NSP_OSS_Client_Name__c}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_OSS_Job_Title__c}
+        field-name="NSP_OSS_Job_Title__c"
+        data-name="NSP_OSS_Job_Title__c"
+        value={field.NSP_OSS_Job_Title__c}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+
+      <div class="slds-size_12-of-12">
+        <lightning-input-field
+          disabled={disabled.NSP_AIMS_ClientNo_OSS__c}
+          field-name="NSP_AIMS_ClientNo_OSS__c"
+          data-name="NSP_AIMS_ClientNo_OSS__c"
+          onchange={handleValueChange}
+          value={field.NSP_AIMS_ClientNo_OSS__c}
+          class="slds-col slds-size_6-of-12">
+        </lightning-input-field>
+      </div>
+
+      <lightning-input
+        disabled={disabled.NSP_OSS_Client_Office_Phone__c}
+        label={objectInfo.NSP_OSS_Client_Office_Phone__c.label}
+        data-name="NSP_OSS_Client_Office_Phone__c"
+        value={formattedValue.NSP_OSS_Client_Office_Phone__c}
+        onchange={handleValueChange}
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input>
+
+      <lightning-input
+        disabled={disabled.NSP_OSS_Client_Cell_Phone__c}
+        label={objectInfo.NSP_OSS_Client_Cell_Phone__c.label}
+        data-name="NSP_OSS_Client_Cell_Phone__c"
+        value={formattedValue.NSP_OSS_Client_Cell_Phone__c}
+        onchange={handleValueChange}
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input>
+
+      <lightning-input-field
+        disabled={disabled.NSP_OSS_Client_Email__c}
+        field-name="NSP_OSS_Client_Email__c"
+        data-name="NSP_OSS_Client_Email__c"
+        value={field.NSP_OSS_Client_Email__c}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_OSS_Client_Contact_Method__c}
+        field-name="NSP_OSS_Client_Contact_Method__c"
+        data-name="NSP_OSS_Client_Contact_Method__c"
+        value={field.NSP_OSS_Client_Contact_Method__c}
+        onchange={handleValueChange}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input-field>
+    </div>
+
+    <!-- WC -->
+    <div class="slds-grid slds-wrap">
+      <lightning-formatted-text
+        class="slds-text-heading_small slds-col slds-size_6-of-12"
+        value={label.WC}>
+      </lightning-formatted-text>
+      <lightning-input-field
+        disabled={disabled.NSP_WC_contact_is_same_as_OSS__c}
+        field-name="NSP_WC_contact_is_same_as_OSS__c"
+        data-name="NSP_WC_contact_is_same_as_OSS__c"
+        class="slds-col slds-size_6-of-12"
+        onchange={handleCheckBoxChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_WC_Client_Name__c}
+        field-name="NSP_WC_Client_Name__c"
+        data-name="NSP_WC_Client_Name__c"
+        class="slds-col slds-size_6-of-12"
+        value={field.NSP_WC_Client_Name__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_WC_Job_Title__c}
+        field-name="NSP_WC_Job_Title__c"
+        data-name="NSP_WC_Job_Title__c"
+        class="slds-col slds-size_6-of-12"
+        value={field.NSP_WC_Job_Title__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <div class="slds-size_12-of-12">
+        <lightning-input-field
+          disabled={disabled.NSP_AIMS_ClientNo_WC__c}
+          field-name="NSP_AIMS_ClientNo_WC__c"
+          data-name="NSP_AIMS_ClientNo_WC__c"
+          class="slds-col slds-size_6-of-12"
+          value={field.NSP_AIMS_ClientNo_WC__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </div>
+
+      <lightning-input
+        disabled={disabled.NSP_WC_Client_Office_Phone__c}
+        label={objectInfo.NSP_WC_Client_Office_Phone__c.label}
+        value={formattedValue.NSP_WC_Client_Office_Phone__c}
+        data-name="NSP_WC_Client_Office_Phone__c"
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input
+        disabled={disabled.NSP_WC_Client_Cell_Phone__c}
+        label={objectInfo.NSP_WC_Client_Cell_Phone__c.label}
+        data-name="NSP_WC_Client_Cell_Phone__c"
+        value={formattedValue.NSP_WC_Client_Cell_Phone__c}
+        onchange={handleValueChange}
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        class="slds-col slds-size_6-of-12">
+      </lightning-input>
+    
+      <lightning-input-field
+        value={field.NSP_WC_Client_Email__c}
+        class="slds-col slds-size_6-of-12"
+        disabled={disabledFields.NSP_WC_Client_Email__c}
+        field-name="NSP_WC_Client_Email__c"
+        data-name="NSP_WC_Client_Email__c"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_WC_Client_Contact_Method__c}
+        field-name="NSP_WC_Client_Contact_Method__c"
+        data-name="NSP_WC_Client_Contact_Method__c"
+        class="slds-col slds-size_6-of-12"
+        value={field.NSP_WC_Client_Contact_Method__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <!-- PC -->
+    <div class="slds-grid slds-wrap">
+      <lightning-formatted-text
+        class="slds-text-heading_small slds-col slds-size_6-of-12"
+        value={label.PC}>
+      </lightning-formatted-text>
+
+      <lightning-input-field
+        disabled={disabled.NSP_PC_is_same_as_OSS__c}
+        field-name="NSP_PC_is_same_as_OSS__c"
+        data-name="NSP_PC_is_same_as_OSS__c"
+        class="slds-col slds-size_6-of-12"
+        onchange={handleCheckBoxChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_PC_Client_Name__c}
+        field-name="NSP_PC_Client_Name__c"
+        data-name="NSP_PC_Client_Name__c"
+        value={field.NSP_PC_Client_Name__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_PC_Job_Title__c}
+        field-name="NSP_PC_Job_Title__c"
+        data-name="NSP_PC_Job_Title__c"
+        value={field.NSP_PC_Job_Title__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <div class="slds-size_12-of-12">
+        <lightning-input-field
+          disabled={disabled.NSP_AIMS_ClientNo_PC__c}
+          field-name="NSP_AIMS_ClientNo_PC__c"
+          data-name="NSP_AIMS_ClientNo_PC__c"
+          class="slds-col slds-size_6-of-12"
+          value={field.NSP_AIMS_ClientNo_PC__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </div>
+
+      <lightning-input
+        disabled={disabled.NSP_PC_Client_Office_Phone__c}
+        label={objectInfo.NSP_PC_Client_Office_Phone__c.label}
+        data-name="NSP_PC_Client_Office_Phone__c"
+        value={formattedValue.NSP_PC_Client_Office_Phone__c}
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input
+        disabled={disabled.NSP_PC_Client_Cell_Phone__c}
+        label={objectInfo.NSP_PC_Client_Cell_Phone__c.label}
+        data-name="NSP_PC_Client_Cell_Phone__c"
+        value={formattedValue.NSP_PC_Client_Cell_Phone__c}
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input-field
+        disabled={disabled.NSP_PC_Client_Email__c}
+        field-name="NSP_PC_Client_Email__c"
+        data-name="NSP_PC_Client_Email__c"
+        value={field.NSP_PC_Client_Email__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.PC_Client_Contact_Method__c}
+        field-name="PC_Client_Contact_Method__c"
+        data-name="PC_Client_Contact_Method__c"
+        value={field.PC_Client_Contact_Method__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <!-- BACKUP PC -->
+    <div class="slds-grid slds-wrap">
+      <lightning-formatted-text
+        class="slds-text-heading_small slds-col slds-size_6-of-12"
+        value={label.BACKUPPC}>
+      </lightning-formatted-text>
+
+      <lightning-input-field
+        disabled={disabled.NSP_No_back_up_PC__c}
+        field-name="NSP_No_back_up_PC__c"
+        data-name="NSP_No_back_up_PC__c"
+        value={field.NSP_No_back_up_PC__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleCheckBoxChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        field-name="NSP_Back_up_PC_Client_Name__c"
+        data-name="NSP_Back_up_PC_Client_Name__c"
+        value={field.NSP_Back_up_PC_Client_Name__c}
+        disabled={disabled.NSP_Back_up_PC_Client_Name__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        field-name="NSP_Back_up_PC_Job_Title__c"
+        data-name="NSP_Back_up_PC_Job_Title__c"
+        value={field.NSP_Back_up_PC_Job_Title__c}
+        disabled={disabled.NSP_Back_up_PC_Job_Title__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <div class="slds-size_12-of-12">
+        <lightning-input-field
+          disabled={disabled.NSP_AIMS_ClientNo_Backup_PC__c}
+          field-name="NSP_AIMS_ClientNo_Backup_PC__c"
+          data-name="NSP_AIMS_ClientNo_Backup_PC__c"
+          value={field.NSP_AIMS_ClientNo_Backup_PC__c}
+          class="slds-col slds-size_6-of-12"
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </div>
+
+      <lightning-input
+        data-name="NSP_Back_up_Client_Office_Phone__c"
+        value={formattedValue.NSP_Back_up_Client_Office_Phone__c}
+        label={objectInfo.NSP_Back_up_Client_Office_Phone__c.label}
+        disabled={disabled.NSP_Back_up_Client_Office_Phone__c}
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input
+        data-name="NSP_Back_up_Client_Cell_Phone__c"
+        value={formattedValue.NSP_Back_up_Client_Cell_Phone__c}
+        label={objectInfo.NSP_Back_up_Client_Cell_Phone__c.label}
+        disabled={disabled.NSP_Back_up_Client_Cell_Phone__c}
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input-field
+        field-name="NSP_Back_up_Client_Email__c"
+        data-name="NSP_Back_up_Client_Email__c"
+        value={field.NSP_Back_up_Client_Email__c}
+        disabled={disabled.NSP_Back_up_Client_Email__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        field-name="NSP_Back_up_Client_Contact_Method__c"
+        data-name="NSP_Back_up_Client_Contact_Method__c"
+        value={field.NSP_Back_up_Client_Contact_Method__c}
+        disabled={disabled.NSP_Back_up_Client_Contact_Method__c}
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <!-- HR Contact -->
+    <div class="slds-grid slds-wrap">
+      <lightning-formatted-text
+        class="slds-text-heading_small slds-col slds-size_6-of-12"
+        value={label.HrCont}>
+      </lightning-formatted-text>
+
+      <lightning-input-field
+        disabled={disabled.HR_contact_is_same_as_OSS__c}
+        field-name="HR_contact_is_same_as_OSS__c"
+        data-name="HR_contact_is_same_as_OSS__c"
+        class="slds-col slds-size_6-of-12"
+        onchange={handleCheckBoxChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_HR_Client_Name__c}
+        field-name="NSP_HR_Client_Name__c"
+        data-name="NSP_HR_Client_Name__c"
+        class="slds-col slds-size_6-of-12"
+        value={field.NSP_HR_Client_Name__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.NSP_HR_Job_Title__c}
+        field-name="NSP_HR_Job_Title__c"
+        data-name="NSP_HR_Job_Title__c"
+        class="slds-col slds-size_6-of-12"
+        value={field.NSP_HR_Job_Title__c}
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <div class="slds-size_12-of-12">
+        <lightning-input-field
+          disabled={disabled.NSP_AIMS_ClientNo_HR__c}
+          field-name="NSP_AIMS_ClientNo_HR__c"
+          data-name="NSP_AIMS_ClientNo_HR__c"
+          class="slds-col slds-size_6-of-12"
+          value={field.NSP_AIMS_ClientNo_HR__c}
+          onchange={handleValueChange}>
+        </lightning-input-field>
+      </div>
+
+      <lightning-input
+        disabled={disabled.HR_Contact_Office_Phone__c}
+        label={objectInfo.HR_Contact_Office_Phone__c.label}
+        value={formattedValue.HR_Contact_Office_Phone__c}
+        data-name="HR_Contact_Office_Phone__c"
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input
+        disabled={disabled.HR_Contact_Cell_Phone__c}
+        label={objectInfo.HR_Contact_Cell_Phone__c.label}
+        value={formattedValue.HR_Contact_Cell_Phone__c}
+        data-name="HR_Contact_Cell_Phone__c"
+        class="slds-col slds-size_6-of-12"
+        onfocus={handlePhoneFieldFocus}
+        onblur={handlePhoneFieldBlur}
+        onchange={handleValueChange}>
+      </lightning-input>
+
+      <lightning-input-field
+        disabled={disabled.NSP_HR_Client_Email__c}
+        field-name="NSP_HR_Client_Email__c"
+        value={field.NSP_HR_Client_Email__c}
+        data-name="NSP_HR_Client_Email__c"
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+
+      <lightning-input-field
+        disabled={disabled.HR_Contact_Method__c}
+        field-name="HR_Contact_Method__c"
+        value={field.HR_Contact_Method__c}
+        data-name="HR_Contact_Method__c"
+        class="slds-col slds-size_6-of-12"
+        onchange={handleValueChange}>
+      </lightning-input-field>
+    </div>
+
+    <c-nsp_record-form
+      title="Additional Records"
+      fields-group={addnClientContactsFields}
+      records={addnClientContactRecords}
+      object-api-name={addnClientContactsObjectApiName}
+      data-id="addnClientContacts"
+      disabled={checkIfIpisActive}>
+    </c-nsp_record-form>
+
+    <lightning-input-field
+      disabled={disabled.Client_Contact_Notes__c}
+      field-name="Client_Contact_Notes__c"
+      data-name="Client_Contact_Notes__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
+  </lightning-record-edit-form>
+</template>

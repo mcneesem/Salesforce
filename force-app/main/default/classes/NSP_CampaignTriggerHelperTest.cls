@@ -25,7 +25,7 @@ Variables
         List<User> users = new List<User>();
         //Creating User
       
-        User LAuser = new User(alias = 'jBPA', email='jsmithyBPA@acmetest.com', 
+        User LAuser = new User(alias = 'jBPA', email='jsmithyBPA@insperity.com', 
                                 emailencodingkey=emailencodingkey, lastname='Smith', 
                                 languagelocalekey=languagekey, 
                                 localesidkey=languagekey, profileid = profileMark.Id, userroleid = LArole.Id,
@@ -35,7 +35,7 @@ Variables
         // Adding Sales Leader User
      
         
-        User dAUser = new User(alias = 'jsmit', email='jsmithda@acmetestusr.com', 
+        User dAUser = new User(alias = 'jsmit', email='jsmithda@insperity.com', 
                                emailencodingkey=emailencodingkey, lastname='Smithda', 
                                languagelocalekey=languagekey, 
                                localesidkey=languagekey, profileid = profileobj.Id, userroleid = DARole.Id,
@@ -54,7 +54,7 @@ Variables
 * ********************************************************************************************/
     @isTest
     static void updateCampaignFieldOfficeTest() {
-        User dAUser=[Select Id , Name , Email ,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from User WHERE Email = 'jsmithda@acmetestusr.com' Limit 1];
+        User dAUser=[Select Id , Name , Email ,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from User WHERE Email = 'jsmithda@insperity.com' Limit 1];
         System.runAs (dAUser) {
             //Campaign creation
             Test.startTest();
@@ -69,7 +69,7 @@ Variables
     @isTest
     static void updateCampaignFieldSellsOfficeTest() {
         
-        User LAUser=[Select Id , Name , Email ,NSP_Sales_Office__c from User WHERE Email = 'jsmithyBPA@acmetest.com' Limit 1];
+        User LAUser=[Select Id , Name , Email ,NSP_Sales_Office__c from User WHERE Email = 'jsmithyBPA@insperity.com' Limit 1];
         System.runAs (LAUser) {
             //Campaign creation
             Test.startTest();

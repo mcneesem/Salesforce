@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_UserTitle__c</fullName>
+    <externalId>false</externalId>
+    <label>Role</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account Executive</fullName>
+                <default>false</default>
+                <label>Account Executive</label>
+            </value>
+            <value>
+                <fullName>Benefit Representative</fullName>
+                <default>false</default>
+                <label>Benefit Representative</label>
+            </value>
+            <value>
+                <fullName>Benefits Manager</fullName>
+                <default>false</default>
+                <label>Benefits Manager</label>
+            </value>
+            <value>
+                <fullName>BPS Customer Success Manager</fullName>
+                <default>false</default>
+                <label>BPS Customer Success Manager</label>
+            </value>
+            <value>
+                <fullName>BPS Customer Success Representative</fullName>
+                <default>false</default>
+                <label>BPS Customer Success Representative</label>
+            </value>
+            <value>
+                <fullName>BPS Customer Support</fullName>
+                <default>false</default>
+                <label>BPS Customer Support</label>
+            </value>
+            <value>
+                <fullName>BPS Support Director</fullName>
+                <default>false</default>
+                <label>BPS Support Director</label>
+            </value>
+            <value>
+                <fullName>BPS Support Supervisor</fullName>
+                <default>false</default>
+                <label>BPS Support Supervisor</label>
+            </value>
+            <value>
+                <fullName>BT CL/HRS</fullName>
+                <default>false</default>
+                <label>BT CL/HRS</label>
+            </value>
+            <value>
+                <fullName>Client Liaison</fullName>
+                <default>false</default>
+                <label>Client Liaison</label>
+            </value>
+            <value>
+                <fullName>Contact Center Agent</fullName>
+                <default>false</default>
+                <label>Contact Center Agent</label>
+            </value>
+            <value>
+                <fullName>Contact Center Escalations</fullName>
+                <default>false</default>
+                <label>Contact Center Escalations</label>
+            </value>
+            <value>
+                <fullName>Credit Services</fullName>
+                <default>false</default>
+                <label>Credit Services</label>
+            </value>
+            <value>
+                <fullName>EEO</fullName>
+                <default>false</default>
+                <label>EEO</label>
+            </value>
+            <value>
+                <fullName>Finance Service User</fullName>
+                <default>false</default>
+                <label>Finance Service User</label>
+            </value>
+            <value>
+                <fullName>FLSA</fullName>
+                <default>false</default>
+                <label>FLSA</label>
+            </value>
+            <value>
+                <fullName>HR Specialist</fullName>
+                <default>false</default>
+                <label>HR Specialist</label>
+            </value>
+            <value>
+                <fullName>HR COE</fullName>
+                <default>false</default>
+                <label>HR COE</label>
+            </value>
+            <value>
+                <fullName>Health &amp; Welfare</fullName>
+                <default>false</default>
+                <label>Health &amp; Welfare</label>
+            </value>
+            <value>
+                <fullName>IES Customer Support</fullName>
+                <default>false</default>
+                <label>IES Customer Support</label>
+            </value>
+            <value>
+                <fullName>IES Manager</fullName>
+                <default>false</default>
+                <label>IES Manager</label>
+            </value>
+            <value>
+                <fullName>ITA Customer Support</fullName>
+                <default>false</default>
+                <label>ITA Customer Support</label>
+            </value>
+            <value>
+                <fullName>ITA Senior Customer Support</fullName>
+                <default>false</default>
+                <label>ITA Senior Customer Support</label>
+            </value>
+            <value>
+                <fullName>ITA Support Director</fullName>
+                <default>false</default>
+                <label>ITA Support Director</label>
+            </value>
+            <value>
+                <fullName>ITA Support Supervisor</fullName>
+                <default>false</default>
+                <label>ITA Support Supervisor</label>
+            </value>
+            <value>
+                <fullName>Learning &amp; Development Specialist</fullName>
+                <default>false</default>
+                <label>Learning &amp; Development Specialist</label>
+            </value>
+            <value>
+                <fullName>MM HR Consultant</fullName>
+                <default>false</default>
+                <label>MM HR Consultant</label>
+            </value>
+            <value>
+                <fullName>MM HR Specialist</fullName>
+                <default>false</default>
+                <label>MM HR Specialist</label>
+            </value>
+            <value>
+                <fullName>MM MHRS</fullName>
+                <default>false</default>
+                <label>MM MHRS</label>
+            </value>
+            <value>
+                <fullName>Onboarding Project Manager</fullName>
+                <default>false</default>
+                <label>Onboarding Project Manager</label>
+            </value>
+            <value>
+                <fullName>OT Rep</fullName>
+                <default>false</default>
+                <label>OT Rep</label>
+            </value>
+            <value>
+                <fullName>Payroll Implementation Specialist</fullName>
+                <default>false</default>
+                <label>Payroll Implementation Specialist</label>
+            </value>
+            <value>
+                <fullName>Payroll Specialist</fullName>
+                <default>false</default>
+                <label>Payroll Specialist</label>
+            </value>
+            <value>
+                <fullName>Payroll Supervisor</fullName>
+                <default>false</default>
+                <label>Payroll Supervisor</label>
+            </value>
+            <value>
+                <fullName>Payroll Trainer</fullName>
+                <default>false</default>
+                <label>Payroll Trainer</label>
+            </value>
+            <value>
+                <fullName>Performance Specialist</fullName>
+                <default>false</default>
+                <label>Performance Specialist</label>
+            </value>
+            <value>
+                <fullName>RS Customer Support</fullName>
+                <default>false</default>
+                <label>RS Customer Support</label>
+            </value>
+            <value>
+                <fullName>RS Customer Support Manager</fullName>
+                <default>false</default>
+                <label>RS Customer Support Manager</label>
+            </value>
+            <value>
+                <fullName>Safety Consultant</fullName>
+                <default>false</default>
+                <label>Safety Consultant</label>
+            </value>
+            <value>
+                <fullName>TES Banking &amp; Tax</fullName>
+                <default>false</default>
+                <label>TES Banking &amp; Tax</label>
+            </value>
+            <value>
+                <fullName>TES - Customer Success Manager</fullName>
+                <default>false</default>
+                <label>TES - Customer Success Manager</label>
+            </value>
+            <value>
+                <fullName>TES - Customer Success Rep</fullName>
+                <default>false</default>
+                <label>TES - Customer Success Rep</label>
+            </value>
+            <value>
+                <fullName>TES HR Services</fullName>
+                <default>false</default>
+                <label>TES HR Services</label>
+            </value>
+            <value>
+                <fullName>TES Manager</fullName>
+                <default>false</default>
+                <label>TES Manager</label>
+            </value>
+            <value>
+                <fullName>TES Support</fullName>
+                <default>false</default>
+                <label>TES Support</label>
+            </value>
+            <value>
+                <fullName>Finance Leader</fullName>
+                <default>false</default>
+                <label>Finance Leader</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

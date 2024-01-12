@@ -12,6 +12,7 @@ Modification Log     :
 */
 
 public class NSP_ValidateOpportunityStage {
+    // test w/ NSP_ValidateOpportunityStageTest (83%)
     
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -164,7 +165,8 @@ public class NSP_ValidateOpportunityStage {
                    
                    if(eventList!=null){
                        for(Event event:eventList){////looking for discovery
-                           if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY){
+                           if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
+                              event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
                                scannedTask += HAS_DISCOVERY;
                                if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
                                    scannedTask += HAS_OPEN_EVENT;
@@ -271,7 +273,7 @@ public class NSP_ValidateOpportunityStage {
             return userMap;
     }  
     
-/**
+    /**
 * Checks if current user can modify opportunity stage to closed lost
 * @param Opportunity opp
 *  

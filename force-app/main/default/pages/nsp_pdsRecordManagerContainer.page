@@ -1,0 +1,26 @@
+<apex:page showHeader="false" sidebar="false" standardController="NSP_Payroll__c" recordSetVar="payroll" extensions="NSP_PDSRecordManagerController">
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:nsp_pdsRecordManagerApp", function() {
+        $Lightning.createComponent("c:nsp_pdsRecordManager",
+          { 
+              "recordId" : "{!recordId}",
+              "navigateToList" : navigateToList
+          },
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    
+    function navigateToList(url) {
+      if(typeof sforce != 'undefined' && sforce && sforce.one){
+         sforce.one.navigateToURL(url);
+      } else {
+         window.location.href = url;
+      }
+    }
+    
+    </script>
+</apex:page>

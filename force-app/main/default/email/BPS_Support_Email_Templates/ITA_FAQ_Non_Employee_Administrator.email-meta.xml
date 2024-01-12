@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Non-Employee Administrator</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Non-Employee Administrator</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Non-Employee Administrator</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for providing this information. Since this user is within the United States, will not need Insperity Premier access, is not tracking their own time or accruals, and will have administrator access, they can be added as a non-employee administrator. This means they will be able to log in and perform administrative functions without being listed in the employee drop-down menu. 
+ 
+That setup can be completed by a system administrator as follows: 
+
+Navigate to Security Setup &gt; User Security 
+
+Click the ADD button; this will open a blank User Security template 
+
+Set a username and password 
+
+Leave &quot;Employee&quot; blank, as this login will not be linked to an employee profile 
+
+Set the &quot;Force user to change password&quot; field to NO 
+
+In the Group Membership section toward the bottom of the page, move the default security group to the box on the right and the desired security group (System Administrator) to the box on the left. 
+
+Please note that exactly one Group Membership should be assigned, as missing or multiple assignments can create a security conflict resulting in login errors and/or loss of function upon login 
+
+Click the SAVE button 
+
+Once this is complete, the user will be able to log in with the assigned credentials via this URL: 
+ 
+https://timestar.insperity.com/XXX/ 
+ 
+If this user&apos;s role changes in the future and you find that they will need to track their own time or accruals, have lower-than administrator access, or be assigned directly as a supervisor to other employees, please let our Time &amp; Attendance team know and they will be happy to assist with a non-paid employee setup and Premier account at that time. 
+ 
+Please feel free to follow the same process for any non-Insperity users within the United States, who meet the requirements noted above. If you have a non-Insperity user outside of the United States in the future, please let us know and we will be happy to assist. 
+ 
+Thank you, 
+ 
+Insperity Technical Support Team 
+ 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

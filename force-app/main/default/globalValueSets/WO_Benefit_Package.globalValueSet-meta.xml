@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Freedom Classic Choice</fullName>
+        <default>false</default>
+        <label>Freedom Classic Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Freedom Enhanced</fullName>
+        <default>false</default>
+        <label>Freedom Enhanced</label>
+    </customValue>
+    <customValue>
         <fullName>Freedom Premier</fullName>
         <default>false</default>
         <label>Freedom Premier</label>
-    </customValue>
-    <customValue>
-        <fullName>Freedom Select</fullName>
-        <default>false</default>
-        <label>Freedom Select</label>
-    </customValue>
-    <customValue>
-        <fullName>Freedom Basic</fullName>
-        <default>false</default>
-        <label>Freedom Basic</label>
     </customValue>
     <customValue>
         <fullName>Freedom Saver</fullName>
@@ -21,9 +21,24 @@
         <label>Freedom Saver</label>
     </customValue>
     <customValue>
-        <fullName>Freedom Choice</fullName>
+        <fullName>Freedom Select</fullName>
         <default>false</default>
-        <label>Freedom Choice</label>
+        <label>Freedom Select</label>
+    </customValue>
+    <customValue>
+        <fullName>Freedom Value Choice</fullName>
+        <default>false</default>
+        <label>Freedom Value Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Independence Classic Choice</fullName>
+        <default>false</default>
+        <label>Independence Classic Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Independence Enhanced</fullName>
+        <default>false</default>
+        <label>Independence Enhanced</label>
     </customValue>
     <customValue>
         <fullName>Independence Premier</fullName>
@@ -31,24 +46,29 @@
         <label>Independence Premier</label>
     </customValue>
     <customValue>
-        <fullName>Independence Select</fullName>
-        <default>false</default>
-        <label>Independence Select</label>
-    </customValue>
-    <customValue>
-        <fullName>Independence Basic</fullName>
-        <default>false</default>
-        <label>Independence Basic</label>
-    </customValue>
-    <customValue>
         <fullName>Independence Saver</fullName>
         <default>false</default>
         <label>Independence Saver</label>
     </customValue>
     <customValue>
-        <fullName>Independence Choice</fullName>
+        <fullName>Independence Select</fullName>
         <default>false</default>
-        <label>Independence Choice</label>
+        <label>Independence Select</label>
+    </customValue>
+    <customValue>
+        <fullName>Independence Value Choice</fullName>
+        <default>false</default>
+        <label>Independence Value Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Liberty Classic Choice</fullName>
+        <default>false</default>
+        <label>Liberty Classic Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Liberty Enhanced</fullName>
+        <default>false</default>
+        <label>Liberty Enhanced</label>
     </customValue>
     <customValue>
         <fullName>Liberty Premier</fullName>
@@ -56,24 +76,24 @@
         <label>Liberty Premier</label>
     </customValue>
     <customValue>
-        <fullName>Liberty Select</fullName>
-        <default>false</default>
-        <label>Liberty Select</label>
-    </customValue>
-    <customValue>
-        <fullName>Liberty Basic</fullName>
-        <default>false</default>
-        <label>Liberty Basic</label>
-    </customValue>
-    <customValue>
         <fullName>Liberty Saver</fullName>
         <default>false</default>
         <label>Liberty Saver</label>
     </customValue>
     <customValue>
-        <fullName>Liberty Choice</fullName>
+        <fullName>Liberty Select</fullName>
         <default>false</default>
-        <label>Liberty Choice</label>
+        <label>Liberty Select</label>
+    </customValue>
+    <customValue>
+        <fullName>Liberty Value Choice</fullName>
+        <default>false</default>
+        <label>Liberty Value Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Pacific Northwest</fullName>
+        <default>false</default>
+        <label>Pacific Northwest</label>
     </customValue>
     <customValue>
         <fullName>Revolution</fullName>
@@ -81,11 +101,47 @@
         <label>Revolution</label>
     </customValue>
     <customValue>
-        <fullName>Pacific Northwest</fullName>
+        <fullName>Liberty Basic</fullName>
         <default>false</default>
-        <label>Pacific Northwest</label>
+        <isActive>false</isActive>
+        <label>Liberty Basic</label>
+    </customValue>
+    <customValue>
+        <fullName>Independence Choice</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Independence Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Independence Basic</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Independence Basic</label>
+    </customValue>
+    <customValue>
+        <fullName>Freedom Choice</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Freedom Choice</label>
+    </customValue>
+    <customValue>
+        <fullName>Freedom Savor</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Freedom Savor</label>
+    </customValue>
+    <customValue>
+        <fullName>Freedom Basic</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Freedom Basic</label>
+    </customValue>
+    <customValue>
+        <fullName>Liberty Choice</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Liberty Choice</label>
     </customValue>
     <masterLabel>WO Benefit Package</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
- 

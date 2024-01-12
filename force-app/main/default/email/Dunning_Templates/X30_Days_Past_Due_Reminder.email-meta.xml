@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <available>true</available>
+    <description>Payment Reminder For 30 Days Past Due Invoice</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>30 Days Past Due Reminder</name>
+    <packageVersions>
+        <majorNumber>238</majorNumber>
+        <minorNumber>2</minorNumber>
+        <namespace>blng</namespace>
+    </packageVersions>
+    <style>none</style>
+    <subject>Friendly Reminder: Invoice  Due on</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

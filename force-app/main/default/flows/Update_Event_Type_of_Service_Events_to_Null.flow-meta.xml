@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <constants>
+        <name>BPSService</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BPS Service</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Contact Center</description>
+        <name>ContactCenter</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Contact Center</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>PEO</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PEO Service</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>RetirementService</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Retirement Service</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Check current user is of any service profile</description>
+        <name>Check_current_user_is_of_any_service_profile</name>
+        <label>Check current user is of any service profile</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Service_Profile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Profile_Name_of_User_Creating_Event</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Event_Type_to_Null</targetReference>
+            </connector>
+            <label>Service Profile</label>
+        </rules>
+    </decisions>
+    <description>Update the event type service events to null (It was setting to Core Sales by default when created through dispatcher)</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Event Type of Service Events to Null {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Event Type of Service Events to Null</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Profile Name of User Creating Event</description>
+        <name>Get_Profile_Name_of_User_Creating_Event</name>
+        <label>Get Profile Name of User Creating Event</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_current_user_is_of_any_service_profile</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6)</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CreatedBy.Profile.Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>BPSService</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>PEO</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ContactCenter</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RetirementService</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>System Admin</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Profile</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Event_Type_to_Null</name>
+        <label>Update Event Type to Null</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>NSP_Event_Type__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Profile_Name_of_User_Creating_Event</targetReference>
+        </connector>
+        <object>Event</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

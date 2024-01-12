@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_all_sch_B_changes_that_apply__c</fullName>
+    <externalId>false</externalId>
+    <label>Check all sch B changes that apply</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Benefit package changed</fullName>
+                <default>false</default>
+                <label>Benefit package changed</label>
+            </value>
+            <value>
+                <fullName>Classing added</fullName>
+                <default>false</default>
+                <label>Classing added</label>
+            </value>
+            <value>
+                <fullName>Contributions changed</fullName>
+                <default>false</default>
+                <label>Contributions changed</label>
+            </value>
+            <value>
+                <fullName>HSA Client Distribution</fullName>
+                <default>false</default>
+                <label>HSA Client Distribution</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

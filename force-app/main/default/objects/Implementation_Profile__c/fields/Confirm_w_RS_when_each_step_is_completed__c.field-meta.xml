@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confirm_w_RS_when_each_step_is_completed__c</fullName>
+    <externalId>false</externalId>
+    <label>Confirm w/RS when each step is completed</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Fee analysis</fullName>
+                <default>false</default>
+                <label>Fee analysis</label>
+            </value>
+            <value>
+                <fullName>Plan review</fullName>
+                <default>false</default>
+                <label>Plan review</label>
+            </value>
+            <value>
+                <fullName>Appropriate Product Identification</fullName>
+                <default>false</default>
+                <label>Appropriate Product Identification</label>
+            </value>
+            <value>
+                <fullName>Implementation Call</fullName>
+                <default>false</default>
+                <label>Implementation Call</label>
+            </value>
+            <value>
+                <fullName>Controlled Group Questionnaire Review</fullName>
+                <default>false</default>
+                <label>Controlled Group Questionnaire Review</label>
+            </value>
+            <value>
+                <fullName>Plan Design</fullName>
+                <default>false</default>
+                <label>Plan Design</label>
+            </value>
+            <value>
+                <fullName>Implementation/Conversion</fullName>
+                <default>false</default>
+                <label>Implementation/Conversion</label>
+            </value>
+            <value>
+                <fullName>Employee Education</fullName>
+                <default>false</default>
+                <label>Employee Education</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

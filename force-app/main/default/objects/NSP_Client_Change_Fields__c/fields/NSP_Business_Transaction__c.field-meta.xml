@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Business_Transaction__c</fullName>
+    <externalId>false</externalId>
+    <label>Business Transaction</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Asset Purchase/Sale</fullName>
+                <default>false</default>
+                <label>Asset Purchase/Sale</label>
+            </value>
+            <value>
+                <fullName>Stock Purchase</fullName>
+                <default>false</default>
+                <label>Stock Purchase</label>
+            </value>
+            <value>
+                <fullName>New Co. Formed</fullName>
+                <default>false</default>
+                <label>New Co. Formed</label>
+            </value>
+            <value>
+                <fullName>Merger</fullName>
+                <default>false</default>
+                <label>Merger</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

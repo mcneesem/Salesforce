@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Phone</fullName>
+        <default>true</default>
+        <label>Phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non SLA</fullName>
+        <default>false</default>
+        <label>Non SLA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mail</fullName>
+        <default>false</default>
+        <label>Mail</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow-up</fullName>
+        <default>false</default>
+        <label>Follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dunning</fullName>
+        <default>false</default>
+        <label>Dunning</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Impact Focus Item</fullName>
+        <default>false</default>
+        <label>Impact Focus Item</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1st CSS TP Follow up</fullName>
+        <default>false</default>
+        <label>1st CSS TP Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOC Follow up</fullName>
+        <default>false</default>
+        <label>VOC Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Quarterly Call Follow up</fullName>
+        <default>false</default>
+        <label>Quarterly Call Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Survey Follow up</fullName>
+        <default>false</default>
+        <label>Survey Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Change in Primary Contact Follow up</fullName>
+        <default>false</default>
+        <label>Change in Primary Contact Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Save Attempt Follow up</fullName>
+        <default>false</default>
+        <label>Save Attempt Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Year End Follow up</fullName>
+        <default>false</default>
+        <label>Year End Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Implementation</fullName>
+        <default>false</default>
+        <label>Implementation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inbox Email</fullName>
+        <default>false</default>
+        <label>Inbox Email</label>
+    </standardValue>
+</StandardValueSet>

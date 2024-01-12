@@ -63,25 +63,26 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Primary_Product_is_WS_or_WA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>If Primary Product is WS or WA, share with MidMarket Admins</description>
+        <label>Primary Product is WS or WA</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_PrimaryProduct__c</field>
+            <operation>equals</operation>
+            <value>,Workforce Synchronization,Workforce Administration</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Read_Edit_Access_on_MidMarket_Opportunities_to_MM_Admin</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Read Edit Access on MidMarket Opportunities to MM Admin</label>
         <sharedTo>
             <role>MidMarket_Administrator</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>NSP_Number_of_Employees__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>150</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Read_Edit_Access_on_MidMarket_Opportunities_to_MM_Sales_Leader</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Read Edit Access on MidMarket Opportunities to MM Sales Leader</label>
-        <sharedTo>
-            <role>MidMarket_Sales_Leader</role>
         </sharedTo>
         <criteriaItems>
             <field>NSP_Number_of_Employees__c</field>
@@ -107,7 +108,7 @@
     </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>All_Opportunities_Edit_access_to_Finance_Users</fullName>
-        <accessLevel>Edit</accessLevel>
+        <accessLevel>Read</accessLevel>
         <description>Sharing rule to give edit access of opportunities to Finance Users</description>
         <label>All Opportunities Edit access to Finance Users</label>
         <sharedTo>
@@ -127,6 +128,42 @@
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_BPC_share_with_MidMarket_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>If owner is Business Performance Consultant, share with MidMarket Admins</description>
+        <label>Owner is BPC share with MidMarket Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Consultant</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Admin_share_with_MM_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>If owner is MidMarket Administrator, share with MidMarket Admins</description>
+        <label>Owner is MidMarket Admin share with MM Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Administrator</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Sales_Leader_share_with_MM_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>If owner is MidMarket Sales Leader, share with MidMarket Admins</description>
+        <label>Owner is MidMarket Sales Leader share with MM Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Sales_Leader</role>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

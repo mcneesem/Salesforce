@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Date_Required_for_project_template</fullName>
+    <active>true</active>
+    <description>Start Date is required when Template is checked on the Project.</description>
+    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.ProjectValidations__c != true, $Profile.Name  &lt;&gt; &apos;Sysyem Adminstrator&apos;, pse__Is_Template__c, ISNULL( pse__Start_Date__c))</errorConditionFormula>
+    <errorDisplayField>pse__Start_Date__c</errorDisplayField>
+    <errorMessage>Please Select Start date</errorMessage>
+</ValidationRule>

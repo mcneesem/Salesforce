@@ -1,0 +1,184 @@
+<template>
+    <div class="slds-box">
+        <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId} onsubmit={handleOnSubmit}
+            onsuccess={handleSuccess} onload={handleOnload} onerror={handleError}>
+            <lightning-messages></lightning-messages>
+            <template if:false={enableFilter}>
+                <lightning-layout>
+                    <lightning-layout-item size="12">
+                     <div class="slds-m-around_medium"> 
+                        <div style="display:none"> 
+                            <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+                            </lightning-input-field> 
+                        </div>
+                        <div class="slds-p-vertical_xx-large"> 
+                            <div class="slds-p-top_x-large">
+                                <b>{customLabel.wizardFilterMessage}</b>
+                            </div>
+                        </div>
+                    </div>
+                    </lightning-layout-item> 
+                </lightning-layout>
+            </template>
+            <template if:true={enableFilter}>
+            <lightning-layout>
+                <lightning-layout-item size="8">
+                    <div style="display:none"> 
+                        <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
+                        </lightning-input-field> 
+                    </div>
+                    <div class="slds-m-around_small">
+                        <p> <b>Note:  If you want to include a filter, there must be at least 10 possible respondents to each option or survey cannot be anonymous. </b> </p>
+                    </div>
+
+                    <div class="slds-m-around_small"><p>Check the filters to include on the survey.</p> </div>
+                    <div class="slds-p-around_medium slds-m-around_medium">
+                        <div class="slds-p-vertical_medium">
+                        <lightning-input-field field-name="NSP_ClientLocation__c"
+                            onchange={radioOnChange}></lightning-input-field>
+
+                        <div if:true={visibility.NSP_ClientLocation__c} class="NSP_ClientLocation__c">
+                            <div class="slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="NSP_ListOfLocations__c">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    List of Locations to include, separated by semi-colon </label>
+                                <lightning-input-field class='NSP_ClientLocation__c' variant="label-hidden" id="NSP_ListOfLocations__c"
+                                    field-name="NSP_ListOfLocations__c" required={NSP_ClientLocation}>
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='slds-p-vertical_medium'>
+                        <lightning-input-field field-name="NSP_ClientDepartmentsDivision__c" onchange={radioOnChange}>
+                        </lightning-input-field>
+                        <div if:true={visibility.NSP_ClientDepartmentsDivision__c} class="NSP_ClientDepartmentsDivision__c">
+                            <div class="slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="NSP_ListOfDepartmentsDivisions__c">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    List of Departments or Divisions to include, separated by semi-colon </label>
+                                <lightning-input-field class="NSP_ClientDepartmentsDivision__c" variant="label-hidden" id="NSP_ListOfDepartmentsDivisions__c"
+                                    field-name="NSP_ListOfDepartmentsDivisions__c" required={NSP_ClientDepartmentsDivision}>
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+
+                        <!--- Role Option -->
+                        <div class="slds-p-vertical_medium" >
+                        <lightning-input-field field-name="NSP_RoleOptions__c"
+                        onchange={radioOnChange}></lightning-input-field>
+
+                        <div class='slds-form-element_horizontal' for='NSP_RoleOptionSelection__c'> 
+                            <lightning-checkbox-group 
+                                if:true={visibility.NSP_RoleOptions__c}
+                                name="NSP_RoleOptionSelection__c"
+                                class='NSP_RoleOptions__c'
+                                options={roleOptions}
+                                onchange={handleComboChange}
+                                required={NSP_RoleOptions}
+                                value={NSP_RoleOptionSelection__c}
+                                variant='label-hidden'>
+                            </lightning-checkbox-group>
+                        </div>
+                            <div style={roleOptionErrorMsg}>
+                                <span  class="slds-text-color_error slds-form-element__help">An option must be selected.</span>
+                            </div>
+
+                            <lightning-input-field class="NSP_RoleOptions__c" field-name="NSP_RoleOptionSelection__c" id='NSP_RoleOptionSelection__c'
+                                style="display:none" value={NSP_RoleOptionSelection__c} required={NSP_RoleOptions}>
+                            </lightning-input-field>
+                        
+                         <div if:true={visibility.NSP_CustomRoleList__c} class="NSP_RoleOptionSelection__c slds-p-top_small"> 
+                            <div class="slds-form-element_horizontal">
+                                <label class="slds-form-element__label " for="NSP_CustomRoleList__c">  <span class="slds-required" >*</span>
+                                    List custom Role options, separated by a semi-colon </label>
+                                 <lightning-input-field class="NSP_RoleOptionSelection__c" id="NSP_CustomRoleList__c" field-name="NSP_CustomRoleList__c" required={NSP_CustomRoleList}
+                                 variant="label-hidden">
+                                 </lightning-input-field>
+                            </div>
+                        </div>    
+                    </div>
+
+                        <!--- Service length -->
+                        <div class="slds-p-vertical_medium" >
+                        <lightning-input-field field-name="NSP_ServiceLength__c"
+                            onchange={radioOnChange}></lightning-input-field>
+
+                            <div class='slds-form-element_horizontal'>
+                                    <lightning-checkbox-group if:true={visibility.NSP_ServiceLength__c} 
+                                        name="NSP_ServiceLengthSelection__c" class='NSP_ServiceLength__c'
+                                     options={serviceOptions} onchange={handleComboChange} required={NSP_ServiceLength}
+                                     variant='label-hidden'
+                                    value={NSP_ServiceLengthSelection__c}>
+                                </lightning-checkbox-group>
+                            </div>
+                                <lightning-input-field class={NSP_ServiceLength__c} style="display:none" field-name="NSP_ServiceLengthSelection__c"
+                                 value={NSP_ServiceLengthSelection__c} required={NSP_ServiceLength}>
+                                </lightning-input-field>
+
+                        <div style= {serviceLengthErrorMsg} >
+                            <span aria-live="assertive" class="slds-text-color_error slds-form-element__help">An option must be selected.</span>
+                        </div>
+
+                      <div if:true={visibility.NSP_CustomServiceLength__c} class="NSP_ServiceLengthSelection__c slds-p-top_small">
+                            <div class="slds-form-element_horizontal">
+                                <label class="slds-form-element__label " for="NSP_ServiceLengthSelection__c">  <span class="slds-required" >*</span>
+                                    List custom Service Length options, separated by a semi-colon </label>
+                                <lightning-input-field class="NSP_ServiceLengthSelection__c" id="NSP_ServiceLengthSelection__c" field-name="NSP_CustomServiceLength__c" required={NSP_CustomServiceLength}
+                                variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                      </div>
+                    </div>
+                        <!---  Status Options-->
+                        <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_HRSurveyStatus__c"
+                            onchange={radioOnChange}></lightning-input-field>
+                            <div class='slds-form-element_horizontal'>
+                                <lightning-checkbox-group if:true={visibility.NSP_HRSurveyStatus__c}
+                                    name="NSP_HRSurveyStatusSelection__c"
+                                    class='NSP_HRSurveyStatus__c' options={statusOptions} onchange={handleComboChange}
+                                    required={NSP_HRSurveyStatus} value={NSP_HRSurveyStatusSelection__c} variant='label-hidden'>
+                                </lightning-checkbox-group>
+                            </div>
+                                <lightning-input-field  class="NSP_HRSurveyStatus__c" style="display:none" field-name="NSP_HRSurveyStatusSelection__c"
+                                     value={NSP_HRSurveyStatusSelection__c} required={NSP_HRSurveyStatus}>
+                                </lightning-input-field>
+
+                                <div style={surveyStatusErrorMsg} >
+                                    <span aria-live="assertive" class="slds-text-color_error slds-form-element__help">An option must be selected.</span>
+                                </div>
+                            
+                        <div if:true={NSP_Manager} >
+                            <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Manager__c"
+                                value={NSP_Manager__c} >
+                           </lightning-input-field>
+                        </div>
+
+                    </div>
+                </lightning-layout-item>
+
+                 <lightning-layout-item size="4">
+                    <!--   file upload start here -->
+                    <div class="slds-align_absolute-center slds-p-around_medium" >
+                    </div>
+                    <!-- File Upload End here -->
+                   </lightning-layout-item>
+                </lightning-layout>
+            </template>
+            <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+                <lightning-button variant="brand" label="Previous" class="slds-m-top_small slds-m-left_small" onclick={handlePrev}>
+                </lightning-button>
+
+                <lightning-button class="slds-m-top_small slds-m-left_small" onclick={handleSave} label="Save and Exit">
+                </lightning-button>
+
+                <lightning-button class="slds-m-top_small slds-m-left_small" type="submit" variant="brand"
+                    label="Next">
+                </lightning-button>
+            </div>
+        </lightning-record-edit-form>
+        
+    </div>
+
+</template>

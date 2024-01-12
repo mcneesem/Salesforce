@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Comm_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Comm Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Ethernet</fullName>
+                <default>false</default>
+                <label>Ethernet</label>
+            </value>
+            <value>
+                <fullName>LAN</fullName>
+                <default>false</default>
+                <label>LAN</label>
+            </value>
+            <value>
+                <fullName>Modem</fullName>
+                <default>false</default>
+                <label>Modem</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Serial</fullName>
+                <default>false</default>
+                <label>Serial</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

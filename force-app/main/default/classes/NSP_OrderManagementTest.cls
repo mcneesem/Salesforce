@@ -23,6 +23,10 @@ public class NSP_OrderManagementTest {
                                    SBQQ__PreserveBundleStructureUponRenewals__c=true);
                                    
         insert ctrct;
+        
+        ctrct.Status = 'Activated';
+        update ctrct;
+        
     }
     
     /*
@@ -57,7 +61,7 @@ public class NSP_OrderManagementTest {
      @isTest
     private static void testUpdateContract(){
         Test.startTest();
-        List<Contract> contractList = [SELECT Id FROM Contract WHERE Status = 'Draft' LIMIT 10]; //Added WHERE Condition as part of code fix
+        List<Contract> contractList = [SELECT Id FROM Contract WHERE Status = 'Activated' LIMIT 10]; //Added WHERE Condition as part of code fix
         Boolean isContractUpdated= NSP_OrderManagement.updateContract(contractList[0].Id,'Amendment/Supplemental');
         System.assert(isContractUpdated);
         Test.stopTest();
@@ -73,7 +77,7 @@ public class NSP_OrderManagementTest {
         Boolean isContractUpdated = true;
         Test.startTest();
         try{
-        	 isContractUpdated= NSP_OrderManagement.updateContract(null,'Amendment/Supplemental');
+             isContractUpdated= NSP_OrderManagement.updateContract(null,'Amendment/Supplemental');
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }

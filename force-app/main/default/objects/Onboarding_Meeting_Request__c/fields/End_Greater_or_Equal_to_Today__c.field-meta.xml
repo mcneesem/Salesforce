@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Greater_or_Equal_to_Today__c</fullName>
+    <externalId>false</externalId>
+    <formula>End__c &gt;= TODAY()</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>End Greater or Equal to Today</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

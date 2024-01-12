@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This email template is created to send an email to IQA CQA Team when the master case is created.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>NSP ITA CQA Case Creation Template</name>
+    <style>none</style>
+    <subject>New ITA CQA Master Case Created</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

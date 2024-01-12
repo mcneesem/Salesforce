@@ -1,0 +1,27 @@
+<template>
+  <div class="slds-modal__header">
+    <div class="slds_modal__header">
+      <h1 class="slds-modal__title slds-hyphenate slds-align_absolute-center">{heading}</h1>
+    </div>
+    </div>
+
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-spinner
+      if:true={state.isLoading}
+      alternative-text="Loading"></lightning-spinner>
+          <div class="slds-grid slds-gutters slds-p-top_x-small sticky">
+            <template for:each={fieldsGroup} for:item="fields">
+              <div class={colClassName} key={uniqueValue}>
+                <template for:each={fields} for:item="field">
+                    <lightning-input-field field-name={field} key={field}></lightning-input-field>
+                </template>
+              </div>
+            </template>
+        </div>
+  </lightning-record-edit-form>
+</template>

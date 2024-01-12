@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Able to edit Background Screening field on WO record type Asset</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Modify Background Screening  Asset Fields</label>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.NSP_WO_WS_Uses_Background_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+</PermissionSet>

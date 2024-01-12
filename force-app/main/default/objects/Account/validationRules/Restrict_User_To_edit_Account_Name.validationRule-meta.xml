@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_User_To_edit_Account_Name</fullName>
+    <active>true</active>
+    <description>Restrict user to edit account name</description>
+    <errorConditionFormula>AND( 
+
+ ISCHANGED( Name ), 
+
+ $Profile.Name = &apos;Contact Center&apos;
+
+)</errorConditionFormula>
+    <errorMessage>You don&apos;t have permission to edit account name.</errorMessage>
+</ValidationRule>

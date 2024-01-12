@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA L2 - CO - New Pay Type</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA L2 - CO - New Pay Type</name>
+    <style>freeForm</style>
+    <subject>ITA L2 - CO - New Pay Type</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+We understand that you are interested in adding a new pay type to your Time &amp; Attendance system. In order to determine the extent of this change, and ensure proper setup, we have a few questions:
+
+Is this an hours, dollars, or units pay type?
+
+
+If units, what will be the rate per unit?
+
+Will the per-unit rate differ based upon employee/pay group?
+
+
+Is this pay type going to be sent to payroll?
+
+
+If so, has there already been a pay code designated in your payroll system for this addition?
+
+
+Will this pay type count towards overtime, deduct from an accrual plan, and/or deduct from a salary record?
+
+Should this pay type be available to all employees?
+
+Will this pay type be added directly to employee timecards, or will it be requested by employees/generated automatically based upon a data condition, such as working between 10 PM and 2 AM?
+
+
+Will this pay type need to be allocated across different departments/locations/cost centers? 
+
+Should this pay code be visible on:
+
+
+The Request Module?
+
+The Time Off Calendar?
+
+The Approvals Page?
+
+
+Thank you in advance for providing this information. Once it is received, a member of our team will determine the next steps and a representative will be in touch as soon as they are able.
+
+Thank you, 
+
+Technical Support Team
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

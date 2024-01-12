@@ -74,4 +74,28 @@
         <senderType>CurrentUser</senderType>
         <template>NSP_Sales/NSP_Quote_Approval_to_Opportunity_Owner</template>
     </alerts>
+        <alerts>
+        <fullName>Email_Alert_for_Renewal_Quote_Due_for_Order_30_days_ago</fullName>
+        <description>Email Alert for Renewal Quote Due for Order 30 days ago</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Opportunity_Owner_Email_Id__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>pwc_qa@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Renewal_Quote_Due_for_Order_30days_ago</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_for_Renewal_Quote_Due_for_Order_Yesterday</fullName>
+        <description>Email Alert for Renewal Quote Due for Order Yesterday</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Opportunity_Owner_Email_Id__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>pwc_qa@insperity.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Renewal_Quote_Due_for_Order_yesterday</template>
+    </alerts>
 </Workflow>

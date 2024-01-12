@@ -15,7 +15,6 @@ public class NSP_userSalesOfficeRecordSharing {
     public static void ownerSalesofficeSharing(Map<Id,User> userNewMap ,Map<Id,User> userOldMap  ){
         Set<Id> newUserIdSet = new Set<Id>();
         Map<String,Set<String>> mapNewSalesOfficeSetUserId = new Map<String,Set<String>>();
-        Map<String,Set<String>> mapOldSalesOfficeSetUserId = new Map<String,Set<String>>();
         Map<String,Set<String>> mapUserIdSetOldSalesOffice= new Map<String,Set<String>>();
         Map<String,String> mapSalesOfficeLabels =salesOfficePicklistLabelsMap();
         List<User> updateUserList = new  List<User>();

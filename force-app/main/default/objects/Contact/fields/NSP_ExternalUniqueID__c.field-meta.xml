@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ExternalUniqueID__c</fullName>
     <description>Used to store External Unique Id</description>
-    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>ExternalUniqueID</label>
     <length>80</length>

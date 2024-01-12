@@ -103,9 +103,39 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
                 Database.update(oppMap.values());
             }
         }catch(DmlException de){
-            System.debug(de);
         }
     }
+        /**
+* Method Name : createBillingPayment 
+* Description : Method to create payment record once cusomer pays the amount
+* Author : Samba Raju       Date : 28/09/2021
+* @param listOfEnrollmentFee list  of New Enrollment Fee. 
+* @param enrollmentOldMap Map of Old New Enrollment Fee.   
+* @return void  
+*/
+Public static void createBillingPayment(List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee,Map<Id, NSP_Enrollment_Fee_Payment__c> enrollmentOldMap){
+    List<blng__Payment__c> paymentsToCreate= new List<blng__Payment__c>();
+    for(NSP_Enrollment_Fee_Payment__c fee: listOfEnrollmentFee){
+        if(fee.NSP_WX_WA_Enrollment_Fee_Received__c!=null && fee.NSP_WX_WA_Enrollment_Fee_Received__c!=enrollmentOldMap.get(fee.Id).NSP_WX_WA_Enrollment_Fee_Received__c){
+            blng__Payment__c currPayment = new blng__Payment__c();
+            currPayment.blng__Account__c = fee.NSP_Account_Id__c; 
+            currPayment.blng__Amount__c = fee.NSP_WX_WA_Enrollment_Fee_Received__c;
+            currPayment.NSP_Enrollment_Fee_Payment__c=fee.Id;
+            currPayment.blng__GLRule__c=getGLruleInfo(NSP_CPQConstants.PAYMYENT_GL_RULE)?.blng__GLRule__c;
+            currPayment.blng__GLTreatment__c=getGLruleInfo(NSP_CPQConstants.PAYMYENT_GL_RULE)?.Id;
+            currPayment.blng__LegalEntity__c=getGLruleInfo(NSP_CPQConstants.PAYMYENT_GL_RULE)?.blng__GLLegalEntity__c;
+            paymentsToCreate.add(currPayment);
+        }
+    }
+    if(!paymentsToCreate.isEmpty()){
+        List<Database.SaveResult> results = Database.insert(paymentsToCreate,false);
+        NSP_ErrorLogHandler.logSaveResultsException('NSP_EnrollmentFeePaymentTriggerClass','createBillingPayment', results); 
+    }
+}
+private static blng__GLTreatment__c getGLruleInfo(String name){
+    blng__GLTreatment__c treatment=[SELECT Id,blng__GLLegalEntity__c,blng__GLRule__c FROM blng__GLTreatment__c WHERE Name=:name limit 1];
+    return treatment;
+}
     
     /***********************************************************************************************
     * MethodName: enrollmentFeeMidMarket
@@ -120,7 +150,6 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
         Set<id> opportunityIds=new Set<id>(); //Holds the opportunity id's
         Map<Id, Id> oppEnrollMap = new Map<Id, Id>();
         Set<id> oppIdEnrollment=new Set<id>();
-        Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>(); //Holds the opportunity details to update
         For(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
             if(feepayment.NSP_Opportunity__c != null){
                 opportunityIds.add(feepayment.NSP_Opportunity__c);
@@ -128,8 +157,7 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
             }
         }
         
-        if(Trigger.isInsert)
-            {
+        if(Trigger.isInsert){
                 //Modified for user story 192368
                  for (Opportunity enrollId :[SELECT ID FROM OPPORTUNITY WHERE ID IN :opportunityIds AND (NSP_Number_of_Employees__c >= 150 OR NSP_MidMarketNationalAccount__c != Null)]){
                    {
@@ -138,19 +166,14 @@ public class NSP_EnrollmentFeePaymentTriggerClass {
                     }
             
                }
-                if(oppIdEnrollment.Size() > 0)
-       		 	{
+                if(oppIdEnrollment.Size() > 0){
                 	for (NSP_Enrollment_Fee_Payment__c enrollId : listOfEnrollmentFee){
                    	 	if(oppIdEnrollment.contains(oppEnrollMap.get(enrollId.Id)) ){
                   		enrollId.NSP_Is_MidMarket__c = True; 
                     }
-            
                	}
                 }
             }
-        
-        
     }
-    
-    
+ 
 }

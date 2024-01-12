@@ -1,0 +1,27 @@
+<template>
+    <div class="slds-is-relative">
+        <lightning-spinner if:true={isLoading}></lightning-spinner>
+
+        <lightning-record-edit-form onsuccess={handleSuccess} 
+            onerror={handleError} record-id={recordId} density="comfy"
+            object-api-name={objectApiName} onload={handleLoad}>
+
+            <lightning-formatted-text class="slds-page-header__title" value={title}>
+            </lightning-formatted-text>
+
+            <lightning-layout class="slds-m-top_small" multiple-rows>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name={fields.project} onchange={handleProjectChange}></lightning-input-field>
+                    <lightning-input-field field-name={fields.asset}></lightning-input-field>
+                    <lightning-input-field field-name={fields.account} onchange={handleAccountChange}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name={fields.clientName}></lightning-input-field>
+                    <lightning-input-field field-name={fields.clientNumber}></lightning-input-field>
+                    <lightning-input type="text" label="BPO" value={bpo} disabled
+                        class="question slds-form-element slds-form-element_stacked"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

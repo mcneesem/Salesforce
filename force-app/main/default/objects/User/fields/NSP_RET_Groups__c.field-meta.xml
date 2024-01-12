@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_Groups__c</fullName>
+    <externalId>false</externalId>
+    <label>RET Groups</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RET Plan Consulting Team</fullName>
+                <default>false</default>
+                <label>RET Plan Consulting Team</label>
+            </value>
+            <value>
+                <fullName>RET NBI Team</fullName>
+                <default>false</default>
+                <label>RET NBI Team</label>
+            </value>
+            <value>
+                <fullName>RET Ops Processing Team</fullName>
+                <default>false</default>
+                <label>RET Ops Processing Team</label>
+            </value>
+            <value>
+                <fullName>RET Education Team</fullName>
+                <default>false</default>
+                <label>RET Education Team</label>
+            </value>
+            <value>
+                <fullName>RET NBI Implementation</fullName>
+                <default>false</default>
+                <label>RET NBI Implementation</label>
+            </value>
+            <value>
+                <fullName>RET Sales</fullName>
+                <default>false</default>
+                <label>RET Sales</label>
+            </value>
+            <value>
+                <fullName>RET Ops OMNI</fullName>
+                <default>false</default>
+                <label>RET Ops OMNI</label>
+            </value>
+            <value>
+                <fullName>RET NBI Conversion &amp; ORK</fullName>
+                <default>false</default>
+                <label>RET NBI Conversion &amp; ORK</label>
+            </value>
+            <value>
+                <fullName>RET Sec 125</fullName>
+                <default>false</default>
+                <label>RET Sec 125</label>
+            </value>
+            <value>
+                <fullName>RET NBI QC Analyst</fullName>
+                <default>false</default>
+                <label>RET NBI QC Analyst</label>
+            </value>
+            <value>
+                <fullName>RET IPT Service Consultant</fullName>
+                <default>false</default>
+                <label>RET IPT Service Consultant</label>
+            </value>
+            <value>
+                <fullName>RET Compliance</fullName>
+                <default>false</default>
+                <label>RET Compliance</label>
+            </value>
+            <value>
+                <fullName>RET Finance</fullName>
+                <default>false</default>
+                <label>RET Finance</label>
+            </value>
+            <value>
+                <fullName>RET CSP Implementation</fullName>
+                <default>false</default>
+                <label>RET CSP Implementation</label>
+            </value>
+            <value>
+                <fullName>RET CSP Plan Consulting</fullName>
+                <default>false</default>
+                <label>RET CSP Plan Consulting</label>
+            </value>
+            <value>
+                <fullName>RET CSP Conversion</fullName>
+                <default>false</default>
+                <label>RET CSP Conversion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

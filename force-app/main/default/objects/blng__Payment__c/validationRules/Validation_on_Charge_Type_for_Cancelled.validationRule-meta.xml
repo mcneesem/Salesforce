@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Charge_Type_for_Cancelled</fullName>
+    <active>true</active>
+    <description>Validates that charge type is populated for Cancelled Status.</description>
+    <errorConditionFormula>AND( ISPICKVAL( blng__Status__c , &apos;Cancelled&apos;) , ISBLANK(TEXT(  NSP_Chargeback_Type__c  )),
+NOT( $Setup.NSP_Trigger_Switch__c.PaymentMethodValidations__c) )</errorConditionFormula>
+    <errorMessage>Please select a charge back type for Cancelled Payments</errorMessage>
+</ValidationRule>

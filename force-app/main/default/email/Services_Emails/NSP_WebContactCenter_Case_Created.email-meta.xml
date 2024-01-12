@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>NSP Web Contact Center– Case Created</name>
+    <style>freeForm</style>
+    <subject>Thank you for contacting Insperity</subject>
+    <textOnly>Hello {!Contact.Name},
+
+Thank you for contacting Insperity with your {!Case.NSP_Area_Of_Assistance__c} question. We have received your email and Case {!Case.CaseNumber} has been created. Please allow 24-48 hours for a response.
+ 
+Insperity Contact Center</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

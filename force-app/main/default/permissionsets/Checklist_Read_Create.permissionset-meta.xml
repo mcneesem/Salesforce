@@ -8,7 +8,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Checklist__c.Existing_Payroll_Provider__c</field>
+        <field>NSP_Checklist__c.Active_Benefit_Continuation_Period__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -159,11 +159,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.NSP_Bid_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Checklist__c.NSP_Billing_Postal_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1178,11 +1173,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Checklist__c.NSP_servicefeeAIMSmatchesfinalsignedSchB__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Checklist__c.NSP_softwaresyscurrentlyuseforpayroll__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1199,16 +1189,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Checklist__c.NSP_wanttotracktimeorganizational_level__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Checklist__c.WO_Benefit_Package__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Checklist__c.WX_Modules__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_How_many_accrual_levels_in_Policy__c</fullName>
+    <description>How many accrual levels (0-11 months, 12-35 months, etc.) will you have in your policy?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>How many accrual levels (0-11 months, 12-35 months, etc.) will you have in your policy?</inlineHelpText>
+    <label>How many accrual levels in Policy?</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

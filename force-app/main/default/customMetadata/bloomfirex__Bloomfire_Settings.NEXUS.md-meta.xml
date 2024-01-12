@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>NEXUS</label>
+    <protected>false</protected>
+    <values>
+        <field>bloomfirex__API_Key__c</field>
+        <value xsi:type="xsd:string">3fc71554c3dabe03de5069d1fb00e8b5bb7d9b9f</value>
+    </values>
+    <values>
+        <field>bloomfirex__Community_Domain__c</field>
+        <value xsi:type="xsd:string">https://nexus.insperity.com/</value>
+    </values>
+    <values>
+        <field>bloomfirex__Is_Default_Community__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>bloomfirex__Is_Test__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

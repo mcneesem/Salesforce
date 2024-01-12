@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Congratulation Payroll Template MM</name>
+    <style>freeForm</style>
+    <subject>Congratulations on Your First Payroll!</subject>
+    <textOnly>Congratulations on Your First Payroll
+
+
+Now that we’ve achieved this important milestone together, we would like to provide you with quick access to resources that we believe will be of great value. We will work together to schedule one-on-one training on many of these topics. In the meantime, feel free to access the links below for ease of reference.
+
+
+Insperity Premier Help Center – This site offers user training videos, user guides and brief tutorials designed to assist with topics that include navigating Insperity Premier, managing new or existing employees, and much more!
+
+Insperity Payroll Reporting – Access the “Payroll Reports” tab on this page for a brief video on how to run reports via Insperity Premier.
+Additionally, this link directs you to a helpful resource with samples and descriptions of each Insperity report.
+
+Your Insperity Invoice – Access this page for guidance on understanding your Insperity payroll invoice and additional reporting tutorials.
+
+I am available as your trusted payroll partner and look forward to providing support. Feel free to reach out should you need any assistance regarding your payroll-related concerns.
+
+
+Thank you for choosing Insperity!
+
+Kind Regards,
+{!Contact.Name}
+Payroll Specialist
+{!Contact.NSP_Work_email__c}
+{!Contact.NSP_Work_Phone__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

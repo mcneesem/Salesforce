@@ -1,7 +1,6 @@
 ({
     fetchData: function (cmp, event, helper) {
  		var action = cmp.get("c.initData")
- 		var relatedFieldApiName = cmp.get("v.relatedFieldApiName")
         var numberOfRecords = cmp.get("v.numberOfRecords")
         var jsonData = JSON.stringify({fields:cmp.get("v.fields"),
                                        relatedFieldApiName:cmp.get("v.relatedFieldApiName"),
@@ -49,8 +48,6 @@
                 cmp.set('v.sobjectLabel', jsonData.sobjectLabel)
                 cmp.set('v.sobjectLabelPlural', jsonData.sobjectLabelPlural)
                 cmp.set('v.parentRelationshipApiName', jsonData.parentRelationshipApiName)
-            }else if (state === "ERROR") {
-                var errors = response.getError();
             }
         });
 

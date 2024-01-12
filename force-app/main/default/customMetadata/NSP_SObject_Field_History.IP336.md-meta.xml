@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>IP336</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_FIeld_Label__c</field>
+        <value xsi:type="xsd:string">Misc Contact Office Phone</value>
+    </values>
+    <values>
+        <field>NSP_Field_API_Name__c</field>
+        <value xsi:type="xsd:string">Monthly_pay_freq_comply_w_state_laws__c</value>
+    </values>
+    <values>
+        <field>NSP_SObject_Name__c</field>
+        <value xsi:type="xsd:string">Implementation_Profile__c</value>
+    </values>
+</CustomMetadata>

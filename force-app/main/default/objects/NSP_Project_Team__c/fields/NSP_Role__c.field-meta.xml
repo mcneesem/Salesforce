@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Role__c</fullName>
+    <description>This field is created as a part of STY-03121</description>
+    <externalId>false</externalId>
+    <label>Role</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MidMarket Account Exec</fullName>
+                <default>false</default>
+                <label>MidMarket Account Exec</label>
+            </value>
+            <value>
+                <fullName>Orientation Rep</fullName>
+                <default>false</default>
+                <label>Orientation Rep</label>
+            </value>
+            <value>
+                <fullName>OS Coordinator</fullName>
+                <default>false</default>
+                <label>OS Coordinator</label>
+            </value>
+            <value>
+                <fullName>OT Coordinator</fullName>
+                <default>false</default>
+                <label>OT Coordinator</label>
+            </value>
+            <value>
+                <fullName>OT Planner</fullName>
+                <default>false</default>
+                <label>OT Planner</label>
+            </value>
+            <value>
+                <fullName>Payroll Project Manager</fullName>
+                <default>false</default>
+                <label>Payroll Project Manager</label>
+            </value>
+            <value>
+                <fullName>Payroll Specialist</fullName>
+                <default>false</default>
+                <label>Payroll Specialist</label>
+            </value>
+            <value>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+                <label>Project Manager</label>
+            </value>
+            <value>
+                <fullName>Sr Benefit Rep</fullName>
+                <default>false</default>
+                <label>Sr Benefit Rep</label>
+            </value>
+            <value>
+                <fullName>Sr HR Specialist</fullName>
+                <default>false</default>
+                <label>Sr HR Specialist</label>
+            </value>
+            <value>
+                <fullName>Transition Specialist</fullName>
+                <default>false</default>
+                <label>Transition Specialist</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

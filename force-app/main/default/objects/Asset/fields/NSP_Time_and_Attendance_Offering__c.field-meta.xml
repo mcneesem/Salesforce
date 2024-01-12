@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Time_and_Attendance_Offering__c</fullName>
+    <externalId>false</externalId>
+    <label>Time and Attendance Offering</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>iSolved Time</fullName>
+                <default>false</default>
+                <label>iSolved Time</label>
+            </value>
+            <value>
+                <fullName>iSolved TimeStar</fullName>
+                <default>false</default>
+                <label>iSolved TimeStar</label>
+            </value>
+            <value>
+                <fullName>Premier Time and Attendance</fullName>
+                <default>false</default>
+                <label>Premier Time and Attendance</label>
+            </value>
+            <value>
+                <fullName>Premier TimeSheet</fullName>
+                <default>false</default>
+                <label>Premier TimeSheet</label>
+            </value>
+            <value>
+                <fullName>TimeStar for Windows</fullName>
+                <default>false</default>
+                <label>TimeStar for Windows</label>
+            </value>
+            <value>
+                <fullName>TimeStar License</fullName>
+                <default>false</default>
+                <label>TimeStar License</label>
+            </value>
+            <value>
+                <fullName>TimeStar License - Cloud Hosted</fullName>
+                <default>false</default>
+                <label>TimeStar License - Cloud Hosted</label>
+            </value>
+            <value>
+                <fullName>TimeStar SaaS</fullName>
+                <default>false</default>
+                <label>TimeStar SaaS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

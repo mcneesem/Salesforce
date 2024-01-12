@@ -1,0 +1,200 @@
+<template>
+  <c-confirmation-dialog
+    title="Confirm Submission?"
+    message="Do you want to create a new Engagement Plan project for this client?"
+    confirm-label="Yes"
+    cancel-label="No"
+    visible={isDialogVisible}
+    original-message={originalMessage}
+    name="confirmModal"
+    onmodalaction={handleDialogAction}>
+  </c-confirmation-dialog>
+
+  <c-modal header={header} data-fname="Open Modal">
+    <lightning-spinner if:true={state.isLoading} variant="brand">
+    </lightning-spinner>
+    <c-nsp_alert-message
+      if:true={error}
+      message={error}
+      mode="error"
+      class="slds-m-bottom_medium slds-show"></c-nsp_alert-message>
+
+    <lightning-record-edit-form
+      onsuccess={handleSuccess}
+      onsubmit={handleSubmit}
+      onerror={handleFormError}
+      record-type-id={recordTypeId}
+      onload={handleFormLoad}
+      object-api-name="pse__Proj__c">
+      <lightning-card>
+        <div class="slds-box">
+          <div class="pbHeader">
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td class="pbTitle">
+                    <h2 class="slds-text-title_bold">
+                      Project Details (Copied From: {copyProjectName})
+                    </h2>
+                  </td>
+
+                  <td class="pbButton cpftPageBlockButtons">
+                    <lightning-button
+                      class="slds-m-bottom_medium slds-m-right_small slds-float_right"
+                      type="submit"
+                      disabled={isCreateProjectButtonDisabled}
+                      label="Create Project">
+                    </lightning-button>
+                    <lightning-button
+                      class="slds-m-bottom_medium slds-m-right_small slds-float_right"
+                      onclick={handleCancelModal}
+                      label="Cancel">
+                    </lightning-button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div
+            aria-controls="expando-unique-id"
+            aria-expanded="true"
+            class="slds-section__title-action">
+            <span
+              class="slds-truncate slds-m-around_x-small"
+              title="Section Title"
+              >Select a Project Template</span
+            >
+          </div>
+          <div class="slds-p-around_medium">
+            <lightning-radio-group
+              if:true={projectTemplates}
+              label="Project Templates"
+              options={projectTemplates}
+              onchange={handleProjectTemplateChange}
+              type="radio">
+            </lightning-radio-group>
+          </div>
+
+          <div
+            aria-controls="expando-unique-id"
+            aria-expanded="true"
+            class="slds-section__title-action">
+            <span
+              class="slds-truncate slds-m-around_x-small"
+              title="Section Title"
+              >Create Project</span
+            >
+          </div>
+          <div class="slds-m-top_medium slds-p-around_medium">
+            <lightning-layout multiple-rows="true">
+              <template for:each={servicePlanProjFields} for:item="field">
+                <lightning-layout-item
+                  key={field.apiName}
+                  size="6"
+                  class="slds-p-around_x-small">
+                  <div if:true={field.value}>
+                    <lightning-input-field
+                      class={field.apiName}
+                      field-name={field.apiName}
+                      required={field.required}
+                      value={field.value}>
+                    </lightning-input-field>
+                  </div>
+                  <div if:false={field.value}>
+                    <lightning-input-field
+                      field-name={field.apiName}
+                      required={field.required}>
+                    </lightning-input-field>
+                  </div>
+                </lightning-layout-item>
+              </template>
+            </lightning-layout>
+          </div>
+        </div>
+      </lightning-card>
+      <br />
+      <div class="slds-box">
+        <lightning-card>
+          <!-- Project Tasks Section -->
+          <div>
+            <div
+              aria-controls="expando-unique-id"
+              aria-expanded="true"
+              class="slds-section__title-action">
+              <span
+                class="slds-truncate slds-m-around_x-small"
+                title="Project Tasks"
+                >Project Tasks</span
+              >
+            </div>
+            <div class="slds-m-around_medium">
+              <c-nsp_alert-message
+                if:true={state.warningMessage}
+                message={state.warningMessage}
+                mode="warning"
+                class="slds-m-bottom_medium slds-show"></c-nsp_alert-message>
+
+              <div style={taskTableHight}>
+                <lightning-datatable
+                  class="taskDataTable"
+                  key-field="Id"
+                  data={taskVisalbleData}
+                  columns={projectTaskColumns}
+                  onrowselection={taskRowSelection}
+                  selected-rows={taskRowpreSelectedRows}>
+                </lightning-datatable>
+              </div>
+            </div>
+            <c-nsp_pagination
+              records={taskItems}
+              record-size={defaultPageSize}
+              onpagination={updateProjectTaskpage}>
+            </c-nsp_pagination>
+          </div>
+
+          <!-- Project Accounts Section -->
+          <div>
+            <div
+              aria-controls="expando-unique-id"
+              aria-expanded="true"
+              class="slds-section__title-action">
+              <span
+                class="slds-truncate slds-m-around_x-small"
+                title="Project Accounts">
+                Project Accounts
+                <lightning-helptext
+                  content={message.projectAccHelpText}></lightning-helptext>
+              </span>
+            </div>
+            <div class="slds-m-around_medium">
+              <lightning-datatable
+                if:true={projectAccountRows.length}
+                class="projectAccountDataTable"
+                key-field="Id"
+                data={projectAccountRows}
+                columns={projectAccountColumns}>
+              </lightning-datatable>
+            </div>
+          </div>
+
+          <div class="slds-align_absolute-center">
+            <div slot="actions">
+              <lightning-button
+                type="submit"
+                label="Create Project"
+                onclick={spinnerOn}
+                disabled={isCreateProjectButtonDisabled}>
+              </lightning-button>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              <lightning-button onclick={handleCancelModal} label="Cancel">
+              </lightning-button>
+            </div>
+          </div>
+        </lightning-card>
+      </div>
+      <br />
+      <br />
+    </lightning-record-edit-form>
+  </c-modal>
+</template>

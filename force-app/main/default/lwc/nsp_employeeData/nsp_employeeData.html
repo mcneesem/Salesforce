@@ -1,0 +1,64 @@
+<template>
+  <div class="slds-m-left_medium slds-is-relative">
+    <lightning-spinner
+      if:true={isLoading}
+      alternative-text="Loading"></lightning-spinner>
+
+    <lightning-formatted-text value={title} class="answered"></lightning-formatted-text>
+    <template for:each={recordsMap} for:item="record" for:index="i">
+      <lightning-record-edit-form
+        object-api-name={objectApiName}
+        record-id={record.id}
+        onload={handleLoad}
+        onerror={handleError}
+        key={record.uid}
+        data-uid={record.uid}
+        data-index={i}>
+        <lightning-input-field
+          field-name="NSP_Parent_Field_API_Name__c"
+          value={parentField}
+          class="slds-hide"></lightning-input-field>
+
+        <lightning-layout>
+          <lightning-layout-item size="8">
+            <div class="slds-grid slds-gutters slds-var-m-top_xx-small">
+              <template for:each={fields} for:item="fieldName">
+                <lightning-input-field
+                  field-name={fieldName}
+                  disabled={disabled}
+                  key={fieldName}
+                  variant="label-stacked"
+                  class="slds-col"
+                  data-name={fieldName}
+                  onchange={handleValueChange}></lightning-input-field>
+              </template>
+            </div>
+          </lightning-layout-item>
+          <lightning-layout-item size="4">
+            <div class="slds-var-m-top_xx-large">
+              <lightning-button-icon
+                icon-name="utility:add"
+                data-index={i}
+                alternative-text="Add"
+                onclick={handleAddRow}
+                variant="border-filled"
+                class="slds-var-m-left_small"
+                disabled={disabled}>
+              </lightning-button-icon>
+
+              <lightning-button-icon
+                icon-name="utility:delete"
+                data-index={i}
+                alternative-text="Delete"
+                onclick={handleDeleteRow}
+                variant="border-filled"
+                class="slds-var-m-left_small"
+                disabled={disabled}>
+              </lightning-button-icon>
+            </div>
+          </lightning-layout-item>
+        </lightning-layout>
+      </lightning-record-edit-form>
+    </template>
+  </div>
+</template>

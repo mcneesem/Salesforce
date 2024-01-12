@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_WX_WA_Modules_Elected__c</fullName>
+    <externalId>false</externalId>
+    <label>WX/WA Modules Elected</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401k - Ubiquity Payroll Export</fullName>
+                <default>false</default>
+                <label>401k - Ubiquity Payroll Export</label>
+            </value>
+            <value>
+                <fullName>ACA Administration</fullName>
+                <default>false</default>
+                <label>ACA Administration</label>
+            </value>
+            <value>
+                <fullName>Benefits Administration</fullName>
+                <default>false</default>
+                <label>Benefits Administration</label>
+            </value>
+            <value>
+                <fullName>Carrier Integrations -Health</fullName>
+                <default>false</default>
+                <label>Carrier Integrations -Health</label>
+            </value>
+            <value>
+                <fullName>Carrier Integrations 401K</fullName>
+                <default>false</default>
+                <label>Carrier Integrations 401K</label>
+            </value>
+            <value>
+                <fullName>Cobra</fullName>
+                <default>false</default>
+                <label>Cobra</label>
+            </value>
+            <value>
+                <fullName>eLearning</fullName>
+                <default>false</default>
+                <label>eLearning</label>
+            </value>
+            <value>
+                <fullName>FSA, HSA</fullName>
+                <default>false</default>
+                <label>FSA, HSA</label>
+            </value>
+            <value>
+                <fullName>HR Resource Center</fullName>
+                <default>false</default>
+                <label>HR Resource Center</label>
+            </value>
+            <value>
+                <fullName>Insperity Integra</fullName>
+                <default>false</default>
+                <label>Insperity Integra</label>
+            </value>
+            <value>
+                <fullName>Insperity TimeStar</fullName>
+                <default>false</default>
+                <label>Insperity TimeStar</label>
+            </value>
+            <value>
+                <fullName>iSolved Hire</fullName>
+                <default>false</default>
+                <label>iSolved Hire</label>
+            </value>
+            <value>
+                <fullName>iSolved Performance Mgmt</fullName>
+                <default>false</default>
+                <label>iSolved Performance Mgmt</label>
+            </value>
+            <value>
+                <fullName>iSolved Time</fullName>
+                <default>false</default>
+                <label>iSolved Time</label>
+            </value>
+            <value>
+                <fullName>iSolved Time Advanced Scheduling</fullName>
+                <default>false</default>
+                <label>iSolved Time Advanced Scheduling</label>
+            </value>
+            <value>
+                <fullName>iSolved Time Virtual Clock</fullName>
+                <default>false</default>
+                <label>iSolved Time Virtual Clock</label>
+            </value>
+            <value>
+                <fullName>Leave Administration</fullName>
+                <default>false</default>
+                <label>Leave Administration</label>
+            </value>
+            <value>
+                <fullName>OrgPlus Employee Directory</fullName>
+                <default>false</default>
+                <label>OrgPlus Employee Directory</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Retirement Services Integration</fullName>
+                <default>false</default>
+                <label>Retirement Services Integration</label>
+            </value>
+            <value>
+                <fullName>Share &amp; Perform</fullName>
+                <default>false</default>
+                <label>Share &amp; Perform</label>
+            </value>
+            <value>
+                <fullName>Training and Development (Non-SSO)</fullName>
+                <default>false</default>
+                <label>Training and Development (Non-SSO)</label>
+            </value>
+            <value>
+                <fullName>Training and Development (SSO)</fullName>
+                <default>false</default>
+                <label>Training and Development (SSO)</label>
+            </value>
+            <value>
+                <fullName>WC - Amtrust</fullName>
+                <default>false</default>
+                <label>WC - Amtrust</label>
+            </value>
+            <value>
+                <fullName>WC - Erie</fullName>
+                <default>false</default>
+                <label>WC - Erie</label>
+            </value>
+            <value>
+                <fullName>WC - Guard</fullName>
+                <default>false</default>
+                <label>WC - Guard</label>
+            </value>
+            <value>
+                <fullName>WC - Hartford</fullName>
+                <default>false</default>
+                <label>WC - Hartford</label>
+            </value>
+            <value>
+                <fullName>WC - Insurelinx</fullName>
+                <default>false</default>
+                <label>WC - Insurelinx</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -3,7 +3,7 @@
     <fullName>NSP_Contractual_Part_time_EE_Count__c</fullName>
     <description>This field is used for Integration</description>
     <externalId>false</externalId>
-    <label>Contractual Part Time EE Count</label>
+    <label>Contracted Part Time EE Count</label>
     <precision>8</precision>
     <required>false</required>
     <scale>0</scale>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Addressed Client Request</fullName>
+        <default>false</default>
+        <label>Addressed Client Request</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Answered Question</fullName>
+        <default>false</default>
+        <label>Answered Question</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Approved</fullName>
+        <default>false</default>
+        <label>Approved</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Approved Exception</fullName>
+        <default>false</default>
+        <label>Approved Exception</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>BPS - Assigned to Regeneration</fullName>
+        <default>false</default>
+        <label>BPS - Assigned to Regeneration</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>BPS - Currently Not Interested</fullName>
+        <default>false</default>
+        <label>BPS - Currently Not Interested</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>BPS - Enrolled</fullName>
+        <default>false</default>
+        <label>BPS - Enrolled</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Changed to Non-Exempt</fullName>
+        <default>false</default>
+        <label>Changed to Non-Exempt</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Changing Business Structure</fullName>
+        <default>false</default>
+        <label>Changing Business Structure</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Client Confirmed</fullName>
+        <default>false</default>
+        <label>Client Confirmed</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Complete</fullName>
+        <default>false</default>
+        <label>Complete</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Employee Enrolled on-line</fullName>
+        <default>false</default>
+        <label>Employee Enrolled on-line</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Equifax - AT RISK</fullName>
+        <default>false</default>
+        <label>Equifax - AT RISK</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Equifax - NO RISK</fullName>
+        <default>false</default>
+        <label>Equifax - NO RISK</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Equifax - NOT AFFECTED</fullName>
+        <default>false</default>
+        <label>Equifax - NOT AFFECTED</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Equifax - REDIRECT</fullName>
+        <default>false</default>
+        <label>Equifax - REDIRECT</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Equipment Upgrade</fullName>
+        <default>false</default>
+        <label>Equipment Upgrade</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Fulfilled</fullName>
+        <default>false</default>
+        <label>Fulfilled</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Other Exemption</fullName>
+        <default>false</default>
+        <label>Other Exemption</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Paid in Multiple Clients</fullName>
+        <default>false</default>
+        <label>Paid in Multiple Clients</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Payroll VM</fullName>
+        <default>false</default>
+        <label>Payroll VM</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Premier Concern - AT RISK</fullName>
+        <default>false</default>
+        <label>Premier Concern - AT RISK</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Premier Concern - NO RISK</fullName>
+        <default>false</default>
+        <label>Premier Concern - NO RISK</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred from Benefits Fair</fullName>
+        <default>false</default>
+        <label>Referred from Benefits Fair</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to Contact Center</fullName>
+        <default>false</default>
+        <label>Referred to Contact Center</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to HRS</fullName>
+        <default>false</default>
+        <label>Referred to HRS</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to Payroll</fullName>
+        <default>false</default>
+        <label>Referred to Payroll</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to Renewals</fullName>
+        <default>false</default>
+        <label>Referred to Renewals</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to Service Team</fullName>
+        <default>false</default>
+        <label>Referred to Service Team</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Refer to Premier</fullName>
+        <default>false</default>
+        <label>Refer to Premier</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Rejected</fullName>
+        <default>false</default>
+        <label>Rejected</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Request Withdrawn</fullName>
+        <default>false</default>
+        <label>Request Withdrawn</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent - Email</fullName>
+        <default>false</default>
+        <label>Sent - Email</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent - Fax</fullName>
+        <default>false</default>
+        <label>Sent - Fax</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent - Mail</fullName>
+        <default>false</default>
+        <label>Sent - Mail</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent Materials</fullName>
+        <default>false</default>
+        <label>Sent Materials</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Terming</fullName>
+        <default>false</default>
+        <label>Terming</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Updated Information</fullName>
+        <default>false</default>
+        <label>Updated Information</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Wages Raised</fullName>
+        <default>false</default>
+        <label>Wages Raised</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+</StandardValueSet>

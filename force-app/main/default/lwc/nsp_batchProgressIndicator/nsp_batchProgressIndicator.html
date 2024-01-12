@@ -1,0 +1,66 @@
+<template>
+    <template if:true={enableBatchUI}>
+    <lightning-card  title="Real Time Invoice Batch Execution Status">
+       <!-- <lightning-button label="New" slot="actions"></lightning-button> -->
+        <lightning-button-icon
+        icon-name="action:refresh"
+        variant="brand"
+        onclick={handleRefreshView}
+        alternative-text="Refresh"
+        slot="actions">s
+    </lightning-button-icon>
+     <lightning-layout multiple-rows="true">
+        <template if:true={showList}>
+        <lightning-layout-item size="12" padding="around-small" class="slds-box">
+            <template for:each={jobsList} for:item="job">
+            <lightning-layout key={job.batchJobId}>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input label={job.batchClassName} value={job.batchJobId} disabled variant="label-stacked" class="slds-p-bottom_medium"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small">
+                    <div class="slds-p-top_large">
+                        <b>{job.executedPercentage}%</b>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" padding="around-large">
+                    <div class="slds-p-top_large">
+                        <lightning-progress-bar value={job.executedIndicator} size="medium"></lightning-progress-bar>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="slds-p-top_large">
+                        Batch Executed <b>{job.executedBatch}</b> of <b>{job.totalBatch}</b>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            </template>
+        </lightning-layout-item>
+    </template>
+        <lightning-layout-item size="12" padding="around-small">
+        <lightning-layout>
+            <lightning-layout-item size="6" padding="around-small">
+            <lightning-combobox
+            name="batchName"
+            label="Batch Class"
+            value={value}
+            placeholder="Select Batch Class"
+            options={batchOptions}
+            onchange={handleBatchChange} >
+            </lightning-combobox>
+        </lightning-layout-item>
+        <lightning-layout-item size="3" padding="around-small">
+            <lightning-input label="Enter Batch Size" variant="label-stacked" type="number"
+                onchange={handleBatchSizeChange} disabled={disableBatchSize} value={batchSize}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="3" padding="around-small" class="slds-grid slds-grid_vertical-align-center">
+            <lightning-button label="Execute Batch" variant="brand" onclick={handleExecuteBatch}
+                class="slds-p-around_medium" disabled={disableExecuteBatch}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+   
+    <p slot="footer">Batch Run Status</p>
+</lightning-card>
+</template>
+</template>

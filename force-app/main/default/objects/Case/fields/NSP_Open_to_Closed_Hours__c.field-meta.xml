@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Open_to_Closed_Hours__c</fullName>
+    <description>Captures duration between when case status changes from Open to Close, only after case is assigned to user</description>
+    <externalId>false</externalId>
+    <formula>12 * (
+   ( 5 * FLOOR( ( DATEVALUE( ClosedDate ) - DATE( 1900, 1, 8) ) / 7) +
+    MIN(5, 
+     MOD( DATEVALUE( ClosedDate ) - DATE( 1900, 1, 8), 7) +
+     MIN( 1, 24 / 12 * ( MOD( ClosedDate - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1 ) ) )
+    ) 
+   )
+ -
+   ( 5 * FLOOR( ( DATEVALUE( CreatedDate ) - DATE( 1900, 1, 8) ) / 7) +
+     MIN( 5,
+      MOD( DATEVALUE( CreatedDate ) - DATE( 1996, 1, 1), 7 ) +
+      MIN( 1, 24 / 12 * ( MOD( CreatedDate - DATETIMEVALUE( &apos;1900-01-08 12:00:00&apos; ), 1) ) )
+    )
+   ) 
+  )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Open to Closed (Hours)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

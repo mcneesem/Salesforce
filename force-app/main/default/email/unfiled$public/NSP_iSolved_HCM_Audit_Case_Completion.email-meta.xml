@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used for sending completion notification for iSolved HCM Audit Case</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>iSolved HCM Audit Case Completion</name>
+    <style>none</style>
+    <subject>Audit Case Completed</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Action which launches a Screen Flow to publish a One_Time_Sync_Event__e Platform Event for all records of the current sObjectType.</description>
+    <flowDefinition>One_Time_Sync_Sync_All</flowDefinition>
+    <label>One Time Sync (Sync-All)</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

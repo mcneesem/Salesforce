@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ CA SPSL Retro Adjustments (WO Only)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ CA SPSL Retro Adjustments (WO Only)</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ CA SPSL Retro Adjustments (WO Only)</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. We do not make accrual or time data changes in pay periods that are now closed. The reason for this is that such edits alter more than simply the transactions being added and can lead to reporting discrepancies, which can raise concerns in the case of an audit. 
+ 
+Additionally, for the CA SPSL pay types specifically, having the hours adjusted retroactively in Time &amp; Attendance will not allow for accurate reporting to the employee. In order for the ADDCASPSL or CASPSL2022 pay types to calculate time used for the employee’s CA Supplemental Leave report, the time needs to be recorded in Payroll. Make a retroactive adjustment in Time &amp; Attendance does not prompt that data to be exported to Payroll, as only data from the current pay period will be exported. As such, it is best practice to make these retroactive adjustments in Payroll to ensure proper reporting. I&apos;ve copied your Payroll Specialist here, as they will be best equipped to assist with those Payroll record adjustments.  
+ 
+A system administrator can then make a manual adjustment to the employee’s accrual balances, if needed, in order to add any time previously recorded under another pay type back to their available balance. This article in our Help Center details that process: 
+ 
+https://help.insperity.com/bps/knowledge-base/accruals-making-accrual-adjustments/ 
+ 
+If you have additional questions or concerns, or would like to update your configuration to allow forecasting, please let us know and we will be happy to help. 
+ 
+Thank you, 
+ 
+Insperity Time &amp; Attendance Technical Support Team 
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

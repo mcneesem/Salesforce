@@ -1,3 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <autoResponseRule>
+        <fullName>Case Notification</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Contact Center&apos;,  SuppliedEmail != Null,  $Setup.NSP_Trigger_Switch__c.NSP_CC_Cse_Creation_Notification__c = false)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test Contact Center</senderName>
+            <template>Services_Emails/NSP_ContactCenter_CaseCreation</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Health &amp; Welfare Leave Admin</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>No reply</senderName>
+            <template>NSP_Health_Welfare_Email_Templates/NSP_Health_Welfare_Leave_Admin</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Health &amp; Welfare Client Sponsored Plans</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>No reply</senderName>
+            <template>NSP_Health_Welfare_Email_Templates/NSP_Health_Welfare_External_Client_Sponsored_Plans</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>Health &amp; Welfare Ed Assist</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>No reply</senderName>
+            <template>NSP_Health_Welfare_Email_Templates/NSP_Health_Welfare_External_Ed_Assist</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Time &amp; Attendance&apos;,  SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test Time &amp; Attendance</senderName>
+            <template>Services_Emails/NSP_TimeStar_Content_Case_Created</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Time &amp; Attendance&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test TimeStar Hardware</senderName>
+            <template>Services_Emails/NSP_TimeStarHardware_CaseCreated</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;OrgPlus&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test OrgPlus</senderName>
+            <template>Services_Emails/NSP_OrgPlus_Case_Created</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;PerformSmart&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test PerformSmart</senderName>
+            <template>Services_Emails/NSP_PerformSmart_Case_Created</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;XML&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test XML</senderName>
+            <template>Services_Emails/NSP_XML_Case_Created</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Integra&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test Integra</senderName>
+            <template>Services_Emails/NSP_Integra_Case_Created</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Employment Screening&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Test Employment Screening</senderName>
+            <template>Services_Emails/NSP_Employment_Screening</template>
+        </ruleEntry>
+        <ruleEntry>
+            <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;WX COS Team&apos;, SuppliedEmail != Null)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>WX COS Team</senderName>
+            <template>Services_Emails/WX_COS_Team</template>
+        </ruleEntry>
+    </autoResponseRule>
+</AutoResponseRules>

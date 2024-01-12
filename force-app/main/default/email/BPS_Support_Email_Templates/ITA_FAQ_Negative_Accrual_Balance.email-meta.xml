@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Negative Accrual Balance</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Negative Accrual Balance</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Negative Accrual Balance</subject>
+    <textOnly>Hello {!Contact.FirstName}
+ 
+Thank you for contacting Insperity Time &amp; Attendance Support. At this time, the (NAME) accrual plan has a minimum balance threshold of zero, meaning employees will not be able to submit a time off request that would result in a negative balance for the current accrual year. If you’d like to allow negative balances for this plan, we can certainly change the minimum balance threshold. Please let us know what value you would like to set going forward (i.e. -8 hours, -40 hours, etc.). 
+ 
+There are a few ways we can configure this for you once we know what threshold you would like to use: 
+  
+
+Employees can request time off that will result in a negative balance for the current accrual year and supervisors can approve that time off as appropriate. 
+
+Employees can request time off that will result in a negative balance for the current accrual year, but supervisors will be unable to approve the request. Rather, the request would require an administrator’s approval.  
+
+Employees cannot request time off that will result in a negative balance for the current accrual year, but administrators can manually enter time off for employees that will result in a negative balance. 
+
+ 
+All of these options will adhere to the minimum balance threshold, never allowing an employee to have a negative accrual year balance lower than that threshold. Please note that, if you forecast accruals, employees may be able to have a negative running balance throughout the accrual year, depending on your accrual balance display settings. 
+ 
+Please let us know how you would like to proceed and we will be happy to assist. 
+              
+Thank you, 
+ 
+Technical Support Team 
+
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562 
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

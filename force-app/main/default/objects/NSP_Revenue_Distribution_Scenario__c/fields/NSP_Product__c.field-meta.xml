@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Product__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Captures Product Details</description>
+    <externalId>false</externalId>
+    <label>Product</label>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Revenue Distribution Scenarios</relationshipLabel>
+    <relationshipName>Revenue_Distribution_Scenarios</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

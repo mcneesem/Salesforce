@@ -341,9 +341,9 @@
                 <identifier>RecordOneTrust_Opt_Out_cField2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1582,8 +1582,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_SDRLeadSource__c</fieldItem>
-                <identifier>RecordNSP_SDRLeadSource_cField</identifier>
+                <fieldItem>Record.NSP_SDR__c</fieldItem>
+                <identifier>RecordNSP_SDR_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Notes__c</fieldItem>
+                <identifier>RecordNSP_Notes_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2bd644d7-d846-4059-8f3d-df778ff50b9d</name>
@@ -1986,6 +1996,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
                 <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Most_Recent_Activity_Date__c</fieldItem>
+                <identifier>RecordMost_Recent_Activity_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3134,10 +3154,16 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection11</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Referral</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Service_Referral_Lead</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -3314,10 +3340,16 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection12</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Referral</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Service_Referral_Lead</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -3383,9 +3415,9 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
@@ -3413,9 +3445,9 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
@@ -3443,9 +3475,9 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
@@ -3706,9 +3738,9 @@
                         <rightValue>false</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
@@ -3740,6 +3772,19 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.OneTrust_Opt_Out__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Advanced_Salesforce_Administrator}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-445698ef-4d06-4285-b420-42bfa49d64c9</name>

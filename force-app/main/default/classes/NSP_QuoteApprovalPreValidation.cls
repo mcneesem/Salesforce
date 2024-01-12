@@ -12,8 +12,10 @@ Modification Log     :
 */
 
 public class NSP_QuoteApprovalPreValidation {
+    // test w/ QuoteExtControllerTests (80%)
+
     //constructor
-    public NSP_QuoteApprovalPreValidation(){}
+    private NSP_QuoteApprovalPreValidation(){}
     
     //Static strings for storing error messages from labels.
     Static final String IRSO_ONDEMAND='IRSOOnDemand';	
@@ -33,6 +35,8 @@ public class NSP_QuoteApprovalPreValidation {
 	Static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
 	Static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
     Static final String BENCHMARK_JOB_DATE_ERR=System.Label.NSP_Benchmark_Date_Validation;
+    Static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
+    Static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
     //Map to prepare kay value pair of notes field for each corresponsing product.
     Static final Map<String,String> productFieldMap=new Map<String,String>{
          'NSP_OnDemand_Notes__c' => 'IRSOOnDemand',
@@ -138,6 +142,7 @@ public class NSP_QuoteApprovalPreValidation {
         String customerRole = null;
         String authorizedPurchaser = null;
         String primaryContact = null;
+        String serialIds=null;
         //quering user groups
         for(groupMember  objmember : [Select id,UserOrGroupId,GroupId,Group.DeveloperName,Group.Name FROM groupMember 
         WHERE UserOrGroupId =: userinfo.getUserId() AND Group.DeveloperName IN : groupname  ]) {
@@ -155,21 +160,12 @@ public class NSP_QuoteApprovalPreValidation {
                                           NSP_Ship_To_Street__c,NSP_Ship_To_State__c,NSP_Ship_To_City__c,NSP_Ship_To_Postal_Code__c,NSP_Ship_To_Country__c,
                                           NSP_Benchmark_Job_End_Date__c,NSP_Benchmark_Job_Start_Date__c,NSP_Implementation_Start_Date__c,NSP_Talent_Connect_Subscription_End_Date__c,NSP_Talent_Connect_Subscription_Date__c,
                                           NSP_RPO_End_Date__c,NSP_RPO_Start_Date__c,NSP_ProjRec_Start_Date__c,NSP_ProjRec_End_Date__c,NSP_Target_Date__c,NSP_Customer_Stakeholder__c,NSP_Authorized_Purchaser_1__c,
-                                          NSP_Authorized_Purchaser_2__c,NSP_Customer_Role__c,SBQQ__PrimaryContact__c FROM SBQQ__Quote__c WHERE Id=:QuoteId];
+                                          NSP_Authorized_Purchaser_2__c,NSP_Customer_Role__c,SBQQ__PrimaryContact__c,NSP_TerminationDate__c,NSP_TransactionType__c FROM SBQQ__Quote__c WHERE Id=:QuoteId];
 
         
         for(SBQQ__Quote__c quoteRec: quoteRecord) {
             //sequential execution of validations conditions for that specific quote
-             if(quoteRec.NSP_Requested_First_Check_Date__c != null && 
-               (quoteRec.NSP_Has_WA_product__c || quoteRec.NSP_Has_WX_product__c || quoteRec.NSP_Has_WOSS_product__c) 
-               && (quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW || quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)
-               && quoteRec.NSP_Requested_First_Check_Date__c < system.today()) {
-                   errorMessageList.add(REQ_DATE_ERR_MESSAGE);
-               }
-            if(quoteRec.NSP_Requested_First_Check_Date__c == null && (quoteRec.NSP_Has_WA_product__c || quoteRec.NSP_Has_WX_product__c || quoteRec.NSP_Has_WOSS_product__c) && (quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW || quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)){
-                errorMessageList.add(REQ_DATE_ERR_MESSAGE);
-            }
-            if(quoteRec.NSP_Invoice_To_Email__c == null){
+            if(quoteRec.NSP_Invoice_To_Email__c == null && quoteRec.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
                 errorMessageList.add(INVOICE_EMAIL_ERR_MESSAGE);
             }   
             if((quoteRec.SBQQ__ExpirationDate__c == null)  || (quoteRec.SBQQ__ExpirationDate__c <= system.today())) {
@@ -306,11 +302,19 @@ public class NSP_QuoteApprovalPreValidation {
                     errorMessageList.add(QuoteExtController.BRANDING_TARGET_DATE_ERR);      
                 }
             }
+            //validate termination date
+            if(quoteRec.NSP_TransactionType__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION && quoteRec.NSP_TerminationDate__c == null){
+                errorMessageList.add(QuoteExtController.TERMINATION_DATE_ERROR);
+            }
             
         }						   
         descriptionOfService = 	validateDescriptionOfServices(QuoteId);
+        serialIds=validateSerialIds(QuoteId);
         if(descriptionOfService!= null)	{
             errorMessageList.add(DESC_SERVICES_ERR_MESSAGE);
+        }
+        if(serialIds!= null)	{
+            errorMessageList.add(serialIds);
         }
         return errorMessageList;
         
@@ -343,8 +347,7 @@ public class NSP_QuoteApprovalPreValidation {
 * @param  ContactId Id ,AccountId Id,errMessage String
 */                                                                          
     
-public static String validateContacts(Id cId,Id accountId,String errMessage,Boolean isValidateEmail)
-{
+public static String validateContacts(Id cId,Id accountId,String errMessage,Boolean isValidateEmail){
     Set<String> contactSet = new Set<String>(); 
     List<Contact> contactList=[SELECT Id, Name FROM Contact WHERE Id IN (SELECT contactId FROM AccountContactRelation WHERE AccountId = :accountId)];
         
@@ -363,5 +366,30 @@ public static String validateContacts(Id cId,Id accountId,String errMessage,Bool
         return null;
     
 }  
+public static string validateSerialIds(Id QuoteId){
+    List<SBQQ__QuoteLine__c> quoteLineList=[SELECT Id,NSP_SerialId_Validation__c,NSP_ET_Checked_Serial_Ids__c,NSP_Serial_Ids__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c=:QuoteId];
+    for(SBQQ__QuoteLine__c quoteLineRec: quoteLineList)	 {
+        if(quoteLineRec.NSP_SerialId_Validation__c == true) {
+            return SERIAL_IDS_ERR;
+        }
+        if(quoteLineRec.NSP_Serial_Ids__c!=null && quoteLineRec.NSP_ET_Checked_Serial_Ids__c!=null){
+            Map<String,String> serialIdsMap= new Map<String,String>();
+            Map<String,String> etserialIdsMap= new Map<String,String>();
+            for(String serialId:quoteLineRec.NSP_Serial_Ids__c.split(',')){
+                serialIdsMap.put(serialId,serialId);
+            }
+            for(String etserialId:quoteLineRec.NSP_ET_Checked_Serial_Ids__c.split(',')){
+                etserialIdsMap.put(etserialId,etserialId);
+            }
+            //iterate over Serial Ids and check it has all the Early Termination Checked Serial Ids, If not throw validation error
+            for(String etSerialId:etserialIdsMap.KeySet()){
+                if(!serialIdsMap.containsKey(etSerialId)){
+                    return ET_SERIAL_IDS_ERR;
+                }
+            }
+        }
+    }						           
+    return null;
+}
     
 }

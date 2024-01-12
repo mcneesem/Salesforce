@@ -5,7 +5,7 @@
         <name>Add_varEventRecord_to_Event_Collection</name>
         <label>Add varEventRecord to Event Collection</label>
         <locationX>138</locationX>
-        <locationY>2339</locationY>
+        <locationY>2951</locationY>
         <assignmentItems>
             <assignToReference>colEventRecordsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Add_varTaskRecord_to_Task_Collection</name>
         <label>Add varTaskRecord to Task Collection</label>
         <locationX>138</locationX>
-        <locationY>1175</locationY>
+        <locationY>1487</locationY>
         <assignmentItems>
             <assignToReference>colTaskRecordsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Assign_Current_Event_to_varEventRecord</name>
         <label>Assign Current Event to varEventRecord</label>
         <locationX>138</locationX>
-        <locationY>2219</locationY>
+        <locationY>2843</locationY>
         <assignmentItems>
             <assignToReference>varEventRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>Assign_Current_Task_to_varTaskRecord</name>
         <label>Assign Current Task to varTaskRecord</label>
         <locationX>138</locationX>
-        <locationY>1055</locationY>
+        <locationY>1379</locationY>
         <assignmentItems>
             <assignToReference>varTaskRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -86,6 +86,38 @@
             <targetReference>Add_varTaskRecord_to_Task_Collection</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_Event_Record</name>
+        <label>Assign Event Record</label>
+        <locationX>402</locationX>
+        <locationY>2219</locationY>
+        <assignmentItems>
+            <assignToReference>EventRecordType</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_On_Event_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_On_Event_Record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Task_Record</name>
+        <label>Assign Task Record</label>
+        <locationX>402</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>TasKRecordType</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_On_Task_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_On_Task_Record</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>flowName</name>
         <dataType>String</dataType>
@@ -97,7 +129,7 @@
         <name>Are_there_open_Events</name>
         <label>Are there open Events?</label>
         <locationX>314</locationX>
-        <locationY>1859</locationY>
+        <locationY>2519</locationY>
         <defaultConnectorLabel>There are not open Events</defaultConnectorLabel>
         <rules>
             <name>Yes_There_are_open_Events</name>
@@ -119,9 +151,9 @@
         <name>Are_there_open_Tasks</name>
         <label>Are there open Tasks?</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>1055</locationY>
         <defaultConnector>
-            <targetReference>Get_Events_with_Status_of_Open</targetReference>
+            <targetReference>Get_Event_Record</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>There are no open tasks</defaultConnectorLabel>
         <rules>
@@ -143,8 +175,8 @@
     <decisions>
         <name>Has_OneTrust_Opt_Out_changed</name>
         <label>Has OneTrust Opt Out changed?</label>
-        <locationX>1238</locationX>
-        <locationY>335</locationY>
+        <locationX>1502</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>n/a</defaultConnectorLabel>
         <rules>
             <name>Yes_Opted_out</name>
@@ -183,7 +215,7 @@
         <name>Is_it_a_Cadence_Event</name>
         <label>Is it a Cadence Event?</label>
         <locationX>270</locationX>
-        <locationY>2099</locationY>
+        <locationY>2735</locationY>
         <defaultConnector>
             <targetReference>Loop_over_future_Events</targetReference>
         </defaultConnector>
@@ -208,7 +240,7 @@
         <name>Is_this_a_Cadence_Task</name>
         <label>Is this a Cadence Task?</label>
         <locationX>270</locationX>
-        <locationY>935</locationY>
+        <locationY>1271</locationY>
         <defaultConnector>
             <targetReference>Loop_over_Open_Tasks</targetReference>
         </defaultConnector>
@@ -244,10 +276,38 @@
     <interviewLabel>Lead - OneTrust Opt Out {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead - OneTrust Opt Out</label>
     <loops>
+        <name>Loop_On_Event_Record</name>
+        <label>Loop On Event Record</label>
+        <locationX>314</locationX>
+        <locationY>2111</locationY>
+        <collectionReference>Get_Event_Record</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Event_Record</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Events_with_Status_of_Open</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_On_Task_Record</name>
+        <label>Loop On Task Record</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <collectionReference>Get_sales_Task_Record_Type</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Task_Record</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Tasks_with_Status_of_Open</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Loop_over_future_Events</name>
         <label>Loop over future Events</label>
         <locationX>50</locationX>
-        <locationY>1979</locationY>
+        <locationY>2627</locationY>
         <collectionReference>Get_Events_with_Status_of_Open</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -261,7 +321,7 @@
         <name>Loop_over_Open_Tasks</name>
         <label>Loop over Open Tasks</label>
         <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationY>1163</locationY>
         <collectionReference>Get_Tasks_with_Status_of_Open</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -291,10 +351,50 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Event_Record</name>
+        <label>Get_Event_Record</label>
+        <locationX>314</locationX>
+        <locationY>2003</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_On_Event_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Event</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Core Sales Event RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Mid Market Event RT</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>RecordType</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Events_with_Status_of_Open</name>
         <label>Get Events with Status of Open</label>
         <locationX>314</locationX>
-        <locationY>1739</locationY>
+        <locationY>2411</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_open_Events</targetReference>
@@ -303,7 +403,7 @@
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filterLogic>1 AND (2 OR 3) AND 4</filterLogic>
         <filters>
             <field>WhoId</field>
             <operator>EqualTo</operator>
@@ -325,15 +425,104 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>EventRecordType</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Event</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_sales_Task_Record_Type</name>
+        <label>Get sales Task Record Type</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_On_Task_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BPS task RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Core Sales Task RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Correspondence Task RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Eloqua Task RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Mid Market Task RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New Client Sales RT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Upsell</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>RecordType</object>
+        <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Get_Tasks_with_Status_of_Open</name>
         <label>Get Tasks with Status of Open</label>
         <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationY>947</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_open_Tasks</targetReference>
@@ -342,7 +531,7 @@
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filterLogic>1 AND (2 OR 3) AND 4</filterLogic>
         <filters>
             <field>WhoId</field>
             <operator>EqualTo</operator>
@@ -362,6 +551,13 @@
             <operator>IsNull</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>TasKRecordType</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -372,7 +568,7 @@
         <name>Cancel_All_Open_Events</name>
         <label>Cancel All Open Events</label>
         <locationX>50</locationX>
-        <locationY>2651</locationY>
+        <locationY>3227</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
@@ -383,9 +579,9 @@
         <name>Cancel_All_Open_Tasks</name>
         <label>Cancel All Open Tasks</label>
         <locationX>50</locationX>
-        <locationY>1487</locationY>
+        <locationY>1763</locationY>
         <connector>
-            <targetReference>Get_Events_with_Status_of_Open</targetReference>
+            <targetReference>Get_Event_Record</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -397,9 +593,9 @@
         <name>Update_Lead_Record_to_Opted_Out</name>
         <label>Update Lead Record to Opted Out</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <connector>
-            <targetReference>Get_Tasks_with_Status_of_Open</targetReference>
+            <targetReference>Get_sales_Task_Record_Type</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Fault_Handler_Subflow</targetReference>
@@ -469,8 +665,8 @@
     <recordUpdates>
         <name>Update_Lead_Record_to_Remove_Opt_Out</name>
         <label>Update Lead Record to Remove Opt Out</label>
-        <locationX>1634</locationX>
-        <locationY>455</locationY>
+        <locationX>2162</locationX>
+        <locationY>431</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
@@ -517,7 +713,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>1112</locationX>
+        <locationX>1376</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Has_OneTrust_Opt_Out_changed</targetReference>
@@ -534,8 +730,8 @@ ISCHANGED({!$Record.OneTrust_Opt_Out__c} )
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1370</locationX>
-        <locationY>575</locationY>
+        <locationX>1898</locationX>
+        <locationY>539</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
@@ -565,6 +761,20 @@ ISCHANGED({!$Record.OneTrust_Opt_Out__c} )
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>EventRecordType</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>TasKRecordType</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>varEventRecord</name>

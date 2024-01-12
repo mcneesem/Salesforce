@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Verbal_Term_recd__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>to track if verbal termination is received</description>
+    <externalId>false</externalId>
+    <label>Verbal Termination Notice Received</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

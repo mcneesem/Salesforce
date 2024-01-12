@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Notice of Termination for Account Owner</name>
     <style>none</style>
-    <subject>Notice of Termination for {!Account.Name}</subject>
+    <subject>Notice of Termination for {!Account.Name} - {!Opportunity.NSP_PrimaryProduct__c}</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

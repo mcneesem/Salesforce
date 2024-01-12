@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Issue_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Issue Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Global outage</fullName>
+                <default>false</default>
+                <label>Global outage</label>
+            </value>
+            <value>
+                <fullName>Server Issue</fullName>
+                <default>false</default>
+                <label>Server Issue</label>
+            </value>
+            <value>
+                <fullName>Networking Issue</fullName>
+                <default>false</default>
+                <label>Networking Issue</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

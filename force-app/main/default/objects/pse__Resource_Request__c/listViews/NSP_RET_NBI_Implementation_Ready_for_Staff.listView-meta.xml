@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_RET_NBI_Implementation_Ready_for_Staff</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>pse__Resource_Role__c</field>
+        <operation>equals</operation>
+        <value>RET NBI - Implementation</value>
+    </filters>
+    <filters>
+        <field>pse__Status__c</field>
+        <operation>equals</operation>
+        <value>Ready to Staff</value>
+    </filters>
+    <label>RET NBI-Implementation-Ready for Staff</label>
+</ListView>

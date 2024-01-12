@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_WageClaimIssues__c</fullName>
+    <externalId>false</externalId>
+    <label>Wage Claim Issues</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Commission</fullName>
+                <default>false</default>
+                <label>Commission</label>
+            </value>
+            <value>
+                <fullName>Overtime</fullName>
+                <default>false</default>
+                <label>Overtime</label>
+            </value>
+            <value>
+                <fullName>PTO</fullName>
+                <default>false</default>
+                <label>PTO</label>
+            </value>
+            <value>
+                <fullName>Meal Break</fullName>
+                <default>false</default>
+                <label>Meal Break</label>
+            </value>
+            <value>
+                <fullName>Timeliness</fullName>
+                <default>false</default>
+                <label>Timeliness</label>
+            </value>
+            <value>
+                <fullName>Regular Wages</fullName>
+                <default>false</default>
+                <label>Regular Wages</label>
+            </value>
+            <value>
+                <fullName>Expense</fullName>
+                <default>false</default>
+                <label>Expense</label>
+            </value>
+            <value>
+                <fullName>Rest Periods</fullName>
+                <default>false</default>
+                <label>Rest Periods</label>
+            </value>
+            <value>
+                <fullName>Bonus</fullName>
+                <default>false</default>
+                <label>Bonus</label>
+            </value>
+            <value>
+                <fullName>Severance</fullName>
+                <default>false</default>
+                <label>Severance</label>
+            </value>
+            <value>
+                <fullName>Classification Issue?</fullName>
+                <default>false</default>
+                <label>Classification Issue?</label>
+            </value>
+            <value>
+                <fullName>Deferred Compensation</fullName>
+                <default>false</default>
+                <label>Deferred Compensation</label>
+            </value>
+            <value>
+                <fullName>Unauthorized Deductions</fullName>
+                <default>false</default>
+                <label>Unauthorized Deductions</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

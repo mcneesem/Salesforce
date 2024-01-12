@@ -1,0 +1,162 @@
+<template>
+    <div class="slds-box">
+        <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId}
+            record-type-id={recordTypeId} onsubmit={handleOnSubmit} onsuccess={handleSuccess} onerror={handleError} onload={handleOnLoad}>
+            <lightning-messages></lightning-messages>
+     <lightning-layout>
+      <lightning-layout-item size="8">
+        <div style="display:none"> 
+            <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber" field-name="NSP_LastSavedPageNumber__c" value={pageNumber} >
+            </lightning-input-field> 
+            <lightning-input-field class="slds-hidden" field-name="Name" value={reportName} ></lightning-input-field>
+        </div>
+            <lightning-layout>
+                <lightning-layout-item size="6">
+                    <div class="slds-m-top_medium slds-p-around_medium">
+                        <div class="slds-var-m-around_medium slds-align_absolute-center ">
+                            <lightning-input-field data-fname="clientName" field-name='NSP_ClientName__c' required
+                                value={clientId} onchange={handleAccChange}></lightning-input-field>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <template if:true={enableContact}>
+                <div class="slds-form-element__label" > 
+                    <p>Who at client will have access to the online results report dashboard?</p>
+                </div>
+            <lightning-layout>    
+<!-- Add contact  slds-form-element_horizontal-->
+                <lightning-layout-item size="4">
+                    <div class="slds-var-m-around_medium">
+                        <div class="slds-form-element "> 
+                       <label for="NSP_Contact__c" class="slds-form-element__label">
+                           <abbr title="required" class="slds-required">*</abbr>
+                           Select Contact
+                        </label>
+                        <template if:true ={isOnloadCalled}>
+                            <c-nsp_case-custom-look-up
+                                    s-object-api-name="Contact"
+                                    icon-name = "standard:contact"
+                                    parent-id ={clientAccId}
+                                    default-record-id = {NSP_Contact__c}
+                                    onlookupupdate={handlelookupRecord}
+                                    search-key={cname}
+                                    placeholder="Search Contacts...">
+                                    </c-nsp_case-custom-look-up>
+                                </template>
+                            <div style="display:none">
+                           <lightning-input-field  data-fname="NSP_Contact__c"  id="NSP_Contact__c" field-name="NSP_Contact__c"  value={NSP_Contact__c}
+                           onchange={handleContact} disabled={disableContact} dirty
+                           ></lightning-input-field>
+                           </div>
+                      </div>
+                      </div>
+                    </lightning-layout-item>
+
+                <lightning-layout-item size="4">
+                    <div class="slds-var-m-around_medium ">
+                        <lightning-input name="cemail" data-fname="emailAddress" class='emailAddress' type="email" label="Email address" value={cemail} 
+                        pattern="[A-Za-z0-9._\-]+@[a-z0-9.\-]+\.[a-zA-Z]{2,6}" message-when-pattern-mismatch="Please enter a valid email" disabled={disableContact} >
+                        </lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="4">
+                    <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+
+                        <lightning-button variant="brand" label="Add" disabled={showButton} onclick={handleAddContact}>
+                        </lightning-button>
+
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+<!-- Remove contact -->
+            <lightning-layout>
+                <lightning-layout-item size="12">
+                    <lightning-datatable key-field="email" data={mergeObjectList} columns={columns}
+                        onrowaction={handleRowAction} hide-checkbox-column>
+                    </lightning-datatable>
+                        <div  class="slds-var-p-bottom_large" style={showErroMsg}>
+                                <div class="slds-text-color_error"> 
+                                  Please add a contact to Who at client will have access to the online results report dashboard ? field.
+                                 </div>
+                        <div style='display:none'> 
+                            <lightning-input-field  id="contactSelect" class="NSP_WhoAtclientCccessToOnlineResul__c" field-name="NSP_WhoAtclientCccessToOnlineResul__c" 
+                            value={arrayToTextArea} required >
+                            </lightning-input-field>
+                        </div>
+                      </div>
+                </lightning-layout-item>
+                <!-- <lightning-layout-item></lightning-layout-item> -->
+            </lightning-layout>
+
+            <lightning-layout>
+                <lightning-layout-item size="6">
+                    <div class="slds-m-vertical_large">
+                    <template if:true={surveyTypeValues.data}>
+                        <div class="slds-var-m-around_medium">
+                            <lightning-radio-group name="NSP_Survey_Type__c" label="Survey Type"
+                                options={surveyTypeValues.data.values} value={NSP_Survey_Type__c} onchange={handleChange}
+                                required type="radio">
+                            </lightning-radio-group>
+                            <div style='display:none'>
+                                <lightning-input-field  field-name="NSP_Segment__c"  value={segmentType}  class="slds-hidden"></lightning-input-field>
+                                <lightning-input-field  field-name="NSP_Region__c"  value={region}  class="slds-hidden"></lightning-input-field>
+                                <lightning-input-field  field-name="NSP_HRSpeciallist__c"  value={userID}  class="slds-hidden"></lightning-input-field>
+                            
+                             
+                                <lightning-input-field  field-name="NSP_Survey_Type__c" value={NSP_Survey_Type__c}   required >
+                                </lightning-input-field>
+                            </div>
+
+                            <lightning-input-field  class ='slds-m-vertical_large' field-name="NSP_Begin_Date__c" required>
+                            </lightning-input-field>
+
+                            <div style={showEndDate}>
+                                <lightning-input-field class="slds-m-vertical_large NSP_End_Date__c" field-name="NSP_End_Date__c" required={endDateRequired} value={NSP_End_Date__c}>
+                                </lightning-input-field>
+                            </div>
+
+                            <div class ='slds-m-vertical_large'>
+                                <lightning-radio-group name="NSP_BargainingUnitEmployeesComplete__c"
+                                    label="Does the client plan to have any Bargaining Unit Employees complete the survey?"
+                                    options={yesNoValues} value={NSP_BargainingUnitEmployeesComplete__c} required onchange={handleChange} type="radio">
+                                </lightning-radio-group>
+                            </div>
+                            <div style='display:none'> 
+                                <lightning-input-field  class="NSP_BargainingUnitEmployeesComplete__c" field-name="NSP_BargainingUnitEmployeesComplete__c" 
+                                value={NSP_BargainingUnitEmployeesComplete__c} required >
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <template if:true={showUnion}>
+                            <p>An HR Advisor will be contacting you once the survey closes to discuss the best approach
+                                for implementing action plans for union employees </p>
+                        </template>
+                    </template>
+                </div>
+                </lightning-layout-item>
+                <lightning-layout-item></lightning-layout-item>
+            </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="4">
+                <lightning-layout-item>
+                    <!--   file upload start here 
+                    <div class="slds-align_absolute-center slds-p-around_medium">
+                       <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}> </c-wizard-file-upload>
+                     </div>
+                    File Upload End here -->
+                   </lightning-layout-item>
+            </lightning-layout-item>
+           </lightning-layout>
+
+            <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
+               <lightning-button class="slds-m-top_small slds-m-left_small" onclick={handleSave} label="Save and Exit" ></lightning-button>
+
+                <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
+                </lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

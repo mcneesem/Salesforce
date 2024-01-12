@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Name_and_FEIN_Locked__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>A field to note when there is a related Asset record and the Account&apos;s Name and FEIN field should be locked from user updates</description>
+    <externalId>false</externalId>
+    <label>Account Name and FEIN Locked</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>MM Accrual Profile Team</name>
+    <queueSobject>
+        <sobjectType>NSP_Accrual_Profile__c</sobjectType>
+    </queueSobject>
+</Queue>

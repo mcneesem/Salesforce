@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Client_Segment__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Segment</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Business Team</fullName>
+                <default>false</default>
+                <label>Business Team</label>
+            </value>
+            <value>
+                <fullName>Business Team (1 – 30 EEs)</fullName>
+                <default>false</default>
+                <label>Business Team (1 – 30 EEs)</label>
+            </value>
+            <value>
+                <fullName>Core</fullName>
+                <default>false</default>
+                <label>Core</label>
+            </value>
+            <value>
+                <fullName>Core (16 - 49 EEs)</fullName>
+                <default>false</default>
+                <label>Core (16 - 49 EEs)</label>
+            </value>
+            <value>
+                <fullName>Core (31 - 49 EEs)</fullName>
+                <default>false</default>
+                <label>Core (31 - 49 EEs)</label>
+            </value>
+            <value>
+                <fullName>Emerging Growth (100+ EEs)</fullName>
+                <default>false</default>
+                <label>Emerging Growth (100+ EEs)</label>
+            </value>
+            <value>
+                <fullName>Emerging Growth (50 - 149 EEs)</fullName>
+                <default>false</default>
+                <label>Emerging Growth (50 - 149 EEs)</label>
+            </value>
+            <value>
+                <fullName>Emerging Growth (50 - 99 EEs)</fullName>
+                <default>false</default>
+                <label>Emerging Growth (50 - 99 EEs)</label>
+            </value>
+            <value>
+                <fullName>Middle Market</fullName>
+                <default>false</default>
+                <label>Middle Market</label>
+            </value>
+            <value>
+                <fullName>Middle Market Enterprise</fullName>
+                <default>false</default>
+                <label>Middle Market Enterprise</label>
+            </value>
+            <value>
+                <fullName>MidMarket (150 - 749 EEs)</fullName>
+                <default>false</default>
+                <label>MidMarket (150 - 749 EEs)</label>
+            </value>
+            <value>
+                <fullName>Non-PEO Transfer</fullName>
+                <default>false</default>
+                <label>Non-PEO Transfer</label>
+            </value>
+            <value>
+                <fullName>Not Yet Defined</fullName>
+                <default>false</default>
+                <label>Not Yet Defined</label>
+            </value>
+            <value>
+                <fullName>PEO</fullName>
+                <default>false</default>
+                <label>PEO</label>
+            </value>
+            <value>
+                <fullName>Small (1 - 15 EEs)</fullName>
+                <default>false</default>
+                <label>Small (1 - 15 EEs)</label>
+            </value>
+            <value>
+                <fullName>Startup</fullName>
+                <default>false</default>
+                <label>Startup</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

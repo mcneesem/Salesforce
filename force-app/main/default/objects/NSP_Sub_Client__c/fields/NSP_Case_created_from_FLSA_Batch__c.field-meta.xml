@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Case_created_from_FLSA_Batch__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This flag is used to check if case is created for a subclient from the asset FLSA case creation batch.</description>
+    <externalId>false</externalId>
+    <label>Case created from FLSA Batch</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

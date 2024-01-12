@@ -1,0 +1,6 @@
+A Project titled {!pse__Proj__c.Name} has been assigned to the you.
+
+
+You can access it by clicking here:
+
+<a href="{!pse__Proj__c.Link}">{!pse__Proj__c.Name}</a>

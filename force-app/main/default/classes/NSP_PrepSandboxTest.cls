@@ -2,7 +2,7 @@
 class NSP_PrepSandboxTest {
 
     @isTest
-    static void testSandboxPrep(){
+    static void testSandboxPrep() {
         // Insert logic here to create records of the objects that the class your testing manipulates.
         Integer queueCount = 0;
 
@@ -22,10 +22,12 @@ class NSP_PrepSandboxTest {
         System.assertEquals(0, queueCount);
     }
 
-    @isTest
-    static void testManualSteps(){
+    @isTest(SeeAllData = True)
+    static void testManualSteps() {
         Test.startTest();
         NSP_PrepSandbox.runManualSteps();
+        NSP_PrepSandbox.runManualSteps2();
+        NSP_PrepSandbox.doUserImport('sandbox');
         Test.stopTest();
     }
 }

@@ -1,0 +1,265 @@
+<template>
+    <div class="clientContacts slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError} record-id={recordId}
+            object-api-name={objectApiName} density="comfy" onload={handleLoad}>
+            <lightning-formatted-text class="slds-page-header__title" value={label.clientContacts}>
+            </lightning-formatted-text>
+
+            <!-- KDM -->
+            <lightning-layout class="kdmSection slds-m-top_small" multiple-rows>
+                <lightning-layout-item size="7">
+                    <lightning-formatted-text class="slds-m-left_xx-small slds-text-heading_small" value={label.KDM}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="kdmClientName" field-name="NSP_AIMS_ClientNo_KDM__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="kdmClientName" field-name="NSP_KDM_Client_Name__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="kdmClientOfficePhone" field-name="NSP_KDM_Client_Office_Phone__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="kdmClientCellPhone" field-name="NSP_KDM_Client_Cell_Phone__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="kdmClientEmail" field-name="NSP_KDM_Client_Email__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="kdmClientContactMethod" field-name="NSP_KDM_Client_Contact_Method__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <!-- OSS -->
+            <lightning-layout class="ossSection slds-m-top_small" multiple-rows>
+                <lightning-layout-item size="6">
+                    <lightning-formatted-text class="slds-m-left_xx-small slds-text-heading_small" value={label.OSS}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input-field variant="label-hidden" field-name="NSP_OSS_contact_is_same_as_KDM__c"
+                        onchange={makeOSSSameasKDM}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="5">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.OSSSameasKDM}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="ossClientName" field-name="NSP_AIMS_ClientNo_OSS__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="ossClientName" field-name="NSP_OSS_Client_Name__c"
+                        value={oOSSRecord.NSP_OSS_Client_Name__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="ossClientOfficePhone" field-name="NSP_OSS_Client_Office_Phone__c"
+                        value={oOSSRecord.NSP_OSS_Client_Office_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="ossClientCellPhone" field-name="NSP_OSS_Client_Cell_Phone__c"
+                        value={oOSSRecord.NSP_OSS_Client_Cell_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="ossClientEmail" field-name="NSP_OSS_Client_Email__c"
+                        value={oOSSRecord.NSP_OSS_Client_Email__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="ossClientContactMethod" field-name="NSP_OSS_Client_Contact_Method__c"
+                        value={oOSSRecord.NSP_OSS_Client_Contact_Method__c}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <!-- WC -->
+            <lightning-layout class="wcSection slds-m-top_small" multiple-rows>
+                <lightning-layout-item size="6">
+                    <lightning-formatted-text class="slds-m-left_xx-small slds-text-heading_small" value={label.WC}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input-field variant="label-hidden" field-name="NSP_WC_contact_is_same_as_OSS__c"
+                        onchange={makeWCSameasOSS}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="5">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.WCSameasOSS}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="wcClientName" field-name="NSP_AIMS_ClientNo_WC__c">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="wcClientName" field-name="NSP_WC_Client_Name__c"
+                        value={oWCRecord.NSP_WC_Client_Name__c}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="wcClientOfficePhone" field-name="NSP_WC_Client_Office_Phone__c"
+                        value={oWCRecord.NSP_WC_Client_Office_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="wcClientCellPhone" field-name="NSP_WC_Client_Cell_Phone__c"
+                        value={oWCRecord.NSP_WC_Client_Cell_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="wcClientEmail" field-name="NSP_WC_Client_Email__c"
+                        value={oWCRecord.NSP_WC_Client_Email__c}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field class="wcClientContactMethod" field-name="NSP_WC_Client_Contact_Method__c"
+                        value={oWCRecord.NSP_WC_Client_Contact_Method__c}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <!-- PC -->
+            <lightning-layout class="pcSection slds-m-top_small" multiple-rows>
+                <lightning-layout-item size="6">
+                    <lightning-formatted-text class="slds-m-left_xx-small slds-text-heading_small" value={label.PC}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input-field variant="label-hidden" field-name="NSP_PC_is_same_as_OSS__c"
+                        onchange={makePCSameasOSS}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="5">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.PCSameasOSS}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_AIMS_ClientNo_PC__c"></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_PC_Client_Name__c" value={oPCRecord.NSP_PC_Client_Name__c}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_PC_Client_Office_Phone__c"
+                        value={oPCRecord.NSP_PC_Client_Office_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_PC_Client_Cell_Phone__c"
+                        value={oPCRecord.NSP_PC_Client_Cell_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_PC_Client_Email__c" value={oWCRecord.NSP_PC_Client_Email__c}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <!--Changed th API name as part of DF-02087-->
+                    <lightning-input-field field-name="PC_Client_Contact_Method__c"
+                        value={oPCRecord.PC_Client_Contact_Method__c}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        <!-- BACKUP PC -->
+           <lightning-layout class="backupSection slds-m-top_small" multiple-rows>
+               <lightning-layout-item size="6">
+                   <lightning-formatted-text class="slds-m-left_xx-small slds-text-heading_small"
+                       value={label.BACKUPPC}>
+                   </lightning-formatted-text>
+               </lightning-layout-item>
+               <lightning-layout-item>
+                   <lightning-input-field class="noBackUpPC" variant="label-hidden" field-name="NSP_No_back_up_PC__c"
+                       onchange={makeBackupPCdisable}></lightning-input-field>
+               </lightning-layout-item>
+               <lightning-layout-item size="5">
+                   <lightning-formatted-text class="slds-form-element__label" value={label.NOBACKUPPC}>
+                   </lightning-formatted-text>
+               </lightning-layout-item>
+               <template if:true={reloadBackupFields}>
+               <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                   <span class={addBlackColor}>{label.clientContactAiims}</span>
+                   <lightning-input-field variant="label-hidden" field-name="NSP_AIMS_ClientNo_Backup_PC__c" disabled={backupFieldDisabled}
+                       value = {oBackupRecord.NSP_AIMS_ClientNo_Backup_PC__c}>
+                   </lightning-input-field>
+               </lightning-layout-item>
+               <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                   <span class={addBlackColor}>{label.backUpPcClientContactName}</span>
+                   <lightning-input-field variant="label-hidden" field-name="NSP_Back_up_PC_Client_Name__c" 
+                       value={oBackupRecord.NSP_Back_up_PC_Client_Name__c} disabled={backupFieldDisabled}>
+                   </lightning-input-field>
+               </lightning-layout-item>
+               <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                   <span class={addBlackColor}>{label.backUpPcClientOfficePhone}</span>
+                   <lightning-input-field variant="label-hidden" field-name="NSP_Back_up_Client_Office_Phone__c"
+                       value={oBackupRecord.NSP_Back_up_Client_Office_Phone__c} disabled={backupFieldDisabled}>
+                   </lightning-input-field>
+               </lightning-layout-item>
+               <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                   <span class={addBlackColor}>{label.backUpPcClientCellPhone}</span>
+                   <lightning-input-field variant="label-hidden" field-name="NSP_Back_up_Client_Cell_Phone__c"
+                       value={oBackupRecord.NSP_Back_up_Client_Cell_Phone__c} disabled={backupFieldDisabled}>
+                   </lightning-input-field>
+               </lightning-layout-item>
+               <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                   <span class={addBlackColor}>{label.backUpPcClientEmail}</span>
+                   <lightning-input-field variant="label-hidden" field-name="NSP_Back_up_Client_Email__c"
+                       value={oBackupRecord.NSP_Back_up_Client_Email__c} disabled={backupFieldDisabled}>
+                   </lightning-input-field>
+               </lightning-layout-item>
+               <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                   <span class={addBlackColor}>{label.backUpPcClientContactMethod}</span>
+                   <lightning-input-field variant="label-hidden" field-name="NSP_Back_up_Client_Contact_Method__c"
+                       value={oBackupRecord.NSP_Back_up_Client_Contact_Method__c} disabled={backupFieldDisabled}>
+                   </lightning-input-field>
+               </lightning-layout-item>
+           </template>
+           </lightning-layout>
+
+            <!-- HR Contact -->
+            <lightning-layout class="hrSection slds-m-top_small" multiple-rows>
+                <lightning-layout-item size="6">
+                    <lightning-formatted-text class="slds-m-left_xx-small slds-text-heading_small" value="HR Contact">
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input-field variant="label-hidden" field-name="HR_contact_is_same_as_OSS__c"
+                        onchange={makeHRSameasOSS}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="5">
+                    <lightning-formatted-text class="slds-form-element__label" value={label.HRSameasOSS}>
+                    </lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_AIMS_ClientNo_HR__c"></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_HR_Client_Name__c" value={hrRecord.NSP_HR_Client_Name__c}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="HR_Contact_Office_Phone__c"
+                        value={hrRecord.HR_Contact_Office_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="HR_Contact_Cell_Phone__c"
+                        value={hrRecord.HR_Contact_Cell_Phone__c}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="NSP_HR_Client_Email__c" value={hrRecord.NSP_HR_Client_Email__c}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field field-name="HR_Contact_Method__c"
+                        value={hrRecord.HR_Contact_Method__c}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-layout>
+                <lightning-layout-item size="7">
+                    <lightning-input-field field-name="Client_Contact_Notes__c"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+</template>

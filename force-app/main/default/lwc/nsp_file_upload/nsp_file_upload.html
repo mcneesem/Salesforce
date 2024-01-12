@@ -1,0 +1,73 @@
+<template>
+	<lightning-formatted-text class="slds-page-header__title slds-var-p-bottom_xx-small" value="Attachments"> </lightning-formatted-text>
+	<template if:true={isHavingPermission}>
+	<div class="slds-p-left_large">
+		<div class="slds-p-around_medium lgc-bg">
+			<div class="demo-only" style="max-width:1000px">
+				<div class="slds-form-element"> <span class="slds-form-element__label" id="file-selector-primary-label"></span>
+					<div class="slds-form-element__control">
+						<div class="slds-file-selector slds-file-selector_images">
+							<div class="slds-file-selector__dropzone slds-has-drag-over">
+								<lightning-file-upload name="fileUploader" record-id={recordId} onuploadfinished={handleUploadFinished} multiple> </lightning-file-upload>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/> </div>
+	</template>
+	
+	<template if:true={relatedfile}>
+		<template if:false={showSpinner}>
+		<div class="slds-box slds-theme_default">
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+				<thead>
+					<tr class="slds-text-title_caps">
+						<th scope="col" class="slds-p-horizontal_small" style="text-align:center">
+							<div class="slds-truncate" title="File Name">File Name</div>
+						</th>
+						<th scope="col" class="slds-p-horizontal_small" style="text-align:center">
+							<div class="slds-truncate" title="Created Date">Created Date</div>
+						</th>
+						<th scope="col" class="slds-p-horizontal_small" style="text-align:center">
+							<div class="slds-truncate" title="Download">Download</div>
+						</th>
+						<th scope="col" if:true={isHavingPermission} class="slds-p-horizontal_small" style="text-align:center">
+							<div class="slds-truncate" title="Delete">Delete</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={relatedfile} for:item="repReq">
+						<tr key={repReq.Id}>
+							<td data-label="File Name" style="text-align:center">
+								<div class="slds-truncate" title="">{repReq.PathOnClient}</div>
+							</td>
+							<td data-label="Created Date" style="text-align:center">
+								<div class="slds-truncate" title="">
+									<lightning-formatted-date-time value={repReq.CreatedDate}></lightning-formatted-date-time>
+								</div>
+							</td>
+							<td data-label="Download" style="text-align:center">
+								<div class="slds-truncate" title="">
+									<lightning-button variant="base" icon-name="action:download" data-recordid={repReq.ContentDocumentId} onclick={downloadFile}></lightning-button>
+								</div>
+							</td>
+							<td  if:true={isHavingPermission} style="text-align:center">
+								<lightning-button variant="base" icon-name="utility:delete" data-recordid={repReq.ContentDocumentId} onclick={handleDeleteRelatedFile}></lightning-button>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
+	</template>
+	<c-nsp_modal-dialog buttons={buttonConfig} if:true={isDeleteClicked} onbuttonclick={handleButtonClick}> 
+		<h1 class="deleteMessage">{deleteMessage}</h1>
+	</c-nsp_modal-dialog>
+</template>
+<div if:true={showSpinner} class="slds-is-relative">
+	<lightning-spinner variant="brand"></lightning-spinner>
+</div>
+</template>

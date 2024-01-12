@@ -1,0 +1,14 @@
+<!-- 
+@Name: nspCreateCaseAura.cmp
+@Description: This describes about the custom creation of Case.
+-->
+<aura:component implements="force:lightningQuickActionWithoutHeader, force:hasRecordId, lightning:actionOverride,lightning:isUrlAddressable" access="global">
+    <aura:handler action ="{!c.doInit}" name ="init" value="{!this}"  />
+    <aura:handler name="change" value="{!v.pageReference}"
+    action="{!c.onPageReferenceChanged}" />
+    
+    <lightning:workspaceAPI aura:id="workspace"/> 
+    <aura:attribute name="parentId" type="String" />
+    <c:nsp_CustomCaseCreationPage parentId="{!v.parentId}" oncloseconsoletab= "{!c.handleCloseConsoleTab}"></c:nsp_CustomCaseCreationPage>"
+</aura:component>
+

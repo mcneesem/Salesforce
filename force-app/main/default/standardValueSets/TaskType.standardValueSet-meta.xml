@@ -86,4 +86,14 @@
         <default>false</default>
         <label>Demo</label>
     </standardValue>
+    <standardValue>
+        <fullName>Client Transition Meeting Request</fullName>
+        <default>false</default>
+        <label>Client Transition Meeting Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Employee Orientation Meeting Request</fullName>
+        <default>false</default>
+        <label>Employee Orientation Meeting Request</label>
+    </standardValue>
 </StandardValueSet>

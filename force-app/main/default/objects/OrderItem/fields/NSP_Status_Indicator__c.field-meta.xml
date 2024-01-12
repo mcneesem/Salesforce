@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Status_Indicator__c</fullName>
+    <description>Indicates Order Product record status</description>
+    <externalId>false</externalId>
+    <formula>IF (
+
+SBQQ__Activated__c = TRUE,
+IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos;, &apos;Activated&apos;, 20, 20),
+CASE(
+NSP_ReCalculation_Status_Internal__c, &apos;Staged&apos;, IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos;, &apos;Staged&apos;, 20, 20), 
+&apos;Processing&apos;, IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusOrange.png&apos;, &apos;Processing&apos;, 20, 20),
+IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusOrange.png&apos;, &apos;Draft&apos;, 20, 20)
+) 
+
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Red -Hold; Amber-Draft / In-Progress, Green - Activated</inlineHelpText>
+    <label>Status Indicator</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

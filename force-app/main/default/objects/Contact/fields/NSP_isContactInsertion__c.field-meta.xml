@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_isContactInsertion__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>STY-02840. This field is created so that Work phone and work email will not be erased during the creation of Contact. As we have a scenario where Work Phone and Work Email should be erased after the insertion of direct ACR.</description>
+    <externalId>false</externalId>
+    <label>isContactInsertion</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

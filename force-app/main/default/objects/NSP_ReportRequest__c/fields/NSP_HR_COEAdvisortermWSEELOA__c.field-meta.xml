@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_HR_COEAdvisortermWSEELOA__c</fullName>
+    <externalId>false</externalId>
+    <label>HR COE Advisor - term WSEE on LOA?</label>
+    <required>false</required>
+        <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Caroline Hernandez</fullName>
+                <default>false</default>
+                <label>Caroline Hernandez</label>
+            </value>
+            <value>
+                <fullName>Rebecca Aviles</fullName>
+                <default>false</default>
+                <label>Rebecca Aviles</label>
+            </value>
+            <value>
+                <fullName>Kimberly Franklin</fullName>
+                <default>false</default>
+                <label>Kimberly Franklin</label>
+            </value>
+            <value>
+                <fullName>Celenia Estime</fullName>
+                <default>false</default>
+                <label>Celenia Estime</label>
+            </value>
+            <value>
+                <fullName>Lori Sweeney</fullName>
+                <default>false</default>
+                <label>Lori Sweeney</label>
+            </value>
+            <value>
+                <fullName>Taylor Queen</fullName>
+                <default>false</default>
+                <label>Taylor Queen</label>
+            </value>
+            <value>
+                <fullName>Dawn Motsiff</fullName>
+                <default>false</default>
+                <label>Dawn Motsiff</label>
+            </value>
+            <value>
+                <fullName>Angela Smart</fullName>
+                <default>false</default>
+                <label>Angela Smart</label>
+            </value>
+            <value>
+                <fullName>Andrea Cook</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Andrea Cook</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

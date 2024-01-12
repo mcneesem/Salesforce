@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Final BT Email Template - Welcome Call</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Final BT Email Template - Welcome Call</name>
+    <style>freeForm</style>
+    <subject>HR Specialist Welcome Call Request – {!Asset.Account} {!Asset.NSP_Client__c}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

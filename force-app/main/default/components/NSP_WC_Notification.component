@@ -1,0 +1,76 @@
+<apex:component access="global" controller="NSP_WC_NotificationController">
+    <apex:attribute name="currentRecordId" description="recordId" type="String" assignTo="{!recId}" />
+    <apex:attribute name="impProfile" description="implementation profile " type="Implementation_Profile__c" />
+
+    <apex:outputpanel rendered="{!CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'NH')}">
+        <apex:outputText value="This Client has employees in New Hampshire. "/>
+        <apex:outputpanel rendered="{!impProfile.Effective_Date_Payroll_Worker_comp_EPLI__c !=NULL}">
+        <apex:outputText value="The client’s Effective Date is:"/>
+        <apex:outputText value="{0,date,MM/dd/yy}">
+            <apex:param value="{!impProfile.Effective_Date_Payroll_Worker_comp_EPLI__c}" />
+        </apex:outputText>&nbsp;
+        <apex:outputText value=". This date is subject to change." />
+    </apex:outputpanel>
+    </apex:outputpanel>
+
+    <apex:outputPanel rendered="{!AND(OR(CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'WY'),
+                                CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'ND'),
+                                CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'WA'),
+                                CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'OH')))}">
+        <p>This Client has employees in the following WC Monopolistic states:
+            <br/>
+            <apex:repeat value="{!employeesWhoWorkList}" var="string" id="theRepeat">
+                <apex:outputText value="{!string}" id="theValue" />
+                <br/>
+            </apex:repeat>
+        </p>
+    </apex:outputPanel>
+
+
+    <apex:outputPanel rendered="{!OR(OR(CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'MA'),
+                                CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'NY'),
+                                CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'RI')),
+                                CONTAINS(impProfile.Employees_work_in_the_following_states__c ,'VA')) }">
+        <p>The Client has employees who work in :&nbsp;
+            <apex:outputText value="{!employeesWhoWork}" />
+           </p>
+       
+
+    </apex:outputPanel>
+
+
+    <apex:outputPanel rendered="{!AND(OR(CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'MA'),
+                                CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'NY'),
+                                CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'RI'),
+                                CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'VA')),
+                                IF(impProfile.Client_does_business_in_MA_NY_or_VA__c=='Yes',True,FALSE),
+								IF(impProfile.RecordType.Name=='Middle Market',True,FALSE))}">
+         
+        <p>The client does business in : 
+        <apex:outputPanel rendered="{!CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'MA')}">
+            Massachusetts &nbsp;
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'NY')}">
+            New York &nbsp;
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'RI')}">
+            Rhode Island <br/>
+        </apex:outputPanel> 
+        <apex:outputPanel rendered="{!CONTAINS(impProfile.Client_business_in_MA_NY_or_VA__c ,'VA')}">
+            Virginia
+        </apex:outputPanel></p>
+    </apex:outputPanel>
+	
+    <apex:outputPanel rendered="{!AND(OR(CONTAINS(impProfile.NSP_Business_Meeting_States__c ,'MA'),
+                                CONTAINS(impProfile.NSP_Business_Meeting_States__c ,'NY'),
+                                CONTAINS(impProfile.NSP_Business_Meeting_States__c ,'RI'),
+                                CONTAINS(impProfile.NSP_Business_Meeting_States__c ,'VA')),
+                                IF(impProfile.Client_does_business_in_MA_NY_or_VA__c=='Yes',True,FALSE),
+								IF(impProfile.RecordType.Name=='FSO',True,FALSE))}">
+         
+        <p>The client does business in :&nbsp;  
+            <apex:outputText value="{!clientDoesBusiness}" />
+        </p>
+    </apex:outputPanel>
+	
+</apex:component>

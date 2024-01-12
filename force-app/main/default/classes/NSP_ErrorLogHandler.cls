@@ -44,13 +44,60 @@ public class NSP_ErrorLogHandler {
 *                
 */
     public static void logSaveException(String className, String methodName, String message){
+        createErrorLogObj(className, methodName, message);
+    }
+
+    /**
+     * This method logs error for the failed results of Database.insert/update operation in DB.
+     * @param className String holds the name of the class
+     * @param methodName String holds the name of the method from the class
+     * @param result - List of saveResult records
+     * @return void
+     */
+    public static void logSaveResultsException(String className, String methodName, List<Database.SaveResult> result){
+        createErrorLogObj(className, methodName, getErrorMessage(NSP_Utilities.getDbErrorRecords(result)));
+    }
+
+    /**
+     * This method logs error for the failed results of Database.delete operation in DB.
+     * @param className String holds the name of the class
+     * @param methodName String holds the name of the method from the class
+     * @param result - List of deleteResult records
+     * @return void
+     */
+    public static void logDeleteResultsException(String className, String methodName, List<Database.DeleteResult> result){
+        createErrorLogObj(className, methodName, NSP_Utilities.getDbErrorRecords(result));
+    }
+
+    /**
+     * This method logs error for the failed results of Database.upsert operation in DB.
+     * @param className String holds the name of the class
+     * @param methodName String holds the name of the method from the class
+     * @param result - List of deleteResult records
+     * @return void
+     */
+    public static void logUpsertResultsException(String className, String methodName, List<Database.UpsertResult> result){
+        createErrorLogObj(className, methodName, NSP_Utilities.getDbErrorRecords(result));
+    }
+
+    private static void createErrorLogObj(String className, String methodName, List<String> messages){
+        if(!messages.isEmpty()){
+            createErrorLogObj(className, methodName, getErrorMessage(messages));
+        }
+    }
+
+    private static void createErrorLogObj(String className, String methodName, String message){
         //Creating a refernce for the log Object
         NSP_Error_Log__c log = new NSP_Error_Log__c();
         log.NSP_Class__c = className;
-        log.NSP_Method__c = methodName;                
+        log.NSP_Method__c = methodName;
         log.NSP_Description__c = String.valueOf(message);
         
         //Inserting the record in the log object
         Insert log;
+    }
+
+    private static String getErrorMessage(List<String> errors){
+        return String.join(errors, ' <br> ');
     }
 }

@@ -1,0 +1,24 @@
+<template>
+  <lightning-record-edit-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onerror={handleError}
+    onload={handleLoad}
+    density="comfy">
+    <lightning-formatted-text
+      class="slds-page-header__title slds-var-p-bottom_xx-small"
+      value={label.deductions}>
+    </lightning-formatted-text>
+    <c-nsp_selection-box
+      disabled={disabledFields.NSP_FormsAreNeededForFollowingDeduction__c}
+      multiple
+      label={label.NSP_FormsAreNeededForFollowingDeduction}
+      class={styles.NSP_FormsAreNeededForFollowingDeduction__c}
+      field-api-name="Implementation_Profile__c.NSP_FormsAreNeededForFollowingDeduction__c"
+      record-type-id={recordTypeId}
+      value={field.NSP_FormsAreNeededForFollowingDeduction__c}
+      data-name="NSP_FormsAreNeededForFollowingDeduction__c"
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+  </lightning-record-edit-form>
+</template>

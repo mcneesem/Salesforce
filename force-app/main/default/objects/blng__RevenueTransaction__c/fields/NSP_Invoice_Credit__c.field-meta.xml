@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Invoice_Credit__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( !ISBLANK(blng__InvoiceLine__c) , HYPERLINK(Left($Api.Enterprise_Server_URL_190,(find(&apos;/services&apos;,$Api.Enterprise_Server_URL_190))) +  blng__InvoiceLine__r.blng__Invoice__r.Id ,  blng__InvoiceLine__r.blng__Invoice__r.Name ) , 
+IF(!ISBLANK(blng__CreditNoteLine__c),HYPERLINK(Left($Api.Enterprise_Server_URL_190,(find(&apos;/services&apos;,$Api.Enterprise_Server_URL_190))) +  blng__CreditNoteLine__r.blng__CreditNote__r.Id ,  blng__CreditNoteLine__r.blng__CreditNote__r.Name),&apos;&apos;))</formula>
+    <label>Invoice/Credit</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

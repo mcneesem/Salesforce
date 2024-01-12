@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ITA - FAQ Unapproving Time</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>ITA - FAQ Unapproving Time</name>
+    <style>freeForm</style>
+    <subject>ITA - FAQ Unapproving Time</subject>
+    <textOnly>Hello {!Contact.FirstName}
+
+Thank you for contacting Insperity Time &amp; Attendance support. I&apos;m happy to assist with your inquiry about unapproving time. There are a couple ways you can unapprove time for this pay period:
+
+To unapprove time for a single employee, navigate to Daily Procedures &gt; Total Hours for the employee in question and click the UNAPPROVE button(s). 
+To unapprove time for multiple employees, navigate to End of Period Procedures &gt; Approvals and select &quot;Approved Only&quot; from the Filter List drop-down menu. Then click the LAUNCH APPROVALS button. The approvals page will open in a new tab. Uncheck the approval box(es) to the left of the employee name(s) and then click the SAVE button. 
+
+If you have additional questions or concerns, please let us know and we will be happy to help.
+
+Thank you,
+
+Technical Support Team
+
+8401 Greenway Blvd. Suite 1100 | Middleton, WI 53562
+OFFICE: 800-314-8223 | FAX: 262-364-3800</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

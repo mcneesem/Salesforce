@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_EffectiveDateRequiredWhenRevised</fullName>
+    <active>true</active>
+    <description>Effective Date Required When Revised on AIMS PTO Smartform</description>
+    <errorConditionFormula>AND(  CONTAINS(   RecordType.DeveloperName   , &apos;AIMS&apos;) ,  
+      ISPICKVAL( NSP_New_Revised__c ,&apos;Revised&apos;) ,   
+       ISBLANK(NSP_Effective_date__c) )</errorConditionFormula>
+    <errorDisplayField>NSP_Effective_date__c</errorDisplayField>
+    <errorMessage>Effective date is Mandatory.</errorMessage>
+</ValidationRule>

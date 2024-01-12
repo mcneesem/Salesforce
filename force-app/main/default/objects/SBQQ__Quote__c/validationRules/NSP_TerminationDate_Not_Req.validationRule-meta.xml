@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_TerminationDate_Not_Req</fullName>
+    <active>true</active>
+    <description>Termination date not required for normal quote (DF-04255)</description>
+    <errorConditionFormula>AND(NSP_TransactionType__c  != &apos;Termination&apos;,  NOT(ISNULL(NSP_TerminationDate__c)) || NOT(ISBLANK(NSP_TerminationDate__c)))</errorConditionFormula>
+    <errorDisplayField>NSP_TerminationDate__c</errorDisplayField>
+    <errorMessage>Termination Date Should Not Be Populated For This Type Of Quote</errorMessage>
+</ValidationRule>

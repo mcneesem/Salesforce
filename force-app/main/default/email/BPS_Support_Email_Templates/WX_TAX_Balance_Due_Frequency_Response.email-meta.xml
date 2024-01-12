@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>WX TAX - Balance Due - Frequency Response</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>WX TAX - Balance Due - Frequency Response</name>
+    <style>freeForm</style>
+    <subject>WX TAX - Balance Due - Frequency Response</subject>
+    <textOnly>Insperity Payroll Services 
+19001 Crescent Springs Drive 
+Kingwood, Texas 77339 
+ 
+ 
+12/28/2022 
+ 
+ 
+Name of Agency 
+Agency Department Name 
+Mailing Address 
+City, State Zip Code 
+ 
+ 
+RE: {!Account.Name}
+{!Account.NSP_FEIN__c}
+{!Account.AccountNumber}
+Notice Number 
+ 
+ 
+Dear Sir or Madam, 
+ 
+ 
+Our client received the attached balance due, due to incorrect frequency setup. We assumed the tax filing responsibility for our client as of first check date. I have carefully reviewed the information provided in this notice and would like to request abatement of penalties due. 
+ 
+We remitted payments at the most frequent payment frequency as we were pending the assigned frequency from our client. Upon receiving the correct frequency, we promptly updated our records to ensure accurate and timely payments would be completed going forward. 
+ 
+I have enclosed the returns for the periods indicated on the notice. Please apply the payments as indicated below. 
+ 
+Payment/Filing remitted on XX/XX/XXX 
+Payment amount Period to be applied 
+ 
+OR 
+ 
+Our records indicate we did not receive frequency change notice in a timely manner from client, which caused prior frequency to remain in our system, causing this issue. We have now updated our system to ensure we have correct frequency going forward. 
+ 
+ 
+We respectfully ask to have penalty in the amount of $0.00 abated as there was no malicious intent or willful neglect of compliance. 
+ 
+ 
+Please understand it was not NS Dev Test RMD intent to defraud nor an act of willful negligence to process any late payments or filings. 
+ 
+ 
+If you need additional assistance in this matter or have any questions, I can be reached at or IPS.TAX@Insperity.com. 
+ 
+ 
+Many thanks for your attention to this matter. 
+ 
+ 
+Regards,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

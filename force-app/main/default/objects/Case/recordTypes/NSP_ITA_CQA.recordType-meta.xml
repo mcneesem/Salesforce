@@ -1,0 +1,1419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ITA_CQA</fullName>
+    <active>true</active>
+    <businessProcess>Onboarding</businessProcess>
+    <label>ITA CQA</label>
+    <picklistValues>
+        <picklist>Areas_of_Interest__c</picklist>
+        <values>
+            <fullName>401 %28K%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_AppealedBy__c</picklist>
+        <values>
+            <fullName>Claimant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Area_Of_Assistance__c</picklist>
+        <values>
+            <fullName>401%28K%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BENEFITS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BUSINESS TEAM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EEO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HUMAN RESOURCES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INSPERITY EXPENSE MANAGEMENT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INSPERITY INTEGRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INSPERITY ORGANIZATIONAL PLANNING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INSPERITY PERFORMANCE MANAGEMNT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MARKETPLACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTHER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAYROLL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAFETY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUGGESTIONS AND COMMENTS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TRAINING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TTY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WEBSUPPORT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Browser_Type__c</picklist>
+        <values>
+            <fullName>Edge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fire Fox</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google Chrome</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internet Explorer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safari</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_CQA_Cause__c</picklist>
+        <values>
+            <fullName>Best Practice Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client User Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentation Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect Assignments %28Implementer%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Misconfiguration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_CQA_Initial_Quality__c</picklist>
+        <values>
+            <fullName>No Current Payroll Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potential Current Payroll Impact</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_CQA_Issue_Type__c</picklist>
+        <values>
+            <fullName>Accruals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accruals - Smartform Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Export Mapping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holiday - Pay Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lunch%2FBreak Config</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master CQA Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Standard - Pay Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pay Periods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pay Types</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pay-Current</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Points Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premium - Pay Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Punch Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary Config</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Step Zero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Units Processing</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_CQA_Resulting_Severity__c</picklist>
+        <values>
+            <fullName>%28L1%29 Accruals Miscalculation with Pay Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L1%29 CA Accruals Miscalculation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L1%29 Compliance Updates with Miscalculations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L1%29 Pay Miscalculation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L2%29 Compliance Updates - No Miscalculations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L2%29 Crucial Update - No Miscalculations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L2%29 Non-CA Accruals Miscalculation no Pay Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L3%29 Best Practice Updates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L3%29 Documentation Updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L3%29 UX Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28L4%29 No Impact - No Updates</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_CQA_Severity__c</picklist>
+        <values>
+            <fullName>L1-Payroll Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L2-Crucial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L3-Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L4-None</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Case_Sub_Status__c</picklist>
+        <values>
+            <fullName>Can%27t Confirm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Terminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Duplicate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Junk Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not an Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resolved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resolved by Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent to Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To Be Scheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unable to contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unassigned</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Unresolved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Tax Agency</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_ClaimState__c</picklist>
+        <values>
+            <fullName>AK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NJ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WY</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Complexity_Level__c</picklist>
+        <values>
+            <fullName>Level 1 %E2%80%93 Standard %28NSP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 2 %E2%80%93 Non-Standard %28NSP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 3 %E2%80%93 Legal Escalation %28CP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 4 %E2%80%93 Equity%2FDeferred Comp %28CP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 5 %E2%80%93 ATP %28CP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 6 %E2%80%93 Settlement %28CP%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Consumer_Privacy_Act_Category__c</picklist>
+        <values>
+            <fullName>Data Collection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Removal Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opt-Out Request</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Covid_19__c</picklist>
+        <values>
+            <fullName>Business Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA Balance Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Credit%2FAdjustment %24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Layoffs%2FFurloughs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Misc Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Punching</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Dunning_Automation__c</picklist>
+        <values>
+            <fullName>Automated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manual</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Dunning_Dispute_Resolution__c</picklist>
+        <values>
+            <fullName>Credited</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resolved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unresolved</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Dunning_Emails_Sent__c</picklist>
+        <values>
+            <fullName>120 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>135 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>45 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>90 Days</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Dunning_Type__c</picklist>
+        <values>
+            <fullName>ACH Chargeback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC Processor Dispute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return Check</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Findings__c</picklist>
+        <values>
+            <fullName>Exemption Misclassification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Improper Wage Deductions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meal Breaks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Violations Found</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recordkeeping Violation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rest Periods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rounding Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training Time</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Operating_System__c</picklist>
+        <values>
+            <fullName>Macintosh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windows 10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windows 2003 Server</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windows 2008 Server</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windows 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windows 8%2E1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Preferred_method_of_contact__c</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Rating__c</picklist>
+        <values>
+            <fullName>Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Somewhat Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat Unfavorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Responsible_Party_for_Penalty__c</picklist>
+        <values>
+            <fullName>Client Responsibility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Responsibility</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_StateOfAudit__c</picklist>
+        <values>
+            <fullName>AK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NJ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WY</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dunning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Follow-up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non SLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>ASAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Payroll Emergency</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Addressed Client Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Answered Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approved Exception</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPS - Assigned to Regeneration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPS - Currently Not Interested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPS - Enrolled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed to Non-Exempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changing Business Structure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Enrolled on-line</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equifax - AT RISK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equifax - NO RISK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equifax - NOT AFFECTED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equifax - REDIRECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fulfilled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Exemption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid in Multiple Clients</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll VM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier Concern - AT RISK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier Concern - NO RISK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refer to Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred from Benefits Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to HRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Renewals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Service Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Request Withdrawn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent - Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent - Fax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent - Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent Materials</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terming</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Updated Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wages Raised</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>CASPSL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CASPSL New PT EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Congruex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dunning - Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dunning - Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holiday Admin Relief</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Request - WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Request WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobile %E2%80%93 WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobile - WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Jurisdiction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outage %E2%80%93 WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outage - WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance International User</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time International User</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TimeStar Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trigild %E2%80%93 New Property</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO%2FWA Transition</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_List_all_Default_Pay_Codes_in_AIMS__c</fullName>
+    <externalId>false</externalId>
+    <label>List all Default Pay Codes in AIMS:</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Salary – Exempt</fullName>
+                <default>false</default>
+                <label>Salary – Exempt</label>
+            </value>
+            <value>
+                <fullName>Salary – Non Exempt / OT / DT</fullName>
+                <default>false</default>
+                <label>Salary – Non Exempt / OT / DT</label>
+            </value>
+            <value>
+                <fullName>Rate 1 Reg / OT / DT</fullName>
+                <default>false</default>
+                <label>Rate 1 Reg / OT / DT</label>
+            </value>
+            <value>
+                <fullName>Rate 2 Reg / OT / DT</fullName>
+                <default>false</default>
+                <label>Rate 2 Reg / OT / DT</label>
+            </value>
+            <value>
+                <fullName>Rate 3 Reg / OT / DT</fullName>
+                <default>false</default>
+                <label>Rate 3 Reg / OT / DT</label>
+            </value>
+            <value>
+                <fullName>Self Employed Earnings</fullName>
+                <default>false</default>
+                <label>Self Employed Earnings</label>
+            </value>
+            <value>
+                <fullName>Salary Exempt Day Rate</fullName>
+                <default>false</default>
+                <label>Salary Exempt Day Rate</label>
+            </value>
+            <value>
+                <fullName>Salary Exempt/Prorated</fullName>
+                <default>false</default>
+                <label>Salary Exempt/Prorated</label>
+            </value>
+            <value>
+                <fullName>Commission $ Reg</fullName>
+                <default>false</default>
+                <label>Commission $ Reg</label>
+            </value>
+            <value>
+                <fullName>Commission $ Sup</fullName>
+                <default>false</default>
+                <label>Commission $ Sup</label>
+            </value>
+            <value>
+                <fullName>Retro Pay $</fullName>
+                <default>false</default>
+                <label>Retro Pay $</label>
+            </value>
+            <value>
+                <fullName>Retro Pay #</fullName>
+                <default>false</default>
+                <label>Retro Pay #</label>
+            </value>
+            <value>
+                <fullName>Fringe Sup</fullName>
+                <default>false</default>
+                <label>Fringe Sup</label>
+            </value>
+            <value>
+                <fullName>Holiday</fullName>
+                <default>false</default>
+                <label>Holiday</label>
+            </value>
+            <value>
+                <fullName>Tracking Holiday</fullName>
+                <default>false</default>
+                <label>Tracking Holiday</label>
+            </value>
+            <value>
+                <fullName>Non Discretionary Bonus ND</fullName>
+                <default>false</default>
+                <label>Non Discretionary Bonus ND</label>
+            </value>
+            <value>
+                <fullName>Hours Worked – Tracking Not Print on Stub</fullName>
+                <default>false</default>
+                <label>Hours Worked – Tracking Not Print on Stub</label>
+            </value>
+            <value>
+                <fullName>Missed Meal Occurrences</fullName>
+                <default>false</default>
+                <label>Missed Meal Occurrences</label>
+            </value>
+            <value>
+                <fullName>Missed Rest Occurrences</fullName>
+                <default>false</default>
+                <label>Missed Rest Occurrences</label>
+            </value>
+            <value>
+                <fullName>Bereavement / Tracking Bereavement</fullName>
+                <default>false</default>
+                <label>Bereavement / Tracking Bereavement</label>
+            </value>
+            <value>
+                <fullName>Volunteer / Tracking Volunteer</fullName>
+                <default>false</default>
+                <label>Volunteer / Tracking Volunteer</label>
+            </value>
+            <value>
+                <fullName>Weather Day / Tracking Weather Day</fullName>
+                <default>false</default>
+                <label>Weather Day / Tracking Weather Day</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

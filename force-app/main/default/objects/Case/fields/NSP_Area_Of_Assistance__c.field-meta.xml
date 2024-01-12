@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Area_Of_Assistance__c</fullName>
+    <externalId>false</externalId>
+    <label>Area of Assistance</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401(K)</fullName>
+                <default>false</default>
+                <label>401(K)</label>
+            </value>
+            <value>
+                <fullName>BENEFITS</fullName>
+                <default>false</default>
+                <label>BENEFITS</label>
+            </value>
+            <value>
+                <fullName>BUSINESS TEAM</fullName>
+                <default>false</default>
+                <label>BUSINESS TEAM</label>
+            </value>
+            <value>
+                <fullName>EEO</fullName>
+                <default>false</default>
+                <label>EEO</label>
+            </value>
+            <value>
+                <fullName>HUMAN RESOURCES</fullName>
+                <default>false</default>
+                <label>HUMAN RESOURCES</label>
+            </value>
+            <value>
+                <fullName>INSPERITY EXPENSE MANAGEMENT</fullName>
+                <default>false</default>
+                <label>INSPERITY EXPENSE MANAGEMENT</label>
+            </value>
+            <value>
+                <fullName>INSPERITY INTEGRA</fullName>
+                <default>false</default>
+                <label>INSPERITY INTEGRA</label>
+            </value>
+            <value>
+                <fullName>INSPERITY ORGANIZATIONAL PLANNING</fullName>
+                <default>false</default>
+                <label>INSPERITY ORGANIZATIONAL PLANNING</label>
+            </value>
+            <value>
+                <fullName>INSPERITY PERFORMANCE MANAGEMNT</fullName>
+                <default>false</default>
+                <label>INSPERITY PERFORMANCE MANAGEMNT</label>
+            </value>
+            <value>
+                <fullName>MARKETPLACE</fullName>
+                <default>false</default>
+                <label>MARKETPLACE</label>
+            </value>
+            <value>
+                <fullName>OTHER</fullName>
+                <default>false</default>
+                <label>OTHER</label>
+            </value>
+            <value>
+                <fullName>PAYROLL</fullName>
+                <default>false</default>
+                <label>PAYROLL</label>
+            </value>
+            <value>
+                <fullName>SAFETY</fullName>
+                <default>false</default>
+                <label>SAFETY</label>
+            </value>
+            <value>
+                <fullName>SUGGESTIONS AND COMMENTS</fullName>
+                <default>false</default>
+                <label>SUGGESTIONS AND COMMENTS</label>
+            </value>
+            <value>
+                <fullName>TRAINING</fullName>
+                <default>false</default>
+                <label>TRAINING</label>
+            </value>
+            <value>
+                <fullName>TTY</fullName>
+                <default>false</default>
+                <label>TTY</label>
+            </value>
+            <value>
+                <fullName>WEBSUPPORT</fullName>
+                <default>false</default>
+                <label>WEBSUPPORT</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

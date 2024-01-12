@@ -1,0 +1,113 @@
+c-nsp_implementation-profile lightning-input-field .slds-form-element__label{
+	font-weight: 500;
+	color: #0000FF;
+}
+
+c-nsp_implementation-profile lightning-input .slds-form-element__label{
+	font-weight: 500;
+	color: #0000FF;
+}
+
+c-nsp_implementation-profile .answered lightning-formatted-text{
+    color: #000000;
+    font-weight: 500;
+}
+
+c-nsp_implementation-profile lightning-formatted-text.answered{
+    color: #000000;
+    font-weight: 500;
+}
+
+c-nsp_implementation-profile lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
+    color: #0000FF;
+    font-weight: 500;
+}
+c-nsp_implementation-profile .question{
+    color: #0000FF;
+    font-weight: 500;
+}
+
+c-nsp_implementation-profile .question .slds-form-element__label{
+    color: #0000FF;
+    font-weight: 500;
+}
+
+c-nsp_implementation-profile .answered .slds-form-element__label{
+    color: #000000;
+    font-weight: 500;
+}
+
+c-nsp_implementation-profile .slds-checkbox .slds-checkbox__label .slds-form-element__label{
+	font-size: 12px;
+}
+
+c-nsp_mid-market-form-ip lightning-formatted-text + lightning-input-field{
+    display: block;
+    padding: 4px;
+    margin-bottom: 4px;
+}
+
+/* added as part of STY-03065 */
+c-nsp_implementation-profile lightning-formatted-text.redAnswered{
+    color: red;
+    font-weight: 500;
+}
+
+c-nsp_implementation-profile .redAnswered lightning-formatted-text .slds-form-element__label{
+    color: red;
+}
+
+c-nsp_implementation-profile .redAnswered lightning-combobox .slds-form-element__label{
+    color: red !important;
+}
+
+c-nsp_implementation-profile lightning-timepicker label.slds-form-element__label{
+    display: none !important;
+}
+
+c-nsp_record-form lightning-datepicker label.slds-form-element__label{
+    display: none !important;
+}
+
+c-nsp_implementation-profile .level-1{
+    margin-left: 20px;
+    margin-right: 20px;
+    display: block;
+}
+
+c-nsp_implementation-profile .level-2{
+    margin-left: 40px;
+    margin-right: 40px;
+    display: block;
+}
+
+c-nsp_implementation-profile .level-3{
+    margin-left: 60px;
+    margin-right: 60px;
+    display: block;
+}
+
+c-nsp_implementation-profile .level-4{
+    margin-left: 80px;
+    margin-right: 80px;
+    display: block;
+}
+
+c-nsp_implementation-profile .nsp_form-element{
+    padding: 0 var(--lwc-spacingXxSmall,0.25rem);
+}
+
+.nsp-highlight label.slds-form-element__label{
+    background-color: yellow;
+    font-weight: 500;
+}
+
+.nsp-highlight label.slds-checkbox__label{
+    background-color: yellow;
+    font-weight: 500;
+}
+
+lightning-formatted-text.nsp-highlight{
+    background-color: yellow;
+    font-weight: 500;
+}

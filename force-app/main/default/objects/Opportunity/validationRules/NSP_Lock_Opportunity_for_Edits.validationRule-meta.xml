@@ -3,6 +3,27 @@
     <fullName>NSP_Lock_Opportunity_for_Edits</fullName>
     <active>true</active>
     <description>Opportunity is Locked for edits once the Opportunity is closed won.</description>
-    <errorConditionFormula>AND( NSP_Lock_Opportunity__c , NOT(OR($UserRole.DeveloperName  = &quot;NSP_L1_Support&quot;, $UserRole.DeveloperName  = &quot;NSP_L2_Support_Admin&quot;, $Profile.Name = &quot;Sales Operations&quot;, $Profile.Name = &quot;System Administrator&quot;, $Profile.Name = &quot;Integration User&quot;, $UserRole.Name = &quot;Sales Engineer&quot;, AND($Profile.Name = &quot;Marketing Channel&quot;,OR(IsChanged(NSP_Partner__c),IsChanged(NSP_SubPartner__c),IsChanged(NSP_Producer__c))))), NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c))</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c) ,
+  NSP_Lock_Opportunity__c ,
+  NOT(
+    OR(
+      $UserRole.DeveloperName = &quot;NSP_L1_Support&quot;,
+      $UserRole.DeveloperName = &quot;NSP_L2_Support_Admin&quot;,
+      $Profile.Name = &quot;Sales Operations&quot;,
+      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
+      $Profile.Name = &quot;Integration User&quot;,
+      $UserRole.Name = &quot;Sales Engineer&quot;,
+      AND(
+        $Profile.Name = &quot;Marketing Channel&quot;,
+        OR(
+          IsChanged(NSP_Partner__c),
+          IsChanged(NSP_SubPartner__c),
+          IsChanged(NSP_Producer__c)
+        )
+      )
+    )
+  )
+)</errorConditionFormula>
     <errorMessage>Once Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team</errorMessage>
 </ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Share_your_experience_With_payroll__c</fullName>
+    <description>Do you have any further information you would like to share concerning your experience with the Insperity payroll process?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Do you have any further information you would like to share concerning your experience with the Insperity payroll process?</inlineHelpText>
+    <label>Share your experience With payroll</label>
+    <length>30000</length>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>2</visibleLines>
+</CustomField>

@@ -1,0 +1,11 @@
+<template>
+    <template if:true={listOfOptions}>
+        <div class="slds-var-p-around_xx-small">
+            <lightning-formatted-text class="slds-form-element__label" value={fieldLabel}>
+            </lightning-formatted-text>
+            <lightning-radio-group name={fieldLabel} required={required} variant="label-hidden" label={fieldLabel}
+                options={listOfOptions} value={value} type="radio" onchange={handleChange}>
+            </lightning-radio-group>
+        </div>
+    </template>
+</template>

@@ -3,7 +3,8 @@
     <fullName>NSP_Net_Total__c</fullName>
     <description>Formula field to show Net Total on subscription line.</description>
     <externalId>false</externalId>
-    <formula>SBQQ__QuoteLine__r.NSP_Net_Total__c</formula>
+    <formula>/*SBQQ__QuoteLine__r.NSP_Net_Total__c*/
+If(!ISBLANK(SBQQ__QuoteLine__c),SBQQ__QuoteLine__r.NSP_Net_Total__c,if( ISPICKVAL(SBQQ__PricingMethod__c,&apos;Block&apos;),SBQQ__NetPrice__c,0 ))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Net Total</label>
     <precision>18</precision>
