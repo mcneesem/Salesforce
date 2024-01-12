@@ -3,5 +3,6 @@
     <description>Perm set group to move permissions off the Sys Admin Lite profile</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Admin Lite</label>
+    <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
