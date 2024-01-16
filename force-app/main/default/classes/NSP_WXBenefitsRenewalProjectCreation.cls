@@ -76,7 +76,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements Schedulable,Databas
             .orderby('NSP_Primary__c', 'DESC', false) 
             .build();
         for(NSP_Account_Team__c oAccountTeam : Database.query(accountTeam)){
-            if(oAccountTeam.NSP_Role__c == NSP_ServiceConstants.BENEFITS_SPECIALIST && !mapOfBenefitsAccIdAccTeam.containsKey(oAccountTeam.NSP_Account__c)){
+            if(oAccountTeam.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS && !mapOfBenefitsAccIdAccTeam.containsKey(oAccountTeam.NSP_Account__c)){
                 if(oAccountTeam.NSP_Primary__c){
                     mapOfBenefitsAccIdAccTeam.put(oAccountTeam.NSP_Account__c, oAccountTeam);
                     benefitAccIdSet.add(oAccountTeam.NSP_Account__c);
