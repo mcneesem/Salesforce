@@ -119,8 +119,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         for(EmailMessage eMessage : listOfEmailMessage){
             Integer daysBetween;
             Integer businessDaysBetween;
-            List<String> ToAddressList = new List<String>(); 
-            
             if(mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c != null){
                 Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
                 Date caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c;
@@ -139,9 +137,16 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                               listOfCase.add(getCase);
                           }
             }
-            ToAddressList = eMessage.ToAddress.split(';');
-            if(mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null && mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' && 
-              mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId && isContactCenterCase(ContactCenterEmailAddresses,ToAddressList)){
+            List<String> ToAddressList = new List<String>();
+            if ( String.isNotBlank( eMessage.ToAddress ) ) { // prevent NullPointerException when ToAddress is missing a value...
+                ToAddressList = eMessage.ToAddress.split( ';' );
+            }
+            if ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null )
+                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' )
+                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId )
+                && isContactCenterCase( ContactCenterEmailAddresses , ToAddressList )
+                )
+            {
                 Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
                 Datetime caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate;
                 Datetime emailMessageDate = Datetime.newInstance(eMessage.MessageDate.year(), eMessage.MessageDate.month(), eMessage.MessageDate.day());
