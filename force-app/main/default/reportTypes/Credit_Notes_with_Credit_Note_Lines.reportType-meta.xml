@@ -240,6 +240,11 @@
             <field>NSP_LegalEntity__c</field>
             <table>blng__CreditNote__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Credit_Note_ID_18__c</field>
+            <table>blng__CreditNote__c</table>
+        </columns>
         <masterLabel>Credit Notes</masterLabel>
     </sections>
     <sections>
@@ -586,6 +591,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Project_Go_Live_Date__c</field>
+            <table>blng__CreditNote__c.blng__CreditNoteCreditLines__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Credit_Note_Line_ID_18__c</field>
             <table>blng__CreditNote__c.blng__CreditNoteCreditLines__r</table>
         </columns>
         <masterLabel>Credit Note Lines</masterLabel>

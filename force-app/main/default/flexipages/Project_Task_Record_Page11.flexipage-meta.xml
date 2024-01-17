@@ -7,6 +7,9 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>pse__Project_Task__c.New_Termination_Form</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>pse__Project_Task__c.Add_Update_Address</value>
                             <visibilityRule>
                                 <criteria>
@@ -114,7 +117,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>

@@ -383,6 +383,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAT - Intake Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAT - Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAT - Review Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Scheduled</fullName>
             <default>false</default>
         </values>
@@ -1974,7 +1986,7 @@
         </values>
         <values>
             <fullName>Neutral</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Somewhat Favorable</fullName>
@@ -3755,6 +3767,14 @@
         <picklist>Origin</picklist>
         <values>
             <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Meeting %E2%80%93 In Person</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Meeting %E2%80%93 Virtual</fullName>
             <default>false</default>
         </values>
         <values>

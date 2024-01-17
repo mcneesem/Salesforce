@@ -60,11 +60,13 @@
             <value>
                 <fullName>Compensation Services</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Compensation Services</label>
             </value>
             <value>
                 <fullName>Leave &amp; Disability</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Leave &amp; Disability</label>
             </value>
         </valueSetDefinition>

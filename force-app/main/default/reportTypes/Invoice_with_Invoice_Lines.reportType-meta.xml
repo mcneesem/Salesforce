@@ -450,6 +450,11 @@
             <field>NSP_CLM_Document_Received__c</field>
             <table>blng__Invoice__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Invoice_ID_18__c</field>
+            <table>blng__Invoice__c</table>
+        </columns>
         <masterLabel>Invoices</masterLabel>
     </sections>
     <sections>
@@ -941,6 +946,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_TemplateUnitPrice__c</field>
+            <table>blng__Invoice__c.blng__InvoiceInvoiceLines__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Invoice_Line_ID_18__c</field>
             <table>blng__Invoice__c.blng__InvoiceInvoiceLines__r</table>
         </columns>
         <masterLabel>Invoice Lines</masterLabel>

@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Type</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -90,6 +90,30 @@
                 <fullName>WX Account Group</fullName>
                 <default>false</default>
                 <label>WX Account Group</label>
+            </value>
+            <value>
+                <fullName>Ownership</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ownership</label>
+            </value>
+            <value>
+                <fullName>Private Equity Affiliation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Private Equity Affiliation</label>
+            </value>
+            <value>
+                <fullName>Renew Together</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Renew Together</label>
+            </value>
+            <value>
+                <fullName>Venture Capital Affiliation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Venture Capital Affiliation</label>
             </value>
             <value>
                 <fullName>iSolved</fullName>

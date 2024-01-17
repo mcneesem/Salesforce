@@ -38,7 +38,7 @@ public class NSP_ServiceConstants {
   public static final String PROJECT_NON_REIMBURSABLE = 'RET Non Reimbursable Plan Project';
   public static final String PROJECT_ORK_RELATED = 'RET ORK Related Plan Project';
   public static final String PROJECT_STANDARD_PLAN_PROJECT = 'RET Standard Plan Project';
-  
+
   public static final String PLAN_AMENDMENT_TEMPLATE = 'RET Plan Amendment 2020 Form';
   public static final String SAFE_HARBOUR_TEMPLATE = 'RET Safe Harbor Retractions 2020 Form';
   public static final String DECONVERSION_TEMPLATE = 'RET Deconversion 2020';
@@ -56,7 +56,7 @@ public class NSP_ServiceConstants {
   public static final String PEO_PROJECT_TASK_NAME= 'PEO Project Task';
   public static final String PROJECT_MM_90_DAY_EP_TEMPLATE = 'MM 90 day EP';
   public static final String PROJECT_MM_ENTERPRISE_EP_TEMPLATE = 'MM Enterprise 90 day EP';
-  
+
   // PROJECT TASK CONSTANTS
   public static final String PROJECT_TASK_PEO_RECORDTYPE = 'PEO_Project_Task';
   public static final String PROJECT_TASK_BPS_RECORDTYPE = 'BPS_Project_Task';
@@ -95,14 +95,14 @@ public class NSP_ServiceConstants {
 
   //WORK TYPE Name
   public static final String WORKTYPE_NAME='Generic';
-  
+
   // TERMINATION FROM STATUS 
   public static final String TERMINATION_FORM_APPROVED_STATUS = 'PR Supervisor Approved';
   public static final String TERMINATION_FORM_PR_APPROVED_STATUS = 'Term Team Approved';
   // PROJECT TASK ASSIGNMENT CONSTANTS
   public static final String PTASSIGNMENTROLE = 'Architect';
   public static final string PRIMARY_RESOURCETYPE = 'Primary';
-  
+
   //TEMPLATE NAMES
   public final static String BPS_DEPENDENTTASKNOTIFICATIONTEMPLATE = 'NSP_BPS_Preceding_Task_Completion_Notification';
   public final static String PEO_DEPENDENTTASKNOTIFICATIONTEMPLATE = 'NSP_PEO_Preceding_Task_Completion_Notification';
@@ -224,37 +224,37 @@ public class NSP_ServiceConstants {
   public final static String TYPECONTROLLEDGROUP  = 'Controlled Group';
   public final static String BUSINESS_PERFORMANCE_ADVISOR = 'Business Performance Advisor';
   public final static String BUSINESS_PERFORMANCE_CONSULTANT = 'Business Performance Consultant';
-  
+
   // Random Constants
   public final static String ASSIGNMENTNOTIFICATIONTEMPLATE = 'NSP_Project_Task_Resource_Assignment';
   public final static String FROM_OBJECT_ASSET = 'AssetOpportunity';
   public final static String NO_REPLY = 'no reply';
 
-  
+
   //Milestone Constatns
   public final static String PEOMILSTONE = 'PEO_Milestone';
   public final static String BPSMILESTONE = 'BPS_Milestone';
   public final static String MILESTONESTATUSCOMPLETE = 'Complete';
   public final static String MILESTONESTATUSINPROGRESS = 'In Progress';
-  
+
   //contact Contains
   public final static String Resource_Role = 'Insperity';
   public final static String EXT = 'ext';
 
   //Account Constants 
   public final static String Account_Status = 'Active';
-  
+
   //Plan SubPlan Constants 
   public final static String STATUS_ACTIVE = 'Active';
-  
+
   //SubPlanChangeHistory Constants 
   public final static String CHOICE_RT_NAME = 'Choice';
   public final static String WO_RT_NAME = 'WO';
-  
+
   //Category Constants
   public final static String Client_Management = 'Client Management';
   public final static String Quality_Touch_Point = 'Quality Touch Point';
-public static final String CREDIT_SERVICES = 'Credit Services';
+  public static final String CREDIT_SERVICES = 'Credit Services';
 
   //Subcategory Constants
   public static final String CRITICAL_BUSINESS_CHALLENGES = 'Critical Business Challenges';
@@ -274,8 +274,8 @@ public static final String CREDIT_SERVICES = 'Credit Services';
 
   //Subcategory Constants
   public final static String Renewal_Consultation ='Renewal Consultation';
-  
- //Work Type Constants
+
+  //Work Type Constants
   public final static String durationType = 'Hours';
   //Project Constants
   public final static String MM_PROJECT_TEMPLATE_KEY = 'Middle Market - Implementation';
@@ -311,18 +311,18 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String ASSETBLACKOUT = 'Backout';
   public final static String ASSET_OP_RECORDTYPE = 'Organizational_Planning';
   public final static String ASSET_TT_RECORDTYPE = 'Time_Attendance';
-  
-  
+
+
   //To set opportunity stage as closed won
   public static final String CLOSED_WON ='Closed Won';
   public static final String CLOSED_LOST ='Closed Lost';
   public static final String TRANSITION_TYPE_PEO_WX ='PEO to WX';
   public static final String TRANSITION_TYPE_WX_PEO ='WX to PEO';
   public static final String LOST_REASON_CURRENT_SOLUTION ='Stayed with Current Insperity Solution';
-  
+
   public final static String TERMINATED = 'Terminated';
   public final static String BACKOUT = 'Backout';
-  
+
   //Profile Names
   public final static String PEOSERVICE = 'PEO Service';
   public final static String CONTACTCENTER = 'Contact Center';
@@ -378,7 +378,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String CASE_WX_WA = 'WX/WA';
   public final static String OR_NSP_ACCOUNT_SEGMENT_EQUALS = ' OR NSP_Account_Segment__c = ';
   public final static string LOADETAILS='Leave Letters/Forms';
-  
+
   //IP client sponspored plan
   public final static String HCFSA='Health Care Flexible Spending Account (HCFSA)';
   public final static String HSA='Health Savings Account';
@@ -487,7 +487,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String RECRUITING = 'Recruiting Services';
   public final static String CERTIFY = 'Certify';
 
-  
+
   //email template names
   public final static String CONGRATULATIONTEMPLATE='NSP_Congratulation_Payroll_Template';
   public final static String CONGRATULATIONTEMPLATEMM='NSP_Congratulation_Payroll_Template_MM';
@@ -507,8 +507,8 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String PROLL='Payroll';
   public final static String MISCELLANEOUS='Miscellaneous';
   public final static String EMPLOYEE_SEC = 'Employees';
-  
-  
+
+
   //IP automation methods
   public final static String CREATECASEFSA='createCaseFSA';
   public final static String CREATECASENSP='createCaseNSP';
@@ -529,13 +529,13 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String EEO_INFO = 'EEO Information';
   public final static String AUTOMATION_NEW_401 = 'New 401(k)';
   public final static String AUTOMATION_SRP_NOTIFY = 'SRP Notification';
-  
-  
+
+
   //email templates
   public final static String CAFETERIAPLAN='NSP_CafetariaPlan';
   public final static String COMMISSION='NSP_CommissionOnlyEEs';
   public final static String RETIRMENTPLAN='NSP_RetirementPlan';  
-  
+
   // Project Constants
   public final static String AccountExecutive = 'MidMarket Account Exec';
   public final static String HRSpecialist = 'HR Specialist';
@@ -558,7 +558,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String TIMEENTRY = 'Time entry method is ';
   public final static String HRSREVIEW='HRS to review accrual policy(ies) with Client/create any new policies as needed, once compliant, then submit PTO SmartForm with attached policy(ies). Once complete, close this case.';
   public final static String SEASONALCOMMENT='Payroll reviewed seasonal information with client.  Seasonal employees will not work greater than 6 months, they only increase staff for specific seasons for business influx, this is not project work and they were not previously using temporary employees.';
-  
+
   // IP Automation Names
   public final static String CSPDOCSNOTRECEIVED = 'CSP doc(s) not received';
   public final static String GENERALlIABILITY = 'General Liability & Auto';
@@ -591,7 +591,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String EESONLOA='EEs on LOA';
   public final static String FIELDAPINAMECOBRA ='Have_name_s_of_COBRA_takeovr_employees__c'; 
   public final static String FIELDAPINAMELOA ='Do_you_have_the_LOA_information__c'; 
-  
+
   //IP SECTIONS
   public final static String PAYROLLSEC = 'Payroll';
   public final static String PAYOUTSSEC = 'Additional Pay Outs';
@@ -600,11 +600,11 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String CLIENTINFO = 'Client Information';
   public final static String STATE_RET_PLAN = 'State Retirement Plan';
   public final static String SERVICE_TEAM_SEC = 'Service Team';
-  
+
   //Project Team Constants 
   public final static String MMProjectTeamRecordType = 'NSP_Middle_Market_Project_Team';
   public final static String FSOProjectTeamRecordType = 'NSP_FSO_Project_Team';
-  
+
   //IP MM Automation Email Tempaltes
   public final static String EEO_INFORMATION = 'NSP_EEO_information';
   public final static String EPLI_NOTIFICATION = 'NSP_EPLI_Notification';
@@ -627,13 +627,13 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String MM_SRP_NOTIFY = 'NSP_MM_SRP_Notification';
   public final static String MM_SRP_NOTIFY_401 = 'NSP_MM_SRP_Notification_401';
   public final static String MM_SRP_RET_SALES = 'NSP_MM_SRP_Notification_RetSales';
-  
+
   //Group Names
   public final static String HEALTH_WELFARE = 'Health & Welfare Reporting & Compliance';
   public final static String HEALTH_WELFARE_PRODUCT = 'Health & Welfare Products';
   public final static String NATIONAL_BENEFIT_TEAM = 'National Benefits Team';
-  
-  
+
+
   //SUB CATEGORY NAMES
   public final static String LEAVE_DISABILITY = 'Leave & Disability';
   //IP Automation class name
@@ -677,7 +677,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String SUBMIT_EA_PACKAGE = 'Submit EA Package to Implementation for QC';
   public final static String VALIDATION_PPTT_INSTALL = 'Validation of pptt feed to OMNI';
   public final static String VALIDATION_PPTT_STARTUP = 'Validation of PPTT feed to OMNI';
-  
+
   //FSO Form Constants
   public final static String FSOAutomations = 'FSO'; 
   public final static String EmailAutomation = 'Email';
@@ -698,7 +698,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static String SECURITY_TYPE_PRIVATE = 'Private'; 
   public final static String APPEND_NAME = 'RI - ';
   public final static String CONFIDENTIAL_CHECK_BOX_PERMISSION = 'NSP Confidential Checkbox Permission';
-  
+
   // Sharing Constants
   public final static String BEN_SERVICE_CLAIMS = 'Ben Service - Claims'; 
   public final static String HR_EMPLOYEE_RELATIONS = 'HR Employee Relations'; 
@@ -816,7 +816,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public static final String RETIREMENT_SERVICES ='NSP_Retirement_Services';
   public static final String WX_IMPL_SUPPORT = 'NSP_WX_IMPL_Support';
   public static final String NATIONAL_BUSINESS_TEAM = 'NSP_National_Business_Team';
-  
+
   //Products of Interest Tasks
   public static final String EMPLOYMENT_SCREENING = 'Employment Screening';
   public static final String EXPENSE_MANAGEMENT = 'Expense Management';
@@ -898,7 +898,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
   public final static string WORK_SITE = 'Worksite';
   public final static string SOURCE = 'AIMS';
   public final static string US_MAIL = 'U.S. Mail';
-  
+
 
   //Note constants
   public static final String NOTE_SOBJECT_TYPE = 'NSP_Note__c';
@@ -1004,4 +1004,7 @@ public static final String CREDIT_SERVICES = 'Credit Services';
 
   public static final String ONBOARDING_MEETING_REQUEST= 'Onboarding_Meeting_Request';
   public final static string ORIENTATION_MEETING_REQUEST = 'Orientation_Meeting_Request';
+  public final static string HR_CLIENT_IMPLEMENTATION_QUEUE = 'NSP_HR_Client_Implementation';
+  public static final string UPDATE_TRIGGER = 'update';
+  public static final string INSERT_TRIGGER = 'insert';
 }

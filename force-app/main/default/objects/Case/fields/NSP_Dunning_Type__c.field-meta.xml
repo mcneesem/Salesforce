@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Dunning Type</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -35,10 +36,6 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Dunning - Account</controllingFieldValue>
-            <valueName>Open Invoice</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Dunning - Invoice</controllingFieldValue>
             <valueName>CC Processor Dispute</valueName>
         </valueSettings>
@@ -49,6 +46,10 @@
         <valueSettings>
             <controllingFieldValue>Dunning - Invoice</controllingFieldValue>
             <valueName>Return Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dunning - Account</controllingFieldValue>
+            <valueName>Open Invoice</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

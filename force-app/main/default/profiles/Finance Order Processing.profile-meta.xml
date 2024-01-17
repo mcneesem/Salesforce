@@ -13765,7 +13765,7 @@
         <recordType>Account.NSP_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Account Layout 0422</layout>
+        <layout>Account-Finance Account Layout</layout>
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>

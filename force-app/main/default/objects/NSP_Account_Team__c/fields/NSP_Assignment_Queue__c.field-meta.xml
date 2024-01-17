@@ -8,7 +8,6 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -24,7 +23,6 @@
             <value>
                 <fullName>HCM Payroll Support</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
                 <label>HCM Payroll Support</label>
             </value>
         </valueSetDefinition>

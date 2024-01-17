@@ -329,7 +329,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     if(!listOfTOAddresses.isEmpty()){
                         String mailBody = getMailBody(proj, template.Id);
                         sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                            null,mapofAccountIds.get(accId).id , template.Id); 
+                                 null,accountIdProjectTaskMap.get(accId), template.Id);
                         
                     }
                 }
@@ -462,7 +462,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     if(!listOfTOAddresses.isEmpty()){
                         String mailBody = getMailBody(proj, template.Id);
                         sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                            fromAddress,mapofAccountIds.get(accId).id , template.Id); 
+                                fromAddress,accountIdProjectTaskMap.get(accId), template.Id);
                         
                     }
                     }

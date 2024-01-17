@@ -2589,10 +2589,15 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Enrollment_fee_Subtotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.NSP_Budgetary_Quote__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Non_docupay__c</field>
         <readable>true</readable>
@@ -2600,6 +2605,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Total_Amount_With_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Total_Upfront_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Total_Upfront_fee_Tax__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2720,6 +2735,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.SBQQ__Activated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.OrderType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5638,6 +5658,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Amendment_Net_Total__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Amendment_Net_Unit_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Amendment_Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.NSP_AIMS_Billing_Code__c</field>
         <readable>true</readable>
@@ -5793,7 +5828,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.NSP_Preferred_Payment_Method__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7010,6 +7045,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteTerm__c.SBQQ__Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Amendment_Total_Annual_Freq_Fees__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

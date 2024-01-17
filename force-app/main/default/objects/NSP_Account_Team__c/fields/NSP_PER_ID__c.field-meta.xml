@@ -6,6 +6,7 @@
     <label>PER ID</label>
     <length>40</length>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

@@ -316,6 +316,11 @@
             <field>blng__Unallocations__c</field>
             <table>blng__Payment__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Payment_ID_18__c</field>
+            <table>blng__Payment__c</table>
+        </columns>
         <masterLabel>Payments</masterLabel>
     </sections>
     <sections>

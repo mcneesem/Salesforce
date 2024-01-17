@@ -472,6 +472,11 @@
                 <default>false</default>
                 <label>NSP_TCFullUserLicenseQty__c</label>
             </value>
+            <value>
+                <fullName>Amendment_Total_Annual_Freq_Fees__c</fullName>
+                <default>false</default>
+                <label>Amendment_Total_Annual_Freq_Fees__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -659,6 +664,10 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>NSP_Terminate_All__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Amendment_Total_Annual_Freq_Fees__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

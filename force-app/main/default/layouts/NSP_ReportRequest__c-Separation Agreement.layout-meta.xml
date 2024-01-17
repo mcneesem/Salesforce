@@ -31,7 +31,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Mid_Market_or_Mid_Market_Enterprise__c</field>
             </layoutItems>
-            <layoutItems> 
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Written_Approval_From_The_MHRS__c</field>
             </layoutItems>
@@ -57,7 +57,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Client_Contact__c</field>
-            </layoutItems>            
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -96,6 +96,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_TotalAgreementsRequested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Severance_Total__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

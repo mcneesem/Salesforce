@@ -11,7 +11,8 @@ Modification Log     :
 * -----------------------------------------------------------------------------------------------
 */
 public class NSP_AddressTriggerHelper {
-    
+    // test w/ NSP_AddressTriggerHelper_Test (85%)
+
     public static void updateSCCAddressWithStreet(List<NSP_Address__c> newAddress, Map<Id, NSP_Address__c> oldMap) {
         Map<Id, String> addressByStreet = new Map<Id, String>();
         List<NSP_Sub_Client_Contact_Address__c> sccAddressToUpdate = new List<NSP_Sub_Client_Contact_Address__c>();
@@ -40,6 +41,27 @@ public class NSP_AddressTriggerHelper {
                 update sccAddressToUpdate;
             }
             
+        }
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    newAddress,
+                    oldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
+        }
+    }
+    
+    public void afterInsertDirector(List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap){
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    newList,
+                    null,
+                    NSP_ServiceConstants.INSERT_TRIGGER
+                )
+            );
         }
     }
     

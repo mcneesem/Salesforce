@@ -12,6 +12,8 @@ Modification Log     :
 * Anil                      8/19/2022               First Iteration
 */
 public class NSP_RegulatedAreaBatch implements Database.Batchable<sObject>, Database.Stateful {
+    // test w/ NSP_RegulatedAreaBatch_Test (95%)
+
     private  Set<String> setRegulatedStates = new Set<String>();
     private  Map<String, NSP_Regulated_Area__c> stateWithRegulatedArea = new Map<String, NSP_Regulated_Area__c>();
     private  Map<String, NSP_Regulated_Area__c> zipCodesWithRegArea = new Map<String, NSP_Regulated_Area__c>();
@@ -66,7 +68,7 @@ public class NSP_RegulatedAreaBatch implements Database.Batchable<sObject>, Data
    public void finish(Database.BatchableContext bc) {
 
         Map<String, Object> data = new Map<String, Object>{
-            'counter' => 1,
+            'counter' => 0,
             'setRegulatedStates'=> setRegulatedStates,
             'stateWithRegulatedArea'=> stateWithRegulatedArea,
             'zipCodesWithRegArea'=> zipCodesWithRegArea
