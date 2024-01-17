@@ -3,11 +3,11 @@ Apex Class Name      :  NSP_WXBenefitsRenewalProjectCreation
 Version              :  1.0 
 Author               :  Simran
 Function             :  Creates Project with WX Rebewal Template
-Story                :  As part of STY-02160                                                                  
-
+Story                :  As part of STY-02160
 */
 public class NSP_WXBenefitsRenewalProjectCreation implements Schedulable,Database.Batchable<sObject> {
     // test w/ NSP_WXBenefitsRenewalProjCreat_Test (93%)
+
     private static Set<Id> astAccountId = new Set<Id>();
     private static final List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests = new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>();
     private static final Map<String, NSP_Account_Team__c> mapOfBenefitsAccIdAccTeam = new Map<String, NSP_Account_Team__c>();
