@@ -2,7 +2,7 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
-    // test w/ NSP_TerminationFormTriggerHelperTest (92%)
+    // test w/ NSP_TerminationFormTriggerHelperTest (91%)
 
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
@@ -223,6 +223,10 @@ public class NSP_TerminationFormTriggerHelper {
                     setOfClientOwnerId.add(terminationForm.NSP_Client_Owner__c);
                     clientTerminationForms.add(terminationForm);
                 }
+                if(String.isBlank(terminationForm.NSP_Client_Owner__c) && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c){
+                    terminationForm.Client_Owner_Phone__c = '';
+                    terminationForm.Client_Owner_Email__c = '';
+                } 
             }
         }
         if(!setOfClientOwnerId.isEmpty()){
