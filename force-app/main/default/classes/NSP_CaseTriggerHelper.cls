@@ -119,9 +119,6 @@ public class NSP_CaseTriggerHelper {
             }
         }
         
-        if(sAssetIds.size() > 0){
-            performAssetValidation(lAssetCases,sAssetIds);
-        }
         if(findContactMap.size()>0){
             findWebContact(findContactMap);
         }
@@ -213,20 +210,6 @@ public class NSP_CaseTriggerHelper {
             updateCaseOwnerList.add(eachCase) ;
         }
     }
-    
-    
-    /*
-Description: If Case Account is not equal to Asset Id , show Error
-*/
-    public void performAssetValidation(List<Case> lCases, Set<Id> sAssetIds){
-        Map<Id,Asset> mAssets = new Map<Id,Asset>([SELECT Id,AccountId FROM Asset WHERE Id in: sAssetIds]);
-        for(Case oCase : lCases){
-            if(mAssets.get(oCase.AssetId).AccountId != oCase.AccountId){
-                oCase.addError('Asset needs to related to the selected account');
-            }
-        }
-    }
-    
     
     /* Description : This will update the owner of Case to escalations queue
 when L2 is set to true 
