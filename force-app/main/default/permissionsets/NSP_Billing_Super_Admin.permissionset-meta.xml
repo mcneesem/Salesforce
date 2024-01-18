@@ -16631,6 +16631,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>blng__CreditNoteLine__c.NSP_AIMS_Billing_Code__c</field>
         <readable>true</readable>
@@ -17040,6 +17045,11 @@
         <field>blng__CreditNoteLine__c.blng__Unallocations__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__CreditNote__c.NSP_AIMS_Billing_ID__c</field>
@@ -17711,6 +17721,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    	<fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNoteLine__c.NSP_Start_Date_End_Of_Month__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>blng__DebitNote__c.NSP_Debit_Note_External_ID__c</field>
         <readable>true</readable>
@@ -17921,6 +17941,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>blng__FinanceBook__c.NSP_Finance_Book_External_Id__c</field>
         <readable>true</readable>
@@ -18065,6 +18090,11 @@
         <field>blng__GLTreatment__c.blng__UniqueId__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__InvoiceLine__c.NSP_TemplateUnitPrice__c</field>
@@ -18745,6 +18775,11 @@
         <field>blng__Invoice__c.Is_Renewal_Invoice__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Invoice__c.Invoice_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__Invoice__c.NSP_AIMS_Billing_ID__c</field>
@@ -20140,6 +20175,11 @@
         <field>blng__Payment__c.blng__Unallocations__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>false</editable>
+		<field>blng__Payment__c.Payment_ID_18__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__RevenueAgreement__c.NSP_Revenue_Agreement_External_ID__c</field>
