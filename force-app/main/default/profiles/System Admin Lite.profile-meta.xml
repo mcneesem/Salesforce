@@ -215,6 +215,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
+        <name>OutboundMigrationToolsUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>PublishPackaging</name>
     </userPermissions>
     <userPermissions>
