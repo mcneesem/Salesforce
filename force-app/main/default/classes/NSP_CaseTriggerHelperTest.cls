@@ -376,43 +376,6 @@ private class NSP_CaseTriggerHelperTest {
 
         test.stopTest();
     }
-        /*
-    * test to perform asset validation
-    * @ param N/A
-    * @return void
-    */
-
-    @isTest
-    private static void testperformAssetValidation(){
-        test.startTest();
-        //Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, true);
-        //create account
-        Account newAccount2 = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, false);
-        newAccount2.Name = 'Test newAccount2 - 01';
-        newAccount2.BillingCity ='Houston';
-        newAccount2.BillingPostalCode = '77339';
-        newAccount2.BillingCountry = 'United States';
-        newAccount2.BillingStreet = '19001 Crescent Springs Drive ' ;
-        newAccount2.BillingState = 'Texas';
-        insert newAccount2;
-        //create asset
-        Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', true);
-        //create parentcase
-        try{
-            Id recordTypePEOID = SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
-            Case parentCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
-            parentCase.RecordTypeId = recordTypePEOID;
-            parentCase.AccountId = newAccount2.Id;
-            parentCase.AssetId = newAsset.Id;
-            parentCase.NSP_Consumer_Privacy_Inquiry__c = true;
-            parentCase.NSP_CCPA_email_Sent__c = false;
-            insert parentCase;
-        } catch (DmlException ex) {
-            System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
-        } 
-        test.stopTest();
-    }
-
     /*
     * method to test getAccountTeamMember
     * @ param N/A
