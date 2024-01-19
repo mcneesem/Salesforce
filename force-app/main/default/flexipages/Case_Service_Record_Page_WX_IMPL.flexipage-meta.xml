@@ -99,16 +99,6 @@
                 <identifier>RecordRegulated_Batch_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Testing_Asset__c</fieldItem>
-                <identifier>RecordTesting_Asset_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-f572fde9-d56b-48c2-90a4-8902cc7dc3c9</name>
         <type>Facet</type>
     </flexiPageRegions>
