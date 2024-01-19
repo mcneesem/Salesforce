@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants the Permission Set to allow a User to login-as another User. Requires multiple Permission Set Licenses.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Login-As User (Licensed)</label>
+    <permissionSets>Modify_All_Data</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
