@@ -4,5 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Admin Lite</label>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
+    <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
