@@ -5,6 +5,18 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>NSP_OrderManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NSP_OrderTriggerHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NSP_OrderTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NSP_QuoteTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2017,6 +2029,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <description>Standard user permissions across all Salesforce CPQ objects.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.ParentId</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.SBQQ__AssetQuantitiesCombined__c</field>
@@ -7123,12 +7140,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_ProjectOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_Project__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7145,6 +7162,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_TransactionType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_WX_Scholarship__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7760,6 +7782,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.NSP_Serial_Ids__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Subscription__c.NSP_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
