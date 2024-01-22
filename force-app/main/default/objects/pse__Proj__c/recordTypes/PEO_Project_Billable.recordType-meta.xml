@@ -229,7 +229,7 @@
             <fullName>Handbook</fullName>
             <default>false</default>
         </values>
-<values>
+        <values>
             <fullName>iSolved - Other</fullName>
             <default>false</default>
         </values>
@@ -369,7 +369,7 @@
             <fullName>XML Utility Rework</fullName>
             <default>false</default>
         </values>
-                <values>
+        <values>
             <fullName>iSolved ACA</fullName>
             <default>false</default>
         </values>
