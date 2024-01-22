@@ -3263,4 +3263,13 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Billing and CPQ Data Load</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>sbaa__EmailTemplate__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
 </PermissionSet>
