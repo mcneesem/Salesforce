@@ -1,6 +1,5 @@
 trigger FlowErrorLogTrigger on FlowErrorLog__c ( before insert , before update ) {
     // test w/ FlowErrorLogControllerTest (100%)
-    // test w/ FlowErrorLogTriggerTest (??%)
     static final String DEBUG_PREFIX = ' ~ FlowErrorLogTrigger';
     TriggerContextHandler.debug( DEBUG_PREFIX );
     if ( Trigger.isBefore && ( Trigger.isInsert || Trigger.isUpdate ) ) {
