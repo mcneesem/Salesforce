@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Full System Administrator PSG</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>System Administrator</label>
+    <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
+    <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
+    <permissionSets>Project_Template_Data_Load</permissionSets>
+    <permissionSets>Resource_Absence_record_type_access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
