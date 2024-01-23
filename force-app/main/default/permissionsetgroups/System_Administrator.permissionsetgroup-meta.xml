@@ -6,5 +6,6 @@
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
+    <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
