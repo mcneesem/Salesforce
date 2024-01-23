@@ -75,6 +75,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>GenderIdentity</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nonbinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Listed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LID__No_longer_at_Company__c</picklist>
         <values>
             <fullName>Ignore</fullName>
@@ -192,6 +211,17 @@
         <values>
             <fullName>Temporary - Benefit Eligible</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_DM_Status__c</picklist>
+        <values>
+            <fullName>Insert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -566,6 +596,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1703</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1901</fullName>
             <default>false</default>
         </values>
@@ -595,6 +629,10 @@
         </values>
         <values>
             <fullName>2203</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2301</fullName>
             <default>false</default>
         </values>
         <values>
@@ -666,6 +704,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>3306</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>3401</fullName>
             <default>false</default>
         </values>
@@ -711,6 +753,10 @@
         </values>
         <values>
             <fullName>4301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4302</fullName>
             <default>false</default>
         </values>
         <values>
@@ -779,6 +825,10 @@
         </values>
         <values>
             <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4418</fullName>
             <default>false</default>
         </values>
         <values>
@@ -874,6 +924,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>582</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>601</fullName>
             <default>false</default>
         </values>
@@ -882,7 +936,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>603</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>702</fullName>
             <default>false</default>
         </values>
         <values>
@@ -954,6 +1016,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Service_Request_Channel__c</picklist>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Source__c</picklist>
         <values>
             <fullName>AIMS</fullName>
@@ -1007,6 +1088,33 @@
         </values>
         <values>
             <fullName>Prof%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pronouns</picklist>
+        <values>
+            <fullName>He%2FHim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>He%2FThey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Listed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FHer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FThey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>They%2FThem</fullName>
             <default>false</default>
         </values>
     </picklistValues>
