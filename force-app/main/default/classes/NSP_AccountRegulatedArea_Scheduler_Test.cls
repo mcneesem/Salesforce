@@ -8,15 +8,14 @@
 @isTest(SeeAllData=false)
 
 public class NSP_AccountRegulatedArea_Scheduler_Test {
+    private static final String sch = '0 0 0 * * ? *';
     public NSP_AccountRegulatedArea_Scheduler_Test() {
 
     }
     //Static Test Method to Call the Scheduler Class
     static testMethod void testAccountRegulatedBatchScheduler() {  
         Test.startTest();  
-        NSP_AccountRegulatedArea_Scheduler regualtedAreaScheduler = new NSP_AccountRegulatedArea_Scheduler();
-        String sch = '0 0 2 * * ?';
-        String jobId = System.schedule('Test Regulated Batch', sch, regualtedAreaScheduler);
+        String jobId = NSP_AccountRegulatedArea_Scheduler.schedule();
         CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
         System.assertEquals(sch, ct.CronExpression);
         System.assertEquals(0, ct.TimesTriggered);
