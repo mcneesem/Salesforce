@@ -5,6 +5,8 @@
     <description>Will trigger the Flow labeled Box Opportunity Folder and Sub Folder Creation</description>
     <externalId>false</externalId>
     <inlineHelpText>Click and save for Folder Creation.</inlineHelpText>
-    <label>Create Box.com Folder(s)</label>
+    <label>Send File Request to Primary Contact</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
