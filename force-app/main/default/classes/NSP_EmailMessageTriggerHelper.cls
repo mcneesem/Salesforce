@@ -97,7 +97,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     and EmailMessage date is within 5 days,else, it will create a new Case
     ***********************************************************************************************/
     public static void reOpenOrMarkResponseAfterCloseTrue(Set<Id> caseIds, List<EmailMessage> listOfEmailMessage){
-        List<Case> listOfCase = new List<Case> ();
         Map<Id, Case> mapOfCaseIdAndCase = new Map<Id, Case> ();
         
         Id caseBPSRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
@@ -116,6 +115,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
         }
         
+        List<Case> listOfCase = new List<Case>();
         for(EmailMessage eMessage : listOfEmailMessage){
             Integer daysBetween;
             Integer businessDaysBetween;
@@ -131,12 +131,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 if(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween <= 90){
                     getCase.Status = 'ReOpened';
                     getCase.NSP_Case_Reopened_EmaiToCase__c = true;
-                    listOfCase.add(getCase);
+                    listOfCase.add( getCase );
                 } else if(
                     	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId) ||
                     	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween > 90)){
                               getCase.NSP_Response_After_Close__c = true;
-                              listOfCase.add(getCase);
+                              listOfCase.add( getCase );
                           }
             }
             ToAddressList = eMessage.ToAddress.split(';');
@@ -170,11 +170,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         if(!insertedCaseList.isEmpty()){
             updateRelatedCaseOnEmailMessage(ParentCaseToEmailMessageMap,insertedCaseList);
         }
-        if(!listOfCase.isEmpty()){
-            Database.update(listOfCase);
+        if ( !listOfCase.isEmpty() ) {
+            try {
+                Database.update( listOfCase );
+            } catch ( Exception e ) { // catch unhandled DmlExceptions within Case Trigger logic...
+                System.debug( ' ~ CATCH ~ e=' + e );
+            }
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName    : isContactCenterCase
     * Description   : Check if ToAddress has Contact Center Email
