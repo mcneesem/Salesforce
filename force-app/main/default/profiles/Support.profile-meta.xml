@@ -38853,7 +38853,7 @@ m   <fieldPermissions>
         <name>AssignTopics</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>AuthorApex</name>
     </userPermissions>
     <userPermissions>
@@ -39089,7 +39089,7 @@ m   <fieldPermissions>
         <name>ImportPersonal</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>InboundMigrationToolsUser</name>
     </userPermissions>
     <userPermissions>
@@ -39205,7 +39205,7 @@ m   <fieldPermissions>
         <name>ManageHubConnections</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageInteraction</name>
     </userPermissions>
     <userPermissions>
@@ -39345,7 +39345,7 @@ m   <fieldPermissions>
         <name>ModifyDataClassification</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ModifyMetadata</name>
     </userPermissions>
     <userPermissions>
@@ -39353,7 +39353,7 @@ m   <fieldPermissions>
         <name>NewReportBuilder</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>OutboundMigrationToolsUser</name>
     </userPermissions>
     <userPermissions>
