@@ -201,9 +201,9 @@ export default class Nsp_retirementServicesFso extends LightningElement {
 
   updateRsContactDetails(empDataRecords, fields) {
     if (empDataRecords) {
-      this.field.NSP_RS_Contact__c = empDataRecords
-        .map((rec) => `${rec[fields[0]]}`)
-        .join(',');
+     this.field.NSP_RS_Contact__c = empDataRecords
+        .map((rec) => `${rec[fields[0]]} (${rec[fields[1]]} | ${rec[fields[2]]})`)
+        .join('; ');
     }
   }
 
