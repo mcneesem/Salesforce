@@ -27,10 +27,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         List<Case> caseToUpdate = new List<Case> ();
         Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
         for(EmailMessage eMessage : newList){
-            if(eMessage.ParentId != null && incomingEmailCheck(eMessage)){
-                setOfCaseId.add(eMessage.ParentId);   
+            if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
+                setOfCaseId.add( eMessage.ParentId );
             }
-
             //Added as a part of STY-04132 
             if(!setOfCaseId.isEmpty()){
               for(Id caseID:setOfCaseId){
@@ -358,28 +357,33 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             && (restrictedEmailAddresses.contains(eMessage.FromAddress)
                 || eMessage.FromAddress.startsWith(NSP_ServiceConstants.POSTMASTER_EMAIL_ADDRESS));
     }
-    
-    /***********************************************************************************************
-    * MethodName	: incomingEmailCheck
-    * Description	: Incoming Email check for subject check
-    * Story 		: STY-03643
-    * Params		: EmailMessage eMessage
-    * ********************************************************************************************/
-    public static Boolean incomingEmailCheck(EmailMessage eMessage){
-        return eMessage.incoming && 
-            String.valueOf(eMessage.ParentId).startsWith('500') && 
-            (!eMessage.Subject.containsIgnoreCase('OOO') && 
-             !eMessage.Subject.containsIgnoreCase('Out of Office') && 
-             !eMessage.Subject.containsIgnoreCase('Auto-Response') &&
-             !eMessage.Subject.containsIgnoreCase('Auto-Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Auto Response') &&
-             !eMessage.Subject.containsIgnoreCase('Auto Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic Response') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic-Response') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic-Reply')); 
+
+    // ********************************************************************************************
+    // MethodName	: incomingEmailCheck
+    // Description	: Incoming Email check for subject check
+    // Story 		: STY-03643
+    // Params		: EmailMessage eMessage
+    // ********************************************************************************************
+    private static Boolean incomingEmailCheck( EmailMessage eMessage ) {
+        return (
+            ( eMessage != null ) // prevent NullPointerException...
+            && eMessage.Incoming
+            && ( eMessage.ParentId != null ) // prevent NullPointerException when EmailMessage is not related to a Case...
+            && ( eMessage.ParentId.getSObjectType() == Case.getSObjectType() )
+            && String.isNotBlank( eMessage.Subject ) // prevent NullPointerException when Subject is missing a value...
+            && !eMessage.Subject.containsIgnoreCase( 'OOO' )
+            && !eMessage.Subject.containsIgnoreCase( 'Out of Office' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto-Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto-Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic-Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic-Reply' )
+        );
     }
-    
+
     /***********************************************************************************************
     * MethodName : updateConfidentialCheckBoxForEmpScreening
     * Story : STY-03671
