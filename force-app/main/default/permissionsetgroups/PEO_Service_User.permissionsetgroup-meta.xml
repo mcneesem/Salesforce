@@ -6,5 +6,6 @@
     <permissionSets>NSP_Read_Access_on_Sub_client_contact_addresses</permissionSets>
     <permissionSets>PEO_Service_Task_Owner</permissionSets>
     <permissionSets>Termination_form_field_access</permissionSets>
+    <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

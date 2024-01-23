@@ -24370,6 +24370,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Credit_Specialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_Hide_Submit_For_Approval__c</field>
         <readable>true</readable>
