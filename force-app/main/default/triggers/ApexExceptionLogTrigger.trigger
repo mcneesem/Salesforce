@@ -1,6 +1,5 @@
 trigger ApexExceptionLogTrigger on ApexExceptionLog__c ( before insert , before update ) {
     // test w/ ApexExceptionLogControllerTest (100%)
-    // test w/ ApexExceptionLogTriggerTest (??%)
     static final String DEBUG_PREFIX = ' ~ ApexExceptionLogTrigger';
     TriggerContextHandler.debug( DEBUG_PREFIX );
     if ( Trigger.isBefore && ( Trigger.isInsert || Trigger.isUpdate ) ) {
