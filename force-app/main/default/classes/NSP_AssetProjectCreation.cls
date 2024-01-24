@@ -4,10 +4,11 @@
 * Author : Nischay Jindal
 * Name : NSP_AssetProjectCreation
 */
-public class NSP_AssetProjectCreation implements Queueable  {
+public class NSP_AssetProjectCreation implements Queueable {
     // test w/ NSP_AssetServiceTriggerHelperTest (83%)
+
     private static final String NSP_ASSET_PROJECT_CREATION = 'NSP_AssetProjectCreation';
-    
+
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
     public NSP_AssetProjectCreation(){
         if(Test.isRunningTest()){

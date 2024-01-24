@@ -1,13 +1,13 @@
 public without sharing class NSP_CreateReferralLead {
- // test w/ NSP_CreateReferralLeadTest (83%)
+    // test w/ NSP_CreateReferralLeadTest (83%)
 
- private static final String ErrorOccured=' Error occured: ';   
- private static final String ReferralTask='Referral_Task';  
- private static final String objectName='Lead';  
- private static final string Customerpotential = 'NSP_Howdoyouknowthepotentialcustomer__c';
- private static final string Industry ='Industry';
- private static final string Productinterted ='NSP_Product_Interest__c'; 
-    
+    private static final String ErrorOccured=' Error occured: ';   
+    private static final String ReferralTask='Referral_Task';  
+    private static final String objectName='Lead';  
+    private static final string Customerpotential = 'NSP_Howdoyouknowthepotentialcustomer__c';
+    private static final string Industry ='Industry';
+    private static final string Productinterted ='NSP_Product_Interest__c'; 
+
     /**
 * Fetches the owner of the account record
 * @param LeadObject String json holds the values in the account object.  
