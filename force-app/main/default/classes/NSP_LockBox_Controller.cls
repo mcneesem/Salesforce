@@ -130,9 +130,9 @@ public class NSP_LockBox_Controller {
                             currPayment.blng__GLTreatment__c = gLRulewithglTreatmentMap.get(lockBoxNumerGLRuleMap.get(lb.NSP_LockBox_Number__c));
                         }
 
-                        /*
-                        * Case 1 : When there is a matching invoice on lock box record
-                        */
+                        //
+                        // Case 1 : When there is a matching invoice on lock box record
+                        //
                         if (lb.NSP_Invoice__c != null){
                             currPayment.blng__Invoice__c = lb.NSP_Invoice__c;
                             //currPayment.blng__Account__c = lb.NSP_Account__c;
@@ -168,9 +168,9 @@ public class NSP_LockBox_Controller {
                     //lb.NSP_Status__c = 'Success';
 
                 }
-                /*
-                * Creating blng__Payment__c Records
-                */
+                //
+                // Creating blng__Payment__c Records
+                //
                 if (paymentRecsToInsert.size() > 0) {
                     insert paymentRecsToInsert;
                 }
@@ -179,9 +179,9 @@ public class NSP_LockBox_Controller {
                     completedRecords.add(prec.NSP_Created_From_Lock_Box__c);
 
                 }
-                /*
-                * Creating Allocations Records
-                */
+                //
+                // Creating Allocations Records
+                //
                 if (allocationsToInsert.size() > 0){
                     for (blng__PaymentAllocationInvoice__c allocrec : allocationsToInsert){
                         if (lockBoxIdToPaymentIdMap.containsKey(allocrec.blng__Payment__c)){
