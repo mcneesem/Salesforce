@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestTriggerHelper {
-    // test w/ NSP_ReportRequestTriggerHelper (??%)
+    // test w/ NSP_ReportRequestTriggerHelper (81%)
 
     private static final String NSP_REPORTREQUESTTRIGGERHELPER = 'NSP_ReportRequestTriggerHelper';
     private static final String UNDER_40 = 'Under 40';
@@ -7,40 +7,39 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     private static final String UNKNOWN = 'Unknown';
     private static final String INSPERITY_PREPARED = 'Insperity-Prepared';
     private static final string SEPERATION_AGREEMENT_RECORD_TYPE_ID = NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c', 'NSP_SeparationRequest'); 
-    public void beforeUpdateDirector( Map<Id, NSP_ReportRequest__c> newMap, Map<Id, NSP_ReportRequest__c > oldMap){
-        
+
+    public void beforeUpdateDirector( Map<Id,NSP_ReportRequest__c> newMap , Map<Id,NSP_ReportRequest__c> oldMap ) {
         List<NSP_ReportRequest__c> repReqList = new List<NSP_ReportRequest__c>();
         List<NSP_ReportRequest__c> insperityPreparedRepReqList = new List<NSP_ReportRequest__c>();
         Set<Id> repReqContactIds = new Set<Id>();
         Set<Id> repReqAccountIds = new Set<Id>();
-
         beforeInsertDirector(newMap.values(), oldMap);
         //Added the below logic as part of STY-04602
         for(NSP_ReportRequest__c repReq: newMap.values()){
-            if(repReq.NSP_WSEE__c != oldMap.get(repReq.Id).NSP_WSEE__c &&  repReq.NSP_RequestingMultipleEmployees__c != NSP_ServiceConstants.YES){
+            if ( repReq.NSP_WSEE__c != oldMap.get(repReq.Id).NSP_WSEE__c
+                && repReq.NSP_RequestingMultipleEmployees__c != NSP_ServiceConstants.YES
+                )
+            {
                 repReqContactIds.add(repReq.NSP_WSEE__c);
                 repReqAccountIds.add(repReq.NSP_ClientName__c);
                 repReqList.add(repReq);
-                
             }
-            if(repReq.NSP_WSEE__c != oldMap.get(repReq.Id).NSP_WSEE__c && oldMap.get(repReq.Id).NSP_WSEE__c == null && 
-               repReq.NSP_AgreementType__c == INSPERITY_PREPARED && repReq.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.YES){
-                   insperityPreparedRepReqList.add(repReq);
-               }
-
-               // Change By Prakash Jada || Modified Date: Jan 17, 2024 || Description: When the record type is Separation Agreement then check the Request multiple employees field
-               if(repReq.RecordTypeId == SEPERATION_AGREEMENT_RECORD_TYPE_ID)
-               {
-                if(repReq.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.YES)
-                {
+            if ( repReq.NSP_WSEE__c != oldMap.get(repReq.Id).NSP_WSEE__c
+                && oldMap.get(repReq.Id).NSP_WSEE__c == null
+                && repReq.NSP_AgreementType__c == INSPERITY_PREPARED
+                && repReq.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.YES
+                )
+            {
+                insperityPreparedRepReqList.add(repReq);
+            }
+            // Change By Prakash Jada || Modified Date: Jan 17, 2024 || Description: When the record type is Separation Agreement then check the Request multiple employees field
+            if(repReq.RecordTypeId == SEPERATION_AGREEMENT_RECORD_TYPE_ID) {
+                if(repReq.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.YES) {
                     repReq.NSP_Consideration_Amount_min_2wks_Salary__c = null;
-                } 
-                else if(repReq.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO)
-                {
+                } else if(repReq.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO) {
                     repReq.NSP_Severance_Total__c = null;
                 }
-               }
-
+            }
         }
         if(!repReqList.isEmpty() && !repReqContactIds.isEmpty() && !repReqAccountIds.isEmpty()){
             updateWSEEDetails(repReqList,repReqContactIds,repReqAccountIds);
@@ -48,8 +47,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         if(!insperityPreparedRepReqList.isEmpty()){
             showValidationForInsperityPrepared(insperityPreparedRepReqList);
         }
-        
     }
+
     public void beforeInsertDirector( List<NSP_ReportRequest__c> newList,  Map<Id, NSP_ReportRequest__c > oldMap){
 
         Id recordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_DevelopmentReport');  
