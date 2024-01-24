@@ -419,5 +419,22 @@ public class NSP_TerminationFormTriggerHelperTest {
         System.assertEquals(2, [SELECT count() FROM US_Contact__c WHERE Termination_Form__c =: oTerminationForm.Id]);
 
     }
-	
+
+    @isTest private static void insertcreditspecialistphone() {
+        Test.startTest();
+        //Inserting Contact
+        Account oAccount = [SELECT Id FROM Account WHERE Id != null LIMIT 1];
+        List<Contact>  contactList = New List<Contact>();
+        contactList.add(New Contact(FirstName = 'FName', LastName = 'LName', AccountId = oAccount.Id));
+        insert contactList;
+        List<NSP_Termination_Form__c> terminationList = new List<NSP_Termination_Form__c>();
+        Contact oCon =[SELECT Id,NSP_Work_Phone__c FROM Contact WHERE Id!=null Limit 1];      
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false); 
+        oTerminationForm.Credit_Specialist__c = oCon.Id;
+        oTerminationForm.NSP_Credit_Specialist_Phone__c = oCon.NSP_Work_Phone__c;
+        insert oTerminationForm;
+        Test.stopTest();
+        System.assertEquals(oTerminationForm.NSP_Credit_Specialist_Phone__c,oCon.NSP_Work_Phone__c);
+    }
+
 }
