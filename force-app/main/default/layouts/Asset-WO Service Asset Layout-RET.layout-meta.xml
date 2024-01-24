@@ -171,8 +171,8 @@
                 <field>NSP_Invoice_Reconciliation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_National_Account__c</field>
+                <behavior>Edit</behavior>
+                <field>National_Account_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
