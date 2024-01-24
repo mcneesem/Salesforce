@@ -11,7 +11,7 @@ Modification Log     :
 * Jatin                      6/9/2022                First Iteration
 */
 public without sharing class Nps_CloneServicePlanProjectController {
-    // test w/ NPS_CloneServicePlanProjectController (81%)
+    // test w/ Nps_CloneServicePlanProjectCtrTest (80%)
 
     private static final List<String> PROJECT_TASK_FIELDS = new List<String>{ 
                                             'Id', 'pse__Project__c', 'Name', 'pse__Status__c', 'NSP_isClonedFromAutomation__c',
