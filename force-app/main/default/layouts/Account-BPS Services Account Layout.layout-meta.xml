@@ -387,7 +387,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
         </platformActionListItems>
-<platformActionListItems>
+        <platformActionListItems>
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>12</sortOrder>
@@ -412,7 +412,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>16</sortOrder>
         </platformActionListItems>
-                <platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.NSP_New_task_BPS</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>17</sortOrder>
@@ -506,10 +506,10 @@
         <fields>CASES.SUBJECT</fields>
         <fields>NSP_Category__c</fields>
         <fields>NSP_SubCategory__c</fields>
-                <fields>CASES.STATUS</fields>
+        <fields>CASES.STATUS</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
-                <relatedList>RelatedCaseList</relatedList>
-            </relatedLists>
+        <relatedList>RelatedCaseList</relatedList>
+    </relatedLists>
     <relatedLists>
         <customButtons>pse__Create_Project_From_Template</customButtons>
         <excludeButtons>MassChangeOwner</excludeButtons>
@@ -791,7 +791,7 @@
         <fields>TASK.WHAT_NAME</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
-        <relatedObjects>ParentId</relatedObjects>
+    <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
