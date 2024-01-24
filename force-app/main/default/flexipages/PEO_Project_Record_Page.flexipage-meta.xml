@@ -550,6 +550,16 @@
                 <identifier>RecordRecordTypeIdField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.pse__Work_Calendar__c</fieldItem>
+                <identifier>Recordpse_Work_Calendar_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ffc19596-a26b-42ab-b56b-97e7f9d3194a</name>
         <type>Facet</type>
     </flexiPageRegions>
