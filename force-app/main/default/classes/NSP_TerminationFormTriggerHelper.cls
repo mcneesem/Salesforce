@@ -251,7 +251,7 @@ public class NSP_TerminationFormTriggerHelper {
             populateCreditspecialistphone(setOfCreditSpecialistId, creditTerminationForms);
         }
     }
-    
+
     public void afterUpdateTerminationForm(List<NSP_Termination_Form__c> terminationFormList, map<Id, NSP_Termination_Form__c> oldMap){
         set<Id> setOfProjectTaskId = new set<Id>();
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
@@ -376,7 +376,6 @@ public class NSP_TerminationFormTriggerHelper {
                 specialistIds.add(term.CreatedById);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
             }
-                
         }
         
         if(termFormToSpecialistIdsMap.keySet().size()> 0 ){
