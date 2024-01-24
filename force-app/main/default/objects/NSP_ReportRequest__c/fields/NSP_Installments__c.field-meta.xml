@@ -3,7 +3,7 @@
     <fullName>NSP_Installments__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Include the total number of equal payments based on the client’s regular pay periods.  Installments not equal or not based on the regular payroll will be a non-standard release.</inlineHelpText>
-    <label>Installments</label>
+    <label>Installments DEPREICATED</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
