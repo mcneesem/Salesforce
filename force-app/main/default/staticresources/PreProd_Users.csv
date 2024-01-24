@@ -1,19 +1,33 @@
-﻿Notes,Username,Email,First Name,Last Name,Profile,Role
-DO NOT DELETE,CRM Team,matt.mcneese@insperity.com,Matt,McNeese,System Administrator,
-DO NOT DELETE,CRM Team,miguel.florian@insperity.com,Miguel,Florian,System Administrator,MidMarket Administrator
+Notes,Username,Email,First Name,Last Name,Profile,Role
+DO NOT DELETE,CRM Team,matt.mcneese@insperity.com,Matt,McNeese,System Admin Lite,
+DO NOT DELETE,CRM Team,miguel.florian@insperity.com,Miguel,Florian,System Admin Lite,
 DO NOT DELETE,CRM Team,ravi.bhagavatula@insperity.com,Ravi,Bhagavatula,System Administrator,
-DO NOT DELETE,CRM Team,atchutanand.kandregula@insperity.com,Atchutanand,Kandregula,System Administrator,
-DO NOT DELETE,CRM Team,mohammed.shareef@insperity.com,Mohammed,Shareef,System Administrator,
-DO NOT DELETE,CRM Team,margarita.castaneda@insperity.com.invalid,Margarita,Castaneda,System Administrator,General User
-DO NOT DELETE,CRM Team,nishanth.volam@insperity.com.invalid,Nishanth,Volam,System Administrator,Business Performance Advisor
-DO NOT DELETE,CRM Team,erin.dunphy@insperity.com.invalid,Erin,Dunphy,System Administrator,L2 Support - Admin
-DO NOT DELETE,CRM Team,matthew.johnson@insperity.com.invalid,Matthew,Johnson,System Administrator,
-DO NOT DELETE,CRM Team,vignesh.pilli@insperity.com,Vignesh,Pilli,System Administrator,
-DO NOT DELETE,CRM Team,jimmy.wells@insperity.com,Jimmy,Wells,System Administrator,
-DO NOT DELETE,CRM Team,sreedevi.munnaluri@insperity.com.invalid,Sreedevi,Munnaluri,System Administrator,L3 Support - Config
-,meet.patel@insperity.com.sfdev1,meet.patel@insperity.com.invalid,Meet,Patel,Minimum Access - Salesforce,General User
-,jana.house@insperity.com.sfdev1,jana.house@insperity.com.invalid,Jana,House,Sales Administrator,L3 Support - Config
-,rolando.gonzalez-mendez@insperity.com.sfdev1,rolando.gonzalez-mendez@insperity.com.invalid,Rolando,Gonzalez-Mendez,System Administrator,General User
-,alejandro.padilla@insperity.com.sfdev1,alejandro.padilla@insperity.com,Alejandro,Padilla,System Administrator,
-,derek.landini@insperity.com.sfdev1,derek.landini@insperity.com,Derek,Landini,System Administrator,
-,kole.strullmyer@insperity.com.sfdev1,kole.strullmyer@insperity.com,kole,strullmyer,System Administrator,
+DO NOT DELETE,CRM Team,atchutanand.kandregula@insperity.com,Atchutanand,Kandregula,System Admin Lite,
+DO NOT DELETE,CRM Team,mohammed.shareef@insperity.com,Mohammed,Shareef,System Admin Lite,
+DO NOT DELETE,CRM Team,margarita.castaneda@insperity.com,Margarita,Castaneda,System Admin Lite,
+DO NOT DELETE,CRM Team,nishanth.volam@insperity.com,Nishanth,Volam,System Admin Lite,
+DO NOT DELETE,CRM Team,erin.dunphy@insperity.com,Erin,Dunphy,System Admin Lite,
+DO NOT DELETE,CRM Team,matthew.johnson@insperity.com,Matthew,Johnson,System Administrator,
+DO NOT DELETE,CRM Team,vignesh.pilli@insperity.com,Vignesh,Pilli,System Admin Lite,
+DO NOT DELETE,CRM Team,jimmy.wells@insperity.com,Jimmy,Wells,System Admin Lite,
+DO NOT DELETE,CRM Team,sreedevi.munnaluri@insperity.com,Sreedevi,Munnaluri,System Admin Lite,
+DO NOT DELETE,CRM Team,marguerite.blackburn@insperity.com,Marguerite,Blackburn,System Admin Lite,L3 Support - Config
+DO NOT DELETE,CRM Team,elijah.popov@insperity.com,Elijah,Popov,System Admin Lite,
+DO NOT DELETE,CRM Team,noorahmad.khan@insperity.com,Noor Ahmad,Khan,System Admin Lite,
+DO NOT DELETE,CRM Team,william.gardneriii@insperity.com,William,"Gardner, III",System Admin Lite,
+DO NOT DELETE,CRM Team,prakash.jada@insperity.com,Prakash,Jada,System Admin Lite,
+DO NOT DELETE,CRM Team,clayton.fielding@insperity.com,Clayton,Fielding,System Admin Lite,
+DO NOT DELETE,CRM Team,angela.alderete@insperity.com,Angela,Alderete,System Admin Lite,
+DO NOT DELETE,CRM Team,arunkumar.dasari@insperity.com,Arun Kumar,Dasari,System Admin Lite,
+DO NOT DELETE,CRM Team,blake.stringer@insperity.com,Blake,Stringer,System Admin Lite,
+DO NOT DELETE,CRM Team,freddy.peoples@insperity.com,Freddy,Peoples,System Admin Lite,
+DO NOT DELETE,CRM Team,jyoshna.muddasani@insperity.com,Jyoshna,Muddasani,System Admin Lite,
+DO NOT DELETE,CRM Team,suhas.sutar@insperity.com,Suhas,Sutar,System Admin Lite,
+DO NOT DELETE,CRM Team,vishali.kolasani@insperity.com,Vishali,Kolasani,System Admin Lite,
+DO NOT DELETE,CRM Team,waqar.malik@insperity.com,Waqar,Malik,System Admin Lite,
+,meet.patel@insperity.com,meet.patel@insperity.com,Meet,Patel,System Admin Lite,General User
+,jana.house@insperity.com,jana.house@insperity.com,Jana,House,Sales Admin Lite,L3 Support - Config
+,rolando.gonzalez-mendez@insperity.com,rolando.gonzalez-mendez@insperity.com,Rolando,Gonzalez-Mendez,System Admin Lite,General User
+,alejandro.padilla@insperity.com,alejandro.padilla@insperity.com,Alejandro,Padilla,System Admin Lite,
+,derek.landini@insperity.com,derek.landini@insperity.com,Derek,Landini,System Admin Lite,
+,kole.strullmyer@insperity.com,kole.strullmyer@insperity.com,kole,strullmyer,System Admin Lite,
