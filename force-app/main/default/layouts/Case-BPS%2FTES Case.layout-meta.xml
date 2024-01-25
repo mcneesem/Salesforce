@@ -408,7 +408,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
+<platformActionListItems>
             <actionName>New_BPS_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -584,6 +584,9 @@
         <fields>NSP_Per_Id__c</fields>
         <fields>NSP_IsPrimary__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
