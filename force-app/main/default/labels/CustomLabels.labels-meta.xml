@@ -82,6 +82,13 @@
         <value>Recruiting Manager</value>
     </labels>
     <labels>
+        <fullName>Recurring_Created_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Created Date</shortDescription>
+        <value>yesterday</value>
+    </labels>
+    <labels>
         <fullName>Close_Lost_Roles_for_Retirement_Sales_Consultant</fullName>
         <categories>Closed Lost. Roles Eligible</categories>
         <language>en_US</language>
