@@ -30,7 +30,11 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
         Integer eventCount = 0;
         List<ResourceAbsence> raUpdateList = new List<ResourceAbsence>();
         List <ResourceAbsence> resList = new List<ResourceAbsence> ();
-        Id NArecordType = SObjectType.ResourceAbsence.getRecordTypeInfosByDeveloperName().get('Non_Availability').getRecordTypeId();
+        Schema.RecordTypeInfo info = SObjectType.ResourceAbsence.getRecordTypeInfosByDeveloperName().get('Non_Availability');
+        Id NArecordType = null;
+        if ( info != null ) {
+            NArecordType = info.getRecordTypeId();
+        }
         for(Event eventRec : scope){
             ownerIdSet.add(eventRec.OwnerId); 
             eventIdSet.add(eventRec.Id);
@@ -51,7 +55,9 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
                     resObject.Start = eventRec.StartDateTime;
                     resObject.End = eventRec.EndDateTime;
                     resObject.Event_Id__c = String.valueOf(eventRec.Id);
-                    resObject.RecordTypeId = NArecordType;
+                    if ( NArecordType != null ) {
+                        resObject.RecordTypeId = NArecordType;
+                    }
                     resList.add(resObject); 
                     eventsForRA.add(resObject.Event_Id__c);
                 }
