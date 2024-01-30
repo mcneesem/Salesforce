@@ -7,5 +7,6 @@
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
+    <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
