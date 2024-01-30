@@ -88,7 +88,7 @@ public class NSP_EventTriggerHelper {
     public void afterDeleteDirector(List<Event> eventOldList,Map<Id, Event> eventOldMap){
         try{
             List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
-         	if (eventOldMap.size() > 0){
+         	if (!eventOldMap.isEmpty()){
              	resourceAbsenceList = [SELECT ID From ResourceAbsence WHERE Event_Id__c IN: eventOldMap.keySet()];
             }
          	if (resourceAbsenceList.size() > 0){
