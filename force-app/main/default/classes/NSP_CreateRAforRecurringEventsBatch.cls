@@ -102,9 +102,13 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
     }
 
     public static void schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
         System.schedule(
-            'NSP_CreateRAforRecurringEventsBatch ~ Create Resource Absences for previous day events ~ everyday at 1 AM',
-            '0 0 1 1/1 * ? *', //This is for Every Day at 1:00 AM
+            'NSP_CreateRAforRecurringEventsBatch ~ Create Resource Absences for previous day events ~ everyday at 1 AM' + suffix ,
+            '0 0 1 1/1 * ? *', // this is for Every Day at 1:00 AM...
             new NSP_CreateRAforRecurringEventsBatch()
         );
     }
