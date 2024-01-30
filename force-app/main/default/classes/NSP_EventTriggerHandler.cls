@@ -97,6 +97,8 @@ public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
     *                
     */ 
      public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+         NSP_EventTriggerHelper  eventTriggerHelperObject =  new NSP_EventTriggerHelper();        
+         eventTriggerHelperObject.afterDeleteDirector((List<Event>) oldList,(Map<Id, Event>) oldMap);   
     }
 
 }

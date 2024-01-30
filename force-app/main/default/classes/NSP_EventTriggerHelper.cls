@@ -75,7 +75,28 @@ public class NSP_EventTriggerHelper {
             
             updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
             updateActivityDate(eventNewMap.values(),eventOldMap);
-        }   
+        }
+    /**
+    * Iterates throught the list of old Events and passes the required attributes to other methods.
+    * @param eventOldList List of Old Event. 
+    * @param eventOldMap Map of Old Event.   
+    * @return void             
+    *                
+    */
+        
+     public void afterDeleteDirector(List<Event> eventOldList,Map<Id, Event> eventOldMap){
+         try{
+         List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+         if (eventOldMap.size() > 0){
+             resourceAbsenceList = [SELECT ID From ResourceAbsence WHERE Event_Id__c IN: eventOldMap.keySet()];
+         }
+         if (resourceAbsenceList.size() > 0){
+			Delete resourceAbsenceList;
+         }
+             }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'afterDeleteDirector', ex.getMessage());
+        } 
+     }
         
         
     public void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
