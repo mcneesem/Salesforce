@@ -2,6 +2,7 @@
  * Represents the Event trigger handler.
  */
 public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
+    // test w/ NSP_EventTriggerHelperTest (100%)
    
     //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
