@@ -4,5 +4,5 @@
     <description>Custom Settings that control the Apex Class InboundEmailLogController.</description>
     <enableFeeds>false</enableFeeds>
     <label>Inbound Email Log Settings</label>
-    <visibility>Protected</visibility>
+    <visibility>Public</visibility>
 </CustomObject>
