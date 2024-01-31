@@ -3,12 +3,13 @@
 *
 */
 public class NSP_CaseTriggerHelper {
-    // test w/ NSP_CaseTriggerHelperTest (80%)
+    // test w/ NSP_CaseTriggerHelperTest (78%)
 
     public static string ESCALATION_QUEUE = 'NSP_Escalations';
     public static string QUEUE_TYPE       = 'Queue';
     public static string CATEGORY_VALUE   = 'CSS';
     public static string CSS_ROLE         = 'Customer Success Specialist';
+    public static string RET_NSPHardship_QUEUE = 'RET - NSPHardship';
     public final String BPSRECORDTYPE = 'BPS';
     public final String TASKPRIORITY = 'Medium';
     public final String TASKSTATUS = 'Completed';
@@ -107,6 +108,14 @@ public class NSP_CaseTriggerHelper {
                 assetpopulationAccIdSet.add(eachCase.AccountId);
                 assetpopulationCategoryIdSet.add(eachcase.NSP_Category__c);
                 assetpopulationSubCategoryIdSet.add(eachcase.NSP_SubCategory__c);
+            }
+
+            // Added as part of usrsty-247918
+            if(eachcase.RecordTypeId == PEO_RECORDTYPEID && eachcase.NSP_Assigned_Queue__c == RET_NSPHardship_QUEUE){
+                if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
+                    eachcase.NSp_Category__c = 'Retirement Svc-Processing';
+                    eachcase.NSP_SubCategory__c = 'Hardship';
+                }
             }
             
             if(String.isNotBlank(eachcase.NSP_Category__c) && String.isNotBlank(eachcase.NSP_SubCategory__c)){
@@ -2035,13 +2044,15 @@ Story:        STY-4166
 createdDate : 6/12/2023
 ********************************************************************************************/
     private static void checkTheEligibiltyOfConfidentiality(Set<String> categorySet, Set<String> subCategorySet, List<case> caseList){
+        Map<string, Boolean> catSubCatDefaultConfidentialEligibleMap = new Map<string, Boolean>();
         Map<string, Boolean> catSubCatConfidentialEligibleMap = new Map<string, Boolean>();
         Map<string, Boolean> catSubCatDetailConfidentialEligibleMap = new Map<string, Boolean>();
         try{           
             for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
                                                                          NSP_Public_Groups_To_Share__c,
                                                                          NSP_Detail__c,
-                                                                         NSP_Display_confidential_popup__c
+                                                                         NSP_Display_confidential_popup__c,
+                                                                         Default_case_as_confidential__c
                                                                          FROM NSP_Category_Sub_Category_Mapping__c 
                                                                          WHERE NSP_Category__c IN: categorySet 
                                                                          AND NSP_Subcategory__c IN: subCategorySet]){
@@ -2052,6 +2063,10 @@ createdDate : 6/12/2023
                                                                              catSubCatConfidentialEligibleMap.put(
                                                                                  catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
                                                                                  catSubCatMapping.NSP_Display_confidential_popup__c
+                                                                             );
+                                                                             catSubCatDefaultConfidentialEligibleMap.put(
+                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
+                                                                                 catSubCatMapping.Default_case_as_confidential__c
                                                                              );
                                                                          }
     
@@ -2064,8 +2079,14 @@ createdDate : 6/12/2023
                 }else{
                     if(String.isNotBlank(cse.NSP_Detail__c)){
                         cse.NSP_Show_Confidential_Checkbox__c = catSubCatDetailConfidentialEligibleMap.containsKey(detailKey) ? catSubCatDetailConfidentialEligibleMap.get(detailKey) : false;
-                    }else if(catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){
-                        cse.NSP_Show_Confidential_Checkbox__c = catSubCatConfidentialEligibleMap.get(catSubCatKey);
+                    }else if(catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){ 
+                        cse.NSP_Show_Confidential_Checkbox__c = false;
+                        if(catSubCatConfidentialEligibleMap.get(catSubCatKey) || catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey)){
+                            cse.NSP_Show_Confidential_Checkbox__c = true;
+                        }
+                        if(catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey) && !catSubCatConfidentialEligibleMap.get(catSubCatKey)){
+                            cse.NSP_Confidential__c = true;
+                        }
                     }else{
                         cse.NSP_Show_Confidential_Checkbox__c = false;
                     }

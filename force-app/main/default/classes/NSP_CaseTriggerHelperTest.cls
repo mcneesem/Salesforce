@@ -1263,4 +1263,26 @@ private class NSP_CaseTriggerHelperTest {
         Test.stopTest();
         Assert.areNotEqual(caseRecord.Origin, null);
     }
+
+    /**
+    * @Description: This test method is used to test the case category and subcategory setting for RET - NSPHardship cases 
+    * @return void             
+    ***********************************/
+   @isTest static void HarshipCaseTest()
+   {
+       Id recordTypePEOID 			   = SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+       Case caseRecord 				   = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
+       caseRecord.NSP_Category__c 	   = '';
+       caseRecord.NSP_SubCategory__c   = '';
+       caseRecord.NSP_Assigned_Queue__c= NSP_CaseTriggerHelper.RET_NSPHardship_QUEUE;
+       
+       Test.startTest();
+       insert caseRecord;
+       Test.stopTest();
+       
+       Case getCase = [Select Id,NSP_Category__c from Case where Id=:caseRecord.Id];
+       Assert.isNotNull(getCase,'Case should not be null after the case insert');
+       Assert.areEqual(getCase.NSP_Category__c,'Retirement Svc-Processing');
+       Assert.areNotEqual(getCase.NSP_Category__c,'');
+    }    
 }
