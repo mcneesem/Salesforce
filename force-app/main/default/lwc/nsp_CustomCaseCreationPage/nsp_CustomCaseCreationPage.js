@@ -31,6 +31,10 @@ import { getRecord } from 'lightning/uiRecordApi';
 import Id from '@salesforce/user/Id';
 import CASE_OBJ from "@salesforce/schema/Case";
 import PARENTCASE_ACCOUNTID from '@salesforce/schema/Case.AccountId';
+import PROJECT from '@salesforce/schema/Case.Project__c';
+import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
+import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
+
 const ACCOUNTFIELDS = [
     'Account.Name',
     'Account.NSP_AIMS_Client__c'
@@ -451,11 +455,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     }
 
     // Added as part of DF-03856 to populate the account Id, if the child case is created from the parent Case
-    @wire(getRecord , { recordId : '$caseParentId', fields: [PARENTCASE_ACCOUNTID] })
+    @wire(getRecord , { recordId : '$caseParentId', fields: [PARENTCASE_ACCOUNTID, PROJECT, CATEGORY, SUB_CATEGORY] })
     getParentCaseFields(value){
         const { error, data} = value;
         if(data){
             this.accountID = data.fields.AccountId.value;
+            this.projectId = data.fields.Project__c.value;
+            this.selectedCategory = data.fields.NSP_Category__c.value;
+            this.selectedSubCategory = data.fields.NSP_SubCategory__c.value;
             let accountLookupEle = this.template.querySelector('c-nsp_case-custom-look-up[data-id="accountLookup"]');
             if(accountLookupEle){
                 accountLookupEle.getDefaultRecord(this.accountID, 'Account', '');
@@ -1373,6 +1380,14 @@ if(this.isMultipleContactsSelected === false){
         return showPrivateCheckBox;
     }
 
+    get isCQAChildCase(){
+        let enableCQAChild = false;
+        if(this.selectedRecordTypeName === 'ITA CQA' && this.parentId.startsWith("500")){
+            enableCQAChild = true;
+            return enableCQAChild;
+        }
+    }
+    
     render(){
         return ((this.selectedRecordTypeName === 'BPS') ? bpsTemplate : (this.selectedRecordTypeName === 'RET Time Tracking') ? retTemplate : defaultTemplate);
     } 
