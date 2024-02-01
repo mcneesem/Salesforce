@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>NSP_Prevent_Case_Contact_Deletion</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Prevent Case Contact Deletion</shortDescription>
-        <value>Separating WSEE cannot be deleted from the Case</value>
-    </labels>
-    <labels>
-        <fullName>NSP_ReportRequestErrorMessage</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ReportRequestErrorMessage</shortDescription>
-        <value>You cannot add WSEEs to multi employee agreements</value>
-    </labels>
-    <labels>
-        <fullName>NSP_Contact_Center_Email_Addresses</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Contact Center Email Addresses</shortDescription>
-	<value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com</value>
-    </labels>
-    <labels>
         <fullName>ASSET_BPS_RET_RECORDTYPES</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1740,6 +1719,13 @@
         <protected>false</protected>
         <shortDescription>ConfigurationCall</shortDescription>
         <value>Configuration Call</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Contact_Center_Email_Addresses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Center Email Addresses</shortDescription>
+        <value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_Copy_Button</fullName>
@@ -3699,7 +3685,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NiceCX Flow Error Receipent</shortDescription>
-        <value>rakesh.das@pwc.com,nice.integration@insperity.com</value>
+        <value>nice.integration@insperity.com,paul.mccluskey@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_No</fullName>
@@ -4283,6 +4269,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <value>You can&apos;t create a Task on a closed Case</value>
     </labels>
     <labels>
+        <fullName>NSP_Prevent_Case_Contact_Deletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Prevent Case Contact Deletion</shortDescription>
+        <value>Separating WSEE cannot be deleted from the Case</value>
+    </labels>
+    <labels>
         <fullName>NSP_Previous</fullName>
         <categories>nsp_implementationProfile</categories>
         <language>en_US</language>
@@ -4407,6 +4400,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <protected>false</protected>
         <shortDescription>NSP_Profile_To_Skip_OLI_Validation</shortDescription>
         <value>System Administrator,Data Migration,Integration User</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ProjTemplateDeleteError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ProjTemplateDeleteError</shortDescription>
+        <value>You do not have permission to delete project templates</value>
     </labels>
     <labels>
         <fullName>NSP_ProjectKeySet</fullName>
@@ -4751,6 +4751,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <protected>false</protected>
         <shortDescription>NSP_ReportDevelopmentGroupName</shortDescription>
         <value>Report Development Team</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ReportRequestErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReportRequestErrorMessage</shortDescription>
+        <value>You cannot add WSEEs to multi employee agreements</value>
     </labels>
     <labels>
         <fullName>NSP_Report_Dev_OrgWideEmail</fullName>
@@ -6149,12 +6156,5 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
-    </labels>
-    <labels>
-        <fullName>NSP_ProjTemplateDeleteError</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP_ProjTemplateDeleteError</shortDescription>
-        <value>You do not have permission to delete project templates</value>
     </labels>
 </CustomLabels>

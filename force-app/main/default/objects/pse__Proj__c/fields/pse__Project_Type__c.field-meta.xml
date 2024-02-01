@@ -78,6 +78,11 @@
                 <default>false</default>
                 <label>Transition</label>
             </value>
+            <value>
+                <fullName>Training &amp; Development</fullName>
+                <default>false</default>
+                <label>Training &amp; Development</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

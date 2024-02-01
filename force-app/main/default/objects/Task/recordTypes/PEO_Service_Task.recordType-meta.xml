@@ -5,6 +5,121 @@
     <compactLayoutAssignment>PEO_Service_Task_Compact_Layout</compactLayoutAssignment>
     <label>PEO Service Task</label>
     <picklistValues>
+        <picklist>Activity_Category__c</picklist>
+        <values>
+            <fullName>Configuration Solution Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Configuration Validation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved-3rd party integration</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EBN_Request_Type__c</picklist>
+        <values>
+            <fullName>EDI Cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EDI Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New 401k EDI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Benefits EDI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OE EDI Request</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FSL__Event_Type__c</picklist>
+        <values>
+            <fullName>Resource Absence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Appointment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Group_Assigned__c</picklist>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shared Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Infinisource_Request_Type__c</picklist>
+        <values>
+            <fullName>COBRA Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COBRA Sync</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COBRA cancellation request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FRINGE Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FRINGE Sync</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fringe cancellation request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New COBRA Integration request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Fringe Integration request</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Activity_Product__c</picklist>
         <values>
             <fullName>1st CSS TP Follow Up</fullName>
@@ -324,6 +439,45 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Activity_type__c</picklist>
+        <values>
+            <fullName>Client reference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Demo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email Click</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email Open</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email send</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EmailBounced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form Submission</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Required for Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website visit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Assigned__c</picklist>
         <values>
             <fullName>Employee</fullName>
@@ -392,6 +546,104 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Documents_Missing__c</picklist>
+        <values>
+            <fullName>BPA Commission Checklist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CSA addendums</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enrollment Fee Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Pricing and Review approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Owner outside Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing and Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal Addendum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution Addendum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rush Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Engineer Questionnaire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Intake Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signed CPQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signed CSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signed Delivery Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signed Schedule B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tech Solution docs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Total monthly fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Union Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Sold to Paid Checklist</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Engagement_Type__c</picklist>
+        <values>
+            <fullName>COI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Event_Subtype__c</picklist>
         <values>
             <fullName>Closing Appointment</fullName>
@@ -426,6 +678,33 @@
         </values>
         <values>
             <fullName>UH Suite Tickets</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Form_Name__c</picklist>
+        <values>
+            <fullName>InsperityBPSForm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>InsperityLearnMoreForm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>InsperityRSLearnMoreForm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>InsperityRecruitingGetAQuoteForm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>InsperitySalesChatbot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>InsperityWOLearnMoreForm</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -824,57 +1103,598 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Upsell_Product_of_Interest__c</picklist>
+        <picklist>NSP_Priority__c</picklist>
         <values>
-            <fullName>Applicant Tracking</fullName>
+            <fullName>High</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Employment Screening</fullName>
+            <fullName>Low</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Expense Management</fullName>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Sales_Division__c</picklist>
+        <values>
+            <fullName>Central</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Full Service HR %28Workforce Optimization%29</fullName>
+            <fullName>Corporate</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>HR Consulting Services</fullName>
+            <fullName>Eastern</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Insurance Services (Health &amp; Wellness)</fullName>
+            <fullName>MidMarket</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Insurance Services (Property &amp; Casualty)</fullName>
+            <fullName>Northeast</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Organizational Planning</fullName>
+            <fullName>Western</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Sales_Office__c</picklist>
+        <values>
+            <fullName>1001</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
+            <fullName>1021</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Management</fullName>
+            <fullName>1041</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Recruiting Services</fullName>
+            <fullName>1061</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Retirement Services</fullName>
+            <fullName>1081</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Time and Attendance</fullName>
+            <fullName>1101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1102</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1103</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1104</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1402</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1403</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1404</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1702</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1703</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2110</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2201</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2202</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2203</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2402</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>302</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3102</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3103</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3302</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3303</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3304</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3305</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3306</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3421</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3621</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3801</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3902</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3921</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4101</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4301</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4302</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4401</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4402</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4403</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4404</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4405</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4406</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4407</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4408</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4409</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4410</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4411</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4412</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4413</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4414</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4415</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4416</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4417</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4418</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4466</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4477</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4491</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4492</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4493</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4499</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4801</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4802</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>501</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>502</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>505</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>506</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>507</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>508</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>509</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>520</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>521</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>522</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>523</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>540</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>541</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>561</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>581</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>582</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>602</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>603</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>701</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>702</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>801</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>901</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>902</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>903</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Sales_Region__c</picklist>
+        <values>
+            <fullName>Central 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MM Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western 4</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1772,6 +2592,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Sub_Type_BPS__c</picklist>
+        <values>
+            <fullName>Incorrect Client Name on BPS%2FRetirement booking spreadsheet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing or closed opportunity in Salesforce</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Submission_type__c</picklist>
+        <values>
+            <fullName>Sales ready</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White paper downloaded</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Task_Subtype__c</picklist>
         <values>
             <fullName>BPA Debrief Call</fullName>
@@ -1970,6 +2812,500 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Time_Category__c</picklist>
+        <values>
+            <fullName>Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PTO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Settlor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Time_Entry__c</picklist>
+        <values>
+            <fullName>Administrative tasks related to CGQ processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annual Contributions-PS%2C QNEC%2C THM%2C SIMPLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annual Employer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application Development - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application Maintenance - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application Support - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attorney%2FClient %E2%80%93 Priv Data Collection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA - Prospect Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Balancing Plan Accounts - SDA%2C Regions%2C etc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CGQ review for ALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Management Database</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Management Database-Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Touch Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client%2FParticipant Communication - Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client%2FParticipant Communication - Non-Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications to clients to collect data for testing %28both 401%28k%29 and 125 Testing%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contributions Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Controlled Group%28CGQ%29%2FFEIN or Client Change %26 Related Research</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conversion Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DOL Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daily Business Duties - Filing%2C Email%2C Phone%2C Timesheet%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deconversions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DefCon %28Projects%2C Meetings Testing%2C Troubleshooting%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DefCon Operational Issue - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DefCon Operational Issue - Non reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disaster Recovery Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disbursements %26 Withdrawal Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERISA Testing-ADP%2FACP%2C TH%2C 410b</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fee Disclosure Analysis-Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance - Budget Process %26 Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance - Expense Submission %26 Account Recon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Folder Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Questions from WOS clients</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Activities - Reviews%2C Training%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IRS Forms-5500%2C 5330%2C audit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Implementation%2FPlan Sponsor Guides - call%2Fwalk through</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Improving online CGQ %E2%80%93 benefits both 401K and 125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoicing Clients</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Processing %26 Maint%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manage Team In Boxes %28One Voice%2FEmail%29 - Specific to a Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Managerial Activities - Approve timesheets%2C job descrip%2E%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing Activities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Company%2FTown Hall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Non-Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - One on One%2C Goals%2C HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Project Related - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Project Related - Non-Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Settlor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting - Staff%2FInter-Team Meetings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Metrics compilation and review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mutual Fund Corrections - Pricing%2C Manual Trades%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mutual Fund Related - Notices%2C Prospectus%27%2CChanges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NQDC - Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NQDC - Plan Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NetSuite Support - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Plan Set Up activities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New plan implementation %28all processes%2Fall systems%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newkirk - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK - Expanded Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK Match Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK Related Duties</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ORK to RS Campaign</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OmniPlus Reporting - Ppt Valuation%2FDeferral Matching%2F1099</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Operational Issues - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Meetings%2C Section 125 Specific Tasks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Settlor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Record Keeper %28ORK%29 Form 5500</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Record Keeper %28ORKs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PTO%2FCommunity Service%2FHoliday</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Participant Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Participant Forms Processing %28Beneficiary%2C enrollment%2C etc%2E%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Amendments - Settlor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Related Admin%3A making folders%2Ffiling%2C records%2C printing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Review %28Document Collection for Legal Analysis%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan Valuations %26 Trust Statements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plan%2FParticipant Maintenance %26 Corrections</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparing%2Fimplementing required plan documents %26 amendments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procedure %28Creation%2C Review%2C Update%29 - Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Process automation%2FTextfile Maintenance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project 1 - Trustee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Projects - Management%2FMaintenance of Project List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Projects - Working on Specific Project%28s%29 - Chargeable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Projects - Working on Specific Project%28s%29 - Non Chargeable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Assurance Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly Statements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RMD and QDRO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Development %26 Training</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Implementation%2FConversion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Project - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSO Suitability%2FPlan Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Research - Non Reimbursable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Research - Related to a plan or set of plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revenue - pmts%2C research%2C recon%2C ppt counts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review CGQ for client implementing a 401%28k%29 Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review CGQ for nondiscrimination testing %28125 testing only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review CGQ for nondiscrimination testing %28both 401%28k%29 and 125 testing%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review of Prior Plan Documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOC-1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SRP Facilitation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales - Calls%2C Conferences%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales - RSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales - WOS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suitablity%2FNew Plan Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Maintenance %28Insperity%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Testing %26 Maintenance - Sungard Products%2FCompliance Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade%2FShare Reconciliation %26 Files</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training - 401k Plan%2C Compliance%2C etc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training - Non-401k</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transaction Processing - Dividends%2C Disbursements%2C etc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trustee Review%2FSearch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Transition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Year-end Activities - Fid</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Priority</picklist>
         <values>
             <fullName>High</fullName>
@@ -2090,6 +3426,61 @@
         </values>
         <values>
             <fullName>Website visit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Upsell_Product_of_Interest__c</picklist>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Service HR %28Workforce Optimization%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Consulting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Services %28Health %26 Wellness%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Services %28Property %26 Casualty%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll %26 Human Capital Management%28Workforce Acceleration%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance</fullName>
             <default>false</default>
         </values>
     </picklistValues>

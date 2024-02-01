@@ -27,10 +27,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         List<Case> caseToUpdate = new List<Case> ();
         Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
         for(EmailMessage eMessage : newList){
-            if(eMessage.ParentId != null && incomingEmailCheck(eMessage)){
-                setOfCaseId.add(eMessage.ParentId);   
+            if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
+                setOfCaseId.add( eMessage.ParentId );
             }
-
             //Added as a part of STY-04132 
             if(!setOfCaseId.isEmpty()){
               for(Id caseID:setOfCaseId){
@@ -97,7 +96,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     and EmailMessage date is within 5 days,else, it will create a new Case
     ***********************************************************************************************/
     public static void reOpenOrMarkResponseAfterCloseTrue(Set<Id> caseIds, List<EmailMessage> listOfEmailMessage){
-        List<Case> listOfCase = new List<Case> ();
         Map<Id, Case> mapOfCaseIdAndCase = new Map<Id, Case> ();
         
         Id caseBPSRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
@@ -116,11 +114,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
         }
         
+        List<Case> listOfCase = new List<Case>();
         for(EmailMessage eMessage : listOfEmailMessage){
             Integer daysBetween;
             Integer businessDaysBetween;
-            List<String> ToAddressList = new List<String>(); 
-            
             if(mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c != null){
                 Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
                 Date caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c;
@@ -131,17 +128,24 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 if(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween <= 90){
                     getCase.Status = 'ReOpened';
                     getCase.NSP_Case_Reopened_EmaiToCase__c = true;
-                    listOfCase.add(getCase);
+                    listOfCase.add( getCase );
                 } else if(
                     	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId) ||
                     	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween > 90)){
                               getCase.NSP_Response_After_Close__c = true;
-                              listOfCase.add(getCase);
+                              listOfCase.add( getCase );
                           }
             }
-            ToAddressList = eMessage.ToAddress.split(';');
-            if(mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null && mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' && 
-              mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId && isContactCenterCase(ContactCenterEmailAddresses,ToAddressList)){
+            List<String> ToAddressList = new List<String>();
+            if ( String.isNotBlank( eMessage.ToAddress ) ) { // prevent NullPointerException when ToAddress is missing a value...
+                ToAddressList = eMessage.ToAddress.split( ';' );
+            }
+            if ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null )
+                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' )
+                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId )
+                && isContactCenterCase( ContactCenterEmailAddresses , ToAddressList )
+                )
+            {
                 Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
                 Datetime caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate;
                 Datetime emailMessageDate = Datetime.newInstance(eMessage.MessageDate.year(), eMessage.MessageDate.month(), eMessage.MessageDate.day());
@@ -170,11 +174,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         if(!insertedCaseList.isEmpty()){
             updateRelatedCaseOnEmailMessage(ParentCaseToEmailMessageMap,insertedCaseList);
         }
-        if(!listOfCase.isEmpty()){
-            Database.update(listOfCase);
+        if ( !listOfCase.isEmpty() ) {
+            try {
+                Database.update( listOfCase );
+            } catch ( Exception e ) { // catch unhandled DmlExceptions within Case Trigger logic...
+                System.debug( ' ~ CATCH ~ e=' + e );
+            }
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName    : isContactCenterCase
     * Description   : Check if ToAddress has Contact Center Email
@@ -354,28 +362,33 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             && (restrictedEmailAddresses.contains(eMessage.FromAddress)
                 || eMessage.FromAddress.startsWith(NSP_ServiceConstants.POSTMASTER_EMAIL_ADDRESS));
     }
-    
-    /***********************************************************************************************
-    * MethodName	: incomingEmailCheck
-    * Description	: Incoming Email check for subject check
-    * Story 		: STY-03643
-    * Params		: EmailMessage eMessage
-    * ********************************************************************************************/
-    public static Boolean incomingEmailCheck(EmailMessage eMessage){
-        return eMessage.incoming && 
-            String.valueOf(eMessage.ParentId).startsWith('500') && 
-            (!eMessage.Subject.containsIgnoreCase('OOO') && 
-             !eMessage.Subject.containsIgnoreCase('Out of Office') && 
-             !eMessage.Subject.containsIgnoreCase('Auto-Response') &&
-             !eMessage.Subject.containsIgnoreCase('Auto-Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Auto Response') &&
-             !eMessage.Subject.containsIgnoreCase('Auto Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic Response') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic-Response') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic-Reply')); 
+
+    // ********************************************************************************************
+    // MethodName	: incomingEmailCheck
+    // Description	: Incoming Email check for subject check
+    // Story 		: STY-03643
+    // Params		: EmailMessage eMessage
+    // ********************************************************************************************
+    private static Boolean incomingEmailCheck( EmailMessage eMessage ) {
+        return (
+            ( eMessage != null ) // prevent NullPointerException...
+            && eMessage.Incoming
+            && ( eMessage.ParentId != null ) // prevent NullPointerException when EmailMessage is not related to a Case...
+            && ( eMessage.ParentId.getSObjectType() == Case.getSObjectType() )
+            && String.isNotBlank( eMessage.Subject ) // prevent NullPointerException when Subject is missing a value...
+            && !eMessage.Subject.containsIgnoreCase( 'OOO' )
+            && !eMessage.Subject.containsIgnoreCase( 'Out of Office' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto-Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto-Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic-Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic-Reply' )
+        );
     }
-    
+
     /***********************************************************************************************
     * MethodName : updateConfidentialCheckBoxForEmpScreening
     * Story : STY-03671

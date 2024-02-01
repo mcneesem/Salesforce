@@ -10,10 +10,9 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 * Srushti Bikkannavar        12/22/2022           First Iteration
 */
+public class NSP_WXCSSTaskCreationBatch implements Schedulable, Database.Batchable<sObject> {
+    // test w/ NSP_WXCSSTaskCreationBatchTest (89%)
 
-public class NSP_WXCSSTaskCreationBatch implements Schedulable, Database.Batchable < sObject >{
-    // test w/ NSP_WXCSSTaskCreationBatchTest  (89%)
-    
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Date cssRenewDate = System.today().addDays(15);
         

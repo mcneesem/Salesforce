@@ -670,16 +670,6 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Create_Box_com_Folder_s__c</fieldItem>
-                <identifier>RecordCreate_Box_com_Folder_s_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-97b9c062-f1d1-4354-bd4e-6ce6c426fa4d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -960,16 +950,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_PremierPathwayLink__c</fieldItem>
                 <identifier>RecordNSP_PremierPathwayLink_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Create_Box_com_Folder_s__c</fieldItem>
-                <identifier>RecordCreate_Box_com_Folder_s_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a020e64a-5c06-459e-91e6-7dc6d0d54fed</name>
@@ -1584,16 +1564,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Producer__c</fieldItem>
                 <identifier>RecordNSP_Producer_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Create_Box_com_Folder_s__c</fieldItem>
-                <identifier>RecordCreate_Box_com_Folder_s_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-57dff982-fe9d-4649-9528-c213cd320869</name>
@@ -5969,6 +5939,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Create_Box_com_Folder_s__c</fieldItem>
+                <identifier>RecordCreate_Box_com_Folder_s_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Service_Team_Email__c</fieldItem>
                 <identifier>RecordNSP_Service_Team_Email_cField</identifier>
             </fieldInstance>
@@ -7247,6 +7227,151 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Create_Box_com_Folder_s__c</fieldItem>
+                <identifier>RecordCreate_Box_com_Folder_s_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-93fbc5e7-f8c3-40fa-9bad-c6540ea9e809</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-93fbc5e7-f8c3-40fa-9bad-c6540ea9e809</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column53</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-a0afc2bf-1ada-4a42-ac4f-4e2720056c27</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt;&lt;em&gt;Step One:&lt;/em&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt; Click the &quot;&lt;/span&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt;Create Folder&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt;&quot; button.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <value>1px</value>
+                </componentInstanceProperties>
+                <componentName>box:recordBoxFolder</componentName>
+                <identifier>box_recordBoxFolder</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Box_Insperity_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;em&gt;Step Two:&lt;/em&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; Check the &quot;&lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Send File Request to Primary Contact&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&quot; field and then Save.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-a0afc2bf-1ada-4a42-ac4f-4e2720056c27</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Send File Request (Step 2)</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection27</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Box_Insperity_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(80, 56, 231);&quot;&gt;&lt;em&gt;Success!&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 16px;&quot;&gt; Your secure Box folder has been created. &lt;/em&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(80, 56, 231);&quot;&gt;&lt;em&gt;Notify your Primary Contact to check their email inbox&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 16px; color: rgb(80, 56, 231);&quot;&gt;.&lt;/em&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>canCreateNewFolder</name>
@@ -7258,7 +7383,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>canDownload</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>canPreview</name>
@@ -7296,8 +7421,14 @@
                 <componentName>box:UIElementContentExplorer</componentName>
                 <identifier>box_UIElementContentExplorer</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Box_Insperity_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>

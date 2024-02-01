@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Credit_Specialist_Phone__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Field populates when Credit Specialist is chosen &amp; form saved, or manually enter to override</inlineHelpText>
     <label>Credit Specialist Phone</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
