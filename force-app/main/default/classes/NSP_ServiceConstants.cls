@@ -203,6 +203,7 @@ public class NSP_ServiceConstants {
   public final static String APPLICANT_TRACKING_RECORD_TYPE = 'Applicant_Tracking';
   public final static String ISOLVED  = 'WX Account Group';
   public final static String ASSET_ONBOARDING_STATUS = 'Onboarding';
+  public final static String ASSET_ONDEMAND_STATUS = 'On Demand';
   public final static String ASSET_ACTIVE_STATUS = 'Active';
   public final static string ASSET_RECRUITING_SERVICES = 'Recruiting_Services';  
   public final static string LEARNING_DEVELOPMENT = 'Learning_Development';                                                                                    
@@ -826,6 +827,7 @@ public class NSP_ServiceConstants {
   public static final String ORGANIZATIONAL_PLANNING = 'Organizational Planning';
   public static final String PAYROLL_HR_MANAGEMENT_WA = 'Payroll & Human Capital Management(Workforce Acceleration)';
   public static final String PERFORMANCE_MANAGEMENT = 'Performance Management';
+  public static final String TIME_ATTENDANCE = 'Time & Attendance';
   public static final String PI_RECRUITING_SERVICES = 'Recruiting Services';
   public static final String PI_RETIREMENT_SERVICES = 'Retirement Services';
   public static final String TIME_AND_ATTENDANCE = 'Time and Attendance';
