@@ -2,9 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>InboundEnvelope__c</fullName>
     <description>The Messaging.InboundEnvelope parameter of handleInboundEmail().</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Inbound Envelope</label>
     <length>32768</length>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

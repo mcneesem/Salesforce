@@ -16,13 +16,14 @@ public with sharing class SchemaController {
         if ( String.isNotBlank( value ) && ( describedField != null ) ) {
             // compute the maximum length for the described field...
             Integer maxLength = describedField.getLength();
-            if ( ( maxLength != null )
-                && ( maxLength >= 0 )
-                && ( value.length() > maxLength )
-               )
-            {
-                // truncate to the maximum length...
-                value = value.substring( 0 , maxLength );
+            if ( ( maxLength != null ) && ( maxLength >= 0 ) ) {
+                if ( describedField.isHtmlFormatted() && ( value.escapeHtml4().length() > maxLength ) ) {
+                    // special consideration for the html entities in "Rich Text Area" fields...
+                    value = value.escapeHtml4().substring( 0 , maxLength ).unescapeHtml4();
+                } else if ( value.length() > maxLength ) {
+                    // truncate normal text fields to the maximum length...
+                    value = value.substring( 0 , maxLength );
+                }
             }
         }
         return value;
