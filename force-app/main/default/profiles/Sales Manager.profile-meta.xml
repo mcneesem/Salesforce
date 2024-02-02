@@ -14381,6 +14381,14 @@
         <layout>Project_Account__c-Project Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>pse__Proj__c-PEO Project Layout</layout>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+    </layoutAssignments> 
+    <layoutAssignments>
+        <layout>pse__Proj__c-TES%2BBPS</layout>
+        <recordType>pse__Proj__c.TES_BPS</recordType>
+    </layoutAssignments>        
+    <layoutAssignments>
         <layout>QuickText-Quick Text Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
