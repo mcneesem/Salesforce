@@ -88,6 +88,22 @@
     <layoutAssignments>
         <layout>SBQQ__QuoteLine__c-Finance CPQ Admin Quote Line Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Support Core Sales Task Layout</layout>
+        <recordType>Task.BPS_task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Support Core Sales Task Layout</layout>
+        <recordType>Task.Core_Sales_Task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Support Core Sales Task Layout</layout>
+        <recordType>Task.Mid_Market_Task_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Support Core Sales Task Layout</layout>
+	    <recordType>Task.New_Client_Sales_RT</recordType>
+    </layoutAssignments>    
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>false</enabled>
