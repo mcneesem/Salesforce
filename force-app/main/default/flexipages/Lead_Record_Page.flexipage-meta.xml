@@ -732,6 +732,16 @@
                 <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-b59e6338-ef71-4ea7-a5ae-48ab0c832437</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1112,6 +1122,16 @@
                 <identifier>RecordNSP_Regen_Date_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c0add9bb-1921-4454-bb0b-f9b01fbf6ac6</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1310,6 +1330,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
                 <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
