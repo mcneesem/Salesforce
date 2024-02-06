@@ -328,9 +328,20 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     
                     if(!listOfTOAddresses.isEmpty()){
                         String mailBody = getMailBody(proj, template.Id);
-                        sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                                 null,accountIdProjectTaskMap.get(accId), template.Id);
-                        
+                        String fromAddress = null;
+                        List<User> records = [SELECT Email FROM User WHERE (Id = :Userinfo.getUserId())];
+                        if(!records.isEmpty()){
+                            fromAddress = records[0].Email;
+                        }
+                        sendMail(
+                            template.Subject,mailBody,
+                            listOfTOAddresses,
+                            null,
+                            listOfCCAddresses,
+                            fromaddress,
+                            accountIdProjectTaskMap.get(accId),
+                            template.Id
+                        );
                     }
                 }
                 
