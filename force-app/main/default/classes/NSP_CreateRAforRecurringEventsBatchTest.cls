@@ -17,7 +17,7 @@ public class NSP_CreateRAforRecurringEventsBatchTest {
     static void setupTestData(){
         User tUser =  NSP_TestHelper.createUser(false);
         tUser.Phone = '(112)6475261 ext415';
-        tUser.Username = 'jsmith@test.com.abc';
+        tUser.Username = 'jsmith@test.com.abc'+System.currentTimeMillis();
         tUser.NSP_Service_Region__c = 'MMSO - Southeast';
         tUser.NSP_Salesforce_Field_Service__c = NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER_RESOURCE;
         tUser.NSP_Dispatch_Region__c = NSP_ServiceConstants.CHILD_DISPATCH_REGION;
