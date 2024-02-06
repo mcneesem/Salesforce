@@ -2,6 +2,7 @@
  * Represents the Event trigger handler.
  */
 public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
+    // test w/ NSP_EventTriggerHelperTest (100%)
    
     //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
@@ -87,16 +88,16 @@ public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
     **/
     public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
     }
-    
-    
-  /**
+
+    /**
     * Handles after delete for Event
     * @param oldList List of old Event
     * @param oldMap Map of Old Event
-    * @return void             
-    *                
-    */ 
-     public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+    * @return void
+    */
+    public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+        NSP_EventTriggerHelper  eventTriggerHelperObject =  new NSP_EventTriggerHelper();
+        eventTriggerHelperObject.afterDeleteDirector((List<Event>) oldList,(Map<Id, Event>) oldMap);
     }
 
 }

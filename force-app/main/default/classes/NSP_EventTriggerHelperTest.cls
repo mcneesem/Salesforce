@@ -47,6 +47,48 @@ public without sharing class NSP_EventTriggerHelperTest {
         newUser.NSP_Dispatch_Region__c = 'Central';
         insert newUser;
         
+        
+        //New Test Event 
+        Event newEvent = new Event();
+        newEvent.Subject = 'Test Subject For Event RA';
+        newEvent.DurationInMinutes = 60;
+        newEvent.ActivityDateTime = system.today();
+        newEvent.StartDateTime = system.today();
+        newEvent.NSP_Event_Subtype__c = 'Discovery Call';
+        insert newEvent;
+        
+        //Insert User
+        User userRecord1 = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+            LastName = 'TestClassUser',
+            Email = 'testuser1@insperity.com',
+            Username = 'testuser1@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+            );
+        insert userRecord1; 
+        //Insert Service Resource
+        ServiceResource serRec = new ServiceResource();
+        serRec.RelatedRecordId = userRecord1.Id;
+        serRec.ResourceType = 'T';
+        serRec.IsActive = True;
+        serRec.Name = 'Test';
+        insert serRec;
+        
+        //Insert Resource Absence
+        ResourceAbsence resObject = new ResourceAbsence();
+        resObject.Type = 'Meeting';
+        resObject.ResourceId = serRec.Id;
+        resObject.Start = system.today();
+        resObject.End = system.today().addDays(1);
+        resObject.Event_Id__c = newEvent.Id;
+        Insert resObject;
+        
     }
     
         
@@ -139,5 +181,17 @@ public without sharing class NSP_EventTriggerHelperTest {
                             .addFilter('Subject', 'Test Subject For Event 2').addLimit(1).build();
         Event  eventRec = Database.query(query);
         System.assertequals(null,eventRec.WhatId);
+    }
+    
+    /**
+    * @Description: This test method is used to cover afterDelete
+    * @return void  
+    */
+    @isTest
+    public static void afterDeleteTest(){
+        List<Event> eventList = [SELECT ID, Subject FROM Event WHERE Subject = 'Test Subject For Event RA' LIMIT 1];
+        if(eventList.size() > 0){
+            DELETE eventList[0];
+        }
     }
 }
