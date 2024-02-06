@@ -129,6 +129,10 @@
                 <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Named_Account_Group__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Referring_Partner__c</field>
             </layoutItems>
@@ -2497,7 +2501,7 @@
         <fields>CONTRACT.STATUS</fields>
         <relatedList>RelatedContractList</relatedList>
     </relatedLists>
-        <relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>NSP_Status__c</fields>
         <fields>NSP_Goal_Type__c</fields>
@@ -2515,6 +2519,16 @@
         <fields>blng__ARStatus__c</fields>
         <fields>blng__StatusFlag__c</fields>
         <relatedList>blng__Invoice__c.blng__Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>blng__Account__c</fields>
+        <fields>blng__InvoiceDate__c</fields>
+        <fields>blng__TotalAmount__c</fields>
+        <fields>blng__Balance__c</fields>
+        <fields>blng__ARStatus__c</fields>
+        <fields>blng__StatusFlag__c</fields>
+        <relatedList>blng__Invoice__c.NSP_Primary_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
@@ -2646,8 +2660,8 @@
     </relatedLists>
     <relatedLists>
         <customButtons>NSP_Create_Accrual_Profile_APAR</customButtons>
-        <excludeButtons>New</excludeButtons>
         <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NSP_Accrual_Profile__c.NAME</fields>
         <fields>NSP_Accrual_Profile__c.NSP_Status__c</fields>
         <fields>NSP_Accrual_Profile__c.NSP_Accrual_Profile_Plan_Name__c</fields>
