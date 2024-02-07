@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>For the Traditional Employment Solutions team</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Team Traditional Employment Solutions</label>
+    <permissionSets>Edit_Case_fields</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
