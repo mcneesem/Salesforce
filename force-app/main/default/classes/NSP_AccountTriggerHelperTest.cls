@@ -350,7 +350,7 @@ public class NSP_AccountTriggerHelperTest {
         // Start Test
         Test.startTest();
         system.runAs(userRecord){
-         for(integer count = 0; count < 5; count++) {
+        for(integer count = 0; count < 5; count++) {
             accountList.add(
                 new Account(
                     OwnerId=userRecord.Id ,
