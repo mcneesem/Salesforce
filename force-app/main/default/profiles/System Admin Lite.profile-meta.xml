@@ -102,7 +102,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Support Core Sales Task Layout</layout>
-	    <recordType>Task.New_Client_Sales_RT</recordType>
+        <recordType>Task.New_Client_Sales_RT</recordType>
     </layoutAssignments>    
     <userLicense>Salesforce</userLicense>
     <userPermissions>

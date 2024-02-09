@@ -14387,7 +14387,7 @@
     <layoutAssignments>
         <layout>pse__Proj__c-TES%2BBPS</layout>
         <recordType>pse__Proj__c.TES_BPS</recordType>
-    </layoutAssignments>        
+    </layoutAssignments>
     <layoutAssignments>
         <layout>QuickText-Quick Text Layout</layout>
     </layoutAssignments>
