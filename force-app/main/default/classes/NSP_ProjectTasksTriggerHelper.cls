@@ -1,5 +1,8 @@
-public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (80%)
+/**
+    * Represents the project trigger helper which handles all the logic.
+    */
+    public class NSP_ProjectTasksTriggerHelper {
+    // test w/ NSP_ProjectTasksTriggerHelperTest (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final string SYS_ADMIN = 'System Administrator';
@@ -1007,7 +1010,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectFsoIdset.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectFsoIdset.isEmpty()){
+        if(!projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getOrgDefaults().NSP_FP_MM_EmailNotificatin__c){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
         if(!projectTaskCobraIdSet.isEmpty()){
