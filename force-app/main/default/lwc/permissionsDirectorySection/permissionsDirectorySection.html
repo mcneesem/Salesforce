@@ -1,0 +1,20 @@
+<template>
+    <template if:false={error}>
+        <lightning-accordion-section
+            name={name}
+            label={labelSection}
+            >
+            <template lwc:if={hasRenderPermissions}>
+                <template for:each={renderPermissions} for:item="permission">
+                    <li key={permission.name}>
+                        <c-permission-source permission={permission}></c-permission-source>
+                    </li>
+                </template>
+            </template>
+            <template lwc:else>
+                <b>No {label} found{containingFilter}.</b>
+            </template>
+        </lightning-accordion-section>
+    </template>
+    <c-error-panel error={error} parent="c-permissions-directory-section"></c-error-panel>
+</template>
