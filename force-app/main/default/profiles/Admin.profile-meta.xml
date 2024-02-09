@@ -1685,6 +1685,14 @@
     <custom>false</custom>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Allow_Delete_Accounts</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Allow_Delete_Leads</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>FSL__Service_List_Canceled</name>
     </customPermissions>
     <customPermissions>
