@@ -122,19 +122,24 @@ public class NSP_Implementationprofile_ServiceHelper {
         this.isRerun=true;
         this.automationsToExecute.add(automationName);
     }
-    public  Map<String, Set<Id>>  executeAutomation() {
-    Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
-    try{
-        start();
-        execute();
-        finish();
-        ipRecordsByAutomationMap= ipRecordsByAutomation;
-    }catch(Exception ex ){
-        NSP_ErrorLogHandler.logSaveException('NSP_Implementationprofile_ServiceHelper', 'executeAutomation', ex.getMessage());
+
+    public Map<String, Set<Id>> executeAutomation() {
+        Map<String, Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
+        try{
+            start();
+            execute();
+            finish();
+            ipRecordsByAutomationMap = ipRecordsByAutomation;
+        } catch ( Exception ex ) {
+            NSP_ErrorLogHandler.logSaveException(
+                'NSP_Implementationprofile_ServiceHelper' ,
+                'executeAutomation' ,
+                ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+            );
        }
        return ipRecordsByAutomationMap;
     }
-    
+
     private void start() {
         // Create a set of eligible records which we need to pull
         populateEligibleRecords();
