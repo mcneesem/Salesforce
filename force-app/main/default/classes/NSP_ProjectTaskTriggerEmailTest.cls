@@ -195,23 +195,30 @@ public class NSP_ProjectTaskTriggerEmailTest {
     @isTest
     public static void emailNotifyforFsoProjectTasks(){ 
         List<pse__Project_Task__c> updateTaskList = new List<pse__Project_Task__c>();
+        List<NSP_Project_Team__c> projTeamList = new List<NSP_Project_Team__c>();
         
-        pse__Proj__c proj =[SELECT Id, (SELECT NSP_Assignee__c
-                                        FROM Project_Teams__r 
-                                        WHERE NSP_Role__c='Payroll Specialist' )
-                            			FROM pse__Proj__c 
-                            			WHERE TemplateName__c=:label.FSOImplementationProject];
-        
+        Test.startTest();
+        Contact con=[SELECT Id ,NSP_Work_email__c FROM Contact WHERE Id != null LIMIT 1];
+        pse__Proj__c proj =[SELECT Id,(SELECT NSP_Assignee__c FROM Project_Teams__r ) 
+                            FROM pse__Proj__c 
+                            WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
+
+        if(proj.Project_Teams__r.size()>0){
+            for(NSP_Project_Team__c projTeam : proj.Project_Teams__r){
+               projTeam.NSP_Assignee__c=con.Id;
+                 projTeamList.add(projTeam);
+            }
+        }
         Implementation_Profile__c ip=[SELECT Id,Has_FEIN_documentation_been_collected__c,NSP_Transition_Specialist__c,
                                      NSP_OT_Representative__c,NSP_Client_Liaison__c,NSP_Payroll_Specialist__c,NSP_HR_Specialist__c
                                       FROM Implementation_Profile__c
                                       WHERE NSP_Project__c=:proj.Id  LIMIT 1];
         ip.Has_FEIN_documentation_been_collected__c='No';
-        
-        
         update ip;
         
-     		
+        if(!projTeamList.isEmpty()){
+            update projTeamList;
+        }
         List<pse__Project_Task__c> projTaskList=[SELECT Id,Name
                                                  FROM pse__Project_Task__c
                                                  WHERE pse__Project__c=:proj.Id];
@@ -238,7 +245,6 @@ public class NSP_ProjectTaskTriggerEmailTest {
             }
             
         }
-        Test.startTest();
             if(!updateTaskList.isEmpty()){
                 update updateTaskList;
             }
@@ -248,7 +254,6 @@ public class NSP_ProjectTaskTriggerEmailTest {
         System.assertEquals( 'Yes',ip1.Has_FEIN_documentation_been_collected__c);
             
         Test.stopTest();
-        
         
     }
     
