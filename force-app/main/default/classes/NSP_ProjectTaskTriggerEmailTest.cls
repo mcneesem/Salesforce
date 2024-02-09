@@ -199,12 +199,12 @@ public class NSP_ProjectTaskTriggerEmailTest {
         
         Test.startTest();
         Contact con=[SELECT Id ,NSP_Work_email__c FROM Contact WHERE Id != null LIMIT 1];
-        pse__Proj__c proj =[SELECT Id,(SELECT NSP_Assignee__c FROM Project_Teams__r ) 
+        pse__Proj__c[] proj =[SELECT Id,(SELECT NSP_Assignee__c FROM Project_Teams__r ) 
                             FROM pse__Proj__c 
                             WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
-
-        if(proj.Project_Teams__r.size()>0){
-            for(NSP_Project_Team__c projTeam : proj.Project_Teams__r){
+		
+        if(proj.size()>0 && proj[0].Project_Teams__r.size()>0){
+            for(NSP_Project_Team__c projTeam : proj[0].Project_Teams__r){
                projTeam.NSP_Assignee__c=con.Id;
                  projTeamList.add(projTeam);
             }
@@ -212,7 +212,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         Implementation_Profile__c ip=[SELECT Id,Has_FEIN_documentation_been_collected__c,NSP_Transition_Specialist__c,
                                      NSP_OT_Representative__c,NSP_Client_Liaison__c,NSP_Payroll_Specialist__c,NSP_HR_Specialist__c
                                       FROM Implementation_Profile__c
-                                      WHERE NSP_Project__c=:proj.Id  LIMIT 1];
+                                      WHERE NSP_Project__c=:proj[0].Id  LIMIT 1];
         ip.Has_FEIN_documentation_been_collected__c='No';
         update ip;
         
@@ -221,7 +221,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         }
         List<pse__Project_Task__c> projTaskList=[SELECT Id,Name
                                                  FROM pse__Project_Task__c
-                                                 WHERE pse__Project__c=:proj.Id];
+                                                 WHERE pse__Project__c=:proj[0].Id];
         for(pse__Project_Task__c pt:projTaskList){
             if(pt.Name == NSP_ServiceConstants.FEIN){
                 pt.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
@@ -250,7 +250,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
             }
         Implementation_Profile__c ip1=[SELECT Id,Has_FEIN_documentation_been_collected__c 
                                       FROM Implementation_Profile__c
-                                      WHERE NSP_Project__c=:proj.Id  LIMIT 1];
+                                      WHERE NSP_Project__c=:proj[0].Id  LIMIT 1];
         System.assertEquals( 'Yes',ip1.Has_FEIN_documentation_been_collected__c);
             
         Test.stopTest();
