@@ -4,5 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Internal User</label>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
+    <permissionSets>Required_Reporting_Fields</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
