@@ -40,6 +40,7 @@
     <groups>Web Support</groups>
     <groups>View All Survey Responses</groups>
     <groups>Leave Admin Data Visibility</groups>
+    <groups>Separation Agreement Requests Data Visib</groups>
     <label>Service Admin</label>
     <loginAccess>false</loginAccess>
     <permissionSets>Cobrowse.io Admin</permissionSets>
@@ -98,6 +99,10 @@
     <permissionSets>Technology Solution Enabled Permission Set</permissionSets>
     <permissionSets>inContact Agent Permission</permissionSets>
     <permissionSets>NSP Sales App Access</permissionSets>
+    <permissionSets>Merge Cases</permissionSets>
+    <permissionSets>Account - Name and FEIN Edit Permission</permissionSets>
+    <permissionSets>NSP Main Service Contacts</permissionSets>
+    <permissionSets>Create Auto Created Account Groups</permissionSets>
     <permissionSets>CRM Analytics Plus User</permissionSets>
     <permissionSets>CRM Analytics Plus Admin</permissionSets>
     <permissionSets>Salesforce CPQ User</permissionSets>
@@ -110,13 +115,10 @@
     <permissionSets>Inbox Included</permissionSets>
     <permissionSets>Einstein Activity Capture Included</permissionSets>
     <permissionSets>Service Cloud User</permissionSets>
-    <permissionSets>Merge Cases</permissionSets>
-    <permissionSets>NSP Main Service Contacts</permissionSets>
-    <permissionSets>Create Auto Created Account Groups</permissionSets>
+    <profiles>PEO Service</profiles>
     <profiles>Sales Manager</profiles>
     <profiles>BPS Service</profiles>
     <profiles>Contact Center</profiles>
-    <profiles>PEO Service</profiles>
     <profiles>Retirement Services</profiles>
     <profiles>System Admin Lite</profiles>
     <roles>BPS Sales Manager</roles>
