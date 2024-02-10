@@ -1,7 +1,4 @@
-/**
-    * Represents the project trigger helper which handles all the logic.
-    */
-    public class NSP_ProjectTasksTriggerHelper {
+public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
