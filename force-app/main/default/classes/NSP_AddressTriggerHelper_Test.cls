@@ -46,7 +46,9 @@ public class NSP_AddressTriggerHelper_Test {
         addressObject.NSP_Legal_Name__c  = 'Test';
         addressObject.NSP_State__c = 'Up';
         addressObject.NSP_Label_Code__c = '23456-123456H';
-        addressObject.NSP_Postal_Code__c = '45678'; 
+        addressObject.NSP_Postal_Code__c = '45678';
+        addressObject.NSP_Source__c = NSP_ServiceConstants.SOURCE;
+        addressObject.NSP_Address_Type__c = NSP_ServiceConstants.US_MAIL;
         insert addressObject;
         
         // Create Address record Without Label Code EndWith 'H'
@@ -114,7 +116,7 @@ public class NSP_AddressTriggerHelper_Test {
        Account acc = new Account();
        acc.Name = 'Test Acc2';
        insert acc;	
-       NSP_Address__c addr = [SELECT Id, NSP_Related_Site__c FROM NSP_Address__c LIMIT 1];
+       NSP_Address__c addr = [SELECT Id, NSP_Related_Site__c FROM NSP_Address__c Where NSP_Address_Type__c =: NSP_ServiceConstants.US_MAIL LIMIT 1];
        addr.NSP_Related_Site__c = acc.Id;
        update addr;
       Test.stopTest();
