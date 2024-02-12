@@ -14,12 +14,24 @@ public class NSP_AddressTriggerHelper {
     // test w/ NSP_AddressTriggerHelper_Test (85%)
 
     public static void updateSCCAddressWithStreet(List<NSP_Address__c> newAddress, Map<Id, NSP_Address__c> oldMap) {
+        List<NSP_Address__c> queueNewAddress = new List<NSP_Address__c>();
+        Map<Id, NSP_Address__c> queueOldMap = new Map<Id, NSP_Address__c>();
+        Set<Id> processedAddresses = new Set<Id>(); 
         Map<Id, String> addressByStreet = new Map<Id, String>();
         List<NSP_Sub_Client_Contact_Address__c> sccAddressToUpdate = new List<NSP_Sub_Client_Contact_Address__c>();
         List<Profile> profile = [SELECT Id FROM Profile WHERE Id =:Userinfo.getProfileId() AND Name  =: NSP_ServiceConstants.INTEGRATION_USER];
         Set<Id> addressUpdateForState = new Set<Id>();
         
-        for (NSP_Address__c address : newAddress) {
+        for (NSP_Address__c address : newAddress) {      
+            NSP_Address__c oldUsAddress = oldMap.get(address.Id);  
+            if(address.NSP_Related_Site__c != oldUsAddress.NSP_Related_Site__c 
+               && address.NSP_Related_Site__c!=null && address.NSP_Address_Type__c == NSP_ServiceConstants.US_MAIL
+               && !processedAddresses.contains(address.Id))
+            {	
+                queueOldMap.put(address.Id,oldUsAddress);
+                queueNewAddress.add(address);
+                processedAddresses.add(address.Id); 
+            }
             if (address.NSP_Street__c != null && address.NSP_Street__c != oldMap.get(address.Id).NSP_Street__c && profile.size() > 0) {  
                 addressByStreet.put(address.Id, address.NSP_Street__c);
             }
@@ -41,20 +53,20 @@ public class NSP_AddressTriggerHelper {
                 update sccAddressToUpdate;
             }
             
-        }
-        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        } 
+        if (!queueNewAddress.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
-                    newAddress,
-                    oldMap,
+                    queueNewAddress,
+                    queueOldMap,
                     NSP_ServiceConstants.UPDATE_TRIGGER
                 )
             );
         }
     }
     
-    public void afterInsertDirector(List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap){
-        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+    public void afterInsertDirector(List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap){    
+        if(!newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
                     newList,
