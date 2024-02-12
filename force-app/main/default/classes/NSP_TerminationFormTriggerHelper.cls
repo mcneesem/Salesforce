@@ -182,16 +182,14 @@ public class NSP_TerminationFormTriggerHelper {
     // @return void
     //
     public void afterInsertFilter(List<NSP_Termination_Form__c> lTerminationForms , Map<Id,NSP_Termination_Form__c> mTerminationForms){
-        if(lTerminationForms != null){ 
-            if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-                System.enqueueJob(
-                    new QueueableTermFormJunctionObjects(
-                        lTerminationForms,
-                        null,
-                        NSP_ServiceConstants.INSERT_TRIGGER
-                    )
-                );
-            }
+        if (!lTerminationForms.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    lTerminationForms,
+                    null,
+                    NSP_ServiceConstants.INSERT_TRIGGER
+                )
+            );
         }
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
         for(NSP_Termination_Form__c oTerminationForm : lTerminationForms){
@@ -237,7 +235,7 @@ public class NSP_TerminationFormTriggerHelper {
                 if(String.isBlank(terminationForm.NSP_Client_Owner__c) && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c){
                     terminationForm.Client_Owner_Phone__c = '';
                     terminationForm.Client_Owner_Email__c = '';
-                } 
+                }
                 if(terminationForm.Credit_Specialist__c != null && terminationForm.Credit_Specialist__c!= oldMap.get(terminationForm.id).Credit_Specialist__c){
                     setOfCreditSpecialistId.add(terminationForm.Credit_Specialist__c);
                     creditTerminationForms.add(terminationForm);
@@ -260,23 +258,13 @@ public class NSP_TerminationFormTriggerHelper {
         set<Id> setOfProjectTaskId = new set<Id>();
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
         Map<Id,Set<Id>> mTFSharingToDelete = new Map<Id,Set<Id>>();
-        
+        List<NSP_Termination_Form__c> queueNewTerm = new List<NSP_Termination_Form__c>();
+       	Map<Id, NSP_Termination_Form__c> queueOldMap = new Map<Id, NSP_Termination_Form__c>();
+        Set<Id> processedTerm = new Set<Id>();
         Set<Id> termFormSet = new Set<Id>();
         Set<ID> terminationFormBellNotificationSet = new Set<ID>();
         String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
         String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
-        
-        if(!terminationFormList.isEmpty()){ 
-            if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-                System.enqueueJob(
-                    new QueueableTermFormJunctionObjects(
-                        terminationFormList,
-                        oldMap,
-                        NSP_ServiceConstants.UPDATE_TRIGGER
-                    )
-                );
-            }
-        }
         
         for(NSP_Termination_Form__c terminationForm : terminationFormList){
             if(terminationForm.NSP_Project_Task__c != null 
@@ -289,7 +277,12 @@ public class NSP_TerminationFormTriggerHelper {
             mTFToUsers.put(terminationForm.Id,new Set<Id>());
             mTFSharingToDelete.put(terminationForm.Id,new Set<Id>());
             NSP_Termination_Form__c oOldTermination = oldMap.get(terminationForm.Id);
-
+			if(terminationForm.NSP_Project_Task__c != oOldTermination.NSP_Project_Task__c && terminationForm.NSP_Project_Task__c!=null && !processedTerm.contains(terminationForm.Id) )
+            {
+                queueOldMap.put(terminationForm.Id,oOldTermination);
+                queueNewTerm.add(terminationForm);
+                processedTerm.add(terminationForm.Id);
+            }
             if(terminationForm.OwnerId != oOldTermination.OwnerId){
                 checkLookupChange(mTFToUsers,terminationForm.Id,terminationForm.OwnerId,terminationForm.NSP_Payroll_Specialist__c);
                 checkLookupChange(mTFToUsers,terminationForm.Id,terminationForm.OwnerId,terminationForm.NSP_Supervisor__c);
@@ -328,7 +321,17 @@ public class NSP_TerminationFormTriggerHelper {
                    termFormSet.add(terminationForm.Id);
                }
         }
-
+		
+        if (!queueNewTerm.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs()) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    queueNewTerm,
+                    queueOldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
+        }
+        
         if(mTFSharingToDelete.keySet().size() > 0){
             deleteTerminationFormSharing(mTFSharingToDelete);
         }
