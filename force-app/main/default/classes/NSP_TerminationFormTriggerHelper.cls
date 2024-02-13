@@ -182,7 +182,7 @@ public class NSP_TerminationFormTriggerHelper {
     // @return void
     //
     public void afterInsertFilter(List<NSP_Termination_Form__c> lTerminationForms , Map<Id,NSP_Termination_Form__c> mTerminationForms){
-        if (!lTerminationForms.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if (lTerminationForms != null && !lTerminationForms.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
                     lTerminationForms,
@@ -277,7 +277,7 @@ public class NSP_TerminationFormTriggerHelper {
             mTFToUsers.put(terminationForm.Id,new Set<Id>());
             mTFSharingToDelete.put(terminationForm.Id,new Set<Id>());
             NSP_Termination_Form__c oOldTermination = oldMap.get(terminationForm.Id);
-			if(terminationForm.NSP_Project_Task__c != oOldTermination.NSP_Project_Task__c && terminationForm.NSP_Project_Task__c!=null && !processedTerm.contains(terminationForm.Id) )
+			if(oOldTermination != null && terminationForm.NSP_Project_Task__c!= null && terminationForm.NSP_Project_Task__c != oOldTermination.NSP_Project_Task__c && !processedTerm.contains(terminationForm.Id) )
             {
                 queueOldMap.put(terminationForm.Id,oOldTermination);
                 queueNewTerm.add(terminationForm);
