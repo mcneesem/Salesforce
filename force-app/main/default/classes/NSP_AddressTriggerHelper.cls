@@ -23,10 +23,9 @@ public class NSP_AddressTriggerHelper {
         Set<Id> addressUpdateForState = new Set<Id>();
         
         for (NSP_Address__c address : newAddress) {      
-            NSP_Address__c oldUsAddress = oldMap.get(address.Id);  
-            if(address.NSP_Related_Site__c != oldUsAddress.NSP_Related_Site__c 
-               && address.NSP_Related_Site__c!=null && address.NSP_Address_Type__c == NSP_ServiceConstants.US_MAIL
-               && !processedAddresses.contains(address.Id))
+            NSP_Address__c oldUsAddress = ( ( oldMap != null ) ? oldMap.get(address.Id) : null );  
+            if(oldUsAddress != null && address.NSP_Related_Site__c !=null && address.NSP_Related_Site__c != oldUsAddress.NSP_Related_Site__c 
+               && address.NSP_Address_Type__c == NSP_ServiceConstants.US_MAIL && !processedAddresses.contains(address.Id))
             {	
                 queueOldMap.put(address.Id,oldUsAddress);
                 queueNewAddress.add(address);
@@ -66,7 +65,7 @@ public class NSP_AddressTriggerHelper {
     }
     
     public void afterInsertDirector(List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap){    
-        if(!newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if(newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
                     newList,
