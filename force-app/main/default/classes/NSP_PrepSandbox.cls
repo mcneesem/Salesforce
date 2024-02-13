@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (79%)
+    // test w/ NSP_PrepSandboxTest (84%)
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
@@ -15,27 +15,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    public static void runManualSteps() {
-        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
-        doCSettings(sandbox);
-        doCMetadata(sandbox);
-        doCLabels(sandbox);
-        doEmailCLabels();
-        doEmailAlerts();
-        setPostRefreshRunFlag(1);
-    }
-
-    public static void runManualSteps2() {
-        String sandbox = OrgSettings__c.getOrgDefaults().SandboxName__c;
-        doCMetadataSvc(sandbox);
-        setPostRefreshRunFlag(2);
-    }
-
     public pagereference runManualStepsButton() {
         try{
             runManualSteps();
+            runManualResult = 'Post-Refresh Steps complete!';
         } catch(Exception e) {
             runManualResult = 'An exception occurred Updating Metadata: ' + e.getMessage();
+        }
+        return null;
+    }
+
+    public pagereference doUserImportPage() {
+        try{
+            runUserImport();
+            runManualResult = 'Import Users step complete!';
+        } catch(Exception e) {
+            runManualResult = 'An exception occurred Importing Users: ' + e.getMessage();
         }
         return null;
     }
@@ -50,37 +45,67 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return null;
     }
 
-    public pagereference doUserImportPage() {
+    public pagereference runE2CAddressesButton() {
         try{
-            doUserImport(OrgSettings__c.getOrgDefaults().SandboxName__c);
-            runManualResult = 'Post-Refresh Steps complete!';
+            resetResult();
+            runE2CAddresses();
+            runManualResult = 'E2C Address updates complete!';
         } catch(Exception e) {
-            runManualResult = 'An exception occurred Importing Users: ' + e.getMessage();
+            runManualResult = 'An exception occurred Updating E2C Addresses: ' + e.getMessage();
         }
         return null;
     }
 
+    public pagereference resetResult() {
+        runManualResult = '';
+        return null;
+    }
+
+    public static void runManualSteps() {
+        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        doCMetadata(sandbox);
+        doCLabels(sandbox);
+        doEmailCLabels();
+        doEmailAlerts();
+        doCSettings(sandbox);
+        setPostRefreshRunFlag(1);
+    }
+
+    public static void runUserImport() {
+        doUserImport(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
+        setPostRefreshRunFlag(2);
+    }
+
+    public static void runManualSteps2() {
+        doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
+        setPostRefreshRunFlag(3);
+    }
+
+    public static void runE2CAddresses() {
+        doE2CAddresses(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
+        setPostRefreshRunFlag(4);
+    }
+
     public static void doUserImport(String sandboxName) {
         try{
-    
             StaticResource userStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'PreProd_Users' WITH SECURITY_ENFORCED];
             String userCsv = userStaticResource.Body.toString();
-            /* columns: 0 - Notes
-            // 			1 - Username
-            // 			2 - Email
-            // 			3 - FirstName
-            // 			4 - LastName
-            // 			5 - Profile
-            // 			6 - Role            
-            */
+            // columns:
+            //  0 - Notes
+            //  1 - Username
+            //  2 - Email
+            //  3 - FirstName
+            //  4 - LastName
+            //  5 - Profile
+            //  6 - Role
             Map<String, List<Profile>> profileNameMap = new map<String, List<Profile>>();
             Map<String, List<UserRole>> userRoleNameMap = new map<String, List<UserRole>>();
             for (String row : userCsv.split('\n')) { // build Profile and Role ID Maps
                 String[] col = row.split(',');
-              	if(col[5].length() > 0 && !profileNameMap.containsKey(col[5])){
+                if(col[5].length() > 0 && !profileNameMap.containsKey(col[5])){
                     Profile[] userProf = [SELECT Id FROM Profile WHERE Name = :col[5].trim() WITH SECURITY_ENFORCED LIMIT 1];
-                	if(!userProf.isEmpty()) profileNameMap.put(col[5], userProf);
-              	}
+                    if(!userProf.isEmpty()) profileNameMap.put(col[5], userProf);
+                }
                 if(col[6].length() > 0 && !userRoleNameMap.containsKey(col[6])){
                     UserRole[] userRole = [SELECT Id FROM UserRole WHERE Name = :col[6].trim() WITH SECURITY_ENFORCED LIMIT 1];
                     if(!userRole.isEmpty()) userRoleNameMap.put(col[6], userRole);
@@ -110,16 +135,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     ));
                 }
             }
-            //System.debug('userList size: ' + userList.size());
-            if(!Test.isRunningTest()){
+            if(!Test.isRunningTest()) {
                 Database.UpsertResult[] userResults = Database.upsert(userList, User.FederationIdentifier, false);
                 for (Database.UpsertResult userResult : userResults) {
-                if (!userResult.isSuccess()) {
-                    for (Database.Error err : userResult.getErrors()) {
-                        System.debug('An exception occurred in doUserImport: ' + err.getMessage());
+                    if (!userResult.isSuccess()) {
+                        for (Database.Error err : userResult.getErrors()) {
+                            System.debug('An exception occurred in doUserImport: ' + err.getMessage());
+                        }
                     }
                 }
-            }
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doUserImport: ' + e.getMessage());
@@ -128,31 +152,62 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCMetadata(String sandboxName) {
         try{
-            //System.debug('starting doCMetadata');
+            Integer batch = 0;
             MetadataService.MetadataPort service = createService();
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-            List<NSP_DocuSign_Signers__mdt> cMd = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=Null];
-    
-            for (NSP_DocuSign_Signers__mdt cMdRecord : cMd) {
+            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+            allMetadataList.add(new List<MetadataService.Metadata>());
+            List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
+            List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
+
+            for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
                 string name = cMdRecord.DeveloperName;
                 string fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
                 string signer_Username = cMdRecord.NSP_Signer_Username__c;
-                //system.debug('CustomMetadata: ' + fullName);
                 
                 MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
                     cMdUpd.fullName = fullName;
                     cMdUpd.label = name;
                 MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
-                    customField1.field = 'NSP_Signer_Username__c'; //the custom field API Name to be updated
+                    customField1.field = 'NSP_Signer_Username__c'; // the custom field API Name to be updated
                     customField1.value = signer_Username + '.' + sandboxName;
                 cMdUpd.values.add(customField1); //add the changes to list of changes to be deployed
-                allMetadataList.add(cMdUpd);
+
+                if (allMetadataList[batch].size() >= 200) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                }
+                allMetadataList[batch].add(cMdUpd);
             }
+
+            for (NSP_PEO_Implementations__mdt cMdRecord : cMdPEOImps) {
+                string name = cMdRecord.DeveloperName;
+                string fullName = 'NSP_PEO_Implementations.' + name; //custom metadata full name
+                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                    cMdUpd.fullName = fullName;
+                    cMdUpd.label = name;
+                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                    customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
+                    switch on sandboxName {
+                         when 'merge','test','stage' {
+                            customField1.value = 'monica.adams@insperity.com';
+                         }
+                         when else {
+                            customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
+                         }
+                     }
+                cMdUpd.values.add(customField1); //add the changes to list of changes to be deployed
+
+                if (allMetadataList[batch].size() >= 200) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                }
+                allMetadataList[batch].add(cMdUpd);
+            }
+
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
-                // for(MetadataService.SaveResult result: results){
-                //     system.debug('Update Custom Metadata Type result success = ' + result.success);
-                // }
+                for (Integer i = 0; i < allMetadataList.size(); i ++) {
+                    List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
+                }
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doCMetadata: ' + e.getMessage());
@@ -164,6 +219,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             Integer batch = 0;
             MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+            allMetadataList.add(new List<MetadataService.Metadata>());
             List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
             List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id!=Null];
             List<pse__Proj__c> oProjTmpls = [Select Id, TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true];
@@ -171,8 +227,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             for (pse__Proj__c oProjTmpl : oProjTmpls) {
                 mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
             }
-
-    		allMetadataList.add(new List<MetadataService.Metadata>());
 
             for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
                 if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
@@ -187,7 +241,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cMdUpd.values.add(customField1); //add the changes to list of changes to be deployed
 
                     if (allMetadataList[batch].size() >= 200) {
-						batch++;
+                        batch++;
                         allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
                     }
                     allMetadataList[batch].add(cMdUpd);
@@ -206,7 +260,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         customField2.value = mTmplId.get(cMdTmplKey.Template_Name__c);
                     cMdUpd.values.add(customField2); //add the changes to list of changes to be deployed
                     if (allMetadataList[batch].size() >= 200) {
-						batch++;
+                        batch++;
                         allMetadataList.add(new List<MetadataService.Metadata>());
                     }
                     allMetadataList[batch].add(cMdUpd);
@@ -216,7 +270,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
                     List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
-                    System.debug('Partition: ' + i);
                 }
             }
         } catch(Exception e) {
@@ -228,14 +281,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-            string cLabels = (!Test.isRunningTest()) ? 'NSP_FTA_Base_URL,NSP_Docusign_Account_Id,NSP_Docusign_Base_URL' : 'test';
+            string cLabels = 'NSP_FTA_Base_URL,NSP_Docusign_Account_Id,NSP_Docusign_Base_URL';
             string[] cLNames = cLabels.split(',');
             for(integer i=0; i < cLNames.size() ; i++){
                 MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
                 if(!Test.isRunningTest()){
                     cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
                 }else{
-                    cL.fullName = 'NSP_FTA_Base_URL';
+                    cL.fullName = cLNames[i];
                     cL.value = 'test';
                 }
                 if(cL.value != null){
@@ -260,6 +313,17 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                          }
                         when 'NSP_Docusign_Account_Id' {
                            cLUpd.value = '65500';
+                           switch on sandboxName {
+                            when 'merge' {
+                                cLUpd.value = '65500';
+                            }
+                            when 'test','stage' {
+                                cLUpd.value = '48945';
+                            }
+                            when else {
+                                cLUpd.value = '50202';
+                            }
+                        }
                         }
                         when 'NSP_Docusign_Base_URL' {
                            cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
@@ -284,11 +348,17 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     
     public static void doEmailCLabels() {
         try {
-            MetadataService.MetadataPort service = createService();        
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+            Integer batch = 0;
+            MetadataService.MetadataPort service = createService();
+            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+            allMetadataList.add(new List<MetadataService.Metadata>());
             MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
-            if(cL.value == null) cL.value = 'NSP_WX_Email_DL,NSP_WO_Email_DL,NSP_Opportunity_Closed_Won_AlertAdditionalEmails,NSP_New_Client_Sales_Email,NSP_Mid_Market_Sales_Email,NSP_Channel_Prgram_Email';
+            MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
+            if(cL.value == null) cL.value = 'dummy';
             string[] cLNames = cL.value.split(',');
+            string[] cLNames2 = (cL2.value == null) ? new string[]{} : cL2.value.split(',');
+            if(cLNames2.size() > 0) cLNames.addAll(cLNames2);
+
             for(integer i=0; i < cLNames.size() ; i++){
                 cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0] : new MetadataService.CustomLabel();
                 cL.value = (!Test.isRunningTest()) ? cL.value : 'test@insperity.com';
@@ -299,14 +369,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cLUpd.shortDescription = cL.shortDescription;
                     cLUpd.language = cL.language;
                     cLUpd.protected_x = cL.protected_x;
-                    allMetadataList.add(cLUpd);
+
+                    if (allMetadataList[batch].size() >= 10) {
+                        batch++;
+                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                    }
+                    allMetadataList[batch].add(cLUpd);
                 }
             }
-            if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-                List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
-                // for(MetadataService.SaveResult result: results){
-                //     system.debug('Update Email Custom Label result success = ' + result.success);
-                // }
+
+            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
+                for (Integer i = 0; i < allMetadataList.size(); i ++) {
+                    List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
+                }
             }
         } catch(Exception e) {
             System.debug('An exception occurred in doEmailCLabels: ' + e.getMessage());
@@ -314,80 +389,92 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doEmailAlerts() {
-        string host = URL.getOrgDomainUrl().toExternalForm();
-        string endPoint = host + '/services/data/v55.0/tooling/';
-        string sessionId = UserInfo.getSessionId();
-        MetadataService.MetadataPort service = createService();
-        
-        //  Get the list of alerts Ids where CCemails is not empty
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(endPoint + 'query/?q=SELECT+id+FROM+WorkflowAlert+WHERE+CCemails+>+\'\'');
-        request.setMethod('GET');
-        request.setHeader('Authorization', 'Bearer '+ sessionId);
-        HTTPResponse response = new HTTPResponse();
-        AlertResult results = new AlertResult();
-        RecordAlert[] records = new RecordAlert[] {};
-        
-        if(!Test.isRunningTest()){
-            response = new Http().send(request);
-            results = (AlertResult)JSON.deserialize(response.getBody(), AlertResult.class);
-            records = results.records;
-        }else{
-            RecordAlert rec = new RecordAlert();
-            Attributes att = new Attributes();
-            WorkflowEmail wfe = new WorkflowEmail();
-            MetadataService.WorkflowAlert wfa = new MetadataService.WorkflowAlert();
-            att.type = 'test';
-            att.url = 'test';
-            rec.FullName='test';
-            rec.id='test';
-        	rec.attributes = att;
-        	wfe.attributes = att;
-            wfe.id='test';
-            wfe.TemplateId='test';
-            wfe.CcEmails='test';
-            wfe.Description='test';
-            wfe.DeveloperName='test';
-            wfe.EntityDefinitionId='test';
-            wfe.FullName='test';
-            wfe.Metadata=wfa;
-            records.add(rec);
-        }
-        
-        for (RecordAlert alert : records) {
-            // Get the Alert meta-data
-            request = new HttpRequest();
-            request.setEndpoint(host + alert.attributes.url);
-            request.setMethod('GET');
-            request.setHeader('Content-Type', 'application/json');
-            request.setHeader('Authorization', 'Bearer '+ sessionId);
-            MetadataService.WorkflowAlert wfa = new MetadataService.WorkflowAlert();
+        try {
+            Integer batch = 0;
+            string host = URL.getOrgDomainUrl().toExternalForm();
+            string endPoint = host + '/services/data/v55.0/tooling/';
+            string sessionId = UserInfo.getSessionId();
+            List<String[]> wfaNames = new List<String[]>();
+            wfaNames.add(new String[]{});
+            MetadataService.MetadataPort service = createService();
+            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             
-            if (!Test.isRunningTest()) {
+            //  Get the list of alerts Ids where CCemails is not empty
+            HttpRequest request = new HttpRequest();
+            request.setEndpoint(endPoint + 'query/?q=SELECT+id+FROM+WorkflowAlert+WHERE+CCemails+>+\'\'');
+            request.setMethod('GET');
+            request.setHeader('Authorization', 'Bearer '+ sessionId);
+            HTTPResponse response = new HTTPResponse();
+            AlertResult results = new AlertResult();
+            RecordAlert[] records = new RecordAlert[] {};
+                
+            if(!Test.isRunningTest()){
                 response = new Http().send(request);
-                WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize(response.getBody(), WorkflowEmail.class);
-                wfa = (MetadataService.WorkflowAlert) service.readMetadata('WorkflowAlert', new String[] { wfe.FullName }).getRecords()[0];
-                string emails = invalidateEmailArray(wfa.ccEmails);
-            } else {
-                response = new HTTPResponse();
+                results = (AlertResult)JSON.deserialize(response.getBody(), AlertResult.class);
+                records = results.records;
+            }else{
+                RecordAlert rec = new RecordAlert();
+                Attributes att = new Attributes();
+                WorkflowEmail wfe = new WorkflowEmail();
+                MetadataService.WorkflowAlert wfa = new MetadataService.WorkflowAlert();
+                att.type = 'test';
+                att.url = 'test';
+                rec.FullName='test';
+                rec.id='test';
+                rec.attributes = att;
+                wfe.attributes = att;
+                wfe.id='test';
+                wfe.TemplateId='test';
+                wfe.CcEmails='test';
+                wfe.Description='test';
+                wfe.DeveloperName='test';
+                wfe.EntityDefinitionId='test';
+                wfe.FullName='test';
+                wfe.Metadata=wfa;
+                records.add(rec);
             }
 
-            MetadataService.WorkflowAlert wfaUpd = new MetadataService.WorkflowAlert();
-            wfaUpd.fullName = wfa.fullName;
-            wfaUpd.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split(',') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
-            wfaUpd.description = wfa.description;
-            wfaUpd.protected_x = wfa.protected_x;
-            wfaUpd.senderType = wfa.senderType;
-            wfaUpd.template = wfa.template;
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-            allMetadataList.add(wfaUpd);
+            for (RecordAlert alert : records) {
+                // Get the Alert meta-data
+                request = new HttpRequest();
+                request.setEndpoint(host + alert.attributes.url);
+                request.setMethod('GET');
+                request.setHeader('Content-Type', 'application/json');
+                request.setHeader('Authorization', 'Bearer '+ sessionId);
 
-            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> resultsUpd = service.updateMetadata(allMetadataList);
-                // for(MetadataService.SaveResult resultUpd: resultsUpd) {
-                //     system.debug('Update Workflow Alert additional emails result success = ' + resultUpd.success);
-                // }
+                if (wfaNames[batch].size() >= 10) {
+                    batch++;
+                    wfaNames.add(new String[]{}); // create a new batch when we fill one up
+                }
+                if (!Test.isRunningTest()) {
+                    response = new Http().send(request);
+                    WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize(response.getBody(), WorkflowEmail.class);
+                    wfaNames[batch].add(wfe.FullName);
+                } else {
+                    wfaNames[batch].add('test');
+                }
             }
+
+            if (wfaNames.size() > 0) {
+                for (Integer i = 0; i < wfaNames.size(); i++) {
+                    MetadataService.ReadResult readResult = new MetadataService.ReadResult();
+                    if (!Test.isRunningTest()) readResult.records = service.readMetadata('WorkflowAlert', wfaNames[i]).getRecords();
+                    allMetadataList.add(new List<MetadataService.Metadata>());
+                    for (MetadataService.Metadata wfaMeta : readResult.records) {
+                        MetadataService.WorkflowAlert wfa = (MetadataService.WorkflowAlert) wfaMeta;
+                        wfa.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split(',') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
+                        allMetadataList[i].add(wfa);
+                    }
+                }
+            }
+
+            if (allMetadataList.size() > 0) {
+                for (Integer i = 0; i < allMetadataList.size(); i ++) {
+                    if (!Test.isRunningTest()) List<MetadataService.SaveResult> updResults = service.updateMetadata(allMetadataList[i]);
+                }
+            }
+        } catch(Exception e) {
+            System.debug('An exception occurred in doEmailAlerts: ' + e.getMessage());
         }
     }
     
@@ -403,7 +490,17 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         try {
             NSP_Docusign_Account_Details__c cS2 = NSP_Docusign_Account_Details__c.getOrgDefaults();
-            cS2.Docusign_Account_Id__c = '65500';
+            switch on sandboxName {
+                when 'merge' {
+                    cS2.Docusign_Account_Id__c = '65500';
+                }
+                when 'test','stage' {
+                    cS2.Docusign_Account_Id__c = '48945';
+                }
+                when else {
+                    cS2.Docusign_Account_Id__c = '50202';
+                }
+            }
             upsert cS2;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
@@ -420,6 +517,76 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             upsert cS3;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+
+        try {
+            NSP_Environment_Details__c cS4 = NSP_Environment_Details__c.getOrgDefaults();
+            switch on sandboxName {
+                when 'stage' {
+                    cS4.NSP_Detailed_Data__c = 'stage1';
+                }
+                when 'test' {
+                    cS4.NSP_Detailed_Data__c = 'test1';
+                }
+                when 'merge' {
+                    cS4.NSP_Detailed_Data__c = 'dev1';
+                }
+                when else {
+                    cS4.NSP_Detailed_Data__c = 'dev1';
+                }
+            }
+            upsert cS4;
+            
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+    }
+    
+    public static void doE2CAddresses(String sandboxName) {
+        try {
+            Map<String, Integer> orgMap = new Map<String, Integer>{'merge' => 1, 'test' => 2, 'stage' => 3};
+            Map<String, String> teamAddrMap = new Map<String, String>();
+            StaticResource e2CStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'EmailToCaseAddresses' WITH SECURITY_ENFORCED];
+            String e2Ccsv = e2CStaticResource.Body.toString();
+            String[] rows = e2Ccsv.split('\n');
+
+            for(integer i=1; i < rows.size() ; i++) { // skip header row
+                String[] col = rows[i].split(',');
+                if (orgMap.containsKey(sandboxName) && col[0].length() > 0 && col[orgMap.get(sandboxName)].length() > 0) {
+                    teamAddrMap.put(col[0], col[orgMap.get(sandboxName)]);
+                }
+            }
+
+            MetadataService.MetadataPort service = createService();
+            MetadataService.CaseSettings cS = new MetadataService.CaseSettings();
+            if (!Test.isRunningTest()) {
+                cS = (MetadataService.CaseSettings) service.readMetadata('CaseSettings', new String[] {'Settings'}).getRecords()[0];
+            } else {
+                MetadataService.EmailToCaseRoutingAddress addr = new MetadataService.EmailToCaseRoutingAddress();
+                MetadataService.EmailToCaseRoutingAddress[] addrs = new MetadataService.EmailToCaseRoutingAddress[] {};
+                MetadataService.EmailToCaseSettings e2CS = new MetadataService.EmailToCaseSettings();
+                addr.routingName = 'Integra';
+                addr.emailAddress = 'test.integrasupport@insperity.com';
+                addrs.add(addr);
+                e2CS.routingAddresses = addrs;
+                cS.emailToCase = e2CS;
+            }
+
+            for (integer i=0; i < cS.emailToCase.routingAddresses.size() ; i++) {
+                String routingName = cS.emailToCase.routingAddresses[i].routingName;
+                if (teamAddrMap.containsKey(routingName)) {
+                    cS.emailToCase.routingAddresses[i].emailAddress = teamAddrMap.get(routingName);
+                }
+            }
+
+            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+            allMetadataList.add(cS);
+
+            if (teamAddrMap.size() > 0 && allMetadataList.size() > 0 && !Test.isRunningTest()) {
+                List<MetadataService.SaveResult> resultsUpd = service.updateMetadata(allMetadataList);
+            }
+        } catch(Exception e) {
+            System.debug('An exception occurred in doE2CAddresses: ' + e.getMessage());
         }
     }
     
@@ -445,6 +612,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
             if (iStep == 1) cS.PostRefreshRun__c = true;
             if (iStep == 2) cS.PostRefreshRun2__c = true;
+            if (iStep == 3) cS.PostRefreshRun3__c = true;
+            if (iStep == 4) cS.PostRefreshRun4__c = true;
             upsert cS;
         } catch(Exception e) {
             System.debug('An exception occurred in setPostRefreshRunFlag: ' + e.getMessage());
@@ -478,7 +647,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     private class AlertResult {
         public Integer totalSize;
         public Boolean done;
-        public String queryLocator;    
+        public String queryLocator;   
         public RecordAlert[] records;
     }
 
