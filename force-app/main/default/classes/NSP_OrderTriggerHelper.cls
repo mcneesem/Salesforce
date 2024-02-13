@@ -2,7 +2,7 @@
 * Represents the Order trigger helper which handles all the logic.
 */
 public class NSP_OrderTriggerHelper {
-    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (77%)
+    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (80%)
 
     static final string STRING_ACCOUNT = 'Account';
     /**
@@ -55,18 +55,17 @@ public class NSP_OrderTriggerHelper {
             if(newOrder.SBQQ__Quote__c != null){
                 quoteIdSet.add(newOrder.SBQQ__Quote__c);
             }
-            //Added as part of DF-03158 to set Order start date to first of the month
-            if(newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT){
-                newOrder.EffectiveDate = System.today().toStartOfMonth();
-            }
         }
-        
         if(quoteIdSet.Size() > 0){
-            Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT 	id,
-                                                                          NSP_Invoice_To_Email__c,NSP_Billing_Account__c,SBQQ__Partner__c,
-                                                                          NSP_Billing_Address__c,NSP_Shipping_Address__c,SBQQ__Account__r.NSP_AIMS_Client__c
-                                                                          from SBQQ__Quote__c WHERE Id In : quoteIdSet]);
-            
+            Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>(
+                [
+                    SELECT
+                        Id , NSP_Invoice_To_Email__c , NSP_Billing_Account__c , SBQQ__Partner__c , SBQQ__StartDate__c ,
+                        NSP_Billing_Address__c , NSP_Shipping_Address__c , SBQQ__Account__r.NSP_AIMS_Client__c
+                    FROM SBQQ__Quote__c
+                    WHERE ( Id In : quoteIdSet )
+                ]
+            );
             for(Order newOrder : newList){
                 newOrder.OwnerId = orderProcessingQueue[0].Id;
                 if(newOrder.SBQQ__Quote__c != null && quoteMap.ContainsKey(newOrder.SBQQ__Quote__c)){
@@ -75,12 +74,18 @@ public class NSP_OrderTriggerHelper {
                     newOrder.blng__BillingAccount__c = objQuote.NSP_Billing_Account__c;
                     newOrder.NSP_Partner__c = objQuote.SBQQ__Partner__c;
                     newOrder.NSP_AIMS_Billing_ID__c=objQuote.SBQQ__Account__r.NSP_AIMS_Client__c;
-                    
+                    if ( ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
+                        && ( objQuote.SBQQ__StartDate__c != null )
+                        )
+                    {
+                        newOrder.EffectiveDate = objQuote.SBQQ__StartDate__c.toStartOfMonth();
+                    }
                 }
             }
         }
     }
-        /**
+
+    /**
 * Method Name : updateOrderStartDate 
 * Description : Method to set Start date on termination Order to Termination Date+1 [DF-04145]
 * Author : Sancharini       Date : 05/16/2023
