@@ -35,7 +35,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         leadObject.NumberOfEmployees =152;
         leadObject.Email = 'testlead1@testlead1.com';
         leadObject.PostalCode = '10001';
-        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        leadObject.DNB_Connect_DUNS_Number__c  = '876543987';
         //Adding lead object to the list
         leadList.add(leadObject);
         Database.insert(leadList);

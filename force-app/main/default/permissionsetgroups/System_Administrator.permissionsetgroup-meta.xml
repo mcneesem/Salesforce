@@ -4,6 +4,8 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Administrator</label>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
+    <permissionSets>DNBConnect__DNB_Connect_Components_access</permissionSets>
+    <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>

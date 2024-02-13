@@ -79,7 +79,7 @@ public class NSP_LeadTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         
@@ -122,7 +122,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject.NSP_Partner__c =accoutObject.Id;
         leadObject.NSP_Lead_Stage__c  =null;      
         leadObject.NSP_Lead_Routing__c = true;
-        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        leadObject.DNB_connect_DUNS_Number__c  = '876543987';
         //Adding lead object to the list
         leadList.add(leadObject);
         
@@ -134,7 +134,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject3.Email = 'fbook@gmail.com';
         leadObject3.NSP_Partner__c =accoutObject.Id;
         leadObject3.NSP_Lead_Stage__c  =null;
-        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
+        leadObject.DNB_connect_DUNS_Number__c  = '743243789';
         leadList.add(leadObject3);
         
         //Lead Creation
@@ -188,7 +188,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject4.Company = 'ABC';
         leadObject4.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject4.Email = 'test@test.com';
-        leadObject4.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
+        leadObject4.DNB_connect_DUNS_Number__c  = '743243789';
         leadObject4.NSP_Lead_Routing__c = true;
         newLeadList.add(leadObject4);
         
@@ -200,7 +200,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject5.Company = 'Allstate123';
         leadObject5.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject5.Email = 'test333@test.com';
-        leadObject5.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject5.DNB_connect_DUNS_Number__c  = '';
         leadObject5.NSP_Lead_Routing__c = true;
         
         newLeadList.add(leadObject5);
@@ -213,7 +213,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject6.Company = 'Allstate123';
         leadObject6.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject6.Email = 'test333@test.com';
-        leadObject6.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject6.DNB_connect_DUNS_Number__c  = '';
         leadObject6.NSP_Parent_Lead__c = leadObject5.Id;
         leadObject6.NSP_Lead_Routing__c = true;
         newLeadList.add(leadObject6);
@@ -300,11 +300,11 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -315,12 +315,12 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateMidMarketTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         getLead.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -331,13 +331,13 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateZipCodeTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         getLead.PostalCode = '10001';
         getLead.NumberOfEmployees = 100;
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -348,13 +348,13 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateCompanyTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE Company = 'TestClass'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         getLead.NSP_Lead_Routing__c = true;
         getLead.Company = 'AllState';
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     } 
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -385,7 +385,7 @@ public class NSP_LeadTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         
@@ -398,7 +398,7 @@ public class NSP_LeadTriggerHelperTest {
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;  
         nLead.NSP_Lead_Routing__c = true;
-        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        nLead.DNB_connect_DUNS_Number__c  = '876543987';
         Test.startTest();
         insert nLead;
         Test.stopTest();
@@ -432,7 +432,7 @@ public class NSP_LeadTriggerHelperTest {
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;  
         nLead.NSP_Lead_Routing__c = true;
-        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        nLead.DNB_connect_DUNS_Number__c  = '876543987';
        
         insert nLead;
         

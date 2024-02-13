@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Send_For_Signature</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -125,8 +122,8 @@
                 <field>NSP_Signed_MOD_Document__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+                <behavior>Readonly</behavior>
+                <field>DNB_Connect_DUNS_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1511,10 +1508,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DnBCompanyRecord__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>pse__Add_BEIs_To_Existing_Batches__c</field>
             </layoutItems>
             <layoutItems>
@@ -1614,6 +1607,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Coverage_Area__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

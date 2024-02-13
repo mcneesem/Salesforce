@@ -53,7 +53,7 @@ public class NSP_TaskTriggerHelperTest {
             leadObject.Email = 'testlead1@testlead1.com';
             leadObject.PostalCode = '10001';
             leadObject.NSP_Lead_Stage__c  =null; 
-            leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '123';
+            leadObject.DNB_connect_DUNS_Number__c = '123';
             insert leadObject;
         }
         
@@ -67,7 +67,7 @@ public class NSP_TaskTriggerHelperTest {
     static void testTaskInsert() {
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
         List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE stagename = 'Discovery'];
-        Lead getLead = [SELECT Id, Name,LastActivityDate,DNBoptimizer__DNB_D_U_N_S_Number__c FROM Lead WHERE firstname = 'Test' LIMIT 1];
+        Lead getLead = [SELECT Id, Name,LastActivityDate,DNB_connect_DUNS_Number__c FROM Lead WHERE firstname = 'Test' LIMIT 1];
         getLead.NumberOfEmployees = 123;
         //updating list
         update getLead;
