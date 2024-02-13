@@ -17,7 +17,7 @@ public class NSP_AccountTriggerHelperTest {
    private static final String languagekey = 'en_US'; 
    private static final String timezonesidkey = 'America/Los_Angeles';   
    /***********************************************************************************************/    
-    public static final String REFPROG3 = 'referralprogramiii';
+    public static final String REFPROG3 = 'ReferralProgramNationalRevShare';
     public static final String ACCOUNTTEST1 = 'AccountTest1';
     public static final String AccountTestData1= 'AccountTestData1';
     public static final String ACCOUNTTEST = 'AccountTest';
@@ -132,7 +132,7 @@ public class NSP_AccountTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
         accoutObject.Name = ACCOUNTTEST1;
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         insert accoutObject;
             Test.stopTest();
             System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
@@ -323,7 +323,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account1 : accountList) {
             account1.NSP_Ready_for_Integration_Sync__c = FALSE;
             account1.NSP_Account_Status__c = ACTIVE;
-            account1.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account1.NSP_Template_Selection__c = 'Affiliate-25';
             account1.BillingState = TEXAS;
             accountMapOld.put(account1.Id, account1);
         }
@@ -358,7 +358,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account1 : accountList) {
             account1.NSP_Ready_for_Integration_Sync__c = FALSE;
             account1.NSP_Account_Status__c = ACTIVE;
-            account1.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account1.NSP_Template_Selection__c = 'Affiliate-25';
             account1.BillingState = TEXAS;
             account1.NSP_Partner_Lifecycle__c = 'Onboarding';
             account1.NSP_Signed_MOD_Document__c = true;
@@ -459,7 +459,7 @@ public class NSP_AccountTriggerHelperTest {
             Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
             accoutObject.Name = ACCOUNTTEST1;
             accoutObject.recordTypeId=partnerRecordTypeId;
-            accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+            accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
             insert accoutObject;
             accoutObject.NSP_Sales_Office__c = '1081';
             update accoutObject;
