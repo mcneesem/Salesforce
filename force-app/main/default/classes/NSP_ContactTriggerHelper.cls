@@ -139,7 +139,7 @@ public class NSP_ContactTriggerHelper {
                 createTaskforClientReference(clientRefernceContactList);
             }
         }
-        if (!newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if (newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
                     newList,
@@ -264,7 +264,6 @@ public class NSP_ContactTriggerHelper {
         List<Contact> queueNewContact = new List<Contact>();
         Map<Id, Contact> queueOldMap = new Map<Id, Contact>();
         Set<Id> processedContact = new Set<Id>();
-        Contact oldContact;
         List<Profile> loggedInUserProfileName = New List<Profile>();
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
             loggedInUserProfileName = getLoggedInUserProfile();
@@ -280,7 +279,7 @@ public class NSP_ContactTriggerHelper {
                 )
             {
                 for(Contact conObj : newMap.values()){
-                    oldContact = oldMap.get(conObj.Id);
+                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
                     if ( conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c
                         && conObj.NSP_Client_Reference__c
                         )
@@ -312,13 +311,15 @@ public class NSP_ContactTriggerHelper {
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
-        for(Contact conObj : newMap.values()){
-            oldContact = oldMap.get(conObj.Id);
-            if(conObj.AccountId != oldContact.AccountId && conObj.AccountId!=null && !processedContact.contains(conObj.Id))
-            {
-                queueOldMap.put(conObj.Id,oldContact);
-                queueNewContact.add(conObj);
-                processedContact.add(conObj.Id); 
+        if(newMap != null){
+            for(Contact conObj : newMap.values()){
+                Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
+                if(oldContact != null && conObj.AccountId !=null && conObj.AccountId != oldContact.AccountId && !processedContact.contains(conObj.Id))
+                {
+                    queueOldMap.put(conObj.Id,oldContact);
+                    queueNewContact.add(conObj);
+                    processedContact.add(conObj.Id); 
+                }
             }
         }
         if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
