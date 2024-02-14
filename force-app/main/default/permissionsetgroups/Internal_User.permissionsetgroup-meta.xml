@@ -3,5 +3,6 @@
     <description>Baseline set of permissions needed for an Insperity internal user</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Internal User</label>
+    <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

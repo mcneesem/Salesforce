@@ -94,8 +94,7 @@ public with sharing class FlowErrorLogController {
         if ( errorLog != null ) {
             List<String> flowErrorBodyLines = null;
             if ( String.isNotBlank( errorLog.FlowErrorBody__c ) ) {
-                String flowErrorBodyRaw = errorLog.FlowErrorBody__c;
-                flowErrorBodyLines = flowErrorBodyRaw.split( '\n' );
+                flowErrorBodyLines = errorLog.FlowErrorBody__c.split( '\n' );
             }
             //
             String apiName = null;

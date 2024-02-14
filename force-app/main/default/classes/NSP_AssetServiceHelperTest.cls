@@ -42,6 +42,15 @@ public class NSP_AssetServiceHelperTest {
         accoutObject.NSP_Sales_Service_Account_Status__c= NSP_ServiceConstants.STATUS_ACTIVE;
         insert accoutObject;
         
+        //Opportunity Creation
+        Opportunity newOpp = (Opportunity)NSP_TestExtendedDataFactory.createSObject(new Opportunity(), 'NSP_TestDataFactory.OpportunityDefaults', false);
+        newOpp.stagename = 'Discovery';
+        newOpp.AccountId = accoutObject.id;
+        newOpp.NSP_Has_WO_Products__c = true;
+        newOpp.NSP_PrimaryProduct__c ='Applicant Tracking';
+        newOpp.NSP_Number_of_Employees__c = 151;
+        insert newOpp;
+        
         //Asset creation
         Asset woAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         woAsset.AccountId = accoutObject.Id;
@@ -61,9 +70,21 @@ public class NSP_AssetServiceHelperTest {
     @isTest
     static void createBPSProjectwithAssetRecordType(){
         // GIVEN
-        
+        Test.startTest();
         List<Asset> assetList = new List<Asset>();
-        
+        List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 LIMIT 1];
+            opportunity oppty = opportunityList[0];
+            oppty.NSP_DM_User__c = oppty.OwnerId;
+            oppty.NSP_DA_User__c = oppty.OwnerId;
+            oppty.NSP_BPA__c = oppty.OwnerId;
+            oppty.StageName = 'Closed Won';
+      		oppty.NSP_PrimaryProduct__c = 'Performance Management';
+            oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
+            oppty.NSP_Signed_CSA__c = true;
+            oppty.NSP_Signed_CSA_Date__c = system.today();
+      
+            update oppty;
+      
         Account oAccount = [SELECT Id, Name, NSP_Sales_Service_Account_Status__c  FROM Account WHERE Name='Test Account' LIMIT 1];
         oAccount.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
         update oAccount;
@@ -72,10 +93,58 @@ public class NSP_AssetServiceHelperTest {
         integraAsset.AccountId = oAccount.Id;
         integraAsset.recordTypeId = INTEGRA_ASSET;
         
-        assetList.add(integraAsset);       
+        Asset PerformanceAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        PerformanceAsset.AccountId = oAccount.Id;
+        PerformanceAsset.Opportunity__c = oppty.Id;
+        PerformanceAsset.recordTypeId = PERFORM_SMART_ASSET;
+        
+        assetList.add(integraAsset);
+        assetList.add(PerformanceAsset);
         
         // WHEN
+        
+        if(!assetList.isEmpty()){
+        	insert assetList;
+        }
+        Test.stopTest();
+        
+            
+        // THEN
+        System.assertEquals(2, assetList.size());
+    }
+    @isTest
+    static void createPerformanceProjectwithAssetRecordType(){
         Test.startTest();
+        // GIVEN
+        
+        List<Asset> assetList = new List<Asset>();
+        List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 LIMIT 1];
+            opportunity oppty = opportunityList[0];
+            oppty.NSP_DM_User__c = oppty.OwnerId;
+            oppty.NSP_DA_User__c = oppty.OwnerId;
+            oppty.NSP_BPA__c = oppty.OwnerId;
+            oppty.StageName = 'Closed Won';
+      		oppty.NSP_PrimaryProduct__c = 'Performance Management';
+            oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
+            oppty.NSP_Signed_CSA__c = true;
+            oppty.NSP_Signed_CSA_Date__c = system.today();
+        	oppty.NSP_IPMRecommendation__c = 'Yes';
+      
+            update oppty;
+      
+        Account oAccount = [SELECT Id, Name, NSP_Sales_Service_Account_Status__c  FROM Account WHERE Name='Test Account' LIMIT 1];
+        oAccount.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
+        update oAccount;
+        
+        Asset PerformanceAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        PerformanceAsset.AccountId = oAccount.Id;
+        PerformanceAsset.Opportunity__c = oppty.Id;
+        PerformanceAsset.recordTypeId = PERFORM_SMART_ASSET;
+        
+        assetList.add(PerformanceAsset);
+        
+        // WHEN
+        
         if(!assetList.isEmpty()){
         	insert assetList;
         }
@@ -88,10 +157,10 @@ public class NSP_AssetServiceHelperTest {
     
     @isTest
     public static void testUpdateAssetTerminationForm(){
-        
+        test.startTest();
         List<Asset> asset =[SELECT NSP_Verbal_Term_recd__c,NSP_Written_Term_Date__c,NSP_Written_Term_recd__c,
                             NSP_Anticipated_Date_Of_Termination__c,NSP_Reason_for_Term__c FROM Asset WHERE recordTypeId=:WO_ASSET LIMIT 1];
-        test.startTest();
+        
         asset[0].NSP_Verbal_Term_recd__c=true;
         asset[0].NSP_Written_Term_recd__c=true;
         asset[0].NSP_Anticipated_Date_Of_Termination__c=system.today();

@@ -148,6 +148,8 @@
     AND( 
         NOT(ISBLANK(NSP_Project_Task__c)),
         NOT(ISBLANK(NSP_Client_Owner__c)),
+        NOT(ISBLANK(Client_Owner_Email__c)),
+        NOT(ISBLANK(Client_Owner_Phone__c)),
         NOT(ISBLANK(NSP_Insperity_Blended_Role__c)),
         NOT(ISBLANK(NSP_Segment_Type__c)),
         NOT(ISBLANK(NSP_Payroll_Specialist__c)),
@@ -178,6 +180,8 @@
         AND( 
             NOT(ISBLANK(NSP_Project_Task__c)),
             NOT(ISBLANK(NSP_Client_Owner__c)),
+            NOT(ISBLANK(Client_Owner_Email__c)),
+            NOT(ISBLANK(Client_Owner_Phone__c)),
             NOT(ISBLANK(NSP_Insperity_Blended_Role__c)),
             NOT(ISBLANK(NSP_Segment_Type__c)),
             NOT(ISBLANK(NSP_Payroll_Specialist__c)),
