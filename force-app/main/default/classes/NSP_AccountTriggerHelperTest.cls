@@ -350,8 +350,16 @@ public class NSP_AccountTriggerHelperTest {
         // Start Test
         Test.startTest();
         system.runAs(userRecord){
-        for(integer count = 0; count < 5; count++) {
-            accountList.add(New Account(Name = ACCOUNTTEST+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,NumberOfEmployees = 100));
+         for(integer count = 0; count < 5; count++) {
+            accountList.add(
+                new Account(
+                    OwnerId=userRecord.Id ,
+                    Name=ACCOUNTTEST+String.valueOf( count ) ,
+                    AccountNumber=String.valueOf( count ) ,
+                    NSP_Ready_for_Integration_Sync__c=True ,
+                    NumberOfEmployees=100
+                )
+            );
         }
         
         insert accountList;
