@@ -26,7 +26,7 @@ public class NSP_AddressTriggerHelper {
             NSP_Address__c oldUsAddress = ( ( oldMap != null ) ? oldMap.get(address.Id) : null );  
             if(oldUsAddress != null && address.NSP_Related_Site__c !=null && address.NSP_Related_Site__c != oldUsAddress.NSP_Related_Site__c 
                && address.NSP_Address_Type__c == NSP_ServiceConstants.US_MAIL && !processedAddresses.contains(address.Id))
-            {	
+            {
                 queueOldMap.put(address.Id,oldUsAddress);
                 queueNewAddress.add(address);
                 processedAddresses.add(address.Id); 
@@ -51,8 +51,7 @@ public class NSP_AddressTriggerHelper {
             if(!sccAddressToUpdate.isEmpty()) {
                 update sccAddressToUpdate;
             }
-            
-        } 
+        }
         if (!queueNewAddress.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
