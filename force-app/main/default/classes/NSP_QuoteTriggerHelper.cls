@@ -8,6 +8,8 @@
 * 
 */
 public class NSP_QuoteTriggerHelper {
+    // test w/ NSP_QuoteTriggerHelper_Test (77%)
+
     public static boolean STOP_ACCOUNT_QUERY  = false;
     static final string CLASS_NAME = 'NSP_QuoteTriggerHelper';
     /**
@@ -301,7 +303,6 @@ static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
                 newQuote.NSP_Budgetary_Quote__c = true;
                 if(newQuote.SBQQ__Partner__c == null &&  opportunityMap.get(newQuote.SBQQ__Opportunity2__c).NSP_Partner__c!=null) {
                     newQuote.SBQQ__Partner__c = opportunityMap.get(newQuote.SBQQ__Opportunity2__c).NSP_Partner__c;
-                    newQuote.NSP_Is_Partner_CS_Applicable__c = true;
                 }
             }
         }
@@ -428,7 +429,22 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
         }
     }
 
-    for(SBQQ__QuoteLine__c ql : [SELECT Id, SBQQ__ProductCode__c, NSP_Lock_On_QLI__c, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE (NSP_Lock_On_QLI__c = true OR NSP_Parent_Product_Code__c = 'HR Consulting Services' OR SBQQ__ProductCode__c IN :applicableCoreProducts) AND SBQQ__Quote__c IN : quoteNewMap.keySet() AND SBQQ__ProductCode__c NOT IN :notapplicableCoreProducts]) {
+        for ( SBQQ__QuoteLine__c ql : [
+                    SELECT Id , SBQQ__ProductCode__c , NSP_Lock_On_QLI__c, SBQQ__Quote__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        NSP_ActionType__c != null
+                        AND (
+                            ( NSP_Lock_On_QLI__c = true )
+                            OR ( NSP_Parent_Product_Code__c = 'HR Consulting Services' )
+                            OR ( SBQQ__ProductCode__c IN :applicableCoreProducts )
+                        )
+                        AND SBQQ__Quote__c IN : quoteNewMap.keySet()
+                        AND SBQQ__ProductCode__c NOT IN :notapplicableCoreProducts
+                    )
+                ]
+            )
+        {
 
         if(ql.SBQQ__ProductCode__c!=null) {
 
@@ -443,7 +459,7 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
 
         }
 
-    }
+        }
 
     for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
         
@@ -566,9 +582,6 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
         //Added for Partner CS Story
         if(newQuote.SBQQ__Partner__c == null) {
             newQuote.NSP_Is_Partner_CS_Applicable__c = false;
-        }
-        if(newQuote.SBQQ__Partner__c != null && newQuote.SBQQ__Partner__c!=quoteOldMap.get(newQuote.Id).SBQQ__Partner__c && newQuote.NSP_Opportunity_Partner_Name__c != LASSO_PARTNERNAME && newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA') && newQuote.NSP_Opportunity_Primary_Bundle__c != STRING_WO_WS ){
-            newQuote.NSP_Is_Partner_CS_Applicable__c = true;
         }
         //Added for Partner CS Story
         
