@@ -2,12 +2,14 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SYNT_PreventReopen_After90DaysOfClosed</fullName>
     <active>true</active>
-    <description>This validation rule prevent the user editing on the Closed record</description>
+    <description>This validation rule prevent the user editing on the Closed record.
+Update for AZD-259116 - 2/14/2024</description>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ) ,
   NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
   $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
   ISPICKVAL( Status , &apos;ReOpened&apos; ) ,
+  IsClosed,
   ( NSP_Date_Closed__c &lt; ( TODAY() - 91 ) )
 )</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
