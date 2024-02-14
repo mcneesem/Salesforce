@@ -8,7 +8,9 @@
 * 
 */
 public class NSP_QuoteTriggerHelper {
-    // test w/ NSP_QuoteTriggerHelper_Test (77%)
+    // test w/ NSP_QuoteTriggerTest,NSP_QuoteTriggerHelper_Test (86%)
+    // test w/ NSP_QuoteTriggerTest (83%)
+    // test w/ NSP_QuoteTriggerHelper_Test (56%)
 
     public static boolean STOP_ACCOUNT_QUERY  = false;
     static final string CLASS_NAME = 'NSP_QuoteTriggerHelper';
