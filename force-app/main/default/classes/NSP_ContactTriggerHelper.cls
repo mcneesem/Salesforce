@@ -280,20 +280,22 @@ public class NSP_ContactTriggerHelper {
             {
                 for(Contact conObj : newMap.values()){
                     Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
-                    if ( conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c
-                        && conObj.NSP_Client_Reference__c
-                        )
-                    {
-                        clientRefernceContactList.add(conObj);
-                    }
-                    if ( (conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c)
-                        || (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c)
-                        || oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c
-                        || oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c
-                        || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
-                        )
-                    {
-                        ConIdcontactMap.put(conObj.Id, conObj);
+                    if ( oldContact != null ) {
+                        if ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c
+                            && conObj.NSP_Client_Reference__c
+                            )
+                        {
+                            clientRefernceContactList.add(conObj);
+                        }
+                        if ( (conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c)
+                            || (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c)
+                            || oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c
+                            || oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c
+                            || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
+                            )
+                        {
+                            ConIdcontactMap.put(conObj.Id, conObj);
+                        }
                     }
                 }
                 if(clientRefernceContactList.size() > 0){
