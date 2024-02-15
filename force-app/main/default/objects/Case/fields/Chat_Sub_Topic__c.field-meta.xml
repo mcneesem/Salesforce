@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Chat_Sub_Topic__c</fullName>
+    <externalId>false</externalId>
+    <label>Sub-Topic</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Chat_Topic__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Benefits Address Change</fullName>
+                <default>false</default>
+                <label>Benefits Address Change</label>
+            </value>
+            <value>
+                <fullName>Benefits Communication</fullName>
+                <default>false</default>
+                <label>Benefits Communication</label>
+            </value>
+            <value>
+                <fullName>Benefits Enrollment</fullName>
+                <default>false</default>
+                <label>Benefits Enrollment</label>
+            </value>
+            <value>
+                <fullName>Benefits Plan Info</fullName>
+                <default>false</default>
+                <label>Benefits Plan Info</label>
+            </value>
+            <value>
+                <fullName>COBRA</fullName>
+                <default>false</default>
+                <label>COBRA</label>
+            </value>
+            <value>
+                <fullName>Flexible Spending</fullName>
+                <default>false</default>
+                <label>Flexible Spending</label>
+            </value>
+            <value>
+                <fullName>Health Savings Accounts (HSA)</fullName>
+                <default>false</default>
+                <label>Health Savings Accounts (HSA)</label>
+            </value>
+            <value>
+                <fullName>ID Cards</fullName>
+                <default>false</default>
+                <label>ID Cards</label>
+            </value>
+            <value>
+                <fullName>Leave of absence</fullName>
+                <default>false</default>
+                <label>Leave of absence</label>
+            </value>
+            <value>
+                <fullName>Mid Year Event</fullName>
+                <default>false</default>
+                <label>Mid Year Event</label>
+            </value>
+            <value>
+                <fullName>New Hire</fullName>
+                <default>false</default>
+                <label>New Hire</label>
+            </value>
+            <value>
+                <fullName>Open Enrollment</fullName>
+                <default>false</default>
+                <label>Open Enrollment</label>
+            </value>
+            <value>
+                <fullName>x401k_Address_Change</fullName>
+                <default>false</default>
+                <label>401k Address Change</label>
+            </value>
+            <value>
+                <fullName>401k Enrollment</fullName>
+                <default>false</default>
+                <label>401k Enrollment</label>
+            </value>
+            <value>
+                <fullName>401k Plan Info</fullName>
+                <default>false</default>
+                <label>401k Plan Info</label>
+            </value>
+            <value>
+                <fullName>Hardship</fullName>
+                <default>false</default>
+                <label>Hardship</label>
+            </value>
+            <value>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+                <label>Distribution</label>
+            </value>
+            <value>
+                <fullName>Investments</fullName>
+                <default>false</default>
+                <label>Investments</label>
+            </value>
+            <value>
+                <fullName>Loans</fullName>
+                <default>false</default>
+                <label>Loans</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Rollover</fullName>
+                <default>false</default>
+                <label>Rollover</label>
+            </value>
+            <value>
+                <fullName>Statements</fullName>
+                <default>false</default>
+                <label>Statements</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>x401k_Address_Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>401k Enrollment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>401k Plan Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Hardship</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Distribution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Investments</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Loans</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Retirement Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Rollover</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>401K</controllingFieldValue>
+            <valueName>Statements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Benefits Address Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Benefits Communication</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Benefits Enrollment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Benefits Plan Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>COBRA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Flexible Spending</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Health Savings Accounts (HSA)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>ID Cards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Leave of absence</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Mid Year Event</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>New Hire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Open Enrollment</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
