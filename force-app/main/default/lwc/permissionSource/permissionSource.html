@@ -1,0 +1,21 @@
+<template>
+    <template if:false={error}>
+        <template lwc:if={permission}>
+            <span title={name}>{label}<span class={nameClass}>({name})</span></span>
+            <template lwc:if={permission.sources}>
+                <ul class="slds-list_dotted">
+                    <!-- is-object-permission -->
+                    <template lwc:if={allows}>
+                        <li>{allows}</li>
+                    </template>
+                    <template for:each={permission.sources} for:item="permissionSet">
+                        <li key={permissionSet.Id}>
+                            <c-permission-set-link permission-set={permissionSet}></c-permission-set-link>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </template>
+    </template>
+    <c-error-panel error={error} parent="c-permission-source"></c-error-panel>
+</template>
