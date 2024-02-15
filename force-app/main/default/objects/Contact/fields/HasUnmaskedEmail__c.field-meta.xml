@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HasUnmaskedEmail__c</fullName>
+    <description>Used to identify records with a un-masked email address.</description>
+    <externalId>false</externalId>
+    <formula>/*
+  WHERE (
+    ( Email != null )
+    AND ( NOT Email LIKE &apos;%.invalid&apos; )
+    AND ( Email != &apos;preprod_emails@insperity.com&apos; )
+    AND ( ( Email LIKE &apos;%@insperity.com&apos; ) OR ( NOT Email LIKE &apos;%@insperity.%&apos; ) )
+  )
+*/
+OR(
+  AND(
+    NOT( ISBLANK( Email ) ) ,
+    NOT( RIGHT( Email , 8 ) = &apos;.invalid&apos; ) ,
+    NOT( Email = &apos;preprod_emails@insperity.com&apos; ) ,
+    OR(
+      ( RIGHT( Email , 14 ) = &apos;@insperity.com&apos; ),
+      NOT( CONTAINS( Email , &apos;@insperity.&apos; ) )
+    )
+  ) ,
+  AND(
+    NOT( ISBLANK( NSP_Alt_Email__c ) ) ,
+    NOT( RIGHT( NSP_Alt_Email__c , 8 ) = &apos;.invalid&apos; ) ,
+    NOT( NSP_Alt_Email__c = &apos;preprod_emails@insperity.com&apos; ) ,
+    OR(
+      ( RIGHT( NSP_Alt_Email__c , 14 ) = &apos;@insperity.com&apos; ),
+      NOT( CONTAINS( NSP_Alt_Email__c , &apos;@insperity.&apos; ) )
+    )
+  ) ,
+  AND(
+    NOT( ISBLANK( NSP_Personal_Email__c ) ) ,
+    NOT( RIGHT( NSP_Personal_Email__c , 8 ) = &apos;.invalid&apos; ) ,
+    NOT( NSP_Personal_Email__c = &apos;preprod_emails@insperity.com&apos; ) ,
+    OR(
+      ( RIGHT( NSP_Personal_Email__c , 14 ) = &apos;@insperity.com&apos; ),
+      NOT( CONTAINS( NSP_Personal_Email__c , &apos;@insperity.&apos; ) )
+    )
+  ) ,
+  AND(
+    NOT( ISBLANK( NSP_Work_email__c ) ) ,
+    NOT( RIGHT( NSP_Work_email__c , 8 ) = &apos;.invalid&apos; ) ,
+    NOT( NSP_Work_email__c = &apos;preprod_emails@insperity.com&apos; ) ,
+    OR(
+      ( RIGHT( NSP_Work_email__c , 14 ) = &apos;@insperity.com&apos; ),
+      NOT( CONTAINS( NSP_Work_email__c , &apos;@insperity.&apos; ) )
+    )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Has Unmasked Email</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
