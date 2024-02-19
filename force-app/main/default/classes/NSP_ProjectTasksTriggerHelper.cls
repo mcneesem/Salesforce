@@ -1007,7 +1007,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectFsoIdset.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotificatin__c){
+        if(!projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
         if(!projectTaskCobraIdSet.isEmpty()){
