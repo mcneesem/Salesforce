@@ -271,7 +271,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     if(String.isNotBlank(imp.NSP_HR_Specialist__r.NSP_Work_email__c)){
                         ccAddress.add(imp.NSP_HR_Specialist__r.NSP_Work_email__c);
                     }
-                    if(String.isNotBlank(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c)){
+                    if(imp.NSP_Payroll_Specialist__c != null && String.isNotBlank(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c)){
                         ccAddress.add(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c);
                     }
                     mapofccEmailSet.put(imp.NSP_Project__c, ccAddress);
