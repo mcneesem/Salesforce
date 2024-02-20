@@ -421,4 +421,16 @@
         <object>NSP_Termination_Form__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Client_Reinstatement</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Credit_Specialist_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
