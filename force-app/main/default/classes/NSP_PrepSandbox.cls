@@ -352,8 +352,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
-            MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
-            MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
+            MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
+            MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
             if(cL.value == null) cL.value = 'dummy';
             string[] cLNames = cL.value.split(',');
             string[] cLNames2 = (cL2.value == null) ? new string[]{} : cL2.value.split(',');
