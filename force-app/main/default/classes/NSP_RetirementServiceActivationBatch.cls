@@ -10,9 +10,10 @@
  * -------------------------------------------------------------------------------------------------
  * Manikantan Mohan           13/12/2022              Retirement Service Activation on Order Products(which has order activation trigger as 'Plan Activation') Related to Asset object in the Client sub plan History.
  */
-public class NSP_RetirementServiceActivationBatch implements Database.Batchable<sObject>, Database.Stateful{
+public class NSP_RetirementServiceActivationBatch implements Database.Batchable<sObject> , Database.Stateful {
     // test w/ NSP_RetirementServiceActivationBatchTest (92%)
-    public NSP_RetirementServiceActivationBatch(){
+
+    public NSP_RetirementServiceActivationBatch() {
     }
 
     //Querying the data from client sub plan history which has Start date as today and current subplan is true
