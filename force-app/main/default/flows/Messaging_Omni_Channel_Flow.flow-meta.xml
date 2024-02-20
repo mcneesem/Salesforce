@@ -791,13 +791,13 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>First_Name__c</field>
+            <field>FirstName__c</field>
             <value>
                 <elementReference>input_FirstName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Last_Name__c</field>
+            <field>LastName__c</field>
             <value>
                 <elementReference>input_LastName</elementReference>
             </value>

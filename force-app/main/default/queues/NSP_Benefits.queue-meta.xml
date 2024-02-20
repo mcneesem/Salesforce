@@ -3,6 +3,7 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>contact_center@insperity.com.invalid</email>
     <name>Contact Center Benefits</name>
+    <queueRoutingConfig>Messaging_for_In_App_and_Web</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
