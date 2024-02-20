@@ -46,7 +46,7 @@ public class NSP_RetirementServiceActivationBatch implements Database.Batchable<
                         if ( !mapOrderSubCLient.isEmpty()
                             && mapOrderSubCLient.containsKey(orderItemRecord.OrderId)
                             && ( mapOrderSubCLient.get(orderItemRecord.OrderId) != null )
-                            && ( mapOrderSubCLient.get(orderItemRecord.OrderId).NSP_Start_Date__c ! = null )
+                            && ( mapOrderSubCLient.get(orderItemRecord.OrderId).NSP_Start_Date__c != null )
                             )
                         {
                             orderItemRecord.ServiceDate = mapOrderSubCLient.get(orderItemRecord.OrderId).NSP_Start_Date__c.toStartOfMonth();
