@@ -12,7 +12,7 @@
     <currency>USD</currency>
     <description>Open Orders with the Existing Product Type</description>
     <filter>
-        <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
         <criteriaItems>
             <column>Order.NSP_Order_Product_Type__c</column>
             <columnToColumn>false</columnToColumn>
@@ -28,11 +28,11 @@
             <value></value>
         </criteriaItems>
         <criteriaItems>
-            <column>ORDER_STATUS</column>
+            <column>Order.Order_ID_18__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
-            <value>Activated</value>
+            <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Order.NSP_Back_Out__c</column>
@@ -40,6 +40,13 @@
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_STATUS</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Activated</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>
