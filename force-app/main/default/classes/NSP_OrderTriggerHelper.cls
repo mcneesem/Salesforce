@@ -2,7 +2,7 @@
 * Represents the Order trigger helper which handles all the logic.
 */
 public class NSP_OrderTriggerHelper {
-    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest,NSP_QuoteTriggerHelper_Test (80%)
+    // test w/ NSP_OrderTriggerHelperTest, NSP_OrderItemTriggerHelperTest, NSP_QuoteTriggerHelper_Test (80%)
 
     static final string STRING_ACCOUNT = 'Account';
     /**
@@ -74,7 +74,8 @@ public class NSP_OrderTriggerHelper {
                     newOrder.blng__BillingAccount__c = objQuote.NSP_Billing_Account__c;
                     newOrder.NSP_Partner__c = objQuote.SBQQ__Partner__c;
                     newOrder.NSP_AIMS_Billing_ID__c=objQuote.SBQQ__Account__r.NSP_AIMS_Client__c;
-                    if ( ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
+                    if ( ( Order_Settings__c.getInstance( UserInfo.getUserId() ).EffectiveDateStartOfMonth__c == True )
+                        && ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
                         && ( objQuote.SBQQ__StartDate__c != null )
                         )
                     {
