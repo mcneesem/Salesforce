@@ -5,30 +5,23 @@
 * author           | Date              | Description
 * -------------------------------------------------------------------------------------
 * Rahul         11-17-2022            Modified this class for user story 128436
-* 
 */
 public class NSP_QuoteTriggerHelper {
-    // test w/ NSP_QuoteTriggerTest,NSP_QuoteTriggerHelper_Test (86%)
+    // test w/ NSP_QuoteTriggerTest, NSP_QuoteTriggerHelper_Test (86%)
     // test w/ NSP_QuoteTriggerTest (83%)
     // test w/ NSP_QuoteTriggerHelper_Test (56%)
 
     public static boolean STOP_ACCOUNT_QUERY  = false;
     static final string CLASS_NAME = 'NSP_QuoteTriggerHelper';
-    /**
-* Iterates throught the list of new leads and passes the required attributes to other methods.
-* @param newList List of New leads.  
-* @return void             
-*                
-*/
-static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE=System.Label.NSP_Incorrect_Pricing_Model;    
-static final String WO_APP_PRICEBOOK_ERR_MESSAGE=System.Label.NSP_WO_Applicable_PriceBooks_Error;    
-static final String BYPASS_SIGNATURE_NOT_ALLOWED=System.Label.NSP_Bypass_Signature_Not_Allowed;   
-static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Supplemental_Error;     
-static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Amendment_Error;
-static final String WX_WA_QUOTE_VALIDATION_ERROR=System.Label.NSP_WX_WA_Quote_Validation_Message;
-static final String STRING_WO_WS = 'WO/WS';
-static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
-    
+    static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE=System.Label.NSP_Incorrect_Pricing_Model;
+    static final String WO_APP_PRICEBOOK_ERR_MESSAGE=System.Label.NSP_WO_Applicable_PriceBooks_Error;
+    static final String BYPASS_SIGNATURE_NOT_ALLOWED=System.Label.NSP_Bypass_Signature_Not_Allowed;
+    static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Supplemental_Error;
+    static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Amendment_Error;
+    static final String WX_WA_QUOTE_VALIDATION_ERROR=System.Label.NSP_WX_WA_Quote_Validation_Message;
+    static final String STRING_WO_WS = 'WO/WS';
+    static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
+
     public void beforeInsertDirector(List<SBQQ__Quote__c> newList){        
         List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
         validateQuote(newList);
@@ -309,18 +302,17 @@ static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
             }
         }
     }
-    
 
-/**
-* Method Name : initializeDefaultFieldValues 
-* Description : Method to set default Quote values based on conditions.
-* Author : Rakesh Das       Date : 10/08/2021
-* @param QuoteNewMap Map of New Quote. 
-* @param QuoteOldMap Map of Old Quote.   
-* @return void  
-*/
-public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap) { 
-  
+    //
+    // Method Name : initializeDefaultFieldValues
+    // Description : Method to set default Quote values based on conditions.
+    // Author : Rakesh Das       Date : 10/08/2021
+    // @param QuoteNewMap Map of New Quote.
+    // @param QuoteOldMap Map of Old Quote.
+    // @return void
+    //
+    public void initializeDefaultFieldValues( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
+
     NSP_Partner_Configurations__mdt partnerConfigRec = NSP_Partner_Configurations__mdt.getInstance('Altula');
     Map<String,String> woPBNames = new Map<String,String>{'WA Pricebook'=>'WA','WX Pricebook'=>'WX'};
     List<String> notapplicableCoreProducts = new List<String>{'HR Consulting Services'};
@@ -447,20 +439,15 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
                 ]
             )
         {
-
-        if(ql.SBQQ__ProductCode__c!=null) {
-
-            if(quoteProductBundles.containskey(ql.SBQQ__Quote__c)) {
-                Set<String> prodlist = quoteProductBundles.get(ql.SBQQ__Quote__c);     
-                prodlist.add(ql.SBQQ__ProductCode__c);
-                quoteProductBundles.put(ql.SBQQ__Quote__c,prodlist);
+            if ( ql.SBQQ__ProductCode__c!=null ) {
+                if ( quoteProductBundles.containskey( ql.SBQQ__Quote__c ) ) {
+                    Set<String> prodlist = quoteProductBundles.get( ql.SBQQ__Quote__c );
+                    prodlist.add( ql.SBQQ__ProductCode__c );
+                    quoteProductBundles.put( ql.SBQQ__Quote__c , prodlist );
+                } else {
+                    quoteProductBundles.put( ql.SBQQ__Quote__c , new Set<String>{ ql.SBQQ__ProductCode__c } );
+                }
             }
-            else{
-                quoteProductBundles.put(ql.SBQQ__Quote__c,new Set<String>{ql.SBQQ__ProductCode__c});
-            }
-
-        }
-
         }
 
     for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
@@ -586,11 +573,8 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
             newQuote.NSP_Is_Partner_CS_Applicable__c = false;
         }
         //Added for Partner CS Story
-        
-}
-
-
-}
+        }
+    }
 
 /**
 * Method Name : initializeDefaultFieldValuesOnInsert 
