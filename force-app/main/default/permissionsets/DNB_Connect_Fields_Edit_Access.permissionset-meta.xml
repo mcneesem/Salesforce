@@ -486,6 +486,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.DnB_Domestic_Ultimate_DUNS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.DnB_Domestic_Ultimate_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.DnB_Email_Deliverability_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
