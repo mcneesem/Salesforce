@@ -3,7 +3,6 @@
     <description>Includes Service L4 Permission Set and perm sets required for admin access to installed packages(SFS, FF, cobrowse, docusign related packages)</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Service L4 Permission Set Group</label>
-    <permissionSets>FSL_Admin_Permissions</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Service_L4_Permission_Set</permissionSets>
     <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
