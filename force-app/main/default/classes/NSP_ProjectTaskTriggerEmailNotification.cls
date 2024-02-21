@@ -255,7 +255,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             List<String> ccAddress = new List<String>();
             if(!projectIdset.isEmpty()){
                 for(Implementation_Profile__c imp: [SELECT Id, NSP_Project__c,  NSP_Client_Liaison__c, NSP_Client_Liaison__r.NSP_Work_email__c, NSP_Project_Manager__c, NSP_Project_Manager__r.NSP_Work_email__c,
-                NSP_Manager_HR_Services__c, NSP_Manager_HR_Services__r.NSP_Work_email__c,NSP_HR_Specialist__c, NSP_HR_Specialist__r.NSP_Work_email__c 
+                NSP_Manager_HR_Services__c, NSP_Manager_HR_Services__r.NSP_Work_email__c,NSP_HR_Specialist__c, NSP_HR_Specialist__r.NSP_Work_email__c,NSP_Payroll_Specialist__c,NSP_Payroll_Specialist__r.NSP_Work_email__c 
                 FROM Implementation_Profile__c WHERE NSP_Project__c in:projectIdset ]){
                     
                     
@@ -270,6 +270,9 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     }
                     if(String.isNotBlank(imp.NSP_HR_Specialist__r.NSP_Work_email__c)){
                         ccAddress.add(imp.NSP_HR_Specialist__r.NSP_Work_email__c);
+                    }
+                    if(imp.NSP_Payroll_Specialist__c != null && String.isNotBlank(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c)){
+                        ccAddress.add(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c);
                     }
                     mapofccEmailSet.put(imp.NSP_Project__c, ccAddress);
                 }
