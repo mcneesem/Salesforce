@@ -4,5 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Messaging Agent Supervisor</label>
     <permissionSets>Manage_Business_Hours_Holidays</permissionSets>
+    <permissionSets>Omni_Supervisor</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
