@@ -325,7 +325,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                         Set<String> toEmailSet =  mapAccountIdSetContactEmail.get(scc.NSP_Sub_Client__r.NSP_Account__c);
                         if(scc.NSP_Work_Email__c != null){
                             toEmailSet.add(scc.NSP_Work_email__c);
-                        }else if(scc.NSP_Contact__r.NSP_Work_email__c != null){
+                        }else if(scc.NSP_Contact__c != null && scc.NSP_Contact__r.NSP_Work_email__c != null){
                             toEmailSet.add(scc.NSP_Contact__r.NSP_Work_email__c);
                         }
                         mapAccountIdSetContactEmail.put(scc.NSP_Sub_Client__r.NSP_Account__c,toEmailSet);                       
