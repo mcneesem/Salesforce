@@ -291,766 +291,129 @@
         <field>Contact.DnB_Prefix__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.DNBConnect__ISO_Alpha_2_Char_Country_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.DNBConnect__PrimName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.DU_PrimName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.DU_duns__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.DU_numOfEmpl_value__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.DU_primAddr_Region_abbrName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.Fins_reliabilityDnBCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.Fins_yearlyRevenue_value__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.GU_FamilyTreeMembersCnt__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.GU_PrimName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.GU_duns__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.HQ_PrimName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.HQ_duns__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_NAICS_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_NAICS_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_NAICS_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_NAICS_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_NAICS_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_NAICS_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_US_1987_SIC_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_US_1987_SIC_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_US_1987_SIC_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_US_1987_SIC_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_US_1987_SIC_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_Descr_US_1987_SIC_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_Priority_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_Priority_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_Priority_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_Priority_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_Priority_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_Priority_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeCode_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeCode_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeCode_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeCode_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeCode_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeCode_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeDescr_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeDescr_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeDescr_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeDescr_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeDescr_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_TypeDescr_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_NAICS_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_Priorty_priorty1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_Priorty_priorty2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_Priorty_priorty3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_Priorty_priorty4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_Priorty_priorty5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_Priorty_priorty6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypCode_priorty1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypCode_priorty2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypCode_priorty3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypCode_priorty4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypCode_priorty5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypCode_priorty6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypDesc_priorty1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypDesc_priorty2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypDesc_priorty3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypDesc_priorty4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypDesc_priorty5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_TypDesc_priorty6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_priority1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_priority2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_priority3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_priority4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_priority5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.IndustCodes_US_1987_SIC_priority6__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.bizEntityType_Descr__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.bizEntityType_dnbCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.cons_numberofemployees_infoscopecode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.cons_numberofemployees_infoscopedesc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.cons_numberofemployees_val__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.cons_numofemployees_figuresdate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.cons_numofemployees_reliabilitycode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.cons_numofemployees_reliabilitydesc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.controlOwnershipType_Descr__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.dunsCntrStat_isDelisted__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.dunsCntrStat_isMarketable__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.dunsCntrStat_opeRtngSubStatus_Descr__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.hq_ind_numberofemployees_infoscopecode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.hq_ind_numberofemployees_infoscopedesc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.hq_ind_numberofemployees_val__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.hq_ind_numofemployees_figuresdate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.hq_ind_numofemployees_reliabilitycode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.hq_ind_numofemployees_reliabilitydesc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.isFortune1000Listed__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.isSmallbiz__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_AddrLocal_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_Cntry_isoAlpha2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_Region_abbrName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_Region_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_postalCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_postalRoute__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_streetAddr_line1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.mailingAddr_streetAddr_line2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.numOfEmpl_trend_growthRate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.organization_email_address_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.organization_website_address_domain_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.organization_website_address_url_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.parent_PrimName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.parent_duns__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_AddrLocal_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_Cntry_isoAlpha2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_Cntry_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_Region_abbrName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_Region_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_latitude__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_longitude__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_postalCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_streetAddr_line1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.primAddr_streetAddr_line2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1_class_code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1_class_desc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1_location__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1_preferred_indic__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1_type_code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_1_type_desc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_2_type_desc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_3_type_desc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.registration_number_4_type_desc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.stockExchanges_exchangeName_Descr__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.stockExchanges_tickerName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_international_dialing_code_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_international_dialing_code_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_international_dialing_code_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_international_dialing_code_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_international_dialing_code_5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_telephonenumber_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_telephonenumber_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_telephonenumber_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_telephonenumber_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.telephone_telephonenumber_5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_name_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_name_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_name_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_name_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_name_5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_priority_1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_priority_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_priority_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_priority_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DNBConnect__D_B_Connect_Company_Profile__c.tsn_tradestylenames_priority_5__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.DNBConnect__D_B_Connect_Company_Profile__c</field>
