@@ -11,5 +11,7 @@
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQAdmin</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
+    <permissionSets>sbaa__AdvancedApprovalsAdmin</permissionSets>
+    <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
