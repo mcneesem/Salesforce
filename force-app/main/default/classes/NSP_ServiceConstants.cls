@@ -188,6 +188,8 @@ public class NSP_ServiceConstants {
   //ASSET CONSTANTS
   public final static string ASSET_SOBJECT_TYPE            ='Asset';
   public final static string AIMS_STATUS                   = 'Active';
+  public final static string PAID_NON_PAID_WSEE            = 'Paid WSEE';
+  public final static string PAID_NON_PAID_ACTIVE          = 'Active Non-Paid User';
   public final static string WO_ASSET_RECORDTYPE           = 'WO';
   public final static string TIME_ATTENDANCE_ASSET         = 'Time_Attendance';
   public final static string PERFORMANCE_MANAGEMENT_ASSET  = 'Performance_Management';
