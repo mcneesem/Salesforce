@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PostRefreshRun3__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>tracks whether Email-to-Case Address update automation has been run</description>
+    <externalId>false</externalId>
+    <label>PostRefreshRun3</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

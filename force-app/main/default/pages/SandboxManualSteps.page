@@ -1,15 +1,25 @@
 <apex:page controller="NSP_PrepSandbox">
  <apex:form >
-    <apex:commandButton style="font-size:12px" value="Post-Refresh Steps" action="{!runManualStepsButton}" rerender="result" status="Status1" oncomplete="callMethod2();"/>
-    <apex:actionFunction name="callMethod2" action="{!doUserImportPage}" rerender="result" status="Status2"/>
+    <apex:commandButton style="font-size:12px" value="Post-Refresh Steps" action="{!resetResult}" rerender="result" status="Status1" oncomplete="callPostRefresh();"/>
+    <apex:actionFunction name="callPostRefresh" action="{!runManualStepsButton}" rerender="result" status="Status1"/>
     <apex:outputPanel id="postRefreshAlreadyRun" style="font-size:14px;color:black" rendered="{!$Setup.OrgSettings__c.PostRefreshRun__c}"><i>&nbsp;&nbsp;Post-refresh steps have been run.</i></apex:outputPanel>
     <br/>
-    <apex:commandButton style="font-size:12px" value="Post-Import Steps" action="{!runManualStepsButton2}" rerender="result" status="Status1"/>
-    <apex:outputPanel id="postRefreshAlreadyRun2" style="font-size:14px;color:black" rendered="{!$Setup.OrgSettings__c.PostRefreshRun2__c}"><i>&nbsp;&nbsp;Post-import steps have been run.</i></apex:outputPanel>
+    <apex:commandButton style="font-size:12px" value="Import Org Users    " action="{!resetResult}" rerender="result"  oncomplete="callUserImport();"/>
+    <apex:actionFunction name="callUserImport" action="{!doUserImportPage}" rerender="result" status="Status2"/>
+    <apex:outputPanel id="postRefreshAlreadyRun2" style="font-size:14px;color:black" rendered="{!$Setup.OrgSettings__c.PostRefreshRun2__c}"><i>&nbsp;&nbsp;Import Users step has been run.</i></apex:outputPanel>
+    <br/>
+    <apex:commandButton style="font-size:12px" value="Post-Import Steps  " action="{!resetResult}" rerender="result"  oncomplete="callPostImport();"/>
+    <apex:actionFunction name="callPostImport" action="{!runManualStepsButton2}" rerender="result" status="Status1"/>
+    <apex:outputPanel id="postRefreshAlreadyRun3" style="font-size:14px;color:black" rendered="{!$Setup.OrgSettings__c.PostRefreshRun3__c}"><i>&nbsp;&nbsp;Post-import steps have been run.</i></apex:outputPanel>
+    <br/>
+    <apex:commandButton style="font-size:12px" value="E2C Addresses       " action="{!resetResult}" rendered="{!CONTAINS(lower($User.Username),'paul.mccluskey@insperity.com')}"  rerender="result"  oncomplete="callE2C();"/>
+    <apex:actionFunction name="callE2C" action="{!runE2CAddressesButton}" rerender="result" status="Status3"/>
+    <apex:outputPanel id="postRefreshAlreadyRun4" style="font-size:14px;color:black" rendered="{!CONTAINS(lower($User.Username),'paul.mccluskey@insperity.com') && $Setup.OrgSettings__c.PostRefreshRun4__c}"><i>&nbsp;&nbsp;E2C Address updates have been run.</i></apex:outputPanel>
     <br/><br/>
     <apex:outputPanel id="result" style="font-size:14px">&nbsp;&nbsp;
-        <apex:actionStatus id="Status1" startText="...updating Metadata..." />
-        <apex:actionStatus id="Status2" startText="...importing Users..." />
+        <apex:actionStatus id="Status1" startText="...updating Metadata..."/>
+        <apex:actionStatus id="Status2" startText="...importing Users..."/>
+        <apex:actionStatus id="Status3" startText="...updating E2C Addresses..."/>
         {!runManualResult}
     </apex:outputPanel>
  </apex:form>
