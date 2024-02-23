@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Price Level</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
@@ -164,6 +165,24 @@
                 <fullName>WS</fullName>
                 <default>false</default>
                 <label>WS</label>
+            </value>
+            <value>
+                <fullName>RET- Default for Not Mass Bill</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RET- Default for Not Mass Bill</label>
+            </value>
+            <value>
+                <fullName>RET- Prospect</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RET- Prospect</label>
+            </value>
+            <value>
+                <fullName>RET- White Label FBT Fee Sched</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RET- White Label FBT Fee Sched</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -829,6 +829,14 @@
             <fullName>53</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>54</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>55</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ORK_Plan_Vendor__c</picklist>
