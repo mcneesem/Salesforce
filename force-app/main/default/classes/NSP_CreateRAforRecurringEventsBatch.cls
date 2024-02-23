@@ -9,7 +9,6 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
 
     public Integer recordsProcessed = 0; // stores number of records processed.
     public static String RecurringCreatedDate = System.Label.Recurring_Created_Date;
-    public static String TRAVEL = 'Travel';
 
 
     public Database.QueryLocator start(Database.BatchableContext bc){
@@ -26,9 +25,10 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
         Integer eventCount = 0;
         List <ResourceAbsence> resList = new List<ResourceAbsence> ();
         List<ResourceAbsence> resAbsence = NEW List<ResourceAbsence>();
-        Map<Id,Id> eventIdToRAidMap = new Map<Id,Id>(); 
-        Map<ID, Event> eventMap;
+        Map<String,Id> eventIdToRAidMap = new Map<String,Id>(); 
+        Map<ID, Event> eventMap = null;
         List<Event> eventScope = new List<Event>();
+        String TRAVEL = 'Travel';
         Schema.RecordTypeInfo info = SObjectType.ResourceAbsence.getRecordTypeInfosByDeveloperName().get('Non_Availability');
         Id NArecordType = null;
         if ( info != null ) {
@@ -51,7 +51,7 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
         if(scope != NULL){
         	for(Event eventRec : scope){
             	//checking if events in scope already has a RA created
-            	if (eventIdToRAidMap != Null && eventIdToRAidMap.get(eventRec.Id) == NULL){
+            	if (!eventIdToRAidMap.containsKey( eventRec.Id ) || ( eventIdToRAidMap.get( eventRec.Id ) == null)){
                 	ownerIdSet.add(eventRec.OwnerId); 
                 	eventIdSet.add(eventRec.Id);
                 	eventScope.add(eventRec);
@@ -72,10 +72,11 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
                     	ResourceAbsence resObject = new ResourceAbsence();
                     	resObject.ResourceId = mapOfServiceResourceMem.get(eventRec.OwnerId);
                     	resObject.Type = eventRec.Subject;
-                    	if (eventRec.Subject != null && ((eventRec.Subject).toLowerCase()).contains(TRAVEL.toLowerCase())){
+                    	if (String.isNotBlank( eventRec.Subject ) && ((eventRec.Subject).toLowerCase()).contains(TRAVEL.toLowerCase())){
                         	resObject.FSL__GanttLabel__c = TRAVEL;
-                    	} else
-                        	resObject.FSL__GanttLabel__c = eventRec.ShowAs;
+                        } else{
+                            resObject.FSL__GanttLabel__c = eventRec.ShowAs;
+                        }
                     	resObject.Start = eventRec.StartDateTime;
                     	resObject.End = eventRec.EndDateTime;
                     	resObject.Event_Id__c = String.valueOf(eventRec.Id);
