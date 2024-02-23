@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <assignments>
+        <name>Populate_Named_Account_Group_field_with_RecordId</name>
+        <label>Populate Named Account Group field with RecordId</label>
+        <locationX>842</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Named_Account_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Populate_Named_Account_Group_with_Connect_DUNS</name>
+        <label>Populate Named Account Group with Connect DUNS</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Named_Account_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DNB_Connect_DUNS_Number__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Populate_Named_Account_Group_with_Domestic_Ultimate_DUNS</name>
+        <label>Populate Named Account Group with Domestic Ultimate DUNS</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Named_Account_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DnB_Domestic_Ultimate_DUNS__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Populate_Named_Account_Group_with_FEIN</name>
+        <label>Populate Named Account Group with FEIN</label>
+        <locationX>578</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Named_Account_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DnB_FEIN__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Is_the_D_B_Connect_DUNS_populated</name>
+        <label>Is the D&amp;B Connect DUNS populated?</label>
+        <locationX>512</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Is_the_FEIN_populated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No D&amp;B Connect DUNS</defaultConnectorLabel>
+        <rules>
+            <name>Yes_D_B_Connect_DUNS_is_populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DNB_Connect_DUNS_Number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Named_Account_Group_with_Connect_DUNS</targetReference>
+            </connector>
+            <label>Yes - D&amp;B Connect DUNS is populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_the_Domestic_Ultimate_DUNS_populated</name>
+        <label>Is the Domestic Ultimate DUNS populated?</label>
+        <locationX>281</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Is_the_D_B_Connect_DUNS_populated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Domestic Ultimate DUNS</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Domestic_Ultimate_DUNS_is_populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DnB_Domestic_Ultimate_DUNS__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Named_Account_Group_with_Domestic_Ultimate_DUNS</targetReference>
+            </connector>
+            <label>Yes - Domestic Ultimate DUNS is populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_the_FEIN_populated</name>
+        <label>Is the FEIN populated?</label>
+        <locationX>710</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Populate_Named_Account_Group_field_with_RecordId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No FEIN</defaultConnectorLabel>
+        <rules>
+            <name>Yes_FEIN_is_populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DnB_FEIN__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Named_Account_Group_with_FEIN</targetReference>
+            </connector>
+            <label>Yes - FEIN is populated</label>
+        </rules>
+    </decisions>
+    <description>Populating &quot;Named Account Group&quot; field based on following logic: D&amp;B Domestic Ultimate DUNS, D&amp;B Connect DUNS, FEIN and finally RecordId if none of the others are populated. (simplified)</description>
+    <environments>Default</environments>
+    <interviewLabel>Lead - Before Save Populate Named Account Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead - Before Save Populate Named Account Group</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>155</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_the_Domestic_Ultimate_DUNS_populated</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
