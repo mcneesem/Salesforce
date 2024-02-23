@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Client has CSA addendum for stock/equity</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

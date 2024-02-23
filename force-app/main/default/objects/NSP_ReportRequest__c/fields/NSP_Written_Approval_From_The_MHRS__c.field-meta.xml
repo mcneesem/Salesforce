@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Written Approval From The MHRS</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

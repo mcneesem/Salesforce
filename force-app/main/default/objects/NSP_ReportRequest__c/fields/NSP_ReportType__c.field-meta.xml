@@ -4,11 +4,11 @@
     <externalId>false</externalId>
     <label>Report Type</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -75,66 +75,6 @@
                 <fullName>General Account/General Ledger</fullName>
                 <default>false</default>
                 <label>General Account/General Ledger</label>
-            </value>
-            <value>
-                <fullName>COVID-19 Well-Being &amp; Support</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>COVID-19 Well-Being &amp; Support</label>
-            </value>
-            <value>
-                <fullName>Climate</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Climate</label>
-            </value>
-            <value>
-                <fullName>Climate Plus</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Climate Plus</label>
-            </value>
-            <value>
-                <fullName>Custom</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Custom</label>
-            </value>
-            <value>
-                <fullName>Engagement</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Engagement</label>
-            </value>
-            <value>
-                <fullName>Exit</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Exit</label>
-            </value>
-            <value>
-                <fullName>GA/GL</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>GA/GL</label>
-            </value>
-            <value>
-                <fullName>General Well Being</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>General Well Being</label>
-            </value>
-            <value>
-                <fullName>Onboarding</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Onboarding</label>
-            </value>
-            <value>
-                <fullName>Return to Work Readiness</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Return to Work Readiness</label>
             </value>
         </valueSetDefinition>
     </valueSet>

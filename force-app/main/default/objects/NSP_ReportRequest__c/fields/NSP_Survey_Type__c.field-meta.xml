@@ -4,11 +4,11 @@
     <externalId>false</externalId>
     <label>Survey Type</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -75,18 +75,6 @@
                 <fullName>Stay</fullName>
                 <default>false</default>
                 <label>Stay</label>
-            </value>
-            <value>
-                <fullName>Onboarding</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Onboarding</label>
-            </value>
-            <value>
-                <fullName>Onboarding - Week2/Week 5</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Onboarding - Week2/Week 5</label>
             </value>
         </valueSetDefinition>
     </valueSet>

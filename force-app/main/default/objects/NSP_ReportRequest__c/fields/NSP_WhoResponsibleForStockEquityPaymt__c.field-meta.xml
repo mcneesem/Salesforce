@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Who&apos;s responsible for stock/equity paymt</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
