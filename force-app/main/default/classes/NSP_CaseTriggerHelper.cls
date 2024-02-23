@@ -442,18 +442,15 @@ Date        : 30/09/2021
             Id oldOwnerId = caseOldMap.get(eachCase.Id).OwnerId;
             Id newOwnerId = eachCase.OwnerId;
             if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c){
-                if(eachCase.NSP_Level_2__c  != caseOldMap.get(eachCase.Id).NSP_Level_2__c  && eachCase.NSP_Level_2_Assigned_Date__c==NULL){
+                if(newOwnerId.getSobjectType()!=Schema.User.SObjectType  && eachCase.NSP_Level_2_Assigned_Date__c==NULL){
                     eachCase.NSP_Level_2_Assigned_Date__c = System.now();
-                }
-                else if(newOwnerId  != oldOwnerId && oldOwnerId.getSobjectType()!=Schema.User.SObjectType  && newOwnerId.getSobjectType()==Schema.User.SObjectType
+                }else if(newOwnerId  != oldOwnerId && oldOwnerId.getSobjectType()!=Schema.User.SObjectType  && newOwnerId.getSobjectType()==Schema.User.SObjectType
                         && eachCase.NSP_First_Level2_Assigned_Duration__c == null){
-                    decimal l2AssignedDuration = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, System.Now());
-                    eachCase.NSP_First_Level2_Assigned_Duration__c = Math.floor(l2AssignedDuration*60);
-                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+                   eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifferenceInMin(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, System.Now());
+                   eachCase.NSP_Level_2_Assigned_Date__c = System.now();
                 }
                 if(caseOldMap.get(eachCase.Id).NSP_First_Level2_Reply_Date__c==null && eachCase.NSP_First_Level2_Reply_Date__c!=null && eachCase.NSP_Level_2_Assigned_Date__c!=null){
-                    decimal l2ReplydDuration = calculateTimeDifference(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
-                    eachCase.NSP_First_Level2_Reply_Duration__c = Math.floor(l2ReplydDuration*60);
+                    eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifferenceInMin(defaultBusinessHours.Id, eachCase.NSP_Level_2_Assigned_Date__c, eachCase.NSP_First_Level2_Reply_Date__c);
                 }
             }            
         }
@@ -2002,6 +1999,17 @@ Params:       String businessHoursId, DateTime startDate, DateTime endDate
         Decimal mins = timeDifference / 60000;
         Decimal hours = mins/60;//Time spent in Hours
         return hours.setscale(2);
+    }
+ /**********************************************************************************************
+MethodName: calculateTimeDifferenceInMin 
+Description : This method calculates Time Difference including the business hours and holidays
+Params:       String businessHoursId, DateTime startDate, DateTime endDate
+********************************************************************************************/    
+    public Decimal calculateTimeDifferenceInMin(String businessHoursId, DateTime startDate, DateTime endDate) {
+        Long timeDifference = BusinessHours.diff(businessHoursId, startDate, endDate);
+        decimal seconds =  timeDifference/1000;
+        decimal mins = (seconds / 60).setscale(2); 
+        return mins;
     }
     
     // states with code and country variable
