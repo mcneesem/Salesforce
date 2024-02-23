@@ -6,6 +6,8 @@
 
 */
 public class NSP_CaseContactTriggerHelper {
+    // test w/ NSP_CaseContactTriggerHelperTest (??%)
+
     private static final string NSP_CASE_TRIGGERHELPER = 'NSP_CaseContactTriggerHelper';
     /***********************************************************************************************
 * MethodName: beforeInsertDirector
