@@ -298,38 +298,53 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     mapOfAccountTeamEmail.put(accTeam.NSP_Account__c, accountTeamccAddress);
                 }
                 //get all subclient related to fso project account
-                for(NSP_Sub_Client__c sc: [SELECT Id,NSP_Account__c,NSP_Account_Status__c from NSP_Sub_Client__c  WHERE 
-                                           NSP_Account_Status__c =: NSP_ServiceConstants.AIMS_STATUS
-                                           AND NSP_Account__c IN:accountIds]){
-                        if(!mapofSubclientIds.containsKey(sc.NSP_Account__c)){
-                        mapofSubclientIds.put(sc.NSP_Account__c, new Set<Id>());
-                        }
-                            mapofSubclientIds.get(sc.NSP_Account__c).add(sc.Id) ; 
-                            subclientIds.add(sc.Id);
+                for ( NSP_Sub_Client__c sc : [
+                            SELECT Id , NSP_Account__c , NSP_Account_Status__c
+                            FROM NSP_Sub_Client__c
+                            WHERE (
+                                ( NSP_Account_Status__c = :NSP_ServiceConstants.AIMS_STATUS )
+                                AND ( NSP_Account__c IN :accountIds )
+                            )
+                        ]
+                    )
+                {
+                    if ( !mapofSubclientIds.containsKey( sc.NSP_Account__c ) ) {
+                        mapofSubclientIds.put( sc.NSP_Account__c , new Set<Id>() );
+                    }
+                    mapofSubclientIds.get( sc.NSP_Account__c ).add( sc.Id );
+                    subclientIds.add( sc.Id );
                 }
             }
             //fetch all contacts  email who has On-site Supervisor and payroll contacts for to address
             
-            if(!subclientIds.isEmpty()){
-                for(NSP_Sub_Client_Contact__c scc: [SELECT Id, NSP_Work_Email__c, NSP_Contact__c, NSP_Sub_Client__c,NSP_Sub_Client__r.NSP_Account__c, NSP_Contact__r.NSP_Work_email__c, NSP_Contact__r.Name, NSP_Contact__r.NSP_Work_Phone__c, NSP_Payroll_Contact__c, NSP_On_Site_Supervisor__c, NSP_Job_Title__c
-                                                    FROM NSP_Sub_Client_Contact__c
-                                                    WHERE (NSP_Payroll_Contact__c=TRUE OR NSP_On_Site_Supervisor__c=TRUE)
-                                                    AND (NSP_Paid_Non_Paid__c =: NSP_ServiceConstants.PAID_NON_PAID_WSEE OR NSP_Paid_Non_Paid__c =: NSP_ServiceConstants.PAID_NON_PAID_ACTIVE)
-                                                    AND NSP_Employee_Status__c !=: NSP_ServiceConstants.TERMINATED_STATUS
-                                                    AND  NSP_Sub_Client__c IN :subclientIds 
-                                                    AND (NSP_Work_email__c != null OR NSP_Contact__r.NSP_Work_email__c!=null)]){
-
-                        if(!mapAccountIdSetContactEmail.containsKey(scc.NSP_Sub_Client__r.NSP_Account__c)){
-                                mapAccountIdSetContactEmail.put(scc.NSP_Sub_Client__r.NSP_Account__c,new Set<String>());   
-                        }   
-                        Set<String> toEmailSet =  mapAccountIdSetContactEmail.get(scc.NSP_Sub_Client__r.NSP_Account__c);
-                        if(scc.NSP_Work_Email__c != null){
-                            toEmailSet.add(scc.NSP_Work_email__c);
-                        }else if(scc.NSP_Contact__c != null && scc.NSP_Contact__r.NSP_Work_email__c != null){
-                            toEmailSet.add(scc.NSP_Contact__r.NSP_Work_email__c);
-                        }
-                        mapAccountIdSetContactEmail.put(scc.NSP_Sub_Client__r.NSP_Account__c,toEmailSet);                       
+            if ( !subclientIds.isEmpty() ) {
+                for ( NSP_Sub_Client_Contact__c scc : [
+                            SELECT
+                                Id , NSP_Work_Email__c , NSP_Contact__c , NSP_Sub_Client__c , NSP_Sub_Client__r.NSP_Account__c ,
+                                NSP_Contact__r.NSP_Work_email__c , NSP_Contact__r.Name , NSP_Contact__r.NSP_Work_Phone__c ,
+                                NSP_Payroll_Contact__c , NSP_On_Site_Supervisor__c , NSP_Job_Title__c
+                            FROM NSP_Sub_Client_Contact__c
+                            WHERE (
+                                ( ( NSP_Payroll_Contact__c = true ) OR ( NSP_On_Site_Supervisor__c = true ) )
+                                AND ( ( NSP_Paid_Non_Paid__c =: NSP_ServiceConstants.PAID_NON_PAID_WSEE ) OR ( NSP_Paid_Non_Paid__c =: NSP_ServiceConstants.PAID_NON_PAID_ACTIVE ) )
+                                AND ( NSP_Employee_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
+                                AND ( NSP_Sub_Client__c IN :subclientIds )
+                                AND ( ( NSP_Work_email__c != null ) OR ( NSP_Contact__r.NSP_Work_email__c != null ) )
+                            )
+                        ]
+                    )
+                {
+                    if ( !mapAccountIdSetContactEmail.containsKey( scc.NSP_Sub_Client__r.NSP_Account__c ) ) {
+                        mapAccountIdSetContactEmail.put( scc.NSP_Sub_Client__r.NSP_Account__c , new Set<String>() );
                     }
+                    Set<String> toEmailSet =  mapAccountIdSetContactEmail.get( scc.NSP_Sub_Client__r.NSP_Account__c );
+                    if ( scc.NSP_Work_Email__c != null ) {
+                        toEmailSet.add( scc.NSP_Work_email__c );
+                    } else if ( ( scc.NSP_Contact__c != null ) && ( scc.NSP_Contact__r.NSP_Work_email__c != null ) ) {
+                        toEmailSet.add( scc.NSP_Contact__r.NSP_Work_email__c );
+                    }
+                    mapAccountIdSetContactEmail.put( scc.NSP_Sub_Client__r.NSP_Account__c , toEmailSet );
+                }
             }
             
             if(!accountIdProjectTaskMap.values().isEmpty()){
