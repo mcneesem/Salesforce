@@ -47,13 +47,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_CorporateEmployeeEE__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.AccountId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
