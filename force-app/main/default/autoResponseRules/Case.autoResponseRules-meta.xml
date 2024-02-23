@@ -7,7 +7,7 @@
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Contact Center&apos;,  SuppliedEmail != Null,  $Setup.NSP_Trigger_Switch__c.NSP_CC_Cse_Creation_Notification__c = false)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test Contact Center</senderName>
+            <senderName>Contact Center</senderName>
             <template>Services_Emails/NSP_ContactCenter_CaseCreation</template>
         </ruleEntry>
         <ruleEntry>
@@ -77,49 +77,49 @@
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Time &amp; Attendance&apos;,  SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test Time &amp; Attendance</senderName>
+            <senderName>Time &amp; Attendance</senderName>
             <template>Services_Emails/NSP_TimeStar_Content_Case_Created</template>
         </ruleEntry>
         <ruleEntry>
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Time &amp; Attendance&apos;, SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test TimeStar Hardware</senderName>
+            <senderName>TimeStar Hardware</senderName>
             <template>Services_Emails/NSP_TimeStarHardware_CaseCreated</template>
         </ruleEntry>
         <ruleEntry>
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;OrgPlus&apos;, SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test OrgPlus</senderName>
+            <senderName>OrgPlus</senderName>
             <template>Services_Emails/NSP_OrgPlus_Case_Created</template>
         </ruleEntry>
         <ruleEntry>
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;PerformSmart&apos;, SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test PerformSmart</senderName>
+            <senderName>PerformSmart</senderName>
             <template>Services_Emails/NSP_PerformSmart_Case_Created</template>
         </ruleEntry>
         <ruleEntry>
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;XML&apos;, SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test XML</senderName>
+            <senderName>XML</senderName>
             <template>Services_Emails/NSP_XML_Case_Created</template>
         </ruleEntry>
         <ruleEntry>
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Integra&apos;, SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test Integra</senderName>
+            <senderName>Integra</senderName>
             <template>Services_Emails/NSP_Integra_Case_Created</template>
         </ruleEntry>
         <ruleEntry>
             <formula>AND(ISPICKVAL(Origin,&apos;Email&apos;), NSP_Assigned_Queue__c = &apos;Employment Screening&apos;, SuppliedEmail != Null)</formula>
             <notifyCcRecipients>false</notifyCcRecipients>
             <senderEmail>no-reply@insperity.com</senderEmail>
-            <senderName>Test Employment Screening</senderName>
+            <senderName>Employment Screening</senderName>
             <template>Services_Emails/NSP_Employment_Screening</template>
         </ruleEntry>
         <ruleEntry>
