@@ -7,11 +7,8 @@
 global without sharing class NSP_CreateRAforRecurringEventsBatch implements Schedulable,Database.Batchable<SObject>, Database.Stateful {
     // test w/ NSP_CreateRAforRecurringEventsBatchTest (93%)
 
-    public Integer recordsProcessed = 0; // stores number of records processed.
-    public static String RecurringCreatedDate = System.Label.Recurring_Created_Date;
-
-
     public Database.QueryLocator start(Database.BatchableContext bc){
+        String RecurringCreatedDate = System.Label.Recurring_Created_Date;
         //returns QueryLocator to execute method.
         String query = 'SELECT Id,OwnerId, Subject, StartDateTime, EndDateTime,showAs FROM Event WHERE WhatId = null and (IsRecurrence2 = true or IsRecurrence=true) and createdBy.NSP_Salesforce_Field_Service__c IN (\'Dispatcher + Resource\',\'Resource\') and recordType.Name = \'Core Sales Event RT\' and createdDate = '+ RecurringCreatedDate;
         return Database.getQueryLocator(query);
