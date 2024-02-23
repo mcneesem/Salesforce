@@ -67,14 +67,17 @@ public class NSP_CaseContactTriggerHelper {
 * Story: STY-3784
 * ********************************************************************************************/
     public static void updateCorporateEmployeecheckBox(List<Case> caseList){
-        for(Case cse : caseList){
-            cse.NSP_CorporateEmployeeEE__c = false;
-        }
-        try{
-            List<Database.SaveResult> results = Database.update(caseList,false); 
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_CASE_TRIGGERHELPER, 'updateCorporateEmployeecheckBox', results );
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASE_TRIGGERHELPER, 'updateCorporateEmployeecheckBox', ex.getMessage());
+        Boolean isNewCorpEEEnable = Case_Settings__c.getInstance(UserInfo.getUserId() ).Enable_New_Corp_EE_Logic__c;
+        if(!isNewCorpEEEnable){
+            for(Case cse : caseList){
+                cse.NSP_CorporateEmployeeEE__c = false;
+            }
+            try{
+                List<Database.SaveResult> results = Database.update(caseList,false); 
+                NSP_ErrorLogHandler.logSaveResultsException(NSP_CASE_TRIGGERHELPER, 'updateCorporateEmployeecheckBox', results );
+            }catch (Exception ex) {
+                NSP_ErrorLogHandler.logSaveException(NSP_CASE_TRIGGERHELPER, 'updateCorporateEmployeecheckBox', ex.getMessage());
+            }
         }
     }
     /***********************************************************************************************

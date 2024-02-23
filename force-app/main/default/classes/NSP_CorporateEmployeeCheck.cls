@@ -27,44 +27,46 @@ public class NSP_CorporateEmployeeCheck {
 * Story: STY-03784
 * ********************************************************************************************/
     public static void stampCorporateEmployeeEECheckbox(Set<Id> acrAccIdSet, Set<Id> acrConIdSet, List<Case> newList, Boolean isAcr){
-        
-        accIdAccMap =new Map<Id,Account>([SELECT Id, Name FROM Account WHERE Id IN: acrAccIdSet]);
-        
-        conIdListOfACRMap = new Map<Id, List<AccountContactRelation>>();
-        conIdInspAccIdMap = new Map<Id, Id>();
-        conIdInspNotTerminatedAccIdMap = new Map<Id, Id>();
-        conIdNotTerminateACRdMap = new Map<Id, List<AccountContactRelation>>();
-        conIdTerminatedOrBlankACRMap = new Map<Id, List<AccountContactRelation>>();
-        conIdACRListMap = new Map<Id, List<AccountContactRelation>>();
-        List<Case> cseToUpdateList = new List<Case>();
-        
-        for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId, NSP_Employee_Status__c FROM AccountContactRelation WHERE ContactId IN: acrConIdSet]){
-            getconIdACRListMap(acr); // Framing the map of Con and ACRs
-            insperityAccountId = test.isRunningTest() ? acr.AccountId : System.Label.NSP_Insperity_Account;
-            if(checkForInspAcc(accIdAccMap,conIdInspAccIdMap,null,acr,true)){
-                conIdInspAccIdMap.put(acr.ContactId, acr.AccountId);
-                if(acr.NSP_Employee_Status__c != NSP_ServiceConstants.TERMINATED_STATUS){
-                    conIdInspNotTerminatedAccIdMap.put(acr.ContactId, acr.AccountId);
+        Boolean isNewCorpEEEnable = Case_Settings__c.getInstance(UserInfo.getUserId() ).Enable_New_Corp_EE_Logic__c;
+        if(!isNewCorpEEEnable){
+            accIdAccMap =new Map<Id,Account>([SELECT Id, Name FROM Account WHERE Id IN: acrAccIdSet]);
+            
+            conIdListOfACRMap = new Map<Id, List<AccountContactRelation>>();
+            conIdInspAccIdMap = new Map<Id, Id>();
+            conIdInspNotTerminatedAccIdMap = new Map<Id, Id>();
+            conIdNotTerminateACRdMap = new Map<Id, List<AccountContactRelation>>();
+            conIdTerminatedOrBlankACRMap = new Map<Id, List<AccountContactRelation>>();
+            conIdACRListMap = new Map<Id, List<AccountContactRelation>>();
+            List<Case> cseToUpdateList = new List<Case>();
+            
+            for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId, NSP_Employee_Status__c FROM AccountContactRelation WHERE ContactId IN: acrConIdSet]){
+                getconIdACRListMap(acr); // Framing the map of Con and ACRs
+                insperityAccountId = test.isRunningTest() ? acr.AccountId : System.Label.NSP_Insperity_Account;
+                if(checkForInspAcc(accIdAccMap,conIdInspAccIdMap,null,acr,true)){
+                    conIdInspAccIdMap.put(acr.ContactId, acr.AccountId);
+                    if(acr.NSP_Employee_Status__c != NSP_ServiceConstants.TERMINATED_STATUS){
+                        conIdInspNotTerminatedAccIdMap.put(acr.ContactId, acr.AccountId);
+                    }
+                } 
+                
+                getconIdTerminatedACRMap(acr);  // framing the map of Contact and Terminated or Blank Employee Status ACRs
+                getconIdNotTerminateACRdMap(acr); // framing the map of Contact and Not Terminated or Not Blank Employee Status ACRs 
+                
+            }        
+            try{
+                for(Case cse : newList){
+                    cse.NSP_CorporateEmployeeEE__c = oneAcrWithInsperityAccount(cse);
+                    cseToUpdateList.add(cse);
                 }
-            } 
-            
-            getconIdTerminatedACRMap(acr);  // framing the map of Contact and Terminated or Blank Employee Status ACRs
-            getconIdNotTerminateACRdMap(acr); // framing the map of Contact and Not Terminated or Not Blank Employee Status ACRs 
-            
-        }        
-        try{
-            for(Case cse : newList){
-                cse.NSP_CorporateEmployeeEE__c = oneAcrWithInsperityAccount(cse);
-                cseToUpdateList.add(cse);
+                
+                if(!cseToUpdateList.isEmpty() && isAcr){
+                    List<Database.SaveResult> results = Database.update(cseToUpdateList,false); 
+                    NSP_ErrorLogHandler.logSaveResultsException('NSP_CorporateEmployeeCheck', 'stampCorporateEmployeeEECheckbox', results );
+                }
+                
+            }catch(Exception ex){
+                NSP_CustomException.LogException(ex);
             }
-            
-            if(!cseToUpdateList.isEmpty() && isAcr){
-                List<Database.SaveResult> results = Database.update(cseToUpdateList,false); 
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_CorporateEmployeeCheck', 'stampCorporateEmployeeEECheckbox', results );
-            }
-            
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
         } 
     }
     
