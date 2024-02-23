@@ -2,14 +2,14 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     // test w/ LoadFullAccessPermSetsQueueableTest (80%)
 
     // **************************************************************************************************
-	//  Author:         Matthew McNeese
-    //  MethodName:     LoadFullAccessPermSetsQueueable 
-	//  Description :   Queueable method for loading two specified PermissionSets with Object and Field
+    //  Author:         Matthew McNeese
+    //  MethodName:     LoadFullAccessPermSetsQueueable
+    //  Description:    Queueable method for loading two specified PermissionSets with Object and Field
     //                  Permissions for specified list of object API names. For each object name in the
     //                  specified list, method upserts ObjectPermissions and then FieldPermissions for
-    //                  that object into each Perm Set and then strings a new Queueable job to do the same
+    //                  that object into each Perm Set then strings a new Queueable job to do the same
     //                  for the next object name in the list. This Queueable chain can be aborted by
-    //                  unchecking 'EnableLoadPermSetChain' field on 'QueueableSettings' Custom Setting.
+    //                  unchecking 'EnableLoadPermSetChain' field on 'QueueableSettings' Custom Setting
     // ***************************************************************************************************
 
     private List<String> objectApiNames = new List<String>();
@@ -29,8 +29,8 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
 
         createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading ObjectPermissions');
-        loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for all objects in list
-        loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for all objects in list
+        loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for first object in list
+        loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for first object in list
 
         createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading FieldPermissions');
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
@@ -117,8 +117,8 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         
         if (!String.isBlank(permSetId)) {
             Set<String> skipFields = new Set<String>{'Id','IsDeleted','CreatedDate','LastModifiedDate','SystemModstamp','UserRecordAccessId',
-            	'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','CurrencyIsoCode',
-           		'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
+                'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','CurrencyIsoCode',
+                'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
 
             List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName, IsCalculated
                 FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName = :currObjName AND IsNameField=false AND QualifiedApiName NOT IN :skipFields];
