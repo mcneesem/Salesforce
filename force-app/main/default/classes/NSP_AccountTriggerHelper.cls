@@ -101,9 +101,15 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                 (SELECT ParentId FROM ObjectPermissions WHERE SobjectType = 'Account' 
                 AND PermissionsModifyAllRecords = true )];    
             }
+
+            Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
+                                                 'Named_Account_Group_Bypass_Restrictions',
+                                                 UserInfo.getUserId()
+                                                 );
+
             //Added as part of 128176
             // Modified on 02/2023-part of 194459- Bypass for MM roles
-            if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
+            if(!hasNamedAccountGroupBypass && userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
                 if(!getPermSet.isEmpty() || Test.isRunningTest()){
                 restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                 }
