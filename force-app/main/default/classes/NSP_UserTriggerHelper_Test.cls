@@ -125,7 +125,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
             Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
             accoutObject.Name = ACCOUNTTEST1;
             accoutObject.recordTypeId=partnerRecordTypeId;
-            accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+            accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
             accoutObject.OwnerId = tUser.Id;
             insert accoutObject;
             

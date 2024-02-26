@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DnB_Employee_Count_Here__c</fullName>
     <externalId>false</externalId>
-    <label>D&amp;B Employee Count Total</label>
+    <label>D&amp;B Employee Count Here</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
