@@ -213,7 +213,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00G7g000006gHtNEAU</stringValue>
+                <stringValue>00G7d000004zW3zEAE</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -225,7 +225,7 @@
         <inputParameters>
             <name>queueLabel</name>
             <value>
-                <stringValue>MessagingChatQueue</stringValue>
+                <stringValue>Messaging Chat Queue</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -863,13 +863,13 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>First_Name__c</field>
+            <field>FirstName__c</field>
             <value>
                 <elementReference>input_FirstName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Last_Name__c</field>
+            <field>LastName__c</field>
             <value>
                 <elementReference>input_LastName</elementReference>
             </value>
@@ -914,12 +914,6 @@
         <locationX>1634</locationX>
         <locationY>1514</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultedOrg</name>
-            <value>
-                <elementReference>$Organization.Id</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
