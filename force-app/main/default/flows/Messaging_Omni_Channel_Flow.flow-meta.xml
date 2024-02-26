@@ -7,6 +7,10 @@
         <locationY>1622</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
@@ -80,10 +84,14 @@
     <actionCalls>
         <name>Route_to_Benefits_Queue</name>
         <label>Route to Benefits Queue</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1622</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
@@ -157,10 +165,14 @@
     <actionCalls>
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
-        <locationX>578</locationX>
+        <locationX>1106</locationX>
         <locationY>1622</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
@@ -235,7 +247,7 @@
     <assignments>
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
@@ -251,7 +263,7 @@
     <assignments>
         <name>prepareMessagingSessionForContactPopulation</name>
         <label>prepareMessagingSessionForContactPopulation</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
@@ -274,7 +286,7 @@
     <assignments>
         <name>prepareMessagingSessionForNewContactPopulation</name>
         <label>prepareMessagingSessionForNewContactPopulation</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.Id</assignToReference>
@@ -297,7 +309,7 @@
     <decisions>
         <name>Check_subtopic_for_Case</name>
         <label>Check subtopic for Case</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue</targetReference>
@@ -305,7 +317,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>X401k_Case</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR ((11 OR 12) AND 13)</conditionLogic>
             <conditions>
                 <leftValueReference>input_SubTopic</leftValueReference>
                 <operator>EqualTo</operator>
@@ -376,6 +388,27 @@
                     <stringValue>Statements</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>input_SubTopic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Self</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_SubTopic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Client</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Topic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>401k</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Route_to_401k_Queue</targetReference>
             </connector>
@@ -383,7 +416,7 @@
         </rules>
         <rules>
             <name>Benefits</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR ((13 OR 14) AND 15)</conditionLogic>
             <conditions>
                 <leftValueReference>input_SubTopic</leftValueReference>
                 <operator>EqualTo</operator>
@@ -468,6 +501,27 @@
                     <stringValue>Open Enrollment</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>input_SubTopic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Self</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_SubTopic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Client</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Topic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Benefits</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Route_to_Benefits_Queue</targetReference>
             </connector>
@@ -477,7 +531,7 @@
     <decisions>
         <name>isContactAvailable</name>
         <label>isContactAvailable</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>createContact</targetReference>
@@ -524,7 +578,7 @@
     <recordCreates>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>974</locationY>
         <connector>
             <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
@@ -536,19 +590,25 @@
         <inputAssignments>
             <field>Chat_Sub_Topic__c</field>
             <value>
-                <stringValue>x401k_Address_Change</stringValue>
+                <elementReference>input_SubTopic</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Chat_Topic__c</field>
             <value>
-                <stringValue>401K</stringValue>
+                <elementReference>input_Topic</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>createContact</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>input_Description</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -575,7 +635,7 @@
     <recordCreates>
         <name>createContact</name>
         <label>createContact</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>674</locationY>
         <connector>
             <targetReference>prepareMessagingSessionForNewContactPopulation</targetReference>
@@ -603,6 +663,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NSP_Per_ID__c</field>
+            <value>
+                <elementReference>input_perId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_Contact_Record_Type.Id</elementReference>
@@ -614,7 +680,7 @@
     <recordLookups>
         <name>Get_Case_RecordType</name>
         <label>Get Case RecordType</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -639,7 +705,7 @@
     <recordLookups>
         <name>Get_Contact_Record_Type</name>
         <label>Get Contact Record Type</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -664,7 +730,7 @@
     <recordLookups>
         <name>getContactRecords</name>
         <label>getContactRecords</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -676,10 +742,10 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>FirstName</field>
+            <field>NSP_Per_ID__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>input_FirstName</elementReference>
+                <elementReference>input_perId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -689,7 +755,7 @@
     <recordLookups>
         <name>getMessagingSessionRecord</name>
         <label>getMessagingSessionRecord</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -714,7 +780,7 @@
     <recordUpdates>
         <name>populateContactOnMessagingSession</name>
         <label>populateContactOnMessagingSession</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1190</locationY>
         <connector>
             <targetReference>updateMessagingEndUser</targetReference>
@@ -728,7 +794,7 @@
     <recordUpdates>
         <name>updateMessagingEndUser</name>
         <label>updateMessagingEndUser</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1298</locationY>
         <connector>
             <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
@@ -762,7 +828,7 @@
     <recordUpdates>
         <name>UpdateMessagingSessionWithPreChatInfo</name>
         <label>UpdateMessagingSessionWithPreChatInfo</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1406</locationY>
         <connector>
             <targetReference>Check_subtopic_for_Case</targetReference>
@@ -785,19 +851,25 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <elementReference>input_Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Email__c</field>
             <value>
                 <elementReference>input_Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FirstName__c</field>
+            <field>First_Name__c</field>
             <value>
                 <elementReference>input_FirstName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>LastName__c</field>
+            <field>Last_Name__c</field>
             <value>
                 <elementReference>input_LastName</elementReference>
             </value>
@@ -808,10 +880,28 @@
                 <elementReference>input_perId</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Sub_Topic__c</field>
+            <value>
+                <elementReference>input_SubTopic</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <elementReference>input_Subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Topic__c</field>
+            <value>
+                <elementReference>input_Topic</elementReference>
+            </value>
+        </inputAssignments>
         <object>MessagingSession</object>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getMessagingSessionRecord</targetReference>
@@ -821,9 +911,15 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
-        <locationX>974</locationX>
+        <locationX>1634</locationX>
         <locationY>1514</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultedOrg</name>
+            <value>
+                <elementReference>$Organization.Id</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
@@ -839,6 +935,13 @@
     </subflows>
     <variables>
         <name>input_clientId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>input_Description</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

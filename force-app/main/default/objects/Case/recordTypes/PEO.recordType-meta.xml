@@ -17,6 +17,116 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Chat_Sub_Topic__c</picklist>
+        <values>
+            <fullName>401k Address Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>401k Enrollment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>401k Plan Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Address Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Communication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Enrollment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits Plan Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COBRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Distribution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flexible Spending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health Savings Accounts %28HSA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leave of absence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mid Year Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Hire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Enrollment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rollover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Statements</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Chat_Topic__c</picklist>
+        <values>
+            <fullName>401K</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_AppealedBy__c</picklist>
         <values>
             <fullName>Claimant</fullName>
@@ -3767,7 +3877,7 @@
         <picklist>Origin</picklist>
         <values>
             <fullName>Chat</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Client Meeting %E2%80%93 In Person</fullName>
@@ -3803,7 +3913,7 @@
         </values>
         <values>
             <fullName>Phone</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
