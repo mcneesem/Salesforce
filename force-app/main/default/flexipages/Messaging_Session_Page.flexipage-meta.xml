@@ -211,12 +211,6 @@
                 <identifier>console_relatedRecord2</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>nsp_casecategorycmp</componentName>
-                <identifier>c_nsp_casecategorycmp</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>
