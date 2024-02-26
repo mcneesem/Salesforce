@@ -8,6 +8,13 @@
                     <valueList>
                         <valueListItems>
                             <value>pse__Project_Task__c.New_Termination_Form</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Termination request form</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Project_Task__c.Add_Update_Address</value>
