@@ -962,6 +962,7 @@ Date        : 30/09/2021
             /*Added as part of STY-02181*/
             if(caseOldMap.get(eachCase.Id).Status != eachCase.Status
                && eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS 
+               && String.isNotBlank( eachCase.Subject )
                && eachCase.Subject.contains(NSP_ServiceConstants.HCM_CASE_SUBJECT)){
                    hcmCaseList.add(eachCase);
                }

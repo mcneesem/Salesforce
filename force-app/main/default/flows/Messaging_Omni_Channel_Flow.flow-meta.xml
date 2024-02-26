@@ -4,7 +4,7 @@
         <name>Route_to_401k_Queue</name>
         <label>Route to 401k Queue</label>
         <locationX>50</locationX>
-        <locationY>1622</locationY>
+        <locationY>1922</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -85,7 +85,7 @@
         <name>Route_to_Benefits_Queue</name>
         <label>Route to Benefits Queue</label>
         <locationX>578</locationX>
-        <locationY>1622</locationY>
+        <locationY>1922</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -166,7 +166,7 @@
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
         <locationX>1106</locationX>
-        <locationY>1622</locationY>
+        <locationY>1922</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -261,6 +261,24 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
+~ REQUIRED_FIELD_MISSING: Required fields are missing: [Name].</description>
+        <name>Populate_Input_First_Name</name>
+        <label>Populate Input First Name</label>
+        <locationX>666</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>input_FirstName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Blank First Name</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateMessagingEndUser</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>prepareMessagingSessionForContactPopulation</name>
         <label>prepareMessagingSessionForContactPopulation</label>
         <locationX>446</locationX>
@@ -307,10 +325,42 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Input_First_Name</name>
+        <label>Check Input First Name</label>
+        <locationX>578</locationX>
+        <locationY>1298</locationY>
+        <defaultConnector>
+            <targetReference>Populate_Input_First_Name</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_NOT_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_FirstName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_FirstName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>updateMessagingEndUser</targetReference>
+            </connector>
+            <label>Is NOT Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_subtopic_for_Case</name>
         <label>Check subtopic for Case</label>
         <locationX>578</locationX>
-        <locationY>1514</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue</targetReference>
         </defaultConnector>
@@ -783,7 +833,7 @@
         <locationX>578</locationX>
         <locationY>1190</locationY>
         <connector>
-            <targetReference>updateMessagingEndUser</targetReference>
+            <targetReference>Check_Input_First_Name</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -795,7 +845,7 @@
         <name>updateMessagingEndUser</name>
         <label>updateMessagingEndUser</label>
         <locationX>578</locationX>
-        <locationY>1298</locationY>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
         </connector>
@@ -829,7 +879,7 @@
         <name>UpdateMessagingSessionWithPreChatInfo</name>
         <label>UpdateMessagingSessionWithPreChatInfo</label>
         <locationX>578</locationX>
-        <locationY>1406</locationY>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Check_subtopic_for_Case</targetReference>
         </connector>
@@ -912,7 +962,7 @@
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>1634</locationX>
-        <locationY>1514</locationY>
+        <locationY>1814</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
