@@ -188,11 +188,125 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Convert</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Lead.NSP_Update_NAICS_SIC</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Lead.DNB_Connect_Data_Refresh</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Clone</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentNote</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.TextPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>EmailHighlightAction</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.PollPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.QuestionPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Core_Sales_Event</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Mid_Market_Event</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Core_Sales_Task</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Mid_Market_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Client_Sales_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Correspondence_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Eloqua_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_BPS_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.LogACall</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsInNative</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -726,10 +840,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField</identifier>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1326,10 +1440,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField2</identifier>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2182,14 +2296,24 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField3</identifier>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9944fda8-6b45-4446-9eb4-904131eaa12e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DNBConnect__D_B_Connect_Company_Profile__c</fieldItem>
+                <identifier>RecordDNBConnect_D_B_Connect_Company_Profile_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -2570,16 +2694,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Lead_Owner_Role__c</fieldItem>
                 <identifier>RecordNSP_Lead_Owner_Role_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DnBCompanyRecord__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DnBCompanyRecord_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

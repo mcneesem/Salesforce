@@ -149,16 +149,16 @@ public class NSP_EventTriggerHelper {
             }
             }
             if(!leadIdSet.isEmpty()){
-                leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
+                leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
                 if(!leadResult.isEmpty()) {
                     for(Lead leadObj :leadResult){
-                        if(leadObj.LastActivityDate != null && leadObj.DNBoptimizer__DNB_D_U_N_S_Number__c !=null) {
-                            lastActivityDateMap.put(leadObj.DNBoptimizer__DNB_D_U_N_S_Number__c,leadObj.LastActivityDate);
+                        if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
+                            lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
                         }
                     }
                     if(!lastActivityDateMap.isEmpty()) {
-                        leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c IN: lastActivityDateMap.keySet()];
-                        Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
+                        leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
+                        Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
                         if(!leadWithDuns.isEmpty()){
                             for(Lead leadObject : leadWithDuns){
                                  leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;

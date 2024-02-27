@@ -82,6 +82,9 @@
                             <value>Account.NSP_Update_NAICS_SIC</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.DNB_Connect_Data_Refresh</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.Referral_Log</value>
                         </valueListItems>
                         <valueListItems>

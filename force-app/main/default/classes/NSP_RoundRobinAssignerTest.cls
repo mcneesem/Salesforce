@@ -81,7 +81,7 @@ public class NSP_RoundRobinAssignerTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         
@@ -110,7 +110,7 @@ public class NSP_RoundRobinAssignerTest {
         leadObject5.Company = 'Allstate123';
         leadObject5.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject5.Email = 'test333@test.com';
-        leadObject5.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject5.DNB_connect_DUNS_Number__c  = '';
         leadObject5.NSP_Lead_Routing__c = true;
 		newLeadList.add(leadObject5);
         
@@ -122,7 +122,7 @@ public class NSP_RoundRobinAssignerTest {
         leadObject6.Company = 'Allstate123';
         leadObject6.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject6.Email = 'test333@test.com';
-        leadObject6.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject6.DNB_connect_DUNS_Number__c  = '';
         leadObject6.NSP_Lead_Routing__c = true;
 		newLeadList.add(leadObject6);
         //insert lead records
@@ -137,7 +137,7 @@ public class NSP_RoundRobinAssignerTest {
 public static void dunsCheckBeforeUpdateTest2(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_Lead_Routing__c,NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                        WHERE firstName = 'TestLead113'];
-    getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+    getLead.DNB_connect_DUNS_Number__c = '';
     getLead.PostalCode = '10001';
      getLead.NumberOfEmployees = 100;
     Test.startTest();
@@ -155,7 +155,7 @@ public static void dunsCheckBeforeUpdateTest2(){
 public static void dunsCheckBeforeUpdateTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_Lead_Routing__c,NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                        WHERE firstName = 'RounRobinTest'];
-    getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+    getLead.DNB_connect_DUNS_Number__c = '';
     getLead.PostalCode = '10002';
      getLead.NumberOfEmployees = 100;
     Test.startTest();
