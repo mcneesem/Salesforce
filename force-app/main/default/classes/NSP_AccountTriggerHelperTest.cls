@@ -323,7 +323,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account1 : accountList) {
             account1.NSP_Ready_for_Integration_Sync__c = FALSE;
             account1.NSP_Account_Status__c = ACTIVE;
-            account1.NSP_Template_Selection__c = 'Affiliate-25';
+            account1.NSP_Template_Selection__c = 'Referral Program Associations';
             account1.BillingState = TEXAS;
             accountMapOld.put(account1.Id, account1);
         }
@@ -366,7 +366,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account1 : accountList) {
             account1.NSP_Ready_for_Integration_Sync__c = FALSE;
             account1.NSP_Account_Status__c = ACTIVE;
-            account1.NSP_Template_Selection__c = 'Affiliate-25';
+            account1.NSP_Template_Selection__c = 'Referral Program Associations';
             account1.BillingState = TEXAS;
             account1.NSP_Partner_Lifecycle__c = 'Onboarding';
             account1.NSP_Signed_MOD_Document__c = true;
