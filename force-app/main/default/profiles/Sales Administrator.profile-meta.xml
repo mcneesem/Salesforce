@@ -1042,6 +1042,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Allow_Delete_Accounts</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Allow_Delete_Leads</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Division__c</field>

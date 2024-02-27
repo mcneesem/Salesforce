@@ -3,6 +3,8 @@
     <description>Full System Administrator PSG</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Administrator</label>
+    <permissionSets>Allow_Delete_Accounts</permissionSets>
+    <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
     <permissionSets>DNBConnect__DNB_Connect_Components_access</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
