@@ -122,8 +122,7 @@
     <formulas>
         <name>Termination_Form_Name</name>
         <dataType>String</dataType>
-        <expression>IF({!Select_Record_Type_radio}={!NSP_Client_Reinstatement}, 
-&quot;Reinstate Client&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c}, &quot;Term Request&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c})</expression>
+        <expression>IF(({!Select_Record_Type_radio}={!NSP_Client_Reinstatement})||({!Select_Record_Type_radio_2}={!NSP_Client_Reinstatement}), &quot;Reinstate Client&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c}, &quot;Term Request&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c})</expression>
     </formulas>
     <interviewLabel>New Termination Form {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Termination Form</label>
@@ -187,12 +186,26 @@
         <connector>
             <targetReference>Getrecordtype_null_check</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Select_Record_Type_radio</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Select_Record_Type_radio_1</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Select_Record_Type_radio_2</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -230,12 +243,56 @@
                 <fields>
                     <name>Select_Record_Type_radio</name>
                     <choiceReferences>NSP_Payroll_Specialist_Form</choiceReferences>
-                    <choiceReferences>NSP_Credit_Specialist_Form</choiceReferences>
                     <choiceReferences>NSP_Client_Reinstatement</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>&lt;span style= &quot;font-size: 18px;&quot;&gt;Select Record Type&lt;span class=&quot;ql=cursor&quot;&gt;&lt;/span&gt;&lt;/span&gt;</fieldText>
                     <fieldType>RadioButtons</fieldType>
                     <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6</conditionLogic>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Payroll Trainer</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Payroll Implementation</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Payroll Specialist</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Payroll Supervisor/Manager</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Profile</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>PEO Service</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -259,9 +316,160 @@
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
+        <fields>
+            <name>Select_Record_Type_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Select_Record_Type_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Select_Record_Type_Section2_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Select_Record_Type_radio_1</name>
+                    <choiceReferences>NSP_Credit_Specialist_Form</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>&lt;span style= &quot;font-size: 18px;&quot;&gt;Select Record Type&lt;span class=&quot;ql=cursor&quot;&gt;&lt;/span&gt;&lt;/span&gt;</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>1 AND 2 AND 3</conditionLogic>
+                        <conditions>
+                            <leftValueReference>User_Profile</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Finance Service</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Finance Service User</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Select_Record_Type_Section2_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>Select_Record_Type_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Select_Record_Type_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Select_Record_Type_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Select_Record_Type_radio_2</name>
+                    <choiceReferences>NSP_Payroll_Specialist_Form</choiceReferences>
+                    <choiceReferences>NSP_Credit_Specialist_Form</choiceReferences>
+                    <choiceReferences>NSP_Client_Reinstatement</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>&lt;span style= &quot;font-size: 18px;&quot;&gt;Select Record Type&lt;span class=&quot;ql=cursor&quot;&gt;&lt;/span&gt;&lt;/span&gt;</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
+                        <conditions>
+                            <leftValueReference>User_Profile</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>System Administrator</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Profile</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>System Admin Lite</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Termination Team</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>User_Profile</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>PEO Service</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Select_Record_Type_Section3_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>914</locationX>
@@ -297,6 +505,26 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>pse__Project_Task__c</objectType>
+    </variables>
+    <variables>
+        <name>User_Profile</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Profile.Name</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>User_Role</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$UserRole.Name</elementReference>
+        </value>
     </variables>
     <variables>
         <name>varTermination</name>
