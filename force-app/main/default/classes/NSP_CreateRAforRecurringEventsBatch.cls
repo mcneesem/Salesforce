@@ -43,17 +43,17 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
         if (resAbsence.size() > 0){
             for (ResourceAbsence eachRA : resAbsence){
                 eventIdToRAidMap.put(eachRA.Event_Id__c,eachRA.Id);
-            }   
+            }
         }
         if(scope != NULL){
-        	for(Event eventRec : scope){
-            	//checking if events in scope already has a RA created
-            	if (!eventIdToRAidMap.containsKey( eventRec.Id ) || ( eventIdToRAidMap.get( eventRec.Id ) == null)){
-                	ownerIdSet.add(eventRec.OwnerId); 
-                	eventIdSet.add(eventRec.Id);
-                	eventScope.add(eventRec);
-            	}
-        	}
+            for(Event eventRec : scope){
+                //checking if events in scope already has a RA created
+                if (!eventIdToRAidMap.containsKey( eventRec.Id ) || ( eventIdToRAidMap.get( eventRec.Id ) == null)){
+                    ownerIdSet.add(eventRec.OwnerId); 
+                    eventIdSet.add(eventRec.Id);
+                    eventScope.add(eventRec);
+                }
+            }
         }
         
         if(ownerIdSet.Size() > 0){
@@ -66,22 +66,22 @@ global without sharing class NSP_CreateRAforRecurringEventsBatch implements Sche
             if (eventScope.size() > 0){
                 for (Event eventRec : eventScope){
                     if ( mapOfServiceResourceMem != null && mapOfServiceResourceMem.containsKey(eventRec.OwnerId) ) {
-                    	ResourceAbsence resObject = new ResourceAbsence();
-                    	resObject.ResourceId = mapOfServiceResourceMem.get(eventRec.OwnerId);
-                    	resObject.Type = eventRec.Subject;
-                    	if (String.isNotBlank( eventRec.Subject ) && ((eventRec.Subject).toLowerCase()).contains(TRAVEL.toLowerCase())){
-                        	resObject.FSL__GanttLabel__c = TRAVEL;
+                        ResourceAbsence resObject = new ResourceAbsence();
+                        resObject.ResourceId = mapOfServiceResourceMem.get(eventRec.OwnerId);
+                        resObject.Type = eventRec.Subject;
+                        if (String.isNotBlank( eventRec.Subject ) && ((eventRec.Subject).toLowerCase()).contains(TRAVEL.toLowerCase())){
+                            resObject.FSL__GanttLabel__c = TRAVEL;
                         } else{
                             resObject.FSL__GanttLabel__c = eventRec.ShowAs;
                         }
-                    	resObject.Start = eventRec.StartDateTime;
-                    	resObject.End = eventRec.EndDateTime;
-                    	resObject.Event_Id__c = String.valueOf(eventRec.Id);
-                    	if ( NArecordType != null ) {
-                        	resObject.RecordTypeId = NArecordType;
-                    	}
-                    	resList.add(resObject); 
-                	}
+                        resObject.Start = eventRec.StartDateTime;
+                        resObject.End = eventRec.EndDateTime;
+                        resObject.Event_Id__c = String.valueOf(eventRec.Id);
+                        if ( NArecordType != null ) {
+                            resObject.RecordTypeId = NArecordType;
+                        }
+                        resList.add(resObject); 
+                    }
                 }
             }
         }
