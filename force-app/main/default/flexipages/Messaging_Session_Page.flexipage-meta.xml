@@ -239,6 +239,12 @@
                 <identifier>console_relatedRecord2</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>messagingSessionCaseCategory</componentName>
+                <identifier>c_messagingSessionCaseCategory</identifier>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>
