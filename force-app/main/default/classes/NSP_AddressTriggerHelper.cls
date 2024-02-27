@@ -13,16 +13,14 @@ Modification Log     :
 public class NSP_AddressTriggerHelper {
     // test w/ NSP_AddressTriggerHelper_Test (85%)
 
-    public static void updateSCCAddressWithStreet(List<NSP_Address__c> newAddress, Map<Id, NSP_Address__c> oldMap) {
+    public static void updateSCCAddressWithStreet( List<NSP_Address__c> newAddress , Map<Id,NSP_Address__c> oldMap ) {
         List<NSP_Address__c> queueNewAddress = new List<NSP_Address__c>();
-        Map<Id, NSP_Address__c> queueOldMap = new Map<Id, NSP_Address__c>();
+        Map<Id,NSP_Address__c> queueOldMap = new Map<Id,NSP_Address__c>();
         Set<Id> processedAddresses = new Set<Id>(); 
-        Map<Id, String> addressByStreet = new Map<Id, String>();
-        List<NSP_Sub_Client_Contact_Address__c> sccAddressToUpdate = new List<NSP_Sub_Client_Contact_Address__c>();
+        Map<Id,String> addressByStreet = new Map<Id,String>();
         List<Profile> profile = [SELECT Id FROM Profile WHERE Id =:Userinfo.getProfileId() AND Name  =: NSP_ServiceConstants.INTEGRATION_USER];
         Set<Id> addressUpdateForState = new Set<Id>();
-        
-        for (NSP_Address__c address : newAddress) {      
+        for ( NSP_Address__c address : newAddress ) {
             NSP_Address__c oldUsAddress = ( ( oldMap != null ) ? oldMap.get(address.Id) : null );  
             if(oldUsAddress != null && address.NSP_Related_Site__c !=null && address.NSP_Related_Site__c != oldUsAddress.NSP_Related_Site__c 
                && address.NSP_Address_Type__c == NSP_ServiceConstants.US_MAIL && !processedAddresses.contains(address.Id))
@@ -38,11 +36,10 @@ public class NSP_AddressTriggerHelper {
                 addressUpdateForState.add(address.Id);
             }
         }
-        
         if (!addressByStreet.isEmpty()) {
             updateChildAddressesAsync(JSON.serialize(addressByStreet));
         }
-        
+        List<NSP_Sub_Client_Contact_Address__c> sccAddressToUpdate = new List<NSP_Sub_Client_Contact_Address__c>();
         if(!addressUpdateForState.isEmpty()) {
             for (NSP_Sub_Client_Contact_Address__c address : [SELECT Id, Name, NSP_Address__c FROM NSP_Sub_Client_Contact_Address__c WHERE NSP_Address__c =:addressUpdateForState]) {
                 address.NSP_Address_State_Changed_Date__c = System.today();
@@ -52,29 +49,33 @@ public class NSP_AddressTriggerHelper {
                 update sccAddressToUpdate;
             }
         }
-        if (!queueNewAddress.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if ( !queueNewAddress.isEmpty() && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
-                    queueNewAddress,
-                    queueOldMap,
+                    queueNewAddress ,
+                    queueOldMap ,
                     NSP_ServiceConstants.UPDATE_TRIGGER
                 )
             );
         }
     }
-    
-    public void afterInsertDirector(List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap){    
-        if(newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+
+    public void afterInsertDirector( List<NSP_Address__c> newList , Map<Id,NSP_Address__c> newMap ) {
+        if ( ( newList != null )
+            && !newList.isEmpty()
+            && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+            )
+        {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
-                    newList,
-                    null,
+                    newList ,
+                    null ,
                     NSP_ServiceConstants.INSERT_TRIGGER
                 )
             );
         }
     }
-    
+
     @future
     public static void updateChildAddressesAsync(String addresses) {
         
