@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Handbook Status</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
