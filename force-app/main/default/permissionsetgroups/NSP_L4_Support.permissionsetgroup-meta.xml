@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>L4 Support</label>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Corp_Employee_Field_Edit</permissionSets>
     <permissionSets>Enable_SSO_Permission_Set</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>

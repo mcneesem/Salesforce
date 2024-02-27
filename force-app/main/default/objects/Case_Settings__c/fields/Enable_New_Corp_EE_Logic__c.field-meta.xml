@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_New_Corp_EE_Logic__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This is used to enable the new Corp EE logic 
+Class: NSP_CorporateEmployeeCheck
+Flow:Update_Corp_Employee_on_Case</description>
+    <externalId>false</externalId>
+    <label>Enable New Corp EE Logic</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
