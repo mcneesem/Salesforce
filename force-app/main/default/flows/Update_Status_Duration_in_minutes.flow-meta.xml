@@ -19,7 +19,7 @@
     <formulas>
         <name>StatusDurationinMinutes</name>
         <dataType>Number</dataType>
-        <expression>({!$Record.StatusEndDate} - {!$Record.StatusStartDate})/60</expression>
+        <expression>({!$Record.StatusEndDate} - {!$Record.StatusStartDate})*24*60</expression>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Update Status Duration in minutes {!$Flow.CurrentDateTime}</interviewLabel>

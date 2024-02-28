@@ -652,7 +652,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>createContact</elementReference>
+                <elementReference>messagingSessionRecord.EndUserContactId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
