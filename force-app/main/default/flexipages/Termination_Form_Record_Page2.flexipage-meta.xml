@@ -921,7 +921,7 @@
                 <fieldItem>Record.NSP_Benefit_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Benefit_Termination_Date__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+                    <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR 6) OR (7 AND 8 AND 9 AND 10)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -956,6 +956,21 @@
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Insperity Requested Termination Codes</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>1600 Void</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>1900 Merger with Insperity Client</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>2700 Change in FEIN</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
