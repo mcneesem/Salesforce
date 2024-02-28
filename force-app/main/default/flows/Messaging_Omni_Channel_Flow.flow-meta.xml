@@ -248,7 +248,7 @@
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
         <locationX>578</locationX>
-        <locationY>1082</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -266,7 +266,7 @@
         <name>Populate_Input_First_Name</name>
         <label>Populate Input First Name</label>
         <locationX>666</locationX>
-        <locationY>1406</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>input_FirstName</assignToReference>
             <operator>Assign</operator>
@@ -275,14 +275,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateMessagingEndUser</targetReference>
+            <targetReference>isContactAvailable</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>prepareMessagingSessionForContactPopulation</name>
         <label>prepareMessagingSessionForContactPopulation</label>
         <locationX>446</locationX>
-        <locationY>674</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
             <operator>Assign</operator>
@@ -305,7 +305,7 @@
         <name>prepareMessagingSessionForNewContactPopulation</name>
         <label>prepareMessagingSessionForNewContactPopulation</label>
         <locationX>710</locationX>
-        <locationY>782</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -328,7 +328,7 @@
         <name>Check_Input_First_Name</name>
         <label>Check Input First Name</label>
         <locationX>578</locationX>
-        <locationY>1298</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Populate_Input_First_Name</targetReference>
         </defaultConnector>
@@ -351,7 +351,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>updateMessagingEndUser</targetReference>
+                <targetReference>isContactAvailable</targetReference>
             </connector>
             <label>Is NOT Blank</label>
         </rules>
@@ -582,7 +582,7 @@
         <name>isContactAvailable</name>
         <label>isContactAvailable</label>
         <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationY>866</locationY>
         <defaultConnector>
             <targetReference>createContact</targetReference>
         </defaultConnector>
@@ -629,7 +629,7 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>578</locationX>
-        <locationY>974</locationY>
+        <locationY>1274</locationY>
         <connector>
             <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
         </connector>
@@ -692,7 +692,7 @@
         <name>createContact</name>
         <label>createContact</label>
         <locationX>710</locationX>
-        <locationY>674</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>prepareMessagingSessionForNewContactPopulation</targetReference>
         </connector>
@@ -765,7 +765,7 @@
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>isContactAvailable</targetReference>
+            <targetReference>Check_Input_First_Name</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -837,9 +837,9 @@
         <name>populateContactOnMessagingSession</name>
         <label>populateContactOnMessagingSession</label>
         <locationX>578</locationX>
-        <locationY>1190</locationY>
+        <locationY>1490</locationY>
         <connector>
-            <targetReference>Check_Input_First_Name</targetReference>
+            <targetReference>updateMessagingEndUser</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
