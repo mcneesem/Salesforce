@@ -103,7 +103,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>StatusStartDate__c</field>
+            <field>StatusStartDate</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
@@ -143,7 +143,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>StatusStartDate__c</field>
+            <field>StatusStartDate</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>CurrentDate</elementReference>
@@ -165,7 +165,7 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>UserServicePresence</object>
-        <sortField>StatusStartDate__c</sortField>
+        <sortField>StatusStartDate</sortField>
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
