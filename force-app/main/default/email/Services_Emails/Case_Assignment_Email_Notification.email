@@ -1,0 +1,24 @@
+<messaging:emailTemplate subject="Case # {!RelatedTo.CaseNumber} has been assigned to you." recipientType="User" relatedToType="Case">
+<messaging:htmlEmailBody >
+<html>
+   <body>
+
+<p>*** NEW CASE ASSIGNMENT NOTIFICATION ***</p>
+
+<p>Company Name : {!relatedTo.Account.Name}</p>
+
+<p>AIMS # : {!relatedTo.Account.NSP_AIMS_Client__c}</p>
+
+<apex:outputpanel rendered="{!IF(relatedTo.Asset.RecordTypeName__c=='NSP_Asset_Product',true,false)}">
+<p>iSolved # : {!relatedTo.Asset.NSP_iSolved_ID__c}</p>
+</apex:outputpanel>
+
+<p>Subject : {!relatedTo.Subject}</p>
+
+<p>Priority : {!relatedTo.Priority}</p>
+
+<p>Click on the link to access the case: &nbsp;<apex:outputLink value="{!left($Api.partner_server_url_260,find('/services',$Api.Partner_Server_URL_260))}{!relatedTo.Id}" target="_blank">{!relatedTo.CaseNumber}</apex:outputLink></p>
+    </body>
+</html>            
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
