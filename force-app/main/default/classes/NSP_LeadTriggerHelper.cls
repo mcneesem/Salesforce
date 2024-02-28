@@ -333,10 +333,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             for (Id leadId: leadNewMap.keySet()) {
                 if (trigger.isupdate && trigger.isbefore) {
                     Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
-                                                 'Named_Account_Group_Bypass_Restrictions',
-                                                 UserInfo.getUserId()
-                                                 );
-                                                 
+                        'Named_Account_Group_Bypass_Restrictions',
+                        UserInfo.getUserId()
+                    );
                     if (!hasNamedAccountGroupBypass && userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
                         if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
                             if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
@@ -349,7 +348,8 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                 }
             }
         }
-    }    
+    }
+
     /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
 * @param leadNewMap Map of New leads. 
