@@ -22,16 +22,6 @@
                 <label>Select</label>
             </value>
             <value>
-                <fullName>Choice</fullName>
-                <default>false</default>
-                <label>Choice</label>
-            </value>
-            <value>
-                <fullName>Basic</fullName>
-                <default>false</default>
-                <label>Basic</label>
-            </value>
-            <value>
                 <fullName>Saver</fullName>
                 <default>false</default>
                 <label>Saver</label>
@@ -42,9 +32,34 @@
                 <label>Pacific</label>
             </value>
             <value>
+                <fullName>Classic Choice</fullName>
+                <default>false</default>
+                <label>Classic Choice</label>
+            </value>
+            <value>
+                <fullName>Value Choice</fullName>
+                <default>false</default>
+                <label>Value Choice</label>
+            </value>
+            <value>
+                <fullName>Enhanced</fullName>
+                <default>false</default>
+                <label>Enhanced</label>
+            </value>
+            <value>
                 <fullName>NA</fullName>
                 <default>false</default>
                 <label>NA</label>
+            </value>
+            <value>
+                <fullName>Choice</fullName>
+                <default>false</default>
+                <label>Choice (Old)</label>
+            </value>
+            <value>
+                <fullName>Basic</fullName>
+                <default>false</default>
+                <label>Basic (Old)</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -39,6 +39,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Any_1099_international_or_other_users__c</picklist>
+        <values>
+            <fullName>1099</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Any_EEs_in_clients_waiting_period__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -86,6 +101,21 @@
         <picklist>Any_employees_currently_enrolled__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Any_employees_with_temporary_status__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
             <default>false</default>
         </values>
         <values>
@@ -155,6 +185,17 @@
     </picklistValues>
     <picklistValues>
         <picklist>Arbitration_Agreement_been_discussed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Are_all_EEs_eligible_for_paid_holidays__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -444,11 +485,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>VA</fullName>
+            <fullName>RI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RI</fullName>
+            <fullName>VA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -488,11 +529,11 @@
     <picklistValues>
         <picklist>Client_entity_owned_or_a_non_profit__c</picklist>
         <values>
-            <fullName>Yes - Non Profit</fullName>
+            <fullName>Yes - Entity Owned</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Yes - Entity Owned</fullName>
+            <fullName>Yes - Non Profit</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -759,6 +800,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Client_retaining_any_benefit_plans__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Client_runs_expenses_or_payroll__c</picklist>
         <values>
             <fullName>Allowances</fullName>
@@ -975,6 +1031,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Does_EDC_have_supervisors_and_work_email__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Does_client_employ_ministers_or_teachers__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -987,6 +1058,28 @@
     </picklistValues>
     <picklistValues>
         <picklist>Does_client_have_any_Minor_EEs__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Does_client_have_plan_EE_no_of_work_hrs__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Does_client_have_premium_pay_needs__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -1035,6 +1128,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Does_client_offer_floating_holidays__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Does_client_offer_paid_holidays__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Does_client_perform_background_checks__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -1057,6 +1172,21 @@
         </values>
         <values>
             <fullName>N%2FA - no job costing needed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Does_client_want_NSP_to_track_hours_and__c</picklist>
+        <values>
+            <fullName>PTO tracking only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and PTO tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time tracking only</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1610,6 +1740,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Has_sample_payroll_report_been_requsted__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requested - Not collected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Have_EEs_been_notified_of_the_transition__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -1688,6 +1833,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>How_will_EEs_punch_in_out__c</picklist>
+        <values>
+            <fullName>Biometric Clock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bluetooth Beach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobile App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timeclock</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>How_will_emp_deferral_loan_amnt__c</picklist>
         <values>
             <fullName>Bulk loader tool %28excel file required%29</fullName>
@@ -1710,7 +1874,11 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_Immediate_need_for_Workers_Comp_Cert__c</picklist>
+        <picklist>If_EE_works_holiday_are_paid_prem__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -1982,6 +2150,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Classic Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enhanced</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>NA</fullName>
             <default>false</default>
         </values>
@@ -1999,6 +2175,10 @@
         </values>
         <values>
             <fullName>Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value Choice</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2019,6 +2199,17 @@
     </picklistValues>
     <picklistValues>
         <picklist>Monthly_pay_freq_comply_w_state_laws__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Any_EEs_work_on_holidays__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -2106,6 +2297,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Arrearagein_compliance_witheachstate__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Back_up_Client_Contact_Method__c</picklist>
         <values>
             <fullName>Cell Phone</fullName>
@@ -2117,6 +2319,17 @@
         </values>
         <values>
             <fullName>Office Phone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Billing_Groups_Status__c</picklist>
+        <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2248,6 +2461,133 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Copy_Section_Selections__c</picklist>
+        <values>
+            <fullName>additionalPayCodes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>additionalPayOuts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>assignmentMeetings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>assignments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>attachments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>auditLog</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>automation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>businessPerformanceSolutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>checkDelivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>clientContacts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>clientInformation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>clientProject</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>clientProjectInfo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>deductions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>general</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>generalPayInfo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>humanResources</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>meetingDetails</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>miscellaneous</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>onBoarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>orientation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>payRollInfo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>preDiscovery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>retirementServices</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>serviceTeam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>systemInfo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>workersCompSafety</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_DCFSA_Ongoing_CSP_Cafeteria_document__c</picklist>
         <values>
             <fullName>NA</fullName>
@@ -2289,6 +2629,17 @@
         </values>
         <values>
             <fullName>Setup Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Departments_Status__c</picklist>
+        <values>
+            <fullName>Requested</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2479,6 +2830,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_EarnedSick_Time_StartDate_Washington__c</picklist>
+        <values>
+            <fullName>Accrual year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calendar Year</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Employee_Types__c</picklist>
         <values>
             <fullName>Full Time</fullName>
@@ -2644,6 +3006,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Has_hardware_been_ordered__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Has_the_addendum_been_collected__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2700,6 +3073,84 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_How_will_EEs_punch_in_out__c</picklist>
+        <values>
+            <fullName>Biometric Clock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bluetooth Beach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobile App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timeclock</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_How_will_the_payroll_be_funded__c</picklist>
+        <values>
+            <fullName>Direct Debit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wire</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_IRR_Status__c</picklist>
+        <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_If_EE_works_holiday_are_paid_prem__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Immediate_need_for_Workers_Comp_Cert__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Immediateworkerscomporsafety_concern__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Is_a_translator_needed__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2722,6 +3173,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Is_the_client_working_an_NSP_RS_rep__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Is_there_an_Enrollment_fee__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2729,6 +3191,17 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Job_Costing__c</picklist>
+        <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2744,6 +3217,97 @@
         </values>
         <values>
             <fullName>Office Phone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_List_all_Default_Pay_Codes_in_AIMS__c</picklist>
+        <values>
+            <fullName>Bereavement %2F Tracking Bereavement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commission %24 Reg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commission %24 Sup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fringe Sup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holiday</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hours Worked %E2%80%93 Tracking Not Print on Stub</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed Meal Occurrences</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed Rest Occurrences</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Discretionary%C2%A0Bonus ND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate 1 Reg %2F OT %2F DT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate 2 Reg %2F OT %2F DT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate 3 Reg %2F OT %2F DT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retro Pay %23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retro Pay %24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary %E2%80%93 Exempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary %E2%80%93 Non Exempt %2F OT %2F DT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary Exempt Day Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary Exempt%2FProrated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Employed Earnings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tracking Holiday</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Volunteer %2F Tracking Volunteer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weather Day %2F Tracking Weather Day</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2775,6 +3339,17 @@
         </values>
         <values>
             <fullName>Vacation %2F Tracking Vacation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Locations_Status__c</picklist>
+        <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3017,6 +3592,83 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Separate_pay_document_Illinois__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Separate_pay_document_Maryland__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Separate_pay_document_Minnesota__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Separate_pay_document_New_Hampshire__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Separate_pay_document_New_York__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Separate_pay_document_South_Carolina__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Separate_pay_document_Washington_DC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Service_Model__c</picklist>
         <values>
             <fullName>WO</fullName>
@@ -3112,6 +3764,17 @@
         </values>
         <values>
             <fullName>PST</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Tracking_Solution__c</picklist>
+        <values>
+            <fullName>AIMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3223,7 +3886,21 @@
             <default>false</default>
         </values>
     </picklistValues>
-   
+    <picklistValues>
+        <picklist>NSP_company_of_entity_not_wth_Insperity__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>NSP_non_Insperity_paid_emps_contractors__c</picklist>
         <values>
@@ -3408,7 +4085,7 @@
     <picklistValues>
         <picklist>Paid_Sick_Leave_Plan_Type__c</picklist>
         <values>
-            <fullName>=24Hrs/Yr</fullName>
+            <fullName>%3D24Hrs%2FYr</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3650,7 +4327,7 @@
     <picklistValues>
         <picklist>Recent_Payroll_Register_Collected__c</picklist>
         <values>
-            <fullName>N/A - Client has never run payroll</fullName>
+            <fullName>N%2FA - Client has never run payroll</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3774,11 +4451,11 @@
     <picklistValues>
         <picklist>Select_BPSes__c</picklist>
         <values>
-            <fullName>Employment Screening</fullName>
+            <fullName>Certify</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Certify</fullName>
+            <fullName>Employment Screening</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3832,7 +4509,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Job costing</fullName>
+            <fullName>Job Costing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3841,6 +4518,33 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Select_all_premium_pay_needs_that_apply__c</picklist>
+        <values>
+            <fullName>Alternative Work Week</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dollars</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overtime</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Secondary Rates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shift Premiums</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Units</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3866,6 +4570,10 @@
     <picklistValues>
         <picklist>Select_the_applicable_LOA_types__c</picklist>
         <values>
+            <fullName>FMLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Greater than 84 days</fullName>
             <default>false</default>
         </values>
@@ -3879,10 +4587,6 @@
         </values>
         <values>
             <fullName>Workers%27 Comp</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FMLA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3957,6 +4661,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Standard_of_hours_worked_for_all_EEs__c</picklist>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Terming_life_insurance_disability_plan__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -3994,6 +4713,17 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tracking_Solution__c</picklist>
+        <values>
+            <fullName>AIMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4127,6 +4857,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Will_all_EEs_use_ITA__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Will_the_BPA_s_Be_attending_the_SKO__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -4228,6 +4969,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>client_round_hours_or_other_spl_pay_rule__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rounding</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>client_terminated_old_benefit_coverage__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -4283,116 +5035,6 @@
         </values>
         <values>
             <fullName>Requested</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-        <picklistValues>
-        <picklist>NSP_EarnedSick_Time_StartDate_Washington__c</picklist>
-        <values>
-            <fullName>Accrual year</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Calendar Year</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-        <picklistValues>
-        <picklist>NSP_Immediateworkerscomporsafety_concern__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-        <picklistValues>
-        <picklist>NSP_Separate_pay_document_Illinois__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Separate_pay_document_Maryland__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Separate_pay_document_New_Hampshire__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Separate_pay_document_New_York__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Separate_pay_document_South_Carolina__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Separate_pay_document_Washington_DC__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-        <picklistValues>
-        <picklist>NSP_Separate_pay_document_Minnesota__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Is_the_client_working_an_NSP_RS_rep__c</picklist>
-        <values>
-            <fullName>No</fullName>
             <default>false</default>
         </values>
         <values>
