@@ -3,6 +3,8 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>DataGroomr User</label>
     <permissionSets>Account_Modify_All</permissionSets>
+    <permissionSets>Allow_Delete_Accounts</permissionSets>
+    <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>DataGroomer_Permission_Set</permissionSets>
     <permissionSets>Lead_Modify_All</permissionSets>
     <permissionSets>Named_Account_Group_Bypass_Restrictions</permissionSets>
