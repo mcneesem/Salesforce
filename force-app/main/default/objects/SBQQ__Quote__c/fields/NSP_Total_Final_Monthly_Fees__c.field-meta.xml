@@ -5,6 +5,11 @@
     <externalId>false</externalId>
     <label>Total Final Monthly Fees</label>
     <summarizedField>SBQQ__QuoteLine__c.NSP_Total_Final_Monthly_Fees__c</summarizedField>
+    <summaryFilterItems>
+        <field>SBQQ__QuoteLine__c.Amendment_Monthly_Fees__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
     <summaryForeignKey>SBQQ__QuoteLine__c.SBQQ__Quote__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
     <trackHistory>false</trackHistory>
