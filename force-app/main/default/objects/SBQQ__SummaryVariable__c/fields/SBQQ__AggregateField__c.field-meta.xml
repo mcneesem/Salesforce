@@ -147,6 +147,11 @@
                 <default>false</default>
                 <label>Amendment_Net_Total__c</label>
             </value>
+            <value>
+                <fullName>Timestar_Hardware_Net_Total__c</fullName>
+                <default>false</default>
+                <label>Timestar_Hardware_Net_Total__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

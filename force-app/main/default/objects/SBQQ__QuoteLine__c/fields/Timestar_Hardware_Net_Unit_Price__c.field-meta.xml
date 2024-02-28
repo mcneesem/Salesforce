@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Timestar_Hardware_Net_Unit_Price__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL(SBQQ__BillingFrequency__c, &apos;Annual&apos;), 
+IF(AND( ISPICKVAL(SBQQ__Product__r.Family , &apos;Support&apos;), ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c , &apos;Amendment&apos;), NSP_ActionType__c = &apos;Add Product&apos;),
+SBQQ__ListPrice__c-SBQQ__AdditionalDiscountAmount__c,
+IF(AND ( ISPICKVAL(SBQQ__Product__r.Family , &apos;Support&apos;), NOT(ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c , &apos;Amendment&apos;))),SBQQ__NetPrice__c,SBQQ__NetPrice__c)),
+SBQQ__NetPrice__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Timestar Hardware Net Unit Price</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>
