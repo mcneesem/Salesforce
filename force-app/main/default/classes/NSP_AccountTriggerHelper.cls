@@ -94,18 +94,21 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             //modified for user story 191911    
             List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
             if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){ 
-                                
                 getPermSet = [SELECT Id, PermissionSetId, PermissionSet.Name, AssigneeId
                 FROM PermissionSetAssignment WHERE Assignee.IsActive = true AND 
                 AssigneeId =: userDetails.Id AND PermissionSetId IN 
                 (SELECT ParentId FROM ObjectPermissions WHERE SobjectType = 'Account' 
                 AND PermissionsModifyAllRecords = true )];    
             }
+            Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
+                'Named_Account_Group_Bypass_Restrictions',
+                UserInfo.getUserId()
+            );
             //Added as part of 128176
             // Modified on 02/2023-part of 194459- Bypass for MM roles
-            if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
+            if(!hasNamedAccountGroupBypass && userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
                 if(!getPermSet.isEmpty() || Test.isRunningTest()){
-                restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                 }
             }
         }catch(Exception ex){
