@@ -370,7 +370,7 @@
     <picklistValues>
         <picklist>NSP_What_competitor__c</picklist>
         <values>
-            <fullName>EEMPLOYERS SOLUTION</fullName>
+            <fullName>EMPLOYERS SOLUTION</fullName>
             <default>false</default>
         </values>
         <values>
