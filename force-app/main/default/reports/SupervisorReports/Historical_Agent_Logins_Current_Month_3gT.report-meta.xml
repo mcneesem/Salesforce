@@ -27,13 +27,18 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>UserServicePresence$User.Offline_Time_Today__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
         <field>UserServicePresence$StatusStartDate</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Historical Agent Logins Current Month</name>
     <params>
         <name>co</name>
-        <value>1</value>
+        <value>0</value>
     </params>
     <reportType>User_Presence_for_Omni_channel__c</reportType>
     <scope>organization</scope>

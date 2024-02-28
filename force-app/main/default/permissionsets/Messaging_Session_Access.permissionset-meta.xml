@@ -141,6 +141,11 @@
         <field>UserServicePresence.Status_Duration__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Offline_Time_Today__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Messaging Session Access</label>
     <objectPermissions>

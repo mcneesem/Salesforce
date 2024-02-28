@@ -29,6 +29,11 @@
         <field>UserServicePresence$User</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>UserServicePresence$User.Offline_Time_Today__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>Today&apos;s View for Agent Time</name>
     <params>
         <name>co</name>
