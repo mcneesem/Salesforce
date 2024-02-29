@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>AgentWork$OriginalQueue</field>
+    </columns>
+    <columns>
+        <field>AgentWork.MessagingSession$Name</field>
+    </columns>
+    <columns>
+        <field>AgentWork.MessagingSession$Case</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AgentWork$HandleTime</field>
+    </columns>
+    <currency>USD</currency>
+    <description>STY-261956</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>AgentWork$LastModifiedBy</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <field>AgentWork$AcceptDateTime</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Queue Detail Weekly Summary Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Agent_Work_with_Messaging_Session__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>AgentWork$AcceptDateTime</dateColumn>
+        <interval>INTERVAL_THISWEEK</interval>
+    </timeFrameFilter>
+</Report>

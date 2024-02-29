@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Messaging Agents.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Messaging Agent</label>
+    <permissionSets>Messaging_Session_Access</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Access_All</permissionSets>
+    <permissionSets>force__MessagingForInAppAndWebUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
