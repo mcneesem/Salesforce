@@ -3877,7 +3877,7 @@
         <picklist>Origin</picklist>
         <values>
             <fullName>Chat</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Client Meeting %E2%80%93 In Person</fullName>
@@ -3913,7 +3913,7 @@
         </values>
         <values>
             <fullName>Phone</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Web</fullName>
