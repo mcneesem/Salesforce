@@ -4,7 +4,7 @@
         <name>Route_to_401k_Queue</name>
         <label>Route to 401k Queue</label>
         <locationX>50</locationX>
-        <locationY>1922</locationY>
+        <locationY>2222</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -85,7 +85,7 @@
         <name>Route_to_Benefits_Queue</name>
         <label>Route to Benefits Queue</label>
         <locationX>578</locationX>
-        <locationY>1922</locationY>
+        <locationY>2222</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -166,7 +166,7 @@
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
         <locationX>1106</locationX>
-        <locationY>1922</locationY>
+        <locationY>2222</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -248,7 +248,7 @@
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
         <locationX>578</locationX>
-        <locationY>1382</locationY>
+        <locationY>1682</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -261,7 +261,9 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
+        <description>Prevent unhanded Flow Error in createContact Flow Element.
+~ REQUIRED_FIELD_MISSING: Required fields are missing: [FirstName].
+Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
 ~ REQUIRED_FIELD_MISSING: Required fields are missing: [Name].</description>
         <name>Populate_Input_First_Name</name>
         <label>Populate Input First Name</label>
@@ -275,6 +277,24 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Check_Input_Last_Name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Prevent unhanded Flow Error in createContact Flow Element.
+~ REQUIRED_FIELD_MISSING: Required fields are missing: [LastName].</description>
+        <name>Populate_Input_Last_Name</name>
+        <label>Populate Input Last Name</label>
+        <locationX>666</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>input_LastName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Blank Last Name</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>isContactAvailable</targetReference>
         </connector>
     </assignments>
@@ -282,7 +302,7 @@
         <name>prepareMessagingSessionForContactPopulation</name>
         <label>prepareMessagingSessionForContactPopulation</label>
         <locationX>446</locationX>
-        <locationY>974</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
             <operator>Assign</operator>
@@ -305,7 +325,7 @@
         <name>prepareMessagingSessionForNewContactPopulation</name>
         <label>prepareMessagingSessionForNewContactPopulation</label>
         <locationX>710</locationX>
-        <locationY>1082</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -334,7 +354,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_NOT_Blank</name>
+            <name>First_Name_Is_NOT_Blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>input_FirstName</leftValueReference>
@@ -351,16 +371,48 @@
                 </rightValue>
             </conditions>
             <connector>
+                <targetReference>Check_Input_Last_Name</targetReference>
+            </connector>
+            <label>First Name Is NOT Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Input_Last_Name</name>
+        <label>Check Input Last Name</label>
+        <locationX>578</locationX>
+        <locationY>866</locationY>
+        <defaultConnector>
+            <targetReference>Populate_Input_Last_Name</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Last_Name_Is_NOT_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_LastName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_LastName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
                 <targetReference>isContactAvailable</targetReference>
             </connector>
-            <label>Is NOT Blank</label>
+            <label>Last Name Is NOT Blank</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_subtopic_for_Case</name>
         <label>Check subtopic for Case</label>
         <locationX>578</locationX>
-        <locationY>1814</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue</targetReference>
         </defaultConnector>
@@ -582,7 +634,7 @@
         <name>isContactAvailable</name>
         <label>isContactAvailable</label>
         <locationX>578</locationX>
-        <locationY>866</locationY>
+        <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>createContact</targetReference>
         </defaultConnector>
@@ -629,7 +681,7 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>578</locationX>
-        <locationY>1274</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
         </connector>
@@ -662,12 +714,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Chat</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_Case_RecordType.Id</elementReference>
@@ -692,7 +738,7 @@
         <name>createContact</name>
         <label>createContact</label>
         <locationX>710</locationX>
-        <locationY>974</locationY>
+        <locationY>1274</locationY>
         <connector>
             <targetReference>prepareMessagingSessionForNewContactPopulation</targetReference>
         </connector>
@@ -837,7 +883,7 @@
         <name>populateContactOnMessagingSession</name>
         <label>populateContactOnMessagingSession</label>
         <locationX>578</locationX>
-        <locationY>1490</locationY>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>updateMessagingEndUser</targetReference>
         </connector>
@@ -851,7 +897,7 @@
         <name>updateMessagingEndUser</name>
         <label>updateMessagingEndUser</label>
         <locationX>578</locationX>
-        <locationY>1598</locationY>
+        <locationY>1898</locationY>
         <connector>
             <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
         </connector>
@@ -885,7 +931,7 @@
         <name>UpdateMessagingSessionWithPreChatInfo</name>
         <label>UpdateMessagingSessionWithPreChatInfo</label>
         <locationX>578</locationX>
-        <locationY>1706</locationY>
+        <locationY>2006</locationY>
         <connector>
             <targetReference>Check_subtopic_for_Case</targetReference>
         </connector>
@@ -968,7 +1014,7 @@
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>1634</locationX>
-        <locationY>1814</locationY>
+        <locationY>2114</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
