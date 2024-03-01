@@ -143,6 +143,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>UserServicePresence.StatusStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.Offline_Time_Today__c</field>
         <readable>true</readable>
     </fieldPermissions>
