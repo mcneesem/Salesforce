@@ -1095,11 +1095,6 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
             </value>
         </inputAssignments>
     </subflows>
-    <textTemplates>
-        <name>Askusertofilloutinfo</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Seems like customer has not correctly restarted the chat from premier. We do not have any information, right now. You can either ask the customer to restart the conversation from premier or take the inputs directly.&lt;/p&gt;</text>
-    </textTemplates>
     <variables>
         <name>input_clientId</name>
         <dataType>String</dataType>
@@ -1141,14 +1136,6 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>input_record</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>LiveChatTranscript</objectType>
     </variables>
     <variables>
         <name>input_Subject</name>
