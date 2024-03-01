@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AllowStatusChangedToWorking__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Prevent unhandled Flow Errors within the Task_Created Flow within the Update_Lead_Record Flow Element.
+~ allow Lead.Status change to &apos;Working&apos; when a related Task.Status is &apos;Completed&apos;.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>See Apex Method: NSP_LeadTriggerHelper.restrictLeadOwnerChange()</inlineHelpText>
+    <label>AllowStatusChangedToWorking</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
