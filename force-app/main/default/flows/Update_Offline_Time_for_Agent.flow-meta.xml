@@ -103,7 +103,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>StatusStartDate</field>
+            <field>StatusStartDate__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
@@ -125,7 +125,7 @@
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>UserServicePresence</object>
-        <sortField>StatusStartDate</sortField>
+        <sortField>StatusStartDate__c</sortField>
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -143,7 +143,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>StatusStartDate</field>
+            <field>StatusStartDate__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>CurrentDate</elementReference>
@@ -165,7 +165,7 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>UserServicePresence</object>
-        <sortField>StatusStartDate</sortField>
+        <sortField>StatusStartDate__c</sortField>
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -204,7 +204,7 @@
     <subflows>
         <name>Handle_Error</name>
         <label>Handle Error</label>
-        <locationX>1188</locationX>
+        <locationX>1276</locationX>
         <locationY>384</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -212,9 +212,15 @@
         </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
         </inputAssignments>
         <inputAssignments>
             <name>triggeringFlow</name>
+            <value>
+                <stringValue>Update_Offline_Time_for_Agent</stringValue>
+            </value>
         </inputAssignments>
     </subflows>
     <variables>

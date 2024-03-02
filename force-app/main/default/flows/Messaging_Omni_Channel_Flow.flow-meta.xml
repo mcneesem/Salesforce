@@ -4,7 +4,7 @@
         <name>Route_to_401k_Queue</name>
         <label>Route to 401k Queue</label>
         <locationX>50</locationX>
-        <locationY>2222</locationY>
+        <locationY>2330</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -85,7 +85,7 @@
         <name>Route_to_Benefits_Queue</name>
         <label>Route to Benefits Queue</label>
         <locationX>578</locationX>
-        <locationY>2222</locationY>
+        <locationY>2330</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -165,8 +165,8 @@
     <actionCalls>
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
-        <locationX>1106</locationX>
-        <locationY>2222</locationY>
+        <locationX>226</locationX>
+        <locationY>2714</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -248,7 +248,7 @@
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
         <locationX>578</locationX>
-        <locationY>1682</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -268,7 +268,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>Populate_Input_First_Name</name>
         <label>Populate Input First Name</label>
         <locationX>666</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>input_FirstName</assignToReference>
             <operator>Assign</operator>
@@ -286,7 +286,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>Populate_Input_Last_Name</name>
         <label>Populate Input Last Name</label>
         <locationX>666</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>input_LastName</assignToReference>
             <operator>Assign</operator>
@@ -302,7 +302,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>prepareMessagingSessionForContactPopulation</name>
         <label>prepareMessagingSessionForContactPopulation</label>
         <locationX>446</locationX>
-        <locationY>1274</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
             <operator>Assign</operator>
@@ -325,7 +325,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>prepareMessagingSessionForNewContactPopulation</name>
         <label>prepareMessagingSessionForNewContactPopulation</label>
         <locationX>710</locationX>
-        <locationY>1382</locationY>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -348,13 +348,13 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>Check_Input_First_Name</name>
         <label>Check Input First Name</label>
         <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Populate_Input_First_Name</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>First_Name_Is_NOT_Blank</name>
+            <name>First_Name_IS_NOT_Blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>input_FirstName</leftValueReference>
@@ -373,20 +373,20 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
             <connector>
                 <targetReference>Check_Input_Last_Name</targetReference>
             </connector>
-            <label>First Name Is NOT Blank</label>
+            <label>First Name IS NOT Blank</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_Input_Last_Name</name>
         <label>Check Input Last Name</label>
         <locationX>578</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Populate_Input_Last_Name</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Last_Name_Is_NOT_Blank</name>
+            <name>Last_Name_IS_NOT_Blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>input_LastName</leftValueReference>
@@ -405,14 +405,74 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
             <connector>
                 <targetReference>isContactAvailable</targetReference>
             </connector>
-            <label>Last Name Is NOT Blank</label>
+            <label>Last Name IS NOT Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Input_Variables</name>
+        <label>Check Input Variables</label>
+        <locationX>226</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>getMessagingSessionRecord</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Chat_IS_Restarted</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4) AND (5 OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>input_FirstName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_FirstName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_LastName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_LastName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_perId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_perId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Route_to_Queue</targetReference>
+            </connector>
+            <label>Chat IS Restarted</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_subtopic_for_Case</name>
         <label>Check subtopic for Case</label>
         <locationX>578</locationX>
-        <locationY>2114</locationY>
+        <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue</targetReference>
         </defaultConnector>
@@ -634,7 +694,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>isContactAvailable</name>
         <label>isContactAvailable</label>
         <locationX>578</locationX>
-        <locationY>1166</locationY>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>createContact</targetReference>
         </defaultConnector>
@@ -681,7 +741,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>578</locationX>
-        <locationY>1574</locationY>
+        <locationY>1682</locationY>
         <connector>
             <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
         </connector>
@@ -714,6 +774,12 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Chat</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_Case_RecordType.Id</elementReference>
@@ -738,7 +804,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>createContact</name>
         <label>createContact</label>
         <locationX>710</locationX>
-        <locationY>1274</locationY>
+        <locationY>1382</locationY>
         <connector>
             <targetReference>prepareMessagingSessionForNewContactPopulation</targetReference>
         </connector>
@@ -783,7 +849,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>Get_Case_RecordType</name>
         <label>Get Case RecordType</label>
         <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contact_Record_Type</targetReference>
@@ -808,7 +874,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>Get_Contact_Record_Type</name>
         <label>Get Contact Record Type</label>
         <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Input_First_Name</targetReference>
@@ -833,7 +899,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>getContactRecords</name>
         <label>getContactRecords</label>
         <locationX>578</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_RecordType</targetReference>
@@ -858,7 +924,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>getMessagingSessionRecord</name>
         <label>getMessagingSessionRecord</label>
         <locationX>578</locationX>
-        <locationY>134</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getContactRecords</targetReference>
@@ -883,7 +949,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>populateContactOnMessagingSession</name>
         <label>populateContactOnMessagingSession</label>
         <locationX>578</locationX>
-        <locationY>1790</locationY>
+        <locationY>1898</locationY>
         <connector>
             <targetReference>updateMessagingEndUser</targetReference>
         </connector>
@@ -897,7 +963,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>updateMessagingEndUser</name>
         <label>updateMessagingEndUser</label>
         <locationX>578</locationX>
-        <locationY>1898</locationY>
+        <locationY>2006</locationY>
         <connector>
             <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
         </connector>
@@ -931,7 +997,7 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <name>UpdateMessagingSessionWithPreChatInfo</name>
         <label>UpdateMessagingSessionWithPreChatInfo</label>
         <locationX>578</locationX>
-        <locationY>2006</locationY>
+        <locationY>2114</locationY>
         <connector>
             <targetReference>Check_subtopic_for_Case</targetReference>
         </connector>
@@ -1003,18 +1069,18 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <object>MessagingSession</object>
     </recordUpdates>
     <start>
-        <locationX>452</locationX>
+        <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getMessagingSessionRecord</targetReference>
+            <targetReference>Check_Input_Variables</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
-        <locationX>1634</locationX>
-        <locationY>2114</locationY>
+        <locationX>1282</locationX>
+        <locationY>2222</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
@@ -1070,14 +1136,6 @@ Prevent unhanded Flow Error in updateMessagingEndUser Flow Element.
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>input_record</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>LiveChatTranscript</objectType>
     </variables>
     <variables>
         <name>input_Subject</name>
