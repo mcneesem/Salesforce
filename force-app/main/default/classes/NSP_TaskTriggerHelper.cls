@@ -1,5 +1,5 @@
 public class NSP_TaskTriggerHelper {
-    // test w/ NSP_TaskTriggerHelper (85%)
+    // test w/ NSP_TaskTriggerHelperTest (85%)
 
     /**
     * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
