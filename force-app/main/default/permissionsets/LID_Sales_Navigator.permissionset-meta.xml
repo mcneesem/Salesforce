@@ -3022,11 +3022,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Recurrence_Interval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Regional_Manager__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -11850,11 +11845,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Priority__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Recurrence_Interval__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
