@@ -958,7 +958,76 @@ static void createAssetTest3(){
         Test.stopTest();
     }
     
-    
-     
+    @isTest
+    static void testSendFileRequest() {
+        
+        Test.startTest();
+
+        //  Create temporary user and set Profile to 'Sales Manager'
+        User user = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
+            LastName = 'TestClassUser',
+            Phone = '1231231231',
+            Email = 'testuser@insperity.com',
+            Username = 'testuser@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            NSP_Sales_Office_Membership__c = '301'
+        );
+        insert user;
+
+        //  Create account
+        Account acct = new Account();
+        acct.Name = 'Test Account';
+        insert acct;
+
+        //  Create opportunity
+        Opportunity oppty = new Opportunity();
+        oppty.accountId = acct.id;
+        oppty.ownerId = user.id;
+        oppty.CloseDate = date.today();
+        oppty.StageName = 'Discovery';
+        insert oppty;
+
+        //  Create quote with status Approved
+        SBQQ__Quote__c quote = new SBQQ__Quote__c();
+        quote.SBQQ__Opportunity2__c = oppty.Id;
+        quote.SBQQ__Account__c = oppty.AccountId;
+        quote.SBQQ__Primary__c = true;
+        quote.SBQQ__Type__c = 'New Product';
+        quote.SBQQ__Status__c = 'Approved';
+        insert quote;
+
+        //  Move opportunity to Proposal and set the primary quote
+        oppty.SBQQ__PrimaryQuote__c = quote.Id;
+        oppty.StageName = 'Proposal';
+        update oppty;
+
+        //  Move opportunity to closed won
+        oppty.StageName = 'Closed Won';
+        oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
+        oppty.AVA_SFCLOUD__Sales_Tax__c = 1000;
+        oppty.Type = NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY;
+        update oppty;
+
+        System.runAs(user) {
+            
+            //  Trigger the flow 'Box Opportunity Folder and Sub Folder Creation' by setting the checkbox 'Create Box' to true
+            oppty.Create_Box_com_Folder_s__c = true;
+            update oppty;
+ 
+            Opportunity opp = [Select Id,Create_Box_com_Folder_s__c FROM Opportunity WHERE id =: oppty.id LIMIT 1];
+
+            Test.stopTest();
+ 
+            // The field 'Create Box' should be set to true without any errors
+            System.assertEquals(true, opp.Create_Box_com_Folder_s__c);            
+       }       
+    }
  
 }
