@@ -2,7 +2,7 @@
 * Represents the Asset Service helper which handles the logic for BPS project creation through automation.
 */
 public class NSP_AssetServiceHelper {
-    // test w/ NSP_AssetServiceHelperTest (88%)
+    // test w/ NSP_AssetServiceHelperTest (91%)
     
     public static final Id PEO_PROJECT = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PEOProject );
     public static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
@@ -38,38 +38,33 @@ public class NSP_AssetServiceHelper {
         
         try{
             List<String> assetRecordTypeList = new List<String>{INTEGRA_ASSET, PERFORM_SMART_ASSET, TIME_ATTENDANCE_ASSET, XML_ASSET};
-            Set<Id> oppIds = new Set<Id>();
-            for(Asset a: assetList){
-                oppIds.add(a.Opportunity__c);
-            }
-            Map<Id, Opportunity> opportunityMap = new Map<Id, Opportunity>([SELECT Id, NSP_Time_Entry_Recommendation__c,NSP_PrimaryProduct__c, NSP_IPMRecommendation__c FROM Opportunity WHERE Id IN :oppIds]);
-                for(Asset asset: assetList){
-                    Opportunity op = opportunityMap.get(asset.Opportunity__c);
-                    //STY-03289 implementation
-                    if(asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null){
-                        accountIdSet.add(asset.AccountId);
-                        integraAssetSet.add(asset.Id);
-                    }
-                    if ( ( asset.RecordTypeId == PERFORM_SMART_ASSET )
-                        && ( op != null )
-                        && ( asset.AccountId != null )
-                        && ( op.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT )
-                        && ( ( op.NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att ) || ( op.NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Timesheet ) )
-                        && ( op.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
-                        )
-                    {
-                        accountIdSet.add(asset.AccountId);
-                        performSmartAssetSet.add(asset.Id);
-                    }
-                    if(asset.RecordTypeId == TIME_ATTENDANCE_ASSET && asset.AccountId!=null){
-                        accountIdSet.add(asset.AccountId);
-                        timeAttendanceAssetSet.add(asset.Id);
-                    }
-                    if(asset.RecordTypeId == XML_ASSET && asset.AccountId!=null){
-                        accountIdSet.add(asset.AccountId);
-                        xmlAssetSet.add(asset.Id);
-                    }
+            for ( Asset asset : assetList ) {
+                //STY-03289 implementation
+                if ( asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null ) {
+                    accountIdSet.add(asset.AccountId);
+                    integraAssetSet.add(asset.Id);
                 }
+                if ( asset.RecordTypeId == PERFORM_SMART_ASSET
+                    &&  asset.AccountId != null
+                    && !asset.Is_Perform_WO_WS_Asset__c
+                    )
+                {
+                    accountIdSet.add(asset.AccountId);
+                    performSmartAssetSet.add(asset.Id);
+                }
+                if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
+                    && asset.AccountId!=null
+                    && !asset.Is_Perform_WO_WS_Asset__c
+                    )
+                {
+                    accountIdSet.add(asset.AccountId);
+                    timeAttendanceAssetSet.add(asset.Id);
+                }
+                if ( asset.RecordTypeId == XML_ASSET && asset.AccountId!=null){
+                    accountIdSet.add(asset.AccountId);
+                    xmlAssetSet.add(asset.Id);
+                }
+            }
             
             //check if asset has active account
             for(Account acc: [SELECT Id ,NSP_Sales_Service_Account_Status__c,Name,
@@ -130,7 +125,6 @@ public class NSP_AssetServiceHelper {
                 if ( timeAttendanceAssetSet.contains(asset.Id)
                     && ( mapOfAccount.get(asset.AccountId) != null )
                     && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), TIME_ATTENDANCE_ASSET )
-                    && (asset.Opportunity__r.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || asset.Opportunity__r.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)
                     )
                 {
                     templateType=NSP_ServiceConstants.ITA_IMPLEMENTATION;
