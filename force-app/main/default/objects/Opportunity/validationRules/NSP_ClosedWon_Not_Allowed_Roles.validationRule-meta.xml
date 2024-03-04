@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_ClosedWon_Not_Allowed_Roles</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR($UserRole.DeveloperName = &apos;Business_Performance_Advisor&apos;,
+$UserRole.DeveloperName = &apos;Business_Performance_Consultant&apos;,
+$UserRole.DeveloperName = &apos;Associate_Business_Performance_Advisors&apos;),
+ISPICKVAL(StageName, &apos;Closed Won&apos;),
+NOT(AND(
+$Permission.Edit_Closed_Won_Create_Box_Folder,
+IsChanged(Create_Box_com_Folder_s__c))
+))</errorConditionFormula>
+    <errorMessage>You do not have access to move opportunity to Closed Won</errorMessage>
+</ValidationRule>

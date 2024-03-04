@@ -4,6 +4,7 @@
     <active>true</active>
     <description>Only Sales Operations and Sales Admin profile should have access to edit backout fields.</description>
     <errorConditionFormula>AND(
+  NOT($Permission.Edit_Closed_Won_Create_Box_Folder&amp;&amp; ISCHANGED(Create_Box_com_Folder_s__c )),
   AND(
     OR(
       OR(
