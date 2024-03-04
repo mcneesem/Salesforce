@@ -107,6 +107,11 @@
                 <label>Raymond James Advisors</label>
             </value>
             <value>
+                <fullName>South Carolina Research Authority</fullName>
+                <default>false</default>
+                <label>South Carolina Research Authority</label>
+            </value>
+            <value>
                 <fullName>TechStars</fullName>
                 <default>false</default>
                 <label>TechStars</label>
@@ -115,6 +120,11 @@
                 <fullName>The Union for Reform Judaism</fullName>
                 <default>false</default>
                 <label>The Union for Reform Judaism</label>
+            </value>
+            <value>
+                <fullName>The Veterinary Cooperative</fullName>
+                <default>false</default>
+                <label>The Veterinary Cooperative</label>
             </value>
             <value>
                 <fullName>Trane U.S. Inc.</fullName>

@@ -899,11 +899,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>South Carolina Research Authority</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>TechStars</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Union for Reform Judaism</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The Veterinary Cooperative</fullName>
             <default>false</default>
         </values>
         <values>
