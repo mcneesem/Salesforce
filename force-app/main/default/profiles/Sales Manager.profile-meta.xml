@@ -1042,10 +1042,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Edit_Closed_Won_Create_Box_Folder</name>
-    </customPermissions>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>NSP_SObject_Field_History__mdt</name>
