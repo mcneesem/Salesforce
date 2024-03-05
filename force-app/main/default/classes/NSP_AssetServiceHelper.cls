@@ -38,31 +38,33 @@ public class NSP_AssetServiceHelper {
         
         try{
             List<String> assetRecordTypeList = new List<String>{INTEGRA_ASSET, PERFORM_SMART_ASSET, TIME_ATTENDANCE_ASSET, XML_ASSET};
-            for ( Asset asset : assetList ) {
-                //STY-03289 implementation
-                if ( asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null ) {
-                    accountIdSet.add(asset.AccountId);
-                    integraAssetSet.add(asset.Id);
-                }
-                if ( asset.RecordTypeId == PERFORM_SMART_ASSET
-                    &&  asset.AccountId != null
-                    && !asset.Is_Perform_WO_WS_Asset__c
-                    )
-                {
-                    accountIdSet.add(asset.AccountId);
-                    performSmartAssetSet.add(asset.Id);
-                }
-                if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
-                    && asset.AccountId!=null
-                    && !asset.Is_Perform_WO_WS_Asset__c
-                    )
-                {
-                    accountIdSet.add(asset.AccountId);
-                    timeAttendanceAssetSet.add(asset.Id);
-                }
-                if ( asset.RecordTypeId == XML_ASSET && asset.AccountId!=null){
-                    accountIdSet.add(asset.AccountId);
-                    xmlAssetSet.add(asset.Id);
+            if ( assetList != null ){
+                for ( Asset asset : assetList ) {
+                    //STY-03289 implementation
+                    if ( asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null ) {
+                        accountIdSet.add(asset.AccountId);
+                        integraAssetSet.add(asset.Id);
+                    }
+                    if ( asset.RecordTypeId == PERFORM_SMART_ASSET
+                        &&  asset.AccountId != null
+                        && !asset.Is_Perform_WO_WS_Asset__c
+                        )
+                    {
+                        accountIdSet.add(asset.AccountId);
+                        performSmartAssetSet.add(asset.Id);
+                    }
+                    if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
+                        && asset.AccountId!=null
+                        && !asset.Is_Perform_WO_WS_Asset__c
+                        )
+                    {
+                        accountIdSet.add(asset.AccountId);
+                        timeAttendanceAssetSet.add(asset.Id);
+                    }
+                    if ( asset.RecordTypeId == XML_ASSET && asset.AccountId!=null){
+                        accountIdSet.add(asset.AccountId);
+                        xmlAssetSet.add(asset.Id);
+                    }
                 }
             }
             
