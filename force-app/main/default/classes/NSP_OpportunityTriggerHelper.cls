@@ -249,7 +249,7 @@ public class NSP_OpportunityTriggerHelper {
             Opportunity oldOpportunity =  opportunityOldMap.get(opportunityId);
             
             //  AZD-258129
-            if(NSP_hotfix_Switch__c.getOrgDefaults().Is_Edit_Closed_Won_Allowed__c && 
+            if(NSP_hotfix_Switch__c.getInstance(UserInfo.getUserId()).Is_Edit_Closed_Won_Allowed__c && 
             newOpportunity.Create_Box_com_Folder_s__c != oldOpportunity.Create_Box_com_Folder_s__c && 
             newOpportunity.StageName == 'Closed Won'){
                 
