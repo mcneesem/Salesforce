@@ -89,6 +89,38 @@ public without sharing class NSP_EventTriggerHelperTest {
         resObject.Event_Id__c = newEvent.Id;
         Insert resObject;
         
+        User tUser =  NSP_TestHelper.createUser(false);
+        tUser.Phone = '(112)6475261 ext415';
+        tUser.Username = 'jsmith@test.com.abc'+System.currentTimeMillis();
+        tUser.NSP_Service_Region__c = 'MMSO - Southeast';
+        tUser.NSP_Salesforce_Field_Service__c = NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER_RESOURCE;
+        tUser.NSP_Dispatch_Region__c = NSP_ServiceConstants.CHILD_DISPATCH_REGION;
+        insert tUser;
+        Event newEventRec = new Event();
+        newEventRec.OwnerId = tUser.Id;
+        newEventRec.Subject = 'Test Subject For Event Rec';
+        newEventRec.DurationInMinutes = 60;
+        newEventRec.ActivityDateTime = system.today();
+        newEventRec.StartDateTime = system.today();
+        newEventRec.IsRecurrence = true;
+        newEventRec.RecurrenceStartDateTime = system.today();
+        newEventRec.RecurrenceEndDateOnly = System.today()+30;
+        newEventRec.RecurrenceType = 'RecursDaily';
+        newEventRec.RecurrenceInterval = 2; // This means that the event will wait 1 day before recurring again
+        newEventRec.IsAllDayEvent =false;
+        newEventRec.DurationInMinutes =60;
+        newEventRec.WhatId= resObject.Id;
+        insert newEventRec; 
+        
+        //Insert Resource Absence
+        ResourceAbsence resObject1 = new ResourceAbsence();
+        resObject1.Type = 'Meeting';
+        resObject1.ResourceId = serRec.Id;
+        resObject1.Start = system.today();
+        resObject1.End = system.today().addDays(1);
+        resObject1.Event_Id__c = newEventRec.Id;
+        Insert resObject1;
+        
     }
     
         
@@ -189,9 +221,27 @@ public without sharing class NSP_EventTriggerHelperTest {
     */
     @isTest
     public static void afterDeleteTest(){
+        Test.startTest();
         List<Event> eventList = [SELECT ID, Subject FROM Event WHERE Subject = 'Test Subject For Event RA' LIMIT 1];
         if(eventList.size() > 0){
             DELETE eventList[0];
         }
+        Test.stopTest();
+    }
+    
+    
+    /**
+    * @Description: This test method is used to cover updateResourceAbsenceDate
+    * @return void  
+    */
+    @isTest
+    public static void resyncTest(){
+        Test.startTest();
+        List<Event> eventList = [SELECT ID, Subject, IsRecurrence, StartDateTime FROM Event WHERE Subject = 'Test Subject For Event Rec' AND IsRecurrence = true LIMIT 1];
+        if(eventList.size() > 0){
+            eventList[0].StartDateTime = System.today().addDays(1);
+        }
+        update eventList[0];
+        Test.stopTest();
     }
 }
