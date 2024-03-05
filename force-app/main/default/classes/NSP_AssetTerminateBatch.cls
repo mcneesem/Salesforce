@@ -12,13 +12,14 @@ Modification Log     :
 */
 
 Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<sObject> {
-
+    // test w/ NSP_AssetTerminateBatch_Test (89%)
+ 
     private static final String ASSET = 'Asset';
-    
+    private static final Id WO_ASSET_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
     global Database.QueryLocator start(Database.BatchableContext bc) {
         Date last30Days = system.Today()-30;
         String finalDate = String.valueOf(last30Days).removeEnd(' 00:00:00');
-        Id WO_ASSET_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.WO_ASSET_RECORDTYPE); 
+           
         List<String> assetFields = new List<String>{
                 'ID',
                 'AccountId',
@@ -44,10 +45,13 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
         
         //Loop through the asset list
         for(Asset asst : existAsset) {
-            //get exist account ids
-            accIds.add(asst.AccountId);
-            //map of account ID and termination date 
-            accountIDTermDateMap.put(asst.AccountId, asst.NSP_Termination_Date__c);
+            Integer activeWOAssets = [SELECT Count() FROM Asset WHERE  AccountId =:asst.AccountId and NSP_Account_Status__c !=:NSP_ServiceConstants.TERMINATED and RecordTypeId =:WO_ASSET_RECORDTYPE];
+            if(activeWOAssets == 0){
+                //get exist account ids
+                accIds.add(asst.AccountId);
+                //map of account ID and termination date 
+                accountIDTermDateMap.put(asst.AccountId, asst.NSP_Termination_Date__c);
+            }
         }        
         //update Status AND Termination Date for RT other then WO
         for(Asset asst : [SELECT Id, AccountId, RecordTypeId, Status, NSP_Termination_Date__c FROM Asset WHERE  AccountId =: accIds AND RecordTypeId IN : assetRecordIDList AND NSP_ProductBundle__c =: NSP_ServiceConstants.WoWSAsset AND Status != : NSP_ServiceConstants.TERMINATED]) {
