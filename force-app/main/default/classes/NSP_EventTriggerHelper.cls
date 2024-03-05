@@ -2,7 +2,7 @@
 * Represents the Event trigger helper which handles all the logic.
 */
 public class NSP_EventTriggerHelper {
-    // test w/ NSP_EventTriggerHelperTest (87%)
+    // test w/ NSP_EventTriggerHelperTest (88%)
     
     public static String DISCOVERY_CALL = 'Discovery Call';
     private static final String EMPTY_STRING = '';
@@ -72,11 +72,55 @@ public class NSP_EventTriggerHelper {
     *                
     */
         
-        public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){        
+        public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
+            Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
+            if(eventNewMap != null){
+            	for (Event newEventRecord : eventNewMap.Values()){
+                	Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
+                	if ((newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE)
+                        && oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime))
+                    {
+                    	rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                	} 
+            	}
+            }
+            if (rescheduledEventsMap.size() > 0){
+                updateResourceAbsenceDate(rescheduledEventsMap);
+            }
             
             updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
             updateActivityDate(eventNewMap.values(),eventOldMap);
         }
+    
+    /**
+	* Method Name : updateResourceAbsenceDate 
+	* Description : Method to update start and end date on RAs for recurring events
+	* @param Map of Event. 
+	* @return void  
+	*/
+    
+    public void updateResourceAbsenceDate(Map<Id,Event> rescheduledEventsMap){
+        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+        List<ResourceAbsence> resourceAbsenceToUpdateList = new List<ResourceAbsence>();
+        
+        try{
+            if (rescheduledEventsMap.size() > 0){
+            	resourceAbsenceList = [SELECT ID, Start, End, Event_Id__c From ResourceAbsence WHERE Event_Id__c IN: rescheduledEventsMap.keySet()];
+            }
+         	if (resourceAbsenceList.size() > 0){
+                for (ResourceAbsence eachRA : resourceAbsenceList){
+                    eachRA.Start = rescheduledEventsMap.get(eachRA.Event_Id__c).StartDateTime;
+                    eachRA.End = rescheduledEventsMap.get(eachRA.Event_Id__c).EndDateTime;
+                    resourceAbsenceToUpdateList.add(eachRA);
+                }
+         	}
+            if (resourceAbsenceToUpdateList.size() > 0){
+                Update resourceAbsenceToUpdateList;
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateResourceAbsenceDate', ex.getMessage());
+        }
+    }
 
     /**
     * Iterates throught the list of old Events and passes the required attributes to other methods.
