@@ -3020,6 +3020,7 @@
         <editable>false</editable>
         <field>Event.NSP_Priority__c</field>
         <readable>false</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Regional_Manager__c</field>
