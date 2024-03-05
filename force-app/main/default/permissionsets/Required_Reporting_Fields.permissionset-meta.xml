@@ -8,6 +8,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_ICP_Percent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_SalesRegion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -39,6 +44,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Activity_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.NSP_ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
