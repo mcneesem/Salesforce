@@ -3,6 +3,11 @@
     <description>Fields needed for any/all users to run reports/utilize enabled report filters</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Account_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
