@@ -5,6 +5,7 @@
     <inlineHelpText>Exhibits A/B must be prepared listing job titles, decisional unit, eligibility factors, and age of the employees affected and not affected by the layoff.</inlineHelpText>
     <label>WSEE Same Unit as others(Last 90 days)?</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

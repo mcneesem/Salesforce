@@ -4,5 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Amigos</label>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>One_Time_Sync_Single_Record</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

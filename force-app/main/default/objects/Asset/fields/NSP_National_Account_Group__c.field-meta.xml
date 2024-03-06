@@ -112,6 +112,41 @@
                 <default>false</default>
                 <label>Gradient</label>
             </value>
+            <value>
+                <fullName>49</fullName>
+                <default>false</default>
+                <label>VSG</label>
+            </value>
+            <value>
+                <fullName>50</fullName>
+                <default>false</default>
+                <label>BRUNSWICK</label>
+            </value>
+            <value>
+                <fullName>51</fullName>
+                <default>false</default>
+                <label>ITDG</label>
+            </value>
+            <value>
+                <fullName>52</fullName>
+                <default>false</default>
+                <label>MDVIP</label>
+            </value>
+            <value>
+                <fullName>53</fullName>
+                <default>false</default>
+                <label>TRANE</label>
+            </value>
+            <value>
+                <fullName>54</fullName>
+                <default>false</default>
+                <label>Princeton Equity Advisors</label>
+            </value>
+            <value>
+                <fullName>55</fullName>
+                <default>false</default>
+                <label>Union for Reform Judaism</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

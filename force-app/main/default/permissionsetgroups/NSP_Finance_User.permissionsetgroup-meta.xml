@@ -9,5 +9,6 @@
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>NSP_Finance_CPQ_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
+    <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

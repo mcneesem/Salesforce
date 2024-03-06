@@ -118,7 +118,7 @@
     <groups>Client Goal Object Read/Edit</groups>
     <groups>Contact Referral Object Read/Edit</groups>
     <groups>Contacts</groups>
-    <groups>Corp Cases Visibility</groups>
+    <groups>Corp Case Visibility</groups>
     <groups>CSS</groups>
     <groups>CSS Approver Group</groups>
     <groups>Custom Survey Object Read/Edit</groups>
@@ -770,27 +770,29 @@
     <permissionSets>Finance User</permissionSets>
     <permissionSets>HCM</permissionSets>
     <permissionSets>Inbound Sales</permissionSets>
-    <permissionSets>L1 Support</permissionSets>
+    <permissionSets>L1 Support</permissionSets><!-- XXX -->
     <permissionSets>Loyalty Program (Advisor, Manager)</permissionSets>
     <permissionSets>Marketing</permissionSets>
     <permissionSets>Mid Market Admin</permissionSets>
     <permissionSets>Mid Market Sales Leader</permissionSets>
-    <permissionSets>Minimum Access</permissionSets>
+    <permissionSets>Minimum Access</permissionSets><!-- XXX -->
     <permissionSets>New Client Sales Permission set Group</permissionSets>
-    <permissionSets>PEO Service User</permissionSets>
+    <permissionSets>PEO Service User</permissionSets><!-- XXX -->
     <permissionSets>Recruiting</permissionSets>
     <permissionSets>Regional Manager</permissionSets>
     <permissionSets>Regional Team</permissionSets>
     <permissionSets>Retirement Services</permissionSets>
     <permissionSets>Retirement_Services_User</permissionSets>
     <permissionSets>SSS (Sales Support Specialist)</permissionSets>
-    <permissionSets>Sales Administrator</permissionSets>
+    <permissionSets>Sales Administrator</permissionSets><!-- XXX -->
     <permissionSets>Sales Compensation</permissionSets>
     <permissionSets>Sales Engineer</permissionSets>
     <permissionSets>Sales Engineer Manager</permissionSets>
     <permissionSets>Sales Executive</permissionSets>
     <permissionSets>Sales Operations</permissionSets>
     <permissionSets>Service</permissionSets>
+    <permissionSets>System Admin Lite</permissionSets><!-- XXX -->
+    <permissionSets>Team L1</permissionSets><!-- XXX -->
     <!-- END PSGs -->
     <profiles>CPQ Admin</profiles>
     <profiles>CPQ Sales User</profiles>

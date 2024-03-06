@@ -269,12 +269,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
         
         for(NSP_Account_Team__c accountTeamMemberObj : acctTeamList) {
-            if(employeeIdMap.containsKey(accountTeamMemberObj.NSP_PER_ID__c) 
-               && (accountTeamMemberObj.NSP_PER_ID__c != null 
-                   && accountTeamMemberObj.NSP_User__c == null)){
-                       accountTeamMemberObj.NSP_User__c = employeeIdMap.get(accountTeamMemberObj.NSP_PER_ID__c).Id;
-                   }
-            
+            if(employeeIdMap.containsKey(accountTeamMemberObj.NSP_PER_ID__c) && (accountTeamMemberObj.NSP_PER_ID__c != null)){
+                accountTeamMemberObj.NSP_User__c = employeeIdMap.get(accountTeamMemberObj.NSP_PER_ID__c).Id;
+            }
         }
     }
     

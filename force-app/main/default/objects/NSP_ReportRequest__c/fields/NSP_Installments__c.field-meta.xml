@@ -5,6 +5,7 @@
     <inlineHelpText>Include the total number of equal payments based on the client’s regular pay periods.  Installments not equal or not based on the regular payroll will be a non-standard release.</inlineHelpText>
     <label>Installments DEPREICATED</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -21,6 +22,12 @@
                 <fullName>Non-standard (total number of installments not equal or not based on the regular payroll). PROVIDE INSTALLMENT STRUCTURE IN SPECIAL ITEMS BELOW.</fullName>
                 <default>false</default>
                 <label>Non-standard (total number of installments not equal or not based on the regular payroll). PROVIDE INSTALLMENT STRUCTURE IN SPECIAL ITEMS BELOW.</label>
+            </value>
+            <value>
+                <fullName>Non-standard (total number of installments not equal or not based on the regular payroll. &lt;b&gt;&lt;font color=RED&gt;Provide installment structure in Special Items below.&lt;/font&gt;&lt;/b&gt;)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Non-standard (total number of installments not equal or not based on the regular payroll. &lt;b&gt;&lt;font color=RED&gt;Provide installment structure in Special Items below.&lt;/font&gt;&lt;/b&gt;)</label>
             </value>
         </valueSetDefinition>
     </valueSet>

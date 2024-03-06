@@ -1,0 +1,8 @@
+<template>
+    <template if:false={error}>
+        <template lwc:if={permissionSet}>
+            <a onclick={handleNavigate} data-id={dataId}>{label}</a> {type}
+        </template>
+    </template>
+    <c-error-panel error={error} parent="c-permission-set-link"></c-error-panel>
+</template>

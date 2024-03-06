@@ -12,14 +12,15 @@
 Please note the projects below have been created.
 A new project has been created in Salesforce and you have been assigned to it. See the project and customer information below.
 
-Project Number: {!pse__Assignment__c.NSP_Project_Number__c}
 Project Name: {!pse__Assignment__c.NSP_Project__c}
-Customer: {!pse__Assignment__c.NSP_Customer__c}
-Project Resource:{!pse__Assignment__c.pse__Resource__c}
-Start Date: {!pse__Assignment__c.pse__Start_Date__c}
+
+Project Number: {!pse__Assignment__c.NSP_Project_Number__c}
+
+Project Account: {!pse__Assignment__c.NSP_Customer__c}
 
 
-Click below to view the record
+
+Click to view assignment record
 View Record</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>

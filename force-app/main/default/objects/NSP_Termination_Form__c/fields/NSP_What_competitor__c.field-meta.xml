@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>EEMPLOYERS SOLUTION</fullName>
+                <fullName>EMPLOYERS SOLUTION</fullName>
                 <default>false</default>
-                <label>EEMPLOYERS SOLUTION</label>
+                <label>EMPLOYERS SOLUTION</label>
             </value>
             <value>
                 <fullName>G&amp;G PARTNERS</fullName>

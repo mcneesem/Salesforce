@@ -26,28 +26,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BTCoreEgMinMaxRange</shortDescription>
-        <value>-7;-14</value>
+        <value>-8;-14</value>
     </labels>
     <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CANNOT_DELETE_ACCOUNT</shortDescription>
-        <value>You do not have permission to delete Accounts</value>
+        <value>Missing Custom Permission: Allow Delete Accounts</value>
     </labels>
     <labels>
         <fullName>CANNOT_DELETE_LEAD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CANNOT_DELETE_LEAD</shortDescription>
-        <value>You do not have permission to delete Leads.</value>
-    </labels>
-    <labels>
-        <fullName>CanDeleteAccountLead</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CanDeleteAccountLead</shortDescription>
-        <value>System Administrator,Sales Administrator</value>
+        <value>Missing Custom Permission: Allow Delete Leads</value>
     </labels>
     <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>

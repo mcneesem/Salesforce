@@ -189,7 +189,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>fields</name>
-                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,	NSP_Modified_By__r.Name</value>
+                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedFieldApiName</name>
@@ -257,6 +257,64 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>Height</name>
+                    <value>400</value>
+                </componentInstanceProperties>
+                <componentName>TracHier:hierarchy</componentName>
+                <identifier>TracHier_hierarchy</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewAccount</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>Domestic Ultimate Hierarchy Information</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Account.Domestic_Ultimate_Hierarchy_Information</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewAccount</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>D&amp;B Hierarchy Information</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Account.Complete_Hierarchy_Fields</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b95298db-b829-4d8f-b830-a1a8a9f84dc7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -316,6 +374,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b95298db-b829-4d8f-b830-a1a8a9f84dc7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Account Hierarchy</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab3</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

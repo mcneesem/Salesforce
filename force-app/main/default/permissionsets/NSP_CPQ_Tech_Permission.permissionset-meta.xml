@@ -13512,6 +13512,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Amendment_Monthly_Fees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.NSP_ActionType__c</field>
         <readable>false</readable>
@@ -14774,6 +14779,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.SBQQ__VolumeDiscount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Timestar_Hardware_Net_Total__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+ <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Timestar_Hardware_Net_Unit_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16574,6 +16589,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.SBQQ__TargetCustomerAmount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Timestar_Total_Annual_Fees__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

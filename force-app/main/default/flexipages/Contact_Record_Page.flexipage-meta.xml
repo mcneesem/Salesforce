@@ -2669,7 +2669,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>fields</name>
-                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,	NSP_Modified_By__r.Name</value>
+                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedFieldApiName</name>

@@ -1,0 +1,23 @@
+﻿Team/Group,MERGE,TEST,STAGE
+BPS Customer Success (Team Box),test.bps.customerservice.merge@insperity.com,test.bps.customerservice@insperity.com,test.bps.customerservice_UAT@insperity.com
+TES HR Support Center,test.hrsupportcenter.merge@insperity.com,test.hrsupportcenter@insperity.com,test.hrsupportcenter_UAT@insperity.com
+Salesforce Email to Case,test.salesforce_emailtocase.merge@insperity.com,test.salesforce_emailtocase@insperity.com,salesforce_emailtocase_UAT@insperity.com
+Talent Connect,test.itcinfo.merge@insperity.com,test.itcinfo.test@insperity.com,test.itcinfo.stage@insperity.com 
+My Hires,test.myhires.merge@insperity.com,test.myhires.test@insperity.com,test.myhires.stage@insperity.com
+Contact Center,test.contact_center.merge@insperity.com,test.contact_center@insperity.com,test.contact_center_UAT@insperity.com
+Employment Screening,test.customer.service.merge@insperity.com,test.customer.service@insperity.com,test.customer.service_UAT@insperity.com
+Employment Screening (2nd),test.ies.drugscreen.merge@insperity.com,test.ies.drugscreen@insperity.com,test.drugscreen_uat@insperity.com
+Integra,test.integrasupport.merge@insperity.com,test.integrasupport@insperity.com,test.integrasupport_UAT@insperity.com
+OrgPlus,test.orgplussupport.merge@insperity.com,test.orgplussupport@insperity.com,test.orgplussupport_UAT@insperity.com
+PerformSmart,test.performsmartsupport.merge@insperity.com,test.performsmartsupport@insperity.com,test.performsmartsupport_UAT@insperity.com
+Time and Attendance,test.time.support.merge@insperity.com,test.time.support@insperity.com,test.time.support_UAT@insperity.com
+TimeStar Hardware,test.datacollection.merge@insperity.com,test.datacollection@insperity.com,test.datacollection_UAT@insperity.com
+WX HR Services,test.wkforceacceleratnhr.merge@insperity.com,test.wkforceacceleratnhr@insperity.com,test.wkforceacceleratnhr_UAT@insperity.com
+WX Tax,test.ips.tax.merge@insperity.com,test.ips.tax@insperity.com,test.ips.tax_UAT@insperity.com
+XML Utility,test.payrollxmlsupport.merge@insperity.com,test.payrollxmlsupport@insperity.com,test.payrollxmlsupport_UAT@insperity.com 
+WX Payroll Support,test.hcmpayrollsupport.merge@insperity.com,test.hcmpayrollsupport@insperity.com,test.hcmpayrollsupport_UAT@insperity.com
+Health & Welfare Section 125,test.section125.merge@insperity.com,test.section125@insperity.com,test.section125_UAT@insperity.com
+Client Sponsored Plans,test.clientsponsoredplans.merge@insperity.com,test.clientsponsoredplans@insperity.com,test.clientsponsoredplans_UAT@insperity.com
+Educational Assistance,test.edassist.merge@insperity.com,test.edassist@insperity.com,test.edassit_UAT@insperity.com
+isolved Time,test.watime.merge@insperity.com,test.watime@insperity.com,test.watime.stage@insperity.com
+WX COS Team,merge.wxcosteam@insperity.com,test.wxcosteam@insperity.com,stage.wxcosteam@insperity.com

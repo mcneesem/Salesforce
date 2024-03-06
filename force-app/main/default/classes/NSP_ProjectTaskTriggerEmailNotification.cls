@@ -1,5 +1,5 @@
 public class NSP_ProjectTaskTriggerEmailNotification {
-    // test w/ NSP_ProjectTaskTriggerEmailTest (88%)
+    // test w/ NSP_ProjectTaskTriggerEmailTest (91%)
 
     /***********************************************************************************************
     * MethodName: updateImplementationProfile
@@ -29,7 +29,6 @@ public class NSP_ProjectTaskTriggerEmailNotification {
     public static void emailNotifyforFEIN(Set<Id> projectTaskIdSet, Map<Id,Id> mapofProjecttasks ){
         //as part of STY-02170
         
-        Map<Id, Project_Asset__c> mapofprojectIdAssets= new Map<Id,Project_Asset__c>();
         List<String> listofccAddresses = new List<String>();
         List<Implementation_Profile__c> updateIplist = new List<Implementation_Profile__c>();
         Map<Id,List<Messaging.EmailFileAttachment>> mapTaskIdListAttachments = new  Map<Id,List<Messaging.EmailFileAttachment>>();
@@ -40,13 +39,18 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             
             if(!mapofProjecttasks.isEmpty()){
                 mapTaskIdListAttachments=NSP_EmailServiceAttachment.getProjectTaskAttachments(projectTaskIdSet);
-                for(Project_Asset__c projAsset:[SELECT Id, Asset__c, Asset__r.NSP_Client__c,Asset__r.NSP_Company_Name__c,  
-                                                Project__c from Project_Asset__c WHERE Project__c in:mapofProjecttasks.keySet()]){
-                            if(projAsset!=null){
-                                mapofprojectIdAssets.put(projAsset.Project__c, projAsset);
-                            }
+                Map<Id,Implementation_Profile__c> mapofprojectIdAssets = new Map<Id,Implementation_Profile__c>();
+                for ( Implementation_Profile__c projIp : [
+                        SELECT Id , NSP_Project__c , NSP_AIMS_Client_Name__c , NSP_AIMS_ClientNo__c
+                        FROM Implementation_Profile__c
+                        WHERE ( NSP_Project__c IN :mapofProjecttasks.keySet() )
+                    ]
+                )
+                {
+                    if ( projIp!=null ) {
+                        mapofprojectIdAssets.put( projIp.NSP_Project__c , projIp );
+                    }
                 }
-                
                 for(pse__Proj__c proj: [SELECT Id, recordTypeId, pse__Project_Type__c,pse__Project_Status__c,
                                         pse__Project_Manager__c,pse__Project_Manager__r.NSP_Job_Title__c,pse__Project_Manager__r.NSP_Work_email__c,pse__Project_Manager__r.Name,
                                         (SELECT Id,NSP_Role__c,NSP_Assignee__c, NSP_Assignee__r.Name,NSP_Assignee__r.NSP_Job_Title__c,
@@ -69,33 +73,31 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                                             }
                                         }
                                     }
-
-                                       List<Messaging.EmailFileAttachment> emailAttachmentList = mapTaskIdListAttachments.get(mapofProjecttasks.get(proj.Id));
-                                      
-                                           if(String.isNotBlank(pf.NSP_Email_Address__c)){   
-                                           sendMailFEIN(mapofprojectIdAssets.get(proj.Id).Asset__r.NSP_Client__c, mapofprojectIdAssets.get(proj.Id).Asset__r.NSP_Company_Name__c,
-                                                        projectManagerJobTitle,new List<String>{pf.NSP_Email_Address__c},listofccAddresses,
-                                                        projectManager,emailAttachmentList, mapofProjecttasks.get(proj.Id) );
-                                       }
-                                 
+                    if ( String.isNotBlank( pf.NSP_Email_Address__c ) ) {
+                        sendMailFEIN(
+                            mapofprojectIdAssets.get( proj.Id ).NSP_AIMS_ClientNo__c ,
+                            mapofprojectIdAssets.get( proj.Id ).NSP_AIMS_Client_Name__c ,
+                            projectManagerJobTitle ,
+                            new List<String>{ pf.NSP_Email_Address__c } ,
+                            listofccAddresses ,
+                            projectManager ,
+                            mapTaskIdListAttachments.get( mapofProjecttasks.get( proj.Id ) ) ,
+                            mapofProjecttasks.get( proj.Id )
+                        );
+                    }
                 }
                 //UPDATE IP FEIN FEILD WHEN FEIN PROJECT TASK IS COMPLETE
-               
                 if(mapofProjecttasks.size()>0){
-                    
                     for(Implementation_Profile__c ip: [SELECT Id,Has_FEIN_documentation_been_collected__c,  NSP_Project__c from Implementation_Profile__c WHERE NSP_Project__c IN : mapofProjecttasks.keyset() AND RecordTypeId=:ipFSORecordTypeId  AND Has_FEIN_documentation_been_collected__c!= :NSP_ServiceConstants.YES]){
                         ip.Has_FEIN_documentation_been_collected__c=NSP_ServiceConstants.YES;
                         updateIplist.add(ip);
-                        
                     }
                 }
-                
                 database.update(updateIplist, false);
             }
         }catch(Exception ex ){
-           
-                NSP_ErrorLogHandler.logSaveException('NSP_ProjectTaskTriggerEmailNotification', 'emailNotifyforFEIN', ex.getMessage());
-            }
+            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTaskTriggerEmailNotification', 'emailNotifyforFEIN', ex.getMessage());
+        }
     }
     /***********************************************************************************************
     * MethodName: emailNotifyforFundingDocuments
@@ -106,7 +108,6 @@ public class NSP_ProjectTaskTriggerEmailNotification {
  
     public static void emailNotifyforFundingDocuments(Set<Id> projectTaskIdSet, Map<Id,Id> mapofProjecttasks ){
         //as part of STY-02170
-        Map<Id, Project_Asset__c> mapofprojectIdAssets= new Map<Id,Project_Asset__c>();
         Map <Id, List<Messaging.EmailFileAttachment>> mapPrjIdListAttachment = new Map <Id, List<Messaging.EmailFileAttachment>>();
         try{
             Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
@@ -114,9 +115,16 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             
             if(!mapofProjecttasks.isEmpty()){
                 mapPrjIdListAttachment = NSP_EmailServiceAttachment.getProjectTaskAttachments(projectTaskIdSet);
-                for(Project_Asset__c projAsset:[SELECT Id, Asset__c, Asset__r.NSP_Client__c,Asset__r.NSP_Company_Name__c,  Project__c from Project_Asset__c WHERE Project__c in:mapofProjecttasks.keySet()]){
-                  if(projAsset!=null){
-                        mapofprojectIdAssets.put(projAsset.Project__c, projAsset);
+                Map<Id,Implementation_Profile__c> mapofprojectIdAssets = new Map<Id,Implementation_Profile__c>();
+                for ( Implementation_Profile__c projIp : [
+                        SELECT Id , NSP_Project__c , NSP_AIMS_Client_Name__c , NSP_AIMS_ClientNo__c
+                        FROM Implementation_Profile__c
+                        WHERE ( NSP_Project__c IN :mapofProjecttasks.keySet() )
+                    ]
+                )
+                {
+                    if ( projIp!=null ) {
+                        mapofprojectIdAssets.put( projIp.NSP_Project__c , projIp );
                     }
                 }
                 for(pse__Proj__c proj: [SELECT Id, recordTypeId, TemplateName__c, pse__Project_Type__c,pse__Project_Status__c,
@@ -124,19 +132,24 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                                         NSP_Assignee__r.NSP_Work_email__c FROM Project_Teams__r WHERE NSP_Role__c =: NSP_ServiceConstants.ProjectManager AND NSP_Assignee__c!=null LIMIT 1 )                       
                                         FROM pse__Proj__c where Id in:mapofProjecttasks.keyset() AND
                                         pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND recordTypeId=:peoProjectRecordTypeId AND
-                                        TemplateName__c=:label.FSOImplementationProject AND pse__Project_Status__c NOT IN :listOfProjectStatus]){
-                                        List<Messaging.EmailFileAttachment> emailAttachmentList =mapPrjIdListAttachment.get(mapofProjecttasks.get(proj.Id));
-                                             sendFundingDocumentMail(mapofprojectIdAssets.get(proj.Id).Asset__r.NSP_Client__c, mapofprojectIdAssets.get(proj.Id).Asset__r.NSP_Company_Name__c,
-                                             proj.Project_Teams__r[0].NSP_Assignee__r.NSP_Job_Title__c,new List<String>{pf.NSP_Email_Address__c},
-                                             proj.Project_Teams__r[0].NSP_Assignee__r.Name,emailAttachmentList, mapofProjecttasks.get(proj.Id) );
-                                 
+                                        TemplateName__c=:label.FSOImplementationProject AND pse__Project_Status__c NOT IN :listOfProjectStatus])
+                {
+                    sendFundingDocumentMail(
+                        mapofprojectIdAssets.get( proj.Id ).NSP_AIMS_ClientNo__c ,
+                        mapofprojectIdAssets.get( proj.Id ).NSP_AIMS_Client_Name__c ,
+                        proj.Project_Teams__r[0].NSP_Assignee__r.NSP_Job_Title__c ,
+                        new List<String>{ pf.NSP_Email_Address__c } ,
+                        proj.Project_Teams__r[0].NSP_Assignee__r.Name ,
+                        mapPrjIdListAttachment.get( mapofProjecttasks.get( proj.Id ) ) ,
+                        mapofProjecttasks.get( proj.Id )
+                    );
                 }
             }
         }catch(Exception ex ){
             NSP_ErrorLogHandler.logSaveException('NSP_ProjectTaskTriggerEmailNotification', 'emailNotifyforFundingDocuments', ex.getMessage());
         }
-        
     }
+
     /***********************************************************************************************
     * MethodName: emailNotifyforFormCollected
     * Description : This Method send email notification when Form Collected project task completed
@@ -242,7 +255,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             List<String> ccAddress = new List<String>();
             if(!projectIdset.isEmpty()){
                 for(Implementation_Profile__c imp: [SELECT Id, NSP_Project__c,  NSP_Client_Liaison__c, NSP_Client_Liaison__r.NSP_Work_email__c, NSP_Project_Manager__c, NSP_Project_Manager__r.NSP_Work_email__c,
-                NSP_Manager_HR_Services__c, NSP_Manager_HR_Services__r.NSP_Work_email__c,NSP_HR_Specialist__c, NSP_HR_Specialist__r.NSP_Work_email__c 
+                NSP_Manager_HR_Services__c, NSP_Manager_HR_Services__r.NSP_Work_email__c,NSP_HR_Specialist__c, NSP_HR_Specialist__r.NSP_Work_email__c,NSP_Payroll_Specialist__c,NSP_Payroll_Specialist__r.NSP_Work_email__c 
                 FROM Implementation_Profile__c WHERE NSP_Project__c in:projectIdset ]){
                     
                     
@@ -257,6 +270,9 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     }
                     if(String.isNotBlank(imp.NSP_HR_Specialist__r.NSP_Work_email__c)){
                         ccAddress.add(imp.NSP_HR_Specialist__r.NSP_Work_email__c);
+                    }
+                    if(imp.NSP_Payroll_Specialist__c != null && String.isNotBlank(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c)){
+                        ccAddress.add(imp.NSP_Payroll_Specialist__r.NSP_Work_email__c);
                     }
                     mapofccEmailSet.put(imp.NSP_Project__c, ccAddress);
                 }
@@ -282,29 +298,53 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     mapOfAccountTeamEmail.put(accTeam.NSP_Account__c, accountTeamccAddress);
                 }
                 //get all subclient related to fso project account
-                for(NSP_Sub_Client__c sc: [SELECT Id,NSP_Account__c from NSP_Sub_Client__c  WHERE NSP_Account__c IN:accountIds]){
-                        if(!mapofSubclientIds.containsKey(sc.NSP_Account__c)){
-                        mapofSubclientIds.put(sc.NSP_Account__c, new Set<Id>());
-                        }
-                            mapofSubclientIds.get(sc.NSP_Account__c).add(sc.Id) ; 
-                            subclientIds.add(sc.Id);
+                for ( NSP_Sub_Client__c sc : [
+                            SELECT Id , NSP_Account__c , NSP_Account_Status__c
+                            FROM NSP_Sub_Client__c
+                            WHERE (
+                                ( NSP_Account_Status__c = :NSP_ServiceConstants.AIMS_STATUS )
+                                AND ( NSP_Account__c IN :accountIds )
+                            )
+                        ]
+                    )
+                {
+                    if ( !mapofSubclientIds.containsKey( sc.NSP_Account__c ) ) {
+                        mapofSubclientIds.put( sc.NSP_Account__c , new Set<Id>() );
+                    }
+                    mapofSubclientIds.get( sc.NSP_Account__c ).add( sc.Id );
+                    subclientIds.add( sc.Id );
                 }
             }
             //fetch all contacts  email who has On-site Supervisor and payroll contacts for to address
             
-            if(!subclientIds.isEmpty()){
-                for(NSP_Sub_Client_Contact__c scc: [SELECT Id, NSP_Contact__c, NSP_Sub_Client__c,NSP_Sub_Client__r.NSP_Account__c, NSP_Contact__r.NSP_Work_email__c, NSP_Contact__r.Name, NSP_Contact__r.NSP_Work_Phone__c, NSP_Payroll_Contact__c, NSP_On_Site_Supervisor__c, NSP_Job_Title__c
-                                                    FROM NSP_Sub_Client_Contact__c
-                                                    WHERE (NSP_Payroll_Contact__c=TRUE OR NSP_On_Site_Supervisor__c=TRUE) 
-                                                    AND  NSP_Sub_Client__c IN :subclientIds AND NSP_Contact__r.NSP_Work_email__c!=null]){
-
-                        if(!mapAccountIdSetContactEmail.containsKey(scc.NSP_Sub_Client__r.NSP_Account__c)){
-                                mapAccountIdSetContactEmail.put(scc.NSP_Sub_Client__r.NSP_Account__c,new Set<String>());   
-                        }   
-                        Set<String> toEmailSet =  mapAccountIdSetContactEmail.get(scc.NSP_Sub_Client__r.NSP_Account__c);
-                        toEmailSet.add(scc.NSP_Contact__r.NSP_Work_email__c);
-                        mapAccountIdSetContactEmail.put(scc.NSP_Sub_Client__r.NSP_Account__c,toEmailSet);                       
+            if ( !subclientIds.isEmpty() ) {
+                for ( NSP_Sub_Client_Contact__c scc : [
+                            SELECT
+                                Id , NSP_Work_Email__c , NSP_Contact__c , NSP_Sub_Client__c , NSP_Sub_Client__r.NSP_Account__c ,
+                                NSP_Contact__r.NSP_Work_email__c , NSP_Contact__r.Name , NSP_Contact__r.NSP_Work_Phone__c ,
+                                NSP_Payroll_Contact__c , NSP_On_Site_Supervisor__c , NSP_Job_Title__c
+                            FROM NSP_Sub_Client_Contact__c
+                            WHERE (
+                                ( ( NSP_Payroll_Contact__c = true ) OR ( NSP_On_Site_Supervisor__c = true ) )
+                                AND ( ( NSP_Paid_Non_Paid__c =: NSP_ServiceConstants.PAID_NON_PAID_WSEE ) OR ( NSP_Paid_Non_Paid__c =: NSP_ServiceConstants.PAID_NON_PAID_ACTIVE ) )
+                                AND ( NSP_Employee_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
+                                AND ( NSP_Sub_Client__c IN :subclientIds )
+                                AND ( ( NSP_Work_email__c != null ) OR ( NSP_Contact__r.NSP_Work_email__c != null ) )
+                            )
+                        ]
+                    )
+                {
+                    if ( !mapAccountIdSetContactEmail.containsKey( scc.NSP_Sub_Client__r.NSP_Account__c ) ) {
+                        mapAccountIdSetContactEmail.put( scc.NSP_Sub_Client__r.NSP_Account__c , new Set<String>() );
                     }
+                    Set<String> toEmailSet =  mapAccountIdSetContactEmail.get( scc.NSP_Sub_Client__r.NSP_Account__c );
+                    if ( scc.NSP_Work_Email__c != null ) {
+                        toEmailSet.add( scc.NSP_Work_email__c );
+                    } else if ( ( scc.NSP_Contact__c != null ) && ( scc.NSP_Contact__r.NSP_Work_email__c != null ) ) {
+                        toEmailSet.add( scc.NSP_Contact__r.NSP_Work_email__c );
+                    }
+                    mapAccountIdSetContactEmail.put( scc.NSP_Sub_Client__r.NSP_Account__c , toEmailSet );
+                }
             }
             
             if(!accountIdProjectTaskMap.values().isEmpty()){
@@ -497,9 +537,9 @@ public class NSP_ProjectTaskTriggerEmailNotification {
     
     public static void sendFundingDocumentMail(String aimsClient, String aimsClientName, String jobTitle, list<String> listOfTOAddresses, String projectManager, List<Messaging.EmailFileAttachment> emailAttachments, String prjTaskId){
         //email template for funding documents
-        String subjectString = aimsClientName+'('+aimsClient+')'+'– Funding Documents ';
-        String mailBody ='The funding documents for ' +aimsClientName+'('+aimsClient+')';
-        mailBody += 'are attached.'+'<br/><br/>';
+        String subjectString = aimsClientName+' ('+aimsClient+')'+' – Funding Documents ';
+        String mailBody ='The funding documents for ' +aimsClientName+' ('+aimsClient+')';
+        mailBody += ' are attached.'+'<br/><br/>';
         mailBody += 'Regards,'+'<br/>';
         mailBody += projectManager+'<br/>';
         mailBody += jobTitle;
@@ -512,9 +552,9 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                                             list<String> listOfCCAddresses, String projectManager, List<Messaging.EmailFileAttachment> emailAttachments, String prjcTaskId){
         
                                                 //email template for FEIN Document
-        String subjectString = aimsClientName+'('+aimsClient+')'+'– IRS Documentation collected ';
-        String mailBody ='The IRS Documentation for ' +aimsClientName+'('+aimsClient+')';
-        mailBody += 'has been collected and is attached.'+'<br/><br/>';
+        String subjectString = aimsClientName+' ('+aimsClient+')'+' – IRS Documentation collected ';
+        String mailBody ='The IRS Documentation for ' +aimsClientName+' ('+aimsClient+')';
+        mailBody += ' has been collected and is attached.'+'<br/><br/>';
         mailBody += 'Regards,'+'<br/>';
         mailBody += projectManager+'<br/>';
         mailBody += jobTitle;

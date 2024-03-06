@@ -24,6 +24,10 @@
                 <field>Prior_Bill_To_Contact__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Open_Orders__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillToContactId</field>
             </layoutItems>

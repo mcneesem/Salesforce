@@ -3,5 +3,6 @@
     <description>Group of Permission Sets to be granted to Team QE Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team QE</label>
+    <permissionSets>Use_Any_API_Client</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

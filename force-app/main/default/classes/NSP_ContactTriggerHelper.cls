@@ -139,7 +139,7 @@ public class NSP_ContactTriggerHelper {
                 createTaskforClientReference(clientRefernceContactList);
             }
         }
-        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if (newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
                     newList,
@@ -261,6 +261,9 @@ public class NSP_ContactTriggerHelper {
     public void afterUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
         //Modified as part of SOQL fix 228901 
         String loggedInUserProfile_Name;
+        List<Contact> queueNewContact = new List<Contact>();
+        Map<Id, Contact> queueOldMap = new Map<Id, Contact>();
+        Set<Id> processedContact = new Set<Id>();
         List<Profile> loggedInUserProfileName = New List<Profile>();
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
             loggedInUserProfileName = getLoggedInUserProfile();
@@ -270,28 +273,29 @@ public class NSP_ContactTriggerHelper {
         try{
             List<Contact> clientRefernceContactList = new List<Contact>();
             Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
-            Contact oldContact;
             //Modified as part of SOQL fix 228901
             if ( ( loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name) )
                 || ( loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name) )
                 )
             {
                 for(Contact conObj : newMap.values()){
-                    oldContact = oldMap.get(conObj.Id);
-                    if ( conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c
-                        && conObj.NSP_Client_Reference__c
-                        )
-                    {
-                        clientRefernceContactList.add(conObj);
-                    }
-                    if ( (conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c)
-                        || (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c)
-                        || oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c
-                        || oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c
-                        || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
-                        )
-                    {
-                        ConIdcontactMap.put(conObj.Id, conObj);
+                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
+                    if ( oldContact != null ) {
+                        if ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c
+                            && conObj.NSP_Client_Reference__c
+                            )
+                        {
+                            clientRefernceContactList.add(conObj);
+                        }
+                        if ( (conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c)
+                            || (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c)
+                            || oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c
+                            || oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c
+                            || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
+                            )
+                        {
+                            ConIdcontactMap.put(conObj.Id, conObj);
+                        }
                     }
                 }
                 if(clientRefernceContactList.size() > 0){
@@ -309,16 +313,22 @@ public class NSP_ContactTriggerHelper {
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
-        List<Contact> contactList = new List<Contact>();
-        contactList.addAll(newMap.values());
-        for(Contact addContact: newMap.values()){
-            contactList.add(addContact); 
+        if(newMap != null){
+            for(Contact conObj : newMap.values()){
+                Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
+                if(oldContact != null && conObj.AccountId !=null && conObj.AccountId != oldContact.AccountId && !processedContact.contains(conObj.Id))
+                {
+                    queueOldMap.put(conObj.Id,oldContact);
+                    queueNewContact.add(conObj);
+                    processedContact.add(conObj.Id); 
+                }
+            }
         }
-        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
-                    contactList,
-                    oldMap,
+                    queueNewContact,
+                    queueOldMap,
                     NSP_ServiceConstants.UPDATE_TRIGGER
                 )
             );

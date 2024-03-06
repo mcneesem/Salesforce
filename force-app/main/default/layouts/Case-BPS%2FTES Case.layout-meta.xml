@@ -232,7 +232,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Level_2_Date__c</field>
+                <field>NSP_Level_2_Assigned_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

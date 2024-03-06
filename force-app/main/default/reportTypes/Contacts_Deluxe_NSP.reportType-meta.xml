@@ -198,6 +198,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Contact_ID_18__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>IsEmailBounced</field>
             <table>Contact</table>
         </columns>
@@ -219,6 +224,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>LastModifiedDate</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_IsPrimary__c</field>
             <table>Contact</table>
         </columns>
         <columns>
@@ -343,6 +353,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>RecordType</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>OtherState</field>
             <table>Contact</table>
         </columns>
@@ -444,6 +459,31 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Formatted_Phone__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Running_SubRegion__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>HasUnmaskedEmail__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Alt_Email__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Personal_Email__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Work_email__c</field>
             <table>Contact</table>
         </columns>
         <masterLabel>Contacts</masterLabel>

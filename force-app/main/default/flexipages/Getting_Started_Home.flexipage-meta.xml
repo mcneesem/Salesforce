@@ -80,7 +80,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>height</name>
-                    <value>100</value>
+                    <value>140</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -96,7 +96,7 @@
                 <componentName>flexipage:visualforcePage</componentName>
                 <identifier>flexipage_visualforcePage</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
@@ -106,6 +106,11 @@
                         <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>NSP_L4_Support_Master_Admin</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>paul.mccluskey@insperity.com</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -160,16 +165,6 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>flavor</name>
-                    <value>list</value>
-                </componentInstanceProperties>
-                <componentName>home:newsPanel</componentName>
-                <identifier>home_newsPanel</identifier>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>wizardHomePage</componentName>

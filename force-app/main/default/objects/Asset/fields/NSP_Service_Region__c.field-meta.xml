@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Service Region</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
@@ -69,6 +70,12 @@
                 <fullName>FSO - Southwest</fullName>
                 <default>false</default>
                 <label>FSO - Southwest</label>
+            </value>
+            <value>
+                <fullName>FSO - Houston</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FSO - Houston</label>
             </value>
         </valueSetDefinition>
     </valueSet>

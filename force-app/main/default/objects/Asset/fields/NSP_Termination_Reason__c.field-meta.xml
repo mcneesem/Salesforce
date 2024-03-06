@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Termination Reason</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
@@ -134,6 +135,60 @@
                 <fullName>WO Support Ended</fullName>
                 <default>false</default>
                 <label>WO Support Ended</label>
+            </value>
+            <value>
+                <fullName>Bank gave free – Free with other service</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bank gave free – Free with other service</label>
+            </value>
+            <value>
+                <fullName>Cancelled During Implementation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cancelled During Implementation</label>
+            </value>
+            <value>
+                <fullName>Country not needed – subsidiary not needed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Country not needed – subsidiary not needed</label>
+            </value>
+            <value>
+                <fullName>ERP has module</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ERP has module</label>
+            </value>
+            <value>
+                <fullName>Financial - Delinquency</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Financial - Delinquency</label>
+            </value>
+            <value>
+                <fullName>Financial Trouble</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Financial Trouble</label>
+            </value>
+            <value>
+                <fullName>Functionality</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Functionality</label>
+            </value>
+            <value>
+                <fullName>Product Issues</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Product Issues</label>
+            </value>
+            <value>
+                <fullName>Termed WO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Termed WO</label>
             </value>
         </valueSetDefinition>
     </valueSet>

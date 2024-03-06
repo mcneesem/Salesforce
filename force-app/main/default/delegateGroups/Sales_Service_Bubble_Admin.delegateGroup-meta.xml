@@ -38,6 +38,9 @@
     <permissionSets>TES CSS Task Permissions</permissionSets>
     <permissionSets>Unemployment Contact Permission Set</permissionSets>
     <permissionSets>NSP Sales App Access</permissionSets>
+    <permissionSets>Merge Cases</permissionSets>
+    <permissionSets>Sales Member Access Perm Set</permissionSets>
+    <permissionSets>Sales - Service Object Permission</permissionSets>
     <permissionSets>Einstein Next Best Action - Unlimited Requests</permissionSets>
     <permissionSets>PSA - Administration</permissionSets>
     <permissionSets>Dialer Outbound</permissionSets>
@@ -80,12 +83,9 @@
     <permissionSets>Upsell Task</permissionSets>
     <permissionSets>Service Cloud User</permissionSets>
     <permissionSets>BPS Sales Admin and Mgr, Specific Perms</permissionSets>
-    <permissionSets>Sales Member Access Perm Set</permissionSets>
-    <permissionSets>Merge Cases</permissionSets>
-    <permissionSets>Sales - Service Object Permission</permissionSets>
-    <profiles>BPS Service</profiles>
     <profiles>Sales Member</profiles>
     <profiles>Sales Support</profiles>
+    <profiles>BPS Service</profiles>
     <profiles>Retirement Services</profiles>
     <profiles>System Admin Lite</profiles>
     <roles>BPS Administrator</roles>

@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Verify Client&apos;s Finance Level</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -12,24 +13,54 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Level 1</fullName>
+                <fullName>Level 1 - $1MM</fullName>
                 <default>false</default>
-                <label>Level 1</label>
+                <label>Level 1 - $1MM</label>
             </value>
             <value>
-                <fullName>Level 2</fullName>
+                <fullName>Level 2 - $750K</fullName>
                 <default>false</default>
-                <label>Level 2</label>
+                <label>Level 2 - $750K</label>
             </value>
             <value>
-                <fullName>Level 1R</fullName>
+                <fullName>Level 3 - $500k</fullName>
                 <default>false</default>
-                <label>Level 1R</label>
+                <label>Level 3 - $500k</label>
             </value>
             <value>
-                <fullName>Level 2R</fullName>
+                <fullName>Level 4 - $250K</fullName>
                 <default>false</default>
-                <label>Level 2R</label>
+                <label>Level 4 - $250K</label>
+            </value>
+            <value>
+                <fullName>Level 5 - $50K</fullName>
+                <default>false</default>
+                <label>Level 5 - $50K</label>
+            </value>
+            <value>
+                <fullName>Level R1 - $1MM</fullName>
+                <default>false</default>
+                <label>Level R1 - $1MM</label>
+            </value>
+            <value>
+                <fullName>Level R2 - $750K</fullName>
+                <default>false</default>
+                <label>Level R2 - $750K</label>
+            </value>
+            <value>
+                <fullName>Level R3 - $500k</fullName>
+                <default>false</default>
+                <label>Level R3 - $500k</label>
+            </value>
+            <value>
+                <fullName>Level R4 - $250K</fullName>
+                <default>false</default>
+                <label>Level R4 - $250K</label>
+            </value>
+            <value>
+                <fullName>Level R5 - $50K</fullName>
+                <default>false</default>
+                <label>Level R5 - $50K</label>
             </value>
         </valueSetDefinition>
     </valueSet>

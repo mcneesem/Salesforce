@@ -3,5 +3,6 @@
     <description>Group of Permission Sets to be granted to Team Mandalorians Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Mandalorians</label>
+    <permissionSets>Assign_Connected_App_Workbench</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

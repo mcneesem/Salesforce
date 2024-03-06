@@ -4,9 +4,9 @@
     <description>Usage Floor Quantity</description>
     <externalId>false</externalId>
     <formula>IF( NSP_Threshold_Applicable__c ,
-	IF(SBQQ__Quote__r.NSP_Multiple_Companies__c &amp;&amp; SBQQ__Quote__r.Total_Employess_of_all_companies__c &gt; NSP_Max_Quantity__c,
-			SBQQ__Quote__r.NSP_Threshold_Percentage__c *SBQQ__Quote__r.Total_Employess_of_all_companies__c,
-	  IF(NSP_Quoted_Quantity__c &gt; NSP_Max_Quantity__c ,SBQQ__Quote__r.NSP_Threshold_Percentage__c *NSP_Quoted_Quantity__c,0)),0) * 8</formula>
+IF(SBQQ__Quote__r.NSP_Multiple_Companies__c &amp;&amp; SBQQ__Quote__r.Total_Employess_of_all_companies__c &gt; NSP_Max_Quantity__c,
+SBQQ__Quote__r.NSP_Threshold_Percentage__c *SBQQ__Quote__r.Total_Employess_of_all_companies__c,
+IF(NSP_Quoted_Quantity__c &gt; NSP_Max_Quantity__c ,SBQQ__Quote__r.NSP_Threshold_Percentage__c *NSP_Quoted_Quantity__c,0)),0) * 8</formula>
     <label>Usage Floor Quantity</label>
     <precision>18</precision>
     <required>false</required>

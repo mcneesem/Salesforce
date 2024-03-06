@@ -10,6 +10,7 @@
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest (76%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
@@ -17,7 +18,6 @@ public class NSP_AccountTriggerHelper {
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
-    public static List < string > CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
 //Added as part of 128176
 public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
 // Added as part of 194459
@@ -94,18 +94,21 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             //modified for user story 191911    
             List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
             if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){ 
-                                
                 getPermSet = [SELECT Id, PermissionSetId, PermissionSet.Name, AssigneeId
                 FROM PermissionSetAssignment WHERE Assignee.IsActive = true AND 
                 AssigneeId =: userDetails.Id AND PermissionSetId IN 
                 (SELECT ParentId FROM ObjectPermissions WHERE SobjectType = 'Account' 
                 AND PermissionsModifyAllRecords = true )];    
             }
+            Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
+                'Named_Account_Group_Bypass_Restrictions',
+                UserInfo.getUserId()
+            );
             //Added as part of 128176
             // Modified on 02/2023-part of 194459- Bypass for MM roles
-            if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
+            if(!hasNamedAccountGroupBypass && userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
                 if(!getPermSet.isEmpty() || Test.isRunningTest()){
-                restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                 }
             }
         }catch(Exception ex){
@@ -394,24 +397,16 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
         }
     }
 
-    /**
-     * Restricts non-Admins from deleting Accounts.
-     * @param oldList List of New Account.
-     * @param oldMap List of New Account.
-     * @return void
-     * Ticket 582488
-     * author           | Date              | Description
-     * -------------------------------------------------------------------------------------
-     * Ruchi Roy         08/08/2022           Created this method
-     *                
-     */
-public void restrictDelete(List<Account> accountList, Map < Id, Account > accountMap) {
-        Id profileId = UserInfo.getProfileId();
-        List < Profile > profileName = New List < Profile > ();
-        profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId];
-        for (Account accObject: accountList) {
-            if (!CanDeleteAccountLead.contains(profileName[0].Name)) {
-                accObject.addError(System.Label.CANNOT_DELETE_ACCOUNT);
+    public void restrictDelete( List<Account> records , Map<Id,Account> deprecated ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
+            Boolean hasPermissionDelete = CustomPermissionController.checkUserPermission(
+                'Allow_Delete_Accounts' ,
+                UserInfo.getUserId()
+            );
+            if ( !hasPermissionDelete ) {
+                for ( Account record : records ) {
+                    record.addError( System.Label.CANNOT_DELETE_ACCOUNT );
+                }
             }
         }
     }

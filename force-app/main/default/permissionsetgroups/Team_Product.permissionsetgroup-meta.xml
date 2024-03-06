@@ -3,5 +3,6 @@
     <description>Group of Permission Sets to be granted to Team Product Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Product</label>
+    <permissionSets>Run_Flows</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

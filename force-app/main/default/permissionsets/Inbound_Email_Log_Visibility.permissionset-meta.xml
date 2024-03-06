@@ -8,6 +8,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>InboundEmailLog__c.CreatedMonth__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>InboundEmailLog__c.CreatedQuarter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>InboundEmailLog__c.FromAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>

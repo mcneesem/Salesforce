@@ -24,7 +24,6 @@ public class NSP_LeadTriggerHelper {
     private static final Id LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(LEAD_RT).getRecordTypeId();
     private static final string SYS_ADMIN = 'System Administrator';
     private static final string INTEGRATION_PROFILE = 'Integration User';
-    public static List<string> CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
     // Added as part of DF-01009
     private static final string REFERRAL_RECORDTYPE = 'Referral';
     private static final Id REFERRAL_RECORDTYPE_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(REFERRAL_RECORDTYPE).getRecordTypeId();
@@ -333,7 +332,11 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             //restrict lead edit access/change owner if logged in user not part of lead owner salesoffice group
             for (Id leadId: leadNewMap.keySet()) {
                 if (trigger.isupdate && trigger.isbefore) {
-                    if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
+                    Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
+                        'Named_Account_Group_Bypass_Restrictions',
+                        UserInfo.getUserId()
+                    );
+                    if (!hasNamedAccountGroupBypass && userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
                         if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
                             if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
                                 if (groupMemberList.isEmpty()) {
@@ -345,7 +348,8 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                 }
             }
         }
-    }    
+    }
+
     /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
 * @param leadNewMap Map of New leads. 
@@ -817,30 +821,20 @@ insert tasksList;
                        leadObject.NSP_Account_Segment__c = null;
                    }
     }
- 
 
-    // /**
-    // * Restricts non-Admins from deleting Leads.
-    // * @param oldList List of New Lead.
-    // * @param oldMap List of New Lead.
-    // * @return void
-    // * Ticket 582491
-    // * author           | Date              | Description
-    // * -------------------------------------------------------------------------------------
-    // * Ruchi Roy         08/08/2022           Created this method
-    // *                
-    // */     
-    public void restrictDelete(List<Lead> leadList, Map < Id, Lead > leadMap) {
-		Id profileId = UserInfo.getProfileId();
-        List<Profile> profileName = New List<Profile>();
-        profileName= [SELECT Id, Name from Profile WHERE Id = :profileId];
-		for(Lead leadObject: leadList ){
-			if(!CanDeleteAccountLead.contains(profileName[0].Name)){
-				leadObject.addError(System.Label.CANNOT_DELETE_LEAD);
-			}
-		}
-	}
- 
+    public void restrictDelete( List<Lead> records , Map<Id,Lead> deprecated ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
+            Boolean hasPermissionDelete = CustomPermissionController.checkUserPermission(
+                'Allow_Delete_Leads' ,
+                UserInfo.getUserId()
+            );
+            if ( !hasPermissionDelete ) {
+                for ( Lead record : records ) {
+                    record.addError( System.Label.CANNOT_DELETE_LEAD );
+                }
+            }
+        }
+    }
 
     // * Prevents Lead duplicate based on email address and OneTrust Opt-out
     // * Matt McNeese      04/28/2023           AZD Story 212804
