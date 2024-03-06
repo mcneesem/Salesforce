@@ -17,6 +17,7 @@ public with sharing class QuoteExtController {
         private SBQQ__Quote__c objQuote;
         public set<string> SE_Approval_Chain = new set<string>{'NSP_SE_Group_1','NSP_SE_Group_2','NSP_SE_MidMarket'};
         public boolean doNotAllow{get;set;}
+    	public boolean isTriggerCalculation{get;set;}
         public  String errorFromValidation{get;set;}
         public  String isRequestedDateValid{get;set;}
         public  String descriptionOfService{get;set;}
@@ -93,6 +94,14 @@ public with sharing class QuoteExtController {
             if(String.isNotBlank(system.label.NSP_Quote_Approval_Bypass_Profile)){
             profileMap = new Map<Id,Profile>([SELECT Id,Name FROM profile WHERE Name in : system.label.NSP_Quote_Approval_Bypass_Profile.split(',')]);
             }
+        
+        
+        if(objQuote != null && objQuote.SBQQ__Type__c == 'Amendment' && objQuote.Ready_for_Approval__c == false)
+        {
+				doNotAllow  = true;
+            	isTriggerCalculation = true;
+        }
+        
 
         if ( !profileMap.containsKey( UserInfo.getProfileId() ) || Test.isRunningTest() ) {
             errorFromValidation = NSP_QuoteApprovalPreValidation.validateRetirementServiceQuote(objQuote.Id);
@@ -301,11 +310,16 @@ public with sharing class QuoteExtController {
     */ 
         public PageReference onSubmit() {
             
-            if (objQuote != null && objQuote.Id != null ) {
+            	if(objQuote.ApprovalStatus__c == 'Approved')
+                {
+                    objQuote.SBQQ__Status__c = 'Approved';
+                }
                 update objQuote;
                 //SBAA.ApprovalAPI.submit(objQuote.Id, SBAA__Approval__c.Quote__c);
-            }
-            PageReference redirect = new PageReference('/apex/sbaa__PreviewApprovals?Id='+objQuote.Id); 
+            
+            
+
+            PageReference redirect = new PageReference('/apex/sbaa__PreviewApprovals?Id='+objQuote.Id);
             return redirect;
         }
         
@@ -318,6 +332,8 @@ public with sharing class QuoteExtController {
         
         public PageReference onRecall() {
             if (objQuote != null && objQuote.Id != null ) {
+                objQuote.Ready_for_Approval__c = false;
+                update objquote;
                 SBAA.ApprovalAPI.recall(objQuote.id, SBAA__Approval__c.Quote__c);
             }
             return new PageReference('/' + objQuote.id);
