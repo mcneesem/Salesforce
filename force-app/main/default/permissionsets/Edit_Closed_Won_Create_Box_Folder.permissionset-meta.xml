@@ -4,6 +4,7 @@
         <enabled>true</enabled>
         <name>Edit_Closed_Won_Create_Box_Folder</name>
     </customPermissions>
+    <description>Grants the Custom Permission: Edit Closed Won Create Box Folder</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Edit Closed Won Create Box Folder</label>
 </PermissionSet>
