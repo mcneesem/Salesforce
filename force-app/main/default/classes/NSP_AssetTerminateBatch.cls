@@ -30,7 +30,7 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
                     String assetObjectApiName = ASSET;  
         NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(assetObjectApiName, assetFields)            								            								
             .addFilter('AccountId', NULL, NSP_QueryBuilder.Operator.NOT_EQUALS,false)
-            .addFilter('RecordTypeId', WO_ASSET_RECORDTYPE , NSP_QueryBuilder.Operator.EQUALS,true)
+            .addFilter('RecordTypeId', NSP_AssetTerminateBatch.WO_ASSET_RECORDTYPE , NSP_QueryBuilder.Operator.EQUALS,true)
             .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.TERMINATED , NSP_QueryBuilder.Operator.EQUALS, true)
             .addFilter('NSP_Termination_Date__c', finalDate , NSP_QueryBuilder.Operator.LESS_THAN_OR_EQUALS, false)
             .setSecurityEnforce(false);      
@@ -45,7 +45,7 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
         
         //Loop through the asset list
         for(Asset asst : existAsset) {
-            Integer activeWOAssets = [SELECT Count() FROM Asset WHERE  AccountId =:asst.AccountId and NSP_Account_Status__c !=:NSP_ServiceConstants.TERMINATED and RecordTypeId =:WO_ASSET_RECORDTYPE];
+            Integer activeWOAssets = [SELECT Count() FROM Asset WHERE  AccountId =:asst.AccountId and NSP_Account_Status__c !=:NSP_ServiceConstants.TERMINATED and RecordTypeId =:NSP_AssetTerminateBatch.WO_ASSET_RECORDTYPE];
             if(activeWOAssets == 0){
                 //get exist account ids
                 accIds.add(asst.AccountId);
