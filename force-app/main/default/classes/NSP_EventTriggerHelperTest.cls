@@ -5,7 +5,7 @@ public without sharing class NSP_EventTriggerHelperTest {
     public static void setupTestData(){
         //Creating account
         List<Account> accList = new List<Account>();
-		Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
+        Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         acc.Name = 'Test Account';
         accList.add(acc);        
         Account acc1 = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
@@ -158,7 +158,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         newEvent.NSP_Event_Subtype__c = 'Discovery Call';
         newEvent.WhoId = conTest.Id;
         newEvent.WhatId = accTest.Id;
-	    String con1query = new NSP_QueryBuilder('Contact', ID_FIELD)
+        String con1query = new NSP_QueryBuilder('Contact', ID_FIELD)
                             .addFilter('LastName', 'Test con1').addLimit(1).build();
         Contact conTest1 = Database.query(con1query);
 
@@ -234,8 +234,7 @@ public without sharing class NSP_EventTriggerHelperTest {
     * @Description: This test method is used to cover updateResourceAbsenceDate
     * @return void  
     */
-    @isTest
-    private static void resyncTest(){
+    @isTest private static void resyncTest(){
         Test.startTest();
         List<Event> eventList = [SELECT ID, Subject, IsRecurrence, StartDateTime FROM Event WHERE Subject = 'Test Subject For Event Rec' AND IsRecurrence = true LIMIT 1];
         if(eventList.size() > 0){
