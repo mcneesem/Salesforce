@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Benefits_MessagingSession</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Contact Center Benefits</label>
+    <queue>NSP_Benefits</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

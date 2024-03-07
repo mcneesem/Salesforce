@@ -958,14 +958,17 @@ Date        : 30/09/2021
                && reassignrecTypeIds.contains(eachCase.RecordTypeId)){
                    ownerChnagedCases.add(eachCase.Id);
                }
-            
+
             /*Added as part of STY-02181*/
-            if(caseOldMap.get(eachCase.Id).Status != eachCase.Status
-               && eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS 
-               && eachCase.Subject.contains(NSP_ServiceConstants.HCM_CASE_SUBJECT)){
-                   hcmCaseList.add(eachCase);
-               }
-            
+            if ( ( caseOldMap.get( eachCase.Id ).Status != eachCase.Status )
+                && ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
+                && String.isNotBlank( eachCase.Subject )
+                && eachCase.Subject.contains( NSP_ServiceConstants.HCM_CASE_SUBJECT )
+                )
+            {
+                hcmCaseList.add( eachCase );
+            }
+
             /*Added as part of STY-00762*/
             if(caseOldMap.get(eachCase.Id).NSP_Detail__c != eachCase.NSP_Detail__c
                && eachCase.NSP_Category__c == NSP_ServiceConstants.CASE_CATEGORY_SERVICE_OPERATIONS
@@ -991,20 +994,28 @@ Date        : 30/09/2021
                && eachCase.NSP_Case_Sub_Status__c == NSP_ServiceConstants.CASE_SUB_STATUS_WIRE_MIGRATION_COMPLETE){
                    migrationCompleteCaseList.add(eachCase);
                }
-            
+
             //As a part of STY-02183
-            if(eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS && 
-               eachCase.NSP_Is_Case_Closed__c && !caseOldMap.get(eachCase.Id).NSP_Is_Case_Closed__c && 
-               eachCase.Subject.contains(NSP_ServiceConstants.BANK_AUDIT_CASE_SUBJECT)){
-                   bankAuditCaseList.add(eachCase);
-               }
-            
+            if ( ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
+                && eachCase.NSP_Is_Case_Closed__c
+                && !caseOldMap.get( eachCase.Id ).NSP_Is_Case_Closed__c
+                && String.isNotBlank( eachCase.Subject )
+                && eachCase.Subject.contains( NSP_ServiceConstants.BANK_AUDIT_CASE_SUBJECT )
+                )
+            {
+                bankAuditCaseList.add( eachCase );
+            }
+
             //As a part of STY-02182
-            if(eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS && 
-               eachCase.Status != caseOldMap.get(eachCase.Id).Status && 
-               eachCase.Subject.contains(NSP_ServiceConstants.FIRST_LIVE_PAYROLL_CASE_SUB)){
-                   firstPayrollCaseList.add(eachCase);
-               }
+            if ( ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
+                && ( eachCase.Status != caseOldMap.get( eachCase.Id ).Status )
+                && String.isNotBlank( eachCase.Subject )
+                && eachCase.Subject.contains( NSP_ServiceConstants.FIRST_LIVE_PAYROLL_CASE_SUB )
+                )
+            {
+                firstPayrollCaseList.add( eachCase );
+            }
+
             //Added as part of STY-03638
             if(caseOldMap.get(eachCase.Id).Type != eachCase.Type 
                && caseOldMap.get(eachCase.Id).RecordTypeId == bpsRecordTypeId

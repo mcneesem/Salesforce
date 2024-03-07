@@ -585,21 +585,32 @@ public String formatCommonPattern(String input) {
                 .addFilter('Id', UserInfo.getProfileId()).setSecurityEnforce(false).build();
         return Database.query(queryProfile);
     }
-    
-    /**
-	* Method Name : getLoggedInUserProfileName 
-	* Date : 11/08/2023
-	* @param   
-	* @return String  profileName
-	*/   
+
+    //
+    // Method Name : getLoggedInUserProfileName 
+    // Date : 11/08/2023
+    // @param
+    // @return String profileName
+    //
     public String getLoggedInUserProfileName() {
-        
-        Id profileId = userinfo.getProfileId();
-        String profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId LIMIT 1].Profile_Name__c;
-		
+        String profileName = '';
+        List<User> autouser = [ SELECT Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
+        if ( !autoUser.isEmpty() && ( autoUser[0].Alias == 'autoproc' ) ) {
+            profileName = 'AutoProc';
+        } else {
+            List<NSP_Profile_Detail__mdt> profileDetails = [
+                SELECT Profile_Name__c
+                FROM NSP_Profile_Detail__mdt
+                WHERE ( Profile_ID__c = :UserInfo.getProfileId() )
+                LIMIT 1
+            ];
+            if ( !profileDetails.isEmpty() ) {
+                profileName = profileDetails[0].Profile_Name__c;
+            }
+        }
         return profileName;
     }
-    
+
     /**
 	* Method Name : getRegionId 
 	* Description : STY-02849/DF-05013 Method to United State region id

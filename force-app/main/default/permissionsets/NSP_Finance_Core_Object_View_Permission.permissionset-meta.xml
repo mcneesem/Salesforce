@@ -7239,7 +7239,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Recurrence_Interval__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10574,7 +10574,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Recurrence_Interval__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

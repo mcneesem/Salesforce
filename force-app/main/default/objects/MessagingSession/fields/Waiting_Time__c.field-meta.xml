@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Waiting_Time__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    Wait_Time__c != 0,
+    IF(
+        FLOOR(Wait_Time__c / 3600) &gt; 0,
+        TEXT(FLOOR(Wait_Time__c / 3600)) + &quot; Hour &quot;,
+        &apos;&apos;
+    )
+    + IF(
+        FLOOR(MOD(Wait_Time__c, 3600) / 60) &gt; 0,
+        TEXT(FLOOR(MOD(Wait_Time__c, 3600) / 60)) + &quot; Minutes &quot;,
+        &apos;&apos;
+    )
+    + IF(
+        ROUND(MOD(MOD(Wait_Time__c, 3600), 60), 0) &gt; 0,
+        TEXT(ROUND(MOD(MOD(Wait_Time__c, 3600), 60), 0)) + &quot; Seconds&quot;,
+        &apos;&apos;
+    ),
+    &apos;&apos;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Waiting Time</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
