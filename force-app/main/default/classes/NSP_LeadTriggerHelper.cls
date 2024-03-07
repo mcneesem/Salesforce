@@ -15,7 +15,7 @@ Modification Log     :
 
 
 public class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (76%)
+    // test w/ NSP_LeadTriggerHelperTest (83%)
     
     public static final List < String > reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split(';');
     private static final string NEW_LEAD_RT = 'NSP_New_Lead_Record_Type';
