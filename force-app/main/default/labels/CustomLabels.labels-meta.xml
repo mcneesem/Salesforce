@@ -6164,4 +6164,11 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
     </labels>
+    <labels>
+        <fullName>ReadyForApprovalError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReadyForApprovalError</shortDescription>
+        <value>Check the &apos;Ready for Approval&apos; box and wait until the quote recalculates before submitting for approval.</value>
+    </labels>
 </CustomLabels>
