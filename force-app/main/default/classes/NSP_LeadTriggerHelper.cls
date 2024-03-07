@@ -394,8 +394,8 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                                     newRecord = leadNewMap.get( leadId );
                                 }
                                 if ( ( newRecord != null )
+                                    && ( newRecord.Status != oldRecord.Status )
                                     && ( newRecord.Status == 'Working' )
-                                    && ( oldRecord.Status != 'Working' )
                                     )
                                 {
                                     isStatusChangedToWorking = True;
