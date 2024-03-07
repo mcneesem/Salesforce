@@ -76,12 +76,14 @@ public class NSP_EventTriggerHelper {
             Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
             if(eventNewMap != null){
             	for (Event newEventRecord : eventNewMap.Values()){
-                	Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
-                	if ((newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE)
-                        && oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime))
-                    {
-                    	rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
-                	} 
+                    if( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ){
+                		Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
+                		if ((newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE)
+                        	&& oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime))
+                    	{
+                    		rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                    	} 
+                	}
             	}
             }
             if (rescheduledEventsMap.size() > 0){
@@ -109,11 +111,16 @@ public class NSP_EventTriggerHelper {
             }
          	if (resourceAbsenceList.size() > 0){
                 for (ResourceAbsence eachRA : resourceAbsenceList){
-                    eachRA.Start = rescheduledEventsMap.get(eachRA.Event_Id__c).StartDateTime;
-                    eachRA.End = rescheduledEventsMap.get(eachRA.Event_Id__c).EndDateTime;
-                    resourceAbsenceToUpdateList.add(eachRA);
+                	if ( rescheduledEventsMap.containsKey( eachRA.Event_Id__c ) ) {
+    					Event record = rescheduledEventsMap.get( eachRA.Event_Id__c );
+    					if ( record != null ) {
+        					eachRA.Start = record.StartDateTime;
+        					eachRA.End = record.EndDateTime;
+        					resourceAbsenceToUpdateList.add(eachRA);
+                    	}
+                	}
                 }
-         	}
+            }
             if (resourceAbsenceToUpdateList.size() > 0){
                 Update resourceAbsenceToUpdateList;
             }
