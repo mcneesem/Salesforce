@@ -235,7 +235,7 @@ public without sharing class NSP_EventTriggerHelperTest {
     * @return void  
     */
     @isTest
-    public static void resyncTest(){
+    private static void resyncTest(){
         Test.startTest();
         List<Event> eventList = [SELECT ID, Subject, IsRecurrence, StartDateTime FROM Event WHERE Subject = 'Test Subject For Event Rec' AND IsRecurrence = true LIMIT 1];
         if(eventList.size() > 0){
