@@ -29,6 +29,10 @@ public class NSP_OpportunityTriggerHelperTest {
     @testSetup
     static void testData() {
        
+        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
+        setting.Is_Edit_Closed_Won_Allowed__c = true;
+        insert setting;
+        
         //Account creation
         Account accoutObject = new Account();
         accoutObject.Name = 'Test Account';
@@ -46,7 +50,12 @@ public class NSP_OpportunityTriggerHelperTest {
         accoutObject1.Name = 'Test Account1';
         //inserting account object
         insert accoutObject1;
-       
+
+        Account accoutObject2 = new Account();
+        accoutObject2.Name = 'Test Account2';
+        //inserting account object
+        insert accoutObject2;
+
         // Inserting Contract
         Contract ct = new Contract();
         ct.AccountId = accoutObject1.Id;
@@ -117,8 +126,7 @@ public class NSP_OpportunityTriggerHelperTest {
         NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         insert opportuniytObject5;
         NSP_OpportunityTriggerHandler.TriggerDisabled = false;
-       
-   
+          
         Test.startTest();
         List<Opportunity> oppList2 = new List<Opportunity>();       
         Opportunity opportuniytObject3 = new Opportunity();
@@ -156,9 +164,32 @@ public class NSP_OpportunityTriggerHelperTest {
         quoteRec.SBQQ__Primary__c = true;
         quoteRec.SBQQ__Type__c = 'New Product';
         quoteRec.SBQQ__Status__c = 'Approved';
-       
         insert quoteRec;
-       
+
+        Opportunity opportuniytObject6 = new Opportunity();
+        opportuniytObject6.Name = 'Closed Won Oppty';
+        opportuniytObject6.AccountId = accoutObject2.id;
+        opportuniytObject6.CloseDate = date.today();
+        opportuniytObject6.CurrencyIsoCode = CURRENCY_USD;
+        opportuniytObject6.NSP_Number_of_Employees__c = 10;
+        opportuniytObject6.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        insert opportuniytObject6;
+
+        SBQQ__Quote__c quoteRec1 = new SBQQ__Quote__c();
+        quoteRec1.SBQQ__Opportunity2__c = opportuniytObject6.Id;
+        quoteRec1.SBQQ__Account__c = opportuniytObject6.AccountId;
+        quoteRec1.SBQQ__Primary__c = true;
+        quoteRec1.SBQQ__Type__c = 'New Product';
+        quoteRec1.SBQQ__Status__c = 'Approved';
+        insert quoteRec1;
+
+        opportuniytObject6.StageName = NSP_SalesConstants.PROPOSAL_STAGE;
+	    opportuniytObject6.SBQQ__PrimaryQuote__c = quoteRec1.id;
+        Update opportuniytObject6;
+
+        opportuniytObject6.StageName = NSP_SalesConstants.CLOSED_WON_STAGE;
+        Update opportuniytObject6;
+        
         insert taskList;
         List<Opportunity> childOppList = new List<Opportunity>();
         //Create child opportunity for Retirement Service
@@ -189,7 +220,7 @@ public class NSP_OpportunityTriggerHelperTest {
         
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
         insert pricebook;
-        
+
         Test.stopTest();
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject.Id,true);
 
@@ -901,8 +932,8 @@ static void createAssetTest3(){
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Id = oppId;
         opportuniytObject.NSP_Number_of_Employees__c = 200;
-        //Inserting Opportunity Object
         update opportuniytObject;
+
         Test.stopTest();
     }
     
@@ -962,72 +993,30 @@ static void createAssetTest3(){
     static void testSendFileRequest() {
         
         Test.startTest();
+        String expectedError = 'You can not modify a Closed Won Opportunity';
 
-        //  Create temporary user and set Profile to 'Sales Manager'
-        User user = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
-            LastName = 'TestClassUser',
-            Phone = '1231231231',
-            Email = 'testuser@insperity.com',
-            Username = 'testuser@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US',
-            NSP_Sales_Office_Membership__c = '301'
-        );
-        insert user;
+        try{
+            List<Opportunity> opp1 = [SELECT id, Name, StageName, AVA_SFCLOUD__Sales_Tax__c, Create_Box_com_Folder_s__c 
+                                      FROM Opportunity
+                                      WHERE Name = 'Closed Won Oppty'] ; 
 
-        //  Create account
-        Account acct = new Account();
-        acct.Name = 'Test Account';
-        insert acct;
+            //  Try to change not allowed fields
+            opp1[0].AVA_SFCLOUD__Sales_Tax__c = 10;
+            opp1[0].Name = 'Test Opportunity change';
 
-        //  Create opportunity
-        Opportunity oppty = new Opportunity();
-        oppty.accountId = acct.id;
-        oppty.ownerId = user.id;
-        oppty.CloseDate = date.today();
-        oppty.StageName = 'Discovery';
-        insert oppty;
+            //  Set checkbox to true
+            opp1[0].Create_Box_com_Folder_s__c = true;
 
-        //  Create quote with status Approved
-        SBQQ__Quote__c quote = new SBQQ__Quote__c();
-        quote.SBQQ__Opportunity2__c = oppty.Id;
-        quote.SBQQ__Account__c = oppty.AccountId;
-        quote.SBQQ__Primary__c = true;
-        quote.SBQQ__Type__c = 'New Product';
-        quote.SBQQ__Status__c = 'Approved';
-        insert quote;
-
-        //  Move opportunity to Proposal and set the primary quote
-        oppty.SBQQ__PrimaryQuote__c = quote.Id;
-        oppty.StageName = 'Proposal';
-        update oppty;
-
-        //  Move opportunity to closed won
-        oppty.StageName = 'Closed Won';
-        oppty.NSP_Merge_On_Demand_Template_Selection__c = 'NDA';
-        oppty.AVA_SFCLOUD__Sales_Tax__c = 1000;
-        oppty.Type = NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY;
-        update oppty;
-
-        System.runAs(user) {
-            //  Trigger the flow 'Box Opportunity Folder and Sub Folder Creation' by setting the checkbox 'Create Box' to true
-            oppty.Create_Box_com_Folder_s__c = true;
-            try {
-                update oppty; // PMCC ~ prevent DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
-            } catch ( Exception e ) {
-                System.debug( ' ~ CATCH ~ e=' + e );
-            }
-            Opportunity opp = [Select Id,Create_Box_com_Folder_s__c FROM Opportunity WHERE id =: oppty.id LIMIT 1];
+            //  Update Opportunity
+        	update opp1;
+        }
+        catch(Exception e){
+            //	An error is expected
+            System.assertEquals(true , e.getMessage().contains(expectedError));
+        }
+        finally{
             Test.stopTest();
-            // The field 'Create Box' should be set to true without any errors
-            //System.assertEquals(true, opp.Create_Box_com_Folder_s__c);
-       }
+        }
+        
     }
 }
-//
