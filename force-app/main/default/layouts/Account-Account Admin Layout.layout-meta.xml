@@ -131,6 +131,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Named_Account_Group_Owner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Referring_Partner__c</field>
             </layoutItems>
             <layoutItems>
@@ -1470,6 +1474,10 @@
         <editHeading>true</editHeading>
         <label>Not Mapped to UI NSP fields(A-D)</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Assignment_Method__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>CurrencyIsoCode</field>

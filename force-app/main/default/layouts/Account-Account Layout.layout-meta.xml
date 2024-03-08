@@ -110,6 +110,10 @@
                 <field>Named_Account_Group__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Named_Account_Group_Owner__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
             </layoutItems>
@@ -130,6 +134,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Account_Segment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Assignment_Method__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
