@@ -37,16 +37,36 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
         String query = queryBuilder.build();        
         return Database.getQueryLocator(query);                
     }
-    global void execute(Database.BatchableContext bc, List<Asset> existAsset){
-        Set<Id> accIds = new Set<Id>();
+    global void execute(Database.BatchableContext bc, List<Asset> existAsset){        
         List<Asset> assetToBeUpdated = new List<Asset>();
         Map<ID,Date> accountIDTermDateMap = new  Map<ID,Date>();
         List<ID> assetRecordIDList = getAssetRecordID();
         
+        Set<Id> accountIds = new Set<Id>();
+        for ( Asset record : existAsset ) {
+            accountIds.add( record.AccountId );
+        }
+        List<Account> parents = [
+            SELECT Id , ( SELECT Id FROM Assets WHERE ( ( NSP_Account_Status__c !=: NSP_ServiceConstants.TERMINATED ) AND ( RecordTypeId =: NSP_AssetTerminateBatch.WO_ASSET_RECORDTYPE ) ) )
+            FROM Account
+            WHERE ( Id IN :accountIds )
+        ];
+        Map<Id,Account> parentsMap = new Map<Id,Account>( parents );
+        
         //Loop through the asset list
+        Set<Id> accIds = new Set<Id>();
         for(Asset asst : existAsset) {
-            Integer activeWOAssets = [SELECT Count() FROM Asset WHERE  AccountId =:asst.AccountId and NSP_Account_Status__c !=:NSP_ServiceConstants.TERMINATED and RecordTypeId =:NSP_AssetTerminateBatch.WO_ASSET_RECORDTYPE];
-            if(activeWOAssets == 0){
+            Boolean hasNonTerminatedWoAsset = False;
+            if ( parentsMap.containsKey( asst.AccountId )
+                && ( parentsMap.get( asst.AccountId ) != null )
+                && ( parentsMap.get( asst.AccountId ).Assets != null )
+                && ( parentsMap.get( asst.AccountId ).Assets.size() > 0 )
+               )
+            {
+                // we have a non-terminated WO Asset for this AccountId
+                hasNonTerminatedWoAsset = True;
+            }
+            if(!hasNonTerminatedWoAsset){
                 //get exist account ids
                 accIds.add(asst.AccountId);
                 //map of account ID and termination date 
