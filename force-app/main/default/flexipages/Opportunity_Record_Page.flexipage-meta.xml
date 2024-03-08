@@ -396,6 +396,23 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TransitionType__c</fieldItem>
+                <identifier>RecordNSP_TransitionType_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New_Client_Sales</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_AddonType__c</fieldItem>
                 <identifier>RecordNSP_AddonType_cField</identifier>
             </fieldInstance>
@@ -1225,6 +1242,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Secondary_Products__c</fieldItem>
                 <identifier>RecordNSP_Secondary_Products_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TransitionType__c</fieldItem>
+                <identifier>RecordNSP_TransitionType_cField4</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New_Client_Sales</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
