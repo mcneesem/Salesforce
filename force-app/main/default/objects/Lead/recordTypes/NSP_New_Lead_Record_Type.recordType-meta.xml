@@ -6,6 +6,29 @@
     <description>This record type is used to display New Page layout only with 5 key fields at the time of lead creation. Once lead is saved, record type will be changed to change page layout</description>
     <label>New Lead Record Type</label>
     <picklistValues>
+        <picklist>Account_Assignment_Method__c</picklist>
+        <values>
+            <fullName>Available Account Assignment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-ABX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Target Account Assignment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Accounting_Software__c</picklist>
         <values>
             <fullName>Intacct</fullName>
