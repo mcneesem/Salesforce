@@ -55,6 +55,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Account_Assignment_Method__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Sales_Service_Account_Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -286,10 +290,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Year_Established__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Account_Assignment_Method__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
