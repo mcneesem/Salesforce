@@ -3,7 +3,47 @@
     <description>Core Sales User Permission Set</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountContactRelation.NSP_Active_Influencer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_Employee_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_Influence_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountContactRelation.NSP_Job_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_KDMs_Perspective_of_Relationship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_KIP_Perspective_of_Relationship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_Service_Roles__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.NSP_Status_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
