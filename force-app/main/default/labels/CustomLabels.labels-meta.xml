@@ -985,6 +985,13 @@
         <value>You do not have access to bypass docusign signature.</value>
     </labels>
     <labels>
+        <fullName>NSP_CANNOT_CHANGE_CLOSEDWON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CANNOT_CHANGE_CLOSEDWON</shortDescription>
+        <value>You can not modify a Closed Won Opportunity</value>
+    </labels>
+    <labels>
         <fullName>NSP_CANNOT_MOVE_TO_CLOSEDLOST</fullName>
         <categories>closed lost, roles eligible</categories>
         <language>en_US</language>
