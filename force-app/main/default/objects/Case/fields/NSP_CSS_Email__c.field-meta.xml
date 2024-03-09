@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>CSS Email</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Email</type>
     <unique>false</unique>
