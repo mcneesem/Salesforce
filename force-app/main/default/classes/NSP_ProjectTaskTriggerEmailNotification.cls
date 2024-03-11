@@ -237,7 +237,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
 
         
         try{
-            for(pse__Proj__c proj:[SELECT Id, pse__Account__c,Project_Team_Payroll_Specialist__c,
+            for(pse__Proj__c proj:[SELECT Id, pse__Account__c,Project_Team_Payroll_Specialist__c,NSP_Account__c,NSP_RET_Client_ID__c,
                                         (SELECT NSP_Assignee__c, NSP_Assignee__r.Name, 
                                         NSP_Assignee__r.NSP_Work_email__c, NSP_Assignee__r.NSP_Work_Phone__c  
                                         FROM Project_Teams__r 
@@ -373,8 +373,20 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                         if(!records.isEmpty()){
                             fromAddress = records[0].Email;
                         }
+                        String subjectString = '';
+                        if ( ( proj != null )
+                            && String.isNotBlank( proj.NSP_Account__c )
+                            && String.isNotBlank( proj.NSP_RET_Client_ID__c )
+                            )
+                        {
+                            subjectString = proj.NSP_Account__c +' ('+ proj.NSP_RET_Client_ID__c+')'+ ' – ';
+                        }
+                        if(template!=null){
+                            subjectString = subjectString + template.subject;
+                        }
                         sendMail(
-                            template.Subject,mailBody,
+                            subjectString,
+                            mailBody,
                             listOfTOAddresses,
                             null,
                             listOfCCAddresses,
