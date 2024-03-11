@@ -116,15 +116,6 @@
         <name>New Year&apos;s Day 2025</name>
     </holidays>
     <holidays>
-        <activityDate>2024-03-07</activityDate>
-        <businessHours>Contact Center</businessHours>
-        <description>QE Testing Time</description>
-        <endTime>16:00:00.000Z</endTime>
-        <isRecurring>false</isRecurring>
-        <name>QE Day</name>
-        <startTime>15:30:00.000Z</startTime>
-    </holidays>
-    <holidays>
         <activityDate>2023-11-24</activityDate>
         <businessHours>Default</businessHours>
         <isRecurring>false</isRecurring>
