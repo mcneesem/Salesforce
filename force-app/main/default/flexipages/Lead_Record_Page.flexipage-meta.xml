@@ -631,16 +631,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
-                <identifier>RecordAccount_Assignment_Method_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_DC_SetDate__c</fieldItem>
                 <identifier>RecordNSP_DC_SetDate_cField</identifier>
             </fieldInstance>
@@ -727,6 +717,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1029,16 +1029,6 @@
                 <identifier>RecordNSP_Other_Lead_Source_cField2</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
-                <identifier>RecordAccount_Assignment_Method_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-5b94a7f5-f24a-4649-bbe1-642ec03f5c85</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1051,6 +1041,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1403,8 +1403,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
-                <identifier>RecordAccount_Assignment_Method_cField3</identifier>
+                <fieldItem>Record.NSP_Partner__c</fieldItem>
+                <identifier>RecordNSP_Partner_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1413,8 +1413,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Partner__c</fieldItem>
-                <identifier>RecordNSP_Partner_cField3</identifier>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-bd99d3aa-1231-4aee-9bea-7e42f516637c</name>
