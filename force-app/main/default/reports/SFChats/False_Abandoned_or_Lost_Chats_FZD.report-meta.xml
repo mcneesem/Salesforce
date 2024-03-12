@@ -54,7 +54,7 @@
     <currency>USD</currency>
     <description>False, abandoned or lost chats - STY-258418</description>
     <filter>
-        <booleanFilter>((1 AND 2) OR (3 AND 4)) OR 5</booleanFilter>
+        <booleanFilter>(((1 AND 2) OR (3 AND 4)) OR 5) AND 6</booleanFilter>
         <criteriaItems>
             <column>MessagingSession$Status</column>
             <columnToColumn>false</columnToColumn>
@@ -90,6 +90,14 @@
             <operator>equals</operator>
             <value>5</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>MessagingSession$Sub_Topic__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
