@@ -63,6 +63,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>MessagingSession.Sub_Topic__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MessagingSession.Wait_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Logged_in_User_check__c</field>
         <readable>true</readable>
     </fieldPermissions>
