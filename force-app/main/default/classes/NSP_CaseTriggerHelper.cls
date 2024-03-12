@@ -450,6 +450,7 @@ Date        : 30/09/2021
                     && ( oldOwnerId.getSobjectType() != Schema.User.SObjectType )
                     && ( newOwnerId.getSobjectType() == Schema.User.SObjectType )
                     && ( eachCase.NSP_First_Level2_Assigned_Duration__c == null )
+                    && ( eachCase.NSP_Level_2_Assigned_Date__c != null )
                     )
                 {
                     eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifferenceInMin(
@@ -2100,9 +2101,12 @@ Description : This method calculates Time Difference including the business hour
 Params:       String businessHoursId, DateTime startDate, DateTime endDate
 ********************************************************************************************/    
     public Decimal calculateTimeDifferenceInMin(String businessHoursId, DateTime startDate, DateTime endDate) {
-        Long timeDifference = BusinessHours.diff(businessHoursId, startDate, endDate);
-        decimal seconds =  timeDifference/1000;
-        decimal mins = (seconds / 60).setscale(2); 
+        Decimal mins = 0.0;
+        if ( ( businessHoursId != null ) && ( startDate != null ) && ( endDate != null ) ) {
+            Long timeDifference = BusinessHours.diff(businessHoursId, startDate, endDate);
+            decimal seconds =  timeDifference/1000;
+            mins = (seconds / 60).setscale(2);
+        }
         return mins;
     }
     
