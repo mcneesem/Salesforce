@@ -5923,6 +5923,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Will payroll be submitted from multiple contacts?</value>
     </labels>
     <labels>
+        <fullName>ReadyForApprovalError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReadyForApprovalError</shortDescription>
+        <value>Check the &apos;Ready for Approval&apos; box and wait until the quote recalculates before submitting for approval.</value>
+    </labels>
+    <labels>
         <fullName>RecepientIdStateretProgram</fullName>
         <language>en_US</language>
         <protected>false</protected>
