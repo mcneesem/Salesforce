@@ -15,7 +15,6 @@ public class NSP_CaseTriggerHelper {
     public final String TASKSTATUS = 'Completed';
     public final String TASKSUBJECT = 'Time Entry';
     private static final String STARTSWITHUSER = '005';
-    private static final String NSP_CASETRIGGERHELPER = 'NSP_CaseTriggerHelper';
     private static final String STARTSWITHGROUP = '00G';
     List<Case> closedCaseLst ;
     Map<Id, Group> queueMap ;
@@ -1765,7 +1764,11 @@ created case will be updated to cancelled.
                 if(!pCaseList.isEmpty()){
                     //updating Parent Case
                     List<Database.SaveResult> results = Database.update(pCaseList, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'updateParentItaCqaCase', results );
+                    NSP_ErrorLogHandler.logSaveResult(
+                        NSP_CaseTriggerHelper.class.getName() ,
+                        'updateParentItaCqaCase' ,
+                        results
+                    );
                 }
             }
         } catch ( Exception e ) {
@@ -1805,7 +1808,11 @@ Story:        STY-01785
                 }
                 if(!cseListToUpdate.isEmpty()){
                     List<Database.SaveResult> results = Database.update(cseListToUpdate, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'updatePrentItaCqaCaseStatus', results );    
+                    NSP_ErrorLogHandler.logSaveResult(
+                        NSP_CaseTriggerHelper.class.getName() ,
+                        'updatePrentItaCqaCaseStatus' ,
+                        results
+                    );
                 }
             }
         } catch ( Exception e ) {
@@ -1833,7 +1840,11 @@ Story:        STY-01785
             }
             if(!pCseListToUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update(pCseListToUpdate, false);
-                NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'reOpenParentItaCqaCase', results );                
+                NSP_ErrorLogHandler.logSaveResult(
+                    NSP_CaseTriggerHelper.class.getName() ,
+                    'reOpenParentItaCqaCase' ,
+                    results
+                );
             }
         } catch ( Exception e ) {
             NSP_CaseTriggerHelper.handleException(
@@ -2124,7 +2135,11 @@ Created by : Harsha Khiroya
         }
         if(!updatedContactList.isEmpty()){
             List<Database.SaveResult> results = Database.update(updatedContactList, false);
-            NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'UpdateServiceRequestChannel', results );
+            NSP_ErrorLogHandler.logSaveResult(
+                NSP_CaseTriggerHelper.class.getName() ,
+                'UpdateServiceRequestChannel' ,
+                results
+            );
         }
         
     }
