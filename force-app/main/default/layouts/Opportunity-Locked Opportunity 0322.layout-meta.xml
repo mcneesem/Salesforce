@@ -559,6 +559,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_Primary_Quote_Link__c</field>
             </layoutItems>
         </layoutColumns>

@@ -278,6 +278,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Bypass_Docusign_Signature__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
