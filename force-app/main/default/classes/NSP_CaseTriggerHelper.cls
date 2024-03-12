@@ -15,7 +15,6 @@ public class NSP_CaseTriggerHelper {
     public final String TASKSTATUS = 'Completed';
     public final String TASKSUBJECT = 'Time Entry';
     private static final String STARTSWITHUSER = '005';
-    private static final String NSP_CASETRIGGERHELPER = 'NSP_CaseTriggerHelper';
     private static final String STARTSWITHGROUP = '00G';
     List<Case> closedCaseLst ;
     Map<Id, Group> queueMap ;
@@ -825,12 +824,15 @@ Date        : 30/09/2021
         if(!cseConList.isEmpty()){
             try{
                 Database.insert(cseConList);
-            }catch (Exception ex) {
-                NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'createCaseContact', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_CaseTriggerHelper.handleException(
+                    e ,
+                    'createCaseContact'
+                );
             }
         }
     }
-    
+
     private void createTimeEntryTask(List<Case> lCases){
         
         Set<String> sTypes = new Set<String>();
@@ -1186,13 +1188,14 @@ createdDate : 6/13/2023
 
             cse.NSP_SubCategory__c = isInsert && cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY && cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ? '' : cse.NSP_SubCategory__c;
             }
-        }catch(Exception excep){
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER,'autoPopulateAsset',excep.getMessage());
+        } catch( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'autoPopulateAsset'
+            );
         }
-        
     }
-    
-    
+
     /* update contact support role from ACR 
 * parameter : list of cases
 */
@@ -1378,11 +1381,14 @@ created case will be updated to cancelled.
             if (!restoreOwnerList.isEmpty()) {
                 database.update(restoreOwnerList);
             }
-        }catch (exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'reassignActivitiesOwner', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'reassignActivitiesOwner'
+            );
+        }
     }
-    
+
     /**
 * @MethodName: getReassignRecordTypeIds
 * @Description: This method is used to get Reassign recordtype Ids
@@ -1402,12 +1408,15 @@ created case will be updated to cancelled.
                                         AND Name IN: reassignRecTypes]){
                                             reassignRecTypeIds.add(cRecTypes.Id);
                                         }
-        }catch (exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'getReassignRecordTypeIds', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'getReassignRecordTypeIds'
+            );
+        }
         return reassignRecTypeIds;
     }
-    
+
     /**
 * @MethodName: sendHCMCaseCompletionMail
 * @Description: This method will send email when iSolved HCM Case status is complete
@@ -1442,11 +1451,35 @@ created case will be updated to cancelled.
                                        email.setSaveAsActivity(false);
                                        emailList.add(email);
                                    }
-            if(emailList.size() > 0){
-                Messaging.sendEmail(emailList);
+            if ( emailList.size() > 0 ) {
+                NSP_CaseTriggerHelper.sendSingleEmailMessages( emailList );
             }
         }
     }
+
+    private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
+        if ( ( messages != null ) && !messages.isEmpty() ) {
+            try {
+                Messaging.sendEmail( messages );
+            } catch ( Exception e ) {
+                NSP_CaseTriggerHelper.handleException(
+                    e ,
+                    'sendSingleEmailMessages'
+                );
+            }
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_CaseTriggerHelper.class.getName() ,
+                methodName ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
+        }
+    }
+
     /***********************************************************************************************
 * MethodName  : caseCloseForFirstTime
 * Description : This Method updated the NSP_Is_Case_Closed__c checkbox on Case
@@ -1458,8 +1491,11 @@ created case will be updated to cancelled.
             for(Case caseRec: caseList){
                 caseRec.NSP_Is_Case_Closed__c = true;
             }
-        }catch(Exception ex ){
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'beforeUpdate', ex.getMessage());
+        } catch ( Exception e ){
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'caseCloseForFirstTime'
+            );
         }
     }
     
@@ -1493,9 +1529,8 @@ created case will be updated to cancelled.
                 email.setSaveAsActivity(false);
                 lstEmailMessages.add(email);
             }
-        if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-            //send email alert
-            Messaging.sendEmail(lstEmailMessages);
+        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
+            NSP_CaseTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }
     }
     
@@ -1524,9 +1559,8 @@ created case will be updated to cancelled.
             email.setSaveAsActivity(false);
             lstEmailMessages.add(email);
         }
-        if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-            //send email alert
-            Messaging.sendEmail(lstEmailMessages);
+        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
+            NSP_CaseTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }     
     }
     
@@ -1545,9 +1579,12 @@ created case will be updated to cancelled.
             for(Case caseRec : caseList){
                 bpsCaseUpdateFieldMapping(caseRec);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'bpsCaseUpdateForNonInsperityEmployeeType', ex.getMessage());
-        }       
+        } catch( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'bpsCaseUpdateForNonInsperityEmployeeType'
+            );
+        }
     }
     
     /***********************************************************************
@@ -1679,10 +1716,14 @@ created case will be updated to cancelled.
                 //Send mail 
                 NSP_GenericEmailUtility.sendSingleEmailMessages(emailMessageList,false);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'sendEmailToProjectImplementor', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'sendEmailToProjectImplementor'
+            );
         }
     }
+
     /**********************************************************************************************
 * MethodName: updateParentItaCqaCase 
 * Description : This method describes about the updation of parent NSP_CQA_Severity__c with the highest level of the child NSP_CQA_Severity__c
@@ -1723,13 +1764,21 @@ created case will be updated to cancelled.
                 if(!pCaseList.isEmpty()){
                     //updating Parent Case
                     List<Database.SaveResult> results = Database.update(pCaseList, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'updateParentItaCqaCase', results );
+                    NSP_ErrorLogHandler.logSaveResult(
+                        NSP_CaseTriggerHelper.class.getName() ,
+                        'updateParentItaCqaCase' ,
+                        results
+                    );
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'updateParentItaCqaCase', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'updateParentItaCqaCase'
+            );
         }
     }
+
     /**********************************************************************************************
 MethodName: updatePrentItaCqaCaseStatus 
 Description : This method describes about the updation of parent ITA CQA Case Status when the all the child case status is closed
@@ -1759,13 +1808,21 @@ Story:        STY-01785
                 }
                 if(!cseListToUpdate.isEmpty()){
                     List<Database.SaveResult> results = Database.update(cseListToUpdate, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'updatePrentItaCqaCaseStatus', results );    
+                    NSP_ErrorLogHandler.logSaveResult(
+                        NSP_CaseTriggerHelper.class.getName() ,
+                        'updatePrentItaCqaCaseStatus' ,
+                        results
+                    );
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'updatePrentItaCqaCaseStatus', ex.getMessage());
-        }        
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'updatePrentItaCqaCaseStatus'
+            );
+        }
     }
+
     /**********************************************************************************************
 MethodName: reOpenParentItaCqaCase 
 Description : This method describes about the updation of parent ITA CQA Case Status when any one of the child case is re-opened
@@ -1783,13 +1840,20 @@ Story:        STY-01785
             }
             if(!pCseListToUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update(pCseListToUpdate, false);
-                NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'reOpenParentItaCqaCase', results );                
+                NSP_ErrorLogHandler.logSaveResult(
+                    NSP_CaseTriggerHelper.class.getName() ,
+                    'reOpenParentItaCqaCase' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'reOpenParentItaCqaCase', ex.getMessage());
-        }        
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'reOpenParentItaCqaCase'
+            );
+        }
     }
-    
+
     public void createCaseHistory(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
         if(oldMap.isEmpty()) {
             List<NSP_Case_History__c> newCaseHistoryToBeCreatedList = new List<NSP_Case_History__c>();
@@ -2071,7 +2135,11 @@ Created by : Harsha Khiroya
         }
         if(!updatedContactList.isEmpty()){
             List<Database.SaveResult> results = Database.update(updatedContactList, false);
-            NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'UpdateServiceRequestChannel', results );
+            NSP_ErrorLogHandler.logSaveResult(
+                NSP_CaseTriggerHelper.class.getName() ,
+                'UpdateServiceRequestChannel' ,
+                results
+            );
         }
         
     }
@@ -2155,9 +2223,12 @@ createdDate : 6/12/2023
                     }
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'checkTheEligibiltyOfConfidentiality', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'checkTheEligibiltyOfConfidentiality'
+            );
         }
     }
-
 }
+//
