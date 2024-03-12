@@ -368,6 +368,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Signed_CSA__c</field>
             </layoutItems>
             <layoutItems>

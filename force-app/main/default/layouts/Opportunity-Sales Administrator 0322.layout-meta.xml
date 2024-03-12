@@ -332,6 +332,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Selected_Template__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
