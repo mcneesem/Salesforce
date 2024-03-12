@@ -15,15 +15,13 @@ Modification Log     :
 
 
 public class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (81%)
+    // test w/ NSP_LeadTriggerHelperTest (83%)
     
     public static final List < String > reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split(';');
     private static final string NEW_LEAD_RT = 'NSP_New_Lead_Record_Type';
     private static final string LEAD_RT = 'Lead';
     private static final Id NEW_LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(NEW_LEAD_RT).getRecordTypeId();
     private static final Id LEAD_RT_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(LEAD_RT).getRecordTypeId();
-    private static final string SYS_ADMIN = 'System Administrator';
-    private static final string INTEGRATION_PROFILE = 'Integration User';
     // Added as part of DF-01009
     private static final string REFERRAL_RECORDTYPE = 'Referral';
     private static final Id REFERRAL_RECORDTYPE_ID = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get(REFERRAL_RECORDTYPE).getRecordTypeId();
@@ -286,62 +284,127 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
               leadObj.OwnerId = dunsLead.OwnerId;
           }
       }
-   }
-/**
-* Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
-* @param leadNewMap Map of New leads. 
-* @param leadOldMap Map of Old leads. 
-* @return void             
-* @DF-01301-The District Administrator is able to reassign the Lead to themself.            
-*/
-    public void restrictLeadOwnerChange(Map < Id, Lead > leadNewMap, Map < Id, Lead > leadOldMap) {
-        //Set to hold the Salesoffices
-        Set < String > salesOfficeSet = new Set < String > ();
-        Set < Id > ownerIdset = new Set < Id > ();
-        //List to hold the groupmembers of salesoffices
-        List < String > MMBSPUserList = Label.MM_AND_BPC_USERROLE.split(',');
-        List < GroupMember > groupMemberList = new List < GroupMember > ();
-        User userDetails = [SELECT Id, Name, UserRole.Name, Profile.Name FROM User WHERE Id = : userinfo.getUserId()];
-        for (Id leadId: leadNewMap.keySet()) {
-            if (trigger.isupdate && trigger.isbefore) {
-                //Current logged in user not equal to Owner and logged in user profile not sys admin 
-                if (userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
-                    //Check logged in user role not in Mid Market/BPS 
-                    if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
-                        //Lead owner not a queue check
-                        if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
-                            ownerIdset.add(leadOldMap.get(leadId).OwnerId);
+    }
+
+    //
+    // Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
+    // @param leadNewMap Map of New leads.
+    // @param leadOldMap Map of Old leads.
+    // @return void
+    // @DF-01301-The District Administrator is able to reassign the Lead to themself.
+    //
+    public void restrictLeadOwnerChange( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
+        // only enforced during before-update Triggers that contain a new Lead record Map...
+        if ( Trigger.isBefore && Trigger.isUpdate && ( leadNewMap != null ) ) {
+            // determine if the current User is allowed to bypass this restriction...
+            Id currentUserId = UserInfo.getUserId();
+            List<User> records = [
+                SELECT Id , Name , UserRoleId , UserRole.Name , ProfileId , Profile.Name
+                FROM User
+                WHERE ( Id = :currentUserId )
+            ];
+            User currentUser = null;
+            if ( ( records != null ) && !records.isEmpty() ) {
+                currentUser = records[0];
+            }
+            // check Profile...
+            Boolean isAllowedProfile = (
+                ( currentUser != null )
+                && ( currentUser.ProfileId != null )
+                && (
+                    currentUser.Profile.Name.startsWith( 'System Admin' )
+                    || ( currentUser.Profile.Name == 'Integration User' )
+                )
+            );
+            // check UserRole...
+            List<String> MMBSPUserList = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
+            Boolean isAllowedRole = (
+                ( currentUser != null )
+                && ( currentUser.UserRoleId != null )
+                && MMBSPUserList.contains( currentUser.UserRole.Name )
+            );
+            // only enforce restrict if User is NOT allowed to bypass...
+            // ~ having "correct" Profile OR "correct" Role allows the bypass...
+            if ( !isAllowedProfile && !isAllowedRole ) {
+                // collect the previous record OwnerId (User.Id) values...
+                Set<Id> ownerIdset = new Set<Id>();
+                for ( Id leadId : leadNewMap.keySet() ) {
+                    Lead oldRecord = null;
+                    if ( ( leadOldMap != null ) && leadOldMap.containsKey( leadId ) ) {
+                        oldRecord = leadOldMap.get( leadId );
+                    }
+                    // current Lead Owner is-a User
+                    // current User not equal to previous Lead Owner
+                    if ( ( oldRecord != null )
+                        && ( oldRecord.OwnerId != null )
+                        && ( oldRecord.OwnerId.getSObjectType() == User.SObjectType )
+                        && ( currentUserId != oldRecord.OwnerId )
+                        )
+                    {
+                        ownerIdset.add( oldRecord.OwnerId );
+                    }
+                }
+                // collect previous Lead Owner's salesoffice details...
+                Set<String> salesOfficeSet = new Set<String>();
+                if ( !ownerIdset.isEmpty() ) {
+                    List<User> ownerIdList = [
+                        SELECT Id , ToLabel(NSP_Sales_Office_Membership__c)
+                        FROM User
+                        WHERE ( Id IN :ownerIdset )
+                    ];
+                    if ( !ownerIdList.isEmpty() ) {
+                        for ( User record : ownerIdList ) {
+                            if ( String.isNotBlank( record.NSP_Sales_Office_Membership__c ) ) {
+                                salesOfficeSet.addAll( new List<String>( record.NSP_Sales_Office_Membership__c.split( ';' ) ) );
+                            }
                         }
                     }
                 }
-            }
-        }
-        //Collect User salesoffice details
-        if (ownerIdset != null) {
-            List < User > ownerIdList = [Select Id, ToLabel(NSP_Sales_Office_Membership__c) from User WHERE ID IN: ownerIdset];
-            if (!ownerIdList.isEmpty()) {
-                for (User userList: ownerIdList) {
-                    if (userList.NSP_Sales_Office_Membership__c != Null) {
-                        salesOfficeSet.addAll(new List<String>(userList.NSP_Sales_Office_Membership__c.Split(';')));
-                    }
+                // collect the groupmembers of previous Lead Owner's salesoffices...
+                List<GroupMember> groupMemberList = new List<GroupMember>();
+                if ( !salesOfficeSet.isEmpty() ) {
+                    groupMemberList = [
+                        SELECT Id , Group.Name , UserOrGroupId
+                        FROM GroupMember
+                        WHERE (
+                            ( UserOrGroupId = :currentUserId )
+                            AND ( Group.Name IN :salesOfficeSet )
+                        )
+                    ];
                 }
-            }
-            if (!salesOfficeSet.isEmpty()) {
-                groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userinfo.getUserId() AND Group.Name IN: salesOfficeSet];
-            }
-            //restrict lead edit access/change owner if logged in user not part of lead owner salesoffice group
-            for (Id leadId: leadNewMap.keySet()) {
-                if (trigger.isupdate && trigger.isbefore) {
-                    Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
-                        'Named_Account_Group_Bypass_Restrictions',
-                        UserInfo.getUserId()
-                    );
-                    if (!hasNamedAccountGroupBypass && userDetails.Id != leadOldMap.get(leadId).OwnerId && userDetails.Profile.Name != SYS_ADMIN && userDetails.Profile.Name != INTEGRATION_PROFILE) {
-                        if (!MMBSPUserList.contains(userDetails.UserRole.Name)) {
-                            if (leadOldMap.get(leadId).OwnerId.getSObjectType() == User.SObjectType) {
-                                if (groupMemberList.isEmpty()) {
-                                    leadNewMap.get(leadId).Id.addError(system.label.NSP_LeadTriggerError);
+                // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
+                if ( groupMemberList.isEmpty() ) {
+                    for ( Id leadId : leadNewMap.keySet() ) {
+                        Lead oldRecord = null;
+                        if ( ( leadOldMap != null ) && leadOldMap.containsKey( leadId ) ) {
+                            oldRecord = leadOldMap.get( leadId );
+                        }
+                        if ( ( oldRecord != null )
+                            && ( oldRecord.OwnerId != null )
+                            && ( oldRecord.OwnerId.getSObjectType() == User.SObjectType )
+                            && ( currentUserId != oldRecord.OwnerId )
+                            )
+                        {
+                            // prevent unhandled Flow Errors within the Task_Created Flow within the Update_Lead_Record Flow Element...
+                            // ~ allow Lead.Status change to 'Working' when a related Task.Status is 'Completed'...
+                            Boolean isStatusChangedToWorking = False;
+                            if ( Lead_Trigger_Settings__c.getInstance( UserInfo.getUserId() ).AllowStatusChangedToWorking__c ) {
+                                Lead newRecord = null;
+                                if ( ( leadNewMap != null ) && leadNewMap.containsKey( leadId ) ) {
+                                    newRecord = leadNewMap.get( leadId );
                                 }
+                                if ( ( newRecord != null )
+                                    && ( newRecord.Status != oldRecord.Status )
+                                    && ( newRecord.Status == 'Working' )
+                                    )
+                                {
+                                    isStatusChangedToWorking = True;
+                                }
+                            }
+                            if ( !isStatusChangedToWorking ) {
+                                // for any other change to the Lead...
+                                // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
+                                leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
                             }
                         }
                     }
