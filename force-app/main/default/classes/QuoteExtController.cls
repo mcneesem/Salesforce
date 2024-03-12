@@ -95,14 +95,6 @@ public with sharing class QuoteExtController {
             profileMap = new Map<Id,Profile>([SELECT Id,Name FROM profile WHERE Name in : system.label.NSP_Quote_Approval_Bypass_Profile.split(',')]);
             }
         
-        
-        if(objQuote != null && objQuote.SBQQ__Type__c == 'Amendment' && objQuote.Ready_for_Approval__c == false)
-        {
-				doNotAllow  = true;
-            	isTriggerCalculation = true;
-        }
-        
-
         if ( !profileMap.containsKey( UserInfo.getProfileId() ) || Test.isRunningTest() ) {
             errorFromValidation = NSP_QuoteApprovalPreValidation.validateRetirementServiceQuote(objQuote.Id);
             //descriptionOfService = NSP_QuoteApprovalPreValidation.validateDescriptionOfServices(objQuote.Id);
@@ -301,6 +293,11 @@ public with sharing class QuoteExtController {
                     }
                 }
             }
+        }
+        if(objQuote != null && objQuote.SBQQ__Type__c == 'Amendment' && objQuote.Ready_for_Approval__c == false)
+        {
+				doNotAllow  = true;
+            	isTriggerCalculation = true;
         }
     }
 
