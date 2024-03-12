@@ -48,6 +48,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.DNB_Connect_Reg_Number_1_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.DNB_Connect_Reg_Number_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.DNB_Connect_Reg_Number_2_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.DNB_Connect_Reg_Number_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.DNB_Exclude_Company__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1104,6 +1124,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.DNB_Connect_DUNS_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.DNB_Connect_Reg_Number_1_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.DNB_Connect_Reg_Number_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.DNB_Connect_Reg_Number_2_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.DNB_Connect_Reg_Number_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
