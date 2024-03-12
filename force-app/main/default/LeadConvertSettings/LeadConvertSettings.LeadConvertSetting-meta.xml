@@ -4,6 +4,42 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
+            <inputField>Account_Assignment_Method__c</inputField>
+            <outputField>Account_Assignment_Method__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Account_Segment__c</inputField>
+            <outputField>NSP_Account_Segment__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Accounting_Software__c</inputField>
+            <outputField>NSP_Accounting_Software__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Are_they_in_multiple_states__c</inputField>
+            <outputField>NSP_Are_they_in_multiple_states__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Company_LinkedIn_URL__c</inputField>
+            <outputField>NSP_Company_LinkedIn_URL__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Current_Provider__c</inputField>
+            <outputField>NSP_Current_Provider__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_RenewalWithCompetitor__c</inputField>
+            <outputField>NSP_RenewalWithCompetitor__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>DnB_Employee_Count_Here__c</inputField>
+            <outputField>DnB_Employee_Count_Here__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>DnB_Headquarter_Name__c</inputField>
+            <outputField>DnB_Headquarter_Name__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>DnB_Headquarters_DUNS__c</inputField>
             <outputField>DnB_Headquarter_DUNS__c</outputField>
         </mappingFields>
@@ -140,10 +176,6 @@
             <outputField>DOZISF__ZoomInfo_Enrich_Status__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>DOZISF__ZoomInfo_First_Updated__c</inputField>
-            <outputField>DOZISF__ZoomInfo_First_Updated__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>DOZISF__ZoomInfo_InboxAI_ID__c</inputField>
             <outputField>DOZISF__ZoomInfo_InboxAI_ID__c</outputField>
         </mappingFields>
@@ -152,57 +184,21 @@
             <outputField>DOZISF__ZoomInfo_Last_Updated__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>NSP_Account_Segment__c</inputField>
-            <outputField>NSP_Account_Segment__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>Accounting_Software__c</inputField>
-            <outputField>NSP_Accounting_Software__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Are_they_in_multiple_states__c</inputField>
-            <outputField>NSP_Are_they_in_multiple_states__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Company_LinkedIn_URL__c</inputField>
-            <outputField>NSP_Company_LinkedIn_URL__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Current_Provider__c</inputField>
-            <outputField>NSP_Current_Provider__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_RenewalWithCompetitor__c</inputField>
-            <outputField>NSP_RenewalWithCompetitor__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DNBConnect__D_B_Connect_Company_Profile__c</inputField>
-            <outputField>DNBConnect__D_B_Connect_Company_Profile__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DNB_Connect_DUNS_Number__c</inputField>
-            <outputField>DNB_Connect_DUNS_Number__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DnB_Domestic_Ultimate_DUNS__c</inputField>
-            <outputField>DnB_Domestic_Ultimate_DUNS__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DnB_Domestic_Ultimate_Name__c</inputField>
-            <outputField>DnB_Domestic_Ultimate_Name__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DnB_Employee_Count_Here__c</inputField>
-            <outputField>DnB_Employee_Count_Here__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DnB_Headquarter_Name__c</inputField>
-            <outputField>DnB_Headquarter_Name__c</outputField>
+            <inputField>DOZISF__ZoomInfo_First_Updated__c</inputField>
+            <outputField>DOZISF__ZoomInfo_First_Updated__c</outputField>
         </mappingFields>
         <outputObject>Account</outputObject>
     </objectMapping>
     <objectMapping>
         <inputObject>Lead</inputObject>
+        <mappingFields>
+            <inputField>NSP_Affiliations__c</inputField>
+            <outputField>NSP_Affiliations__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_Decision_Maker__c</inputField>
+            <outputField>NSP_Decision_Maker__c</outputField>
+        </mappingFields>
         <mappingFields>
             <inputField>NSP_Do_Not_Postal_Mail__c</inputField>
             <outputField>NSP_Do_Not_Postal_Mail__c</outputField>
@@ -250,18 +246,6 @@
         <mappingFields>
             <inputField>DOZISF__ZoomInfo_Non_Matched_Reason__c</inputField>
             <outputField>DOZISF__ZoomInfo_Non_Matched_Reason__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Affiliations__c</inputField>
-            <outputField>NSP_Affiliations__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DNBConnect__D_B_Connect_Contact_Profile__c</inputField>
-            <outputField>DNBConnect__D_B_Connect_Contact_Profile__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Decision_Maker__c</inputField>
-            <outputField>NSP_Decision_Maker__c</outputField>
         </mappingFields>
         <outputObject>Contact</outputObject>
     </objectMapping>

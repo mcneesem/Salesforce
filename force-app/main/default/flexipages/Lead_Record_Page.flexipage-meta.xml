@@ -725,6 +725,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
                 <identifier>RecordNSP_Sales_Office_cField</identifier>
             </fieldInstance>
@@ -857,6 +867,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group_Owner__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_Owner_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b59e6338-ef71-4ea7-a5ae-48ab0c832437</name>
@@ -1021,6 +1041,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1249,6 +1279,16 @@
                 <identifier>RecordNamed_Account_Group_cField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group_Owner__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_Owner_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c0add9bb-1921-4454-bb0b-f9b01fbf6ac6</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1367,6 +1407,16 @@
                 <identifier>RecordNSP_Partner_cField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-bd99d3aa-1231-4aee-9bea-7e42f516637c</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1457,6 +1507,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group_Owner__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_Owner_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

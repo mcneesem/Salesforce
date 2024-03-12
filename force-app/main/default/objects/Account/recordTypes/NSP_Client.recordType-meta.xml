@@ -57,6 +57,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Account_Assignment_Method__c</picklist>
+        <values>
+            <fullName>Available Account Assignment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-ABX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Target Account Assignment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DOZISF__ZoomInfo_Enrich_Status__c</picklist>
         <values>
             <fullName>Enriched</fullName>
