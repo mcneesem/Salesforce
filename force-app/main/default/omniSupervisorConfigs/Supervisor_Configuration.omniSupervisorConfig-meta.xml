@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniSupervisorConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isTimelineHidden>false</isTimelineHidden>
+    <masterLabel>Supervisor Configuration</masterLabel>
+    <omniSupervisorConfigAction>
+        <actionName>ChangeQueues</actionName>
+        <actionTab>AllAgents</actionTab>
+        <displayOrder>0</displayOrder>
+    </omniSupervisorConfigAction>
+    <skillVisibility>AllSkills</skillVisibility>
+</OmniSupervisorConfig>
