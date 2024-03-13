@@ -993,7 +993,7 @@ static void createAssetTest3(){
     static void testSendFileRequest() {
         
         Test.startTest();
-        String expectedError = 'You can not modify a Closed Won Opportunity';
+        String expectedError = Label.NSP_CANNOT_CHANGE_CLOSEDWON;
 
         try{
             List<Opportunity> opp1 = [SELECT id, Name, StageName, AVA_SFCLOUD__Sales_Tax__c, Create_Box_com_Folder_s__c 
