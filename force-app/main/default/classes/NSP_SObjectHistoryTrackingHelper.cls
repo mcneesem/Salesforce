@@ -13,7 +13,7 @@ Modification Log     :
 ***************************************************************************************************
 */
 public class NSP_SObjectHistoryTrackingHelper implements Queueable {
-    // test w/ NSP_SObjectHistoryTrackingHelperTest (88%)
+    // test w/ NSP_SObjectHistoryTrackingHelperTest (83%)
 
     // unified entry point...
     public static void enqueueJob( Map<Id,sObject> newRecords , Map<Id,sObject> oldRecords ) {
@@ -56,43 +56,42 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
             fieldHistoryLogData(newMapSObject,oldMapSObject);
         }
     }
-    
-    private void fieldHistoryLogData(Map<Id, sObject> newMapSObject, Map<Id, sObject> oldMapSObject) {
-      
+
+    private void fieldHistoryLogData( Map<Id,sObject> newMapSObject , Map<Id,sObject> oldMapSObject ) {
+        // loop through new records, finding fields that changed...
         final List<sObject> trackList = new List<sObject>();
-        
-        // loop through new records, finding fields that changed
-        for(Id  sobjkey : newMapSObject.keySet()) {
-            sObject newRec = newMapSObject.get(sobjkey);
-            sObject oldRec = oldMapSObject.get(newRec.Id);
-            
-            Integer count = 1;
-            for(NSP_SObject_Field_History__mdt ofh : objFields) {
-                if(newRec.getSObjectType().getDescribe().fields.getMap().containsKey(ofh.NSP_Field_API_Name__c.toLowerCase())
-                   && newRec.get(ofh.NSP_Field_API_Name__c) != oldRec.get(ofh.NSP_Field_API_Name__c)) {
-                       
-                       if(newRec instanceof Implementation_Profile__c){
-                           trackList.add(newIPHistoryTrackingRec(newRec, ofh, count));
-                           count++;
-                       } else {
-                           trackList.add(newHistoryTrackingRec(newRec, ofh));
-                       }
-                       
-                   }
+        if ( this.fieldMap != null ) {
+            for ( Id sobjkey : newMapSObject.keySet() ) {
+                sObject newRec = newMapSObject.get( sobjkey );
+                sObject oldRec = oldMapSObject.get( newRec.Id );
+                Integer count = 1;
+                for ( NSP_SObject_Field_History__mdt ofh : objFields ) {
+                    // used cached results of the described field map to reduce System.LimitException: Apex CPU time limit exceeded...
+                    if ( this.fieldMap.containsKey( ofh.NSP_Field_API_Name__c.toLowerCase() )
+                        && ( newRec != null )
+                        && ( oldRec != null )
+                        && ( newRec.get( ofh.NSP_Field_API_Name__c ) != oldRec.get( ofh.NSP_Field_API_Name__c ) )
+                        )
+                    {
+                        if ( newRec instanceof Implementation_Profile__c ) {
+                            trackList.add( newIPHistoryTrackingRec( newRec , ofh , count ) );
+                            count++;
+                        } else {
+                            trackList.add( newHistoryTrackingRec( newRec , ofh ) );
+                        }
+                    }
+                }
             }
         }
-        
         try{
-            // insert history tracking records
-            if(!trackList.isEmpty() && !Test.isRunningTest()){
-                database.insertImmediate(trackList);
+            if ( !trackList.isEmpty() && !Test.isRunningTest() ) {
+                Database.insertImmediate( trackList );
             }
-            //catch block
-        } catch(Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch( Exception e ) {
+            NSP_CustomException.LogException( e );
         }  
     }
-    
+
     /***********************************************************************************************
     * MethodName: newHistoryTrackingRec
     * Description : prepare bigobject history record
@@ -144,27 +143,47 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         return oht;
     }
 
-    private String objectType {
-        get { 
-            return String.valueOf(newMapSObject.getsobjecttype());
+    private Schema.SObjectType soType {
+        get {
+            if ( ( soType == null ) && ( this.newMapSObject != null ) ) {
+                soType = this.newMapSObject.getSObjectType();
+            }
+            return soType;
         }
+        private set;
     }
-    
-    private Map<String, Schema.SObjectField> fieldMap {
-        get { 
-            Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-            Schema.SObjectType objSchema = schemaMap?.get(objectType);
-            Map<String, Schema.SObjectField> fieldMap = objSchema.getDescribe()?.fields?.getMap();
+
+    // cache the results of the describing the field map results to reduce System.LimitException: Apex CPU time limit exceeded...
+    private Map<String,Schema.SObjectField> fieldMap {
+        get {
+            if ( ( fieldMap == null ) && ( this.soType != null ) ) {
+                fieldMap = this.soType.getDescribe().fields.getMap();
+            }
             return fieldMap;
         }
+        private set;
     }
     
+    private String sObjectName {
+        get {
+            if ( ( sObjectName == null ) && ( this.soType != null ) ) {
+                sObjectName = String.valueOf( this.soType );
+            }
+            return sObjectName;
+        }
+        private set;
+    }
+
     /***********************************************************************************************
     * MethodName: getMetaDataFields
     * Description : get a list of the fields that need to be updated 
     * ********************************************************************************************/
     private List<NSP_SObject_Field_History__mdt> getMetaDataFields() {
-        return [SELECT NSP_Field_API_Name__c , NSP_Field_Label__c FROM NSP_SObject_Field_History__mdt WHERE NSP_SObject_Name__c = :objectType ];
+        return [
+            SELECT NSP_Field_API_Name__c , NSP_Field_Label__c
+            FROM NSP_SObject_Field_History__mdt
+            WHERE NSP_SObject_Name__c = :this.sObjectName
+        ];
     }
 
     /***********************************************************************************************
