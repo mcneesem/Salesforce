@@ -2051,39 +2051,46 @@ Story:        STY-01785
                     if(isStatus){
                         historyRecord.NSP_Status_Duration__c += timeToAdd;
                     }
-                    if(isQueue){
-                        string grpOwner;
+                    if ( isQueue ) {
                         List<String> grpFields = new List<String>{'Id', 'Name', 'DeveloperName'};
-                        String grpQuery = new NSP_QueryBuilder('Group', grpFields)
-                            				.addFilter('Name', historyRecord.NSP_Case_Current_Owner_Text__c).build();
-                        List<Group> queueList = Database.query(grpQuery);
-                        if(!queueList.isEmpty()){
-                        grpOwner = queueList[0].DeveloperName;
-                            if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        		historyRecord.Time_H_W_B_P_C_Queue__c +=  timeToAdd;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        		historyRecord.Time_H_W_Communications_Queue_Spent__c +=  timeToAdd;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        		historyRecord.Time_Health_Welfare_Products_Queue__c +=  timeToAdd;
-                            }
-                            else{
-                        		historyRecord.NSP_Time_in_Queue__c  +=  timeToAdd;
+                        String grpQuery = new NSP_QueryBuilder( 'Group' , grpFields )
+                            .addFilter( 'Name' , historyRecord.NSP_Case_Current_Owner_Text__c )
+                            .build()
+                            ;
+                        List<Group> queueList = null;
+                        try {
+                            queueList = Database.query( grpQuery ); // throws...  System.QueryException: mismatched character '' expecting '''
+                        } catch ( Exception e ) {
+                            NSP_CaseTriggerHelper.handleException(
+                                e ,
+                                'createCaseHistory'
+                            );
+                        }
+                        if ( ( queueList != null ) && !queueList.isEmpty() ) {
+                            String grpOwner = queueList[0].DeveloperName;
+                            if ( grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue ) {
+                                historyRecord.Time_H_W_B_P_C_Queue__c += timeToAdd;
+                            } else if ( grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue ) {
+                                historyRecord.Time_H_W_Communications_Queue_Spent__c += timeToAdd;
+                            } else if ( grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue ) {
+                                historyRecord.Time_Health_Welfare_Products_Queue__c += timeToAdd;
+                            } else {
+                                historyRecord.NSP_Time_in_Queue__c  += timeToAdd;
                             }
                         }
                     }
-                    if(isUser){
+                    if ( isUser ) {
                         historyRecord.NSP_Time_Individual_Spent__c += timeToAdd;
                     }
-                    newCaseHistoryToBeCreatedList.add(historyRecord);
+                    newCaseHistoryToBeCreatedList.add( historyRecord );
                 }
-                if(!newCaseHistoryToBeCreatedList.isEmpty()) {
-                    upsert newCaseHistoryToBeCreatedList; // try catch capture error logs 
+                if ( !newCaseHistoryToBeCreatedList.isEmpty() ) {
+                    upsert newCaseHistoryToBeCreatedList; // try catch capture error logs
                 }
             }
-        } 
+        }
     }
+
     /**********************************************************************************************
 MethodName: calculateTimeDifference 
 Description : This method calculates Time Difference including the business hours and holidays
