@@ -138,26 +138,23 @@ public class NSP_AssetTriggerHelper {
 		updatePayDateonAsset(newMap.values(),oldMap); // added for STY-03387
 
     }
-    
-  
-    /**
-    * Iterates throught the list of new Assets and passes the required attributes to other methods.
-    * @param newMap, oldMap List of Assets.  
-    * @return void             
-    *                
-    */
-   public void afterUpdateDirector(Map<Id, Asset> newMap,Map<Id, Asset> oldMap){ 
+
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // @param newMap, oldMap List of Assets.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) { 
+        if ( ( newMap != null ) && ( newMap.size() > 0 ) ) {
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)newMap ,
+                (Map<Id,sObject>)oldMap
+            );
+        }
        Set<Id> asstIdSet = new Set<Id>();        
        List<Asset> ast = new List<Asset>();
        List<Asset> astremove = new List<Asset>();
        List<Asset> docusignAsset = new List<Asset>();
-       if(newMap.size() > 0){
-           NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
-           If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-               System.enqueueJob(objectFieldHistoryHelper);  
-           }
-       }
-       
        updateInvoiceDate(newMap.values(),oldMap);
        peoTESClientStatus(newMap.values(),oldMap);
        updateRETAsset(newMap.values(),oldMap);

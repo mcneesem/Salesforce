@@ -12,15 +12,30 @@ Modification Log     :
 
 ***************************************************************************************************
 */
-public class NSP_SObjectHistoryTrackingHelper implements Queueable{
-    
+public class NSP_SObjectHistoryTrackingHelper implements Queueable {
+    // test w/ NSP_SObjectHistoryTrackingHelperTest (88%)
+
+    // unified entry point...
+    public static void enqueueJob( Map<Id,sObject> newRecords , Map<Id,sObject> oldRecords ) {
+        if ( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new NSP_SObjectHistoryTrackingHelper(
+                    newRecords ,
+                    oldRecords
+                )
+            );
+        }
+    }
+
+    //
+    //
+    //
+
     private Map<Id, sObject> newMapSObject;
     private Map<Id, sObject> oldMapSObject;
     private Map<Id, Decimal> recIdHistoryCountMap = new Map<Id, Decimal>();
     private List<NSP_SObject_Field_History__mdt> objFields = new List<NSP_SObject_Field_History__mdt>();
-    public static final String CLIENTSEGMENTTYPE = 'Client Segment type';
-    public static final String CLIENTSEGMENTDATE = 'NSP_Client_SegmentDate__c';
-    
+
     public NSP_SObjectHistoryTrackingHelper(Map<Id, sObject> newMapSObject,Map<Id, sObject> oldMapSObject) {
         this.newMapSObject = newMapSObject;
         this.oldMapSObject = oldMapSObject;
@@ -31,6 +46,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable{
      * or log an error if insertion fails.
      */
     public void execute(QueueableContext context){
+        // 2024-03-13 ~ PMCC ~ top offender ~ throws... System.LimitException: Apex CPU time limit exceeded
         //calling function to log history data.
         if(recIdHistoryCountMap.isEmpty() && newMapSObject instanceof Map<Id,Implementation_Profile__c>){
             getPreviousIPHistoryRecordCount();
@@ -95,9 +111,9 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable{
         oht.NSP_Modified_By__c	 = (Id) newRec.get('LastModifiedById');
         oht.NSP_Modified_Date__c = (Datetime) newRec.get('LastModifiedDate');
         //poulate Effective date if NSP_Client_Segment_type__c is changed on asset
-        if(oht.NSP_Field_Name__c == String.valueOf(CLIENTSEGMENTTYPE)){
-            oht.NSP_Effective_Date__c = (Datetime) newRec.get(CLIENTSEGMENTDATE);
-        } 
+        if ( oht.NSP_Field_Name__c == String.valueOf( 'Client Segment type' ) ) {
+            oht.NSP_Effective_Date__c = (Datetime)newRec.get( 'NSP_Client_SegmentDate__c' );
+        }
         return oht;
     }
     
