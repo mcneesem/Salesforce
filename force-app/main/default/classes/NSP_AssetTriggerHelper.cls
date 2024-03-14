@@ -5,9 +5,9 @@
 * Rahul Singh        June  02 2023   
 */
 
-public class NSP_AssetTriggerHelper {    
-    // test w/ NSP_AssetTriggerHelperTest (87%)    
-        
+public class NSP_AssetTriggerHelper {
+    // test w/ NSP_AssetTriggerHelperTest (87%)
+
     private static final string assetWoType = 'WO';
     private static final string assetwxType = 'WX_WA';
     private static final string activeStatus = 'Active';
