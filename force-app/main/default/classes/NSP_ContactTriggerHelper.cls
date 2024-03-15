@@ -181,8 +181,13 @@ public class NSP_ContactTriggerHelper {
                 sUserIds.add(conObj.pse__Salesforce_User__c);
                 lContacts.add(conObj);
             }
-             if(conObj.NSP_SSN__c != null && conObj.NSP_SSN__c.length() > 4 && oldMap.get(conObj.Id).NSP_SSN__c != conObj.NSP_SSN__c){
-            conObj.NSP_Last_4Digit_Of_SSN__c = conObj.NSP_SSN__c.right(4);
+            //Set and reset NSP_Last_4Digit_Of_SSN__c field
+            if ( oldMap.containsKey( conObj.Id ) && ( oldMap.get( conObj.Id ) != null )
+                && ( oldMap.get( conObj.Id ).NSP_SSN__c != conObj.NSP_SSN__c ) ) { // detect an SSN change...
+                conObj.NSP_Last_4Digit_Of_SSN__c = null; // reset the last 4 digits...
+                if ( String.isNotBlank( conObj.NSP_SSN__c ) && ( conObj.NSP_SSN__c.length() > 4 )){
+                    conObj.NSP_Last_4Digit_Of_SSN__c = conObj.NSP_SSN__c.right( 4 ); // rebuild the last 4 digits...
+                }
             }
         }
          if(sUserIds.size() > 0){
