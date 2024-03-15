@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TracRTC__Traction_Complete_Lead_Match__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>If a lead has been matched to another via duplicate rules, enable Traction_Complete_Lead_Match</description>
+    <externalId>false</externalId>
+    <label>Traction Complete Lead Match</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
