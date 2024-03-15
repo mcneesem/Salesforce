@@ -8,6 +8,6 @@
     <inlineHelpText>Used with Native Approvals; to indicate whether the step has been approved</inlineHelpText>
     <label>Step Approved</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
