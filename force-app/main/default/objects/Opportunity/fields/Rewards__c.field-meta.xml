@@ -10,6 +10,6 @@
     </summaryFilterItems>
     <summaryForeignKey>NSP_Reward__c.Opportunity__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>

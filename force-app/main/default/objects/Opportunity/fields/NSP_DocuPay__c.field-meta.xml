@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <formula>IF(NSP_Non_docupay__c == false , true, false)</formula>
     <label>DocuPay</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

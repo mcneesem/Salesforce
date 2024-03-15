@@ -7,6 +7,6 @@
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Date</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Date</type>
 </CustomField>

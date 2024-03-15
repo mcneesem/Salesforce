@@ -6,6 +6,6 @@
     <formula>TEXT($User.NSP_Sales_Office__c) =
 TEXT(NSP_Sales_Office__c)</formula>
     <label>Running Sales Office</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

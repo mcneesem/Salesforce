@@ -6,7 +6,7 @@
     <label>Pending Status</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>

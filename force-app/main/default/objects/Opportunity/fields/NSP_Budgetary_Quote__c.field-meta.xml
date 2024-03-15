@@ -6,6 +6,6 @@
     <formula>SBQQ__PrimaryQuote__r.NSP_Budgetary_Quote__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Budgetary Quote</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -3,6 +3,6 @@
     <fullName>SyncedQuoteId</fullName>
     <description>Field to track quote Id</description>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

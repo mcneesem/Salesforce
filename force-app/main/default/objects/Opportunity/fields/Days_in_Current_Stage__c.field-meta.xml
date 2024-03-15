@@ -11,7 +11,7 @@ TODAY() -  Current_Stage_Start_Date__c, NULL)</formula>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

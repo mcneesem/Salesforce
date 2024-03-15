@@ -7,6 +7,6 @@
     <label>Activate Business Profile</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Url</type>
 </CustomField>

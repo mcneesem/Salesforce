@@ -1,4 +1,4 @@
-<?xml  version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Merge_On_Demand_Template_Selection__c</fullName>
     <description>This field is used to store merge on demand template list name</description>
@@ -6,7 +6,7 @@
     <label>Generate Document</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

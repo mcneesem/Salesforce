@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <formula>SBQQ__PrimaryQuote__r.NSP_Estimate__c</formula>
     <label>Estimate</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>
