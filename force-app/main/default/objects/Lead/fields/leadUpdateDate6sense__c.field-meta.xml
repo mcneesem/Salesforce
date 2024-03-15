@@ -7,6 +7,6 @@
     <label>6sense Lead Update Date</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>DateTime</type>
 </CustomField>

@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>6sense Account 6QA</label>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
