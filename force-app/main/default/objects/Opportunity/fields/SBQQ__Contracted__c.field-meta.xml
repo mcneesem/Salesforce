@@ -8,6 +8,6 @@
     <inlineHelpText>Salesforce CPQ uses this field to automatically convert assets and subscriptions.</inlineHelpText>
     <label>Contracted</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
