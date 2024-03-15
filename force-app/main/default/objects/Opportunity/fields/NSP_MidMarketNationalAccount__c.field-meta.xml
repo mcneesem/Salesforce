@@ -92,6 +92,11 @@
                 <label>MDVIP</label>
             </value>
             <value>
+                <fullName>North American Trailer Dealer Association (NATDA)</fullName>
+                <default>false</default>
+                <label>North American Trailer Dealer Association (NATDA)</label>
+            </value>
+            <value>
                 <fullName>PREVEER (UFG franchise)</fullName>
                 <default>false</default>
                 <label>PREVEER (UFG franchise)</label>

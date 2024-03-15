@@ -1116,6 +1116,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inside Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MidMarket</fullName>
             <default>false</default>
         </values>
@@ -1447,6 +1451,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4450</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4466</fullName>
             <default>false</default>
         </values>
@@ -1464,6 +1472,10 @@
         </values>
         <values>
             <fullName>4493</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4494</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1642,6 +1654,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inside Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MM Sales</fullName>
             <default>false</default>
         </values>
@@ -1663,6 +1679,10 @@
         </values>
         <values>
             <fullName>Northeast 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PCM Sales</fullName>
             <default>false</default>
         </values>
         <values>

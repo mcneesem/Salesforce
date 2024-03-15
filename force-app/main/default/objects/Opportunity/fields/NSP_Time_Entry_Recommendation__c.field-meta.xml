@@ -16,11 +16,6 @@
                 <label>Premier Time &amp; Attendance</label>
             </value>
             <value>
-                <fullName>Premier Timesheet</fullName>
-                <default>false</default>
-                <label>Premier Timesheet</label>
-            </value>
-            <value>
                 <fullName>Web Payroll</fullName>
                 <default>false</default>
                 <label>Web Payroll</label>

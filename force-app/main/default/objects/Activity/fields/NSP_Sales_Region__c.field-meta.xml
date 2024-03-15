@@ -79,15 +79,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MidMarket</controllingFieldValue>
+            <valueName>MM Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MidMarket</controllingFieldValue>
             <valueName>National Accounts</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MidMarket</controllingFieldValue>
-            <valueName>MM Sales</valueName>
+            <valueName>PCM Sales</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Inside Sales</controllingFieldValue>
+            <valueName>Inside Sales</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
