@@ -62,41 +62,32 @@ public with sharing class NSP_ContactServiceTriggerHelper {
     * @Defect : STY-02659
     * @return void                          
     */
-    public void updateSSNField(List<Contact> newList, Map<Id, Contact> oldMap){
-        for(Contact con : newList) {
-            //When Service User is creating the contact
-            if( con.NSP_SSN_Unmasked__c != null) {
-                //Update SSN as per Unmasked SSN, in case on Service profiles
-                con.NSP_SSN__c = con.NSP_SSN_Unmasked__c;
-                
-                if(con.NSP_SSN_Unmasked__c.length() >= 9  && (oldMap == null || (oldMap != null && con.NSP_SSN_Unmasked__c != oldMap.get(con.Id).NSP_SSN_Unmasked__c))) {          
-                    
-                    con.NSP_SSN_Unmasked__c = con.NSP_SSN_Unmasked__c.contains('-')? con.NSP_SSN_Unmasked__c.replaceAll('-', '') : con.NSP_SSN_Unmasked__c;
-                    
-                    con.NSP_SSN_Masked__c = null;
-                    for(Integer ints = 0; ints < con.NSP_SSN_Unmasked__c.length(); ints++) {
-                        if(ints == 3 || ints == 5 ) {
-                            con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c + '-X';
-                        } else{
-                            con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c != null ?  con.NSP_SSN_Masked__c +'X' : 'X';
+    public void updateSSNField( List<Contact> newList , Map<Id,Contact> oldMap ) {
+        if ( newList != null ) {
+            for ( Contact con : newList ) {
+                Contact oldCon = ( ( oldMap != null ) ? oldMap.get( con.Id ) : null );
+                if ( ( oldCon == null ) || ( con.NSP_SSN_Unmasked__c != oldCon.NSP_SSN_Unmasked__c ) || ( con.NSP_SSN__c != oldCon.NSP_SSN__c ) ) {
+                    con.NSP_SSN_Masked__c = null; // reset masked field...
+                    if ( String.isNotBlank( con.NSP_SSN__c ) || String.isNotBlank( con.NSP_SSN_Unmasked__c ) ) {
+                        if ( String.isNotBlank( con.NSP_SSN_Unmasked__c ) ) {
+                            con.NSP_SSN__c = con.NSP_SSN_Unmasked__c;
+                        }
+                        if ( String.isNotBlank( con.NSP_SSN__c ) ) {
+                            // rebuild masked field...
+                            con.NSP_SSN_Masked__c = '';
+                            String ssn = con.NSP_SSN__c.replaceAll( '-' , '' );
+                            for ( Integer index=0 ; index < ssn.length() ; index++ ) {
+                                if ( index == 0 ) {
+                                    con.NSP_SSN_Masked__c = 'X';
+                                } else if ( ( index == 3 ) || ( index == 5 ) ) {
+                                    con.NSP_SSN_Masked__c += '-X';
+                                } else {
+                                    con.NSP_SSN_Masked__c += 'X';
+                                }
+                            }
+                            con.NSP_SSN_Unmasked__c = '';
                         }
                     }
-                    con.NSP_SSN_Unmasked__c = '';
-                }
-            }else if(oldMap == null || (oldMap != null && con.NSP_SSN__c != oldMap.get(con.Id).NSP_SSN__c)) {
-                con.NSP_SSN_Masked__c = '';
-                if(con.NSP_SSN__c != null){
-                    String ssn = con.NSP_SSN__c.contains('-')? con.NSP_SSN__c.replaceAll('-', '') : con.NSP_SSN__c;
-                    //When Other than Service User is creating the contact
-                    con.NSP_SSN_Masked__c = null;
-                    for(Integer ints = 0; ints < ssn.length(); ints++) {
-                        if(ints == 3 || ints == 5) {
-                            con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c +'-X';
-                        }else {
-                            con.NSP_SSN_Masked__c = con.NSP_SSN_Masked__c != null ?  con.NSP_SSN_Masked__c +'X' : 'X';
-                        }
-                    }
-                    con.NSP_SSN_Unmasked__c = '';
                 }
             }
         }
@@ -112,23 +103,25 @@ public with sharing class NSP_ContactServiceTriggerHelper {
     */
     
     public void updateBirthday( List<Contact> newList , Map<Id,Contact> oldMap ) {
-        for ( Contact con : newList ) {
-            Contact oldCon = ( ( oldMap != null ) ? oldMap.get( con.Id ) : null );
-            if ( ( oldCon == null ) || ( con.NSP_Date_Of_Birth_Unmasked__c != oldCon.NSP_Date_Of_Birth_Unmasked__c ) || ( con.NSP_Date_of_Birth__c != oldCon.NSP_Date_of_Birth__c ) ) {
-                con.NSP_Birthday__c = null;
-                con.NSP_Date_Of_Birth_Masked__c = null;
-                con.NSP_Is_Masked__c = false;
-                con.NSP_Is_Unmasked__c = false;
-                if(con.NSP_Date_of_Birth__c != null || con.NSP_Date_Of_Birth_Unmasked__c !=null){
-                    if(con.NSP_Date_Of_Birth_Unmasked__c !=null){
-                        con.NSP_Date_of_Birth__c = con.NSP_Date_Of_Birth_Unmasked__c;
+        if(newList != null){
+            for ( Contact con : newList ) {
+                Contact oldCon = ( ( oldMap != null ) ? oldMap.get( con.Id ) : null );
+                if ( ( oldCon == null ) || ( con.NSP_Date_Of_Birth_Unmasked__c != oldCon.NSP_Date_Of_Birth_Unmasked__c ) || ( con.NSP_Date_of_Birth__c != oldCon.NSP_Date_of_Birth__c ) ) {
+                    con.NSP_Birthday__c = null;
+                    con.NSP_Date_Of_Birth_Masked__c = null;
+                    con.NSP_Is_Masked__c = false;
+                    con.NSP_Is_Unmasked__c = false;
+                    if(con.NSP_Date_of_Birth__c != null || con.NSP_Date_Of_Birth_Unmasked__c !=null){
+                        if(con.NSP_Date_Of_Birth_Unmasked__c !=null){
+                            con.NSP_Date_of_Birth__c = con.NSP_Date_Of_Birth_Unmasked__c;
+                        }
+                        con.NSP_Date_Of_Birth_Masked__c = 'XX/XX/XXXX';
+                        con.NSP_Is_Masked__c = true;
+                        con.NSP_Is_Unmasked__c = true;
+                        con.NSP_Date_Of_Birth_Unmasked__c = null;
+                        //Update Birthday field
+                        updateBirthdayBasedOnDOB(con); 
                     }
-                    con.NSP_Date_Of_Birth_Masked__c = 'XX/XX/XXXX';
-                    con.NSP_Is_Masked__c = true;
-                    con.NSP_Is_Unmasked__c = true;
-                    con.NSP_Date_Of_Birth_Unmasked__c = null;
-                    //Update Birthday field
-                    updateBirthdayBasedOnDOB(con); 
                 }
             }
         }
