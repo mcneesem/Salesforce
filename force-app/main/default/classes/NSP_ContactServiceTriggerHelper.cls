@@ -66,7 +66,11 @@ public with sharing class NSP_ContactServiceTriggerHelper {
         if ( newList != null ) {
             for ( Contact con : newList ) {
                 Contact oldCon = ( ( oldMap != null ) ? oldMap.get( con.Id ) : null );
-                if ( ( oldCon == null ) || ( con.NSP_SSN_Unmasked__c != oldCon.NSP_SSN_Unmasked__c ) || ( con.NSP_SSN__c != oldCon.NSP_SSN__c ) ) {
+                if ( ( oldCon == null )
+                    || ( con.NSP_SSN_Unmasked__c != oldCon.NSP_SSN_Unmasked__c )
+                    || ( con.NSP_SSN__c != oldCon.NSP_SSN__c )
+                    )
+                {
                     con.NSP_SSN_Masked__c = null; // reset masked field...
                     if ( String.isNotBlank( con.NSP_SSN__c ) || String.isNotBlank( con.NSP_SSN_Unmasked__c ) ) {
                         if ( String.isNotBlank( con.NSP_SSN_Unmasked__c ) ) {
@@ -103,16 +107,20 @@ public with sharing class NSP_ContactServiceTriggerHelper {
     */
     
     public void updateBirthday( List<Contact> newList , Map<Id,Contact> oldMap ) {
-        if(newList != null){
+        if ( newList != null ) {
             for ( Contact con : newList ) {
                 Contact oldCon = ( ( oldMap != null ) ? oldMap.get( con.Id ) : null );
-                if ( ( oldCon == null ) || ( con.NSP_Date_Of_Birth_Unmasked__c != oldCon.NSP_Date_Of_Birth_Unmasked__c ) || ( con.NSP_Date_of_Birth__c != oldCon.NSP_Date_of_Birth__c ) ) {
+                if ( ( oldCon == null )
+                    || ( con.NSP_Date_Of_Birth_Unmasked__c != oldCon.NSP_Date_Of_Birth_Unmasked__c )
+                    || ( con.NSP_Date_of_Birth__c != oldCon.NSP_Date_of_Birth__c )
+                    )
+                {
                     con.NSP_Birthday__c = null;
                     con.NSP_Date_Of_Birth_Masked__c = null;
                     con.NSP_Is_Masked__c = false;
                     con.NSP_Is_Unmasked__c = false;
-                    if(con.NSP_Date_of_Birth__c != null || con.NSP_Date_Of_Birth_Unmasked__c !=null){
-                        if(con.NSP_Date_Of_Birth_Unmasked__c !=null){
+                    if ( ( con.NSP_Date_of_Birth__c != null ) || ( con.NSP_Date_Of_Birth_Unmasked__c != null ) ) {
+                        if ( con.NSP_Date_Of_Birth_Unmasked__c !=null ) {
                             con.NSP_Date_of_Birth__c = con.NSP_Date_Of_Birth_Unmasked__c;
                         }
                         con.NSP_Date_Of_Birth_Masked__c = 'XX/XX/XXXX';
@@ -127,38 +135,37 @@ public with sharing class NSP_ContactServiceTriggerHelper {
         }
     }
 
-    
-    private static void updateBirthdayBasedOnDOB(Contact con){
-        if(con != null && con.NSP_Date_of_Birth__c != null){
+    private static void updateBirthdayBasedOnDOB( Contact con ) {
+        if ( ( con != null ) && ( con.NSP_Date_of_Birth__c != null ) ) {
             Date dt = con.NSP_Date_of_Birth__c;
             Integer day = dt.Day(); 
             Integer month = dt.Month();
-            
-            if( month == 1 ) {
+            if ( month == 1 ) {
                 con.NSP_Birthday__c = 'JAN ' + day;
-            }  else if( month == 2 ) {
+            } else if ( month == 2 ) {
                 con.NSP_Birthday__c = 'FEB ' + day;
-            }  else if( month == 3 ) {
+            } else if ( month == 3 ) {
                 con.NSP_Birthday__c = 'MAR ' + day;
-            }  else if( month == 4 ) {
+            } else if ( month == 4 ) {
                 con.NSP_Birthday__c = 'APR ' + day;
-            } else if( month == 5 ) {
+            } else if ( month == 5 ) {
                 con.NSP_Birthday__c = 'MAY ' + day;
-            } else if( month == 6 ) {
+            } else if ( month == 6 ) {
                 con.NSP_Birthday__c = 'JUN ' + day;
-            }  else if( month == 7 ) {
+            } else if ( month == 7 ) {
                 con.NSP_Birthday__c = 'JUL ' + day;
-            }  else if( month == 8 ) {
+            } else if ( month == 8 ) {
                 con.NSP_Birthday__c = 'AUG ' + day;
-            } else if( month == 9 ) {
+            } else if ( month == 9 ) {
                 con.NSP_Birthday__c = 'SEP ' + day;
-            }  else if( month == 10 ) {
+            } else if ( month == 10 ) {
                 con.NSP_Birthday__c = 'OCT ' + day;
-            }  else if( month == 11 ) {
+            } else if ( month == 11 ) {
                 con.NSP_Birthday__c = 'NOV ' + day;
-            }  else if( month == 12 ) {
+            } else if ( month == 12 ) {
                 con.NSP_Birthday__c = 'DEC ' + day;
             }
         }
     }
+
 }
