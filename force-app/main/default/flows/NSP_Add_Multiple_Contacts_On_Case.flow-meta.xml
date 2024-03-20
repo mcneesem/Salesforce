@@ -261,16 +261,6 @@
             <targetReference>LoopAlreadyContacts</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>NoChoice</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-    </choices>
-    <choices>
-        <name>YesChoice</name>
-        <choiceText>Yes</choiceText>
-        <dataType>String</dataType>
-    </choices>
     <constants>
         <name>HREmployeeRelationsCategory</name>
         <dataType>String</dataType>
@@ -455,16 +445,6 @@
         <name>finalCaseId</name>
         <dataType>String</dataType>
         <expression>if({!recordId} != null, {!recordId}, {!caseRecordId})</expression>
-    </formulas>
-    <formulas>
-        <name>isPrimaryValue</name>
-        <dataType>Boolean</dataType>
-        <expression>if({!isPrimaryCount} = 0, true, false)</expression>
-    </formulas>
-    <formulas>
-        <name>selectedPerId</name>
-        <dataType>String</dataType>
-        <expression>{!getSelectedContactRecordValues.NSP_Per_ID__c}</expression>
     </formulas>
     <interviewLabel>Add Multiple Contacts On Case {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -839,14 +819,6 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>existingContactsOfCase</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Contact</objectType>
     </variables>
     <variables>
         <name>isPrimaryCount</name>
