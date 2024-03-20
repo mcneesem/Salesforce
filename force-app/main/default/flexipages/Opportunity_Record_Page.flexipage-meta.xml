@@ -2297,6 +2297,16 @@
                 <identifier>RecordNSP_Selected_Template_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notes_to_Finance__c</fieldItem>
+                <identifier>RecordNotes_to_Finance_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1a4f11fc-dfb6-4a7a-b151-636c8529dcda</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2427,6 +2437,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Bypass_Docusign_Signature__c</fieldItem>
                 <identifier>RecordNSP_Bypass_Docusign_Signature_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notes_to_Finance__c</fieldItem>
+                <identifier>RecordNotes_to_Finance_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-7e4a9ac1-73a3-42fc-9563-292584ba8d1a</name>
@@ -4524,6 +4544,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.SBQQ__PrimaryQuote__c</fieldItem>
                 <identifier>RecordSBQQ_PrimaryQuote_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notes_to_Finance__c</fieldItem>
+                <identifier>RecordNotes_to_Finance_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
