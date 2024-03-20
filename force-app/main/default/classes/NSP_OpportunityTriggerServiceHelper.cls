@@ -2,7 +2,7 @@
 * Represents the Opportunity trigger helper created By Service which handles all the logic.
 */
 public class NSP_OpportunityTriggerServiceHelper {
-    // test w/ NSP_OpportunityTriggerServiceHelperTest (85%)
+    // test w/ NSP_OpportunityTriggerServiceHelperTest (86%)
 
     /*****************************************************************
     * Creating Constructor to call FF API's
@@ -70,34 +70,29 @@ public class NSP_OpportunityTriggerServiceHelper {
                 || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
             );
             if ( opp.stagename != opportunityOldMap.get(opportunityId).stagename
-                && opp.stagename.equals(NSP_SalesConstants.CLOSED_WON)
-                )
+                && opp.stagename.equals(NSP_SalesConstants.CLOSED_WON))
             {
                 // added as a part of STY-03649
                 if ( isValidWoWsPrimaryProduct
                     && isValidTimeEntryRecommendation
-                    && (String.isEmpty(opp.NSP_IPMRecommendation__c) || String.isBlank(opp.NSP_IPMRecommendation__c) || opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes)
                     )
                 {
                     timeAttAssetMap.put(opp.Id,opp);
                 }
                 if ( (opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.TIME_ATTENDANCE)
                     && isValidTimeEntryRecommendation
-                    && opp.Fee_Inclusive__c
                     )
                 {
                     timeAttAssetMap.put(opp.Id,opp);
                 }
                 if ( isValidWoWsPrimaryProduct
                     && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
-                    && ( String.isEmpty(opp.NSP_Time_Entry_Recommendation__c) || String.isBlank(opp.NSP_Time_Entry_Recommendation__c) || isValidTimeEntryRecommendation )
                     )
                 {
                     perAssetMap.put(opp.Id,opp);
                 }
                 if ( opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT 
-                    && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes 
-                    && opp.Fee_Inclusive__c
+                    && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
                     )
                 {
                     perAssetMap.put(opp.Id,opp);
@@ -216,6 +211,7 @@ public class NSP_OpportunityTriggerServiceHelper {
             for(Id oppId:timeAttAssetMap.keyset() ){
                 Opportunity record = timeAttAssetMap.get(oppId);
                 if(record != null){
+                    Boolean IsPerformWOWSAsset = True;
                     assetList.add(
                         createAssetObject(
                             record.Name ,
@@ -224,7 +220,8 @@ public class NSP_OpportunityTriggerServiceHelper {
                             TimeAttAssetRecordType ,
                             NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ,
                             NSP_ServiceConstants.CASE_TIME_ATTENDENCE ,
-                            NSP_ServiceConstants.WoWSAsset
+                            NSP_ServiceConstants.WoWSAsset,
+                            IsPerformWOWSAsset
                         )
                     );
                 }
@@ -235,8 +232,10 @@ public class NSP_OpportunityTriggerServiceHelper {
                 Opportunity record = perAssetMap.get(oppId);
                 if(record != null){
                     String assetStatus = NSP_ServiceConstants.ASSET_ONDEMAND_STATUS;
+                    Boolean IsPerformWOWSAsset = True;
                     if(record.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT){
                         assetStatus = NSP_ServiceConstants.ASSET_ONBOARDING_STATUS;
+                        IsPerformWOWSAsset = False;
                     }
                     assetList.add(
                         createAssetObject(
@@ -246,7 +245,8 @@ public class NSP_OpportunityTriggerServiceHelper {
                             PermformanceAssetRecordType ,
                             assetStatus ,
                             NSP_ServiceConstants.PERFORMANCE ,
-                            NSP_ServiceConstants.WoWSAsset
+                            NSP_ServiceConstants.WoWSAsset,
+                            IsPerformWOWSAsset
                         )
                     );
                 }
@@ -289,7 +289,7 @@ public class NSP_OpportunityTriggerServiceHelper {
     /***********************************************************************************************
     * MethodName: createAssetObject
     * ********************************************************************************************/    
-    private static Asset createAssetObject(String assetName , Id oppId, Id accountId , Id assetRecordTypeId , String status , String productLine , String bundle){
+    private static Asset createAssetObject(String assetName , Id oppId, Id accountId , Id assetRecordTypeId , String status , String productLine , String bundle, Boolean IsPerformWOWSAsset){
         Asset ast = new Asset();
         ast.Name = assetName;
         ast.RecordTypeId = assetRecordTypeId;
@@ -299,6 +299,7 @@ public class NSP_OpportunityTriggerServiceHelper {
         ast.NSP_ProductBundle__c = bundle;
         ast.Opportunity__c = OppId;
         ast.AccountId = accountId;
+        ast.Is_Perform_WO_WS_Asset__c = IsPerformWOWSAsset;
         return ast;
     }   
     

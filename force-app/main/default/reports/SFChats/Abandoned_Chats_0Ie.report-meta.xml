@@ -45,6 +45,13 @@
             <operator>greaterThan</operator>
             <value>45</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>MessagingSession$Sub_Topic__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
     </filter>
     <format>Tabular</format>
     <name>Abandoned Chats</name>

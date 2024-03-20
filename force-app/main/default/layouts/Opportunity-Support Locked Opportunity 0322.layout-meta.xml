@@ -827,6 +827,10 @@
                 <field>SBQQ__PrimaryQuote__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Service_Team_Email__c</field>
             </layoutItems>

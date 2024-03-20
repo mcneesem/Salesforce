@@ -5446,11 +5446,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Recurrence_Interval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Regional_Manager__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -16632,6 +16627,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Ready_for_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Total_Employess_of_all_companies__c</field>
         <readable>false</readable>
@@ -19684,11 +19684,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Priority__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Recurrence_Interval__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

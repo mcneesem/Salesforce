@@ -16,7 +16,7 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    //  test w/ NSP_OpportunityTriggerHelperTest (76%)
+    //  test w/ NSP_OpportunityTriggerHelperTest (77%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -56,12 +56,7 @@ public class NSP_OpportunityTriggerHelper {
         //Iterating over the opportunity new list 
         for(Opportunity opportunityObject : newList){
             ownerIdsSet.add(opportunityObject.OwnerId);
-            
-            //  Check opportunity stage
-            if(opportunityObject.StageName == 'Closed Won'){
-                verifyCloseWonNotAllowedRoles(opportunityObject);
-            }
-    
+
             // AZD-191924 AZD-232114 AZD-232117
             //  If primary product IS 'Workforce Optimization' then calculate fees
             if(opportunityObject.NSP_PrimaryProduct__c != null){
@@ -253,9 +248,24 @@ public class NSP_OpportunityTriggerHelper {
             Opportunity newOpportunity =  opportunityNewMap.get(opportunityId);
             Opportunity oldOpportunity =  opportunityOldMap.get(opportunityId);
             
-            //  Check opportunity stage
-            if(newOpportunity.StageName == 'Closed Won'){
-                verifyCloseWonNotAllowedRoles(newOpportunity);
+            //  AZD-258129
+            if ( NSP_hotfix_Switch__c.getInstance( UserInfo.getUserId() ).Is_Edit_Closed_Won_Allowed__c
+                && ( newOpportunity.Create_Box_com_Folder_s__c != oldOpportunity.Create_Box_com_Folder_s__c )
+                && ( newOpportunity.StageName == 'Closed Won' )
+                )
+            {
+                Map<String,Object> changedFields = newOpportunity.getPopulatedFieldsAsMap();
+                // Only the field Create_Box_com_Folder_s__c should be updated
+                for ( String fieldName : changedFields.keySet() ) {
+                    if ( !fieldName.equals( 'Create_Box_com_Folder_s__c' )
+                        && ( newOpportunity.get( fieldName ) != oldOpportunity.get( fieldName ) )
+                        )
+                    {
+                        newOpportunity.addError( Label.NSP_CANNOT_CHANGE_CLOSEDWON );
+                        break;
+                    }
+                }
+                continue;
             }
 
             // AZD-191924 AZD-232114 AZD-232117 
@@ -1367,31 +1377,7 @@ Created Date:12/05/2022
             NSP_AssetTriggerHandler.TriggerDisabled=false;
             NSP_ErrorLogHandler.logSaveResultsException('NSP_OpportunityTriggerHelper','createHardwareAssets', results); 
         }
-    }     
-
-        private void verifyCloseWonNotAllowedRoles(Opportunity opp){
-
-            //  Bug-205788
-            //  Regardless of product, BPA, BPC, and ABPA should not be allowed to close/won ANY opportunity
-
-            if(notAllowedCloseWonRoles == null){
-                List<String> rolesApiNames = new List<String>();
-                rolesApiNames.add('Business_Performance_Advisor');
-                rolesApiNames.add('Business_Performance_Consultant');
-                rolesApiNames.add('Associate_Business_Performance_Advisors');
-                notAllowedCloseWonRoles = NSP_Lib.getRolesIdByApiName(rolesApiNames);
-            }
-
-            if(userRole != null && notAllowedCloseWonRoles!= null && opp!= null )  //updated as part of DF-04392
-            {
-                for(UserRole role : notAllowedCloseWonRoles){
-                    if(userRole.equals(role.Id)){
-                        opp.addError(Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-                        break;
-                    }
-                }
-            }
-        }
+    }
 
     // AZD-191924 232114
     public static void calculateEnrollmentFees(List<Opportunity> opps){

@@ -1175,11 +1175,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Recurrence_Interval__c</field>
-            <table>Contact.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Event_Subtype__c</field>
             <table>Contact.Activities</table>
         </columns>

@@ -122,7 +122,11 @@ public class NSP_AssetServiceTriggerHelper {
             }//<STY-02841> end
 
             String recordTypeLabel = recTypeLabelMap.get(asset.RecordTypeId);
-            if(OnboardingStatusRecordTypes.contains(recordTypeLabel) && asset.NSP_Account_Status__c != NSP_ServiceConstants.TERMINATED){
+            if( OnboardingStatusRecordTypes.contains(recordTypeLabel)
+                && asset.NSP_Account_Status__c != NSP_ServiceConstants.TERMINATED
+                && !asset.Is_Perform_WO_WS_Asset__c
+                )
+            {
                 asset.Status = ASSET_STATUS_ONBOARDING;
             }else if(NonServiceAsset.contains(recordTypeLabel)){
                 asset.Status = ASSET_STATUS_PURCHASED;

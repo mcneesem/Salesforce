@@ -9,10 +9,16 @@
                         <valueListItems>
                             <value>pse__Project_Task__c.New_Termination_Form</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Termination request form</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Reinstatement Requested</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

@@ -29,6 +29,10 @@ public class NSP_OpportunityTriggerHelperTest {
     @testSetup
     static void testData() {
        
+        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
+        setting.Is_Edit_Closed_Won_Allowed__c = true;
+        insert setting;
+        
         //Account creation
         Account accoutObject = new Account();
         accoutObject.Name = 'Test Account';
@@ -46,7 +50,12 @@ public class NSP_OpportunityTriggerHelperTest {
         accoutObject1.Name = 'Test Account1';
         //inserting account object
         insert accoutObject1;
-       
+
+        Account accoutObject2 = new Account();
+        accoutObject2.Name = 'Test Account2';
+        //inserting account object
+        insert accoutObject2;
+
         // Inserting Contract
         Contract ct = new Contract();
         ct.AccountId = accoutObject1.Id;
@@ -117,8 +126,7 @@ public class NSP_OpportunityTriggerHelperTest {
         NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         insert opportuniytObject5;
         NSP_OpportunityTriggerHandler.TriggerDisabled = false;
-       
-   
+          
         Test.startTest();
         List<Opportunity> oppList2 = new List<Opportunity>();       
         Opportunity opportuniytObject3 = new Opportunity();
@@ -156,9 +164,32 @@ public class NSP_OpportunityTriggerHelperTest {
         quoteRec.SBQQ__Primary__c = true;
         quoteRec.SBQQ__Type__c = 'New Product';
         quoteRec.SBQQ__Status__c = 'Approved';
-       
         insert quoteRec;
-       
+
+        Opportunity opportuniytObject6 = new Opportunity();
+        opportuniytObject6.Name = 'Closed Won Oppty';
+        opportuniytObject6.AccountId = accoutObject2.id;
+        opportuniytObject6.CloseDate = date.today();
+        opportuniytObject6.CurrencyIsoCode = CURRENCY_USD;
+        opportuniytObject6.NSP_Number_of_Employees__c = 10;
+        opportuniytObject6.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        insert opportuniytObject6;
+
+        SBQQ__Quote__c quoteRec1 = new SBQQ__Quote__c();
+        quoteRec1.SBQQ__Opportunity2__c = opportuniytObject6.Id;
+        quoteRec1.SBQQ__Account__c = opportuniytObject6.AccountId;
+        quoteRec1.SBQQ__Primary__c = true;
+        quoteRec1.SBQQ__Type__c = 'New Product';
+        quoteRec1.SBQQ__Status__c = 'Approved';
+        insert quoteRec1;
+
+        opportuniytObject6.StageName = NSP_SalesConstants.PROPOSAL_STAGE;
+	    opportuniytObject6.SBQQ__PrimaryQuote__c = quoteRec1.id;
+        Update opportuniytObject6;
+
+        opportuniytObject6.StageName = NSP_SalesConstants.CLOSED_WON_STAGE;
+        Update opportuniytObject6;
+        
         insert taskList;
         List<Opportunity> childOppList = new List<Opportunity>();
         //Create child opportunity for Retirement Service
@@ -189,7 +220,7 @@ public class NSP_OpportunityTriggerHelperTest {
         
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
         insert pricebook;
-        
+
         Test.stopTest();
         NSP_TestHelper.createCPQQuote(accoutObject1.Id,opportuniytObject.Id,true);
 
@@ -901,8 +932,8 @@ static void createAssetTest3(){
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Id = oppId;
         opportuniytObject.NSP_Number_of_Employees__c = 200;
-        //Inserting Opportunity Object
         update opportuniytObject;
+
         Test.stopTest();
     }
     
@@ -958,7 +989,34 @@ static void createAssetTest3(){
         Test.stopTest();
     }
     
-    
-     
- 
+    @isTest
+    static void testSendFileRequest() {
+        
+        Test.startTest();
+        String expectedError = Label.NSP_CANNOT_CHANGE_CLOSEDWON;
+
+        try{
+            List<Opportunity> opp1 = [SELECT id, Name, StageName, AVA_SFCLOUD__Sales_Tax__c, Create_Box_com_Folder_s__c 
+                                      FROM Opportunity
+                                      WHERE Name = 'Closed Won Oppty'] ; 
+
+            //  Try to change not allowed fields
+            opp1[0].AVA_SFCLOUD__Sales_Tax__c = 10;
+            opp1[0].Name = 'Test Opportunity change';
+
+            //  Set checkbox to true
+            opp1[0].Create_Box_com_Folder_s__c = true;
+
+            //  Update Opportunity
+        	update opp1;
+        }
+        catch(Exception e){
+            //	An error is expected
+            System.assertEquals(true , e.getMessage().contains(expectedError));
+        }
+        finally{
+            Test.stopTest();
+        }
+        
+    }
 }

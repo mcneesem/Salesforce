@@ -452,7 +452,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Notes_to_Finance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AVA_SFCLOUD__AvaTax_Doc_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.Notes_to_Finance__c</field>
         <readable>true</readable>
     </fieldPermissions>
    <fieldPermissions>

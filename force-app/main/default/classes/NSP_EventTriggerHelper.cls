@@ -2,7 +2,7 @@
 * Represents the Event trigger helper which handles all the logic.
 */
 public class NSP_EventTriggerHelper {
-    // test w/ NSP_EventTriggerHelperTest (87%)
+    // test w/ NSP_EventTriggerHelperTest (88%)
     
     public static String DISCOVERY_CALL = 'Discovery Call';
     private static final String EMPTY_STRING = '';
@@ -63,20 +63,72 @@ public class NSP_EventTriggerHelper {
             populateWhatAndWhoNamesEvent(eligibleEvents);//Update of NSP_What_Name__c and NSP_Who_Name__c before Update
         } 
         }    
-        
-        /**
-    * Iterates throught the list of new Events and passes the required attributes to other methods.
-    * @param eventNewMap Map of New Event. 
-    * @param eventOldMap Map of Old Event.   
-    * @return void             
-    *                
-    */
-        
-        public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){        
-            
-            updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
-            updateActivityDate(eventNewMap.values(),eventOldMap);
+
+    //
+    // Iterates throught the list of new Events and passes the required attributes to other methods.
+    // @param eventNewMap Map of New Event.
+    // @param eventOldMap Map of Old Event.
+    // @return void
+    //
+    public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
+        Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
+        if(eventNewMap != null){
+            for (Event newEventRecord : eventNewMap.Values()){
+                if( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ){
+                    Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
+                    if ( ( newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE )
+                        && ( oldEventRecord != null )
+                        && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
+                        )
+                    {
+                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                    }
+                }
+            }
         }
+        if (rescheduledEventsMap.size() > 0){
+            updateResourceAbsenceDate(rescheduledEventsMap);
+        }
+        updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
+        updateActivityDate(eventNewMap.values(),eventOldMap);
+    }
+
+    //
+    // Method Name : updateResourceAbsenceDate 
+    // Description : Method to update start and end date on RAs for recurring events
+    // @param Map of Event. 
+    // @return void  
+    //
+    private void updateResourceAbsenceDate(Map<Id,Event> rescheduledEventsMap){
+        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+        List<ResourceAbsence> resourceAbsenceToUpdateList = new List<ResourceAbsence>();
+        try{
+            if (rescheduledEventsMap.size() > 0){
+                resourceAbsenceList = [
+                    SELECT ID, Start, End, Event_Id__c
+                    FROM ResourceAbsence
+                    WHERE Event_Id__c IN: rescheduledEventsMap.keySet()
+                ];
+            }
+            if (resourceAbsenceList.size() > 0){
+                for (ResourceAbsence eachRA : resourceAbsenceList){
+                    if ( rescheduledEventsMap.containsKey( eachRA.Event_Id__c ) ) {
+                        Event record = rescheduledEventsMap.get( eachRA.Event_Id__c );
+                        if ( record != null ) {
+                            eachRA.Start = record.StartDateTime;
+                            eachRA.End = record.EndDateTime;
+                            resourceAbsenceToUpdateList.add(eachRA);
+                        }
+                    }
+                }
+            }
+            if (resourceAbsenceToUpdateList.size() > 0){
+                Update resourceAbsenceToUpdateList;
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateResourceAbsenceDate', ex.getMessage());
+        }
+    }
 
     /**
     * Iterates throught the list of old Events and passes the required attributes to other methods.
@@ -219,7 +271,7 @@ public class NSP_EventTriggerHelper {
 * Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
 * Date : 25/05/2023
 * @param newEventList List of new Events 
-* @return void  	
+* @return void  
 */
     private void populateWhatAndWhoNamesEvent(List<Event> newEventList) {
         List<String> fieldApiNamesList = new List<String>{ 'WhatId', 'WhoId' };
@@ -246,12 +298,12 @@ public class NSP_EventTriggerHelper {
         for(Schema.DescribeSObjectResult sObjResult : describeSObjectResults){
             objectApiNameLabelMap.put(sObjResult.getName(), sObjResult.getLabel());
         }
-        Map<String, String>	fieldNameByObjectMap = new Map<String, String>{'Case' => 'CaseNumber', 'ServiceAppointment' => 'AppointmentNumber',
-                	                                                                   'ResourceAbsence' => 'AbsenceNumber'};
+        Map<String, String> fieldNameByObjectMap = new Map<String, String>{'Case' => 'CaseNumber', 'ServiceAppointment' => 'AppointmentNumber',
+                                                                                       'ResourceAbsence' => 'AbsenceNumber'};
         for(String objectApiName : targetRecordIdsByObjectApiNameMap.keySet()) {
                 String targetFieldApiName = fieldNameByObjectMap.containsKey(objectApiName) ? fieldNameByObjectMap.get(objectApiName) : 'Name';
-            	Map<Id, String> relatedRecordDetailsMap = getRelatedRecordDetails(objectApiName,
-                                                                              	 targetFieldApiName,
+                Map<Id, String> relatedRecordDetailsMap = getRelatedRecordDetails(objectApiName,
+                                                                                 targetFieldApiName,
                                                                                  targetRecordIdsByObjectApiNameMap.get(objectApiName),
                                                                                  objectApiNameLabelMap.get(objectApiName));
             targetRelatedObjectsMap.putAll(relatedRecordDetailsMap);

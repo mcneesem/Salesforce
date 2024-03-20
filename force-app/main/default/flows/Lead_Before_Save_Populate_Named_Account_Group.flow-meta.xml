@@ -2,10 +2,42 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
     <assignments>
+        <name>Populate_FEIN_with_D_B_Connect_Reg_Num_1</name>
+        <label>Populate FEIN with D&amp;B Connect Reg Num 1</label>
+        <locationX>66</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DnB_FEIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DNB_Connect_Reg_Number_1__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_Domestic_Ultimate_DUNS_populated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_FEIN_with_D_B_Connect_Reg_Num_2</name>
+        <label>Populate FEIN with D&amp;B Connect Reg Num 2</label>
+        <locationX>330</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DnB_FEIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DNB_Connect_Reg_Number_2__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_Domestic_Ultimate_DUNS_populated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Populate_Named_Account_Group_field_with_RecordId</name>
         <label>Populate Named Account Group field with RecordId</label>
-        <locationX>842</locationX>
-        <locationY>611</locationY>
+        <locationX>1111</locationX>
+        <locationY>1211</locationY>
         <assignmentItems>
             <assignToReference>$Record.Named_Account_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -17,8 +49,8 @@
     <assignments>
         <name>Populate_Named_Account_Group_with_Connect_DUNS</name>
         <label>Populate Named Account Group with Connect DUNS</label>
-        <locationX>314</locationX>
-        <locationY>503</locationY>
+        <locationX>583</locationX>
+        <locationY>1103</locationY>
         <assignmentItems>
             <assignToReference>$Record.Named_Account_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -30,8 +62,8 @@
     <assignments>
         <name>Populate_Named_Account_Group_with_Domestic_Ultimate_DUNS</name>
         <label>Populate Named Account Group with Domestic Ultimate DUNS</label>
-        <locationX>50</locationX>
-        <locationY>395</locationY>
+        <locationX>319</locationX>
+        <locationY>995</locationY>
         <assignmentItems>
             <assignToReference>$Record.Named_Account_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -43,8 +75,8 @@
     <assignments>
         <name>Populate_Named_Account_Group_with_FEIN</name>
         <label>Populate Named Account Group with FEIN</label>
-        <locationX>578</locationX>
-        <locationY>611</locationY>
+        <locationX>847</locationX>
+        <locationY>1211</locationY>
         <assignmentItems>
             <assignToReference>$Record.Named_Account_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -54,10 +86,75 @@
         </assignmentItems>
     </assignments>
     <decisions>
+        <name>Is_FEIN_blank</name>
+        <label>Is FEIN blank?</label>
+        <locationX>550</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Is_the_Domestic_Ultimate_DUNS_populated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FEIN is NOT blank</defaultConnectorLabel>
+        <rules>
+            <name>Yes_FEIN_is_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DnB_FEIN__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_one_of_the_D_B_Connect_Reg_numbers_FEIN</targetReference>
+            </connector>
+            <label>Yes - FEIN is blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_one_of_the_D_B_Connect_Reg_numbers_FEIN</name>
+        <label>Is one of the D&amp;B Connect Reg numbers FEIN</label>
+        <locationX>330</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Is_the_Domestic_Ultimate_DUNS_populated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Neither D&amp;B Connect Reg Number is FEIN</defaultConnectorLabel>
+        <rules>
+            <name>D_B_Reg_Number_1_is_the_FEIN</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DNB_Connect_Reg_Number_1_Code__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>6863</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_FEIN_with_D_B_Connect_Reg_Num_1</targetReference>
+            </connector>
+            <label>D&amp;B Reg Number 1 is the FEIN</label>
+        </rules>
+        <rules>
+            <name>D_B_Reg_Number_2_is_the_FEIN</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DNB_Connect_Reg_Number_2_Code__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>6863</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_FEIN_with_D_B_Connect_Reg_Num_2</targetReference>
+            </connector>
+            <label>D&amp;B Reg Number 2 is the FEIN</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_the_D_B_Connect_DUNS_populated</name>
         <label>Is the D&amp;B Connect DUNS populated?</label>
-        <locationX>512</locationX>
-        <locationY>395</locationY>
+        <locationX>781</locationX>
+        <locationY>995</locationY>
         <defaultConnector>
             <targetReference>Is_the_FEIN_populated</targetReference>
         </defaultConnector>
@@ -72,6 +169,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.DNB_Connect_DUNS_Number__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>000000000</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Populate_Named_Account_Group_with_Connect_DUNS</targetReference>
             </connector>
@@ -81,8 +185,8 @@
     <decisions>
         <name>Is_the_Domestic_Ultimate_DUNS_populated</name>
         <label>Is the Domestic Ultimate DUNS populated?</label>
-        <locationX>281</locationX>
-        <locationY>287</locationY>
+        <locationX>550</locationX>
+        <locationY>887</locationY>
         <defaultConnector>
             <targetReference>Is_the_D_B_Connect_DUNS_populated</targetReference>
         </defaultConnector>
@@ -97,6 +201,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.DnB_Domestic_Ultimate_DUNS__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>000000000</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Populate_Named_Account_Group_with_Domestic_Ultimate_DUNS</targetReference>
             </connector>
@@ -106,8 +217,8 @@
     <decisions>
         <name>Is_the_FEIN_populated</name>
         <label>Is the FEIN populated?</label>
-        <locationX>710</locationX>
-        <locationY>503</locationY>
+        <locationX>979</locationX>
+        <locationY>1103</locationY>
         <defaultConnector>
             <targetReference>Populate_Named_Account_Group_field_with_RecordId</targetReference>
         </defaultConnector>
@@ -126,6 +237,28 @@
                 <targetReference>Populate_Named_Account_Group_with_FEIN</targetReference>
             </connector>
             <label>Yes - FEIN is populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NAG_Automation_Bypass</name>
+        <label>NAG Automation Bypass?</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Is_FEIN_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No bypass</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Bypass_NAG_Automation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.NSP_Trigger_Switch__c.NAGAutomation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Yes - Bypass NAG Automation</label>
         </rules>
     </decisions>
     <description>Populating &quot;Named Account Group&quot; field based on following logic: D&amp;B Domestic Ultimate DUNS, D&amp;B Connect DUNS, FEIN and finally RecordId if none of the others are populated. (simplified)</description>
@@ -152,10 +285,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>155</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_the_Domestic_Ultimate_DUNS_populated</targetReference>
+            <targetReference>NAG_Automation_Bypass</targetReference>
         </connector>
         <object>Lead</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
