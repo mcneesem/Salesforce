@@ -610,7 +610,9 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   deleteApgRow(row) {
     if (this._apgData.length > 1) {
       const { uid } = row;
-      this._apgDataToDelete.push(row);
+      if(row.Id){
+        this._apgDataToDelete.push(row);
+      }
       const data = this._apgData;
       const index = this.findRowIndexByUid(uid);
 
