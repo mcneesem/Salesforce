@@ -305,11 +305,10 @@ public class NSP_ContactTriggerHelper {
                     updateWorkPhoneEmailOnACR(ConIdcontactMap);
                 }
             }
-            //for tracking history
-            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
-            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(objectFieldHistoryHelper);  
-            }
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)newMap ,
+                (Map<Id,sObject>)oldMap
+            );
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }

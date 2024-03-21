@@ -476,15 +476,18 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
       if(childList != null){
           updateChildLeadOwner(childList);
       }
-        //for tracking history - defect DF-00972
-        if(leadNewMap.size() > 0 && !test.isRunningTest()){
-            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)leadNewMap, (Map<Id, sObject>)leadOldMap);
-            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(objectFieldHistoryHelper);  
-            }
+        if ( ( leadNewMap != null )
+            && ( leadNewMap.size() > 0 )
+            && !Test.isRunningTest()
+            )
+        {
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)leadNewMap ,
+                (Map<Id,sObject>)leadOldMap
+            );
         }
     }
-    
+
     /**
 * Stamps Parent lead owner on child leads
 * @param newList List of New leads. 

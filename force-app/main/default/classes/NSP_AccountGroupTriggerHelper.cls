@@ -1,9 +1,7 @@
-/**
-* Represents the Account Group trigger helper which handles all the logic.
-*/
-
 public class NSP_AccountGroupTriggerHelper {
-    
+    // test w/ NSP_AccountGroupMemberController_Test (92%)
+    // test w/ NSP_AccountGroupTriggerHelper (77%)
+
     /**
     * Iterates throught the list of NSP_Account_Groups and Updates the group Name based on Criteria.
     * @param newList List of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
@@ -81,20 +79,20 @@ public class NSP_AccountGroupTriggerHelper {
             }                
         }
     }
-    
-    /**
-    * Pass all the records to the Queuable for Account Group History for Big Object.
-    * @param  Map of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
-    * @param newList Map of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
-    * @return void      
-    *                
-    */
-    public void afterUpdate(Map<Id, NSP_Account_Group__c> newMap,Map<Id, NSP_Account_Group__c> oldMap){        
-        if(newMap.size() > 0){
-            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
-            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(objectFieldHistoryHelper);  
-            }
+
+    //
+    // Pass all the records to the Queuable for Account Group History for Big Object.
+    // @param  Map of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
+    // @param newList Map of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
+    // @return void
+    //
+    public void afterUpdate( Map<Id,NSP_Account_Group__c> newMap , Map<Id,NSP_Account_Group__c> oldMap ) {
+        if ( ( newMap != null ) && ( newMap.size() > 0 ) ) {
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)newMap ,
+                (Map<Id,sObject>)oldMap
+            );
         }
     }
 }
+//

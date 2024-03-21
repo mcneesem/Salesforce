@@ -289,14 +289,12 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                     updateAddressAccountList.add(accObj);
                 }
             }
-            //for tracking history
-            if (!test.isRunningTest()) {
-                NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map < Id, sObject > ) newMap, (Map < Id, sObject > ) oldMap);
-                If(Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                    System.enqueueJob(objectFieldHistoryHelper);
-                }
+            if ( !Test.isRunningTest() ) {
+                NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                    (Map<Id,sObject>)newMap ,
+                    (Map<Id,sObject>)oldMap
+                );
             }
-            
             // Send the list to publish event bus
             if (updateAccountList.size() > 0) {
                 /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/

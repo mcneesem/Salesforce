@@ -519,17 +519,16 @@ public class NSP_OpportunityTriggerHelper {
                 backoutOptySet.add(newOpportunity.Id);
             }
         }
-        
-        //for tracking history
-        if(!Test.isRunningTest()){
-        if(opportunityNewMap.size() > 0){
-            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)opportunityNewMap, (Map<Id, sObject>)opportunityOldMap);
-            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(objectFieldHistoryHelper);  
-            }
+        if ( !Test.isRunningTest()
+            && ( opportunityNewMap != null )
+            && ( opportunityNewMap.size() > 0 )
+            )
+        {
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)opportunityNewMap ,
+                (Map<Id,sObject>)opportunityOldMap
+            );
         }
-        }
-        
         // Send the list to publish event bus
         if(updateResyncFlagOpportunityList.size() > 0){
             /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
