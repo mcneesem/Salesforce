@@ -131,6 +131,93 @@ public class NSP_EventTriggerHelper {
     }
 
     /**
+    * Iterates throught the list of old Events and map of old Events and passes the required attributes to other methods.
+    * @param eventOldList List of Old Event.
+    * @param eventOldMap Map of Old Event.
+    * @return void
+    */
+    
+    public void beforeDeleteDirector(List<Event> eventOldList, Map<Id, Event> eventOldMap) {
+        Set<String> subjectSet = new Set<String>();  
+    	Map<Id, Event> recurringEvents = new Map<Id, Event>();   
+    	Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();  
+        
+        try {  
+            if (eventOldMap != null) {  
+                for (Event eachEvent : eventOldMap.values()) {  
+                	if (eachEvent.RecordTypeId == eventRecordType && eachEvent.WhatId == NULL && eachEvent.Type == NULL
+                    	&& (eachEvent.IsRecurrence2 == TRUE || eachEvent.IsRecurrence == TRUE)) 
+                	{  
+                    	subjectSet.add(eachEvent.Subject);  
+                    	recurringEvents.put(eachEvent.Id, eachEvent);  
+                	}
+            	}
+            } 
+        
+            Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,recurringEvents);
+  
+        	if (attendeesEventMap != null && attendeesEventMap.size() > 0) {  
+            	deleteResourceAbsence(attendeesEventMap);
+        	}  
+        } catch (Exception ex) {  
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'beforeDeleteDirector', ex.getMessage());  
+    	}
+    } 
+
+    /**
+	* Method Name : getAttendeesEvent 
+	* Description : Method to update start and end date on RAs for recurring events
+	* @param newList Map of Event. 
+	* @return Map of ResourceAbsence
+	*/
+    
+    private Map<Id, Event> getAttendeesEvent(Set<String> subjectSet,Map<Id, Event> recurringEvents){ 
+        List<Event> eventWithSameSubject = new List<Event>();
+        Map<Id, ResourceAbsence> childResourceAbsenceMap = new Map<Id, ResourceAbsence>();
+        String DISPATCHER_RESOURCE = 'Dispatcher + Resource';  
+    	String RESOURCE = 'Resource'; 
+        Map<Id,Event> attendeesEventMap = new Map<Id,Event>();
+    	Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+        
+        if (subjectSet != null && subjectSet.size() > 0){
+            eventWithSameSubject = [SELECT Id, Subject, StartDateTime, EndDateTime, ShowAs, Description, CreatedById, Location 
+                                    FROM Event  
+            						WHERE Subject IN :subjectSet  
+                					AND IsChild = TRUE  
+                					AND (CreatedBy.NSP_Salesforce_Field_Service__c = :DISPATCHER_RESOURCE OR CreatedBy.NSP_Salesforce_Field_Service__c = :RESOURCE)  
+                					AND RecordTypeId = :eventRecordType
+                                   	AND WhatId = NULL 
+                                    AND Type = NULL
+                    				AND (IsRecurrence2 = TRUE OR IsRecurrence = TRUE)]; 
+        }
+        
+        if (recurringEvents != null && recurringEvents.size() > 0){
+        	for (Event eachEvent : recurringEvents.values()) {  
+            	Set<String> eventAttributes = new Set<String>{  
+                	eachEvent.Subject, eachEvent.ShowAs, eachEvent.Description, eachEvent.Location  
+            	};
+            	Set<Datetime> eventDateAttributes = new Set<Datetime>{  
+                	eachEvent.StartDateTime, eachEvent.EndDateTime  
+            	};
+
+            	for (Event childEvent : eventWithSameSubject) {  
+                	if (eventAttributes.contains(childEvent.Subject) &&  
+                    	eventDateAttributes.contains(childEvent.StartDateTime) &&  
+                    	eventDateAttributes.contains(childEvent.EndDateTime) &&  
+                    	eventAttributes.contains(childEvent.ShowAs) &&  
+                    	eventAttributes.contains(childEvent.Description) &&    
+                    	eventAttributes.contains(childEvent.Location)) 
+                    {  
+                        attendeesEventMap.put(childEvent.Id,childEvent);
+                    	  
+                	}  
+                }  
+            }
+        }
+        return attendeesEventMap;
+    }
+    
+    /**
     * Iterates throught the list of old Events and passes the required attributes to other methods.
     * @param eventOldList List of Old Event.
     * @param eventOldMap Map of Old Event.
@@ -138,15 +225,30 @@ public class NSP_EventTriggerHelper {
     */
     public void afterDeleteDirector(List<Event> eventOldList,Map<Id, Event> eventOldMap){
         try{
-            List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
-            if (!eventOldMap.isEmpty()){
-                resourceAbsenceList = [SELECT ID From ResourceAbsence WHERE Event_Id__c IN: eventOldMap.keySet()];
+            if (eventOldMap != null && eventOldMap.size() > 0){
+                deleteResourceAbsence(eventOldMap);
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'afterDeleteDirector', ex.getMessage());
+        }
+    }
+
+    /**
+    * Method to deleted Resource Absences.
+    * @param eventMap Map of Event.
+    * @return void
+    */    
+    private void deleteResourceAbsence(Map<Id, Event> eventMap){
+        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+        try{
+            if (eventMap != null && eventMap.size() > 0){
+                resourceAbsenceList = [SELECT ID,Event_Id__c From ResourceAbsence WHERE Event_Id__c IN: eventMap.keySet()];
             }
             if (resourceAbsenceList.size() > 0){
                 Delete resourceAbsenceList;
             }
         }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'afterDeleteDirector', ex.getMessage());
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'deleteResourceAbsence', ex.getMessage());
         }
     }
 
