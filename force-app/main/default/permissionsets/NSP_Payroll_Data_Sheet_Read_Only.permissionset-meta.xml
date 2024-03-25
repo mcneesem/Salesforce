@@ -6,42 +6,42 @@
     </classAccesses>
     <description>Read Only access to Payroll Data Sheet record</description>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.Contact_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Contact_Cell__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Contact_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Contact_International_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Contact_Office_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Contact_Outside_US__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Contact_Time_to_Reach__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Additional_Payroll_Contact__c.NSP_Payroll_Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
