@@ -83,6 +83,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>MessagingSession.Sub_Topic__c</field>
         <readable>true</readable>
     </fieldPermissions>
