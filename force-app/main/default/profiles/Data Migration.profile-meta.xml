@@ -34372,6 +34372,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Enter_Case_number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Is_Client_MM_or_MM_Enterprise__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Accrual_Profile__c.NSP_Submitter_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>

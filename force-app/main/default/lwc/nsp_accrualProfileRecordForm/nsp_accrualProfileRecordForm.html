@@ -96,10 +96,26 @@
               </lightning-input-field>
 
               <lightning-input-field
+                field-name="Is_Client_MM_or_MM_Enterprise__c"
+                label="Is Client Middle Market or Middle Market Enterprise?"
+                data-name="Is_Client_MM_or_MM_Enterprise__c"
+                value={fieldValue.Is_Client_MM_or_MM_Enterprise__c}
+                onchange={handleValueChange}>
+              </lightning-input-field>
+
+              <lightning-input-field
                 value={fieldValue.NSP_NewExisting_Client_or_Change_order__c}
                 field-name="NSP_NewExisting_Client_or_Change_order__c"
                 data-name="NSP_NewExisting_Client_or_Change_order__c"
                 onchange={handleValueChange}>
+              </lightning-input-field>
+
+              <lightning-input-field
+                lwc:if={visibility.Enter_Case_number__c}
+                field-name="Enter_Case_number__c"
+                data-name="Enter_Case_number__c"
+                value={fieldValue.Enter_Case_number__c}
+                onchange={handleLookUpChange}>
               </lightning-input-field>
             </div>
           </div>

@@ -265,7 +265,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Lookup_Fields</name>
-            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5)</conditionLogic>
+            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5 AND 7) AND (6 OR 8)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Account_HRS__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -299,6 +299,27 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Enter_Case_number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_Client_MM_or_MM_Enterprise__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_NewExisting_Client_or_Change_order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Client/New ITA Implementation</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1210,7 +1231,7 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>FilesCount</name>
         <dataType>Number</dataType>
