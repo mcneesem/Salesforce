@@ -7,6 +7,6 @@
     <inlineHelpText>Check if this is a services opportunity</inlineHelpText>
     <label>Is Services Opportunity</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
