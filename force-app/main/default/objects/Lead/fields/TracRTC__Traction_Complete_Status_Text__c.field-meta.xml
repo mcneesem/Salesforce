@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TracRTC__Traction_Complete_Status_Text__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>IF( TracRTC__Realtime_Clean_Failed__c, &apos;Error&apos;,
+
+IF( TracRTC__Realtime_Clean_Processed__c,
+
+IF(TracRTC__Realtime_Clean_Company_Match__c,&apos;Company&apos; &amp; IF( TracRTC__Realtime_Clean_Contact_Match__c ||
+TracRTC__Traction_Complete_Lead_Match__c || TracRTC__Traction_Complete_Custom_Match__c,&apos; and &apos;,&apos;&apos;),&apos;&apos;) &amp;
+
+IF(TracRTC__Realtime_Clean_Contact_Match__c, &apos;Contact&apos; &amp; IF( TracRTC__Traction_Complete_Lead_Match__c || TracRTC__Traction_Complete_Custom_Match__c,&apos; and &apos;,&apos;&apos;),&apos;&apos;) &amp;
+
+IF(TracRTC__Traction_Complete_Custom_Match__c, &apos;Custom&apos; &amp; IF( TracRTC__Traction_Complete_Lead_Match__c,&apos; and &apos;,&apos;&apos;),&apos;&apos;) &amp;
+
+IF(TracRTC__Traction_Complete_Lead_Match__c, &apos;Lead&apos;,&apos;&apos;) &amp;
+
+IF(!TracRTC__Realtime_Clean_Company_Match__c &amp;&amp; !TracRTC__Realtime_Clean_Contact_Match__c &amp;&amp; !TracRTC__Traction_Complete_Lead_Match__c &amp;&amp; !TracRTC__Traction_Complete_Custom_Match__c,&apos;No&apos;, &apos;&apos;)
+
+&amp; &apos; Match&apos;,&apos;Not Processed&apos;
+) &amp; IF(TracRTC__Traction_Complete_Paused__c, &apos; - Paused&apos;, &apos;&apos;)
+)</formula>
+    <label>Traction Complete Status Text</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
