@@ -238,7 +238,7 @@ public without sharing class NSP_EventTriggerHelperTest {
     @isTest
     private static void afterDeleteTest(){
         Test.startTest();
-        List<Event> eventList = [SELECT ID, Subject FROM Event WHERE Subject = 'Test Subject For Event RA' LIMIT 1];
+        List<Event> eventList = [SELECT ID, Subject FROM Event WHERE Subject = 'Test Subject For Event Rec' LIMIT 1];
         if(eventList.size() > 0){
             DELETE eventList[0];
         }
