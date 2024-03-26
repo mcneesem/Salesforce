@@ -6,7 +6,7 @@
     <formula>IF( !ISBLANK(SBQQ__PrimaryQuote__c) , HYPERLINK(Left($Api.Enterprise_Server_URL_190,(find(&apos;/services&apos;,$Api.Enterprise_Server_URL_190))) +  SBQQ__PrimaryQuote__r.Id ,  SBQQ__PrimaryQuote__r.Name ) , &apos;Primary Quote Not Available&apos; )</formula>
     <label>Primary Quote Link</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

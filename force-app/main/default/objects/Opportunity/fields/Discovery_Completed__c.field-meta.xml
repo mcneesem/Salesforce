@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <label>Discovery Completed</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

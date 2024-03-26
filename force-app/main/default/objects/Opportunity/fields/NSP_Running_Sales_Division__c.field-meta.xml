@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <formula>TEXT( $User.NSP_SalesDivision__c ) = TEXT(NSP_Sales_Division__c )</formula>
     <label>Running Sales Division</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -3,5 +3,5 @@
     <fullName>Description</fullName>
     <encryptionScheme>None</encryptionScheme>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
 </CustomField>

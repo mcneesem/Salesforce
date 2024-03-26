@@ -7,7 +7,7 @@
     <label>WO/WX Results</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Email</type>
     <unique>false</unique>
 </CustomField>

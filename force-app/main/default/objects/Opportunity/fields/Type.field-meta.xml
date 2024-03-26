@@ -3,6 +3,6 @@
     <fullName>Type</fullName>
     <description>Standard field to track the Type of Opportunity</description>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
 </CustomField>

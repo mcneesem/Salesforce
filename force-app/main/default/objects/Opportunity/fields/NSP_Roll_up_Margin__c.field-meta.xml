@@ -11,6 +11,6 @@
     </summaryFilterItems>
     <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>

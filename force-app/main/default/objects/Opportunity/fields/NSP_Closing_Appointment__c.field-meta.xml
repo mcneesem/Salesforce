@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>Closing Appointment</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

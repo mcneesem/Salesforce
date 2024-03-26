@@ -7,6 +7,6 @@
     <inlineHelpText>Click and save for Folder Creation.</inlineHelpText>
     <label>Send File Request to Primary Contact</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

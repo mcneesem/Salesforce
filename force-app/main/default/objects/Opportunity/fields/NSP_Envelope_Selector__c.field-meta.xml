@@ -36,7 +36,7 @@ NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;), $Label.NSP_HR_Se
 $Label.NSP_WX_Envelope_Configuration) ) ) ) ) ) ), NSP_Wet_Envelope_Selector__c )</formula>
     <label>Envelope Selector</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

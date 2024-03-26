@@ -3,6 +3,7 @@
     <fullName>StageName</fullName>
     <description>Field to track opportunity stage name</description>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>true</trackTrending>
     <type>Picklist</type>
 </CustomField>
