@@ -131,10 +131,20 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Change_Status_to_Active_AIMS</fullName>
+        <fullName>Change_Status_to_Active</fullName>
         <field>NSP_Status__c</field>
         <literalValue>Active</literalValue>
-        <name>Change Status to Active AIMS</name>
+        <name>Change Status to Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Approved_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>AP Approved</literalValue>
+        <name>Change Status to Approved AIMS</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
