@@ -1491,7 +1491,7 @@
             <fullName>Eastern</fullName>
             <default>false</default>
         </values>
-<values>
+        <values>
             <fullName>Inside Sales</fullName>
             <default>false</default>
         </values>
@@ -1826,7 +1826,7 @@
             <fullName>4418</fullName>
             <default>false</default>
         </values>
-<values>
+        <values>
             <fullName>4450</fullName>
             <default>false</default>
         </values>
@@ -1850,7 +1850,7 @@
             <fullName>4493</fullName>
             <default>false</default>
         </values>
-<values>
+        <values>
             <fullName>4494</fullName>
             <default>false</default>
         </values>
@@ -2029,7 +2029,7 @@
             <fullName>HCM Sales</fullName>
             <default>false</default>
         </values>
-<values>
+        <values>
             <fullName>Inside Sales</fullName>
             <default>false</default>
         </values>
@@ -2057,7 +2057,7 @@
             <fullName>Northeast 4</fullName>
             <default>false</default>
         </values>
-<values>
+        <values>
             <fullName>PCM Sales</fullName>
             <default>false</default>
         </values>
