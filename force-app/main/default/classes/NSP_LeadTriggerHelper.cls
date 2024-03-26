@@ -311,8 +311,9 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             Boolean isAllowedProfile = (
                 ( currentUser != null )
                 && ( currentUser.ProfileId != null )
+                && ( currentUser.Profile != null )
                 && (
-                    currentUser.Profile.Name.startsWith( 'System Admin' )
+                    ( String.isNotBlank( currentUser.Profile.Name ) && currentUser.Profile.Name.startsWith( 'System Admin' ) )
                     || ( currentUser.Profile.Name == 'Integration User' )
                 )
             );
