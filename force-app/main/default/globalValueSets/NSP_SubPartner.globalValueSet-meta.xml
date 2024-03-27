@@ -356,6 +356,11 @@
         <label>Acrisure, The Benefits Group, Rochester Hills, MI</label>
     </customValue>
     <customValue>
+        <fullName>Acrisure, The Murray Group</fullName>
+        <default>false</default>
+        <label>Acrisure, The Murray Group</label>
+    </customValue>
+    <customValue>
         <fullName>Acrisure: Brakke-Schafnitz</fullName>
         <default>false</default>
         <label>Acrisure: Brakke-Schafnitz</label>
@@ -2226,6 +2231,11 @@
         <label>University Lab Partners</label>
     </customValue>
     <customValue>
+        <fullName>USI Agency</fullName>
+        <default>false</default>
+        <label>USI Agency</label>
+    </customValue>
+    <customValue>
         <fullName>Venture Atlanta</fullName>
         <default>false</default>
         <label>Venture Atlanta</label>
@@ -2423,10 +2433,10 @@
         <label>FSI- Grove Point Invesmtents</label>
     </customValue>
     <customValue>
-        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <fullName>FSI-  JW Cole</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
+        <label>FSI-  JW Cole</label>
     </customValue>
     <customValue>
         <fullName>Alera Group – TRISURE</fullName>
@@ -2435,10 +2445,10 @@
         <label>Alera Group – TRISURE</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Not Registered with FSI</fullName>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Not Registered with FSI</label>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <customValue>
         <fullName>Acisure</fullName>
@@ -2453,10 +2463,10 @@
         <label>Alera Group – Forum</label>
     </customValue>
     <customValue>
-        <fullName>FSI-  JW Cole</fullName>
+        <fullName>FSI- Not Registered with FSI</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI-  JW Cole</label>
+        <label>FSI- Not Registered with FSI</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>

@@ -81,14 +81,19 @@
         <label>Western 4</label>
     </customValue>
     <customValue>
+        <fullName>Corporate</fullName>
+        <default>false</default>
+        <label>Corporate</label>
+    </customValue>
+    <customValue>
         <fullName>HCM Sales</fullName>
         <default>false</default>
         <label>HCM Sales</label>
     </customValue>
     <customValue>
-        <fullName>National Accounts</fullName>
+        <fullName>Inside Sales</fullName>
         <default>false</default>
-        <label>National Accounts</label>
+        <label>Inside Sales</label>
     </customValue>
     <customValue>
         <fullName>MM Sales</fullName>
@@ -96,9 +101,14 @@
         <label>MM Sales</label>
     </customValue>
     <customValue>
-        <fullName>Corporate</fullName>
+        <fullName>National Accounts</fullName>
         <default>false</default>
-        <label>Corporate</label>
+        <label>National Accounts</label>
+    </customValue>
+    <customValue>
+        <fullName>PCM Sales</fullName>
+        <default>false</default>
+        <label>PCM Sales</label>
     </customValue>
     <masterLabel>Sales Region</masterLabel>
     <sorted>false</sorted>

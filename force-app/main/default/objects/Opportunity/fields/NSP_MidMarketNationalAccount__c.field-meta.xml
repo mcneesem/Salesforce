@@ -92,9 +92,19 @@
                 <label>MDVIP</label>
             </value>
             <value>
+                <fullName>North American Trailer Dealer Association (NATDA)</fullName>
+                <default>false</default>
+                <label>North American Trailer Dealer Association (NATDA)</label>
+            </value>
+            <value>
                 <fullName>PREVEER (UFG franchise)</fullName>
                 <default>false</default>
                 <label>PREVEER (UFG franchise)</label>
+            </value>
+            <value>
+                <fullName>Private Capital Markets (PCM)</fullName>
+                <default>false</default>
+                <label>Private Capital Markets (PCM)</label>
             </value>
             <value>
                 <fullName>Quantum Assurance</fullName>
