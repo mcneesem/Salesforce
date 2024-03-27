@@ -487,6 +487,11 @@
                 <default>false</default>
                 <label>Timestar_Total_Annual_Fees__c</label>
             </value>
+            <value>
+                <fullName>NSP_Template_AdditionalServiceCount__c</fullName>
+                <default>false</default>
+                <label>NSP_Template_AdditionalServiceCount__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -682,6 +687,10 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>Timestar_Total_Annual_Fees__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>NSP_Template_AdditionalServiceCount__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
