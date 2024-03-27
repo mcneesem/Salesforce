@@ -724,7 +724,7 @@
         <inputAssignments>
             <name>triggeringFlow</name>
             <value>
-                <stringValue>isolvedTime_Case_Creation_Alert</stringValue>
+                <stringValue>isolvedTime_CaseCreation_Alert</stringValue>
             </value>
         </inputAssignments>
     </subflows>
