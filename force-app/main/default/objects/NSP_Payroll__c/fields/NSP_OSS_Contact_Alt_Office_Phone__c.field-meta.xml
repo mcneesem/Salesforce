@@ -3,7 +3,7 @@
     <fullName>NSP_OSS_Contact_Alt_Office_Phone__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>On site Supervisor Contact Alt Office Ph</label>
+    <label>On site Sup Contact Alt Office Phone</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
