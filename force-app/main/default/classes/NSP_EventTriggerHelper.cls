@@ -72,19 +72,29 @@ public class NSP_EventTriggerHelper {
     //
     public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
+        Set<String> subjectSet = new Set<String>();  
+    	Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+            
         if(eventNewMap != null){
             for (Event newEventRecord : eventNewMap.Values()){
                 if( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ){
                     Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
                     if ( ( newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE )
+                        && newEventRecord.RecordTypeId == eventRecordType
+                		&& newEventRecord.WhatId == NULL && newEventRecord.Type == NULL
                         && ( oldEventRecord != null )
                         && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
                         )
                     {
                         rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                        subjectSet.add(newEventRecord.Subject);  
                     }
                 }
             }
+        }
+        Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,rescheduledEventsMap);
+        if (!attendeesEventMap.isEmpty()){
+            rescheduledEventsMap.putAll(attendeesEventMap);
         }
         if (rescheduledEventsMap.size() > 0){
             updateResourceAbsenceDate(rescheduledEventsMap);
