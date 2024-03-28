@@ -7,6 +7,7 @@
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
+    <permissionSets>TracRTC__Traction_Complete_User</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
