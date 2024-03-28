@@ -31,8 +31,8 @@
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>Step</label>
-        <name>Step</name>
+        <label>Step 1 MM</label>
+        <name>Step_1_MM</name>
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -50,8 +50,8 @@
                 <value>Middle Market Enterprise</value>
             </criteriaItems>
         </entryCriteria>
-        <label>Step2</label>
-        <name>Step2</name>
+        <label>Step 1 MME</label>
+        <name>Step_1_MME</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
