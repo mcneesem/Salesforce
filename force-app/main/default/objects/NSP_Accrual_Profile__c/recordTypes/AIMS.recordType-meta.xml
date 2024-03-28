@@ -4,6 +4,21 @@
     <active>true</active>
     <label>AIMS</label>
     <picklistValues>
+        <picklist>Is_Client_MM_or_MM_Enterprise__c</picklist>
+        <values>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Accrual_Period_Limit__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -505,6 +520,10 @@
     <picklistValues>
         <picklist>NSP_Status__c</picklist>
         <values>
+            <fullName>AP Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Active</fullName>
             <default>false</default>
         </values>
@@ -517,6 +536,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HR Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inactive</fullName>
             <default>false</default>
         </values>
@@ -525,11 +548,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Resubmitted</fullName>
+            <fullName>Resubmitted for Approval</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted for Approval</fullName>
             <default>false</default>
         </values>
     </picklistValues>

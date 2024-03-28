@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Update_Status_to_resubmitted_for_approval</name>
+        <label>Update Status to resubmitted for approval</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Resubmitted for Approval</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Update_Status_to_Re_Submitted</name>
         <label>Update Status to Re-Submitted</label>
         <locationX>182</locationX>
-        <locationY>431</locationY>
+        <locationY>287</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Submitted_for_Approval_again</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Approval_History</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>$Record__Prior.NSP_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -25,7 +31,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Status_to_Resubmitted</targetReference>
+                <targetReference>Update_Status_to_resubmitted_for_approval</targetReference>
             </connector>
             <label>Submitted for Approval again</label>
         </rules>
@@ -52,49 +58,30 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Approval_History</name>
-        <label>Get Approval History</label>
-        <locationX>182</locationX>
-        <locationY>311</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Update_Status_to_Re_Submitted</targetReference>
-        </connector>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>ProcessInstanceWorkitem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Status_to_Resubmitted</name>
-        <label>Update Status to Resubmitted</label>
-        <locationX>50</locationX>
-        <locationY>551</locationY>
-        <inputAssignments>
-            <field>NSP_Status__c</field>
-            <value>
-                <stringValue>Resubmitted</stringValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Approval_History</targetReference>
+            <targetReference>Update_Status_to_Re_Submitted</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Submitted</stringValue>
+                <stringValue>Submitted for Approval</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>NSP_Accrual_Profile__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
