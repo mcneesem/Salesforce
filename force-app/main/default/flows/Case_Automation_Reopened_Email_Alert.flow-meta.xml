@@ -24,7 +24,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Email_is_not_null</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 AND 3) OR (2 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Owner:User.Email</leftValueReference>
                 <operator>IsNull</operator>
@@ -37,6 +37,20 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
