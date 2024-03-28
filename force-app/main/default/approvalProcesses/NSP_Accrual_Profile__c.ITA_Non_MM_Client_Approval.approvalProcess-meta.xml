@@ -51,8 +51,8 @@
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>Step 2 Existing Client New ITA</label>
-        <name>Step_2_Existing_Client_New_ITA</name>
+        <label>Step 1 Existing Client New ITA</label>
+        <name>Step_1_Existing_Client_New_ITA</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
@@ -80,8 +80,8 @@
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>ApproveRecord</ifCriteriaNotMet>
-        <label>Step 3 Existing Client Change Order</label>
-        <name>Step_3_Existing_Client_Change_Order</name>
+        <label>Step 1 Existing Client Change Order</label>
+        <name>Step_1_Existing_Client_Change_Order</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
@@ -102,8 +102,8 @@
                 <value>Existing Client/Change Orders (changes to current ITA plan)</value>
             </criteriaItems>
         </entryCriteria>
-        <label>Step 4 Existing Client Change Order</label>
-        <name>Step_4_Existing_Client_Change_Order</name>
+        <label>Step 2 Existing Client Change Order</label>
+        <name>Step_2_Existing_Client_Change_Order</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
