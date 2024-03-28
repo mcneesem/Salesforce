@@ -136,7 +136,26 @@ public without sharing class NSP_EventTriggerHelperTest {
         EventRelation er = new EventRelation();
     	er.RelationId= tUser2.Id;
         er.EventId = newEventRec.Id;
+        er.IsInvitee = true;
         insert er; 
+        
+        Event newEventRec1 = new Event();
+        newEventRec1.OwnerId = tUser2.Id;
+        newEventRec1.Subject = 'Test Subject For Event Rec';
+        newEventRec1.DurationInMinutes = 60;
+        newEventRec1.ActivityDateTime = system.today();
+        newEventRec1.StartDateTime = system.today();
+        newEventRec1.IsRecurrence = true;
+        newEventRec1.RecurrenceStartDateTime = system.today();
+        newEventRec1.RecurrenceEndDateOnly = System.today()+30;
+        newEventRec1.RecurrenceType = 'RecursDaily';
+        newEventRec1.RecurrenceInterval = 2; // This means that the event will wait 1 day before recurring again
+        newEventRec1.IsAllDayEvent =false;
+        newEventRec1.DurationInMinutes =60;
+        newEventRec1.RecordTypeId = eventRecordType;
+        system.runAs(tUser2){
+            insert newEventRec1; 
+        }
     }
     
         
