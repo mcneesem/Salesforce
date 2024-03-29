@@ -19,76 +19,80 @@ public class BoxFileRequestFolderUtility implements Queueable, Database.AllowsCa
     }
 
     public void execute(QueueableContext context) {
-        if ( BoxFileRequestFolderUtility.isEnabled ) {
-            System.debug('BoxFileRequestUtility running: ' + opportunityRecordId);
+        try {
+            if ( BoxFileRequestFolderUtility.isEnabled ) {
+                System.debug('BoxFileRequestUtility running: ' + opportunityRecordId);
 
-            //create opportunity folder for opportunityRecordId
-            box.Toolkit boxToolkit = new box.Toolkit();
-            //define collaboration level
-            box.Toolkit.CollaborationType collabType = box.Toolkit.CollaborationType.VIEWERUPLOADER;
+                //create opportunity folder for opportunityRecordId
+                box.Toolkit boxToolkit = new box.Toolkit();
+                //define collaboration level
+                box.Toolkit.CollaborationType collabType = box.Toolkit.CollaborationType.VIEWERUPLOADER;
 
-            System.debug( ' ~ BoxFileRequestFolderUtility.boxTemplateFolderId=' + BoxFileRequestFolderUtility.boxTemplateFolderId );
-            String opportunityFolderId = boxToolkit.createFolderForRecordIdFromTemplate(
-                opportunityRecordId,
-                BoxFileRequestFolderUtility.boxTemplateFolderId,
-                null,
-                true
-            );
-            System.debug('New opportunityFolderId: ' + opportunityFolderId);
+                System.debug( ' ~ BoxFileRequestFolderUtility.boxTemplateFolderId=' + BoxFileRequestFolderUtility.boxTemplateFolderId );
+                String opportunityFolderId = boxToolkit.createFolderForRecordIdFromTemplate(
+                    opportunityRecordId,
+                    BoxFileRequestFolderUtility.boxTemplateFolderId,
+                    null,
+                    true
+                );
+                System.debug('New opportunityFolderId: ' + opportunityFolderId);
 
-            if (opportunityFolderId == null) {
-                System.debug('Error creating opportunity folder: ' + boxToolkit.mostRecentError);
-            }
-
-            //Create child folder for File Request
-            System.debug( ' ~ BoxFileRequestFolderUtility.boxFileRequestFolderName=' + BoxFileRequestFolderUtility.boxFileRequestFolderName );
-            String fileRequestFolderId = boxToolkit.createFolder(
-                BoxFileRequestFolderUtility.boxFileRequestFolderName,
-                opportunityFolderId,
-                null
-            );
-            System.debug('New fileRequestFolderId: ' + fileRequestFolderId);
-
-            if (fileRequestFolderId == null) {
-                System.debug('Error creating file request link folder: ' + boxToolkit.mostRecentError);
-            }
-
-            //get OpportunityContactRole.IsPrimary associated with Opportunity
-            List <OpportunityContactRole> opportunityContactRoles = [
-                SELECT ContactId, Contact.Email, Role, OpportunityId, IsPrimary
-                FROM OpportunityContactRole
-                WHERE (
-                    ( OpportunityId = :opportunityRecordId )
-                    AND ( ContactId != null )
-                    AND ( IsPrimary = True )
-                )
-            ];
-            System.debug('Associated opportunityContactRoles: ' + opportunityContactRoles);
-
-            System.debug( ' ~ BoxFileRequestFolderUtility.boxApiEndpoint=' + BoxFileRequestFolderUtility.boxApiEndpoint );
-            for (OpportunityContactRole opportunityContactRole : opportunityContactRoles) {
-                System.debug('opportunityContactRole: ' + opportunityContactRole);
-                if (!String.isBlank(opportunityContactRole.Contact.Email)) {
-                    //Collaborate OpportunityContactRole.IsPrimary email
-                    String collaboratorEmail = opportunityContactRole.Contact.Email;
-                    System.debug('Collaborator Email: ' + collaboratorEmail);
-                    //Collaborate OpportunityContactRole.IsPrimary email manually
-                    HttpRequest request = new HttpRequest();
-                    request.setMethod('POST');
-                    request.setEndpoint( BoxFileRequestFolderUtility.boxApiEndpoint );
-                    request.setBody(
-                        '{'
-                        +'"item":{"type":"folder","id":' + '"' + fileRequestFolderId + '"' +'},'
-                        +'"accessible_by":{"type":"user","login":'+ '"' + collaboratorEmail + '"' + '},'
-                        +'"role":"viewer uploader"'
-                        +'}'
-                    );
-                    System.debug('Request: ' + request);
-                    HttpResponse response = boxToolkit.sendRequest(request);
-                    System.debug('Response: ' + response);
+                if (opportunityFolderId == null) {
+                    System.debug('Error creating opportunity folder: ' + boxToolkit.mostRecentError);
                 }
+
+                //Create child folder for File Request
+                System.debug( ' ~ BoxFileRequestFolderUtility.boxFileRequestFolderName=' + BoxFileRequestFolderUtility.boxFileRequestFolderName );
+                String fileRequestFolderId = boxToolkit.createFolder(
+                    BoxFileRequestFolderUtility.boxFileRequestFolderName,
+                    opportunityFolderId,
+                    null
+                );
+                System.debug('New fileRequestFolderId: ' + fileRequestFolderId);
+
+                if (fileRequestFolderId == null) {
+                    System.debug('Error creating file request link folder: ' + boxToolkit.mostRecentError);
+                }
+
+                //get OpportunityContactRole.IsPrimary associated with Opportunity
+                List <OpportunityContactRole> opportunityContactRoles = [
+                    SELECT ContactId, Contact.Email, Role, OpportunityId, IsPrimary
+                    FROM OpportunityContactRole
+                    WHERE (
+                        ( OpportunityId = :opportunityRecordId )
+                        AND ( ContactId != null )
+                        AND ( IsPrimary = True )
+                    )
+                ];
+                System.debug('Associated opportunityContactRoles: ' + opportunityContactRoles);
+
+                System.debug( ' ~ BoxFileRequestFolderUtility.boxApiEndpoint=' + BoxFileRequestFolderUtility.boxApiEndpoint );
+                for (OpportunityContactRole opportunityContactRole : opportunityContactRoles) {
+                    System.debug('opportunityContactRole: ' + opportunityContactRole);
+                    if (!String.isBlank(opportunityContactRole.Contact.Email)) {
+                        //Collaborate OpportunityContactRole.IsPrimary email
+                        String collaboratorEmail = opportunityContactRole.Contact.Email;
+                        System.debug('Collaborator Email: ' + collaboratorEmail);
+                        //Collaborate OpportunityContactRole.IsPrimary email manually
+                        HttpRequest request = new HttpRequest();
+                        request.setMethod('POST');
+                        request.setEndpoint( BoxFileRequestFolderUtility.boxApiEndpoint );
+                        request.setBody(
+                            '{'
+                            +'"item":{"type":"folder","id":' + '"' + fileRequestFolderId + '"' +'},'
+                            +'"accessible_by":{"type":"user","login":'+ '"' + collaboratorEmail + '"' + '},'
+                            +'"role":"viewer uploader"'
+                            +'}'
+                        );
+                        System.debug('Request: ' + request);
+                        HttpResponse response = boxToolkit.sendRequest(request);
+                        System.debug('Response: ' + response);
+                    }
+                }
+                boxToolKit.commitChanges();
             }
-            boxToolKit.commitChanges();
+        } catch(Exception ex) {
+            NSP_ErrorLogHandler.logSaveException('BoxFileRequestFolderUtility', 'execute', ex.getMessage()); 
         }
     }
 

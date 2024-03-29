@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_Opportunity_Folder_From_Template</name>
+        <label>Create Opportunity Folder From Template</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <actionName>box__CreateFolderForRecordIdFromTemplate_v2</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Box_Folder_Created</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>templateFolderId</name>
+            <value>
+                <elementReference>boxOptyFolderId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>box__CreateFolderForRecordIdFromTemplate_v2</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>60.0</apiVersion>
+    <decisions>
+        <description>Conditional to check for an existing FRUP record associated with Opportunity.  If a FRUP is found the screen flow will not attempt to invoke the Create Folder flow.</description>
+        <name>Check_for_existing_FRUP</name>
+        <label>Check for existing FRUP</label>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Existing_Folder_Found_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Check For Existing FRUP Found</defaultConnectorLabel>
+        <rules>
+            <name>Check_Existing_FRUP_Not_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Associated_FRUP.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Folders_Screen</targetReference>
+            </connector>
+            <label>Check Existing FRUP Not Found</label>
+        </rules>
+    </decisions>
+    <description>Added boxOptyFolderId var. Fault handler added. A flow to call the custom Apex Method BoxFolderCreationFlowClickHandler which will invoke the BoxFolderAndCollaborationUtility class for Opp Ids input. This flow will be invoked by a button on Opp page.</description>
+    <environments>Default</environments>
+    <interviewLabel>Box Create Folder Button Handler {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Box Create Folder and Collabs Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get FRUP records for Opportunity Id</description>
+        <name>Get_Associated_FRUP</name>
+        <label>Get Associated FRUP</label>
+        <locationX>446</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_for_existing_FRUP</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>box__Record_ID__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>box__Salesforce_User__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>box__FRUP__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Check Box_Folder_Created field to True.</description>
+        <name>Update_Box_Folder_Created</name>
+        <label>Update Box_Folder_Created</label>
+        <locationX>50</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Folder_Creation_Complete_Screen</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Create_Box_com_Folder_s__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <screens>
+        <name>Create_Folders_Screen</name>
+        <label>Create Folders Screen</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Opportunity_Folder_From_Template</targetReference>
+        </connector>
+        <fields>
+            <name>Create_Folders_Screen_Display_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Click &lt;/span&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&lt;em&gt;Next&lt;/em&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; to Send a file request invitation to the Primary Contact.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <helpText>&lt;p&gt;Click Start to Create a Box.com Folder and Collaborate the Primary Contact.&lt;/p&gt;</helpText>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Existing_Folder_Found_Screen</name>
+        <label>Existing Folder Found Screen</label>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Existing_Folder_Found_Screen_Display_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Opportunity {!recordId.Name} has an existing associated Box Folder. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Take me to the Folder.</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Folder_Creation_Complete_Screen</name>
+        <label>Folder Creation Complete Screen</label>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Folder_Creation_Complete_Screen_Display_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(44, 37, 221);&quot;&gt;&lt;em&gt;Success!&lt;/em&gt;&lt;/strong&gt; Your secure Box folder has been created.&lt;span style=&quot;color: rgb(44, 37, 221);&quot;&gt; &lt;/span&gt;&lt;strong style=&quot;color: rgb(44, 37, 221);&quot;&gt;&lt;em&gt;Notify your Primary Contact to check their email inbox.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Take me to the Folder</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Associated_FRUP</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>1106</locationX>
+        <locationY>242</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>Box_Create_Folder_and_Collabs_Flow</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>boxOptyFolderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>$Setup.BoxFileRequest__c.BoxTemplateFolderId__c</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>Click_handler_output</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>A variable to hold associated Opportunity record Id</description>
+        <name>recordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>
