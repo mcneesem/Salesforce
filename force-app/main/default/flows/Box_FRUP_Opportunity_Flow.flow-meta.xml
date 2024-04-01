@@ -4,7 +4,7 @@
         <name>Collaborate_Opportunity_Team_Member</name>
         <label>Collaborate Opportunity Team Member</label>
         <locationX>440</locationX>
-        <locationY>816</locationY>
+        <locationY>708</locationY>
         <actionName>box__CreateCollaborationOnRecord_v2</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -38,44 +38,6 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <description>Collaborates Primary Contact</description>
-        <name>Collaborate_Primary_Contact</name>
-        <label>Collaborate Primary Contact</label>
-        <locationX>352</locationX>
-        <locationY>600</locationY>
-        <actionName>box__CreateCollaboration_v2</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Loop_Opportunity_Team_Memeber</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Loop_Opportunity_Team_Memeber</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>collabType</name>
-            <value>
-                <stringValue>VIEWERUPLOADER</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddress</name>
-            <value>
-                <elementReference>Get_Primary_Contact.Contact.Email</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>folderId</name>
-            <value>
-                <elementReference>CreateFileRequestFolder.folderId</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>box__CreateCollaboration_v2</nameSegment>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
-    <actionCalls>
         <description>Creates Child folder in Opportunity folder to be used for external sharing</description>
         <name>CreateFileRequestFolder</name>
         <label>Create File Request Folder</label>
@@ -84,7 +46,7 @@
         <actionName>box__CreateFolder_v2</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Collaborate_Primary_Contact</targetReference>
+            <targetReference>Loop_Opportunity_Team_Memeber</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -108,7 +70,7 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
-    <description>Corrected sub folder name &quot;Insperity File Request&quot;. Fault Handler added. Flow will collaborate the Primary Contact and Opportunity Team Members on newly created Box folder for Opportunity.</description>
+    <description>Flow will collaborate  Opportunity Team Members on newly created Box folder for Opportunity.</description>
     <environments>Default</environments>
     <interviewLabel>Box FRUP Opportunity Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Box FRUP Opportunity Flow</label>
@@ -116,7 +78,7 @@
         <name>Loop_Opportunity_Team_Memeber</name>
         <label>Loop Opportunity Team Memeber</label>
         <locationX>352</locationX>
-        <locationY>708</locationY>
+        <locationY>600</locationY>
         <collectionReference>Get_Opportunity_Team_Members</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -279,7 +241,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1624</locationX>
+        <locationX>1360</locationX>
         <locationY>384</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
