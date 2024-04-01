@@ -3,9 +3,12 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>BPS Manager</label>
+    <permissionSets>Account_Create</permissionSets>
     <permissionSets>BPS</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
+    <permissionSets>Lead_Create</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
@@ -15,8 +18,10 @@
     <permissionSets>NSP_Service_Operations_AppAcces</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+	<permissionSets>force__PipelineInspectionIncluded</permissionSets>    
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
