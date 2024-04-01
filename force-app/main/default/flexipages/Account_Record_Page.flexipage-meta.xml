@@ -270,7 +270,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>{&quot;datasets&quot;:{&quot;FINANCE_STY_01242&quot;:[{&quot;fields&quot;:[&quot;Account.Id&quot;],&quot;filter&quot;:{&quot;operator&quot;:&quot;in&quot;,&quot;values&quot;:[&quot;$Id&quot;]},&quot;locked&quot;:null,&quot;hidden&quot;:null}]}}</value>
+                    <value>{&quot;datasets&quot;:{&quot;FINANCE_STY_01242&quot;:[{&quot;fields&quot;:[&quot;Account.Id&quot;],&quot;filter&quot;:{&quot;operator&quot;:&quot;in&quot;,&quot;values&quot;:[&quot;$Id&quot;]},&quot;locked&quot;:true,&quot;hidden&quot;:true}]}}</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>height</name>
@@ -286,7 +286,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>openLocation</name>
-                    <value>OPEN_IN_STUDIO</value>
+                    <value>HIDE</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showHeader</name>
