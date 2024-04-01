@@ -31,8 +31,8 @@
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>MM Client</label>
-        <name>MM_Client</name>
+        <label>MM PTO Received</label>
+        <name>MM_PTO_Received</name>
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -50,8 +50,8 @@
                 <value>No</value>
             </criteriaItems>
         </entryCriteria>
-        <label>Not MM Client</label>
-        <name>Not_MM_Client</name>
+        <label>National PTO Received</label>
+        <name>National_PTO_Received</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
