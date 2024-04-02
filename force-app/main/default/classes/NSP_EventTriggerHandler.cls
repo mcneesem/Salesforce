@@ -87,6 +87,8 @@ public class NSP_EventTriggerHandler implements NSP_ITriggerHandler {
      * Added beforeDelete method as this is referred in in NSP_ITriggerHandler
     **/
     public void beforeDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
+         NSP_EventTriggerHelper  eventTriggerHelperObject =  new NSP_EventTriggerHelper();        
+         eventTriggerHelperObject.beforeDeleteDirector((List<Event>) oldList,(Map<Id, Event>) oldMap);
     }
 
     /**

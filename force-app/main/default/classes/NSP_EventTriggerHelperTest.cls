@@ -89,6 +89,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         resObject.Event_Id__c = newEvent.Id;
         Insert resObject;
         
+        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
         User tUser =  NSP_TestHelper.createUser(false);
         tUser.Phone = '(112)6475261 ext415';
         tUser.Username = 'jsmith@test.com.abc'+System.currentTimeMillis();
@@ -109,8 +110,11 @@ public without sharing class NSP_EventTriggerHelperTest {
         newEventRec.RecurrenceInterval = 2; // This means that the event will wait 1 day before recurring again
         newEventRec.IsAllDayEvent =false;
         newEventRec.DurationInMinutes =60;
-        newEventRec.WhatId= resObject.Id;
-        insert newEventRec; 
+        newEventRec.RecordTypeId = eventRecordType;
+        //insert newEventRec; 
+        system.runAs(tUser){
+            insert newEventRec; 
+        }
         
         //Insert Resource Absence
         ResourceAbsence resObject1 = new ResourceAbsence();
@@ -121,6 +125,18 @@ public without sharing class NSP_EventTriggerHelperTest {
         resObject1.Event_Id__c = newEventRec.Id;
         Insert resObject1;
         
+        User tUser2 =  NSP_TestHelper.createUser(false);
+        tUser2.Phone = '(112)6475261 ext415';
+        tUser2.Username = 'jroy@test.com.abc'+System.currentTimeMillis();
+        tUser2.NSP_Service_Region__c = 'MMSO - Southeast';
+        tUser2.NSP_Salesforce_Field_Service__c = NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER_RESOURCE;
+        tUser2.NSP_Dispatch_Region__c = NSP_ServiceConstants.CHILD_DISPATCH_REGION;
+        insert tUser2;
+
+        EventRelation er = new EventRelation();
+    	er.RelationId= tUser2.Id;
+        er.EventId = newEventRec.Id;
+        insert er; 
     }
     
         
@@ -220,9 +236,9 @@ public without sharing class NSP_EventTriggerHelperTest {
     * @return void  
     */
     @isTest
-    public static void afterDeleteTest(){
+    private static void afterDeleteTest(){
         Test.startTest();
-        List<Event> eventList = [SELECT ID, Subject FROM Event WHERE Subject = 'Test Subject For Event RA' LIMIT 1];
+        List<Event> eventList = [SELECT ID, Subject FROM Event WHERE Subject = 'Test Subject For Event Rec' LIMIT 1];
         if(eventList.size() > 0){
             DELETE eventList[0];
         }
@@ -234,7 +250,8 @@ public without sharing class NSP_EventTriggerHelperTest {
     * @Description: This test method is used to cover updateResourceAbsenceDate
     * @return void  
     */
-    @isTest private static void resyncTest(){
+    @isTest
+    private static void resyncTest(){
         Test.startTest();
         List<Event> eventList = [SELECT ID, Subject, IsRecurrence, StartDateTime FROM Event WHERE Subject = 'Test Subject For Event Rec' AND IsRecurrence = true LIMIT 1];
         if(eventList.size() > 0){
