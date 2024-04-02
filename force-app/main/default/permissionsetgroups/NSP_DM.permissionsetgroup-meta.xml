@@ -3,11 +3,13 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>DM</label>
+    <permissionSets>Account_Create</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
@@ -24,12 +26,14 @@
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__InboxIncluded</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

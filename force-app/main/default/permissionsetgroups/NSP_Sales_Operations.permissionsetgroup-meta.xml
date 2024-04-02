@@ -13,6 +13,9 @@
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
+    <permissionSets>ZoomInfo_Insperity</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

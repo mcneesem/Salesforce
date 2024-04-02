@@ -3,15 +3,17 @@
     <description>Full System Administrator PSG</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Administrator</label>
-    <permissionSets>Accrual_Profile_access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
     <permissionSets>DNBConnect__DNB_Connect_Components_access</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
+    <permissionSets>General_Ledger_IP_Read_Edit</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

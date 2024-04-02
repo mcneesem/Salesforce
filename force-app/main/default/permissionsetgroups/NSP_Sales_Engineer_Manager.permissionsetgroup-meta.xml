@@ -3,8 +3,12 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Engineer Manager</label>
+    <permissionSets>Account_Create</permissionSets>
+    <permissionSets>BPS</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>Lead_Create</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
@@ -12,11 +16,13 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
-    <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
+    <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsAdmin</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
     <status>Updated</status>
