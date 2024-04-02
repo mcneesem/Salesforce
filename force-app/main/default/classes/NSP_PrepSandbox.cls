@@ -477,7 +477,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             System.debug('An exception occurred in doEmailAlerts: ' + e.getMessage());
         }
     }
-    
+
     public static void doCSettings(String sandboxName) {
         try {
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
@@ -535,8 +535,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cS4.NSP_Detailed_Data__c = 'dev1';
                 }
             }
-            upsert cS4;
+            upsert cS4;    
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
             
+        try {
+            BoxFileRequest__c cS5 = BoxFileRequest__c.getOrgDefaults();
+            cS5.BoxTemplateFolderId__c = '225207143235';
+            upsert cS5;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
         }
