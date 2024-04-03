@@ -96,6 +96,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>First_Name_Last_Name_web_email</name>
+        <label>First Name Last Name web email</label>
+        <locationX>314</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>VariableName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!$Record.Contact.FirstName} {!$Record.Contact.LastName}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Recipient_Null_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>FirstName_LastName</name>
         <label>FirstName_LastName</label>
         <locationX>842</locationX>
@@ -192,6 +208,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Preferred_Name_Last_Name_webEmail</name>
+        <label>Preferred Name Last Name webEmail</label>
+        <locationX>50</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>VariableName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!$Record.Contact.NSP_Preferred_First_Name__c}  {!$Record.Contact.LastName}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Recipient_Null_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>PreferredName_LastName</name>
         <label>PreferredName_LastName</label>
         <locationX>578</locationX>
@@ -236,7 +268,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Recipient_Null_Check</targetReference>
+            <targetReference>Check_for_Contact_Id</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -294,6 +326,35 @@
                 <targetReference>PayrollEmergency_Email_Variable</targetReference>
             </connector>
             <label>Payroll Emergency</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_for_Contact_Id</name>
+        <label>Check for Contact Id</label>
+        <locationX>380</locationX>
+        <locationY>492</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contact_ID_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_for_Preferred_Name_web_Email</targetReference>
+            </connector>
+            <label>Contact ID not null</label>
         </rules>
     </decisions>
     <decisions>
@@ -472,6 +533,38 @@
                 <targetReference>PreferredName_LastName</targetReference>
             </connector>
             <label>Has preferred Name</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_for_Preferred_Name_web_Email</name>
+        <label>Check for Preferred Name web Email</label>
+        <locationX>182</locationX>
+        <locationY>600</locationY>
+        <defaultConnector>
+            <targetReference>First_Name_Last_Name_web_email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Preferred_Name_web_email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact.NSP_Preferred_First_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact.NSP_Preferred_First_Name__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Preferred_Name_Last_Name_webEmail</targetReference>
+            </connector>
+            <label>Has Preferred Name web email</label>
         </rules>
     </decisions>
     <decisions>
@@ -741,7 +834,7 @@
     <textTemplates>
         <name>EmailSubject</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;{!$Record.Subject} {!$Record.CaseNumber}&lt;/p&gt;</text>
+        <text>{!$Record.Subject} {!$Record.CaseNumber}</text>
     </textTemplates>
     <textTemplates>
         <name>FinalEmailBody</name>
