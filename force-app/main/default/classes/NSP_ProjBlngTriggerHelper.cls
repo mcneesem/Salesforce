@@ -72,9 +72,11 @@ public class NSP_ProjBlngTriggerHelper {
                     orderEvent.NSP_Action__c=PROJECT_UPDATE_ORDER;
                     orderEvent.NSP_Project_SF_Id__c=newProj.Id;
                     orderEvent.NSP_Invoice_Ready__c=newProj.Invoice_Ready__c;
+                    orderEvent.NSP_Project_Go_Live_Date__c=newProj.Go_Live_Date__c;
                 }
                 else{
                     orderEvent.NSP_Invoice_Ready__c=newProj.Invoice_Ready__c;
+                    orderEvent.NSP_Project_Go_Live_Date__c=newProj.Go_Live_Date__c;
                 }
             }
             if(orderEvent.NSP_Action__c!=null){
@@ -127,6 +129,7 @@ public class NSP_ProjBlngTriggerHelper {
                     Order orderobj = new Order(Id=oitem.OrderId);
                     if(projectEventmap.get(oitem.NSP_Project__c)?.NSP_Invoice_Ready__c == true){
                         orderobj.NSP_Project_Go_Live_Approved__c=projectEventmap.get(oitem.NSP_Project__c)?.NSP_Invoice_Ready__c;
+                        orderobj.NSP_Project_Go_Live_Date__c=projectEventmap.get(oitem.NSP_Project__c)?.NSP_Project_Go_Live_Date__c;
                     }
                     if(projectEventmap.get(oitem.NSP_Project__c)?.NSP_Project_Go_Live_Date__c != null){
                         orderobj.NSP_Project_Go_Live_Date__c=projectEventmap.get(oitem.NSP_Project__c)?.NSP_Project_Go_Live_Date__c;
