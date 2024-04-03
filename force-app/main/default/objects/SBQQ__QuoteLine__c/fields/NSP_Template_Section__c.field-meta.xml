@@ -122,6 +122,11 @@
                 <default>false</default>
                 <label>Selected Recruitment Pre-Employment Assessments</label>
             </value>
+            <value>
+                <fullName>Selected Additional Services</fullName>
+                <default>false</default>
+                <label>Selected Additional Services</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
