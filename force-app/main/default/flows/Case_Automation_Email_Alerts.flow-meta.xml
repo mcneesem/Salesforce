@@ -130,7 +130,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2 AND 3 AND 7 AND (4 OR 5 OR 6)</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 AND 4 AND ( 5 OR 6 OR 7 ) )</filterLogic>
         <filters>
             <field>NSP_IsCaseCreatedNotificationEmailSent__c</field>
             <operator>IsChanged</operator>
@@ -153,6 +153,13 @@
             </value>
         </filters>
         <filters>
+            <field>SuppliedEmail</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <filters>
             <field>NSP_Assigned_Queue__c</field>
             <operator>EqualTo</operator>
             <value>
@@ -171,13 +178,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Contact Center</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>SuppliedEmail</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue></stringValue>
             </value>
         </filters>
         <object>Case</object>
