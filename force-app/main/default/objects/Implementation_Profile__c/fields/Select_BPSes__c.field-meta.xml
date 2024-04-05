@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Select BPSes:</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
@@ -24,11 +25,6 @@
                 <fullName>Expense Management</fullName>
                 <default>false</default>
                 <label>Expense Management</label>
-            </value>
-            <value>
-                <fullName>Performance Management</fullName>
-                <default>false</default>
-                <label>Performance Management</label>
             </value>
             <value>
                 <fullName>Organization Planning</fullName>
@@ -54,6 +50,22 @@
                 <fullName>International Payroll Services</fullName>
                 <default>false</default>
                 <label>International Payroll Services</label>
+            </value>
+            <value>
+                <fullName>Integra</fullName>
+                <default>false</default>
+                <label>Integra</label>
+            </value>
+            <value>
+                <fullName>Premier Performance</fullName>
+                <default>false</default>
+                <label>Premier Performance</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Performance Management</label>
             </value>
         </valueSetDefinition>
     </valueSet>

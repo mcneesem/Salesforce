@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Select all payroll needs that apply</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
@@ -39,6 +40,11 @@
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>Integra</fullName>
+                <default>false</default>
+                <label>Integra</label>
             </value>
         </valueSetDefinition>
     </valueSet>
