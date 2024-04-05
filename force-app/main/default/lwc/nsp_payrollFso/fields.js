@@ -4,10 +4,12 @@ const SYNC_FIELDS = {
   Special_Payroll_Needs:'Select_all_payroll_needs_that_apply__c',
   Account__c: 'prefilledIpDetails',
   need_for_a_subaccount__c : 'Is_there_a_need_for_a_subaccount__c',
-  employeeStates : 'Employees_work_in_the_following_states__c'
+  employeeStates : 'Employees_work_in_the_following_states__c',
+  Select_BPSes__c: 'Select_all_payroll_needs_that_apply__c'
 };
 
 const POST_SYNC_IP_FIELDS = { prefilledIpDetails: 'updatePrefilledIpValues' };
+const PRE_SYNC_IP_FIELDS = { Select_BPSes__c: 'Select_all_payroll_needs_that_apply__c'};
 
 const RL_FIELDS = [
   'Do_any_EEs_have_garnishments__c',
@@ -199,6 +201,7 @@ export {
   EMP_DATA_RL_FIELDS,
   PREFILLED_FIELDS,
   POST_SYNC_IP_FIELDS,
+  PRE_SYNC_IP_FIELDS,
   SECTION_FIELDS,
   PAY_FREQUENCY_FIELDS
 };
