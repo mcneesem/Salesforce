@@ -1,8 +1,10 @@
 # Salesforce
+.sf/*
 .sf/orgs/*
 .sf/indexes/*
 .sf/tools/*
 .sf/typings/*
+.sfdx/*
 .sfdx/orgs/*
 .sfdx/indexes/*
 .sfdx/tools/*
