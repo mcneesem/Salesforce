@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>NSP_Request_CTM_OT_Meeting</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Client Transition And Employee Orientation Meeting</label>
+</PermissionSet>
