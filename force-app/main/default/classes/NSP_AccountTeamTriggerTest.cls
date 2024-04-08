@@ -85,6 +85,8 @@ public without sharing class NSP_AccountTeamTriggerTest {
         User userObj = [SELECT Id FROM User WHERE NSP_Employee_Per_ID__c =: EMP_PER_ID];
         NSP_Account_Team__c accTeamObj = [SELECT Id,NSP_User__c FROM NSP_Account_Team__c WHERE NSP_Account__c =: accountObj.Id limit 1];
         system.assertEquals(userObj.Id, accTeamObj.NSP_User__c);
+        accTeam.NSP_PER_ID__c = '7898';
+        update accTeam;
     }
     
     /**
@@ -365,6 +367,8 @@ public without sharing class NSP_AccountTeamTriggerTest {
         //update accountTeamObj;
         accountTeamObjList[1].NSP_PER_ID__c = '0';
         update accountTeamObjList;
+        accTeam1.NSP_PER_ID__c = '765488';
+        update accTeam1;
         test.stopTest();  
         
         NSP_Account_Team__c accountTeam = [SELECT Id,NSP_Role__c,NSP_User__c from NSP_Account_Team__c 
