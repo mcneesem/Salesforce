@@ -9,33 +9,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Available Account Assignment</fullName>
-                <default>false</default>
-                <label>Available Account Assignment</label>
-            </value>
-            <value>
-                <fullName>Marketing Generated</fullName>
-                <default>false</default>
-                <label>Marketing Generated</label>
-            </value>
-            <value>
-                <fullName>Pre-ABX</fullName>
-                <default>false</default>
-                <label>Pre-ABX</label>
-            </value>
-            <value>
-                <fullName>Self Generated</fullName>
-                <default>false</default>
-                <label>Self Generated</label>
-            </value>
-            <value>
-                <fullName>Target Account Assignment</fullName>
-                <default>false</default>
-                <label>Target Account Assignment</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Account_Assignment_Method</valueSetName>
     </valueSet>
 </CustomField>

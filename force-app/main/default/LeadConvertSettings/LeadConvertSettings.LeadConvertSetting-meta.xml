@@ -8,6 +8,10 @@
             <outputField>Account_Assignment_Method__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>DnB_Primary_Location_Type__c</inputField>
+            <outputField>DnB_Primary_Location_Type__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_Account_Segment__c</inputField>
             <outputField>NSP_Account_Segment__c</outputField>
         </mappingFields>
@@ -50,10 +54,6 @@
         <mappingFields>
             <inputField>DnB_Legal_Structure_Desc__c</inputField>
             <outputField>DnB_Legal_Structure_Desc__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DnB_Primary_Location_Type__c</inputField>
-            <outputField>DnB_Primary_Location_Type__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>DnB_Direct_Marketing_Opt_Out__c</inputField>
@@ -116,6 +116,18 @@
             <outputField>NSP_ICP__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>DOZISF__ZoomInfo_First_Updated__c</inputField>
+            <outputField>DOZISF__ZoomInfo_First_Updated__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>DOZISF__ZoomInfo_InboxAI_ID__c</inputField>
+            <outputField>DOZISF__ZoomInfo_InboxAI_ID__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>DOZISF__ZoomInfo_Last_Updated__c</inputField>
+            <outputField>DOZISF__ZoomInfo_Last_Updated__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_If_other_please_indicate_how__c</inputField>
             <outputField>NSP_If_other_please_indicate_how__c</outputField>
         </mappingFields>
@@ -174,18 +186,6 @@
         <mappingFields>
             <inputField>DOZISF__ZoomInfo_Enrich_Status__c</inputField>
             <outputField>DOZISF__ZoomInfo_Enrich_Status__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DOZISF__ZoomInfo_InboxAI_ID__c</inputField>
-            <outputField>DOZISF__ZoomInfo_InboxAI_ID__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DOZISF__ZoomInfo_Last_Updated__c</inputField>
-            <outputField>DOZISF__ZoomInfo_Last_Updated__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>DOZISF__ZoomInfo_First_Updated__c</inputField>
-            <outputField>DOZISF__ZoomInfo_First_Updated__c</outputField>
         </mappingFields>
         <outputObject>Account</outputObject>
     </objectMapping>
