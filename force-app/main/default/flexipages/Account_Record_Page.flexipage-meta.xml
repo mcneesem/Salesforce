@@ -121,7 +121,7 @@
                             <value>Account.Request_a_Discover_SKO_Meeting</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.NSP_Request_Client_Transition_Meeting}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Request_Client_Transition_Meeting}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -131,17 +131,17 @@
                             <value>Account.Request_an_Employee_Orientation_Meeting</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.NSP_Request_Employee_Orientation_Meeting}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Request_Employee_Orientation_Meeting}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Request_CTM_and_OT_Meeting</value>
+                            <value>Account.Request_CTM_and_Employee_Orientation_Meeting</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.NSP_Request_CTM_OT_Meeting}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Request_CTM_and_Employee_Orientation_Meeting}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
