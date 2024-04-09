@@ -165,7 +165,7 @@ public class NSP_AssetProjectCreation implements Queueable {
         *   AZD-269852
         *   Switch created on 4/4/2024
         */
-        if(Test.isRunningTest() || NSP_hotfix_Switch__c.getInstance(UserInfo.getUserId()).Is_Opportunity_Allowed_On_Project__c){
+        if(NSP_hotfix_Switch__c.getInstance(UserInfo.getUserId()).Is_Opportunity_Allowed_On_Project__c){
             project.pse__Opportunity__c = opportunityId;
         }
 
