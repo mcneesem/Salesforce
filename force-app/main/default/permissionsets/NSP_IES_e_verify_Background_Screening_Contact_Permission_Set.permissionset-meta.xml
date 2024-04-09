@@ -2,6 +2,16 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>IES e-verify and background screen contact permission set</description>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.NSP_IES_e_Verify_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.NSP_WO_WS_Uses_Background_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client_Contact__c.NSP_AIMS_Sub_Client_PER_ID_Type__c</field>
         <readable>true</readable>
