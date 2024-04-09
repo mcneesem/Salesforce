@@ -192,6 +192,10 @@ const SECTION_FIELDS = [
   'Arbitration_Agreement_been_discussed__c',
   'NSP_Payroll_notes__c',
   'Insperity_benefits_effective_date__c',
+  'What_accounting_software_do_you_use__c',
+  'Would_you_like_automation_general__c',
+  'Is_payroll_entry_itemized_or_simple__c',
+  'Software_Used__c',
 ];
 
 export {
