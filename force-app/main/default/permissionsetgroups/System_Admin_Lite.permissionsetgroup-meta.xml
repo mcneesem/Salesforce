@@ -11,5 +11,6 @@
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
+    <permissionSets>General_Ledger_IP_Read_Edit</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
