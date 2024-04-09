@@ -4,8 +4,9 @@
 * @date 07/20/2021
 * Name : NSP_CustomException
 */
-
 public class NSP_CustomException extends Exception {
+    // test w/ NSP_CustomExceptionTest (87%)
+
     public static Id apexExceptionRectypeId = Schema.SObjectType.NSP_Exception_Log__c.getRecordTypeInfosByDeveloperName().get('NSP_ApexException').getRecordTypeId();
     
     public static void logException(Exception ex) {
@@ -32,10 +33,12 @@ public class NSP_CustomException extends Exception {
             exc.NSP_Error_Message__c = ex.getMessage() + 'Exception Type: ' +ex.getTypeName();
             exc.NSP_ErrorSource__c=optionalOtherProcess +'Class: '+className+'**Method: '+methodName;
             exc.NSP_StackTrace__c = ex.getStackTraceString();
-            database.insert(exc);            
+            Database.insert(exc);
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+            System.debug( ' ~ CATCH ~ e.getStackTraceString=' + e.getStackTraceString() );
         }
-        finally {
-        }
-        
     }
+
 }
+//
