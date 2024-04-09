@@ -7,5 +7,6 @@
     <permissionSets>NSP_Read_Access_on_Sub_client_contact_addresses</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>Termination_form_field_access</permissionSets>
+    <permissionSets>General_Ledger_IP_Read_Only</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
