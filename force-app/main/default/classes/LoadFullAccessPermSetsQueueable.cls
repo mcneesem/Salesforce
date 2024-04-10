@@ -168,10 +168,14 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
         oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
         String[] sendingTo = new String[]{'sfconfig@insperity.com'};
-		oEmail.setToAddresses(sendingTo);
+        oEmail.setToAddresses(sendingTo);
         oEmail.setSaveAsActivity(false);
         oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{oEmail});
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ oEmail } );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
     }
 
     // ************************ Write Error Log ************************
