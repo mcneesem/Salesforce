@@ -3,11 +3,11 @@
     <description>Permission set group for Retirement services users</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Retirement_Services_User</label>
+    <permissionSets>General_Ledger_IP_Read_Only</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Read_Access_on_Sub_client_contact_addresses</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>RET_Services_Sales_to_Implementation</permissionSets>
     <permissionSets>Termination_form_field_access</permissionSets>
-    <permissionSets>General_Ledger_IP_Read_Only</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
