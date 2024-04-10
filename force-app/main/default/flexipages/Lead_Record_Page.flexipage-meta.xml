@@ -2705,16 +2705,6 @@
                 <identifier>RecordNSP_Is_Sales_Office_Assigned_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DnBContactRecord__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DnBContactRecord_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-02c6cb99-72ff-45d0-bd76-d7683d5a6230</name>
         <type>Facet</type>
     </flexiPageRegions>
