@@ -15,9 +15,10 @@ const SECTION_FIELDS = [
 
 const SYNC_FIELDS = {
   Select_all_payroll_needs_that_apply__c: 'NSP_Select_all_that_apply__c',
-  
 }
 
-const PRE_SYNC_IP_FIELDS = { Select_BPSes__c: 'Integra', 
-                            Select_all_payroll_needs_that_apply__c: 'Integra' };
+const PRE_SYNC_IP_FIELDS = {
+  Select_BPSes__c: 'Integra',
+  Select_all_payroll_needs_that_apply__c: 'Integra',
+};
 export { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS, PRE_SYNC_IP_FIELDS};
