@@ -1046,6 +1046,13 @@
         <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>CM.FIRST_ASSOCIATED_DATE</fields>
+        <fields>INFLUENCE</fields>
+        <relatedList>RelatedCampaignInfluence2List</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>OWNER.LAST_NAME</fields>
@@ -1131,6 +1138,9 @@
         <fields>ASSET.STATUS</fields>
         <fields>NSP_First_Pay_Date__c</fields>
         <relatedList>Asset.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
