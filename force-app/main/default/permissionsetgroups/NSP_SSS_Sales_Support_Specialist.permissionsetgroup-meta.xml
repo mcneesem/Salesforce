@@ -3,6 +3,7 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>SSS (Sales Support Specialist)</label>
+    <permissionSets>Account_Create</permissionSets>
     <permissionSets>Assets_Edit</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
@@ -11,6 +12,7 @@
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
@@ -27,6 +29,7 @@
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
@@ -34,6 +37,7 @@
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__InboxIncluded</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

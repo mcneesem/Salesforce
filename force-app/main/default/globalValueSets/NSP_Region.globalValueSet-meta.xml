@@ -21,14 +21,19 @@
         <label>Western</label>
     </customValue>
     <customValue>
-        <fullName>MidMarket</fullName>
-        <default>false</default>
-        <label>MidMarket</label>
-    </customValue>
-    <customValue>
         <fullName>Corporate</fullName>
         <default>false</default>
         <label>Corporate</label>
+    </customValue>
+    <customValue>
+        <fullName>Inside Sales</fullName>
+        <default>false</default>
+        <label>Inside Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>MidMarket</fullName>
+        <default>false</default>
+        <label>MidMarket</label>
     </customValue>
     <masterLabel>Division</masterLabel>
     <sorted>false</sorted>

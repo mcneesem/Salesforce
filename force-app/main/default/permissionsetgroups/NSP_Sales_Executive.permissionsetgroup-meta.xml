@@ -16,7 +16,9 @@
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

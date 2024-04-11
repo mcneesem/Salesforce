@@ -2297,6 +2297,16 @@
                 <identifier>RecordNSP_Selected_Template_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notes_to_Finance__c</fieldItem>
+                <identifier>RecordNotes_to_Finance_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1a4f11fc-dfb6-4a7a-b151-636c8529dcda</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2427,6 +2437,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Bypass_Docusign_Signature__c</fieldItem>
                 <identifier>RecordNSP_Bypass_Docusign_Signature_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notes_to_Finance__c</fieldItem>
+                <identifier>RecordNotes_to_Finance_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-7e4a9ac1-73a3-42fc-9563-292584ba8d1a</name>
@@ -4524,6 +4544,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.SBQQ__PrimaryQuote__c</fieldItem>
                 <identifier>RecordSBQQ_PrimaryQuote_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notes_to_Finance__c</fieldItem>
+                <identifier>RecordNotes_to_Finance_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -7266,146 +7296,32 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Create_Box_com_Folder_s__c</fieldItem>
-                <identifier>RecordCreate_Box_com_Folder_s_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-93fbc5e7-f8c3-40fa-9bad-c6540ea9e809</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-93fbc5e7-f8c3-40fa-9bad-c6540ea9e809</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column53</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-a0afc2bf-1ada-4a42-ac4f-4e2720056c27</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
+                    <name>flowArguments</name>
+                    <value>[{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;SObject&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt;&lt;em&gt;Step One:&lt;/em&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt; Click the &quot;&lt;/span&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt;Create Folder&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: rgb(116, 116, 116);&quot;&gt;&quot; button.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</value>
+                    <name>flowLayout</name>
+                    <value>oneColumn</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
-                    <name>height</name>
-                    <value>1px</value>
+                    <name>flowName</name>
+                    <value>Box_Create_Folder_and_Collabs_Flow</value>
                 </componentInstanceProperties>
-                <componentName>box:recordBoxFolder</componentName>
-                <identifier>box_recordBoxFolder</identifier>
+                <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Box_Insperity_User}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;em&gt;Step Two:&lt;/em&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; Check the &quot;&lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Send File Request to Primary Contact&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&quot; field and then Save.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText2</identifier>
-                <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-a0afc2bf-1ada-4a42-ac4f-4e2720056c27</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Send File Request (Step 2)</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection27</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Box_Insperity_User}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(80, 56, 231);&quot;&gt;&lt;em&gt;Success!&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 16px;&quot;&gt; Your secure Box folder has been created. &lt;/em&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(80, 56, 231);&quot;&gt;&lt;em&gt;Notify your Primary Contact to check their email inbox&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 16px; color: rgb(80, 56, 231);&quot;&gt;.&lt;/em&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Create_Box_com_Folder_s__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -7414,7 +7330,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>canCreateNewFolder</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>canDelete</name>

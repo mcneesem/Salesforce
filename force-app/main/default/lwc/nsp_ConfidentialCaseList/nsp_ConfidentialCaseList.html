@@ -47,9 +47,6 @@
 			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
 				<thead>
 					<tr>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Subject">Subject</div>
-						  </th>
 						  <th class="" scope="col">
 							<div class="slds-truncate" title="Owner Name">Owner Name</div>
 						  </th>
@@ -69,15 +66,6 @@
 							<div class="slds-truncate" title="Date Closed">Date Closed</div>
 						  </th>
 						  <th class="" scope="col">
-							<div class="slds-truncate" title="Category">Category</div>
-						  </th>
-						  <th class="" scope="col">
-							<div class="slds-truncate" title="Sub Category">Sub Category</div>
-						  </th>
-						  <th class="" scope="col">
-							<div class="slds-truncate" title="Detail">Detail</div>
-						  </th>
-						  <th class="" scope="col">
 							<div class="slds-truncate" title="Due Date">Due Date</div>
 						  </th>
 						  <th class="" scope="col">
@@ -91,16 +79,12 @@
 				<tbody>
 					<template for:each={data} for:item="cse">
 						<tr key={cse.Id}>
-							<td>{cse.Subject}</td>
 							<td>{cse.Owner.Name}</td>
 							<td>{cse.Status}</td>
 							<td>{cse.NSP_Case_Sub_Status__c}</td>
 							<td>{cse.Reason}</td>
 							<td><lightning-formatted-date-time value={cse.CreatedDate} time-zone="UTC"></lightning-formatted-date-time></td>
 							<td><lightning-formatted-date-time value={cse.NSP_Date_Closed__c} time-zone="UTC"></lightning-formatted-date-time></td>
-							<td>{cse.NSP_Category__c}</td>
-							<td>{cse.NSP_SubCategory__c}</td>
-							<td>{cse.NSP_Detail__c}</td>
 							<td><lightning-formatted-date-time value={cse.NSP_Due_Date__c} time-zone="UTC"></lightning-formatted-date-time></td>
 							<td>{cse.Priority}</td>
 							<td>{cse.Account.Name}</td>

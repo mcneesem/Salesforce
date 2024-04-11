@@ -3,5 +3,6 @@
     <fullName>Probability</fullName>
     <description>Field to track Probability of deal closure</description>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>true</trackTrending>
 </CustomField>

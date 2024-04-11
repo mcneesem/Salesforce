@@ -5,7 +5,7 @@
     <label>Time Entry Recommendation</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
@@ -14,11 +14,6 @@
                 <fullName>Premier Time &amp; Attendance</fullName>
                 <default>false</default>
                 <label>Premier Time &amp; Attendance</label>
-            </value>
-            <value>
-                <fullName>Premier Timesheet</fullName>
-                <default>false</default>
-                <label>Premier Timesheet</label>
             </value>
             <value>
                 <fullName>Web Payroll</fullName>

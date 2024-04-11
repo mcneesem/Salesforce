@@ -13,6 +13,6 @@ INCLUDES(SBQQ__PrimaryQuote__r.NSP_Product_Type__c, &quot;Retirement Services&qu
 )
 ), TRUE, FALSE)</formula>
     <label>Doc Signer Validated</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

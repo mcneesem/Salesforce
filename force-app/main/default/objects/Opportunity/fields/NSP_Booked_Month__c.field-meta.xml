@@ -19,7 +19,7 @@
 &quot;None&quot;)</formula>
     <label>Booked Month</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

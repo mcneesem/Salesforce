@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Financial_Analysis_Tool__c</fullName>
-    <defaultValue>&quot;https://testportalapps.insperity.com/financialcomparison/financialanalysis/login?&quot;</defaultValue>
+    <defaultValue>&quot;https://portalapps.insperity.com/financialcomparison/financialanalysis/login?&quot;</defaultValue>
     <description>URL for financial analysis tool</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Financial Analysis Tool</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Url</type>
 </CustomField>

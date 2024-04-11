@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <formula>SBQQ__PrimaryQuote__r.NSP_DO_Signed_By_Billing_Account__c</formula>
     <label>DO Sign By Billing Account</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

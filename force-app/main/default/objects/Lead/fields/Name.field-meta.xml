@@ -3,5 +3,5 @@
     <fullName>Name</fullName>
     <encryptionScheme>None</encryptionScheme>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
 </CustomField>

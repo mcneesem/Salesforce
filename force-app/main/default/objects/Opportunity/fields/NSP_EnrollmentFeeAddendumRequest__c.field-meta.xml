@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>Enrollment Fee Addendum Request</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

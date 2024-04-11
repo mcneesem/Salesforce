@@ -2978,6 +2978,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Ready_for_QC_Review__c</fieldItem>
+                <identifier>RecordReady_for_QC_Review_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_QC_Rep__c</fieldItem>
                 <identifier>RecordNSP_QC_Rep_cField</identifier>
             </fieldInstance>

@@ -42,6 +42,16 @@
                 <default>false</default>
                 <label>Kitchen Aide</label>
             </value>
+            <value>
+                <fullName>YCP LIFEGUARD</fullName>
+                <default>false</default>
+                <label>YCP LIFEGUARD</label>
+            </value>
+            <value>
+                <fullName>SLP LIFEGUARD</fullName>
+                <default>false</default>
+                <label>SLP LIFEGUARD</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (80%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (81%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -167,7 +167,8 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public static void sendCompletionEmail(){
         Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
         oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
-        oEmail.setTargetObjectId(UserInfo.getUserId());
+        String[] sendingTo = new String[]{'sfconfig@insperity.com'};
+		oEmail.setToAddresses(sendingTo);
         oEmail.setSaveAsActivity(false);
         oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
         Messaging.sendEmail(new Messaging.SingleEmailMessage[]{oEmail});

@@ -48,6 +48,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Case_Owner_s_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.NSP_Contact_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -83,6 +88,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>MessagingSession.Sub_Topic__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -99,6 +109,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Reward__c.NSP_Reward_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

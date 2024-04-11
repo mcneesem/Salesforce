@@ -1817,16 +1817,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6438,11 +6428,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Birthdate</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34368,6 +34353,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Accrual_Profile_Subclient_Relation__c.NSP_Sub_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Enter_Case_number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Is_Client_MM_or_MM_Enterprise__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

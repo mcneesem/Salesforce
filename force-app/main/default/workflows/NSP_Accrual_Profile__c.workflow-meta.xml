@@ -1,128 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fieldUpdates>
-        <fullName>Change_Status_to_Active</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Active</literalValue>
-        <name>Change Status to Active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
+    <alerts>
+        <fullName>Accrual_Profile_rejection_alert</fullName>
+        <description>Accrual Profile rejection alert</description>
         <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_Active_AIMS</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Active</literalValue>
-        <name>Change Status to Active AIMS</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Accrual_profile_approval_alert</fullName>
+        <description>Accrual profile approval alert</description>
         <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_ReSubmitted</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Resubmitted</literalValue>
-        <name>Change Status to ReSubmitted</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_ReSubmitted_AIMS</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Resubmitted</literalValue>
-        <name>Change Status to ReSubmitted AIMS</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_Rejected</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Rejected</literalValue>
-        <name>Change Status to Rejected</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_Rejected_AIMS</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Rejected</literalValue>
-        <name>Change Status to Rejected AIMS</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_Submitted</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Submitted</literalValue>
-        <name>Change Status to Submitted</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_to_Submitted_AIMS</fullName>
-        <field>NSP_Status__c</field>
-        <literalValue>Submitted</literalValue>
-        <name>Change Status to Submitted AIMS</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>NSP_Updating_Submitter_Email_Field</fullName>
-        <field>NSP_Submitter_Email__c</field>
-        <formula>$User.Email</formula>
-        <name>Updating Submitter Email Field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>NSP_Updating_Submitter_Email_Field2</fullName>
-        <field>NSP_Submitter_Email__c</field>
-        <formula>$User.Email</formula>
-        <name>Updating Submitter Email Field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>NSP_Updating_Submitter_Field</fullName>
-        <field>NSP_Submitter_Email__c</field>
-        <formula>$User.Email</formula>
-        <name>Updating Submitter Field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>NSP_Updating_Submitter_Field2</fullName>
-        <field>NSP_Submitter_Email__c</field>
-        <formula>$User.Email</formula>
-        <name>Updating Submitter Field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
+    </alerts>
     <alerts>
         <fullName>NSP_Accrual_Profile_Approval_AIMS</fullName>
         <description>Accrual Profile Approval AIMS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>NSP_Accrual_Profile_Approval_Alert</fullName>
+        <description>Accrual Profile Approval Alert</description>
         <protected>false</protected>
         <recipients>
             <field>NSP_Submitter_Email__c</field>
@@ -197,15 +110,244 @@
         <senderType>CurrentUser</senderType>
         <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
     </alerts>
-    <alerts>
-        <fullName>NSP_Accrual_Profile_Approval_Alert</fullName>
-        <description>Accrual Profile Approval Alert</description>
+    <fieldUpdates>
+        <fullName>Change_Status_to_APApproved</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>AP Approved</literalValue>
+        <name>Change Status to AP Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
-        <recipients>
-            <field>NSP_Submitter_Email__c</field>
-            <type>email</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Services_Emails/NSP_Accrual_Profile_Approval</template>
-    </alerts>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_AP_Approved</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>AP Approved</literalValue>
+        <name>Change Status to AP Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Active</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Active</literalValue>
+        <name>Change Status to Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Approved_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>AP Approved</literalValue>
+        <name>Change Status to Approved AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Draft</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Change Status to Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_HR_Approved</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>HR Approved</literalValue>
+        <name>Change Status to HR Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_ReSubmitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted for Approval</literalValue>
+        <name>Change Status to ReSubmitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_ReSubmitted_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted for Approval</literalValue>
+        <name>Change Status to ReSubmitted AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Rejected</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Change Status to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Rejected_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Change Status to Rejected AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Submitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Submitted for Approval</literalValue>
+        <name>Change Status to Submitted for Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Submitted_AIMS</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Submitted for Approval</literalValue>
+        <name>Change Status to Submitted AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_the_Status_to_AP_Approved</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>AP Approved</literalValue>
+        <name>Change the Status to AP Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_the_Status_to_Rejected</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Change the Status to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_the_status_to_resubmitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted for Approval</literalValue>
+        <name>Change the status to resubmitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_the_status_to_submit_for_Approval</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Submitted for Approval</literalValue>
+        <name>Change the status to submit for Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Email_Field</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Email Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Email_Field2</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Email Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Field</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NSP_Updating_Submitter_Field2</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_to_rejected</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Status to rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_email_submitter_field</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Update email submitter field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_to_Draft</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Update status to Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Updating_Submitter_Email_Field</fullName>
+        <field>NSP_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Updating Submitter Email Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
 </Workflow>

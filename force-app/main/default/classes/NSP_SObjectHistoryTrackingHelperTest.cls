@@ -30,7 +30,18 @@ public with sharing class NSP_SObjectHistoryTrackingHelperTest {
         
     }
 
-     /***********************************************************************************************
+    @isTest private static void testContactHistoryTracking() {
+        Contact sharedContact = new Contact(
+            LastName='sharedContact'
+        );
+        insert sharedContact;
+        Test.startTest();
+        sharedContact.LastName = sharedContact.LastName + '.';
+        update sharedContact;
+        Test.stopTest();
+    }
+
+    /***********************************************************************************************
     * MethodName: NSP_SObjectHistoryTrackingHelper
     * Description : Unit test for Queuable class to insert History Records 
     * ********************************************************************************************/
