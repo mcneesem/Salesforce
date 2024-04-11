@@ -327,6 +327,11 @@
                 <default>false</default>
                 <label>NSP_OverrideSubscriptionDate__c</label>
             </value>
+            <value>
+                <fullName>SBQQ__UpgradedSubscription__c</fullName>
+                <default>false</default>
+                <label>SBQQ__UpgradedSubscription__c</label>
+            </value>            
         </valueSetDefinition>
     </valueSet>
 </CustomField>
