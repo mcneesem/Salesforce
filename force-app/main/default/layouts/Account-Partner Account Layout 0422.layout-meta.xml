@@ -17,10 +17,6 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Account_ID_18__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Account_DBA__c</field>
             </layoutItems>
@@ -294,6 +290,13 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Year_Established__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Account_ID_18__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

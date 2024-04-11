@@ -16,10 +16,6 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Account_ID_18__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
@@ -122,6 +118,10 @@
                 <behavior>Readonly</behavior>
                 <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Account_ID_18__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -158,6 +158,12 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DnB_Employee_Count_Here__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
