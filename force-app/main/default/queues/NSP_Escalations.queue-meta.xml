@@ -3,7 +3,7 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>contact_center@insperity.com.invalid</email>
     <name>Contact Center Escalations</name>
-    <queueRoutingConfig>Messaging_for_In_App_and_Web</queueRoutingConfig>
+    <queueRoutingConfig>Messaging_Escalations</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
