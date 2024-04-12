@@ -5,6 +5,11 @@
         <field>Account.Zip_Based_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Current_Tier_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Enablement</label>
 </PermissionSet>
