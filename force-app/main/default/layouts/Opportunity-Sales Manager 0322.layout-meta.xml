@@ -834,6 +834,9 @@
         <relatedList>NSP_Reward__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>NSP_SObject_History_Tracking__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
