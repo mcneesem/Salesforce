@@ -4,7 +4,7 @@
     <active>true</active>
     <description>Prevents editing of Events with a status of &quot;Cancelled&quot;</description>
     <errorConditionFormula>AND(
-NOT( ISNEW()),
+NOT( ISNEW()),NOT($Permission.Bypass_Task_Event_Cancelled_Status),
 ISPICKVAL(PRIORVALUE( NSP_Status__c ),&quot;Cancelled&quot;),
 NOT ($Setup.NSP_Trigger_Switch__c.EventValidations__c)
 )</errorConditionFormula>
