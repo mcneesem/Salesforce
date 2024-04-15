@@ -6,6 +6,9 @@
 */
 
 public class NSP_SObjectUpdateTriggerHelper {
+    // test w/ NSP_AccountContactRelationHelperTest, NSP_AccountTeamMemberTriggerHelperTest, NSP_AccountTeamTriggerTest, 
+    // NSP_AccountTriggerHelperTest, NSP_ContactTriggerHelperTest, NSP_OpportunityTeamMemberTriggerHelper, 
+    // NSP_OpportunityTriggerHelperTest (87%)
 
     /**
      * Validated the updated SObject and passes the required attributes to other methods.
@@ -254,7 +257,7 @@ public class NSP_SObjectUpdateTriggerHelper {
             intAccountId.add(New Integration_Account_Event__e(Id__c = soi));
         }
         
-        If(!intAccountId.isEmpty()) {
+        If(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c && !intAccountId.isEmpty()) {
             //Publish event
             EventBus.publish(intAccountId);
         }

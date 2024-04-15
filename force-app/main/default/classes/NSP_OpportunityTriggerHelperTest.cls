@@ -32,6 +32,12 @@ public class NSP_OpportunityTriggerHelperTest {
         NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
         setting.Is_Edit_Closed_Won_Allowed__c = true;
         insert setting;
+
+        PlatformEventSettings__c pESetting = new PlatformEventSettings__c();
+        pESetting.IsEnabled_IntegrationAccountEvent__c = true;
+        pESetting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        pESetting.IsEnabled_IntegrationOpportunityEvent__c = true;
+        upsert pESetting;
         
         //Account creation
         Account accoutObject = new Account();

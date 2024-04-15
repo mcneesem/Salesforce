@@ -5,7 +5,7 @@
 *    @author: Tejas
 */
 public class NSP_ContactTriggerHelper {
-    // test w/ NSP_ContactTriggerHelperTest (78%)
+    // test w/ NSP_ContactTriggerHelperTest (79%)
 
     public static final String INSPERITYROLE = 'Insperity';
     public static final String CUSTOMERROLE = 'Customer';
@@ -249,7 +249,7 @@ public class NSP_ContactTriggerHelper {
     public void publishEventBus(List<Integration_Account_Event__e> eventList, Set<Id> idSet) {
         
         List<Account> accountList = [SELECT Id, Name, NSP_Ready_for_Integration_Sync__c FROM Account WHERE Id =: idSet];
-        if(!eventList.isEmpty()) {
+        if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c && !eventList.isEmpty()) {
             // Publishing records Event 
             EventBus.publish(eventList);
             for(Account account : accountList) {

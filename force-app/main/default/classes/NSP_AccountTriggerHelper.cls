@@ -218,17 +218,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             }
             // Send the list to publish event bus
             if (accountEventList.size() > 0) {
-                Id profileId = userinfo.getProfileId();
-                //228901 - For fixing SOQL changed to metadata query
-                String profileName;
-                if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-                    profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
-                } else{
-                    profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
-                }
-                /* Adding AND Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-                if (!profileName.containsIgnoreCase(System.label.NSP_Data_Migration_Profile_Name) && 
-                    !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)) {
+                if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c) {
                     publishEventBus(accountEventList, updateResyncFlagAccountList);
                 }
             }
@@ -297,16 +287,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             }
             // Send the list to publish event bus
             if (updateAccountList.size() > 0) {
-                /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-                Id profileId = userinfo.getProfileId();
-                //228901 - For fixing SOQL changed to metadata query
-                String profileName;
-                if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-                    profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
-                } else{
-                    profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
-                }
-                if (String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)) {
+                if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c) {
                     publishEventBus(accountEvent, updateAccountList);
                 }
             }
@@ -814,10 +795,7 @@ public static String getTeamMember(Id userId, Id accountId){
         }
         // Send the list to publish event bus
         if(accountDeleteEventList.size() > 0){
-            Id profileId=userinfo.getProfileId();
-            String profileName=[SELECT Id,Name FROM Profile WHERE Id=:profileId].Name;
-            /* Adding Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-            if(!profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){ // see also "Trigger Switch" Custom Setting
+            if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountDeleteEvent__c) { // see also "Trigger Switch" Custom Setting
                 publishEventBus(accountDeleteEventList, updateResyncFlagAccountList);
             }
         }
