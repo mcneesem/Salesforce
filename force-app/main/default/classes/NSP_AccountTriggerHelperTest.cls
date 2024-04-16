@@ -237,6 +237,12 @@ public class NSP_AccountTriggerHelperTest {
         settings.IsEnabledDeleteAccountTeams__c = True;
         upsert settings;
 
+        PlatformEventSettings__c setting = new PlatformEventSettings__c();
+        setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        setting.IsEnabled_IntegrationOpportunityEvent__c = true;
+        upsert setting;
+
         List<Account>  accountList = New List<Account>();
          User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@insperity.com' Limit 1];
         for(integer count = 0; count < 5; count++) {
@@ -414,6 +420,12 @@ public class NSP_AccountTriggerHelperTest {
 */    
     @isTest
     static void testAccountDeleteByNonAdmin() {
+
+        PlatformEventSettings__c setting = new PlatformEventSettings__c();
+        setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        setting.IsEnabled_IntegrationOpportunityEvent__c = true;
+        upsert setting;
       
         User userRec = [select id FROM User WHERE LastName = 'TestClassUser1'];
          

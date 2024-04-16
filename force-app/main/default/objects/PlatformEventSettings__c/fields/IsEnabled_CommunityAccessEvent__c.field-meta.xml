@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabled_CommunityAccessEvent__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>to control publishing of platform events for NSP_Community_Access_Event__e</description>
+    <externalId>false</externalId>
+    <label>IsEnabled_CommunityAccessEvent</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

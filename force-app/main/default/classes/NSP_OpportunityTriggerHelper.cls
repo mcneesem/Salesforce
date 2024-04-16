@@ -31,13 +31,12 @@ public class NSP_OpportunityTriggerHelper {
     private static set<Id>  byPassValidationOnRole = null;
     private List<UserRole> notAllowedCloseWonRoles = null;
     private String userRole = UserInfo.getUserRoleId();
-    
-/**
-* Iterates throught the list of new Opportunity and passes the required attributes to other methods.
-* @param newList List of New Opportunity.  
-* @return void             
-*                
-*/
+
+    //
+    // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
+    // @param newList List of New Opportunity.
+    // @return void
+    //
     public void beforeInsertDirector(List<Opportunity> newList){        
         
         Set<String> accountIdSet =  new Set<String>();
@@ -192,17 +191,8 @@ public class NSP_OpportunityTriggerHelper {
         getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
         
         // Send the list to publish event bus
-        Id profileId=userinfo.getProfileId();
-        //228901 - For fixing SOQL changed to metadata query
-        String profileName;
-        if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-            profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;            
-        } else {
-            profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
-        }
-        /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-        if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
-            publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);       
+        if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
+            publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
         }
         
     }
@@ -531,16 +521,7 @@ public class NSP_OpportunityTriggerHelper {
         }
         // Send the list to publish event bus
         if(updateResyncFlagOpportunityList.size() > 0){
-            /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-            Id profileId = userinfo.getProfileId();
-            //228901 - For fixing SOQL changed to metadata query
-            String profileName;
-            if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-                profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
-            } else {
-                profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
-            }
-            if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+            if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
                 publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
             }
         }
@@ -1431,5 +1412,4 @@ Created Date:12/05/2022
             }   
         }
      }
-    
 }
