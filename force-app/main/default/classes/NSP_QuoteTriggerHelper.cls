@@ -424,12 +424,14 @@ public class NSP_QuoteTriggerHelper {
     }
 
         for ( SBQQ__QuoteLine__c ql : [
-            SELECT Id , SBQQ__ProductCode__c , NSP_Lock_On_QLI__c, SBQQ__Quote__c, SBQQ__Quote__r.Has_Retirement_Integration_product__c
-            FROM SBQQ__QuoteLine__c
-            WHERE (
-                (NSP_ActionType__c != null 
-                OR SBQQ__Quote__r.Has_Retirement_Integration_product__c = true)
-                AND (
+                    SELECT Id , SBQQ__ProductCode__c , NSP_Lock_On_QLI__c , SBQQ__Quote__c , SBQQ__Quote__r.Has_Retirement_Integration_product__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        (
+                            ( NSP_ActionType__c != null )
+                            OR ( SBQQ__Quote__r.Has_Retirement_Integration_product__c = true )
+                        )
+                        AND (
                             ( NSP_Lock_On_QLI__c = true )
                             OR ( NSP_Parent_Product_Code__c = 'HR Consulting Services' )
                             OR ( SBQQ__ProductCode__c IN :applicableCoreProducts )
