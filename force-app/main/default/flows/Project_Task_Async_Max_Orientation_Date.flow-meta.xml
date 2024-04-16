@@ -132,7 +132,7 @@
             <label>Yes - Project is WO</label>
         </rules>
     </decisions>
-    <description>When WO Project has a Project Tasks created/updated that hit criteria, get furthest End Date in the future of all Project Tasks that hit relevant criteria, and update &quot;Max Orientation Date&quot; on related Opty</description>
+    <description>Updated Project Asset &quot;get&quot;. When WO Project has a Project Tasks created/updated that hit criteria, get furthest End Date in the future of all Project Tasks that hit relevant criteria, and update &quot;Max Orientation Date&quot; on related Opty</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Async Max Orientation Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Async Max Orientation Date</label>
@@ -172,7 +172,7 @@
             <field>Project__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.pse__Project__r.pse__Project_ID__c</elementReference>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </filters>
         <filters>
