@@ -4,9 +4,10 @@
     <active>true</active>
     <description>Created as part of DF-01876</description>
     <errorConditionFormula>AND(
-NOT( ISNEW()),NOT($Permission.Bypass_Task_Event_Cancelled_Status),
-ISPICKVAL(PRIORVALUE(Status),&quot;Cancelled&quot;),
-NOT ($Setup.NSP_Trigger_Switch__c.TaskValidations__c)
+  NOT( ISNEW() ) ,
+  NOT( $Permission.Bypass_Task_Event_Cancelled_Status ) ,
+  ISPICKVAL( PRIORVALUE( Status ) , &quot;Cancelled&quot; ) ,
+  NOT( $Setup.NSP_Trigger_Switch__c.TaskValidations__c )
 )</errorConditionFormula>
     <errorMessage>Once the task is Cancelled. Task cannot be modified.</errorMessage>
 </ValidationRule>
