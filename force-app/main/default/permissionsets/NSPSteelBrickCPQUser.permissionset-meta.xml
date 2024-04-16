@@ -7106,7 +7106,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__Quote__c.Has_Retirement_Integration_product__c</field>
+        <field>SBQQ__Quote__c.Has_Retirement_Integration_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
