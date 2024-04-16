@@ -31,13 +31,12 @@ public class NSP_OpportunityTriggerHelper {
     private static set<Id>  byPassValidationOnRole = null;
     private List<UserRole> notAllowedCloseWonRoles = null;
     private String userRole = UserInfo.getUserRoleId();
-    
-/**
-* Iterates throught the list of new Opportunity and passes the required attributes to other methods.
-* @param newList List of New Opportunity.
-* @return void
-*                
-*/
+
+    //
+    // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
+    // @param newList List of New Opportunity.
+    // @return void
+    //
     public void beforeInsertDirector(List<Opportunity> newList){        
         
         Set<String> accountIdSet =  new Set<String>();
