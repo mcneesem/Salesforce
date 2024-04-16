@@ -4463,7 +4463,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_ProjectTask_Validation</shortDescription>
-        <value>You cannot start Dependent task without completing Preceding task</value>
+        <value>You cannot start a dependent task without completing the preceding task.</value>
     </labels>
     <labels>
         <fullName>NSP_ProjectTeamTriggerValidationMsg</fullName>
