@@ -162,6 +162,13 @@
         <value>Have the user roles been updated in AIMS?</value>
     </labels>
     <labels>
+        <fullName>If_Itemized_they_must_use_Integra</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>If Itemized, they must use Integra</shortDescription>
+        <value>If Itemized, they must use Integra.</value>
+    </labels>
+    <labels>
         <fullName>Inbound_and_Outbound_UserRole</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -174,6 +181,13 @@
         <protected>false</protected>
         <shortDescription>Integra Implementation Timeline</shortDescription>
         <value>Integra Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>Is_payroll_entry_itemized_or_simple_entry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is_payroll_entry_itemized_or_simple_entry</shortDescription>
+        <value>Is payroll entry itemized or simple entry?</value>
     </labels>
     <labels>
         <fullName>Integration_User</fullName>
@@ -6154,6 +6168,20 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>ShowErrorMessageWhenPercentageMoveBackToZero</shortDescription>
         <value>You cannot change the Percentage Complete once it has moved above 0%.</value>
+    </labels>
+    <labels>
+        <fullName>What_accounting_software_do_you_use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What_accounting_software_do_you_use</shortDescription>
+        <value>What accounting software do you use?</value>
+    </labels>
+    <labels>
+        <fullName>Would_you_like_automation_for_your_general_ledger</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Would_you_like_automation_for_your_general_ledger</shortDescription>
+        <value>Would you like automation for your general ledger?</value>
     </labels>
     <labels>
         <fullName>ShowErrorMessageWhenStausCompleteButPercentageNot100</fullName>
