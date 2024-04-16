@@ -1397,6 +1397,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_City__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Zip_Based_Location__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

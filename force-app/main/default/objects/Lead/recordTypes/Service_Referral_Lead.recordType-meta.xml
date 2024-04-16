@@ -8,7 +8,7 @@
     <picklistValues>
         <picklist>Account_Assignment_Method__c</picklist>
         <values>
-            <fullName>Available Account Assignment</fullName>
+            <fullName>Elective Available Assignment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -17,6 +17,10 @@
         </values>
         <values>
             <fullName>Pre-ABX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ROE Available Assignment</fullName>
             <default>false</default>
         </values>
         <values>

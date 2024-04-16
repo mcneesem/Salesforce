@@ -7,6 +7,7 @@
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
+    <permissionSets>Config_Admin</permissionSets>
     <permissionSets>DNBConnect__DNB_Connect_Components_access</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
