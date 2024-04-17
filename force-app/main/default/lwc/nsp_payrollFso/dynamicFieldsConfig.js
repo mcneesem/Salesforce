@@ -246,17 +246,6 @@ const DYNAMIC_FIELDS = {
     },
   ],
  
-  What_accounting_software_do_you_use__c: [
-    {
-      expValue: ["QuickBooks"],
-      dependentFields: ["Would_you_like_automation_general__c","Is_payroll_entry_itemized_or_simple__c"],
-    },
-    {
-      expValue: ["Other"],
-      dependentFields: ["Software_Used__c"],
-    },
-  ],
-  
   Client_does_business_in_MA_NY_or_VA__c: [
     {
       expValue: ["Yes"],
