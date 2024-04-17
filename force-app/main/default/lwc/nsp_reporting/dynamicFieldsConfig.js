@@ -15,18 +15,6 @@ const DYNAMIC_FIELDS = {
       dependentFields: ['showIntegraMessage'],
     },
   ],
-  Select_BPSes__c: [
-    {
-      expValue: ['Integra'],
-      dependentFields: ['showIntegraMessage'],
-    },
-  ],
-  Select_all_payroll_needs_that_apply__c: [
-    {
-      expValue: ['Integra'],
-      dependentFields: ['showIntegraMessage'],
-    },
-  ],
 };
 
 export { DYNAMIC_FIELDS };

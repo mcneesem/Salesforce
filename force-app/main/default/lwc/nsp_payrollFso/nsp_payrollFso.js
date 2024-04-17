@@ -10,7 +10,6 @@ import {
   EMP_TABLE_FIELDS,
   EMP_DATA_RL_FIELDS,
   POST_SYNC_IP_FIELDS,
-  PRE_SYNC_IP_FIELDS,
   PREFILLED_FIELDS,
   SECTION_FIELDS,
   PAY_FREQUENCY_FIELDS
@@ -65,19 +64,10 @@ export default class Nsp_payrollFso extends LightningElement {
         this.field[localName] = value;
         this.postSyncOperations(fieldName, value);
         this.addStyleToPrePopulatedQuestions(fieldName, value);
-        this.preSyncOperations(fieldName, value);
       }
     }
   }
 
-  preSyncOperations(fieldName, value) {
-    const preSyncOpertationsFN = PRE_SYNC_IP_FIELDS[fieldName];
-    if(preSyncOpertationsFN && value) {
-      this.publishSyncEvent(preSyncOpertationsFN);
-    } else if(preSyncOpertationsFN && value == ''){
-      this.publishSyncEvent(preSyncOpertationsFN);
-    }
-  }
   payFrequencyRecordIds = [];
   _payFrequencies;
   @api

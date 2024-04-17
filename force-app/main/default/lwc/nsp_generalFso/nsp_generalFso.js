@@ -142,28 +142,11 @@ export default class Nsp_generalFso extends LightningElement {
 
   publishSyncEvent(fieldName) {
     if (Object.values(SYNC_FIELDS).includes(fieldName)) {
-      let value = this.field[fieldName];
-      if (fieldName == 'Select_BPSes__c' && value) {
-        const itemsTobeRemoved = ['Employment Screening', 
-                                  'Certify', 
-                                  'Expense Management',
-                                  'Organization Planning',
-                                  'Insurance Services',
-                                  'Recruiting Services',
-                                  'Payroll Services (non co-employment/WOSS)',
-                                  'International Payroll Services',
-                                  'Premier Performance'];
-                                  let valueArray = value.split(';');
-        value = this.removeItemsFromArray(valueArray, itemsTobeRemoved).join(';');
-      }
+      const value = this.field[fieldName];
       this.dispatchEvent(
         new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value } })
       );
     }
-  } 
-
-  removeItemsFromArray(strArray, itemsTobeRemoved) {
-    return strArray && strArray.length > 0 ? strArray.filter(x => !itemsTobeRemoved.includes(x)) : [];
   }
 
   doOneTimeActions() {
