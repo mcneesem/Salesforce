@@ -183,6 +183,22 @@ const createMapWithValueProperty = function (obj) {
   }, {});
 }
 
+const getMultiDependentFieldVisibility = function(dependentField, fieldValue, dynamicFields, multipleDependentFields) {
+  let updatedValues = {}, updatedValue1 = {}, updatedValue2 = {};
+  if(fieldValue[multipleDependentFields[dependentField][0]]) {
+    updatedValue1 = getUpdatedFieldVisibility(dynamicFields[multipleDependentFields[dependentField][0]],fieldValue[multipleDependentFields[dependentField][0]]);
+  } else {
+    updatedValue1[dependentField] = false;
+  }
+  if(fieldValue[multipleDependentFields[dependentField][1]]) {
+    updatedValue2 = getUpdatedFieldVisibility(dynamicFields[multipleDependentFields[dependentField][1]],fieldValue[multipleDependentFields[dependentField][1]]);
+  } else {
+    updatedValue2[dependentField] = false;
+  }
+  updatedValues[dependentField] = (updatedValue1[dependentField] && updatedValue2[dependentField]);
+  return updatedValues;
+}
+
 export {
   debounce,
   isSelectionBox,
@@ -203,5 +219,6 @@ export {
   toNorthAmericanPhoneNumber,
   prepareMapByValue,
   getErrorMessage,
-  createMapWithValueProperty
+  createMapWithValueProperty,
+  getMultiDependentFieldVisibility
 };
