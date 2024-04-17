@@ -11,4 +11,8 @@
         <object>Opportunity</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Opportunity.Opportunity</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
