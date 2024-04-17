@@ -887,11 +887,15 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
                         }
                     }
                     // set the field on project record
-                    if(eachOrder.NSP_Down_Payment_Required__c == 'No' && eachOrder.NSP_Project__c != null)
-                    {
-                        pse__Proj__c newProject = new pse__Proj__c(Id = eachOrder.NSP_Project__c );
-                        newProject.Project_Down_Payment_Not_Required__c = true;
-                        projectUpdateMap.put(newProject.Id,newProject);
+                    if ( eachOrder.NSP_Project__c != null ) {
+                        pse__Proj__c newProject = new pse__Proj__c(
+                            Id=eachOrder.NSP_Project__c ,
+                            pse__Opportunity__c=eachOrder.OpportunityId
+                        );
+                        if ( eachOrder.NSP_Down_Payment_Required__c == 'No' ) {
+                            newProject.Project_Down_Payment_Not_Required__c = true;
+                        }
+                        projectUpdateMap.put( newProject.Id , newProject );
                     }
                     
                     if(String.isNotBlank(eachOrder.NSP_Down_Payment_Required__c))
