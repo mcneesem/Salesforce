@@ -286,7 +286,7 @@ public class NSP_QuoteTriggerHelper {
 
             if(String.isNotEmpty(newQuote.NSP_Opportunity_Partner_Name__c) && partnerNames.contains(newQuote.NSP_Opportunity_Partner_Name__c)) {
                 NSP_Partner_Configurations__mdt pcc = partConfigWithpbNameMap.get(newQuote.NSP_Opportunity_Partner_Name__c);
-                if((newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ||  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)) && pcc.NSP_New_Sale_Discount__c!=null) {
+                if((newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ||  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) && newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) && pcc.NSP_New_Sale_Discount__c!=null) {
                     newQuote.SBQQ__PartnerDiscount__c = pcc.NSP_New_Sale_Discount__c;
                 }
                 if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_RENEWAL) && pcc.NSP_Renewal_Discount__c!=null ) {
@@ -475,9 +475,6 @@ public class NSP_QuoteTriggerHelper {
             }
         }
 
-        if(newQuote.NSP_TransactionType__c==NSP_CPQConstants.QUOTE_TYPE_TERMINATION && newQuote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
-            newQuote.SBQQ__Type__c = NSP_CPQConstants.QUOTE_TYPE_TERMINATION;
-        }
         
         if(productsToBypassSignature.contains(newQuote.NSP_Opportunity_Primary_Product__c)) {
             newQuote.NSP_Bypass_DocuSign_Signature__c = true;
@@ -504,7 +501,7 @@ public class NSP_QuoteTriggerHelper {
         if(sortedTemplateSettingsByProduct.containsKey(settingkey) && newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ) {
             newQuote.NSP_Final_Template__c = sortedTemplateSettingsByProduct.get(settingkey).NSP_Selected_Template__c;
         }
-            if(AmendTemplateSettingsByProduct.containsKey(settingkey) &&  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) ) {
+            if(AmendTemplateSettingsByProduct.containsKey(settingkey) &&  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)  && newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION ) {
                 newQuote.NSP_Final_Template__c = AmendTemplateSettingsByProduct.get(settingkey).NSP_Selected_Template__c;
 }
             if(RenewTemplateSettingsByProduct.containsKey(settingkey) && newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_RENEWAL) ) {
@@ -527,7 +524,7 @@ public class NSP_QuoteTriggerHelper {
           if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_NEW && newQuote.NSP_Final_Template__c != 'TimeStar') {
                 newQuote.NSP_Final_Template__c = NSP_CPQConstants.QUOTE_NEW_SHOW_DISCOUNT_BPS;
             }
-            if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) {
+            if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
                 newQuote.NSP_Final_Template__c = NSP_CPQConstants.QUOTE_AMENDMENT_SHOW_DISCOUNT_BPS;
             }
       if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_RENEWAL) {
@@ -565,7 +562,7 @@ public class NSP_QuoteTriggerHelper {
             newQuote.SBQQ__Type__c.addError(AMENDMENT_TYPE_CHANGE_ERROR);
         } **/
         
-        if(newQuote.SBQQ__Type__c!=quoteOldMap.get(newQuote.Id).SBQQ__Type__c && (quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT || quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.SUPPLEMENTAL) && newQuote.SBQQ__LineItemCount__c != 0 ) {
+        if(newQuote.SBQQ__Type__c!=quoteOldMap.get(newQuote.Id).SBQQ__Type__c && (quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT || quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.SUPPLEMENTAL) && newQuote.SBQQ__LineItemCount__c != 0 &&  newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
             newQuote.SBQQ__Type__c.addError(AMENDMENT_TYPE_CHANGE_ERROR);
         }
         //Added for Partner CS Story
@@ -603,9 +600,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
             }
         }
 
-        if(newQuote.NSP_TransactionType__c==NSP_CPQConstants.QUOTE_TYPE_TERMINATION && newQuote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
-            newQuote.SBQQ__Type__c = NSP_CPQConstants.QUOTE_TYPE_TERMINATION;
-        }
         if(newQuote.SBQQ__Type__c==NSP_CPQConstants.SUPPLEMENTAL) {
             newQuote.NSP_Product_Type__c = NSP_CPQConstants.SUPPLEMENTAL;
         }
@@ -622,9 +616,9 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                                             SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c,
                                             SBQQ__RenewedContract__r.NSP_Number_of_Employees__c, SBQQ__RenewedContract__r.NSP_Pricing_Model__c, SBQQ__RenewedContract__r.NSP_Product_Type__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c,  SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Type__c,
                                             SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_BPS_Billing_Frequency__c, 
-                                 			SBQQ__RenewedContract__r.SBQQ__Quote__c, SBQQ__RenewedContract__r.SBQQ__Order__c ,SBQQ__RenewedContract__r.NSP_PrimaryProduct__c, SBQQ__RenewedContract__r.NSP_Client_For_Life__c,SBQQ__RenewedContract__r.NSP_Partner__c, SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c, SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c,
-                                 			SBQQ__AmendedContract__r.SBQQ__Quote__c, SBQQ__AmendedContract__r.SBQQ__Order__c, SBQQ__AmendedContract__r.NSP_PrimaryProduct__c, SBQQ__AmendedContract__r.NSP_Client_For_Life__c,SBQQ__AmendedContract__r.NSP_Partner__c, SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c
-											
+                                            SBQQ__RenewedContract__r.SBQQ__Quote__c, SBQQ__RenewedContract__r.SBQQ__Order__c ,SBQQ__RenewedContract__r.NSP_PrimaryProduct__c, SBQQ__RenewedContract__r.NSP_Client_For_Life__c,SBQQ__RenewedContract__r.NSP_Partner__c, SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c, SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c,
+                                            SBQQ__AmendedContract__r.SBQQ__Quote__c, SBQQ__AmendedContract__r.SBQQ__Order__c, SBQQ__AmendedContract__r.NSP_PrimaryProduct__c, SBQQ__AmendedContract__r.NSP_Client_For_Life__c,SBQQ__AmendedContract__r.NSP_Partner__c, SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c
+                                            
                                             FROM Opportunity WHERE Id IN:opportunityIds AND (SBQQ__AmendedContract__c!=null OR SBQQ__RenewedContract__c!=null) ] ){ //AND (SBQQ__AmendedContract__c!=null AND SBQQ__AmendedContract__r.SBQQ__Quote__c!=null) OR (SBQQ__RenewedContract__c!=null AND SBQQ__RenewedContract__r.SBQQ__Quote__c!=null) ] {
 
             renewAmendOpptys.put(opp.Id,opp);                               
@@ -1519,7 +1513,7 @@ private void validateQuote(List<SBQQ__Quote__c> quotes){
              
              if((newQuote.SBQQ__Primary__c == True && Trigger.isInsert) ||(Trigger.isUpdate && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c == True) ){
                 oppIdSet.add(newQuote.SBQQ__Opportunity2__c);       
-         	 }
+             }
          }
          
         if (oppIdSet.size() > 0) {    

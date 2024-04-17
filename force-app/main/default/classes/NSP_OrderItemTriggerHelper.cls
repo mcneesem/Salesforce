@@ -195,7 +195,10 @@ public class NSP_OrderItemTriggerHelper {
             if(isEnabled){
                 set<Id> quoteIds = new set<Id>();
                 for (OrderItem op : OrderItemNewMap.Values()){
-                    if(op.OrderType__c == 'Amendment' ){
+                    if ( ( op.OrderType__c == 'Amendment' )
+                        && ( op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                        )
+                    {
                         quoteIds.add(op.SBQQ__QuoteLine__c);
                     }
                 }
@@ -298,6 +301,7 @@ public class NSP_OrderItemTriggerHelper {
                         && OrderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
                         && op.Order.Type == 'Amendment'
                         && op.SBQQ__QuoteLine__r.NSP_MergeProducts__c == FALSE
+                        && op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
                         )
                     {
                         OrderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
@@ -309,6 +313,7 @@ public class NSP_OrderItemTriggerHelper {
                         && OrderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
                         && op.Order.Type == 'Amendment'
                         && op.SBQQ__QuoteLine__r.NSP_MergeProducts__c == FALSE
+                        && op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
                         )
                     {
                         OrderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
@@ -366,11 +371,26 @@ public class NSP_OrderItemTriggerHelper {
             Map<Id,Decimal> activeUserMap = new Map<Id,Decimal>();
             String accId = null; 
                 
-            for (OrderItem op : [Select Id, OrderItemNumber, Order.Type,ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, Order.NSP_Usage_Products_Count__c,NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c, NSP_Payment_Method__c,SBQQ__Activated__c,blng__LegalEntity__c,SBQQ__Status__c,NSP_ServiceAssetCategory__c,Order.AccountId FROM OrderItem WHERE Id IN:OrderItemNewMap.keyset()]) {
+            for (OrderItem op : [
+                        SELECT
+                            Id , OrderItemNumber , Order.Type , ServiceDate , SBQQ__QuoteLine__c , SBQQ__QuoteLine__r.NSP_ActionType__c ,
+                            SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c , Order.NSP_Transaction_Type__c , OrderId , Order.Status ,
+                            Order.NSP_Usage_Products_Count__c , NSP_Project_Completion_Date__c , NSP_ReCalculation_Status_Internal__c ,
+                            NSP_Payment_Method__c , SBQQ__Activated__c , blng__LegalEntity__c , SBQQ__Status__c , NSP_ServiceAssetCategory__c ,
+                            Order.AccountId
+                        FROM OrderItem
+                        WHERE ( Id IN :OrderItemNewMap.keyset() )
+                    ]
+                )
+            {
                 if(OrderItemOldMap.get(op.id).SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED
                 && OrderItemNewMap.get(op.Id).SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED && op.Order.Status != NSP_CPQConstants.ORDER_ACTIVATED) {
-                    if((op.Order.NSP_Usage_Products_Count__c == 0 && op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW) ||
-                        op.Order.Type == NSP_CPQConstants.SUPPLEMENTAL || op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) {
+                    if ( ( op.Order.NSP_Usage_Products_Count__c == 0 && op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW )
+                        || op.Order.Type == NSP_CPQConstants.SUPPLEMENTAL
+                        || op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT
+                        && op.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
+                        )
+                    {
                         orderIdSet.add(op.OrderId);
                     }
                 }
@@ -476,9 +496,18 @@ public class NSP_OrderItemTriggerHelper {
         Set<Id> accountIdSet = new Set<Id>();
         Map<Id,Decimal> quantityMap = new Map<Id,Decimal>();
         List<OrderItem> ordItemList = new List<OrderItem>();
-        for (OrderItem op : [Select Id, OrderItemNumber, NSP_QL_ActionType__c,SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c,OrderId, Order.Status,SBQQ__QuoteLine__r.NSP_Number_of_Checks__c,SBQQ__QuoteLine__r.NSP_TCFullUserLicenseQty__c,
-                             Order.OpportunityId,NSP_ServiceAssetCategory__c,SBQQ__QuotedQuantity__c,Order.Type,Order.AccountId,SBQQ__QuoteLine__r.NSP_Number_Of_Boxes__c,SBQQ__QuoteLine__r.NSP_Number_Of_Users__c
-                             FROM OrderItem WHERE Id IN:opIdMap.keyset()]) {
+        for ( OrderItem op : [
+                    SELECT
+                        Id , OrderItemNumber , NSP_QL_ActionType__c , SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c , OrderId ,
+                        order.NSP_Transaction_Type__c , Order.Status , SBQQ__QuoteLine__r.NSP_Number_of_Checks__c ,
+                        SBQQ__QuoteLine__r.NSP_TCFullUserLicenseQty__c , Order.OpportunityId , NSP_ServiceAssetCategory__c ,
+                        SBQQ__QuotedQuantity__c , Order.Type , Order.AccountId , SBQQ__QuoteLine__r.NSP_Number_Of_Boxes__c ,
+                        SBQQ__QuoteLine__r.NSP_Number_Of_Users__c
+                    FROM OrderItem
+                    WHERE ( Id IN :opIdMap.keyset() )
+                ]
+            )
+        {
             if(op.Order.OpportunityId != null){
                 optyId.add(op.Order.OpportunityId);
             } 
@@ -498,7 +527,12 @@ public class NSP_OrderItemTriggerHelper {
                 } else{
                     quantityMap.put(recType,op.SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c);
                 }
-                if(op.NSP_QL_ActionType__c != NSP_CPQConstants.ACTION_AMEND && op.SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c > 0 && op.Order.Type == 'Amendment'){
+                if ( op.NSP_QL_ActionType__c != NSP_CPQConstants.ACTION_AMEND
+                    && op.SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c > 0
+                    && op.Order.Type == 'Amendment'
+                    && op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
+                    )
+                {
                     recordTypeSet.add(recType);
                     accountIdSet.add(op.Order.AccountId);
                 }
