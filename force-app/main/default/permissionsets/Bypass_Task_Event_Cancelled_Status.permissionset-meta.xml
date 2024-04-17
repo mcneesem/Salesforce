@@ -4,8 +4,8 @@
         <enabled>true</enabled>
         <name>Bypass_Task_Event_Cancelled_Status</name>
     </customPermissions>
-    <description>Permits the Users to Bypass the Task and event cancelled Validation Rule</description>
+    <description>Grants the Custom Permission to Bypass Task/Event Cancelled Validation Rules.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Bypass Task_Event Cancelled Status</label>
+    <label>Bypass Task/Event Cancelled Status</label>
     <license>Salesforce</license>
 </PermissionSet>
