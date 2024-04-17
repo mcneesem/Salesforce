@@ -3,6 +3,11 @@
     <fullName>Account_Owned_by_Available</fullName>
     <active>true</active>
     <description>215094 No New Related Contact or New Contact when Account Owner = Available</description>
-    <errorConditionFormula>AND(Account.Owner.LastName = &apos;Available&apos;, ISNEW(),$Setup.NSP_Trigger_Switch__c.ContactValidations__c!=True )</errorConditionFormula>
+    <errorConditionFormula>AND(
+  Account.Owner.LastName = &apos;Available&apos; ,
+  ISNEW() ,
+  NOT( $Setup.NSP_Trigger_Switch__c.ContactValidations__c ) ,
+  NOT( $Permission.Bypass_Available_Lead_Conversion_Rules )
+)</errorConditionFormula>
     <errorMessage>New contact relationships cannot be added on accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</errorMessage>
 </ValidationRule>
