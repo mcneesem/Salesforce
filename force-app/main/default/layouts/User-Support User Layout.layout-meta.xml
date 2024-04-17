@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>BPS_Admin_Ret_Svc_Oppty_Credit_Access__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_Tier_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
