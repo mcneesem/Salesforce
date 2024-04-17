@@ -882,57 +882,6 @@
       onchange={handleValueChange}>
     </lightning-input-field>
     <c-nsp_selection-box
-      disabled={disabledFields.What_accounting_software_do_you_use__c}
-      data-name="What_accounting_software_do_you_use__c"
-      class={styles.What_accounting_software_do_you_use__c}
-      label={label.whatAccountingSoftwareDoYouUse}
-      field-api-name="Implementation_Profile__c.What_accounting_software_do_you_use__c"
-      record-type-id={recordTypeId}
-      value={field.What_accounting_software_do_you_use__c}
-      onchange={handleValueChange}
-      >
-    </c-nsp_selection-box>
-    <c-nsp_selection-box
-      disabled={disabledFields.Would_you_like_automation_general__c}
-      lwc:if={visibility.Would_you_like_automation_general__c}
-      data-name="Would_you_like_automation_general__c"
-      class={styles.Would_you_like_automation_general__c}
-      label={label.wouldYouLikeAutomationForYourGeneralLedger}
-      field-api-name="Implementation_Profile__c.Would_you_like_automation_general__c"
-      record-type-id={recordTypeId}
-      value={field.Would_you_like_automation_general__c}
-      onchange={handleValueChange}
-      >
-    </c-nsp_selection-box>
-    <c-nsp_selection-box
-      disabled={disabledFields.Is_payroll_entry_itemized_or_simple__c}
-      lwc:if={visibility.Is_payroll_entry_itemized_or_simple__c}
-      data-name="Is_payroll_entry_itemized_or_simple__c"
-      class={styles.Is_payroll_entry_itemized_or_simple__c}
-      label={label.isPayrollEntryItemizedOrSimpleEntry}
-      field-api-name="Implementation_Profile__c.Is_payroll_entry_itemized_or_simple__c"
-      record-type-id={recordTypeId}
-      value={field.Is_payroll_entry_itemized_or_simple__c}
-      onchange={handleValueChange}
-      >
-    </c-nsp_selection-box>
-    <lightning-formatted-text
-      lwc:if={visibility.Is_payroll_entry_itemized_or_simple__c}
-      class="slds-m-left_x-large headerMessage"
-      value={label.itemized}
-      >
-    </lightning-formatted-text>
-    <lightning-input-field
-      disabled={disabledFields.Software_Used__c}
-      lwc:if={visibility.Software_Used__c}
-      field-name="Software_Used__c"
-      value={field.Software_Used__c}
-      class={styles.Software_Used__c}
-      data-name="Software_Used__c"
-      onchange={handleValueChange}
-      >
-    </lightning-input-field>
-    <c-nsp_selection-box
       disabled={disabledFields.Employees_work_in_the_following_states__c}
       label={label.employeesWorkinFollowingStates}
       data-name="Employees_work_in_the_following_states__c"

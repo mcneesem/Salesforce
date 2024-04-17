@@ -7,7 +7,6 @@
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
-    <permissionSets>General_Ledger_IP_Read_Edit</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
