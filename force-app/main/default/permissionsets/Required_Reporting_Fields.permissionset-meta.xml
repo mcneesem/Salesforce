@@ -8,6 +8,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Most_Recent_Activity_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Account_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49,6 +54,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Case_Owner_s_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Most_Recent_Activity_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -118,6 +128,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Max_Orientation_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Most_Recent_Activity_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.NSP_Opportunity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -129,6 +149,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Sales_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Rules_of_Engagement__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
