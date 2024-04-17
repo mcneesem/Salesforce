@@ -75,7 +75,8 @@ public class NSP_OrderTriggerHelper {
                     newOrder.NSP_Partner__c = objQuote.SBQQ__Partner__c;
                     newOrder.NSP_AIMS_Billing_ID__c=objQuote.SBQQ__Account__r.NSP_AIMS_Client__c;
                     if ( ( Order_Settings__c.getInstance( UserInfo.getUserId() ).EffectiveDateStartOfMonth__c == True )
-                        && ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT ) && (newOrder.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION)
+                        && ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
+                        && ( newOrder.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
                         && ( objQuote.SBQQ__StartDate__c != null )
                         )
                     {
@@ -294,7 +295,11 @@ public class NSP_OrderTriggerHelper {
             if(newOrder.NSP_Project_Name__c == null && newOrder.Type == NSP_CPQConstants.ORDER_TYPE_NEW) {
                 orderIdNew.add(newOrder.Id);
             }
-            if(newOrder.NSP_Project_Name__c == null && newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT && (newOrder.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION)) {
+            if ( ( newOrder.NSP_Project_Name__c == null )
+                && ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
+                && ( newOrder.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                )
+            {
                 orderIdAmend.add(newOrder.Id);
             }
             if(newOrder.NSP_Project_Name__c == null && newOrder.Type == NSP_CPQConstants.SUPPLEMENTAL) {
@@ -415,10 +420,12 @@ public class NSP_OrderTriggerHelper {
                 if(newOrder.NSP_Order_Product_Type__c == null && newOrder.Status == NSP_CPQConstants.ORDER_DRAFT) {
                     orderIdPT.add(newOrder.Id);
                 }
-                if(newOrder.NSP_Transaction_Type__c  == NSP_CPQConstants.QUOTE_TYPE_TERMINATION && 
-                newOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.NSP_TerminationDate__c!=null 
-               && oldOrder.NSP_TerminationDate__c!=newOrder.NSP_TerminationDate__c
-                ){
+                if ( ( newOrder.NSP_Transaction_Type__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                    && ( newOrder.Status == NSP_CPQConstants.ORDER_DRAFT )
+                    && ( newOrder.NSP_TerminationDate__c ! =null )
+                    && ( oldOrder.NSP_TerminationDate__c != newOrder.NSP_TerminationDate__c )
+                    )
+                {
                     orderIds.add(newOrder.Id);
                 }
             }
@@ -833,9 +840,22 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
         Map<Id,Order> OrderUpdateMap = new Map<Id,Order>();
         try
         {
-            list<Order> orderProcessList = new list<Order>([SELECT Id,NSP_Down_Payment_Required__c,NSP_Project__c,NSP_Project__r.Project_Complete_Date__c,OpportunityId,
-                                                                (SELECT ID,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project__r.Project_Complete_Date__c FROM ORDERITEMS WHERE SBQQ__BillingFrequency__c IN ('Monthly','Annual','Invoice Plan')) 
-                                                                FROM Order WHERE ID IN : orderIds AND NSP_Project_Complete_Date__c = NULL]);
+            list<Order> orderProcessList = new list<Order>(
+                [
+                    SELECT
+                        Id , NSP_Down_Payment_Required__c , NSP_Project__c , NSP_Project__r.Project_Complete_Date__c , OpportunityId ,
+                        (
+                            SELECT Id , SBQQ__BillingFrequency__c , NSP_Project__c , NSP_Project__r.Project_Complete_Date__c
+                            FROM ORDERITEMS
+                            WHERE ( SBQQ__BillingFrequency__c IN ( 'Monthly' , 'Annual' , 'Invoice Plan' ) )
+                        )
+                    FROM Order
+                    WHERE (
+                        ( Id IN : orderIds )
+                        AND ( NSP_Project_Complete_Date__c = NULL )
+                    )
+                ]
+            );
         
             for(Order eachOrder : orderProcessList)
             {
