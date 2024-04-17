@@ -16,9 +16,8 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
-    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>    
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
-	<permissionSets>force__PipelineInspectionIncluded</permissionSets>    
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

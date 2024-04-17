@@ -20,7 +20,6 @@
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Compensation_Role_Permission_Set</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
-    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>

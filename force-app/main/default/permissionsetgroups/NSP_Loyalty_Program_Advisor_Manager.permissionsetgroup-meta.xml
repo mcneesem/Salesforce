@@ -18,8 +18,7 @@
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Rewards_Elevated</permissionSets>
-    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>    
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
-	<permissionSets>force__PipelineInspectionIncluded</permissionSets>    
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
