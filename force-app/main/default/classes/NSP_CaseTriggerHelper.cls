@@ -713,13 +713,16 @@ Date        : 30/09/2021
                    }
                 /*STY-02804  ends*/
                 
-                /*Added as part of STY-03256 */
-                if(oCase.recordTypeId == PEO_RECORDTYPEID &&
-                   oCase.OwnerId == healthAndProductsGrpId && 
-                   oCase.Subject.StartsWith(NSP_ServiceConstants.SUBJECT7) &&
-                   String.isNotBlank(oCase.NSP_Implementation_Profile__c)){
-                       iPIdSet.add(oCase.NSP_Implementation_Profile__c);
-                   }
+                // Added as part of STY-03256
+                if ( ( oCase.recordTypeId == PEO_RECORDTYPEID )
+                    && ( oCase.OwnerId == healthAndProductsGrpId )
+                    && String.isNotBlank( oCase.Subject )
+                    && oCase.Subject.startsWith( NSP_ServiceConstants.SUBJECT7 )
+                    && String.isNotBlank( oCase.NSP_Implementation_Profile__c )
+                    )
+                {
+                    iPIdSet.add( oCase.NSP_Implementation_Profile__c );
+                }
                 /*Added as part of STY-03256 */
                 if(String.isNotBlank(oCase.ContactId)){
                     caseIdSet.add(oCase.Id);
