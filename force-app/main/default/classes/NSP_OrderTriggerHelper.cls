@@ -422,7 +422,7 @@ public class NSP_OrderTriggerHelper {
                 }
                 if ( ( newOrder.NSP_Transaction_Type__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
                     && ( newOrder.Status == NSP_CPQConstants.ORDER_DRAFT )
-                    && ( newOrder.NSP_TerminationDate__c ! =null )
+                    && ( newOrder.NSP_TerminationDate__c != null )
                     && ( oldOrder.NSP_TerminationDate__c != newOrder.NSP_TerminationDate__c )
                     )
                 {
