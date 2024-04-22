@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import IP_OBJECT from '@salesforce/schema/Implementation_Profile__c';
 import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
-import { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS} from './fields';
+import { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS, PRE_SYNC_IP_FIELDS} from './fields';
 import * as LABELS from 'c/nsp_implementationLabels';
 import {
   getUpdatedFieldVisibility,
@@ -57,6 +57,16 @@ export default class Nsp_reporting extends LightningElement {
         this.field[SYNC_FIELDS[fieldName]] = value;
       }
       this.addStyleToPrePopulatedQuestions(fieldName, value);
+      this.preSyncOperations(fieldName, value);
+    }
+  }
+  
+  preSyncOperations(fieldName, value) {
+    const preSyncOpertationsFN = PRE_SYNC_IP_FIELDS[fieldName];
+    if(preSyncOpertationsFN && value) {
+      this.updateDependentFieldVisibility(fieldName, value);
+    } else if(preSyncOpertationsFN && value == ''){
+      this.updateDependentFieldVisibility(fieldName, '');
     }
   }
 
