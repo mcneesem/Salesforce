@@ -10084,6 +10084,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Organizational_Planning_Imp_Timeline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Orientation_Rep__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11454,6 +11459,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Integra_Implementation_Timeline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Interested_in_on_site_safety_inspections__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12746,6 +12756,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.Pre_tax_Client_Sponsored_Plan_CSP_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Premier_Performance_Imp_Timeline__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
