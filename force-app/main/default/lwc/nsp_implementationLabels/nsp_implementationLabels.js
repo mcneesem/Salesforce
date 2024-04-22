@@ -47,6 +47,9 @@ import isClientComingFromAnotherPEO from '@salesforce/label/c.NSP_Is_the_client_
 import isClientComingImplementingPerformance from '@salesforce/label/c.NSP_Will_the_client_be_implemening_Premier_Performannce';
 import whenClientLikeSolutionImplemented from '@salesforce/label/c.NSP_When_client_like_solution_implemented';
 import isClientImplementingAnyOtherBusinessSolutions from '@salesforce/label/c.NSP_Client_implementing_any_other_Business_Performance_Solutions';
+import premierPerformanceImplementationTimeline from '@salesforce/label/c.Premier_Performance_Implementation_Timeline';
+import organizationalPlanningImpTimeline from '@salesforce/label/c.Organizational_Planning_Imp_Timeline';
+import integraImplementationTimeline from '@salesforce/label/c.Integra_Implementation_Timeline';
 import timeEntryMethod from '@salesforce/label/c.NSP_Time_Entry_Method';
 import clientProfileInformation from '@salesforce/label/c.NSP_Client_Profile_Information';
 import hushProtocol from '@salesforce/label/c.NSP_Hush_Protocol';
@@ -573,6 +576,9 @@ export {
     isClientComingFromAnotherPEO,
     isClientComingImplementingPerformance,
     isClientImplementingAnyOtherBusinessSolutions,
+    premierPerformanceImplementationTimeline,
+    organizationalPlanningImpTimeline,
+    integraImplementationTimeline,
     timeEntryMethod,
     clientProfileInformation,
     nationalClient,
