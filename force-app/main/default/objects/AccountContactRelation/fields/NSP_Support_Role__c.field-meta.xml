@@ -75,6 +75,11 @@
                 <default>false</default>
                 <label>TES HRRC</label>
             </value>
+            <value>
+                <fullName>Learning Portal Admin</fullName>
+                <default>false</default>
+                <label>Learning Portal Admin</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>3</visibleLines>
