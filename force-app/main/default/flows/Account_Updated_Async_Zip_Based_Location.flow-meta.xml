@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
-    <description>When Account Billing Zip Code is updated/populated and Account is owned by &quot;Available&quot; then the &quot;Zip Based Location&quot; field should be populated based on relevant Zip to Region Mapping record with matching zip code</description>
+    <description>Updated to account for 9-digit zip. When Account Billing Zip Code is updated/populated and Account is owned by &quot;Available&quot; then the &quot;Zip Based Location&quot; field should be populated based on relevant Zip to Region Mapping record with matching zip code</description>
     <environments>Default</environments>
+    <formulas>
+        <name>fiveDigitZipFormula</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Record.BillingPostalCode},5)</expression>
+    </formulas>
     <interviewLabel>Account - Updated Async - Zip Based Location {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account - Updated Async - Zip Based Location</label>
     <processMetadataValues>
@@ -42,7 +47,7 @@
             <field>NSP_Zip__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.BillingPostalCode</elementReference>
+                <elementReference>fiveDigitZipFormula</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
