@@ -76,6 +76,7 @@ public class NSP_OrderTriggerHelper {
                     newOrder.NSP_AIMS_Billing_ID__c=objQuote.SBQQ__Account__r.NSP_AIMS_Client__c;
                     if ( ( Order_Settings__c.getInstance( UserInfo.getUserId() ).EffectiveDateStartOfMonth__c == True )
                         && ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
+                        && ( newOrder.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
                         && ( objQuote.SBQQ__StartDate__c != null )
                         )
                     {
@@ -294,7 +295,11 @@ public class NSP_OrderTriggerHelper {
             if(newOrder.NSP_Project_Name__c == null && newOrder.Type == NSP_CPQConstants.ORDER_TYPE_NEW) {
                 orderIdNew.add(newOrder.Id);
             }
-            if(newOrder.NSP_Project_Name__c == null && newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT) {
+            if ( ( newOrder.NSP_Project_Name__c == null )
+                && ( newOrder.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
+                && ( newOrder.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                )
+            {
                 orderIdAmend.add(newOrder.Id);
             }
             if(newOrder.NSP_Project_Name__c == null && newOrder.Type == NSP_CPQConstants.SUPPLEMENTAL) {
@@ -313,7 +318,7 @@ public class NSP_OrderTriggerHelper {
                 if(newOrder.blng__BillingAccount__c != null) {
                 reviewedOrdersAccountSet.add(newOrder.blng__BillingAccount__c);
                     accIdstr = newOrder.blng__BillingAccount__c;
-            	}
+                }
                 else {
                 reviewedOrdersAccountSet.add(newOrder.AccountId);
                      accIdstr = newOrder.AccountId;
@@ -415,10 +420,12 @@ public class NSP_OrderTriggerHelper {
                 if(newOrder.NSP_Order_Product_Type__c == null && newOrder.Status == NSP_CPQConstants.ORDER_DRAFT) {
                     orderIdPT.add(newOrder.Id);
                 }
-                if(newOrder.Type == NSP_CPQConstants.QUOTE_TYPE_TERMINATION && 
-                newOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.NSP_TerminationDate__c!=null 
-               && oldOrder.NSP_TerminationDate__c!=newOrder.NSP_TerminationDate__c
-                ){
+                if ( ( newOrder.NSP_Transaction_Type__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                    && ( newOrder.Status == NSP_CPQConstants.ORDER_DRAFT )
+                    && ( newOrder.NSP_TerminationDate__c != null )
+                    && ( oldOrder.NSP_TerminationDate__c != newOrder.NSP_TerminationDate__c )
+                    )
+                {
                     orderIds.add(newOrder.Id);
                 }
             }
@@ -441,7 +448,7 @@ public class NSP_OrderTriggerHelper {
                 //calling method to check and stamp dunning email checkbox on contact acr record
                 stampDunningEmailonContact (billToContactIds,accountIds,uniqueAcrIds);
                 //end of method call
-                List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,EndDate,SBQQ__SubscriptionTerm__c,Order.Type,Order.NSP_Change_Order_Process_Quote__c,NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c,NSP_Order_Activation_Trigger_Amend__c,Order.AccountId,NSP_Payment_Method__c,ServiceDate,SBQQ__BillingFrequency__c,NSP_AnniversaryBlngApplicable__c FROM OrderItem WHERE OrderId IN :orderIdSet];
+                List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,EndDate,SBQQ__SubscriptionTerm__c,Order.Type,Order.NSP_Transaction_Type__c,Order.NSP_Change_Order_Process_Quote__c,NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c,NSP_Order_Activation_Trigger_Amend__c,Order.AccountId,NSP_Payment_Method__c,ServiceDate,SBQQ__BillingFrequency__c,NSP_AnniversaryBlngApplicable__c FROM OrderItem WHERE OrderId IN :orderIdSet];
                 for(OrderItem orderItemObj :orderProductList){ 
                     if(orderItemObj.SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED){
                         //Checks if Order Product is eligible for Anniversay Billing and activates the order product and sets the bill through Date as Satrt Date + (Subscription Term - 1) when Order is reviewed
@@ -463,7 +470,7 @@ public class NSP_OrderTriggerHelper {
                                 orderItemObj.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                                 orderItemListToUpdate.add(orderItemObj);
                             }
-                            if((orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT || orderItemObj.Order.Type == NSP_CPQConstants.SUPPLEMENTAL) && orderItemObj.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.IMMEDIATE){
+                            if((orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT || orderItemObj.Order.Type == NSP_CPQConstants.SUPPLEMENTAL) && (orderItemObj.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) && orderItemObj.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.IMMEDIATE){
                                 orderItemObj.ServiceDate = System.today();
                                 orderItemObj.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                                 orderItemListToUpdate.add(orderItemObj);
@@ -660,13 +667,14 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
     Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
     List<OrderItem> orderItemToUpdate = new List<OrderItem>();
     //Map<Id,Order> orderUpdateMap = new Map<Id,Order>();
-    List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c,Product2.NSP_Partial_Period_Free_Treatment__c,SBQQ__BillingFrequency__c,Order.EffectiveDate,OrderId,NSP_OrderProductStartDate__c,SBQQ__SubscriptionType__c,NSP_AnniversaryBlngApplicable__c,
+    List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,Order.NSP_Transaction_Type__c, Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c,Product2.NSP_Partial_Period_Free_Treatment__c,SBQQ__BillingFrequency__c,Order.EffectiveDate,OrderId,NSP_OrderProductStartDate__c,SBQQ__SubscriptionType__c,NSP_AnniversaryBlngApplicable__c,
                                       NSP_Order_Activation_Trigger_Amend__c,NSP_QL_ActionType__c,SBQQ__QuoteLine__r.NSP_ActionType__c,NSP_ReCalculation_Status_Internal__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c,NSP_Project_Completion_Date__c,Order.NSP_Usage_Products_Count__c,ServiceDate,SBQQ__RequiredBy__c,EndDate
                                       FROM OrderItem WHERE OrderId IN :projCompletedIdSet AND SBQQ__Status__c = 'Draft'];
     for(OrderItem oi: orderProductList){
         if((oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW && oi.NSP_Order_Activation_Trigger__c == NSP_CPQConstants.PROJGOLIVEDATE) || 
-           (oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE && oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT )){
-            if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW && oi.Product2.NSP_Partial_Period_Free_Treatment__c == FALSE && oi.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_MONTHLY){
+           (oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE && oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION)){
+            if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW && oi.Product2.NSP_Partial_Period_Free_Treatment__c == FALSE && oi.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_MONTHLY)
+            {
                 if(!oi.ServiceDate.isSameDay(System.today().toStartOfMonth())){
                     oi.ServiceDate = System.today().toStartOfMonth();
                     oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
@@ -676,14 +684,16 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
                     orderItemToUpdate.add(oi);
                 }
             }
-            else if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_EVERGREEN && oi.NSP_OrderProductStartDate__c == '1st of the month'){
+            else if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT &&  oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION && oi.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_EVERGREEN && oi.NSP_OrderProductStartDate__c == '1st of the month')
+            {
                     oi.ServiceDate = System.today().toStartOfMonth();
                     oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                     orderItemToUpdate.add(oi);
             }
             else if((oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_EVERGREEN) || 
                     (oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE &&  oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW) ||
-                    (oi.SBQQ__RequiredBy__c == null && oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.SBQQ__SubscriptionType__c == null) ){
+                    (oi.SBQQ__RequiredBy__c == null && oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.SBQQ__SubscriptionType__c == null && oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) )
+            {
                 if(oi.ServiceDate < System.today()){
                     oi.ServiceDate = System.today();   
                 }
@@ -694,7 +704,7 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
         if(actionTypeValues.contains(oi.SBQQ__QuoteLine__r.NSP_ActionType__c ) && (oi.Order.NSP_Usage_Products_Count__c == 0 || oi.Order.NSP_Usage_Products_Count__c == null) &&
            oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE && 
            oi.NSP_ReCalculation_Status_Internal__c != 'Processing' && oi.NSP_ReCalculation_Status_Internal__c != 'Staged' &&
-           oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE){
+           oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE &&  oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
                oi.NSP_Project_Completion_Date__c = oi.Order.NSP_Project_Go_Live_Date__c;
                if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null && oi.NSP_QL_ActionType__c != 'Amend'){
                 oi.blng__BillThroughDateOverride__c = oi.EndDate;
@@ -702,7 +712,7 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
                orderItemToUpdate.add(oi);
            }
            else if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && oi.NSP_Order_Activation_Trigger_Amend__c == NSP_CPQConstants.PROJGOLIVEDATE && 
-                    oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE){
+                    oi.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_RENEWABLE && oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
                         oi.ServiceDate = System.today();
                         oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                         if(oi.NSP_AnniversaryBlngApplicable__c == true && oi.EndDate != null && oi.NSP_QL_ActionType__c != 'Amend'){
@@ -830,9 +840,22 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
         Map<Id,Order> OrderUpdateMap = new Map<Id,Order>();
         try
         {
-            list<Order> orderProcessList = new list<Order>([SELECT Id,NSP_Down_Payment_Required__c,NSP_Project__c,NSP_Project__r.Project_Complete_Date__c,
-                                                                (SELECT ID,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project__r.Project_Complete_Date__c FROM ORDERITEMS WHERE SBQQ__BillingFrequency__c IN ('Monthly','Annual','Invoice Plan')) 
-                                                                FROM Order WHERE ID IN : orderIds AND NSP_Project_Complete_Date__c = NULL]);
+            list<Order> orderProcessList = new list<Order>(
+                [
+                    SELECT
+                        Id , NSP_Down_Payment_Required__c , NSP_Project__c , NSP_Project__r.Project_Complete_Date__c , OpportunityId ,
+                        (
+                            SELECT Id , SBQQ__BillingFrequency__c , NSP_Project__c , NSP_Project__r.Project_Complete_Date__c
+                            FROM ORDERITEMS
+                            WHERE ( SBQQ__BillingFrequency__c IN ( 'Monthly' , 'Annual' , 'Invoice Plan' ) )
+                        )
+                    FROM Order
+                    WHERE (
+                        ( Id IN : orderIds )
+                        AND ( NSP_Project_Complete_Date__c = NULL )
+                    )
+                ]
+            );
         
             for(Order eachOrder : orderProcessList)
             {
@@ -887,13 +910,16 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
                         }
                     }
                     // set the field on project record
-                    if(eachOrder.NSP_Down_Payment_Required__c == 'No' && eachOrder.NSP_Project__c != null)
-                    {
-                        pse__Proj__c newProject = new pse__Proj__c(Id = eachOrder.NSP_Project__c );
-                        newProject.Project_Down_Payment_Not_Required__c = true;
-                        projectUpdateMap.put(newProject.Id,newProject);
+                    if ( eachOrder.NSP_Project__c != null ) {
+                        pse__Proj__c newProject = new pse__Proj__c(
+                            Id=eachOrder.NSP_Project__c ,
+                            pse__Opportunity__c=eachOrder.OpportunityId
+                        );
+                        if ( eachOrder.NSP_Down_Payment_Required__c == 'No' ) {
+                            newProject.Project_Down_Payment_Not_Required__c = true;
+                        }
+                        projectUpdateMap.put( newProject.Id , newProject );
                     }
-                    
                     if(String.isNotBlank(eachOrder.NSP_Down_Payment_Required__c))
                     {
                         OrderUpdateMap.put(eachOrder.Id,eachOrder);

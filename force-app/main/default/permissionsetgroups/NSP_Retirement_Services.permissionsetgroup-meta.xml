@@ -16,7 +16,6 @@
     <permissionSets>NSP_RET_Sales_permission_set</permissionSets>
     <permissionSets>NSP_Retirement_Services_Opportunity_Credit</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
-    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>

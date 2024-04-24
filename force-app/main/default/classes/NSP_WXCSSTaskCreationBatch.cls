@@ -11,7 +11,7 @@ Modification Log     :
 * Srushti Bikkannavar        12/22/2022           First Iteration
 */
 public class NSP_WXCSSTaskCreationBatch implements Schedulable, Database.Batchable<sObject> {
-    // test w/ NSP_WXCSSTaskCreationBatchTest (89%)
+    // test w/ NSP_WXCSSTaskCreationBatchTest (93%)
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Date cssRenewDate = System.today().addDays(15);
@@ -119,5 +119,17 @@ public class NSP_WXCSSTaskCreationBatch implements Schedulable, Database.Batchab
     public void execute(SchedulableContext scon) {
         //Executes Batch
         Database.executeBatch(new NSP_WXCSSTaskCreationBatch(),200);
+    }
+    
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_WXCSSTaskCreationBatch ~ On an Account when the current date is 15 days prior to the CSS Renewal date AND it has an Engagement Level = 3 or 4, then a set of tasks will be created ~ Schedule to Run Everyday 11 pm' + suffix ,
+            '0 0 23 * * ?', // this is for Every Day at 11:00 PM
+            new NSP_WXCSSTaskCreationBatch()
+        );
     }
 }

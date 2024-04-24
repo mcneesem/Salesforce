@@ -3,12 +3,14 @@
     <description>Baseline set of permissions needed for an Insperity internal user</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Internal User</label>
+    <permissionSets>All_Users_Editable_Fields</permissionSets>
     <permissionSets>DNB_Connect_Components_access_Insperity</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
+    <permissionSets>Request_Client_Transition_Meeting</permissionSets>
+    <permissionSets>Request_Employee_Orientation_Meeting</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
-    <permissionSets>TracRTC__Traction_Complete_User</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

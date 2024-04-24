@@ -12,7 +12,6 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
-    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
-	<permissionSets>force__PipelineInspectionIncluded</permissionSets>    
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

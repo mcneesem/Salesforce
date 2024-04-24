@@ -3,6 +3,10 @@
     <fullName>Account_Owned_by_Available</fullName>
     <active>true</active>
     <description>215092 No New Opty if Account Owner = Available</description>
-    <errorConditionFormula>AND(Account.Owner.LastName = &apos;Available&apos;,  ISNEW() )</errorConditionFormula>
+    <errorConditionFormula>AND(
+  Account.Owner.LastName = &apos;Available&apos; ,
+  ISNEW() ,
+  NOT( $Permission.Bypass_Available_Lead_Conversion_Rules )
+)</errorConditionFormula>
     <errorMessage>New opportunities cannot be created on accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</errorMessage>
 </ValidationRule>

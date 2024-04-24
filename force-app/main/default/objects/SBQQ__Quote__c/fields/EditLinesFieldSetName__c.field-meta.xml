@@ -2,10 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EditLinesFieldSetName__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL(SBQQ__Type__c  , &apos;Termination&apos;), &quot;Termination_FieldSet&quot;,  
-    IF(ISPICKVAL(SBQQ__Type__c  , &apos;Renewal&apos;),  
+    <formula>IF( NSP_TransactionType__c == &apos;Termination&apos;, &quot;Termination_FieldSet&quot;, 
+    IF( NSP_TransactionType__c == &apos;Renewal&apos;,  
         IF(INCLUDES(NSP_Product_Type__c, &quot;Recruiting Services&quot;), &apos;Recruiting_Services_QLE_Columns&apos;, &apos;Renewal_Field_Set&apos;) ,  
-        IF(ISPICKVAL(SBQQ__Type__c  , &apos;Amendment&apos;),  
+        IF( NSP_TransactionType__c == &apos;Amendment/Supplemental&apos;,  
             IF(INCLUDES(NSP_Product_Type__c, &quot;Workforce Acceleration&quot;) || INCLUDES(NSP_Product_Type__c, &quot;Workforce Administration&quot;)|| INCLUDES(NSP_Product_Type__c,&apos;Time and Attendance&apos;), &apos;WX_WA_Amend_QLE_FieldSet&apos;,  
             IF(INCLUDES(NSP_Product_Type__c, &quot;Recruiting Services&quot;), &apos;Recruiting_Amend_QLE_FieldSet&apos;, &apos;BPS_Amend_QLE_FieldSet&apos;) ) ,  
             

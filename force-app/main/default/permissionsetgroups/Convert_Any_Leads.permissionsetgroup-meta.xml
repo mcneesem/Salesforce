@@ -9,6 +9,7 @@
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Lead_Modify_All</permissionSets>
     <permissionSets>Named_Account_Group_Bypass_Restrictions</permissionSets>
+    <permissionSets>Opportunity_Create</permissionSets>
     <permissionSets>Opportunity_Modify_All</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

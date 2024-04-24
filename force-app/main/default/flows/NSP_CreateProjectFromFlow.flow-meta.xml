@@ -17,6 +17,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_ReviewRevRecRules</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Set_Order_Id</name>
@@ -32,6 +34,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_CreateProjFromFlow</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <decisions>
@@ -141,7 +145,7 @@
             <name>Termination_Or_Renewal_Order</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Type</leftValueReference>
+                <leftValueReference>$Record.NSP_Transaction_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Termination</stringValue>
@@ -252,5 +256,5 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

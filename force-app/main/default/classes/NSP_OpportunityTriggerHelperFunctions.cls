@@ -244,28 +244,19 @@ public static void getAccountOwnerEmail(Set<Id> accountId) {
             if(newAccount.OwnerId != oldAccount.OwnerId && newAccount.OwnerId != null){
                               accountIdSet.add(newAccount.Id);                              
             }
-        
         }
-        
+
         if(accountIdSet.Size() > 0){
-            
-             List<Opportunity>opportunityList =[Select Id , Name,OwnerId,AccountId from Opportunity WHERE AccountId  IN:accountIdSet];
-           
-             List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
-        for(Opportunity opportunityObject: opportunityList){
-            opportunityEventList.add(New Integration_Opportunity_Event__e(Id__c = opportunityObject.Id));
-             
+            List<Opportunity>opportunityList = [Select Id, Name, OwnerId, AccountId from Opportunity WHERE AccountId  IN :accountIdSet];
+            List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
+            for(Opportunity opportunityObject: opportunityList){
+                opportunityEventList.add(New Integration_Opportunity_Event__e(Id__c = opportunityObject.Id));
+            }
+
+            if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
+                publishEventBus(opportunityEventList, opportunityList);
+            }
         }
-            Id profileId=userinfo.getProfileId();
-        String profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
-        /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-        if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
-            publishEventBus(opportunityEventList, opportunityList); 
-        
-        }
-        }
-        
-  
     }
     public static void publishEventBus(List<Integration_Opportunity_Event__e> eventList, List<Opportunity> objectList) {
         if(!eventList.isEmpty()) {
@@ -285,10 +276,6 @@ public static void getAccountOwnerEmail(Set<Id> accountId) {
             if(logList.size() > 0){
                 insert logList;
             }
-            
-            
-           
         }
     }
-
 }

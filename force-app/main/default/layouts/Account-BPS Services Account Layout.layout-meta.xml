@@ -176,10 +176,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Inc_5000__c</field>
             </layoutItems>
         </layoutColumns>

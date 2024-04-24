@@ -569,14 +569,31 @@ public class NSP_ProjectTasksTriggerHelper {
             }
         }
 
-        if(!isMapOfPrecedingTaskAndCompleted.isEmpty()){
-            for(pse__Project_Task__c projectTaskError : lProjectTasks){
-                if(projectTaskError.pse__Started__c 
-                    && !isMapOfPrecedingTaskAndCompleted.get(mapOfDependentTaskAndPrecedingtask.get(projectTaskError.id))){
-                    projectTaskError.addError(System.Label.NSP_ProjectTask_Validation);
+        if ( !isMapOfPrecedingTaskAndCompleted.isEmpty() ) {
+            for ( pse__Project_Task__c projectTaskError : lProjectTasks ) {
+                // when the current task has started...
+                if ( projectTaskError.pse__Started__c ) {
+                    // find the preceeding task...
+                    Id precedingTaskId = null;
+                    if ( ( projectTaskError.Id != null )
+                        && mapOfDependentTaskAndPrecedingtask.containsKey( projectTaskError.Id )
+                       )
+                    {
+                        precedingTaskId = mapOfDependentTaskAndPrecedingtask.get( projectTaskError.Id );
+                    }
+                    // check if the preceeding task is incomplete...
+                    if ( ( precedingTaskId != null )
+                        && isMapOfPrecedingTaskAndCompleted.containsKey( precedingTaskId )
+                        && !isMapOfPrecedingTaskAndCompleted.get( precedingTaskId )
+                       )
+                    {
+                        // show an error when the preceeding task is incomplete...
+                        // ~ Error: You cannot start Dependent task without completing Preceding task
+                        projectTaskError.addError( System.Label.NSP_ProjectTask_Validation );
+                    }
                 }
             }
-        } 
+        }
     }
 
     /**

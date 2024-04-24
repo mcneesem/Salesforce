@@ -140,6 +140,10 @@ public class NSP_AssetServiceTriggerHelperTest {
         woAsset.recordTypeId = woRecordTypeId;
         woAsset.NSP_Client_Segment_type__c = NSP_ServiceConstants.EG100AssetSegment;
         
+        NSP_hotfix_Switch__c settings = new NSP_hotfix_Switch__c();
+        settings.Is_Opportunity_Allowed_On_Project__c = True;
+        upsert settings;
+        
         // WHEN
         Test.startTest();
         insert woAsset;

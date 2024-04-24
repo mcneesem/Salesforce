@@ -40,9 +40,10 @@ import {
   prepareMapByValue,
   getUpdatedFieldVisibility,
   isNonEmptyArray,
-  isMultiSelectCheckbox
+  isMultiSelectCheckbox,
+  getMultiDependentFieldVisibility
 } from 'c/nsp_utils';
-import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
+import { DYNAMIC_FIELDS, MULTIPLE_DEPENDENT_FIELDS } from './dynamicFieldsConfig';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 import { getRecord, getFieldValue, createRecord } from 'lightning/uiRecordApi';
 
@@ -713,9 +714,14 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
   updateDependentFieldVisibility(fieldName, value) {
     const fieldConfig = DYNAMIC_FIELDS[fieldName];
+    let updatedValues = {};
     if (fieldConfig && fieldConfig.length) {
-      const updatedValues = getUpdatedFieldVisibility(fieldConfig, value);
-
+      let dependentField = fieldConfig[0].dependentFields;
+      if(MULTIPLE_DEPENDENT_FIELDS[dependentField] != null) {
+        updatedValues = getMultiDependentFieldVisibility(dependentField, this.fieldValue, DYNAMIC_FIELDS, MULTIPLE_DEPENDENT_FIELDS);
+      } else {
+        updatedValues = getUpdatedFieldVisibility(fieldConfig, value);
+      }
       Object.keys(updatedValues).forEach((fieldApiName) => {
         const actualFieldName = EXISTING_FIELD_API_VALUE.hasOwnProperty(fieldApiName) ? EXISTING_FIELD_API_VALUE[fieldApiName] : fieldApiName;
         this.updateSpecialFieldValues(fieldName);

@@ -18,7 +18,6 @@
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
-    <permissionSets>TracHier__Traction_Hierarchies_User</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>pse__PSAProjectManagementCreateProjectFromTemplate</permissionSets>

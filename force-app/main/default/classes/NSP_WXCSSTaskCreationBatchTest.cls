@@ -107,4 +107,15 @@ public class NSP_WXCSSTaskCreationBatchTest {
         //List<Task> tasklist = [SELECT Id, WhatId FROM Task WHERE WhatId =: acct.Id AND Subject=:NSP_ServiceConstants.QUARTERLY_MEETING];
         System.assertEquals(0, taskList.size());
     }
+
+    @isTest private static void batchSchedulerTest() {
+        Test.startTest();
+        String jobId = NSP_WXCSSTaskCreationBatch.schedule();
+        Test.stopTest();
+        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
+        System.assertEquals('0 0 23 * * ?', ct.CronExpression);
+        System.assertEquals(0, ct.TimesTriggered);
+    }
+
 }
+//

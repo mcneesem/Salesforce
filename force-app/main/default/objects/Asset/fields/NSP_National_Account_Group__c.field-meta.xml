@@ -152,6 +152,26 @@
                 <default>false</default>
                 <label>NSP Prism</label>
             </value>
+            <value>
+                <fullName>57</fullName>
+                <default>false</default>
+                <label>NATDA</label>
+            </value>
+            <value>
+                <fullName>58</fullName>
+                <default>false</default>
+                <label>SCRA</label>
+            </value>
+            <value>
+                <fullName>59</fullName>
+                <default>false</default>
+                <label>TVC</label>
+            </value>
+            <value>
+                <fullName>60</fullName>
+                <default>false</default>
+                <label>Surgical Centers of America</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

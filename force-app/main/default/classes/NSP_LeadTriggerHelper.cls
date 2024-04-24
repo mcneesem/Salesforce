@@ -912,52 +912,59 @@ insert tasksList;
                                         AND Email != null AND Email = :leadObject.Email LIMIT 1];
         if(contactOneTrustDupe.size() > 0 || leadOneTrustDupe.size() > 0) leadObject.addError(System.Label.NSP_OneTrustDupeError);
     }
-    
-    
-/**
-* Method added for CR-027 
-* @param leadObject Current Lead Object Data. 
-* @return void  
-*/
-public Boolean dunsCheck(Lead leadObject) {
-    List < String > zipCodeList = new List < String > ();
-    List < Lead > leadsForRoundRobin = new List < Lead > ();
-    Boolean isOwnerUpdated = false;
-    if (leadObject.DNB_Connect_DUNS_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
+
+    //
+    // Method added for CR-027
+    // @param leadObject Current Lead Object Data.
+    // @return void
+    //
+    public Boolean dunsCheck(Lead leadObject) {
+        List < String > zipCodeList = new List < String > ();
+        List < Lead > leadsForRoundRobin = new List < Lead > ();
+        List<User> userAvailable = [SELECT Id, Name FROM User WHERE Name = 'Available'];
+        Id userAvailableId = ( !userAvailable.isEmpty() ? userAvailable[0].Id : null );
+        Boolean isOwnerUpdated = false;
+        if (leadObject.DNB_Connect_DUNS_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
             List < Account > accResult = [SELECT Id, OwnerId, Owner.Name, Owner.UserRole.Name, NSP_Account_Status__c FROM Account WHERE DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c =: leadObject.DNB_Connect_DUNS_Number__c];
             if (accResult.size() == 1) {
                 for (Account dunsAcc: accResult) {
-                  if (dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE && dunsAcc.Owner.UserRole != null &&
-                      (dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER)) {
+                    if ( ( dunsAcc.OwnerId != userAvailableId )
+                        && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
+                        && ( dunsAcc.Owner.UserRole != null )
+                        && ( dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER )
+                        )
+                    {
                         leadObject.OwnerId = dunsAcc.OwnerId;
-              leadObject.NSP_Lead_Routing__c = FALSE;
+                        leadObject.NSP_Lead_Routing__c = FALSE;
                         isOwnerUpdated = true;
                     }
-                    if (dunsAcc.NSP_Account_Status__c != NSP_SalesConstants.INACTIVE) {
+                    if ( ( dunsAcc.OwnerId != userAvailableId )
+                        && ( dunsAcc.NSP_Account_Status__c != NSP_SalesConstants.INACTIVE )
+                        )
+                    {
                         leadObject.OwnerId = dunsAcc.OwnerId;
-              leadObject.NSP_Lead_Routing__c = FALSE;
+                        leadObject.NSP_Lead_Routing__c = FALSE;
                         isOwnerUpdated = true;
                     }
                 }
+            } else if (accResult.isEmpty()) {
+                List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c = : leadObject.DNB_Connect_DUNS_Number__c AND NSP_Parent_Lead__c = NULL AND id != : leadObject.id];
+                if (leadResult.size() == 1) {
+                    for (Lead dunsLead: leadResult) {
+                        leadObject.NSP_Parent_Lead__c = dunsLead.Id;
+                        leadObject.NSP_Skip_Validation__c= true;
+                        leadObject.OwnerId = dunsLead.OwnerId;
+                        leadObject.NSP_Lead_Routing__c = FALSE;
+                        isOwnerUpdated = true;
+                    }
+                }
+            } else {
+                isOwnerUpdated = false;
             }
-          else if (accResult.isEmpty()) {
-              List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c = : leadObject.DNB_Connect_DUNS_Number__c AND NSP_Parent_Lead__c = NULL AND id != : leadObject.id];
-              if (leadResult.size() == 1) {
-                  for (Lead dunsLead: leadResult) {
-                      leadObject.NSP_Parent_Lead__c = dunsLead.Id;
-                      leadObject.NSP_Skip_Validation__c= true;  
-                      leadObject.OwnerId = dunsLead.OwnerId;
-                      leadObject.NSP_Lead_Routing__c = FALSE;
-                      isOwnerUpdated = true;
-                  }
-              } 
-            
-        } else {
-            isOwnerUpdated = false;
         }
+        return isOwnerUpdated;
     }
-    return isOwnerUpdated;
-}
+
 /**
 * Method Name : createContact 
 * Description : Method to create Contact on Lead Conversion

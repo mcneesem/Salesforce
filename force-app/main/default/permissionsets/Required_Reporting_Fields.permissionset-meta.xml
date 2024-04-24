@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Fields needed for any/all users to run reports/utilize enabled report filters</description>
+    <description>Fields needed for any/all users to run reports/utilize enabled report filters or when &quot;Any/All user should see X field&quot;</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Account_Assignment_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Most_Recent_Activity_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -49,6 +54,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Case_Owner_s_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Most_Recent_Activity_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -118,6 +128,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Max_Orientation_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Most_Recent_Activity_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.NSP_Opportunity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -129,6 +149,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Sales_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Rules_of_Engagement__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
