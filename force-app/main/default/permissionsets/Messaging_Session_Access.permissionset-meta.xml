@@ -73,12 +73,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>MessagingSession.Email_Info__c</field>
+        <field>MessagingSession.ConversationId</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>MessagingSession.ConversationId</field>
+        <field>MessagingSession.Email_Info__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
