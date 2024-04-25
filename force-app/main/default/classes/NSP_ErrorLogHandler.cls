@@ -1,103 +1,165 @@
-public class NSP_ErrorLogHandler {
-    
- /**
-* Dummy private constructor             
-*                
-*/  
-    private NSP_ErrorLogHandler() {  }
-    
-    
-        /**
-* 
-* @param className String holds the name of the class 
-* @param methodName String holds the name of the method from the class 
-* @param saveResultList List<Database.SaveResult> List of records that are processed as part of the batch
-* @return void             
-*                
-*/
-    public static void logSaveResult(String className, String methodName, List<Database.SaveResult> saveResultList){
-        List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
-        for (Database.SaveResult sr: saveResultList) {        
-            if (!sr.isSuccess()) {                    
-                NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = className;
-                log.NSP_Method__c = methodName;                
-                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage());
-                log.NSP_Record_Id__c = sr.getId();
-                //Adding object to the list
-                logList.add(log);  
-            }
+public with sharing class NSP_ErrorLogHandler {
+    // test w/ NSP_ErrorLogHandlerTest (86%)
+
+    //
+    // PUBLIC
+    //
+
+    // primary entry point...
+    public static void logException( String className , String methodName , Exception e ) {
+        NSP_ErrorLogHandler.insertLog(
+            className ,
+            methodName ,
+            null ,
+            NSP_ErrorLogHandler.buildMessage( e )
+        );
+    }
+
+    // primary entry point...
+    public static void logResults( String className , String methodName , List<Database.SaveResult> results ) {
+        NSP_ErrorLogHandler.insertLog(
+            className ,
+            methodName ,
+            null ,
+            NSP_Utilities.getDbErrorRecords( results )
+        );
+    }
+
+    // primary entry point...
+    public static void logResults( String className , String methodName , List<Database.UpsertResult> results ) {
+        NSP_ErrorLogHandler.insertLog(
+            className ,
+            methodName ,
+            null ,
+            NSP_Utilities.getDbErrorRecords( results )
+        );
+    }
+
+    // primary entry point...
+    public static void logResults( String className , String methodName , List<Database.DeleteResult> results ) {
+        NSP_ErrorLogHandler.insertLog(
+            className ,
+            methodName ,
+            null ,
+            NSP_Utilities.getDbErrorRecords( results )
+        );
+    }
+
+    //
+    // DEPRECATED
+    //
+
+    // DEPRECATED ~ see logException
+    // ~ 111 classes
+    public static void logSaveException( String className , String methodName , String message ) {
+        NSP_ErrorLogHandler.insertLog(
+            className ,
+            methodName ,
+            null ,
+            message
+        );
+    }
+
+    // DEPRECATED ~ see logResults
+    // ~ 14 classes
+    public static void logSaveResult( String className , String methodName , List<Database.SaveResult> saveResultList ) {
+        NSP_ErrorLogHandler.logResults(
+            className ,
+            methodName ,
+            saveResultList
+        );
+    }
+
+    // DEPRECATED ~ see logResults
+    // This method logs error for the failed results of Database.insert/update operation in DB.
+    // ~ 55 classes
+    public static void logSaveResultsException( String className , String methodName , List<Database.SaveResult> results ) {
+        NSP_ErrorLogHandler.logResults(
+            className ,
+            methodName ,
+            results
+        );
+    }
+
+    // DEPRECATED ~ see logResults
+    // This method logs error for the failed results of Database.delete operation in DB.
+    // ~ 11 classes
+    public static void logDeleteResultsException( String className , String methodName , List<Database.DeleteResult> results ) {
+        NSP_ErrorLogHandler.logResults(
+            className ,
+            methodName ,
+            results
+        );
+    }
+
+    // DEPRECATED ~ see logResults
+    // This method logs error for the failed results of Database.upsert operation in DB.
+    // ~ 16 classes
+    public static void logUpsertResultsException( String className , String methodName , List<Database.UpsertResult> results ) {
+        NSP_ErrorLogHandler.logResults(
+            className ,
+            methodName ,
+            results
+        );
+    }
+
+    //
+    // PRIVATE
+    //
+
+    private static String buildMessage( Exception e ) {
+        String message = null;
+        if ( e != null ) {
+            String newLine = '\r\n';
+            message = ''
+                + e.getMessage() + newLine + newLine
+                + e.getStackTraceString()
+                ;
         }
-        if(!logList.isEmpty()){
-            //Inserting the record in the log object
-            Insert logList;
-        }   
-    }
-    
-   
-            /**
-* 
-* @param className String holds the name of the class 
-* @param methodName String holds the name of the method from the class 
-* @param message String holds the error message string
-* @return void             
-*                
-*/
-    public static void logSaveException(String className, String methodName, String message){
-        createErrorLogObj(className, methodName, message);
+        return message;
     }
 
-    /**
-     * This method logs error for the failed results of Database.insert/update operation in DB.
-     * @param className String holds the name of the class
-     * @param methodName String holds the name of the method from the class
-     * @param result - List of saveResult records
-     * @return void
-     */
-    public static void logSaveResultsException(String className, String methodName, List<Database.SaveResult> result){
-        createErrorLogObj(className, methodName, getErrorMessage(NSP_Utilities.getDbErrorRecords(result)));
-    }
-
-    /**
-     * This method logs error for the failed results of Database.delete operation in DB.
-     * @param className String holds the name of the class
-     * @param methodName String holds the name of the method from the class
-     * @param result - List of deleteResult records
-     * @return void
-     */
-    public static void logDeleteResultsException(String className, String methodName, List<Database.DeleteResult> result){
-        createErrorLogObj(className, methodName, NSP_Utilities.getDbErrorRecords(result));
-    }
-
-    /**
-     * This method logs error for the failed results of Database.upsert operation in DB.
-     * @param className String holds the name of the class
-     * @param methodName String holds the name of the method from the class
-     * @param result - List of deleteResult records
-     * @return void
-     */
-    public static void logUpsertResultsException(String className, String methodName, List<Database.UpsertResult> result){
-        createErrorLogObj(className, methodName, NSP_Utilities.getDbErrorRecords(result));
-    }
-
-    private static void createErrorLogObj(String className, String methodName, List<String> messages){
-        if(!messages.isEmpty()){
-            createErrorLogObj(className, methodName, getErrorMessage(messages));
+    private static String buildMessage( List<String> messages ) {
+        String message = null;
+        if ( ( messages != null ) && !messages.isEmpty() ) {
+            message = String.join( messages , '\r\n' );
         }
+        return message;
     }
 
-    private static void createErrorLogObj(String className, String methodName, String message){
-        //Creating a refernce for the log Object
+    private static void insertLog( String className , String methodName , String sObjectName , List<String> messages ) {
+        NSP_ErrorLogHandler.insertLog(
+            className ,
+            methodName ,
+            sObjectName ,
+            NSP_ErrorLogHandler.buildMessage( messages )
+        );
+    }
+
+    private static void insertLog( String className , String methodName , String sObjectName , String message ) {
         NSP_Error_Log__c log = new NSP_Error_Log__c();
-        log.NSP_Class__c = className;
-        log.NSP_Method__c = methodName;
-        log.NSP_Description__c = String.valueOf(message);
-        
-        //Inserting the record in the log object
-        Insert log;
+        log.NSP_Class__c = SchemaController.safeText(
+            className ,
+            sObjectType.NSP_Error_Log__c.Fields.NSP_Class__c
+        );
+        log.NSP_Method__c = SchemaController.safeText(
+            methodName ,
+            sObjectType.NSP_Error_Log__c.Fields.NSP_Method__c
+        );
+        log.NSP_Object__c = SchemaController.safeText(
+            sObjectName ,
+            sObjectType.NSP_Error_Log__c.Fields.NSP_Object__c
+        );
+        log.NSP_Description__c = SchemaController.safeText(
+            message ,
+            sObjectType.NSP_Error_Log__c.Fields.NSP_Description__c
+        );
+        try {
+            insert log;
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
     }
 
-    private static String getErrorMessage(List<String> errors){
-        return String.join(errors, ' <br> ');
-    }
 }
+//
