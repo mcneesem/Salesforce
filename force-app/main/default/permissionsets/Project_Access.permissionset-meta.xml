@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Read-Only and Read-Edit FLS for Project fields for BPS Users</description>
+    <description>FLS for Project fields for BPS Users</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.Benefit_Effective_date__c</field>
