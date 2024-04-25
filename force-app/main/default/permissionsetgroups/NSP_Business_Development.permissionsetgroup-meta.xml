@@ -19,6 +19,5 @@
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
-    <permissionSets>force__VoiceOutbound</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
