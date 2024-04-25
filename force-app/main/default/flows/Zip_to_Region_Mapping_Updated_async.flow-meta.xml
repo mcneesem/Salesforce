@@ -40,7 +40,7 @@
             <targetReference>Add_varAccount_to_accountsToUpdate</targetReference>
         </connector>
     </assignments>
-    <description>When Location is changed, find all Accounts owned by Available with matching Billing Zip and update Zip Based Location field</description>
+    <description>Updated to account for 9-digit zip on Account. When Location is changed, find all Accounts owned by Available with matching Billing Zip and update Zip Based Location field</description>
     <environments>Default</environments>
     <interviewLabel>Zip to Region Mapping - Updated async {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Zip to Region Mapping - Updated async</label>
@@ -100,7 +100,7 @@
         </filters>
         <filters>
             <field>BillingPostalCode</field>
-            <operator>EqualTo</operator>
+            <operator>StartsWith</operator>
             <value>
                 <elementReference>$Record.NSP_Zip__c</elementReference>
             </value>
