@@ -5,6 +5,7 @@
     <label>Deals</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>

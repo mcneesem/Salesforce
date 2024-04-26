@@ -3,6 +3,7 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Compensation</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>

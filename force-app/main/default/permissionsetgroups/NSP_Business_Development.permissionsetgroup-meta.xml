@@ -5,6 +5,7 @@
     <label>Business Development</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
