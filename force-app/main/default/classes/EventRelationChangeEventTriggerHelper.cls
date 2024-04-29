@@ -88,7 +88,7 @@ public class EventRelationChangeEventTriggerHelper {
             if ( !eventRelList.isEmpty() && !mapOfServiceResourceMem.isEmpty() ) {  
                 for (EventRelationChangeEvent eventRel : eventRelList) {  
                     if (!eventRelVsEventMap.isEmpty() && eventRelVsEventMap.containsKey(eventRel.Id)) {  
-                        if (!mapOfServiceResourceMem.isEmpty() && mapOfServiceResourceMem.containsKey(eventRelVsUserMap.get(eventRel.Id))) {  
+                        if (mapOfServiceResourceMem.containsKey(eventRelVsUserMap.get(eventRel.Id))) {  
                             Event eventRec = eventRelVsEventMap.get(eventRel.Id);  
                             EventBus.ChangeEventHeader header = eventRel.ChangeEventHeader;
                         	Id actualCreatedByUserId = header.commitUser;
