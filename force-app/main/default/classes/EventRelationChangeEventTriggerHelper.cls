@@ -2,7 +2,7 @@
  * Represents the EventRelationChangeEvent trigger helper which handles all the logic.  
  */  
 public class EventRelationChangeEventTriggerHelper {
-    // test w/ EventRelationChangeEventHelperTest (91%)
+    // test w/ EventRelationChangeEventHelperTest (93%)
     
     /**
     * Iterates throught the map of new EventRelationChangeEvent and passes the required attributes to other methods.
@@ -31,7 +31,7 @@ public class EventRelationChangeEventTriggerHelper {
                 createResourceAbsence(createEventList);
             }
         } catch (Exception ex) {  
-            NSP_ErrorLogHandler.logSaveException('NSP_EventRelationTriggerHelper', 'afterInsertDirector', ex.getMessage());  
+            NSP_ErrorLogHandler.logSaveException(EventRelationChangeEventTriggerHelper.class.getName(), 'afterInsertDirector', ex.getMessage());  
         }  
     }
     
@@ -58,15 +58,14 @@ public class EventRelationChangeEventTriggerHelper {
         try {  
             if (createEventList != null) {  
                 for (EventRelationChangeEvent eventRel : createEventList) {  
-                    if (eventRel != null && eventRel.IsInvitee && eventRel.EventId != null && eventRel.RelationId != null && String.valueOf(eventRel.RelationId).startsWith('005')) {
+                    if (eventRel != null && eventRel.IsInvitee && eventRel.EventId != null && eventRel.RelationId != null && ( eventRel.RelationId.getSObjectType() == User.getSObjectType() )) {
                         eventRelList.add(eventRel);  
                         eventIdSet.add(eventRel.EventId);  
                         userIdSet.add(eventRel.RelationId);  
-                        if (!eventVsRelationIdMap.containsKey(eventRel.EventId)) {  
-                            eventVsRelationIdMap.put(eventRel.EventId, new List<ID>{ eventRel.Id });  
-                        } else {  
-                            eventVsRelationIdMap.get(eventRel.EventId).add(eventRel.Id);  
-                        }  
+                        if ( !eventVsRelationIdMap.containsKey( eventRel.EventId ) ) {  
+                            eventVsRelationIdMap.put( eventRel.EventId , new List<Id>() );
+                        }
+                        eventVsRelationIdMap.get( eventRel.EventId ).add( eventRel.Id );  
                         eventRelVsUserMap.put(eventRel.Id, eventRel.RelationId);  
                     }  
                 }  
@@ -84,9 +83,9 @@ public class EventRelationChangeEventTriggerHelper {
             }  
   
             // Confirm attendee is Resource/ Dispatcher+ Resource, if not - no need to create resource absence  
-            mapOfServiceResourceMem = isResource(userIdSet);  
+            mapOfServiceResourceMem = getResourceMap(userIdSet);  
   
-            if (!eventRelList.isEmpty()) {  
+            if ( !eventRelList.isEmpty() && !mapOfServiceResourceMem.isEmpty() ) {  
                 for (EventRelationChangeEvent eventRel : eventRelList) {  
                     if (!eventRelVsEventMap.isEmpty() && eventRelVsEventMap.containsKey(eventRel.Id)) {  
                         if (!mapOfServiceResourceMem.isEmpty() && mapOfServiceResourceMem.containsKey(eventRelVsUserMap.get(eventRel.Id))) {  
@@ -96,10 +95,12 @@ public class EventRelationChangeEventTriggerHelper {
                             ResourceAbsence resObject = new ResourceAbsence();  
                             resObject.ResourceId = mapOfServiceResourceMem.get(eventRelVsUserMap.get(eventRel.Id));  
                             resObject.Type = eventRec.Subject;  
-                            if (String.isNotBlank(eventRec.Subject) && eventRec.Subject.toLowerCase().contains(TRAVEL.toLowerCase())) {  
-                                resObject.FSL__GanttLabel__c = TRAVEL;  
-                            } else {  
-                                resObject.FSL__GanttLabel__c = eventRec.ShowAs;  
+                            resObject.FSL__GanttLabel__c = eventRec.ShowAs;
+                            if ( String.isNotBlank( eventRec.Subject )
+                                && eventRec.Subject.toLowerCase().contains( TRAVEL.toLowerCase() )
+                               )
+                            {
+                                resObject.FSL__GanttLabel__c = TRAVEL;
                             }  
                             resObject.Start = eventRec.StartDateTime;  
                             resObject.End = eventRec.EndDateTime;  
@@ -114,21 +115,21 @@ public class EventRelationChangeEventTriggerHelper {
   
             if (!resList.isEmpty()) {  
                 List<Database.SaveResult> results = Database.insert(resList, false);  
-                NSP_ErrorLogHandler.logSaveResult('NSP_EventRelationTriggerHelper', 'createResourceAbsence', results);  
+                NSP_ErrorLogHandler.logSaveResult(EventRelationChangeEventTriggerHelper.class.getName(), 'createResourceAbsence', results);  
             }  
         } catch (Exception ex) {  
-            NSP_ErrorLogHandler.logSaveException('NSP_EventRelationTriggerHelper', 'createResourceAbsence', ex.getMessage());  
+            NSP_ErrorLogHandler.logSaveException(EventRelationChangeEventTriggerHelper.class.getName(), 'createResourceAbsence', ex.getMessage());  
         }  
     } 
     
     /**
-	* Method Name : isResource 
+	* Method Name : getResourceMap 
 	* Description : Method to check if User is Resource
 	* @param Set of User Id. 
 	* @return Map<ID, ID>  
 	*/
   
-    private Map<ID, ID> isResource(Set<Id> userIdSet) {  
+    private Map<ID, ID> getResourceMap(Set<Id> userIdSet) {  
   
         Map<ID, ID> mapOfServiceResourceMem = new Map<ID, ID>();  
   
