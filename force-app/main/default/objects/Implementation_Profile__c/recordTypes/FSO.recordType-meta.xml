@@ -3135,12 +3135,16 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_If_EE_works_holiday_are_paid_prem__c</picklist>
-        <values>
+         <values>
             <fullName>N%2FA</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
