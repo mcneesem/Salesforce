@@ -148,6 +148,7 @@ import areThereEEsWithUrgentNeeds from '@salesforce/label/c.NSP_Are_there_any_EE
 import doesCignaTakeoverApplyToClient from '@salesforce/label/c.NSP_Does_Cigna_takeover_apply_to_client';
 import areParticipantsInEligibilityPeriod from '@salesforce/label/c.NSP_Are_participants_in_eligibility_period';
 import doYouHaveCOBRAEmployees from '@salesforce/label/c.NSP_Do_you_have_name_of_COBRA_employees';
+import whatIsClientsABCP from '@salesforce/label/c.What_is_client_s_Active_Benefits_Continuation_Period_ABCP';
 import areThereEEsonLOA from '@salesforce/label/c.NSP_Are_there_any_EEs_LOA';
 import doYouHaveLOAInformation from '@salesforce/label/c.NSP_Do_LOA_Information';
 import didYouInformThatEEwillnotbeEligible from '@salesforce/label/c.NSP_Did_you_inform_client_that_EE_will_not_be_eligible';
@@ -694,6 +695,7 @@ export {
     doesCignaTakeoverApplyToClient,
     areParticipantsInEligibilityPeriod,
     doYouHaveCOBRAEmployees,
+    whatIsClientsABCP,
     areThereEEsonLOA,
     doYouHaveLOAInformation,
     didYouInformThatEEwillnotbeEligible,
