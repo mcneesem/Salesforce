@@ -87,9 +87,9 @@
                 <label>Freedom Boat Club</label>
             </value>
             <value>
-                <fullName>Girl Scouts of America</fullName>
+                <fullName>Girl Scouts of the United States of America</fullName>
                 <default>false</default>
-                <label>Girl Scouts of America</label>
+                <label>Girl Scouts of the United States of America</label>
             </value>
             <value>
                 <fullName>Gradient Financial Group, LLC</fullName>
@@ -175,6 +175,12 @@
                 <fullName>Veterinary Study Group</fullName>
                 <default>false</default>
                 <label>Veterinary Study Group</label>
+            </value>
+            <value>
+                <fullName>Girl Scouts of America</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Girl Scouts of America</label>
             </value>
             <value>
                 <fullName>Worldcom PR</fullName>

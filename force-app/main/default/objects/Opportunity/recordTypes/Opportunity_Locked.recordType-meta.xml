@@ -867,7 +867,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Girl Scouts of America</fullName>
+            <fullName>Girl Scouts of the United States of America</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3586,6 +3586,10 @@
         </values>
         <values>
             <fullName>Gestalt Growth Advisors %28fka H</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Girl Scouts of the United States of America</fullName>
             <default>false</default>
         </values>
         <values>
