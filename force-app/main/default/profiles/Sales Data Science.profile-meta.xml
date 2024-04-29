@@ -1344,16 +1344,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3309,11 +3299,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.DOZISF__ZoomInfo_Company_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4421,21 +4406,6 @@
         <editable>false</editable>
         <field>Lead.Current_Medical_Carrier__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

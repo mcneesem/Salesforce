@@ -9010,11 +9010,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.NSP_County__c</field>
         <readable>true</readable>
     </fieldPermissions>
