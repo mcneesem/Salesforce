@@ -3,6 +3,7 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>L3 Support</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Advanced_Salesforce_Administrator</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>

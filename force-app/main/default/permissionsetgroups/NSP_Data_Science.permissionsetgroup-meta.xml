@@ -3,10 +3,11 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Data Science</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
-    <permissionSets>D_B_Optimizer_Manual_Match</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>

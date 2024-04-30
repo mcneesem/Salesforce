@@ -3,6 +3,7 @@
     <description>Perm set group to move permissions off the Sys Admin Lite profile</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Admin Lite</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
