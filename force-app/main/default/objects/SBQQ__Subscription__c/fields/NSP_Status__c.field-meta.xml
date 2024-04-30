@@ -2,7 +2,15 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Status__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(NOT(ISBLANK( SBQQ__TerminatedDate__c)), &apos;Terminated&apos;, &apos;Active&apos;)</formula>
+    <formula>IF(
+  SBQQ__TerminatedDate__c &lt; Today() ,
+  &apos;Terminated&apos; ,
+  IF(
+    SBQQ__EndDate__c &lt; Today() ,
+    &apos;Terminated&apos; ,
+    &apos;Active&apos;
+  )
+)</formula>
     <label>Status</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
