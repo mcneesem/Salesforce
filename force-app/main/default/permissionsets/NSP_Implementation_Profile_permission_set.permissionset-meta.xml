@@ -13080,6 +13080,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.What_is_client_s_ABCP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.What_is_the_status_of_the_LOA_info__c</field>
         <readable>true</readable>
     </fieldPermissions>

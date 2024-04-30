@@ -71,6 +71,7 @@ const SECTION_FIELDS = [
   'Participants_on_COBRA_eligibility_period__c',
   'Have_name_s_of_COBRA_takeovr_employees__c',
   'Provide_details_for_no_COBRA_employees__c',
+  'What_is_client_s_ABCP__c',
   'Are_there_any_EEs_on_Leave_of_Absence__c',
   'Do_you_have_the_LOA_information__c',
   'What_is_the_status_of_the_LOA_info__c',
