@@ -134,7 +134,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         insert tUser2;
 
         EventRelation er = new EventRelation();
-    	er.RelationId= tUser2.Id;
+        er.RelationId= tUser2.Id;
         er.EventId = newEventRec.Id;
         er.IsInvitee = true;
         insert er; 
@@ -277,6 +277,21 @@ public without sharing class NSP_EventTriggerHelperTest {
             eventList[0].StartDateTime = System.today().addDays(1);
         }
         update eventList[0];
+        Test.stopTest();
+    }
+    
+    @isTest
+    private static void eventRelationCreation(){
+        Test.startTest();
+        List<Event> eventList = [SELECT ID, Subject, IsRecurrence, StartDateTime FROM Event WHERE Subject = 'Test Subject For Event Rec' LIMIT 1];
+        List<User> userList = [SELECT ID, NSP_Service_Region__c FROM User where NSP_Service_Region__c = 'MMSO - Southeast' AND Phone = '(112)6475261 ext495'];
+        if(eventList.size() > 0 && userList.size() > 0){
+            EventRelation er = new EventRelation();
+            er.RelationId= userList[0].Id;
+            er.EventId = eventList[0].Id;
+            er.IsInvitee = True;
+            insert er;
+        }
         Test.stopTest();
     }
 }
