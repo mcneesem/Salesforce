@@ -99,8 +99,12 @@ import doesClientHaveExpenseOrAllowance from '@salesforce/label/c.NSP_Does_clien
 import doesClientHavePostTaxDeductions from '@salesforce/label/c.NSP_Does_client_have_post_tax_deductions';
 import otherDetails from '@salesforce/label/c.NSP_Other_Details';
 import doesClientHaveSpecialPayrollNeeds from '@salesforce/label/c.NSP_Does_Client_Have_SpecialPayrollNeeds';
-import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
+import whatAccountingSoftwareDoYouUse from '@salesforce/label/c.What_accounting_software_do_you_use';
+import wouldYouLikeAutomationForYourGeneralLedger from '@salesforce/label/c.Would_you_like_automation_for_your_general_ledger';
+import isPayrollEntryItemizedOrSimpleEntry from '@salesforce/label/c.Is_payroll_entry_itemized_or_simple_entry';
 import allowances from '@salesforce/label/c.NSP_Allowances';
+import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
+import itemized from '@salesforce/label/c.If_Itemized_they_must_use_Integra';
 import expenses from '@salesforce/label/c.NSP_Expenses';
 import clientBusinessMeetingQuestion from '@salesforce/label/c.NSP_Client_Business_Meeting_States_Question';
 import clientBusinessMeeting from '@salesforce/label/c.NSP_Client_Business_Meeting_States';
@@ -636,6 +640,10 @@ export {
     isClientaFederalContractor,
     doesClientHaveEEONumber,
     doAnyEEsHaveGarnishments,
+    itemized,
+    whatAccountingSoftwareDoYouUse,
+    wouldYouLikeAutomationForYourGeneralLedger,
+    isPayrollEntryItemizedOrSimpleEntry,
     doAnyEEsHaveTaxLevies,
     doesClientHaveExpenseOrAllowance,
     doesClientHavePostTaxDeductions,
