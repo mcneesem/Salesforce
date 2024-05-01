@@ -5,6 +5,11 @@
         <field>ResourceAbsence.Event_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ResourceAbsence.Actual_Created_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Resource Absence record type access</label>
     <recordTypeVisibilities>
