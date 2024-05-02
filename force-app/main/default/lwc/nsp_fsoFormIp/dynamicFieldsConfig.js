@@ -366,7 +366,6 @@ const DYNAMIC_FIELDS = {
       dependentFields: [
         "NSP_Chart_of_Accounts_GL_codes__c",
         "NSP_Sample_of_current_GL_report__c",
-        "NSP_Name_of_accounting_software__c",
       ],
     },
   ],
