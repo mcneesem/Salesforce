@@ -317,8 +317,9 @@
         <numberOfColumns>12</numberOfColumns>
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
-    <dashboardType>LoggedInUser</dashboardType>
+    <dashboardType>SpecifiedUser</dashboardType>
     <isGridLayout>true</isGridLayout>
+    <runningUser>deployment.manager@insperity.com</runningUser>
     <textColor>#000000</textColor>
     <title>BPA Homepage Dashboard</title>
     <titleColor>#000000</titleColor>
