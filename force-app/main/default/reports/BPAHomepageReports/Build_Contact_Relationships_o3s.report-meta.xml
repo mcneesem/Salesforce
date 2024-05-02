@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>LAST_ACTIVITY_DATETIME</field>
+        <field>Contact.Most_Recent_Activity_Date__c</field>
     </columns>
     <columns>
         <field>FIRST_NAME</field>
@@ -34,9 +34,10 @@
     </columns>
     <currency>USD</currency>
     <customDetailFormulas>
-        <calculatedFormula>IF( TODAY() &gt; DATEVALUE(LAST_ACTIVITY_DATETIME) , &apos;Past Activity&apos;,
-IF( TODAY() &lt; DATEVALUE(LAST_ACTIVITY_DATETIME) , &apos;Upcoming Activity&apos;,
-IF( TODAY() = DATEVALUE(LAST_ACTIVITY_DATETIME) , &apos;Today Activity&apos;, &apos;No Activity&apos; )))</calculatedFormula>
+        <calculatedFormula>IF( TODAY() - Contact.Most_Recent_Activity_Date__c &gt;= 20 , &apos;No Activity for 20+ Days&apos;,
+IF( TODAY() - Contact.Most_Recent_Activity_Date__c &gt;= 1 , &apos;Past Activity&apos;,
+IF( TODAY() = Contact.Most_Recent_Activity_Date__c , &apos;Today Activity&apos;, 
+IF( TODAY() &lt; Contact.Most_Recent_Activity_Date__c , &apos;Upcoming Activity&apos;, &apos;No Activity&apos; ))))</calculatedFormula>
         <dataType>Text</dataType>
         <developerName>CDF1</developerName>
         <label>Activity Summary</label>
@@ -68,8 +69,6 @@ IF( TODAY() = DATEVALUE(LAST_ACTIVITY_DATETIME) , &apos;Today Activity&apos;, &a
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>LAST_ACTIVITY_DATETIME</sortColumn>
-    <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>CREATED_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
