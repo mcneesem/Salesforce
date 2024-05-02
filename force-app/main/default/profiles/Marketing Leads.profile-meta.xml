@@ -13807,10 +13807,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_Opportunity_Process_Builder</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Opportunity_Team_Member_Creation</flow>
     </flowAccesses>
     <flowAccesses>
