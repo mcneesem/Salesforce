@@ -1975,41 +1975,44 @@ Implementation profile related to the account of the created asset
             }
         }
     }
-/***********************************************************************************************
-* MethodName: throwErrorMessageForNonEditFields
-* Description : Throw error message if user tries to edit fields for which perm set is not assigned
-    * Story : DF-04328
-* Params: List<Asset> assetList, Map<Id, Asset> oldMap, Boolean isBPSAssetFields
-* ********************************************************************************************/
-    public void throwErrorMessageForNonEditFields(List<Asset> assetList, Map<Id, Asset> oldMap, Boolean isBPSAssetFields, Boolean onCreate){
-    String profileName = [SELECT Id, Name FROM Profile WHERE Id =: UserInfo.getProfileId()].Name;
+
+    //
+    // MethodName: throwErrorMessageForNonEditFields
+    // Description : Throw error message if user tries to edit fields for which perm set is not assigned
+    // Story : DF-04328
+    //
+    public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
+        String profileName = [ SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId() ].Name;
         Boolean isBPSUserFields = false ;
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
-    List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
-    List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
-    //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
-    List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
-    List<String> nonEditableAssetFields = (isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE) ? nonEditableBPSAssetFields :
-                                          (!isBPSAssetFields && profileName == NSP_ServiceConstants.RT) ? nonEditableRETFields : null;
-    if(nonEditableAssetFields == nonEditableBPSAssetFields){
+        List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
+        List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split( ',' );
+        //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
+        List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split( ',' );
+        List<String> nonEditableAssetFields = ( isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE ) ? nonEditableBPSAssetFields :
+                                            ( !isBPSAssetFields && profileName == NSP_ServiceConstants.RT ) ? nonEditableRETFields : null;
+        if ( nonEditableAssetFields == nonEditableBPSAssetFields ) {
             isBPSUserFields = true;
-    }
-        try{
-        for(Asset assetRec: assetList){
-            Asset oldAsset = oldMap != null ? oldMap.get(assetRec.Id) : null;
-            for(String nonEditableField: nonEditableAssetFields){
-                //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
-                if((oldAsset != null && assetRec.get(nonEditableField) != oldAsset.get(nonEditableField)) ||
-                   (assetRec.get(nonEditableField) != null && onCreate == true)){
-
-                    if(isBPSUserFields){
-                        throwErrorOnSpecificRecordTypesAndField(assetRec, oldAsset, nonEditableField);
-                    }else{
-                        assetRec.addError(nonEditableField, errorMessage);
+        }
+        try {
+            for ( Asset assetRec : assetList ) {
+                Asset oldAsset = oldMap != null ? oldMap.get( assetRec.Id ) : null;
+                if ( nonEditableAssetFields != null ) { // prevent NullPointerExceptions
+                    for ( String nonEditableField : nonEditableAssetFields ) {
+                        //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
+                        if ( ( oldAsset != null && assetRec.get( nonEditableField ) != oldAsset.get( nonEditableField ) )
+                            || ( assetRec.get( nonEditableField ) != null && onCreate == true )
+                            )
+                        {
+                            if ( isBPSUserFields ) {
+                                throwErrorOnSpecificRecordTypesAndField( assetRec , oldAsset , nonEditableField );
+                            }else{
+                                assetRec.addError( nonEditableField , errorMessage );
+                            }
+                        }
                     }
                 }
             }
-        }
         } catch ( Exception e ) {
             NSP_AssetServiceTriggerHelper.handleException(
                 e ,
