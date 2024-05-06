@@ -43,6 +43,13 @@
         <value>Missing Custom Permission: Allow Delete Leads</value>
     </labels>
     <labels>
+        <fullName>Client_Integra_Responses_smartsheet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client Integra Responses smartsheet</shortDescription>
+        <value>Client Integra Responses (smartsheet.com).</value>
+    </labels>
+    <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
         <categories>Closed Lost. Roles Eligible</categories>
         <language>en_US</language>
@@ -120,6 +127,55 @@
         <value>Does the client offer a Stock Purchase Plan?</value>
     </labels>
     <labels>
+        <fullName>Do_you_have_a_recent_journal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you have a recent journal</shortDescription>
+        <value>Attach sample to Client Integra Responses project task.</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_have_a_recent_journal_entry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you have a recent journal entry</shortDescription>
+        <value>Do you have a recent journal entry into QuickBooks that you could provide to us?</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_need_to_allocate_costs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you need to allocate costs</shortDescription>
+        <value>Do you need to allocate costs with timesheet data?</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_need_to_allocate_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you need to allocate help text</shortDescription>
+        <value>Ex: Do you track time by jobs, service item, class, etc.? Timesheets must be in QuickBooks for Insperity Time and Attendance.</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_require_more_than_3_job_cost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you require more than 3 job cost</shortDescription>
+        <value>Do you require more than 3 job cost splits?</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_require_more_than_3_job_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you require more than 3 job help text</shortDescription>
+        <value>Ensure to add this detail under the “Do you have any additional comments/questions&quot; section of the</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_require_more_than_3_job_hyperlink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you require more than 3 job hyperlink</shortDescription>
+        <value>https://app.smartsheet.com/b/form/a018de2c40de4cc8aea5f4b064ec35e2</value>
+    </labels>
+    <labels>
         <fullName>EGMMMinMaxRange</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -181,6 +237,13 @@
         <protected>false</protected>
         <shortDescription>Integra Implementation Timeline</shortDescription>
         <value>Integra Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>Is_there_a_need_for_Integra_c</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is there a need for Integra</shortDescription>
+        <value>Is there a need for Integra?</value>
     </labels>
     <labels>
         <fullName>Is_payroll_entry_itemized_or_simple_entry</fullName>
@@ -5902,6 +5965,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Who will be submitting the payroll</value>
     </labels>
     <labels>
+        <fullName>Needed_payroll_entry_allocation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Needed payroll entry allocation</shortDescription>
+        <value>Needed payroll entry allocation (select all that apply):</value>
+    </labels>
+    <labels>
         <fullName>NotifyITAEmail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5956,6 +6026,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Premier Performance Implementation Timeline</shortDescription>
         <value>Premier Performance Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>ProjectTaskLongDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProjectTaskLongDescription</shortDescription>
+        <value>If the client has provided a recent journal entry, attach it to this task. Mark this task complete when the Client Integra Responses Smartsheet has been completed.</value>
     </labels>
     <labels>
         <fullName>ReadyForApprovalError</fullName>
@@ -6192,6 +6269,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>0050R000008jCfUQAU</value>
     </labels>
     <labels>
+        <fullName>What_accounting_software_do_you_use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What_accounting_software_do_you_use</shortDescription>
+        <value>What accounting software do you use?</value>
+    </labels>
+    <labels>
         <fullName>What_is_client_s_Active_Benefits_Continuation_Period_ABCP</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6199,11 +6283,11 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>What is client&apos;s Active Benefits Continuation Period (ABCP)?</value>
     </labels>
     <labels>
-        <fullName>What_accounting_software_do_you_use</fullName>
+        <fullName>What_QuickBooks_version_do_you_use</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>What_accounting_software_do_you_use</shortDescription>
-        <value>What accounting software do you use?</value>
+        <shortDescription>What QuickBooks version do you use</shortDescription>
+        <value>What QuickBooks version do you use?</value>
     </labels>
     <labels>
         <fullName>Would_you_like_automation_for_your_general_ledger</fullName>
