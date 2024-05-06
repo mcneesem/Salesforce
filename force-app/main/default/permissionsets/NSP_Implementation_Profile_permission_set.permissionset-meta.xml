@@ -13235,11 +13235,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.Would_you_like_automation_general__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Implementation_Profile__c.Work_week__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13251,6 +13246,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.Written_doc_pay_plan_for_how_EE_is_paid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Would_you_like_automation_general__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
