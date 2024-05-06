@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>Request_Client_Transition_Meeting</name>
     </customPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_Discover_SKO_Meeting</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Request Client Transition Meeting</label>
 </PermissionSet>

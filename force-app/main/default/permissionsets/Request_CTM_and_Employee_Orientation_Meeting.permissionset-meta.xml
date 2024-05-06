@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>Request_CTM_and_Employee_Orientation_Meeting</name>
     </customPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_CTM_and_Employee_Orientation_Meeting</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Request CTM and Employee Orientation Meeting</label>
 </PermissionSet>
