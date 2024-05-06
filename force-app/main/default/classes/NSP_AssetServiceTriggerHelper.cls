@@ -1995,9 +1995,9 @@ Implementation profile related to the account of the created asset
             isBPSUserFields = true;
         }
         try {
-            for ( Asset assetRec : assetList ) {
-                Asset oldAsset = oldMap != null ? oldMap.get( assetRec.Id ) : null;
-                if ( nonEditableAssetFields != null ) { // prevent NullPointerExceptions
+            if ( nonEditableAssetFields != null ) { // prevent NullPointerExceptions
+                for ( Asset assetRec : assetList ) {
+                    Asset oldAsset = oldMap != null ? oldMap.get( assetRec.Id ) : null;
                     for ( String nonEditableField : nonEditableAssetFields ) {
                         //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
                         if ( ( oldAsset != null && assetRec.get( nonEditableField ) != oldAsset.get( nonEditableField ) )
