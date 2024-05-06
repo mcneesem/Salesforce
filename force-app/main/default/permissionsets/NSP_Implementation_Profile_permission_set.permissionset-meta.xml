@@ -13115,11 +13115,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.Would_you_like_automation_general__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Implementation_Profile__c.What_are_the_FSA_plan_dates__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13236,6 +13231,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.Wnt_cpy_of_Insperity_EPLI_policy_cert__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Would_you_like_automation_general__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
