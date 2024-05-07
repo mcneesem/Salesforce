@@ -776,6 +776,26 @@
                 <identifier>RecordNSP_How_when_Traditional_Employment_prst_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Efforts_To_Retain__c</fieldItem>
+                <identifier>RecordNSP_Efforts_To_Retain_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Situation_Termination_Drivers__c</fieldItem>
+                <identifier>RecordNSP_Situation_Termination_Drivers_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5d62656a-025b-4a9a-89a5-f0a30f893afc</name>
         <type>Facet</type>
     </flexiPageRegions>
