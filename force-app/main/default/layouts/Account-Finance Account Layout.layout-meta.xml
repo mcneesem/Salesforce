@@ -677,6 +677,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>blng__Refund__c.blng__Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>NSP_Regulated_Area__c.NSP_Regulation_Type__c</fields>
         <fields>NSP_Regulated_Area__c.NSP_State__c</fields>
         <fields>NSP_Regulated_Area__c.NSP_City__c</fields>
