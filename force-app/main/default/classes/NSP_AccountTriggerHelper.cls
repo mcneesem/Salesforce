@@ -602,7 +602,10 @@ public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Accou
     try{
         for(Account acc : accountNewMap.values()){
                     Integer isallowUpdate = 0;
-            if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
+            if(accountOldMap.get(acc.Id).Zip_Based_Location__c != acc.Zip_Based_Location__c){
+                isallowUpdate++;
+            }
+            else if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
                 if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
                     isallowUpdate++;
                 }
