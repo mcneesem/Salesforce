@@ -39,7 +39,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Action__c</field>
+                <field>Action_info__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
