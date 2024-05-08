@@ -1037,21 +1037,25 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_NY_VA_Report__c</fieldItem>
                 <identifier>RecordNSP_NY_VA_Report_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_ClientDocumentRequesting_Termination__c</fieldItem>
+                <identifier>RecordNSP_ClientDocumentRequesting_Termination_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_EmployeesEverWorkedInStateNewYork__c}</leftValue>
+                        <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_EmployeesEverWorkedInStateVirginia__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
+                        <rightValue>Client Requested Termination Codes</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1084,16 +1088,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_ClientDocumentRequesting_Termination__c</fieldItem>
-                <identifier>RecordNSP_ClientDocumentRequesting_Termination_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>

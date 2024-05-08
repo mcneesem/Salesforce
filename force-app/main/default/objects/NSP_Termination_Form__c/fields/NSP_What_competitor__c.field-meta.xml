@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>ADP TOTALSOURCE</fullName>
+                <default>false</default>
+                <label>ADP TOTALSOURCE</label>
+            </value>
+            <value>
                 <fullName>EMPLOYERS SOLUTION</fullName>
                 <default>false</default>
                 <label>EMPLOYERS SOLUTION</label>

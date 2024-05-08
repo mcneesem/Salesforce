@@ -370,6 +370,10 @@
     <picklistValues>
         <picklist>NSP_What_competitor__c</picklist>
         <values>
+            <fullName>ADP TOTALSOURCE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EMPLOYERS SOLUTION</fullName>
             <default>false</default>
         </values>
