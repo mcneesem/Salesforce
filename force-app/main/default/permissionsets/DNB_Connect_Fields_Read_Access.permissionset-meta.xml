@@ -73,11 +73,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.DnB_Confidence_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1224,11 +1219,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.DNB_Exclude_Company__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
