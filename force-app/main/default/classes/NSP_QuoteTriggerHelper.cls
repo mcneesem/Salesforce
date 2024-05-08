@@ -1332,8 +1332,7 @@ public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ
                    enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
                    enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
                    enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
-               }
-               else{
+               } else{
                    enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
                    enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
                    enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
@@ -1345,9 +1344,17 @@ public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ
         if(newQuote.NSP_WX_WA_Enrollment_Fee__c==0){
             Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=true);
             optysToupdate.add(opty);
-        }
-        else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0){
-            Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+        } else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0 ){
+            Opportunity opty;
+            if( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED && oldQuote != null && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c) {
+                if(newQuote.SBQQ__Primary__c == true) {
+                    opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+                }
+            } else if(newQuote.SBQQ__Primary__c == true  && oldQuote != null && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c) {
+                if(newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED  ) {
+                    opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+                }
+            }
             optysToupdate.add(opty);
         }
     }
@@ -1356,14 +1363,14 @@ public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ
             upsert enrollmentRecs;
         } catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'createEnrollmentFee',ex.getMessage());
-        }  
+        }
     }
     if(!optysToupdate.isEmpty()){
         try{
             update optysToupdate;
         } catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'createEnrollmentFee',ex.getMessage());
-        }  
+        }
     }
 }
 /**
