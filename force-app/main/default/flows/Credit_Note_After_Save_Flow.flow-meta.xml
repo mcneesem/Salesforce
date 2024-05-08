@@ -27,7 +27,7 @@
         <name>Get_Accounting_Finance_Book</name>
         <label>Get Accounting Finance Book</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Finance_Period</targetReference>
@@ -48,7 +48,7 @@
         <name>Get_Finance_Period</name>
         <label>Get Finance Period</label>
         <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_fin_book_and_period_on_Credit_Note</targetReference>
@@ -83,7 +83,10 @@
         <name>Update_fin_book_and_period_on_Credit_Note</name>
         <label>Update fin book and period on Credit Note</label>
         <locationX>176</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
+        <faultConnector>
+            <targetReference>Error_Handler</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>blng__BillingFinanceBook__c</field>
             <value>
@@ -106,13 +109,6 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>blng__CreditNoteSourceAction__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Manual</stringValue>
-            </value>
-        </filters>
-        <filters>
             <field>NSP_Legal_Entity__c</field>
             <operator>IsNull</operator>
             <value>
@@ -123,5 +119,24 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Error_Handler</name>
+        <label>Error Handler</label>
+        <locationX>440</locationX>
+        <locationY>647</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>Credit_Note_After_Save_Flow</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>

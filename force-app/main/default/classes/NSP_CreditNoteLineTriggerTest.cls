@@ -160,27 +160,16 @@ public class NSP_CreditNoteLineTriggerTest {
         blng__CreditNote__c cred= new blng__CreditNote__c(blng__Account__c=objaccount.Id,blng__CreditNoteDate__c=system.today());
         insert cred;
         
-       /* blng__CreditNoteLine__c credLine= new blng__CreditNoteLine__c();
+        blng__CreditNoteLine__c credLine= new blng__CreditNoteLine__c();
         credLine.blng__Product__c=objproduct.Id;
         credLine.blng__CreditNote__c=cred.Id;
         credLine.blng__Subtotal__c=10;
-        credLine.NSP_Project__c=hcmProject.Id;
         credLine.NSP_Project_Go_Live_Date__c=system.today();
         insert credLine;
-        
-        blng__RevenueSchedule__c sch=new blng__RevenueSchedule__c();
-        sch.blng__TotalRevenueAmount__c=25;
-        sch.blng__FullRecognitionDate__c=system.today()-1;
-        sch.blng__RevenueDistributionMethod__c=[SELECT Id,Name FROM blng__RevenueDistributionMethod__c WHERE Id!=null  limit 1]?.Id;
-        sch.blng__RevenueRecognitionTreatment__c=[SELECT Id,Name FROM blng__RevenueRecognitionTreatment__c WHERE Id!=null limit 1]?.Id;
-        sch.blng__CreditNoteLine__c=credLine.Id;
-        insert sch; */
-        
+
         projectGoLiveDateMap.put(hcmProject.Id,system.today());
         NSP_RevRecService.updateGoLiveDatesOnInvLineAndCredLines(projectGoLiveDateMap);//invoking explicitly as this will called by platform event
-        //credLine.NSP_Project_Go_Live_Date__c=system.today()+1;
-        //update credLine;
-        //System.Assert(credLine.Id!=null);
+
         Test.stopTest(); 
     }
 }
