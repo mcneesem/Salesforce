@@ -4657,7 +4657,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
+        <field>Account.DNBConnect__D_B_Connect_Company_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

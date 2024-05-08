@@ -1148,7 +1148,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+        <field>Lead.DNB_Connect_DUNS_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -47,12 +47,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+        <field>Account.DNB_Connect_DUNS_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
+        <field>Account.DNBConnect__D_B_Connect_Company_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2982,7 +2982,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
+        <field>Contact.DNBConnect__D_B_Connect_Contact_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5247,17 +5247,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+        <field>Lead.DNB_Connect_DUNS_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Lead.DNBoptimizer__DnBCompanyRecord__c</field>
+        <field>Lead.DNBConnect__D_B_Connect_Company_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Lead.DNBoptimizer__DnBContactRecord__c</field>
+        <field>Lead.DNBConnect__D_B_Connect_Contact_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
