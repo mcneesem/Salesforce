@@ -2947,19 +2947,16 @@ public class NSP_Implementationprofile_ServiceHelper {
     */
     
     private void checkforBpses(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        if(newIp.RecordTypeId != ipFSORecordTypeId
-           || newIp.Implementing_biz_Performance_solutions__c!=NSP_ServiceConstants.YES) {
-               return;
-           }
-        
-        if( newIp.RecordTypeId == ipFSORecordTypeId && 
-           newIp.Implementing_biz_Performance_solutions__c == NSP_ServiceConstants.YES){
-               
-               if(existingRec == null ||  newIp.NSP_Form_Completed__c ||
-                  newIp.Implementing_biz_Performance_solutions__c != existingRec.Implementing_biz_Performance_solutions__c){
-                      updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, AdditionalBPSes_FSO);
-                  }
-           }
+        if ( newIp != null && newIp.Select_BPSes__c != null) {        
+            String[] selectedValues = newIp.Select_BPSes__c.split(';');
+            Set<String> selectedSet = new Set<String>(selectedValues);
+            Set<String> excludeValues = new Set <String>{NSP_ServiceConstants.INTEGRA, NSP_ServiceConstants.PremierPerformance};
+            selectedSet.removeAll(excludeValues);
+            if((existingRec == null ||  newIp.NSP_Form_Completed__c ||
+               newIp.Implementing_biz_Performance_solutions__c != existingRec.Implementing_biz_Performance_solutions__c) && selectedSet.size() > 0){
+               updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, AdditionalBPSes_FSO);
+            }  
+        }   
     }
     
     private  void emailNotifyforcheckforBpses(){
