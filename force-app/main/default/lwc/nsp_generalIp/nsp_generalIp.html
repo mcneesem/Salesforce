@@ -21,19 +21,6 @@
                     </lightning-input-field>
                     <lightning-input-field field-name="Client_s_previous_payroll_provider__c">
                     </lightning-input-field>
-                    <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
-                        value={label.isClientComingImplementingPerformance}></lightning-formatted-text>
-                    <lightning-radio-group name="Client_Implementing_Premier_Performance__c" variant="label-hidden"
-                        label={label.isClientComingImplementingPerformance} options={pickValueYesNo}
-                        value={fields.Client_Implementing_Premier_Performance__c} onchange={handleChange} type="radio"
-                        class="slds-m-bottom_xx-small slds-m-left_xx-small">
-                    </lightning-radio-group>
-                    <div class="slds-m-left_medium" if:true={showHowSoonClientLikeSolutionImplemntedfield}>
-                        <lightning-formatted-text class="slds-form-element__label"
-                        value={label.whenClientLikeSolutionImplemented}></lightning-formatted-text>
-                        <lightning-input-field variant="label-hidden"
-                        field-name="When_Client_Wants_Solution_implemented__c"></lightning-input-field>
-                    </div>
 
                     <lightning-formatted-text class="slds-form-element__label slds-m-left_xx-small"
                         value={label.isClientImplementingAnyOtherBusinessSolutions}></lightning-formatted-text>
