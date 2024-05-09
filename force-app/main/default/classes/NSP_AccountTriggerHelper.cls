@@ -250,13 +250,6 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                     accountEvent.add(New Integration_Account_Event__e(Id__c = accObj.Id));
                     updateAccountList.add(accObj);
                 }
-                if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams // kill switch added by AZD-236894
-                    && ( accObj.NSP_Delete_Account_Teams__c != null )
-                   )
-                {
-                    accountTeamMDeleteMap.put(accObj.Id, accObj.NSP_Delete_Account_Teams__c);
-                    accountTeamMDelete.put(accObj.Id, accObj.NSP_Integrated_With__c);
-                }
                 if ( ( accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycle__c )
                     && ( accObj.RecordTypeId == PARTNER_RECORDTYPE_ID )
                     && (
@@ -299,13 +292,6 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             //Added for User Story - 194644
             if(updateAddressAccountList.size() > 0) {
                 updateAddressOnCheckList(updateAddressAccountList, newMap);
-            }
-            //call future method
-            if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams // kill switch added by AZD-236894
-                && ( accountTeamMDeleteMap.size() > 0 )
-                )
-            {
-                deleteAccountTeam(accountTeamMDeleteMap, accountTeamMDelete);
             }
         } catch (Exception ex) {
             NSP_CustomException.LogException(ex);
@@ -539,46 +525,6 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
             accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
         } else if (accountObject.NumberOfEmployees != null) {
             accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
-        }
-    }
-
-    // kill switch added by AZD-236894
-    public static Boolean isEnabledDeleteAccountTeams {
-        public get {
-            if ( isEnabledDeleteAccountTeams == null ) {
-                isEnabledDeleteAccountTeams = AccountTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledDeleteAccountTeams__c;
-            }
-            return isEnabledDeleteAccountTeams;
-        }
-        private set;
-    }
-
-    // DEPRECATED BY AZD-236894
-    @future public static void deleteAccountTeam( Map<Id,DateTime> accountIdDeleteAccountTeamMap , Map<Id,String> accountTeamMDelete ) {
-        if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams ) { // kill switch added by AZD-236894
-            try {
-                List<NSP_Account_Team__c> accountTeamList = [
-                    SELECT Id, NSP_Account__c, NSP_Integrated_With__c from NSP_Account_Team__c
-                    WHERE NSP_Account__c IN: accountIdDeleteAccountTeamMap.keySet() AND createdBy.profile.name =: System.label.NSP_Integration_Profile_Name
-                    AND createddate <: accountIdDeleteAccountTeamMap.values()
-                    AND NSP_Integrated_With__c != ''
-                ];
-                List < NSP_Account_Team__c > accountDelTeamList = new List < NSP_Account_Team__c > ();
-                if (!accountTeamList.isEmpty()) {
-                    for (NSP_Account_Team__c nspAccTeam: accountTeamList) {
-                        if (nspAccTeam.NSP_Integrated_With__c == accountTeamMDelete.get(nspAccTeam.NSP_Account__c)) {
-                            NSP_Account_Team__c newAccTeam = new NSP_Account_Team__c();
-                            newAccTeam.Id = nspAccTeam.Id;
-                            accountDelTeamList.add(newAccTeam);
-                        }
-                    }
-                }
-                if (!accountDelTeamList.isEmpty()) {
-                    delete accountDelTeamList;
-                }
-            } catch (Exception ex) {
-                NSP_CustomException.LogException(ex);
-            }
         }
     }
 
