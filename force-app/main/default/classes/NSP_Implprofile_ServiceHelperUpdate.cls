@@ -376,7 +376,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             if(automationsToExecute.contains(ONSITE_DISCOVERY_FN)){
                 checkOnsiteDiscovery(ipRec, existingRec);
             }
-            if(automationsToExecute.contains(premierPerformance_FN)){
+            NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
+            if(automationsToExecute.contains(premierPerformance_FN) && triggerSwitch.Premier_Performance_Automation__c){
                 checkPermierPerfomance(ipRec, existingRec);
             }
             if(automationsToExecute.contains(enrollFee_FN)){
