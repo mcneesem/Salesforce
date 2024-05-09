@@ -60823,7 +60823,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Implementation Profile read only permission set</label>
+    <label>Implementation Profile (Read-Only)</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
