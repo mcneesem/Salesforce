@@ -44,8 +44,6 @@ import Yes from '@salesforce/label/c.NSP_Yes';
 import No from '@salesforce/label/c.NSP_No';
 
 import isClientComingFromAnotherPEO from '@salesforce/label/c.NSP_Is_the_client_coming_from_Another_PEO';
-import isClientComingImplementingPerformance from '@salesforce/label/c.NSP_Will_the_client_be_implemening_Premier_Performannce';
-import whenClientLikeSolutionImplemented from '@salesforce/label/c.NSP_When_client_like_solution_implemented';
 import isClientImplementingAnyOtherBusinessSolutions from '@salesforce/label/c.NSP_Client_implementing_any_other_Business_Performance_Solutions';
 import premierPerformanceImplementationTimeline from '@salesforce/label/c.Premier_Performance_Implementation_Timeline';
 import organizationalPlanningImpTimeline from '@salesforce/label/c.Organizational_Planning_Imp_Timeline';
@@ -579,7 +577,6 @@ export {
     YES_CONSTANT,
     No,
     isClientComingFromAnotherPEO,
-    isClientComingImplementingPerformance,
     isClientImplementingAnyOtherBusinessSolutions,
     premierPerformanceImplementationTimeline,
     organizationalPlanningImpTimeline,
@@ -752,7 +749,6 @@ export {
     clientInternalDeadlineEE,
     allEEsPaidToSameFEIN,
     certCoverForGeneralLiability,
-    whenClientLikeSolutionImplemented,
     FSO,
     FSOHeader,
     MMHeader,
