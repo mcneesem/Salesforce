@@ -9397,9 +9397,9 @@
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
-		<editable>true</editable>
+		<editable>false</editable>
 		<field>Implementation_Profile__c.If_EE_works_holiday_are_paid_prem__c</field>
-		<readable>true</readable>
+		<readable>false</readable>
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
