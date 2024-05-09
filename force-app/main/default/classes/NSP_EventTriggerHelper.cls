@@ -70,18 +70,24 @@ public class NSP_EventTriggerHelper {
     // @param eventOldMap Map of Old Event.
     // @return void
     //
-    public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
+    public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
         Set<String> subjectSet = new Set<String>();  
-    	Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
-            
+        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
         if(eventNewMap != null){
             for (Event newEventRecord : eventNewMap.Values()){
                 if( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ){
                     Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
+                    if (newEventRecord.RecordTypeId == eventRecordType
+                        && newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence'
+                        && oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime)
+                        )
+                    {
+                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                    }
                     if ( ( newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE )
                         && newEventRecord.RecordTypeId == eventRecordType
-                		&& newEventRecord.WhatId == NULL && newEventRecord.Type == NULL
+                        && newEventRecord.WhatId == NULL && newEventRecord.Type == NULL
                         && ( oldEventRecord != null )
                         && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
                         )

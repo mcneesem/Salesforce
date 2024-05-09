@@ -3,6 +3,7 @@
     <fullName>Only_Int_User_Can_Create_WO_SubPlan</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
+  ISNEW(),
   NOT( $Setup.NSP_Trigger_Switch__c.NSP_Plan_Sub_Plan__c ) ,
   NOT( CONTAINS( $User.NSP_Profile_Name__c , &apos;System Admin&apos; ) ) ,
   $User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos; ,

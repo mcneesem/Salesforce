@@ -105,7 +105,66 @@
     onchange={handleValueChange}
     multiple>
   </c-nsp_selection-box>
-
+  <template lwc:if={visibility.Organizational_Planning_Imp_Timeline__c}>
+    <div class="slds-form-element__label">
+      <lightning-formatted-text
+        class={styles.Organizational_Planning_Imp_Timeline__c}
+        data-field="Organizational_Planning_Imp_Timeline__c"
+        value={label.organizationalPlanningImpTimeline}
+        >
+      </lightning-formatted-text>
+    </div>
+    <lightning-input-field
+      value={field.Organizational_Planning_Imp_Timeline__c}
+      disabled={disabledFields.Organizational_Planning_Imp_Timeline__c}
+      variant="label-hidden"
+      class={styles.Organizational_Planning_Imp_Timeline__c}
+      data-name="Organizational_Planning_Imp_Timeline__c"
+      field-name="Organizational_Planning_Imp_Timeline__c"
+      onchange={handleValueChange}
+      >
+    </lightning-input-field>
+  </template>
+  <template lwc:if={visibility.Integra_Implementation_Timeline__c}>
+    <div class="slds-form-element__label">
+      <lightning-formatted-text
+        class={styles.Integra_Implementation_Timeline__c}
+        data-field="Integra_Implementation_Timeline__c"
+        value={label.integraImplementationTimeline}
+        >
+      </lightning-formatted-text>
+    </div>
+    <lightning-input-field
+      value={field.Integra_Implementation_Timeline__c}
+      disabled={disabledFields.Integra_Implementation_Timeline__c}
+      variant="label-hidden"
+      class={styles.Integra_Implementation_Timeline__c}
+      data-name="Integra_Implementation_Timeline__c"
+      field-name="Integra_Implementation_Timeline__c"
+      onchange={handleValueChange}
+      >
+    </lightning-input-field>
+  </template>
+  <template lwc:if={visibility.Premier_Performance_Imp_Timeline__c}>
+    <div class="slds-form-element__label">
+      <lightning-formatted-text
+        class={styles.Premier_Performance_Imp_Timeline__c}
+        data-field="Premier_Performance_Imp_Timeline__c"
+        value={label.premierPerformanceImplementationTimeline}
+        >
+      </lightning-formatted-text>
+    </div>
+    <lightning-input-field
+      value={field.Premier_Performance_Imp_Timeline__c}
+      disabled={disabledFields.Premier_Performance_Imp_Timeline__c}
+      variant="label-hidden"
+      class={styles.Premier_Performance_Imp_Timeline__c}
+      data-name="Premier_Performance_Imp_Timeline__c"
+      field-name="Premier_Performance_Imp_Timeline__c"
+      onchange={handleValueChange}
+      >
+    </lightning-input-field>
+  </template>
   <c-nsp_selection-box
     disabled={disabledFields.Time_Entry_Method__c}
     label={label.timeEntryMethod}

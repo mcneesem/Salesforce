@@ -414,6 +414,16 @@
     </template>
 
     <c-nsp_selection-box
+      disabled={disabledFields.What_is_client_s_ABCP__c}
+      label={label.whatIsClientsABCP}
+      field-api-name="Implementation_Profile__c.What_is_client_s_ABCP__c"
+      record-type-id={recordTypeId}
+      value={field.What_is_client_s_ABCP__c}
+      data-name="What_is_client_s_ABCP__c"
+      class={styles.What_is_client_s_ABCP__c}
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+    <c-nsp_selection-box
       disabled={disabledFields.Are_there_any_EEs_on_Leave_of_Absence__c}
       label={label.areThereEEsonLOA}
       field-api-name="Implementation_Profile__c.Are_there_any_EEs_on_Leave_of_Absence__c"

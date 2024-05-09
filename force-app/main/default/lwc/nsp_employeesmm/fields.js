@@ -30,6 +30,7 @@ const SECTION_FIELDS = [
    'remove_employee_directory_from_premier__c',
    'client_terminated_old_benefit_coverage__c',
    'prior_med_contributions_tht_Insperity__c',
+   'What_is_client_s_ABCP__c'
 ];
 
 export { EMP_TABLE_FIELDS, SECTION_FIELDS };

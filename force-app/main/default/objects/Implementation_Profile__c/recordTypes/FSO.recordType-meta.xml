@@ -2046,6 +2046,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Is_payroll_entry_itemized_or_simple__c</picklist>
+        <values>
+            <fullName>Itemized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Simple entry</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Is_the_client_a_federal_contractor__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -3141,6 +3152,10 @@
         </values>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4483,6 +4498,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>International Payroll Services</fullName>
             <default>false</default>
         </values>
@@ -4495,7 +4514,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Management</fullName>
+            <fullName>Premier Performance</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4526,6 +4545,10 @@
         </values>
         <values>
             <fullName>IRR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4778,6 +4801,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>What_accounting_software_do_you_use__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QuickBooks</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_is_client_s_ABCP__c</picklist>
+        <values>
+            <fullName>12 weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26 weeks</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>What_time_zone_do_EEs_work__c</picklist>
         <values>
             <fullName>Alaskan</fullName>
@@ -4963,6 +5008,17 @@
         </values>
         <values>
             <fullName>Wednesday - Tuesday</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Would_you_like_automation_general__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>

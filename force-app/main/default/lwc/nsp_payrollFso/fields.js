@@ -4,10 +4,12 @@ const SYNC_FIELDS = {
   Special_Payroll_Needs:'Select_all_payroll_needs_that_apply__c',
   Account__c: 'prefilledIpDetails',
   need_for_a_subaccount__c : 'Is_there_a_need_for_a_subaccount__c',
-  employeeStates : 'Employees_work_in_the_following_states__c'
+  employeeStates : 'Employees_work_in_the_following_states__c',
+  Select_BPSes__c: 'Select_all_payroll_needs_that_apply__c'
 };
 
 const POST_SYNC_IP_FIELDS = { prefilledIpDetails: 'updatePrefilledIpValues' };
+const PRE_SYNC_IP_FIELDS = { Select_BPSes__c: 'Select_all_payroll_needs_that_apply__c'};
 
 const RL_FIELDS = [
   'Do_any_EEs_have_garnishments__c',
@@ -190,6 +192,10 @@ const SECTION_FIELDS = [
   'Arbitration_Agreement_been_discussed__c',
   'NSP_Payroll_notes__c',
   'Insperity_benefits_effective_date__c',
+  'What_accounting_software_do_you_use__c',
+  'Would_you_like_automation_general__c',
+  'Is_payroll_entry_itemized_or_simple__c',
+  'Software_Used__c',
 ];
 
 export {
@@ -199,6 +205,7 @@ export {
   EMP_DATA_RL_FIELDS,
   PREFILLED_FIELDS,
   POST_SYNC_IP_FIELDS,
+  PRE_SYNC_IP_FIELDS,
   SECTION_FIELDS,
   PAY_FREQUENCY_FIELDS
 };

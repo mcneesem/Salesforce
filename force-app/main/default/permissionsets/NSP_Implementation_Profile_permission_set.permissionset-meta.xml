@@ -10074,12 +10074,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Is_payroll_entry_itemized_or_simple__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Manager_HR_Services__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.NSP_Arrearagein_compliance_witheachstate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Organizational_Planning_Imp_Timeline__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11454,6 +11464,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Integra_Implementation_Timeline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Interested_in_on_site_safety_inspections__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12750,6 +12765,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Premier_Performance_Imp_Timeline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Previous_challenge_provide_details__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13015,6 +13035,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Software_Used__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Tech_pack_when_where_quantity_needed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13060,7 +13085,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.What_accounting_software_do_you_use__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.What_current_payroll_reports_being_used__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.What_is_client_s_ABCP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13176,6 +13211,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.Workers_Comp_Safety_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Would_you_like_automation_general__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

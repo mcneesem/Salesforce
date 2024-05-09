@@ -3,6 +3,7 @@
     <fullName>Only_Int_User_Can_Create_WO_Cli_SubPl_Hi</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
+  ISNEW(),
   NOT( CONTAINS( $User.NSP_Profile_Name__c , &apos;System Admin&apos; ) ) ,
   $User.NSP_Profile_Name__c &lt;&gt;&apos;Integration User&apos; ,
   RecordType.Name = &apos;WO&apos;

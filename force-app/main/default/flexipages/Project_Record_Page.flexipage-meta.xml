@@ -236,6 +236,26 @@
                 <identifier>RecordAt_Risk_Flag__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Support_Team__c</fieldItem>
+                <identifier>RecordSupport_Team_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Complexity_Score__c</fieldItem>
+                <identifier>RecordComplexity_Score_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-50fbea8b-1834-43e2-9884-56fb6397c5c8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -330,6 +350,46 @@
                 <identifier>RecordCase__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Processing_Date__c</fieldItem>
+                <identifier>RecordProcessing_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Time_and_Labor_Effective_date__c</fieldItem>
+                <identifier>RecordTime_and_Labor_Effective_date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Benefit_Effective_date__c</fieldItem>
+                <identifier>RecordBenefit_Effective_date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Next_Open_Enrollment__c</fieldItem>
+                <identifier>RecordNext_Open_Enrollment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-edc4e669-d8b2-426e-ba72-d96de2c13f9d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -398,6 +458,16 @@
                 <identifier>RecordOFAC_Review__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Pay_Frequency__c</fieldItem>
+                <identifier>RecordPay_Frequency_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1390a9ec-6fb1-4d3d-b459-f38d097fe099</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -430,6 +500,36 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Exception_Granted__c</fieldItem>
                 <identifier>RecordProject_Exception_Granted__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FEIN__c</fieldItem>
+                <identifier>RecordFEIN_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Employees_at_Signature__c</fieldItem>
+                <identifier>RecordEmployees_at_Signature_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Primary_Product__c</fieldItem>
+                <identifier>RecordPrimary_Product_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-50cf8d25-6134-400d-b4de-85c3c2d82bb1</name>
@@ -986,6 +1086,10 @@
                     <value>Facet-af3a5a8b-030a-46df-83c1-c14de81930eb</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -998,6 +1102,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-03e8038e-6b63-4e01-906a-bb8a5cc068da</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1014,6 +1122,10 @@
                     <value>Facet-2c75dc41-8aae-435e-a07b-11670c789716</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Project Dates</value>
                 </componentInstanceProperties>
@@ -1026,6 +1138,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-34229c4a-8e37-4544-8b5d-5ebcf1aa8211</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1042,6 +1158,10 @@
                     <value>Facet-6a49cd74-d624-4cd8-87c9-36f719b173e1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Classification</value>
                 </componentInstanceProperties>
@@ -1054,6 +1174,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-16c89012-0626-4eb8-beb4-ba804f411f7a</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>

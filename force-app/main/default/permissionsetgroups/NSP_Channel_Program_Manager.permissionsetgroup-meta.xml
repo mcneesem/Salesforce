@@ -5,6 +5,7 @@
     <label>Channel Program Manager</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Contact_Modify_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>

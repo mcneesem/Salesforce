@@ -9121,11 +9121,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.NSP_County__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37011,10 +37006,6 @@ m   <fieldPermissions>
     <flowAccesses>
         <enabled>false</enabled>
         <flow>NSP_Notify_Opportunity_Owner_of_Assignment</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
-        <flow>NSP_Opportunity_Process_Builder</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>

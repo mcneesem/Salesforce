@@ -78,7 +78,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>MessagingSession.Email__c</field>
+        <field>MessagingSession.Email_Info__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -125,16 +125,6 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
-     <applicationVisibilities>
-        <application>DNBoptimizer__DB_Optimizer</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>DNBoptimizer__D_B_Optimizer</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
     <applicationVisibilities>
         <application>DOZISF__ZoomInfo</application>
         <default>false</default>
@@ -19047,16 +19037,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -22958,11 +22938,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Birthdate</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -49251,10 +49226,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>DNBoptimizer__DnBContactRecord__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>standard-ContactRequest</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -49636,10 +49607,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>blng__LegalEntity__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>DNBoptimizer__DnBCompanyRecord__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

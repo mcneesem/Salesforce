@@ -5,6 +5,7 @@
     <label>Business Development</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
@@ -19,6 +20,5 @@
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
-    <permissionSets>force__VoiceOutbound</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

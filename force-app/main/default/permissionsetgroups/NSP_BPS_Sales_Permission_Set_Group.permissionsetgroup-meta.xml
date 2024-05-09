@@ -5,6 +5,7 @@
     <label>BPS Sales Permission Set Group</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>BPS</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>

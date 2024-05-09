@@ -3,6 +3,7 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Inbound Sales</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>

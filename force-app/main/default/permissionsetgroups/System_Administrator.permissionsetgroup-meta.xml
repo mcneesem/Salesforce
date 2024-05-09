@@ -3,6 +3,7 @@
     <description>Full System Administrator PSG</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Administrator</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>

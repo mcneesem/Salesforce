@@ -365,7 +365,9 @@ public class NSP_TerminationFormTriggerHelper {
         Set<String> specialistIds = new Set<String>();
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
         List<NSP_Termination_Form__c> terminationFormBellNotificationList = [
-            SELECT ID, Name, NSP_Supervisor__c, NSP_Status__c, RecordTypeId, NSP_Payroll_Specialist__c, Credit_Specialist__c, OwnerId, CreatedById
+            SELECT
+                Id, Name, NSP_Supervisor__c, NSP_Status__c, RecordTypeId, NSP_Payroll_Specialist__c,
+                Credit_Specialist__c, OwnerId, CreatedById, Credit_Specialist__r.pse__Salesforce_User__c
             FROM NSP_Termination_Form__c 
             WHERE ID IN:terminationFormSet
         ];
@@ -374,7 +376,7 @@ public class NSP_TerminationFormTriggerHelper {
                 specialistIds.add(term.NSP_Payroll_Specialist__c);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
             }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_DENIED && term.Credit_Specialist__c != Null){
-                specialistIds.add(term.Credit_Specialist__c);
+                specialistIds.add(term.Credit_Specialist__r.pse__Salesforce_User__c);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
             }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_APPROVED && term.OwnerId != Null){
                 specialistIds.add(term.OwnerId);

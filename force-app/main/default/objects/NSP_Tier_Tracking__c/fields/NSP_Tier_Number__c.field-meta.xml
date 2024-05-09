@@ -13,6 +13,16 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>0.10</fullName>
+                <default>false</default>
+                <label>0.10</label>
+            </value>
+            <value>
+                <fullName>0.25</fullName>
+                <default>false</default>
+                <label>0.25</label>
+            </value>
+            <value>
                 <fullName>0.5</fullName>
                 <default>false</default>
                 <label>0.5</label>
