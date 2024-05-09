@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import IP_OBJECT from '@salesforce/schema/Implementation_Profile__c';
 import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
-import { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS, PRE_SYNC_IP_FIELDS, Ledger_IP_FIELDS} from './fields';
+import { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS, PRE_SYNC_IP_FIELDS, Ledger_IP_FIELDS, Is_There_Integra} from './fields';
 import * as LABELS from 'c/nsp_implementationLabels';
 import {
   getUpdatedFieldVisibility,
@@ -64,10 +64,13 @@ export default class Nsp_reporting extends LightningElement {
   preSyncOperations(fieldName, value) {
     const preSyncOpertationsFN = PRE_SYNC_IP_FIELDS[fieldName];
     const LedgerIPFIELDS = Ledger_IP_FIELDS[fieldName];
+    const IsThereIntegra = Is_There_Integra[fieldName];
     if(LedgerIPFIELDS && value) {
       this.field.Is_there_a_need_for_Integra__c = 'Yes';
+      this.addStyleToPrePopulatedQuestions(IsThereIntegra, value);
     } else if(LedgerIPFIELDS && value == ''){
       this.field.Is_there_a_need_for_Integra__c = '';
+      this.addStyleToPrePopulatedQuestions(IsThereIntegra, value);
     }
     if(preSyncOpertationsFN && value) {
       this.updateDependentFieldVisibility(fieldName, value);
