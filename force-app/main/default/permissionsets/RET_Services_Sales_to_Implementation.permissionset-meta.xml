@@ -3,6 +3,11 @@
     <description>AZD-255754</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Sales_to_Implementation__c.AIMS_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Sales_to_Implementation__c.Active_Hours__c</field>
         <readable>true</readable>
     </fieldPermissions>
