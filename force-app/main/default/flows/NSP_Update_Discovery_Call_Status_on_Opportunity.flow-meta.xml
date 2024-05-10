@@ -4,8 +4,8 @@
     <decisions>
         <name>Check_Related_Opportunity</name>
         <label>Check Related Opportunity</label>
-        <locationX>440</locationX>
-        <locationY>384</locationY>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Opportunity</name>
@@ -49,8 +49,8 @@
     <recordLookups>
         <name>Select_Related_Opportunity</name>
         <label>Select Related Opportunity</label>
-        <locationX>440</locationX>
-        <locationY>276</locationY>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Related_Opportunity</targetReference>
@@ -84,8 +84,8 @@
         <description>once discovery call event is completed, mark discovery completed checkbox true</description>
         <name>update_discovery_completed_checkbox_on_Opportunity</name>
         <label>update discovery completed checkbox on Opportunity</label>
-        <locationX>176</locationX>
-        <locationY>492</locationY>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
         <faultConnector>
             <targetReference>Fault_Handler</targetReference>
         </faultConnector>
@@ -106,8 +106,11 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Select_Related_Opportunity</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Event_Subtype__c</field>
@@ -139,20 +142,14 @@
         </filters>
         <object>Event</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Select_Related_Opportunity</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>InvalidDraft</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>440</locationX>
-        <locationY>600</locationY>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
