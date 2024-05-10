@@ -312,18 +312,20 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                              }
                          }
                         when 'NSP_Docusign_Account_Id' {
-                           cLUpd.value = '65500';
-                           switch on sandboxName {
-                            when 'merge' {
-                                cLUpd.value = '65500';
+                            switch on sandboxName {
+                                when 'merge' {
+                                    cLUpd.value = '122677';
+                                }
+                                when 'test' {
+                                    cLUpd.value = '65500';
+                                }
+                                when 'stage' {
+                                    cLUpd.value = '48945';
+                                }
+                                when else {
+                                    cLUpd.value = '50202';
+                                }
                             }
-                            when 'test','stage' {
-                                cLUpd.value = '48945';
-                            }
-                            when else {
-                                cLUpd.value = '50202';
-                            }
-                        }
                         }
                         when 'NSP_Docusign_Base_URL' {
                            cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
@@ -378,7 +380,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
 
-            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
+            if (allMetadataList[0].size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
                     List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
                 }
@@ -480,6 +482,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCSettings(String sandboxName) {
         try {
+            Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
+            List<DocuSign_Settings__c> updDSSettings = new List<DocuSign_Settings__c>();
+            for (String key : docusignSettingsMap.keySet()) {
+                DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(key);
+                docusignSettings.IsEnabled__c = false;
+                if (sandboxName.startsWith(key.toLowerCase().left(3))) {
+                    docusignSettings.IsEnabled__c = true;
+                }
+                updDSSettings.add(docusignSettings);
+            }            
+            update updDSSettings;
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
+
+        try {
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
             cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
@@ -492,9 +510,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_Docusign_Account_Details__c cS2 = NSP_Docusign_Account_Details__c.getOrgDefaults();
             switch on sandboxName {
                 when 'merge' {
+                    cS2.Docusign_Account_Id__c = '122677';
+                }
+                when 'test' {
                     cS2.Docusign_Account_Id__c = '65500';
                 }
-                when 'test','stage' {
+                when 'stage' {
                     cS2.Docusign_Account_Id__c = '48945';
                 }
                 when else {
