@@ -1014,6 +1014,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Do_you_have_a_recent_journal_entry__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Do_you_have_the_LOA_information__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -1021,6 +1040,25 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Do_you_need_to_allocate_costs__c</picklist>
+        <values>
+            <fullName>No%3A only input a basic payroll entry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%3A input timesheets into QB directly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%3A use 3rd party T%26A that feeds QB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%3A use ITA %26 have org levels</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1054,6 +1092,17 @@
         </values>
         <values>
             <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Do_you_require_more_than_3_job_cost__c</picklist>
+        <values>
+            <fullName>No</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2091,6 +2140,17 @@
     </picklistValues>
     <picklistValues>
         <picklist>Is_there_a_need_for_a_GL_interface__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_there_a_need_for_Integra__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -4003,6 +4063,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Needed_payroll_entry_allocation__c</picklist>
+        <values>
+            <fullName>Class</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GL Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jobs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Non_exempt_EEs_on_semi_monthly_pay_freq__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -4790,17 +4869,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Uses_WageWorks_for_commuter_benefit_plan__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>What_accounting_software_do_you_use__c</picklist>
         <values>
             <fullName>Other</fullName>
@@ -4812,6 +4880,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Uses_WageWorks_for_commuter_benefit_plan__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>What_is_client_s_ABCP__c</picklist>
         <values>
             <fullName>12 weeks</fullName>
@@ -4819,6 +4898,21 @@
         </values>
         <values>
             <fullName>26 weeks</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_QuickBooks_version_do_you_use__c</picklist>
+        <values>
+            <fullName>QuickBooks Desktop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QuickBooks Desktop External Server</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QuickBooks Online</fullName>
             <default>false</default>
         </values>
     </picklistValues>

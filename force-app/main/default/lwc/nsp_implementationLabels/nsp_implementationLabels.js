@@ -105,6 +105,17 @@ import isPayrollEntryItemizedOrSimpleEntry from '@salesforce/label/c.Is_payroll_
 import itemized from '@salesforce/label/c.If_Itemized_they_must_use_Integra';
 import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
 import allowances from '@salesforce/label/c.NSP_Allowances';
+import WhatQuickBooksversiondoyouuse from '@salesforce/label/c.What_QuickBooks_version_do_you_use';
+import Neededpayrollentryallocation from '@salesforce/label/c.Needed_payroll_entry_allocation';
+import Doyouneedtoallocatecosts from '@salesforce/label/c.Do_you_need_to_allocate_costs';
+import Doyourequiremorethan3jobcost from '@salesforce/label/c.Do_you_require_more_than_3_job_cost';
+import Doyouhavearecentjournalentry from '@salesforce/label/c.Do_you_have_a_recent_journal_entry';
+import Doyouhavearecentjournal from '@salesforce/label/c.Do_you_have_a_recent_journal';
+import Doyouneedtoallocatehelptext from '@salesforce/label/c.Do_you_need_to_allocate_help_text';
+import Doyourequiremorethan3jobhelptext from '@salesforce/label/c.Do_you_require_more_than_3_job_help_text';
+import ClientIntegraResponsessmartsheet from '@salesforce/label/c.Client_Integra_Responses_smartsheet';
+import Doyourequiremorethan3jobhyperlink from '@salesforce/label/c.Do_you_require_more_than_3_job_hyperlink';
+import IsthereaneedforIntegra from '@salesforce/label/c.Is_there_a_need_for_Integra_c';
 import expenses from '@salesforce/label/c.NSP_Expenses';
 import clientBusinessMeetingQuestion from '@salesforce/label/c.NSP_Client_Business_Meeting_States_Question';
 import clientBusinessMeeting from '@salesforce/label/c.NSP_Client_Business_Meeting_States';
@@ -644,6 +655,17 @@ export {
     whatAccountingSoftwareDoYouUse,
     wouldYouLikeAutomationForYourGeneralLedger,
     isPayrollEntryItemizedOrSimpleEntry,
+    WhatQuickBooksversiondoyouuse,
+    Neededpayrollentryallocation,
+    Doyouneedtoallocatecosts,
+    Doyourequiremorethan3jobcost,
+    Doyouhavearecentjournalentry,
+    Doyouhavearecentjournal,
+    Doyouneedtoallocatehelptext,
+    Doyourequiremorethan3jobhyperlink,
+    ClientIntegraResponsessmartsheet,
+    Doyourequiremorethan3jobhelptext,
+    IsthereaneedforIntegra,
     doAnyEEsHaveTaxLevies,
     doesClientHaveExpenseOrAllowance,
     doesClientHavePostTaxDeductions,
