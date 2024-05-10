@@ -27,5 +27,7 @@ const PRE_SYNC_IP_FIELDS = {
   Select_all_payroll_needs_that_apply__c: 'Integra',
 };
 const Ledger_IP_FIELDS = { Select_BPSes__c: 'Integra',
-                           Is_there_a_need_for_Integra__c: 'Yes'};
-export { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS, PRE_SYNC_IP_FIELDS, Ledger_IP_FIELDS};
+};
+const Is_There_Integra = { Select_BPSes__c: 'Is_there_a_need_for_Integra__c',
+};
+export { SECTION_FIELDS, RL_FIELDS,SYNC_FIELDS, PRE_SYNC_IP_FIELDS, Ledger_IP_FIELDS,Is_There_Integra};
