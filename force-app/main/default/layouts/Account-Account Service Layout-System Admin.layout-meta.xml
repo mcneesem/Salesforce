@@ -225,7 +225,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+                <field>DNB_Connect_DUNS_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

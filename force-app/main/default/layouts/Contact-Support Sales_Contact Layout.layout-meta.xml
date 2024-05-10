@@ -278,7 +278,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DnBContactRecord__c</field>
+                <field>DNBConnect__D_B_Connect_Contact_Profile__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
