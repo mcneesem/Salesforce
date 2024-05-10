@@ -43,6 +43,13 @@ const NON_COPY_ABLE_SECTIONS = [
   'clientProject',
 ];
 
+const COPY_ABLE_IP_CHILD_OBJECTS = [
+  IP_RELATED_CLIENT.objectApiName,
+  PAY_PERIOD_OBJECT.objectApiName,
+  ADDITIONAL_CLIENT_CONTACTS.objectApiName,
+  EMPLOYEE_ORIENTATION.objectApiName,
+];
+
 const NON_COPY_ABLE_FIELDS = [
   'NSP_BPA_BPC__c',
   'NSP_Legal_Name__c',
@@ -112,19 +119,19 @@ const sOBJECT_NAME = {
 
 const POST_UPSERT_ACTION_MAPPING = {
   [IP_EMP_DATA_OBJECT.objectApiName]: 'saveEmpDataRecords',
-  [PAY_PERIOD_OBJECT.objectApiName] : 'saveRelatedRecords',
-  [EMPLOYEE_ORIENTATION.objectApiName] : 'saveRelatedRecords',
-  [ADDITIONAL_CLIENT_CONTACTS.objectApiName] : 'saveRelatedRecords',
-  [IP_RELATED_CLIENT.objectApiName] : 'saveRelatedRecords',
-  [IP_COPY_DATA_OBJECT.objectApiName] : 'saveRelatedRecords',
+  [PAY_PERIOD_OBJECT.objectApiName]: 'saveRelatedRecords',
+  [EMPLOYEE_ORIENTATION.objectApiName]: 'saveRelatedRecords',
+  [ADDITIONAL_CLIENT_CONTACTS.objectApiName]: 'saveRelatedRecords',
+  [IP_RELATED_CLIENT.objectApiName]: 'saveRelatedRecords',
+  [IP_COPY_DATA_OBJECT.objectApiName]: 'saveRelatedRecords',
 };
 
 const RELATED_FIELD_NAME = {
-  [EMPLOYEE_ORIENTATION.objectApiName] : 'NSP_Implementation_Profile__c',
-  [PAY_PERIOD_OBJECT.objectApiName] : 'NSP_Implementation_Profile__c',
-  [ADDITIONAL_CLIENT_CONTACTS.objectApiName] : 'NSP_Implementation_Profile__c',
-  [IP_RELATED_CLIENT.objectApiName] : 'NSP_Implementation_Profile__c',
-  [IP_COPY_DATA_OBJECT.objectApiName] : 'NSP_Source_Record__c'
+  [EMPLOYEE_ORIENTATION.objectApiName]: 'NSP_Implementation_Profile__c',
+  [PAY_PERIOD_OBJECT.objectApiName]: 'NSP_Implementation_Profile__c',
+  [ADDITIONAL_CLIENT_CONTACTS.objectApiName]: 'NSP_Implementation_Profile__c',
+  [IP_RELATED_CLIENT.objectApiName]: 'NSP_Implementation_Profile__c',
+  [IP_COPY_DATA_OBJECT.objectApiName]: 'NSP_Source_Record__c'
 }
 
 const PREVIOUS_VALUE_FIELDS_MAPPING = {
@@ -163,5 +170,6 @@ export {
   NON_COPY_ABLE_SECTIONS,
   NON_COPY_ABLE_FIELDS,
   RELATED_FIELD_NAME,
-  PREVIOUS_VALUE_FIELDS_MAPPING
+  PREVIOUS_VALUE_FIELDS_MAPPING,
+  COPY_ABLE_IP_CHILD_OBJECTS
 };

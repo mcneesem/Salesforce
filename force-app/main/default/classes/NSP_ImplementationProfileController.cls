@@ -1,4 +1,5 @@
 public with sharing class NSP_ImplementationProfileController {
+    // test w/ NSP_ImplementationProfileControllerTest (80%)
 
     private static final String IP_OBJ_NAME = 'Implementation_Profile__c';
     
@@ -183,7 +184,7 @@ public with sharing class NSP_ImplementationProfileController {
     @AuraEnabled
     public static void saveEmployeeData(String records, String ipRecId, List<String> parentFieldNames){
         try{
-			List<NSP_Employee_Data__c> newRecords = (List<NSP_Employee_Data__c>) JSON.deserialize(records, List<NSP_Employee_Data__c>.class);
+            List<NSP_Employee_Data__c> newRecords = (List<NSP_Employee_Data__c>) JSON.deserialize(records, List<NSP_Employee_Data__c>.class);
             createNewEmployeeDataRecords(newRecords, ipRecId, parentFieldNames);
         } catch(Exception excep){
             throw new AuraHandledException(excep.getMessage());
@@ -261,9 +262,9 @@ public with sharing class NSP_ImplementationProfileController {
     }
 
     @AuraEnabled
-    public static void copyIpRecordData(List<String> recordIds, String fieldValues, String sourceId, String recType, String userEmail){
+    public static void copyIpRecordData(List<String> recordIds, Map<String, String> config){
         try{
-	       NSP_ImplementationHelper.copyIpRecordData(recordIds, fieldValues, sourceId, recType, userEmail);
+            NSP_ImplementationHelper.copyIpRecordData(recordIds, config);
         } catch(Exception excep){
             throw new AuraHandledException(excep.getMessage());
         }
@@ -353,7 +354,7 @@ public with sharing class NSP_ImplementationProfileController {
 
     private static List<String> getCopyDataRecords(String recordId){
         List<String> records = new List<String>();
-        List<String> fields = new List<String>{ 'NSP_Target_Record__c', 'NSP_Target_Record__r.Name', 'NSP_Target_Record__r.Account__r.Name' };
+        List<String> fields = new List<String>{ 'Id', 'NSP_Target_Record__c', 'NSP_Target_Record__r.Name', 'NSP_Target_Record__r.Account__r.Name' };
         String copyDataQuery = new NSP_QueryBuilder('NSP_Implementation_Profile_Copy_Data__c', fields)
         .addFilter('NSP_Source_Record__c', recordId)
         .build();
@@ -367,7 +368,7 @@ public with sharing class NSP_ImplementationProfileController {
             String targetRecordId = String.valueOf(copyRecord.get('NSP_Target_Record__c'));
             String targetRecordLabel = targetRecordName + ' | ' + accountName;
 
-            records.add(targetRecordId + '~' + targetRecordLabel);
+            records.add(copyRecord.Id + '~' + targetRecordId + '~' + targetRecordLabel);
         }
 
         return records;
