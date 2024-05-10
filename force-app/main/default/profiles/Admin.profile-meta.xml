@@ -37223,7 +37223,7 @@ m   <fieldPermissions>
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountContactRelation-ACR Service Layout</layout>
+        <layout>AccountContactRelation-Admin Support Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Additional_Payroll_Contact__c-Additional Payroll Contact Layout</layout>
