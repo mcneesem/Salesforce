@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Fields needed for any/all users to run reports/utilize enabled report filters</description>
+    <description>Fields needed for any/all users to run reports/utilize enabled report filters or when &quot;Any/All user should see X field&quot;</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Account_Assignment_Method__c</field>
@@ -154,6 +154,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Rules_of_Engagement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.X6Sense_Account_6QA_Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.X6Sense_Buying_Stage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
