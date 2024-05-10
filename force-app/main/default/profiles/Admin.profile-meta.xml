@@ -10250,11 +10250,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Implementation_Profile__c.If_EE_works_holiday_are_paid_prem__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.NSP_AIMS_Client_Name__c</field>
         <readable>true</readable>
