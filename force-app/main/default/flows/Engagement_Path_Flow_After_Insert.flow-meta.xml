@@ -58,7 +58,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Update_Project_Task_Efforts_to_Retain</name>
         <label>Update Project Task Efforts to Retain</label>

@@ -65,7 +65,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Update_Project_Task</name>
         <label>Update Project Task</label>
