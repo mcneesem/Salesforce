@@ -1163,9 +1163,7 @@ public class NSP_Implementationprofile_ServiceHelper {
      Automation Name: Prior Wages 
      Automation icon: envelope
     */
-    
     private void checkForPriorWage(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        
         if(newIp.RecordTypeId == ipFSORecordTypeId  && 
              newIp.NSP_PC_Client_Name__c!=null && newIp.NSP_PC_Client_Email__c!=null){
            List<Implementation_Pay_Period__c> ipPayPeriodList =  additionalIpPayPeriods(newIp.Id);
@@ -1180,12 +1178,10 @@ public class NSP_Implementationprofile_ServiceHelper {
                            break;
                        }
                    }
-      				
                }
-                  
          }
     }
-    
+
     private  void emailNotifyForPriorWage(){
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(PRIOR_WAGES_FN);
