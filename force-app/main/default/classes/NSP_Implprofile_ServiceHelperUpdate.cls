@@ -1791,6 +1791,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                 eachProjecttask.pse__Order__c=56;
                                 Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                 if(ipwithValue != null){
+                                    eachProjecttask.Implementation_Profile__c = ipwithValue.Id;
                                     if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
                                         eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
                                     }
