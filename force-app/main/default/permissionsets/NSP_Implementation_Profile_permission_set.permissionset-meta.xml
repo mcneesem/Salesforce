@@ -10,7 +10,7 @@
         <field>User.NSP_District_Administrator__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.NSP_Old_Benefits_Package__c</field>
         <readable>true</readable>
@@ -10054,6 +10054,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Do_you_have_a_recent_journal_entry__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Do_you_need_to_allocate_costs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Do_you_require_more_than_3_job_cost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.How_will_EEs_punch_in_out__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10079,7 +10094,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Is_there_a_need_for_Integra__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Manager_HR_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Needed_payroll_entry_allocation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10580,6 +10605,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.NSP_Who_will_be_the_backup_ITA_admin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.What_QuickBooks_version_do_you_use__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13080,12 +13110,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.What_are_the_FSA_plan_dates__c</field>
+        <field>Implementation_Profile__c.What_accounting_software_do_you_use__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.What_accounting_software_do_you_use__c</field>
+        <field>Implementation_Profile__c.What_are_the_FSA_plan_dates__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

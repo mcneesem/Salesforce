@@ -437,6 +437,7 @@ public class NSP_ServiceConstants {
   public final static String NYDEDUCTION='Post-Tax deductions - Employee Level – NY';
   public final static String CUSTOMPAYSETUP='Custom Pay Code setup - Client Level';
   public final static String JOBCOSTREPORT='Job Costing Reports';
+  public final static String INTEGRA_RESPONSE_TASK_NAME='Complete the Client Integra Responses Smartsheet';
   public final static String FINANCEREPORT='Finance Reports';
   public final static String REPORT401K='401k reports';
   public final static String COBRATask = 'COBRA Takeovers – need info';
@@ -581,6 +582,7 @@ public class NSP_ServiceConstants {
   public final static String RELABELING= 'Special Pay Codes/Relabeling';
   public final static String JOBCOST='Job Costing';
   public final static String INTEGRA='Integra';
+  public final static String INTEGRARESPONSE='Integra Responses SmartSheet';
   public final static String CUSTOMREPORT='Custom Report';
   public final static String CUSTOM401K='Custom 401(k)';
   public final static String MISSINGCOBRA='Missing COBRA Names';
