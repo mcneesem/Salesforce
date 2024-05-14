@@ -2028,6 +2028,10 @@
         <apexClass>SBQQ__Versionable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Available_Lead_Conversion_Rules</name>
+    </customPermissions>
     <description>Standard user permissions across all Salesforce CPQ objects.</description>
     <fieldPermissions>
         <editable>false</editable>
