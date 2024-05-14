@@ -115,7 +115,7 @@ public class NSP_OpportunityTriggerHelper {
         //validateClosedDate(closedOppList);
                }
         
-		}
+        }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         //Setting direct assignments to opportunity records
