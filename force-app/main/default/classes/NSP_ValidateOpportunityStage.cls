@@ -182,55 +182,50 @@ public class NSP_ValidateOpportunityStage {
                }
             
     }
-    
-    /**
-* Evaluate criteria related to quote
-* @param opportunityList list of New Opportunity.  
-* @param  list of events
-* @param list of tasks
-* @return void             
-*   
-*   added under CR-031          
-*/ 
-     public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
+
+    // Evaluate criteria related to quote
+    // @param opportunityList list of New Opportunity.
+    // @param  list of events
+    // @param list of tasks
+    // @return void
+    public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
         try{
-			// 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
+            // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
             if(!opp.Fee_Inclusive__c && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
-                   if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
-                       if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
-                           if(opp.SBQQ__PrimaryQuote__c != null){
-                               if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                                   opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                               }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
-                                   opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
-                               }
-                           }else{
-                               if(!test.isRunningTest()){
-                                   opp.addError(System.Label.NSP_AddPrimaryQuote);
-                               }
-                           } 
-                       }
-                   }else{
-                       if(opp.SBQQ__PrimaryQuote__c != null){
-                           if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                               opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                           }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
-                                   opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
-                           }
+                if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
+                    if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
+                        if(opp.SBQQ__PrimaryQuote__c != null){
+                            if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                                opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                            }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
+                                opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                            }
+                        }else{
+                            if(!test.isRunningTest()){
+                                opp.addError(System.Label.NSP_AddPrimaryQuote);
+                            }
+                        }
+                    }
+                }else{
+                    if(opp.SBQQ__PrimaryQuote__c != null){
+                        if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                            opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                        }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
+                            opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                        }
                     }else{
-                    	if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || 
-                                                                    (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT 
-                                                                     && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){//DF-01080 subtype Amendment check added
-                                                                         opp.addError(System.Label.NSP_AddPrimaryQuote);
-						}
-					} 
-				}
-			}
+                        if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){
+                            //DF-01080 subtype Amendment check added
+                            opp.addError(System.Label.NSP_AddPrimaryQuote);
+                        }
+                    }
+                }
+            }
         } catch(Exception ex) {
             NSP_CustomException.LogException(ex);
-        }   
+        }
     }
-    
+
     /**
 * Evaluate entry criteria for Closed Won stage
 * @param opportunityList list of New Opportunity.  
