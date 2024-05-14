@@ -14,6 +14,7 @@ Modification Log     :
 ***************************************************************************************************/
 
 public class NSP_InvoiceTriggerHelper {
+    // test w/ NSP_InvoiceLineTriggerTest (75%)
 
     static final string DunningCase_RT = 'Dunning';
     static final Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(DunningCase_RT).getRecordTypeId();
@@ -129,7 +130,6 @@ public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map
                 if(budgetaryInvs.size()<=1) {
                     inv.NSP_Bdgt_Quote_First_Invoice__c = true;
                 }
-
             }
         }
     }
@@ -218,64 +218,38 @@ public static void checkAndCloseDunningCase (Set<Id> accountIds ) {
     } 
 }
 
-/**
-* Method Name : setInvoiceToEmail
-* Description : Method to set invoice to email on Invoice.
-* Author : CPQ Team       Date : 10/13/2022
-* @param invoiceIdSet Invoice Id set.
-* @return void  
-*/
-    /*
-    public static void setInvoiceToEmail(Set < String > invoiceIdSet) {
-        Map<Id,blng__Invoice__c> invoiceMap = new Map<Id,blng__Invoice__c>();
-        blng__Invoice__c invObj = new blng__Invoice__c();
-        List<blng__InvoiceLine__c> invoiceLineList=[SELECT Id,blng__OrderProduct__c,blng__Invoice__c,blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c FROM blng__InvoiceLine__c WHERE blng__Invoice__c IN :invoiceIdSet];
-        for(blng__InvoiceLine__c il:invoiceLineList){
-            invObj = new blng__Invoice__c();
-            if(!invoiceMap.containsKey(il.blng__Invoice__c)){
-                invObj.Id = il.blng__Invoice__c;
-                invObj.blng__BillToContact__c = il.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
-                invoiceMap.put(il.blng__Invoice__c,invObj);
-            }
-        }
-        try{
-            if(invoiceMap.size() > 0){
-                database.update(invoiceMap.values());
-            }
-        }
-        catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        } 
-    }
-    
-    */
-        
-    /**
-    * Method Name : setDownPaymentDetailsOnProject
-    * Description : Method to set Down Payment details on project added for STY-02870
-    * Author : CPQ Team       Date : 11/30/2022
-    * @param invoiceIdSet Invoice Id set.
-    * @return void  
-    */  
-
-    public static void setDownPaymentDetailsOnProject(Set < String > invoiceIdSet) {
-            
+    // Method Name : setDownPaymentDetailsOnProject
+    // Description : Method to set Down Payment details on project added for STY-02870
+    // Author : CPQ Team
+    // Date : 11/30/2022
+    // @param invoiceIdSet Invoice Id set.
+    // @return void
+    public static void setDownPaymentDetailsOnProject( Set<String> invoiceIdSet ) {
         Map<Id,pse__Proj__c> projectUpdateMap = new Map<Id,pse__Proj__c>();
-        for(blng__InvoiceLine__c  eachInvline : [SELECT id,blng__OrderProduct__r.Order.NSP_Down_Payment_Required__c,blng__OrderProduct__r.NSP_Project__c  FROM blng__InvoiceLine__c 
-                                                WHERE blng__OrderProduct__r.NSP_Project__c != null AND blng__Invoice__c IN : invoiceIdSet AND
-                                                blng__OrderProduct__r.Order.NSP_Down_Payment_Required__c = 'Yes' AND
-                                                blng__OrderProduct__r.Order.NSP_Project_Complete_Date__c = NULL])
+        for ( blng__InvoiceLine__c eachInvline : [
+                    SELECT
+                        Id , blng__OrderProduct__r.Order.NSP_Down_Payment_Required__c ,
+                        blng__OrderProduct__r.NSP_Project__c , blng__OrderProduct__r.NSP_Project__r.pse__Project_Status__c
+                    FROM blng__InvoiceLine__c 
+                    WHERE (
+                        blng__OrderProduct__r.NSP_Project__c != null
+                        AND blng__Invoice__c IN :invoiceIdSet
+                        AND blng__OrderProduct__r.Order.NSP_Down_Payment_Required__c = 'Yes'
+                    )
+                ]
+            )
         {
-            pse__Proj__c newProject = new pse__Proj__c(Id = eachInvline.blng__OrderProduct__r.NSP_Project__c );
-            newProject.Project_Down_Payment_Received__c = true;
-            projectUpdateMap.put(newProject.id,newProject);
+            pse__Proj__c newProject = new pse__Proj__c(
+                Id=eachInvline.blng__OrderProduct__r.NSP_Project__c
+            );
+            if ( eachInvline.blng__OrderProduct__r.NSP_Project__r.pse__Project_Status__c != 'Complete' ) {
+                newProject.Project_Down_Payment_Received__c = true;
+                projectUpdateMap.put( newProject.Id , newProject );
+            }
         }
-
-        if(projectUpdateMap.Size() > 0)
-        {
+        if ( projectUpdateMap.Size() > 0 ) {
             update projectUpdateMap.values();
         }
-        
-    }     
+    }
 
 }
