@@ -183,6 +183,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Assignment__c.Assignment_Id_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.Benefit_Effective_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
