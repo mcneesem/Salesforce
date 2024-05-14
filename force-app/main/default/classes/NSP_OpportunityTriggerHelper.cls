@@ -730,21 +730,11 @@ public class NSP_OpportunityTriggerHelper {
         if(!eventList.isEmpty()) {
             // Publishing records Event 
             List<Database.SaveResult> results = EventBus.publish(eventList);
-            
-            // Inspect publishing result for each event
-            List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
-            for (Database.SaveResult sr : results) {
-                NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = 'NSP_OpportunityTriggerHelper';
-                log.NSP_Method__c = 'publishEventBus';                
-                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  '+String.valueOf(sr.getErrors()[0].getStatusCode());
-                log.NSP_Record_Id__c = sr.getId();
-                logList.add(log);  
-            }
-            
-            if(logList.size() > 0){
-                insert logList;
-            }
+            NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_OpportunityTriggerHelper.class.getName() ,
+                'publishEventBus' ,
+                results
+            );
             for(Opportunity  oppObj : objectList) {
                 Opportunity tempOppObj = new Opportunity();
                 tempOppObj.Id = oppObj.Id;
@@ -1051,78 +1041,108 @@ public class NSP_OpportunityTriggerHelper {
         }
         
         if(opportunityIdToRewardTypeMap.Size() > 0){
-                list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
-                map<id,Event> oppottunityToEventMap = new map<id,Event>();
-                
-                for(Event eachEvent : [SELECT Id,NSP_Completed_Date__c,WhatId from Event Where WhatId in :opportunityIdToRewardTypeMap.KeySet() AND NSP_Event_Subtype__c = 'Discovery Call' AND NSP_Status__c = 'Completed' ]){
-                    oppottunityToEventMap.put(eachEvent.WhatId,eachEvent);
-                }
-                
-                for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c, 
-                                                        NSP_Nonprofit_Organization_Name__c,NSP_Nonprofit_Organization_Tax_Id__c from OpportunityContactRole 
-                                                        WHERE opportunityId in : opportunityIdToRewardTypeMap.keySet() 
-                                                        AND NSP_isReferral__c = true]){
-                    string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
-                    opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
-                    if(rewardType == 'Discovery'){
-                        NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
-                            newReward.NSP_Reward_Amount__c = 200;
-                            newReward.NSP_Nonprofit_Amount__c = 200;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                        }
-                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'){
-                            newReward.NSP_Reward_Amount__c = 0;
-                            newReward.NSP_Nonprofit_Amount__c = 200;
-                            newReward.NSP_Payment_Type_Reward__c = null;
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                        }
-                        else{
-                            newReward.NSP_Reward_Amount__c = 200;
-                            newReward.NSP_Nonprofit_Amount__c = 0;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = null;
-                            
-                        }
-                        newReward.NSP_Reward_Type__c = 'Discovery';
-                        newReward.NSP_Discovery_Call_Completed_Date__c = oppottunityToEventMap.containsKey(eachOCR.opportunityId) ? oppottunityToEventMap.get(eachOCR.opportunityId).NSP_Completed_Date__c: null;
-                        rewardsInsertList.add(newReward);
+            list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
+            map<id,Event> oppottunityToEventMap = new map<id,Event>();
+            for ( Event eachEvent : [
+                        SELECT Id , NSP_Completed_Date__c , WhatId
+                        FROM Event
+                        WHERE (
+                            WhatId IN :opportunityIdToRewardTypeMap.KeySet()
+                            AND NSP_Event_Subtype__c = 'Discovery Call'
+                            AND NSP_Status__c = 'Completed' 
+                        )
+                    ]
+                )
+            {
+                oppottunityToEventMap.put(eachEvent.WhatId,eachEvent);
+            }
+            for ( OpportunityContactRole eachOCR : [
+                        SELECT
+                        Id , OpportunityId , Opportunity.NSP_Number_of_EEs__c , ContactId ,
+                        Role , Opportunity.AccountId , NSP_Referralbenefitsanonprofitorg__c ,
+                        NSP_Nonprofit_Organization_Name__c , NSP_Nonprofit_Organization_Tax_Id__c
+                        FROM OpportunityContactRole 
+                        WHERE (
+                            OpportunityId IN :opportunityIdToRewardTypeMap.keySet()
+                            AND NSP_isReferral__c = true
+                        )
+                    ]
+                )
+            {
+                string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
+                opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
+                if(rewardType == 'Discovery'){
+                    NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
+                    if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 200;
+                        newReward.NSP_Nonprofit_Amount__c = 200;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                    } else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 0;
+                        newReward.NSP_Nonprofit_Amount__c = 200;
+                        newReward.NSP_Payment_Type_Reward__c = null;
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                    } else{
+                        newReward.NSP_Reward_Amount__c = 200;
+                        newReward.NSP_Nonprofit_Amount__c = 0;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = null;
+                        
                     }
-                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5) ){
-                        NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
-                            newReward.NSP_Reward_Amount__c = 500;
-                            newReward.NSP_Nonprofit_Amount__c = 500;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                            
-                        }
-                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'){
-                            newReward.NSP_Reward_Amount__c = 0;
-                            newReward.NSP_Nonprofit_Amount__c = 1000;
-                            newReward.NSP_Payment_Type_Reward__c = null;
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                        }
-                        else{
-                            newReward.NSP_Reward_Amount__c = 1000;
-                            newReward.NSP_Nonprofit_Amount__c = 0;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = null;
-                            
-                        }
-                        newReward.NSP_Reward_Type__c = 'Sold';
-                        rewardsInsertList.add(newReward);
+                    newReward.NSP_Reward_Type__c = 'Discovery';
+                    newReward.NSP_Discovery_Call_Completed_Date__c = (
+                        oppottunityToEventMap.containsKey(eachOCR.opportunityId)
+                        ? oppottunityToEventMap.get(eachOCR.opportunityId).NSP_Completed_Date__c
+                        : null
+                    );
+                    rewardsInsertList.add(newReward);
+                } else if ( rewardType == 'Sold'
+                    && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5)
+                    )
+                {
+                    NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
+                    if( String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 500;
+                        newReward.NSP_Nonprofit_Amount__c = 500;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                        
+                    } else if ( String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 0;
+                        newReward.NSP_Nonprofit_Amount__c = 1000;
+                        newReward.NSP_Payment_Type_Reward__c = null;
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                    } else{
+                        newReward.NSP_Reward_Amount__c = 1000;
+                        newReward.NSP_Nonprofit_Amount__c = 0;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = null;
+                        
                     }
+                    newReward.NSP_Reward_Type__c = 'Sold';
+                    rewardsInsertList.add(newReward);
                 }
-                
-                if(rewardsInsertList.Size() > 0 && !createRewardsOnce ){
-                    createRewardsOnce  = true;
-                    insert rewardsInsertList;
-                }
+            }
+            if(rewardsInsertList.Size() > 0 && !createRewardsOnce ){
+                createRewardsOnce  = true;
+                Database.insert( rewardsInsertList , false );
+            }
         }
     }
-    
+
     public NSP_Reward__c createRewards(OpportunityContactRole objOCR, opportunity objOpportunity){
         NSP_Reward__c newReward = new NSP_Reward__c();
         newReward.NSP_Account__c = objOCR.Opportunity.AccountId;
@@ -1309,10 +1329,15 @@ Created Date:12/05/2022
             if(optysToUpdate.values().size()>0){
                 update optysToUpdate.values();
             }
-        }Catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerHelper','calculateDocupayTax',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_OpportunityTriggerHelper.class.getName() ,
+                'calculateSetUpAndDocupayTax' ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
         }
     }
+
                 /**
      * Method Name : createHardwareAssets
      * Description : Method to create hardware assets
