@@ -142,6 +142,13 @@
             </value>
         </filters>
         <filters>
+            <field>pse__Project__c</field>
+            <operator>IsNull</operator>
+            <rightValue>
+                <booleanValue>false</booleanValue>
+            </rightValue>
+        </filters>
+        <filters>
             <field>NSP_Account_Id__c</field>
             <operator>EqualTo</operator>
             <value>
