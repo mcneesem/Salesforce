@@ -25,6 +25,7 @@
                     + 'Type: Screen Flow\r\n'
                     + 'Version: 1\r\n'
                     + 'Org: XXXXX (00DXXX000XXXXXX)\r\n'
+                    + 'Interview GUID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXX\r\n'
                     + 'Interview Label: XXXXX XXXXX XXXXX MM/DD/YYYY HH:MM XM\r\n'
                     + 'Start time: MM/DD/YYYY HH:MM XM\r\n'
                     + 'Duration: # seconds\r\n'

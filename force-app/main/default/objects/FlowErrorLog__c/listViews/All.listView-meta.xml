@@ -3,10 +3,10 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>ApiName__c</columns>
-    <columns>VersionNumber__c</columns>
-    <columns>CREATEDBY_USER</columns>
+    <columns>ErrorElement__c</columns>
+    <columns>ErrorMessage__c</columns>
+    <columns>User__c</columns>
     <columns>CREATED_DATE</columns>
-    <columns>UPDATEDBY_USER</columns>
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
