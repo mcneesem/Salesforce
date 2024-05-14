@@ -269,6 +269,7 @@ public with sharing class QuoteExtController {
         }
         if ( ( objQuote != null )
             && ( objQuote.SBQQ__Type__c == 'Amendment' )
+            && ( objQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
             && ( objQuote.Ready_for_Approval__c == false )
             )
         {
