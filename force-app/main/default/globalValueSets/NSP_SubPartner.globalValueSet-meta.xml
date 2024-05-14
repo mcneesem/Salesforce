@@ -2061,6 +2061,11 @@
         <label>Quantum Energy Partners, LLC</label>
     </customValue>
     <customValue>
+        <fullName>Rampart Insurance</fullName>
+        <default>false</default>
+        <label>Rampart Insurance</label>
+    </customValue>
+    <customValue>
         <fullName>Receivables Management Associa</fullName>
         <default>false</default>
         <label>Receivables Management Associa</label>
@@ -2431,10 +2436,10 @@
         <label>Vistage Worldwide</label>
     </customValue>
     <customValue>
-        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <fullName>Acisure</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
+        <label>Acisure</label>
     </customValue>
     <customValue>
         <fullName>FSI-  JW Cole</fullName>
@@ -2449,18 +2454,6 @@
         <label>FSI- Not Registered with FSI</label>
     </customValue>
     <customValue>
-        <fullName>Alera Group – TRISURE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Alera Group – TRISURE</label>
-    </customValue>
-    <customValue>
-        <fullName>FSI- Atlas Brown, Inc.</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>FSI- Atlas Brown, Inc.</label>
-    </customValue>
-    <customValue>
         <fullName>FSI- Grove Point Invesmtents</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -2473,10 +2466,22 @@
         <label>Alera Group – Forum</label>
     </customValue>
     <customValue>
-        <fullName>Acisure</fullName>
+        <fullName>Alera Group – TRISURE</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Acisure</label>
+        <label>Alera Group – TRISURE</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Atlas Brown, Inc.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- Atlas Brown, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>
