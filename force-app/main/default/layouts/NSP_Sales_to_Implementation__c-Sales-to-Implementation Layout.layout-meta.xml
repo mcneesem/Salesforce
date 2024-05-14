@@ -59,6 +59,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Contact_Notes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AIMS_Client__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
