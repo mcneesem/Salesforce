@@ -259,7 +259,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                                        (SELECT Id,NSP_Role__c,NSP_Assignee__c, NSP_Assignee__r.NSP_Work_email__c FROM Project_Teams__r),
                                                        (SELECT Id, pse__Project__c,pse__Status__c, pse__Order__c, NSP_Sub_Category__c, NSP_Category__c,pse__Milestone__c, Name, NSP_Implementation_Profile_Account__c,NSP_Implementation_Account_Id__c FROM pse__Project_Tasks__r) FROM pse__Proj__c WHERE Id IN :projectIDs]);
         for(sObject projObj : dbRec.values()){
-        	pse__Proj__c proj=(pse__Proj__c)projObj;
+            pse__Proj__c proj=(pse__Proj__c)projObj;
             List<String> completedTask = new List<String>();
             for(pse__Project_Task__c pt:proj.pse__Project_Tasks__r ){
                 if(pt.pse__Status__c==NSP_ServiceConstants.PROJECTSTATUSCOMPLETED){
@@ -825,7 +825,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 if(existingRec == null || newRec.NSP_Form_Completed__c || newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c){
                     List<String> employeeNames = new List<String>();
                     if(newRec.NSP_COBRA_Takeover_Emp_Details__c!=null){
-                    	 employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
+                        employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
                     }
                     updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, COBRA_FORM_COLLECTED_FN);
                    }
@@ -1814,7 +1814,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                         );
                                         eachProjecttask.pse__End_Date_Time__c = eachProjecttask.pse__Start_Date_Time__c.addDays(30);
                                     }
-                            	}
+                                }
                                 eachProjecttask.pse__Long_Description__c = System.label.ProjectTaskLongDescription;
                                 eachProjecttask.pse__Milestone__c=milestoneId;
                                 projectTaskList.add(eachProjecttask);
@@ -1828,9 +1828,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                     )
                                 );
                             }
-                    	}
+                        }
                     }
-            	}
+                }
             }
         }
         //check for existing project task and store the new tasks
@@ -2090,7 +2090,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                             ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.COBRAFOLLOWUP,COBRA_FORM_COLLECTED_FN,NSP_ServiceConstants.BENEFITS,NSP_ServiceConstants.FSOProfile));
                         }else{
                             eachProjecttask.Name = NSP_ServiceConstants.COBRA_FORM_COLLECTED_YES.replace('<WSEE Name>',lstNamesEmployess[0]);
-                        	eachProjecttask.pse__Order__c=89;
+                            eachProjecttask.pse__Order__c=89;
                             ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.COBRAELIGIBITY,COBRA_FORM_COLLECTED_FN,NSP_ServiceConstants.BENEFITS,NSP_ServiceConstants.FSOProfile));
                         }
                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
