@@ -15,6 +15,7 @@
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
+    <permissionSets>Sales_Enablement</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
