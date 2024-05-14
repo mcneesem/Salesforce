@@ -116,6 +116,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Description_Of_Services__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Project__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
