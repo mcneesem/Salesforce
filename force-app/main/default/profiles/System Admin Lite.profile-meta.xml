@@ -3,6 +3,9 @@
     <custom>true</custom>
     <description>A modified version of the Sysem Administrator Profile that removes various Permissions for compliance purposes.</description>
     <layoutAssignments>
+        <layout>AccountContactRelation-Admin Support Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>blng__CreditNote__c-Finance Credit Note Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
