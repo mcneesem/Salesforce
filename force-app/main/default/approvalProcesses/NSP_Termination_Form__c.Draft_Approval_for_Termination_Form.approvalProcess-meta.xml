@@ -145,6 +145,8 @@ IF(
     AND( 
         NOT(ISBLANK(NSP_Approver__c)),
         NOT(ISBLANK(NSP_CSA_Effective_Date__c)),
+        NSP_CSA__c,
+        NSP_NY_VA_Report__c,
         NOT(ISBLANK(NSP_Payroll_Specialist__c)),
         NOT(ISBLANK(NSP_Supervisor__c)),
         NOT(ISBLANK(NSP_Manager_HR_Services__c)),
