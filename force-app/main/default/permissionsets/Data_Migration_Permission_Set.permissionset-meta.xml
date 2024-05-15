@@ -8882,11 +8882,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.If_EE_works_holiday_are_paid_prem__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Implementation_Profile__c.Implementation_Profile_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
