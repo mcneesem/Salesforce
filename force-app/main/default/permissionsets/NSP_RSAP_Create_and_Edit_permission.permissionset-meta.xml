@@ -23,11 +23,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Engagement_Path__c.Action_info__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Engagement_Path__c.NSP_Service_Provider__c</field>
         <readable>true</readable>
     </fieldPermissions>
