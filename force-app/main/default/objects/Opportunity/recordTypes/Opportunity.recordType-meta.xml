@@ -674,6 +674,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Out of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Price</fullName>
             <default>false</default>
         </values>
