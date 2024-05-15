@@ -16,10 +16,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Pre-ABX</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ROE Available Assignment</fullName>
             <default>false</default>
         </values>
