@@ -11,11 +11,6 @@
         <label>Marketing Generated</label>
     </customValue>
     <customValue>
-        <fullName>Pre-ABX</fullName>
-        <default>false</default>
-        <label>Pre-ABX</label>
-    </customValue>
-    <customValue>
         <fullName>ROE Available Assignment</fullName>
         <default>false</default>
         <label>ROE Available Assignment</label>
@@ -35,6 +30,12 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Available Account Assignment</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-ABX</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Pre-ABX</label>
     </customValue>
     <masterLabel>Account Assignment Method</masterLabel>
     <sorted>false</sorted>
