@@ -568,58 +568,75 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         }
     }
 
-// /**
-// * Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
-// * @param accountNewMap Map of New Account.
-// * @param accountOldMap Map of Old Account.
-// * @return void
-// * Ticket 128176
-// * author           | Date              | Description
-// * -------------------------------------------------------------------------------------
-// * Ruchi Roy         10/21/2022           Created this method
-// * Ruchi Roy         11/17/2022           Modified this method for 190991
-// * Rahul Singh       11/29/2022       	 Modified for user story 191911
-// * Modified on 02/2023-part of 194459- Bypass for MM roles
-// * Matt McNeese      05/26/2023       	 Modified for user story 215091
-// */
-public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
-    Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
-    Set<Id> accOwnerIdSet = new Set<Id>();
-    List<String> loggedInUserGrpName = new List<String>();
-    Set<Id> accountTeamMemberId = new Set<Id>();
-    List<User> userAvailable =[SELECT Id, Name FROM User WHERE Name = 'Available'];
-    
-    for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
-        loggedInUserGrpName.add(gMem.Group.Name);
-    }
-    for(Account acc : [SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c), ToLabel(owner.NSP_Sales_Office_Membership__c) 
-                       FROM Account WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles]){
-                           accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
-                       }
-    for(NSP_Account_Team__c accTeam : [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c WHERE NSP_Account__c =:accountNewMap.keySet()] ){
-                    accountTeamMemberId.add(accTeam.NSP_User__c);
-    }                  
-    try{
-        for(Account acc : accountNewMap.values()){
-                    Integer isallowUpdate = 0;
-            if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
-                if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
+    // Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
+    // @param accountNewMap Map of New Account.
+    // @param accountOldMap Map of Old Account.
+    // @return void
+    // Ticket 128176
+    // author           | Date              | Description
+    // -------------------------------------------------------------------------------------
+    // Ruchi Roy         10/21/2022           Created this method
+    // Ruchi Roy         11/17/2022           Modified this method for 190991
+    // Rahul Singh       11/29/2022       	 Modified for user story 191911
+    // Modified on 02/2023-part of 194459- Bypass for MM roles
+    // Matt McNeese      05/26/2023       	 Modified for user story 215091
+    public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
+        Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
+        Set<Id> accOwnerIdSet = new Set<Id>();
+        List<String> loggedInUserGrpName = new List<String>();
+        Set<Id> accountTeamMemberId = new Set<Id>();
+        List<User> userAvailable =[SELECT Id, Name FROM User WHERE Name = 'Available'];
+        for(GroupMember gMem: [
+                    SELECT Id, GroupId, Group.Name, UserOrGroupId
+                    FROM GroupMember
+                    WHERE UserOrGroupId =: userinfo.getUserId()
+                ]
+            )
+        {
+            loggedInUserGrpName.add(gMem.Group.Name);
+        }
+        for(Account acc : [
+                    SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c), ToLabel(owner.NSP_Sales_Office_Membership__c) 
+                    FROM Account
+                    WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles
+                ]
+            )
+        {
+            accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
+        }
+        for(NSP_Account_Team__c accTeam : [
+                    SELECT ID, NSP_User__c,NSP_Account__c
+                    FROM NSP_Account_Team__c
+                    WHERE NSP_Account__c =:accountNewMap.keySet()
+                ]
+            )
+        {
+            accountTeamMemberId.add(accTeam.NSP_User__c);
+        }
+        try{
+            for(Account acc : accountNewMap.values()){
+                Integer isallowUpdate = 0;
+                if(accountOldMap.get(acc.Id).Zip_Based_Location__c != acc.Zip_Based_Location__c){
                     isallowUpdate++;
+                } else if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
+                    if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
+                        isallowUpdate++;
+                    }
+                } else if(accOwnerSalesOfficeMap.isEmpty() || MMRoles.contains(loggedinUser.UserRole.Name) || ((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId())))){
+                    isallowUpdate++;
+                }
+                if(isallowUpdate == 0){
+                    acc.addError(system.label.NSP_AccountTriggerError);
                 }
             }
-            else if(accOwnerSalesOfficeMap.isEmpty() || MMRoles.contains(loggedinUser.UserRole.Name) || ((!loggedInUserGrpName.isEmpty() && 
-                    loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemberId.contains(userInfo.getUserId()) || 
-                    (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId())))){
-                    isallowUpdate++;
-                    }
-                    if(isallowUpdate == 0){
-                        acc.addError(system.label.NSP_AccountTriggerError);
-                    }
-                }
-    } catch(Exception ex) {
-        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'restrictAccountChange',ex.getMessage());
+        } catch(Exception e) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_AccountTriggerHelper.class.getName() ,
+                'restrictAccountChange' ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
+        }
     }
-}
 
 /**
 * Description: This method returns AccountTeamMember.
