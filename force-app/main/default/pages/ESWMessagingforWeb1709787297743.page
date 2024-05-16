@@ -144,7 +144,7 @@
                         <li>SandboxApiName: {!$Setup.OrgSettings__c.SandboxApiName__c}</li>
                         <li>
                             <apex:outputpanel rendered="{!IF($Setup.OrgSettings__c.IsSandbox__c, true, false)}">
-                                <a href="https://insperity--{!$Setup.OrgSettings__c.SandboxApiName__c}.sandbox.my.salesforce-scrt.com/embeddedservice/v1/businesshours?orgId=00D7j0000004cjCEAQ&esConfigName=Messaging_for_Web"
+                                <a href="https://insperity--{!$Setup.OrgSettings__c.SandboxApiName__c}.sandbox.my.salesforce-scrt.com/embeddedservice/v1/businesshours?orgId={!$Setup.OrgSettings__c.OrgId__c}&esConfigName=Messaging_for_Web"
                                     target="_blank"
                                     >
                                     Business Hours
