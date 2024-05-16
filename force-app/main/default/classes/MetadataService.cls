@@ -2107,7 +2107,7 @@ public class MetadataService {
         public String description;
         public String label;
         public Boolean protected_x;
-        public MetadataService.CustomMetadataValue[] values = new MetadataService.CustomMetadataValue[]{};
+        public MetadataService.CustomMetadataValue[] values;
         private String[] description_type_info = new String[]{'description',SOAP_M_URI,null,'0','1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'0','1','false'};
         private String[] protected_x_type_info = new String[]{'protected',SOAP_M_URI,null,'0','1','false'};
