@@ -8,7 +8,6 @@ Modification Log     :
 *--------------------------------------------------------------------------------------------------  
 * Developer                   Date                   Description                                     
 * -------------------------------------------------------------------------------------------------  
-
 * CPQ Team                  October 10, 2021          First Iteration
 ***************************************************************************************************/
 public with sharing class QuoteExtController {
@@ -18,18 +17,18 @@ public with sharing class QuoteExtController {
     public set<string> SE_Approval_Chain = new set<string>{'NSP_SE_Group_1','NSP_SE_Group_2','NSP_SE_MidMarket'};
     public boolean doNotAllow{get;set;}
     public boolean isTriggerCalculation{get;set;}
-    public  String errorFromValidation{get;set;}
-    public  String isRequestedDateValid{get;set;}
-    public  String descriptionOfService{get;set;}
+    public String errorFromValidation{get;set;}
+    public String isRequestedDateValid{get;set;}
+    public String descriptionOfService{get;set;}
     public Boolean invalidRequestedDate{get;set;}
     public Boolean isInvoiceEmailBlank{get;set;}
     public Boolean isQuoteExpirationInvalid{get;set;}
     public Boolean isDescriptionOfServiceBlank{get;set;}
     public Boolean quoteOwnerMismatch{get;set;}
-    public  Boolean invoiceToEmailBilling{get;set;}
-    public  Boolean invoiceToEmailShipping{get;set;}
-    public  List<String> quoteFieldMessage = new List<String>();
-    public  List<String> multipleErrors {get;set;}
+    public Boolean invoiceToEmailBilling{get;set;}
+    public Boolean invoiceToEmailShipping{get;set;}
+    public List<String> quoteFieldMessage = new List<String>();
+    public List<String> multipleErrors {get;set;}
     public Boolean isBillingAddressBlank{get;set;}
     public Boolean isShippingAddressBlank{get;set;}
     public Boolean isBillToAddressBlank{get;set;}
@@ -41,51 +40,51 @@ public with sharing class QuoteExtController {
     public Boolean isRPODateInvalid{get;set;}
     public Boolean isProjectRecruitingDateInvalid{get;set;}
     public Boolean isBrandingTargetDateInvalid{get;set;}
-    public  Boolean isCustomerStakeHolderBilling{get;set;}
-    public  Boolean isCustomerStakeHolderShipping{get;set;}
-    public  Boolean isCustomerRoleBilling{get;set;}
-    public  Boolean isCustomerRoleShipping{get;set;}
-    public  Boolean isAutorizedPurchaseBilling{get;set;}
-    public  Boolean isAutorizedPurchaseShipping{get;set;}
-    public  Boolean isAutorizedPurchaseBilling2{get;set;}
-    public  Boolean isAutorizedPurchaseShipping2{get;set;}
-    public  Boolean isPrimaryContactBilling{get;set;}
-    public  Boolean isPrimaryContactShipping{get;set;}
-    public  Boolean isProjOwnerNotSet{get;set;}
-    public  Boolean isSerialIdsBlank{get;set;}
+    public Boolean isCustomerStakeHolderBilling{get;set;}
+    public Boolean isCustomerStakeHolderShipping{get;set;}
+    public Boolean isCustomerRoleBilling{get;set;}
+    public Boolean isCustomerRoleShipping{get;set;}
+    public Boolean isAutorizedPurchaseBilling{get;set;}
+    public Boolean isAutorizedPurchaseShipping{get;set;}
+    public Boolean isAutorizedPurchaseBilling2{get;set;}
+    public Boolean isAutorizedPurchaseShipping2{get;set;}
+    public Boolean isPrimaryContactBilling{get;set;}
+    public Boolean isPrimaryContactShipping{get;set;}
+    public Boolean isProjOwnerNotSet{get;set;}
+    public Boolean isSerialIdsBlank{get;set;}
     public Boolean isETSerialIdsNotMatched{get;set;}
     public Boolean isTerminationDateBlank{get;set;}
 
-    Static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
-    Static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
-    Static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
-    Static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
-    Static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
-    public Static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
-    public Static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
+    static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
+    static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
+    static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
+    static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
+    static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
+    public static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
+    public static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
     
-    Static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
-    Static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
-    Static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
-    Static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
-    Static final String BENCHMARK_JOB_DATE_ERR=System.Label.NSP_Benchmark_Date_Validation;
-    public Static final String IMPLEMENTATION_DATE_ERR=System.Label.NSP_Implementation_Start_Date_Error;
-    public Static final String TALENT_CONNECT_SUB_DATE_ERR=System.Label.NSP_Talent_Connect_Subscription_Error;
-    public Static final String RPO_DATE_ERR=System.Label.NSP_RPO_Date_Validation_Error;
-    public Static final String PROJECT_RECRUITING_DATE_ERR=System.Label.NSP_Project_Recruiting_Date_Validation_Error;
-    public Static final String BRANDING_TARGET_DATE_ERR=System.Label.NSP_Branding_Target_Date_Validation_Error;
-    public Static final String CUST_STAKEHOLDER_BILLING_ERR=System.Label.NSP_CustStakeHolderBilling;
-    public Static final String CUST_STAKEHOLDER_SHIPPING_ERR=System.Label.NSP_CustStakeholderShipping;
-    public Static final String CUST_ROLE_SHIPPING_ERR=System.Label.NSP_CustRoleShipping;
-    public Static final String CUST_ROLE_BILLING_ERR=System.Label.NSP_CustRoleBilling;
-    public Static final String AUTHORIZED_PURCHASE_BILL_ERR=System.Label.NSP_AuthorizedPurchaseBilling;
-    public Static final String AUTHORIZED_PURCHASE_SHIP_ERR=System.Label.NSP_AuthorizedPurchaseShipping;
-    public Static final String AUTHORIZED_PURCHASE2_BILL_ERR=System.Label.NSP_AuthorizedPurchaseBilling2;
-    public Static final String AUTHORIZED_PURCHASE2_SHIP_ERR=System.Label.NSP_AuthorizedPurchaseShipping2;
-    public Static final String PRIMARY_CONTACT_BILL_ERR=System.Label.NSP_PrimaryContactBilling;
-    public Static final String PRIMARY_CONTACT_SHIP_ERR=System.Label.NSP_PrimaryContactShipping;
-    Static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
-    Static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
+    static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
+    static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
+    static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
+    static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
+    static final String BENCHMARK_JOB_DATE_ERR=System.Label.NSP_Benchmark_Date_Validation;
+    public static final String IMPLEMENTATION_DATE_ERR=System.Label.NSP_Implementation_Start_Date_Error;
+    public static final String TALENT_CONNECT_SUB_DATE_ERR=System.Label.NSP_Talent_Connect_Subscription_Error;
+    public static final String RPO_DATE_ERR=System.Label.NSP_RPO_Date_Validation_Error;
+    public static final String PROJECT_RECRUITING_DATE_ERR=System.Label.NSP_Project_Recruiting_Date_Validation_Error;
+    public static final String BRANDING_TARGET_DATE_ERR=System.Label.NSP_Branding_Target_Date_Validation_Error;
+    public static final String CUST_STAKEHOLDER_BILLING_ERR=System.Label.NSP_CustStakeHolderBilling;
+    public static final String CUST_STAKEHOLDER_SHIPPING_ERR=System.Label.NSP_CustStakeholderShipping;
+    public static final String CUST_ROLE_SHIPPING_ERR=System.Label.NSP_CustRoleShipping;
+    public static final String CUST_ROLE_BILLING_ERR=System.Label.NSP_CustRoleBilling;
+    public static final String AUTHORIZED_PURCHASE_BILL_ERR=System.Label.NSP_AuthorizedPurchaseBilling;
+    public static final String AUTHORIZED_PURCHASE_SHIP_ERR=System.Label.NSP_AuthorizedPurchaseShipping;
+    public static final String AUTHORIZED_PURCHASE2_BILL_ERR=System.Label.NSP_AuthorizedPurchaseBilling2;
+    public static final String AUTHORIZED_PURCHASE2_SHIP_ERR=System.Label.NSP_AuthorizedPurchaseShipping2;
+    public static final String PRIMARY_CONTACT_BILL_ERR=System.Label.NSP_PrimaryContactBilling;
+    public static final String PRIMARY_CONTACT_SHIP_ERR=System.Label.NSP_PrimaryContactShipping;
+    static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
+    static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
     public static final String TERMINATION_DATE_ERROR = System.Label.NSP_Termination_Date_Error;
 
     public QuoteExtController( ApexPages.StandardController stdController ) {
@@ -96,7 +95,6 @@ public with sharing class QuoteExtController {
         }
         if ( !profileMap.containsKey( UserInfo.getProfileId() ) || Test.isRunningTest() ) {
             errorFromValidation = NSP_QuoteApprovalPreValidation.validateRetirementServiceQuote(objQuote.Id);
-            //descriptionOfService = NSP_QuoteApprovalPreValidation.validateDescriptionOfServices(objQuote.Id);
             quoteFieldMessage = NSP_QuoteApprovalPreValidation.validateRequestedFirstCheck(objQuote.Id);
             //Ensuring that the On Demand product isadded correctly @utpal Utkalit STY-00450
             if(objQuote != null && objQuote.SBQQ__Status__c == 'Draft' && errorFromValidation == null )  {
