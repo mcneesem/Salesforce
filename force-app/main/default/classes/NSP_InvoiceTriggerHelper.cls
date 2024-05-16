@@ -14,7 +14,8 @@ Modification Log     :
 ***************************************************************************************************/
 
 public class NSP_InvoiceTriggerHelper {
-    // test w/ NSP_InvoiceLineTriggerTest (75%)
+    // test w/ NSP_InvoiceTriggerHelperTest (75%)
+    // test w/ NSP_InvoiceLineTriggerTest (46%)
 
     static final string DunningCase_RT = 'Dunning';
     static final Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(DunningCase_RT).getRecordTypeId();
