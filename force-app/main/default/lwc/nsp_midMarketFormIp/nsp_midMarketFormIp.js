@@ -18,6 +18,7 @@ import {
   SAVE_AND_EXIT_DIALOG_BUTTON_CONFIG,
   NON_COPY_ABLE_SECTIONS,
   NON_COPY_ABLE_FIELDS,
+  COPY_ABLE_IP_CHILD_OBJECTS,
   RELATED_FIELD_NAME,
 } from './constants';
 import { PREVIOUS_VALUE_FIELDS_MAPPING } from './fields';
@@ -32,7 +33,7 @@ import saveEmployeeData from '@salesforce/apex/NSP_ImplementationProfileControll
 import copyIpRecordData from '@salesforce/apex/NSP_ImplementationProfileController.copyIpRecordData';
 import saveAndDeleteRecords from '@salesforce/apex/NSP_ImplementationProfileController.saveAndDeleteRecords';
 import getIPRelatedRecords from '@salesforce/apex/NSP_ImplementationProfileController.getIPRelatedRecords';
-import loadIPRecords from "@salesforce/apex/NSP_FSOImplementationController.loadAutomationRecords";
+import loadIPRecords from '@salesforce/apex/NSP_FSOImplementationController.loadAutomationRecords';
 
 export default class NSP_MidMarketFormIp extends NavigationMixin(
   LightningElement
@@ -69,6 +70,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     showCopyDialog: false,
     selectedSections: [],
     copiedTargetRecords: [],
+    copiedExistingRecordOptions: [],
     isSaveAndExitAction: false,
   };
   postUpsertRecords = {};
@@ -207,29 +209,31 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
 
   generateCopyRequest(records) {
     this.showLoadingSpinner();
-    const { state, recordId, userData, preselectedCopyTargets } = this;
+    const { state, recordId, userData } = this;
     state.showCopyDialog = false;
 
+    const recordIds = records.map((rec) => rec.value);
+    const fieldValues = this.getFieldValuesToCopy(recordIds);
     const fields = this.getOnlyPermittedFields(
-      this.getFieldValuesToCopy(),
+      fieldValues,
       state.updateableFields
     );
-    const fieldValues = JSON.stringify(fields);
-    const recordIds = records
-      .map((rec) => rec.value)
-      .filter((id) => !preselectedCopyTargets.includes(id));
-
-    copyIpRecordData({
-      recordIds,
-      fieldValues,
+    const config = {
+      fieldValues: JSON.stringify(fields),
       sourceId: recordId,
       recType: 'MM',
       userEmail: userData?.Email?.value,
+      postUpsertRecords: JSON.stringify(fieldValues.postUpsertRecords),
+    };
+
+    copyIpRecordData({
+      recordIds,
+      config,
     })
       .then(() => {
         this.showSuccessToast('Copy Data Job queued successfully.');
-        this.state.copiedTargetRecords = recordIds;
-        this.relatedRecords.NSP_Implementation_Profile_Copy_Data__c = records;
+        state.copiedTargetRecords = recordIds;
+        state.copiedExistingRecordOptions = records;
         this.hideLoadingSpinner();
       })
       .catch((error) => {
@@ -242,31 +246,62 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     const iconName = 'standard:account';
 
     return value.map((val) => {
-      const [value, label] = val.split('~');
+      const [, value, label] = val.split('~');
 
       return { label, value, iconName };
     });
   }
 
-  addCopyDataRecords() {
-    const { state } = this;
-    this.postUpsertRecords.NSP_Implementation_Profile_Copy_Data__c =
-      state.copiedTargetRecords.map((recordId) => {
-        return { NSP_Target_Record__c: recordId };
-      });
+  getChildRecordsForAllTargetIpRecords(
+    objApiName,
+    childRecords = [],
+    targetIPs = []
+  ) {
+    const ipFieldName = RELATED_FIELD_NAME[objApiName];
+    const clonedRecs = [];
 
+    childRecords.forEach((rec) => {
+      targetIPs.forEach((targetIpRecId) => {
+        const recObj = { ...rec };
+        delete recObj.Id;
+        recObj[ipFieldName] = targetIpRecId;
+        recObj.attributes = { type: objApiName };
+        clonedRecs.push(recObj);
+      });
+    });
+    return clonedRecs;
+  }
+
+  addCopyDataRecords() {
+    const { state, postUpsertRecords } = this;
+
+    postUpsertRecords.NSP_Implementation_Profile_Copy_Data__c =
+      state.copiedTargetRecords.map((recId) => {
+        return { NSP_Target_Record__c: recId };
+      });
     state.copiedTargetRecords = [];
   }
 
-  getFieldValuesToCopy() {
+  getFieldValuesToCopy(targetRecordIds) {
     const fieldValues = this.state.selectedSections.reduce(
       (fieldValues, sectionName) => {
-        return {
-          ...fieldValues,
+        const sectionFields = {
           ...this.getComponentByName(sectionName).getFormValues(),
         };
+        const sectionPostUpsertRecs = sectionFields.postUpsertRecords;
+
+        if (sectionPostUpsertRecs) {
+          this.sanitizePostUpsertRecords(sectionPostUpsertRecs, fieldValues, targetRecordIds, sectionFields);
+
+          delete sectionFields.postUpsertRecords;
+        }
+
+        return {
+          ...fieldValues,
+          ...sectionFields,
+        };
       },
-      {}
+      { postUpsertRecords: [] }
     );
 
     NON_COPY_ABLE_FIELDS.forEach((fieldName) => {
@@ -274,6 +309,22 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     });
 
     return fieldValues;
+  }
+
+  sanitizePostUpsertRecords(sectionPostUpsertRecs, fieldValues, targetRecordIds) {
+    Object.keys(sectionPostUpsertRecs)
+      .filter((objName) => COPY_ABLE_IP_CHILD_OBJECTS.includes(objName))
+      .forEach((objName) => {
+        const objWiseChildRecs = sectionPostUpsertRecs[objName];
+        fieldValues.postUpsertRecords = [
+          ...fieldValues.postUpsertRecords,
+          ...this.getChildRecordsForAllTargetIpRecords(
+            objName,
+            objWiseChildRecs,
+            targetRecordIds
+          ),
+        ];
+      });
   }
 
   saveForm() {
@@ -410,8 +461,13 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
   saveRelatedRecords(newRecords, objectApiName) {
     const existingRecords = this.relatedRecords[objectApiName] || [];
     if (newRecords.length || existingRecords.length) {
+      const newlySelectedRecords =
+      objectApiName === 'NSP_Implementation_Profile_Copy_Data__c'
+        ? []
+        : newRecords;
+
       const recordsToDelete = this.getDeletedRecords(
-        newRecords,
+        newlySelectedRecords,
         existingRecords
       );
 
@@ -435,8 +491,11 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     const ipCopyData = res.NSP_Implementation_Profile_Copy_Data__c;
 
     if (isNonEmptyArray(ipCopyData)) {
-      data.NSP_Implementation_Profile_Copy_Data__c =
+      this.state.copiedExistingRecordOptions =
         this.getCopyDataOptions(ipCopyData);
+      data.NSP_Implementation_Profile_Copy_Data__c = ipCopyData.map(
+        (val) => val.split('~')[0]
+      );
     }
 
     return data;
@@ -704,9 +763,4 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     return state.selectedSections;
   }
 
-  get preselectedCopyTargets() {
-    return (this.relatedRecords.NSP_Implementation_Profile_Copy_Data__c || []).map(
-      ({ value }) => value
-    );
-  }
 }

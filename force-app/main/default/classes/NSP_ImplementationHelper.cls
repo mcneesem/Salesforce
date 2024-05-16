@@ -5,14 +5,13 @@
 * Name : NSP_ImplementationHelper
 */
 public class NSP_ImplementationHelper {
-    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (80%)
+    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (76%)
 
     // URL Params for Copy Action
     private static final String SOURCE_PARAM = 'source';
     private static final String REC_TYPE_PARAM = 'recType';
     private static final String SUCCESS_PARAM = 'success';
     private static final String FAIL_PARAM = 'fail';
-    private static final String CLASS_NAME = 'NSP_ImplementationHelper';
 
     /***********************************************************************************************
     * MethodName: prepopulateIPData
@@ -32,10 +31,7 @@ public class NSP_ImplementationHelper {
     
     public static Implementation_Profile__c prepopulateIPData(String accountId, Implementation_Profile__c ip){
         try{
-
-			
-                
-        	List<Opportunity> oppList=[SELECT Id FROM Opportunity WHERE AccountId=:accountId AND StageName=:NSP_ServiceConstants.CLOSED_WON AND
+            List<Opportunity> oppList=[SELECT Id FROM Opportunity WHERE AccountId=:accountId AND StageName=:NSP_ServiceConstants.CLOSED_WON AND
                              Type=:NSP_ServiceConstants.NEWPRODUCT AND NSP_PrimaryProduct__c=:NSP_ServiceConstants.WO_ASSET_RECORDTYPE
                                                         ORDER BY CreatedDate LIMIT 1];
             
@@ -57,7 +53,7 @@ public class NSP_ImplementationHelper {
                 }
                 
                 for(string recordTypeName : mapOfChecklistIPMappingMdt.keySet()){
-            		string checkListQuery=constructChecklistQuery(mapOfChecklistIPMappingMdt.get(recordTypeName),oppList[0].Id,recordTypeName);
+                    string checkListQuery=constructChecklistQuery(mapOfChecklistIPMappingMdt.get(recordTypeName),oppList[0].Id,recordTypeName);
                     
                     List<NSP_Checklist__c> checkListObj = Database.query(checkListQuery);
                     
@@ -80,7 +76,6 @@ public class NSP_ImplementationHelper {
     * Description : prepare dynamic query for checklist object
     * Params:       List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList, Id oppId,string recordTypeName
     * ********************************************************************************************/ 
-	
     public static String constructChecklistQuery(List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList,  Id oppId,string recordTypeName){
         
         Set<String> fieldsToQuerySet = new Set<String>();
@@ -142,7 +137,7 @@ public class NSP_ImplementationHelper {
         for(NSP_ChecklistIPMapping__mdt checklistIPMapping : checklistIPMappingList){
             if(String.isNotBlank(checklistIPMapping.NSP_Target_Field__c) && String.isNotBlank(checklistIPMapping.NSP_Source_Field__c)){
                 
-                Object value=	checkList.get(checklistIPMapping.NSP_Source_Field__c);
+                Object value= checkList.get(checklistIPMapping.NSP_Source_Field__c);
                 ip.put(checklistIPMapping.NSP_Target_Field__c, applyValueConversionPolicy(checklistIPMapping.NSP_Source_Field__c,value)); 
                 
             }
@@ -152,24 +147,24 @@ public class NSP_ImplementationHelper {
     private static object applyValueConversionPolicy(string sourceFieldName,object value){
         switch on sourceFieldName{
             when 'NSP_Does_company_have_more_than_one_FEIN__c'{
-            	return boolean.valueOf(value) ? 'No':null;
+                return boolean.valueOf(value) ? 'No':null;
             }
             
             when 'NSP_Commission_only_employees__c'{
-            	return boolean.valueOf(value) ?'Yes':null;
+                return boolean.valueOf(value) ?'Yes':null;
             }
             when 'NSP_ClientRelatedtootherInsperityClient__c'{
-            	return value=='Yes'?'Related Clients ':null;
+                return value=='Yes'?'Related Clients ':null;
             }
             when 'NSP_Version_Number__c'{
-            	return value!=null?string.valueOf(value):null;
+                return value!=null?string.valueOf(value):null;
             }
             when 'NSP_DBA_AKA_T_A_Name__c'{
                 return getDBAName(value);
             }
             when 'NSP_Benefits_Waiting_Period__c'{
                 if(value==null){
-                	return value;
+                    return value;
                 }
                 return string.valueOf(value).toLowerCase();
                 
@@ -177,7 +172,7 @@ public class NSP_ImplementationHelper {
             when 'NSP_Client_FEIN__c'{
                 
                 if(value==null){
-                	return value;
+                    return value;
                 }
                 String feinString=string.valueOf(value);
                 if(feinString.length()==9){
@@ -191,7 +186,7 @@ public class NSP_ImplementationHelper {
             }
             
             when else {
-            	return value;
+                return value;
             }
         }
     }
@@ -203,36 +198,50 @@ public class NSP_ImplementationHelper {
     * ********************************************************************************************/ 
     
     private static String getDBAName(Object userId){
-       if(userId!=null){
-           Id id=(Id)userId;
-       		User userRec=[SELECT Name from User WHERE Id=:id]; 
-           return userRec.Name;
-       }
-       return null;
-        
+        if(userId!=null){
+            Id id=(Id)userId;
+            User userRec=[SELECT Name from User WHERE Id=:id]; 
+            return userRec.Name;
+        }
+        return null;
     }
 
     /**
      * Copies data from one IP record to multiple records & send status email on process completion.
      * @param recordIds List of Id of the target IP records to which data will be written.
-     * @param fieldValues String representation of IP object field and values
-     * @param sourceId Id of the source IP record
-     * @param recType Record Type of source IP record
-     * @param userEmail Email Id of user to which we need to send status email
-     * @return void
+     * @param config Map containing configuration settings for the data copy process.
+     *   - fieldValues: JSON serialized string containing the field values to update on target IP records.
+     *   - sourceId: ID of the source record.
+     *   - recType: Type of the record being copied.
+     *   - userEmail: Email address to send the status mail after the copy action.
+     *   - postUpsertRecords: JSON serialized list of SObject records to insert or update as child objects of the target IP records.
      */
-	@future(callout=true)
-    public static void copyIpRecordData(List<String> recordIds, String fieldValues, String sourceId, String recType, String userEmail){
+    @future(callout=true)
+    public static void copyIpRecordData(List<String> recordIds, Map<String, String> config){
         try {
-            // Copy Data to target IP records
-            Map<String, List<String>> ipRecordsMap = updateCopyTargetIPRecords(recordIds, fieldValues);
+            String fieldValues = config.get('fieldValues');
+            String sourceId = config.get('sourceId');
+            String recType = config.get('recType');
+            String userEmail = config.get('userEmail');
+            List<SObject> postUpsertRecords = (List<SObject>) JSON.deserialize(config.get('postUpsertRecords'), List<SObject>.class);
 
-            // Send a status mail on finish of copy action
-            if(String.isNotBlank(userEmail)){
-                sendCopyActionStatusEmail(sourceId, recType, userEmail, ipRecordsMap);
+            // Copy Data to target IP records
+            try {
+                // Create IP child object records on all the target IP records 
+                Database.upsert(postUpsertRecords);
+
+                // Update incoming field values on target IP records
+                Map<String, List<String>> ipRecordsMap = updateCopyTargetIPRecords(recordIds, fieldValues);
+
+                // Send a status mail on finish of copy action
+                if(String.isNotBlank(userEmail)){
+                    sendCopyActionStatusEmail(sourceId, recType, userEmail, ipRecordsMap);
+                }
+            } catch(Exception ex) {
+                NSP_ErrorLogHandler.logSaveException(NSP_ImplementationHelper.class.getName(), 'copyIpRecordData', ex.getMessage());
             }
         } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME, 'copyIpRecordData', ex.getMessage());
+            NSP_ErrorLogHandler.logSaveException(NSP_ImplementationHelper.class.getName(), 'copyIpRecordData', ex.getMessage());
         }
     }
 
@@ -246,23 +255,11 @@ public class NSP_ImplementationHelper {
             recToUpdate.add(ipObj);
         }
 
-        List<Database.SaveResult> result = Database.update(recToUpdate, false);
-        List<String> successRecords = new List<String>();
-        List<String> failedRecords = new List<String>();
+        Database.update(recToUpdate);
 
-        for(Database.SaveResult res : result){
-            if (res.isSuccess()) {
-                successRecords.add(res.getId());
-            } else {
-                failedRecords.add(res.getId());
-            }
-        }
-
-        Map<String, List<String>> updatedIpRecordsMap = new Map<String, List<String>>{
-            SUCCESS_PARAM => successRecords, FAIL_PARAM => failedRecords
+        return new Map<String, List<String>>{
+            SUCCESS_PARAM => recordIds, FAIL_PARAM => new List<String>()
         };
-
-        return updatedIpRecordsMap;
     }
 
     private static String getCopyActionStatusEmailBody(String accName, String recType, List<String> successRecords, List<String> failedRecords){
@@ -272,38 +269,41 @@ public class NSP_ImplementationHelper {
         params.put(REC_TYPE_PARAM, recType);
 
         if(!successRecords.isEmpty()){
-	        params.put(SUCCESS_PARAM, JSON.serialize(successRecords));
+            params.put(SUCCESS_PARAM, JSON.serialize(successRecords));
         }
 
         if(!failedRecords.isEmpty()){
-	        params.put(FAIL_PARAM, JSON.serialize(failedRecords));
+            params.put(FAIL_PARAM, JSON.serialize(failedRecords));
         }
 
-        return page.getContent().toString().substringBetween('<body>','</body>');
+        return page?.getContent()?.toString()?.substringBetween('<body>','</body>');
     }
 
     private static String getCopyActionStatusEmailSubject(String accName){
         String emailSubject = 'Implementation Profile Copy Results';
-
-		return String.isBlank(accName) ? emailSubject : emailSubject + ' for ' + accName;
+        return String.isBlank(accName) ? emailSubject : emailSubject + ' for ' + accName;
     }
 
     private static void sendEmail(String[] toAddresses, String subject, String body){
-        // First, reserve email capacity for the current Apex transaction
-        Messaging.reserveSingleEmailCapacity(1);
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-        // Assign the addresses for the To list to the mail object.
-        mail.setToAddresses(toAddresses);
-
-        // Specify the subject line for your email address.
-        mail.setSubject(subject);
-
-        // Specify the content of the email.
-        mail.setHtmlBody(body);
-
-        // Send the email you have created.
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
+        if(!triggerSwitch.SendEmailFlow__c) {
+            Map<String, Object> inputs = new Map<String, Object>();
+            inputs.put('toEmailAddresses', toAddresses);
+            inputs.put('emailSubject', subject);
+            inputs.put('emailBody', body);
+            Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
+            sendEmailFlow.start();  
+        } else {
+            // First, reserve email capacity for the current Apex transaction
+            Messaging.reserveSingleEmailCapacity(1);
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            // Assign the addresses for the To list to the mail object.
+            mail.setToAddresses(toAddresses);
+            // Specify the subject line for your email address.
+            mail.setSubject(subject);
+            // Specify the content of the email.
+            mail.setHtmlBody(body);
+        }
     }
 
     private static void sendCopyActionStatusEmail(String sourceId, String recType, String userEmail, Map<String, List<String>> ipRecordsMap){
@@ -315,7 +315,7 @@ public class NSP_ImplementationHelper {
         String emailBody = getCopyActionStatusEmailBody(sourceName, recType, successRecords, failedRecords);
         
         // Strings to hold the email addresses to which you are sending the email.
-		String[] toAddresses = new String[] { userEmail };
+        String[] toAddresses = new String[] { userEmail };
 
         sendEmail(toAddresses, getCopyActionStatusEmailSubject(sourceName), emailBody);
     }
