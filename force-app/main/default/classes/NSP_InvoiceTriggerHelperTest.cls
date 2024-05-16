@@ -27,6 +27,9 @@ public class NSP_InvoiceTriggerHelperTest
 
         Account objaccount = NSP_TestHelper.createAccount(true);
         Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
+        objcontact.RecordTypeId = '0124x0000019l9CAAQ';
+        update objcontact;
+        
         blng__BillingRule__c bRule=NSP_TestHelper.createBillingRule();
         blng__RevenueRecognitionRule__c rRule=NSP_TestHelper.createRevrecRule('Project Rev Rec');
         blng__TaxRule__c tRule=NSP_TestHelper.createRevTaxRule();
@@ -45,6 +48,7 @@ public class NSP_InvoiceTriggerHelperTest
         objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
         objproduct.blng__BillingRule__c=bRule.Id;
         objproduct.blng__RevenueRecognitionRule__c=rRule.Id;
+        objproduct.ProductCode = 'IWXSU';
         objproduct.blng__TaxRule__c=tRule.Id;
         
         insert objproduct;
@@ -55,6 +59,7 @@ public class NSP_InvoiceTriggerHelperTest
         obj2product.NSP_IsScholarshipPrice_Applicable__c ='YES';
         obj2product.blng__BillingRule__c=bRule.Id;
         obj2product.blng__RevenueRecognitionRule__c=rRule.Id;
+        obj2product.ProductCode	 = 'IWXSU';
         obj2product.blng__TaxRule__c=tRule.Id;
         
         insert obj2product;
@@ -67,6 +72,7 @@ public class NSP_InvoiceTriggerHelperTest
         objproduct1.NSP_IsScholarshipPrice_Applicable__c ='YES';
         objproduct1.blng__BillingRule__c=bRule.Id;
         objproduct1.blng__RevenueRecognitionRule__c=rRule1.Id;
+        objproduct1.ProductCode	 = 'IWXSU';
         objproduct1.blng__TaxRule__c=tRule.Id;
         
         insert objproduct1;
@@ -81,6 +87,13 @@ public class NSP_InvoiceTriggerHelperTest
         caseRecord.Origin='Dunning';
         caseRecord.NSP_Dunning_Type__c = 'Open Invoice';
         //INSERT caseRecord;
+        
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.TemplateName__c=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+        oProject.pse__Is_Template__c = true;
+        oProject.NSP_Asset_Type__c = 'Time_Attendance';
+        oProject.pse__Start_Date__c = System.today();
+        insert oProject;
         
     }
     
@@ -101,43 +114,71 @@ public class NSP_InvoiceTriggerHelperTest
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         objQuote.NSP_Budgetary_Quote__c = true;
-        Test.startTest();
-        update objQuote;       
+        objQuote.SBQQ__Type__c = 'Renewal';
         
+        test.starttest();
+        update objQuote;    
+        
+        list<contact> cntList = [select id from contact limit 2];
+		list<pse__Proj__c> prjList = [select id from pse__Proj__c limit 2];
+
+        //project creation        
         list<OrderItem> orderItemList = new list<OrderItem>([select id,blng__NextBillingDate__c,blng__InvoiceRunProcessingStatus__c from OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id]);
         list<Order> orderList = new list<Order>([select id from Order WHERE SBQQ__Quote__c =:objQuote.Id]);
         orderList[0].NSP_Project_Go_Live_Date__c=system.today();
         orderList[0].Status='Reviewed';
+        orderList[0].ShipToContactId = cntList[0].id;
+		orderList[0].NSP_Down_Payment_Required__c = 'yes';
         update orderList;
         orderItemList[0].blng__InvoiceRunProcessingStatus__c='Pending Billing';
+        orderItemList[0].NSP_Project__c = prjList[0].id;
         update orderItemList;
         orderList[0].Status='Activated';
         update orderList;
         orderList[0].blng__BillNow__c=true;
         update orderList;
-        List<blng__Invoice__c> inv =[Select Id,blng__InvoiceStatus__c,blng__Balance__c from blng__Invoice__c WHERE Id!=null LIMIT 10];
-        inv[0].blng__InvoiceStatus__c='Posted';
-        update inv;
+        List<blng__Invoice__c> inv =[Select Id,blng__InvoiceStatus__c,blng__Balance__c,NSP_Ship_To_City__c,blng__PaymentStatus__c,blng__TotalAmount__c,(select id,NSP_Product_Code__c from blng__InvoiceInvoiceLines__r ) from blng__Invoice__c WHERE Id!=null LIMIT 10];
+        for(blng__Invoice__c invo:inv)
+        {
+             for(blng__InvoiceLine__c invl:invo.blng__InvoiceInvoiceLines__r)
+            {
+                system.debug(invl.NSP_Product_Code__c);
+            }           
+        }
+
+		inv[0].blng__InvoiceStatus__c='Posted';
+        inv[0].NSP_CLM_Document_Received__c = false;
+        inv[0].NSP_Invoice_External_ID__c = null;
+        system.debug(inv);
+        system.debug(inv[0].blng__PaymentStatus__c);
+        update inv[0];	
         
+        
+                
         blng__Payment__c currPayment = new blng__Payment__c();
         currPayment.blng__Account__c = objaccount.id; 
-        currPayment.blng__Amount__c = inv[0].blng__Balance__c;
+        currPayment.blng__Amount__c = inv[0].blng__TotalAmount__c;
         currPayment.blng__Status__c = 'Posted';
         currPayment.blng__PaymentDate__c = system.today();
         currPayment.blng__PaymentType__c = 'Check';
         insert currPayment;
         blng__PaymentAllocationInvoice__c paymentAlloc = new blng__PaymentAllocationInvoice__c();
-        paymentAlloc.blng__Payment__c = currPayment.Id;
+        paymentAlloc.blng__Payment__c = currPayment.id ;
         paymentAlloc.blng__Amount__c = currPayment.blng__Amount__c; 
         paymentAlloc.blng__Invoice__c = inv[0].Id;
         paymentAlloc.blng__Type__c = 'Allocation';
         insert paymentAlloc;
-        system.assertEquals('Posted', inv[0].blng__InvoiceStatus__c);
+        		
+        set<id> invoiceIdset = (new map<id,blng__Invoice__c>(inv)).keyset();               
+        Set<String> invIdset = (Set<String>)JSON.deserialize(JSON.serialize(invoiceIdset), Set<String>.class);
+        
+        NSP_InvoiceTriggerHelper.setDownPaymentDetailsOnProject(invIdset);
+        test.stoptest();
+        
         // NSP_InvoiceTriggerHelper.setInvoiceToEmail(new Set<String>{inv[0].Id}); // correcting compliation errors ~ NSP_InvoiceTriggerHelperTest: line 124, column 34: Method does not exist or incorrect signature: void setInvoiceToEmail(Set<String>) from the type NSP_InvoiceTriggerHelper
         //System.assert(orderList.size()==1,true);
-        }
-    
-    public static testMethod void testDunningCase()
+     }
+     public static testMethod void testDunningCase()
     {
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
 		NSP_InvoiceTriggerHelper.checkAndCloseDunningCase(new set<Id>{objaccount.Id});
@@ -161,7 +202,7 @@ public class NSP_InvoiceTriggerHelperTest
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         objQuote.NSP_Budgetary_Quote__c = true;
-        Test.startTest();
+        test.starttest();
         update objQuote;       
         
         list<OrderItem> orderItemList = new list<OrderItem>([select id,blng__NextBillingDate__c,blng__InvoiceRunProcessingStatus__c from OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id]);
@@ -180,5 +221,5 @@ public class NSP_InvoiceTriggerHelperTest
         update inv;
         System.assert(orderList.size()==1,true);
 
-    }
+    }     
 }
