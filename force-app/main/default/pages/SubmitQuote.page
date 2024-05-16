@@ -51,6 +51,7 @@
             <apex:inputHidden value="{!SBQQ__Quote__c.Ready_for_Approval__c}"/>
             <apex:inputHidden value="{!SBQQ__Quote__c.ApprovalStatus__c}"/>
             <apex:inputHidden value="{!SBQQ__Quote__c.SBQQ__Status__c}"/>
+            <apex:inputHidden value="{!SBQQ__Quote__c.NSP_TransactionType__c}"/>
          </div>
       </div>
       <apex:commandButton styleclass="slds-button slds-button_brand slds-float_right slds-m-top_medium" action="{!onSubmit}" title="Next"  value="Next"/>
