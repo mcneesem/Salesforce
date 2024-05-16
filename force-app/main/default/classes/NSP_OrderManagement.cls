@@ -20,10 +20,10 @@ public class NSP_OrderManagement {
             list<contract> lstTermContract = new list<contract>();
             List<Contract> contractList = [
                 SELECT
-                    Id, Status, ContractNumber, NSP_Product_Type__c,
-                    SBQQ__Evergreen__c, StartDate, EndDate, Account.Name,
-                    SBQQ__Order__c, SBQQ__Order__r.NSP_Transaction_Type__c,
-                    (SELECT Id, NSP_Status__c FROM SBQQ__Subscriptions__r)
+                    Id , Status , ContractNumber , NSP_Product_Type__c ,
+                    SBQQ__Evergreen__c , StartDate , EndDate, Account.Name ,
+                    SBQQ__Order__c , SBQQ__Order__r.NSP_Transaction_Type__c ,
+                    ( SELECT Id , NSP_Status__c FROM SBQQ__Subscriptions__r )
                 FROM Contract
                 WHERE (
                     ( AccountId = :recordId )
@@ -40,7 +40,7 @@ public class NSP_OrderManagement {
                     isTerminated = true;
                 } else if (cnt.SBQQ__Subscriptions__r != null) {
                     isTerminated = true;
-                    for (SBQQ__Subscription__c sub:cnt.SBQQ__Subscriptions__r) {                       
+                    for ( SBQQ__Subscription__c sub : cnt.SBQQ__Subscriptions__r ) {
                         if (sub.NSP_Status__c != 'Terminated') {
                             isTerminated = false;
                             break;
