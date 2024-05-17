@@ -484,14 +484,16 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * @return void                          
     */
     
-    public static void updateAssetServiceRegion(List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap ){
+     public static void updateAssetServiceRegion(List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap ){
         //Get Record Type Id
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
         Set<Id> accIds = new Set<Id>();
         Map<Id, NSP_Account_Team__c> accountTeams = new  Map<Id, NSP_Account_Team__c>();
         //Filter record based on Insert or Update
         for(NSP_Account_Team__c accTeam : newAccTeam) {
-            if(oldMap == null && accTeam.NSP_Account__c != null || oldMap != null && accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c) {                    
+            if(oldMap == null && accTeam.NSP_Account__c != null || 
+               ((oldMap != null && accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c) || 
+                (accTeam.NSP_User__c <> oldMap.get(accTeam.Id).NSP_User__c))) {                    
                  accIds.add(accTeam.NSP_Account__c);
              }            
         }
@@ -502,7 +504,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 accountTeams.put(accountTeam.NSP_Account__c, accountTeam);
             }
         }
-        
+         
         //Update Asset on Insert Or Update based on AccountTeams Map
         updateAssetRegion(accIds, woRecordTypeId, accountTeams);
         
