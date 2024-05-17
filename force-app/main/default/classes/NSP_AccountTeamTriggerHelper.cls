@@ -483,7 +483,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * @Defect : STY-02108
     * @return void                          
     */
-    
      public static void updateAssetServiceRegion(List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap ){
         //Get Record Type Id
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
@@ -504,7 +503,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 accountTeams.put(accountTeam.NSP_Account__c, accountTeam);
             }
         }
-         
         //Update Asset on Insert Or Update based on AccountTeams Map
         updateAssetRegion(accIds, woRecordTypeId, accountTeams);
         
