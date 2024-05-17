@@ -42,7 +42,7 @@
             </value>
         </filters>
         <filters>
-            <field>Action__c</field>
+            <field>Action_info__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>

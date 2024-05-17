@@ -142,17 +142,17 @@
             </value>
         </filters>
         <filters>
-            <field>pse__Project__c</field>
-            <operator>IsNull</operator>
-            <rightValue>
-                <booleanValue>false</booleanValue>
-            </rightValue>
-        </filters>
-        <filters>
             <field>NSP_Account_Id__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_RSAP_Record.NSP_Account__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Complete</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -160,7 +160,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>NSP_Situation_Termination_Drivers__c</queriedFields>
         <queriedFields>pse__Project__c</queriedFields>
-        <sortField>LastModifiedDate</sortField>
+        <sortField>CreatedDate</sortField>
         <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>

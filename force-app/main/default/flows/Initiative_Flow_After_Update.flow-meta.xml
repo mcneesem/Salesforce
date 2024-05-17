@@ -78,11 +78,5 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>isInsert</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
     </subflows>
 </Flow>
