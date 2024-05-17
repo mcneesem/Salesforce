@@ -800,15 +800,37 @@
             <targetReference>Get_entity_definition_of_account</targetReference>
         </connector>
         <fields>
+            <name>Request_Discover_SKO_Meeting_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Request_Discover_SKO_Meeting_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CTM_Header_1</name>
+                    <fieldText>&lt;p&gt;{!Request_Header}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
             <name>Central_time_zone_warning</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(244, 3, 3);&quot;&gt;&lt;em&gt;All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Request_Discover_SKO_Meeting_Section1</name>
+            <name>Request_Discover_SKO_Meeting_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Request_Discover_SKO_Meeting_Section1_Column1</name>
+                <name>Request_Discover_SKO_Meeting_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>OMRdatatable</name>
@@ -1104,7 +1126,7 @@
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
@@ -1182,6 +1204,11 @@ Special Instructions: {!Special_Instructions}</text>
         <name>populate_notes_field_on_task</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;Task created by &apos;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Request_Discover_SKO_Meeting&apos; flow.&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Request_Header</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Request CTM and Employee Orientation Meeting&lt;/strong&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>testtexttemplate</name>

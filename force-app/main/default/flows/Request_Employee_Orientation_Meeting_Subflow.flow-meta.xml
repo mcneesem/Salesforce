@@ -1396,6 +1396,28 @@
             <targetReference>Get_OMR_Dates_in_Time_Parameters_After_SKO</targetReference>
         </connector>
         <fields>
+            <name>Employee_Orientation_Meeting_Type_Start_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Employee_Orientation_Meeting_Type_Start_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>request_header1</name>
+                    <fieldText>&lt;p&gt;{!Request_Header}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
             <name>CTM_Meeting_Date</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Client Transition Meeting Date&lt;/strong&gt;: {!vCTM_Date}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1412,7 +1434,7 @@
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_1st_Employee_Orientation_Meeting</name>
@@ -1425,6 +1447,28 @@
         <connector>
             <targetReference>Decrement_1st_Selected_OMR_Record</targetReference>
         </connector>
+        <fields>
+            <name>Select_1st_Employee_Orientation_Meeting_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Select_1st_Employee_Orientation_Meeting_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>request_header2</name>
+                    <fieldText>&lt;p&gt;{!Request_Header}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
         <fields>
             <name>eom_block_1</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #1:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;font-size: 14px; color: rgb(240, 5, 5);&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
@@ -1624,7 +1668,7 @@
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_2nd_Employee_Orientation_Meeting</name>
@@ -1637,6 +1681,28 @@
         <connector>
             <targetReference>Decrement_2nd_Selected_OMR_Record</targetReference>
         </connector>
+        <fields>
+            <name>Select_2nd_Employee_Orientation_Meeting_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Select_2nd_Employee_Orientation_Meeting_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>request_header3</name>
+                    <fieldText>&lt;p&gt;{!Request_Header}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
         <fields>
             <name>eom_block_2</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #2:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;font-size: 14px; color: rgb(240, 5, 5);&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
@@ -1836,7 +1902,7 @@
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_3rd_Employee_Orientation_Meeting</name>
@@ -2062,6 +2128,28 @@
             <targetReference>Decrement_4th_Selected_OMR_Record</targetReference>
         </connector>
         <fields>
+            <name>Select_4th_Employee_Orientation_Meeting_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Select_4th_Employee_Orientation_Meeting_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>request_header4</name>
+                    <fieldText>&lt;p&gt;{!Request_Header}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
             <name>eom_block_4</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #4:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;color: rgb(240, 5, 5); font-size: 14px;&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -2260,7 +2348,7 @@
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>1607</locationX>
@@ -2294,6 +2382,11 @@
         <name>populate_notes_field_on_task</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>Task created by &apos;Request_Employee_Orientation_Meeting&apos; flow.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Request_Header</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Request CTM and Employee Orientation Meeting&lt;/strong&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>task_description_1meeting</name>
