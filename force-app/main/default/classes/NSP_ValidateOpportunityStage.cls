@@ -314,7 +314,11 @@ public class NSP_ValidateOpportunityStage {
 
         Integer canCloseLost =0;
         Map<Id,User> currentUserRoleMap = getUserRole( UserInfo.getUserId() );
-        if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+
+         //  Added 275639
+        if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity')){
+            canCloseLost++;
+        }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
             canCloseLost++;
         }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RETIREMENT_SALES_CONSULTANT && closeLostRolesforRetirementSalesConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
             canCloseLost++;
