@@ -55,6 +55,12 @@ public class NSP_ValidateOpportunityStage {
             List<Quote> quotes=oppFromMap?.Quotes;
             
             if(opp.StageName != null){
+
+                //  Added 275639
+                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                    continue;
+                }
+
                 //Analysis
                 if ( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
                     || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
