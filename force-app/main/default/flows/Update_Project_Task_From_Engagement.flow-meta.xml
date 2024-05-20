@@ -18,6 +18,13 @@
             <name>RSAP_Is_Not_Null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
+                <leftValueReference>engagementRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>engagementRecord.Relationship_Strategy_Action_Plan__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
