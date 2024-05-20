@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Delivery_Mechanism_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Delivery Mechanism Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>3rd Party Content Marketing</fullName>
+                <default>false</default>
+                <label>3rd Party Content Marketing</label>
+            </value>
+            <value>
+                <fullName>Affiliate - Paid - Centerfield</fullName>
+                <default>false</default>
+                <label>Affiliate - Paid - Centerfield</label>
+            </value>
+            <value>
+                <fullName>Audio - Paid - Adswerve</fullName>
+                <default>false</default>
+                <label>Audio - Paid - Adswerve</label>
+            </value>
+            <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
+                <fullName>Corporate Employee Referral</fullName>
+                <default>false</default>
+                <label>Corporate Employee Referral</label>
+            </value>
+            <value>
+                <fullName>Delivery Mechanisms</fullName>
+                <default>false</default>
+                <label>Delivery Mechanisms</label>
+            </value>
+            <value>
+                <fullName>Display - Paid - 6Sense</fullName>
+                <default>false</default>
+                <label>Display - Paid - 6Sense</label>
+            </value>
+            <value>
+                <fullName>Display - Paid - Connected TV</fullName>
+                <default>false</default>
+                <label>Display - Paid - Connected TV</label>
+            </value>
+            <value>
+                <fullName>Display - Paid - Google</fullName>
+                <default>false</default>
+                <label>Display - Paid - Google</label>
+            </value>
+            <value>
+                <fullName>Display - Paid - Google via 6Sense</fullName>
+                <default>false</default>
+                <label>Display - Paid - Google via 6Sense</label>
+            </value>
+            <value>
+                <fullName>Display - Paid Remarketing - 6Sense</fullName>
+                <default>false</default>
+                <label>Display - Paid Remarketing - 6Sense</label>
+            </value>
+            <value>
+                <fullName>Display - Paid Remarketing - Connected TV</fullName>
+                <default>false</default>
+                <label>Display - Paid Remarketing - Connected TV</label>
+            </value>
+            <value>
+                <fullName>Display - Paid Remarketing - Google</fullName>
+                <default>false</default>
+                <label>Display - Paid Remarketing - Google</label>
+            </value>
+            <value>
+                <fullName>Display - Paid Remarketing - Google via 6Sense</fullName>
+                <default>false</default>
+                <label>Display - Paid Remarketing - Google via 6Sense</label>
+            </value>
+            <value>
+                <fullName>Display - Paid Remarketing - StackAdapt</fullName>
+                <default>false</default>
+                <label>Display - Paid Remarketing - StackAdapt</label>
+            </value>
+            <value>
+                <fullName>Display - Paid - StackAdapt</fullName>
+                <default>false</default>
+                <label>Display - Paid - StackAdapt</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Event - Tradeshow, Industry Conference</fullName>
+                <default>false</default>
+                <label>Event - Tradeshow, Industry Conference</label>
+            </value>
+            <value>
+                <fullName>Event - Webinar</fullName>
+                <default>false</default>
+                <label>Event - Webinar</label>
+            </value>
+            <value>
+                <fullName>Insperity Blog</fullName>
+                <default>false</default>
+                <label>Insperity Blog</label>
+            </value>
+            <value>
+                <fullName>Insperity Website</fullName>
+                <default>false</default>
+                <label>Insperity Website</label>
+            </value>
+            <value>
+                <fullName>Outbound Cold Call</fullName>
+                <default>false</default>
+                <label>Outbound Cold Call</label>
+            </value>
+            <value>
+                <fullName>Paid - YouTube</fullName>
+                <default>false</default>
+                <label>Paid - YouTube</label>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Purchased List</fullName>
+                <default>false</default>
+                <label>Purchased List</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Alliances</fullName>
+                <default>false</default>
+                <label>Relationship Marketing - Alliances</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Brokers</fullName>
+                <default>false</default>
+                <label>Relationship Marketing - Brokers</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Loyalty</fullName>
+                <default>false</default>
+                <label>Relationship Marketing - Loyalty</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - PCM</fullName>
+                <default>false</default>
+                <label>Relationship Marketing - PCM</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Sponsorships</fullName>
+                <default>false</default>
+                <label>Relationship Marketing - Sponsorships</label>
+            </value>
+            <value>
+                <fullName>Search - Organic - Bing</fullName>
+                <default>false</default>
+                <label>Search - Organic - Bing</label>
+            </value>
+            <value>
+                <fullName>Search - Organic - Google</fullName>
+                <default>false</default>
+                <label>Search - Organic - Google</label>
+            </value>
+            <value>
+                <fullName>Search - Paid - Bing</fullName>
+                <default>false</default>
+                <label>Search - Paid - Bing</label>
+            </value>
+            <value>
+                <fullName>Search - Paid - Google</fullName>
+                <default>false</default>
+                <label>Search - Paid - Google</label>
+            </value>
+            <value>
+                <fullName>Social - Organic - LinkedIn</fullName>
+                <default>false</default>
+                <label>Social - Organic - LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Social - Organic - Meta</fullName>
+                <default>false</default>
+                <label>Social - Organic - Meta</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Influencer</fullName>
+                <default>false</default>
+                <label>Social - Paid - Influencer</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - LinkedIn</fullName>
+                <default>false</default>
+                <label>Social - Paid - LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - LinkedIn via 6Sense</fullName>
+                <default>false</default>
+                <label>Social - Paid - LinkedIn via 6Sense</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Meta</fullName>
+                <default>false</default>
+                <label>Social - Paid - Meta</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Meta via 6Sense</fullName>
+                <default>false</default>
+                <label>Social - Paid - Meta via 6Sense</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Quora</fullName>
+                <default>false</default>
+                <label>Social - Paid - Quora</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - X</fullName>
+                <default>false</default>
+                <label>Social - Paid - X</label>
+            </value>
+            <value>
+                <fullName>Traditional Media</fullName>
+                <default>false</default>
+                <label>Traditional Media</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
