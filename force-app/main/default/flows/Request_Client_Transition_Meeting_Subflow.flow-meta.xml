@@ -1195,7 +1195,7 @@ First Pay Date: {!FirstPayDate}
 -
 Time Entry Method: {!Time_Entry_Method}
 -
-Will the client use Self-Paced Orientation (SPOT) in pace of a live Employee Orientation Meeting: {!Will_client_uses_SPOT}
+Will the client use Self-Paced Orientation (SPOT) in place of a live Employee Orientation Meeting: {!Will_client_uses_SPOT}
 -
 Special Instructions: {!Special_Instructions}</text>
     </textTemplates>
