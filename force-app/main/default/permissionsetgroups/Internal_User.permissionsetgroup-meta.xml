@@ -11,6 +11,7 @@
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
     <permissionSets>Request_Client_Transition_Meeting</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting</permissionSets>
+    <permissionSets>Request_Employee_Orientation_Meeting_Revised</permissionSets>    
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
