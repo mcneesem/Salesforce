@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Campaign Target Audience</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

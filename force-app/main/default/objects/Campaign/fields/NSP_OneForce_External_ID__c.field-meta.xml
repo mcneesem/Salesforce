@@ -8,6 +8,7 @@
     <label>OneForce External ID</label>
     <length>80</length>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <type>Text</type>
     <unique>true</unique>
 </CustomField>
