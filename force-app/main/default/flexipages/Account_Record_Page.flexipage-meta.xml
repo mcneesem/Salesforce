@@ -148,7 +148,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Request_an_Employee_Orientation_Meeting_Revised</value>
+                            <value>Account.Request_Employee_Orientation_Meeting_Revised</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Request_Employee_Orientation_Meeting_Revised}</leftValue>
