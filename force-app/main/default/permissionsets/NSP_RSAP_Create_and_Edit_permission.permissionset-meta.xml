@@ -17,7 +17,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Engagement_Path__c.Action__c</field>
         <readable>true</readable>
     </fieldPermissions>
