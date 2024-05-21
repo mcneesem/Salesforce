@@ -69,9 +69,8 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             
             /*STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked 
             and Disptach region field is not null*/
-            if(pTask.NSP_Create_Work_Order__c == true && 
-               (pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c ||
-                String.isBlank(projectTaskOldMap.get(pTask.id).NSP_Dispatch_Region__c)) && 
+            if(pTask.NSP_Create_Work_Order__c == true &&
+               pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c &&
                String.isNotBlank(pTask.NSP_Dispatch_Region__c)){
                    mapOfProjectTaskIdAndProjecTask.put(pTask.Id, pTask);
                }
