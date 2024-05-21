@@ -2,6 +2,8 @@
 * Represents the new project task trigger helper which handles all the logic.
 */
 public class NSP_ProjectTasksTriggerServiceHelper {
+    // test w/ NSP_ProjectTasksTriggerServiceHelperTest (85%)
+
     private Set<Id> allProjectIds = new Set<Id>();
     public static Boolean runOwnerAssignmentLogic = true;
     
