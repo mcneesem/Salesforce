@@ -7,7 +7,6 @@ import getRelatedClients from '@salesforce/apex/NSP_ImplementationProfileControl
 import saveGeneralForm from '@salesforce/apex/NSP_ImplementationProfileController.saveGeneralDetails';
 import IP_CLIENT_RELATED_CLIENT from '@salesforce/schema/NSP_IP_Related_Client__c';
 import IS_CLIENT_FROM_ANOTHER_PEO from '@salesforce/schema/Implementation_Profile__c.Is_the_client_coming_from_another_PEO__c';
-import IS_CLIENT_IMPLEMENTING_PERFORMANCE from '@salesforce/schema/Implementation_Profile__c.Client_Implementing_Premier_Performance__c';
 import CLIENT_IMPLEMENTING_OTHER_BUSINESS from '@salesforce/schema/Implementation_Profile__c.Implementing_biz_Performance_solutions__c';
 import TIME_ENTRY_METHOD from '@salesforce/schema/Implementation_Profile__c.Time_Entry_Method__c';
 import CLIENT_PROFILE_INFORMATION from '@salesforce/schema/Implementation_Profile__c.Client_Profile_Information__c';
@@ -256,16 +255,6 @@ export default class Nsp_generalIp extends LightningElement {
             } else {
                 this.fields.PEO_Name__c = null;
                 this.showPEOName = false;
-            }
-            return;
-        }
-
-        if (field === 'Client_Implementing_Premier_Performance__c') {
-            if (value === this.label.YES_CONSTANT) {
-                this.showHowSoonClientLikeSolutionImplemntedfield = true;
-            } else {
-                this.fields.When_Client_Wants_Solution_implemented__c = null;
-                this.showHowSoonClientLikeSolutionImplemntedfield = false;
             }
             return;
         }

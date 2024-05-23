@@ -177,6 +177,8 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.NSP_Employee_Details_On_LOA__c='test1~date~No,test2~date~No';
         ip.NSP_Form_Completed__c=true;
         ip.Client_Implementing_Premier_Performance__c ='Yes';
+        ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.YES;
+        ip.First_Pay_Date__c = system.today();
         Test.startTest();
         update ip;
         List<pse__Project_Task__c> projTaskList = [Select Id from pse__Project_Task__c WHERE pse__Project__c=: project.id];
@@ -231,6 +233,7 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.Effective_Date_Payroll_Worker_comp_EPLI__c=system.today()+1;
         ip.Insperity_benefits_effective_date__c=system.today()+1;
         ip.Benefits_Package__c='Independence';
+        ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.YES;
         Test.startTest();
         if(projTaskList.size()>0){
        	projTaskList[0].pse__Status__c=NSP_ServiceConstants.TASKCOMPLETE;

@@ -675,6 +675,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Out of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Price</fullName>
             <default>false</default>
         </values>
@@ -3930,6 +3934,10 @@
         </values>
         <values>
             <fullName>RSC Insurance Brokerage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rampart Insurance</fullName>
             <default>false</default>
         </values>
         <values>

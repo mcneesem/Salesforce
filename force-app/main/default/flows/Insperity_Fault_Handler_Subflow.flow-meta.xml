@@ -2,36 +2,269 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <description>Send an email to the WYSIWYG shared mailbox (sfconfig@insperity.com) for triage</description>
-        <name>Send_Fault_Email</name>
-        <label>Send Fault Email</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <name>Send_Email</name>
+        <label>Send Email</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <faultConnector>
+            <targetReference>Set_Self_Faulted</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>faultEmailBodyTemplate</elementReference>
-            </value>
-        </inputParameters>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>sfconfig@insperity.com</stringValue>
+                <elementReference>recipients</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <elementReference>faultEmailSubjectTemplate</elementReference>
+                <elementReference>subjectTemplate</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>bodyTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
-    <description>A flow to handle fault paths from other flows, sends an email to sfconfig@insperity.com
-Updated email to remove Org for now</description>
+    <assignments>
+        <name>Copy_Triggering_Flow_Input</name>
+        <label>Copy Triggering Flow Input</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>faultFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>triggeringFlow</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Log_Attributes</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Log_Attributes</name>
+        <label>Set Log Attributes</label>
+        <locationX>314</locationX>
+        <locationY>434</locationY>
+        <assignmentItems>
+            <assignToReference>faultLog.FaultElement__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>safeFaultElement</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>faultLog.FaultFlow__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>safeFaultFlow</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>faultLog.FaultMessage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>safeFaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>faultLog.InterviewGuid__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.InterviewGuid</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>faultLog.OrganizationId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Organization.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>faultLog.User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>faultLog.UserId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Save_Log</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Placeholder element to prevent Flow optimization.</description>
+        <name>Set_Self_Faulted</name>
+        <label>Set Self-Faulted</label>
+        <locationX>314</locationX>
+        <locationY>866</locationY>
+        <assignmentItems>
+            <assignToReference>isSelfFaulted</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Placeholder element to prevent Flow optimization.</description>
+        <name>Set_Self_Faulted_2</name>
+        <label>Set Self-Faulted</label>
+        <locationX>842</locationX>
+        <locationY>650</locationY>
+        <assignmentItems>
+            <assignToReference>isSelfFaulted</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Check_Recipients</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Temporary decision path until {!triggeringFlow} is fully deprecated and removed.</description>
+        <name>Check_Inputs</name>
+        <label>Check Inputs</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Set_Log_Attributes</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Fault_Flow_Input</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>faultFlow</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>triggeringFlow</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_Triggering_Flow_Input</targetReference>
+            </connector>
+            <label>Update Fault Flow Input</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Recipients</name>
+        <label>Check Recipients</label>
+        <locationX>314</locationX>
+        <locationY>650</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Recipients</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recipients</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recipients</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email</targetReference>
+            </connector>
+            <label>Has Recipients</label>
+        </rules>
+    </decisions>
+    <description>A Flow to handle Fault Paths from other Flows.
+Save a Flow Fault Log record containing fault information.
+Sends an email containing fault information.</description>
     <environments>Default</environments>
+    <formulas>
+        <name>orgApiName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  {!$Setup.OrgSettings__c.IsSandbox__c} ,
+  UPPER( {!$Setup.OrgSettings__c.SandboxApiName__c} ) ,
+  &apos;PROD&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>recipients</name>
+        <dataType>String</dataType>
+        <expression>{!$Setup.InboundEmailLogSettings__c.NotificationRecipients__c}</expression>
+    </formulas>
+    <formulas>
+        <name>safeFaultElement</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!faultElement} ) ) ,
+  IF(
+    ( LEN( {!faultElement} ) &gt; 255 ) ,
+    LEFT( {!faultElement} , 255 ) ,
+    {!faultElement}
+  ) ,
+  &apos;&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>safeFaultFlow</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!faultFlow} ) ) ,
+  IF(
+    ( LEN( {!faultFlow} ) &gt; 255 ) ,
+    LEFT( {!faultFlow} , 255 ) ,
+    {!faultFlow}
+  ) ,
+  &apos;&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>safeFaultMessage</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!faultMessage} ) ) ,
+  IF(
+    ( LEN( {!faultMessage} ) &gt; 255 ) ,
+    LEFT( {!faultMessage} , 255 ) ,
+    {!faultMessage}
+  ) ,
+  &apos;&apos;
+)</expression>
+    </formulas>
     <interviewLabel>Insperity Fault Handler Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Insperity Fault Handler Subflow</label>
     <processMetadataValues>
@@ -53,47 +286,117 @@ Updated email to remove Org for now</description>
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Save_Log</name>
+        <label>Save Log</label>
+        <locationX>314</locationX>
+        <locationY>542</locationY>
+        <connector>
+            <targetReference>Check_Recipients</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Self_Faulted_2</targetReference>
+        </faultConnector>
+        <inputReference>faultLog</inputReference>
+    </recordCreates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Send_Fault_Email</targetReference>
+            <targetReference>Check_Inputs</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
-        <description>The body of the email message to be sent with fault info</description>
-        <name>faultEmailBodyTemplate</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;The following flow has hit a fault: {!triggeringFlow}&lt;/p&gt;&lt;p&gt;Running Username: {!$User.Username}&lt;/p&gt;&lt;p&gt;Error date/time: {!$Flow.CurrentDateTime}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The fault message is as follows: {!faultMessage}&lt;/p&gt;</text>
+        <description>The body of the email message to be sent with fault info.</description>
+        <name>bodyTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;Org API Name: {!orgApiName}&lt;/p&gt;
+&lt;p&gt;Running Username: {!$User.Username}&lt;/p&gt;
+&lt;p&gt;Current Date/Time: {!$Flow.CurrentDateTime}&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Fault Flow: {!faultFlow}&lt;/p&gt;
+&lt;p&gt;Fault Element: {!faultElement}&lt;/p&gt;
+&lt;p&gt;Fault Message: {!faultMessage}&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
-        <description>A template for the email subject</description>
-        <name>faultEmailSubjectTemplate</name>
+        <description>A template for the email subject.</description>
+        <name>subjectTemplate</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!triggeringFlow} + &quot; faulted in &quot; + {!faultedOrg}</text>
+        <text>{!orgApiName}: Fault Handler: {!faultFlow}</text>
     </textTemplates>
     <variables>
+        <description>DEPRECATED ~ replaced by Custom Settings</description>
         <name>faultedOrg</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
+        <description>API Name of the Flow Element that hit a Fault Path.</description>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>API Name of the Flow that hit a Fault Path.</description>
+        <name>faultFlow</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>faultLog</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FlowFaultLog__c</objectType>
+    </variables>
+    <variables>
+        <description>Fault Message that caused a Fault Path.</description>
         <name>faultMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
+        <name>isSelfFaulted</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>DEPRECATED ~ replaced by faultFlow</description>
         <name>triggeringFlow</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>
- 

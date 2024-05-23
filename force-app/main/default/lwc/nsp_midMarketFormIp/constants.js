@@ -3,6 +3,7 @@ import IP_EMP_DATA_OBJECT from '@salesforce/schema/NSP_Employee_Data__c';
 import PAY_PERIOD_OBJECT from '@salesforce/schema/Implementation_Pay_Period__c';
 import IP_RELATED_CLIENT from '@salesforce/schema/NSP_IP_Related_Client__c'
 import IP_COPY_DATA_OBJECT from '@salesforce/schema/NSP_Implementation_Profile_Copy_Data__c';
+import EMPLOYEE_ORIENTATION from '@salesforce/schema/Employee_Orientation__c';
 import ADDITIONAL_CLIENT_CONTACTS from '@salesforce/schema/NSP_IP_Additional_Client_Contact__c';
 
 import yesButton from '@salesforce/label/c.NSP_Yes';
@@ -62,6 +63,13 @@ const NON_COPY_ABLE_FIELDS = [
   'Do_any_EEs_have_tax_levies__c',
   'All_EEs_paid_under_same_FEIN_currently__c',
   'List_additional_FEIN_s__c'
+];
+
+const COPY_ABLE_IP_CHILD_OBJECTS = [
+  IP_RELATED_CLIENT.objectApiName,
+  PAY_PERIOD_OBJECT.objectApiName,
+  ADDITIONAL_CLIENT_CONTACTS.objectApiName,
+  EMPLOYEE_ORIENTATION.objectApiName,
 ];
 
 const HELP_TEXT = {
@@ -172,6 +180,7 @@ export {
   SAVE_AND_EXIT_DIALOG_BUTTON_CONFIG,
   NON_COPY_ABLE_SECTIONS,
   NON_COPY_ABLE_FIELDS,
+  COPY_ABLE_IP_CHILD_OBJECTS,
   RELATED_FIELD_NAME,
   ERROR_TOAST_CONFIG,
 };

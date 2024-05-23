@@ -182,55 +182,50 @@ public class NSP_ValidateOpportunityStage {
                }
             
     }
-    
-    /**
-* Evaluate criteria related to quote
-* @param opportunityList list of New Opportunity.  
-* @param  list of events
-* @param list of tasks
-* @return void             
-*   
-*   added under CR-031          
-*/ 
-     public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
+
+    // Evaluate criteria related to quote
+    // @param opportunityList list of New Opportunity.
+    // @param  list of events
+    // @param list of tasks
+    // @return void
+    public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
         try{
-			// 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
+            // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
             if(!opp.Fee_Inclusive__c && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
-                   if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
-                       if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
-                           if(opp.SBQQ__PrimaryQuote__c != null){
-                               if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                                   opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                               }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
-                                   opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
-                               }
-                           }else{
-                               if(!test.isRunningTest()){
-                                   opp.addError(System.Label.NSP_AddPrimaryQuote);
-                               }
-                           } 
-                       }
-                   }else{
-                       if(opp.SBQQ__PrimaryQuote__c != null){
-                           if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                               opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                           }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
-                                   opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
-                           }
+                if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
+                    if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
+                        if(opp.SBQQ__PrimaryQuote__c != null){
+                            if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                                opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                            }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
+                                opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                            }
+                        }else{
+                            if(!test.isRunningTest()){
+                                opp.addError(System.Label.NSP_AddPrimaryQuote);
+                            }
+                        }
+                    }
+                }else{
+                    if(opp.SBQQ__PrimaryQuote__c != null){
+                        if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                            opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                        }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
+                            opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                        }
                     }else{
-                    	if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || 
-                                                                    (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT 
-                                                                     && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){//DF-01080 subtype Amendment check added
-                                                                         opp.addError(System.Label.NSP_AddPrimaryQuote);
-						}
-					} 
-				}
-			}
+                        if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){
+                            //DF-01080 subtype Amendment check added
+                            opp.addError(System.Label.NSP_AddPrimaryQuote);
+                        }
+                    }
+                }
+            }
         } catch(Exception ex) {
             NSP_CustomException.LogException(ex);
-        }   
+        }
     }
-    
+
     /**
 * Evaluate entry criteria for Closed Won stage
 * @param opportunityList list of New Opportunity.  
@@ -269,88 +264,87 @@ public class NSP_ValidateOpportunityStage {
          Map<Id,User> userMap= new Map<Id,User>([SELECT Id, UserRole.Name, ToLabel(NSP_Sales_Office__c), ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id =:UserId]);
             return userMap;
     }  
-    
-    /**
-* Checks if current user can modify opportunity stage to closed lost
-* @param Opportunity opp
-*  
-* @return void             
-* @DF-01769 
-*/
-/*Modified Logic for Close Lost  
- * Date- 8/4/2022
- * Developer- Ruchi
- * Ticket-10350
- * Modification Date- 9/30/2022
- */     
-public static void evaluateClosedLostStageCriteria(Opportunity opp) {
-    Integer canCloseLost =0;
-    Set < String > salesOfficeSet = new Set < String > ();
-    Map<Id,User> OpportunityOwnerRoleMap= getUserRole(opp.OwnerId);
-    Map<Id,User> currentUserRoleMap=getUserRole(userInfo.getUserId());
-    
-    //Added for 579279
-    Map<Id,Opportunity> oppSalesOfficeMap = new Map<Id,Opportunity>([Select ID, ToLabel(NSP_Sales_Office__c) FROM Opportunity WHERE Id =:opp.Id]);
-    List<String> salesOfficeList = new List<String>();
-    if(oppSalesOfficeMap.get(opp.Id).NSP_Sales_Office__c != null) {
-            salesOfficeList.add(oppSalesOfficeMap.get(opp.Id).NSP_Sales_Office__c);
-    }
 
-    //Added for 579280
-    List<String> salesOfficeMembership = new List<String>();
-    if(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c != null){
-    salesOfficeMembership.addAll(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c.split(';'));
-    }    /*if(!closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        //show error if role not equal to DA,RA or BPA
-        opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
-    }else if(closedLostCriteriaRoles.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name) && !currentUserRoleMap.containsKey(opp.OwnerId)){
-        //if Role is RA / BPA / DA and owner and current user is different - check sales office
-        if(getSalesOfficeGroup(userInfo.getUserId(),currentUserRoleMap.get(userInfo.getUserId()).NSP_Sales_Office__c) != getSalesOfficeGroup(opp.OwnerId,OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office__c)){
-            //if sales office is different - show error
+    // Checks if current user can modify opportunity stage to closed lost
+    // @param Opportunity opp
+    // @return void             
+    // @DF-01769 
+    // Modified Logic for Close Lost  
+    // Date- 8/4/2022
+    // Developer- Ruchi
+    // Ticket-10350
+    // Modification Date- 9/30/2022
+    public static void evaluateClosedLostStageCriteria( Opportunity opp ) {
+        //Added for 579279
+        Map<Id,Opportunity> oppSalesOfficeMap = new Map<Id,Opportunity>(
+            [
+                SELECT Id , ToLabel( NSP_Sales_Office__c )
+                FROM Opportunity
+                WHERE ( Id = :opp.Id )
+            ]
+        );
+        List<String> salesOfficeList = new List<String>();
+        if ( ( oppSalesOfficeMap != null )
+            && !oppSalesOfficeMap.isEmpty()
+            && oppSalesOfficeMap.containsKey( opp.Id )
+            )
+        {
+            Opportunity check = oppSalesOfficeMap.get( opp.Id );
+            if ( ( check != null )
+                && ( check.NSP_Sales_Office__c != null )
+                )
+            {
+                salesOfficeList.add( check.NSP_Sales_Office__c );
+            }
+        }
+
+        //Added for 579280
+        Map<Id,User> OpportunityOwnerRoleMap = getUserRole( opp.OwnerId );
+        List<String> salesOfficeMembership = new List<String>();
+        if(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c != null){
+            salesOfficeMembership.addAll(OpportunityOwnerRoleMap.get(opp.OwnerId).NSP_Sales_Office_Membership__c.split(';'));
+        }
+        List<ID> TeamMemberList = new List<ID>();
+        List<OpportunityTeamMember> OpportunityTeamMemberList = [SELECT Id, UserId, TeamMemberRole from OpportunityTeamMember where OpportunityId = : opp.Id and TeamMemberRole =: closeLostRoleinOpportunityTeam];
+        if(!OpportunityTeamMemberList.isEmpty()) {
+            for(OpportunityTeamMember oppTeamMember : OpportunityTeamMemberList){
+                TeamMemberList.add(oppTeamMember.UserId);
+            }
+        }
+
+        Integer canCloseLost =0;
+        Map<Id,User> currentUserRoleMap = getUserRole( UserInfo.getUserId() );
+        if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RETIREMENT_SALES_CONSULTANT && closeLostRolesforRetirementSalesConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.INSURANCE_SALES && closeLostRolesforInsuranceSales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RECRUITING_SALES && closeLostRolesforRecruitingSales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.TECHNOLOGY_SALES && closeLostRolesforTechnologySales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }else if(opp.ownerid == userInfo.getUserId()){
+            canCloseLost++;
+        }else if(TeamMemberList.contains(userInfo.getUserId())){
+            canCloseLost++;
+        }
+        //Added for 578774
+        else if(opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }
+        //Added for 579280
+        else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeMembership) != '' && closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }
+        //Added for 579279
+        else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeList) != '' && closeLostRolesforsamesalesofficeonOpp.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+            canCloseLost++;
+        }
+        if(canCloseLost == 0){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
         }
-        
-    }*/
-    List<ID> TeamMemberList = new List<ID>();
-    List<OpportunityTeamMember> OpportunityTeamMemberList = [SELECT Id, UserId, TeamMemberRole from OpportunityTeamMember where OpportunityId = : opp.Id and TeamMemberRole =: closeLostRoleinOpportunityTeam];
-    if(!OpportunityTeamMemberList.isEmpty()) {
-        for(OpportunityTeamMember oppTeamMember : OpportunityTeamMemberList){
-         TeamMemberList.add(oppTeamMember.UserId);
     }
-    }
-    
-    if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RETIREMENT_SALES_CONSULTANT && closeLostRolesforRetirementSalesConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.INSURANCE_SALES && closeLostRolesforInsuranceSales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RECRUITING_SALES && closeLostRolesforRecruitingSales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.TECHNOLOGY_SALES && closeLostRolesforTechnologySales.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }else if(opp.ownerid == userInfo.getUserId()){
-        canCloseLost++;
-    }else if(TeamMemberList.contains(userInfo.getUserId())){
-        canCloseLost++;
-    }
-    //Added for 578774
-    else if(opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }
-     //Added for 579280
-    else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeMembership) != '' && closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }
-    //Added for 579279
-    else if(getSalesOfficeGroup(userInfo.getUserId(),salesOfficeList) != '' && closeLostRolesforsamesalesofficeonOpp.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
-        canCloseLost++;
-    }
-    if(canCloseLost == 0){
-        opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
-    }
-}    
-
 
 /**
 * gets the group id of sales office group of which user is member

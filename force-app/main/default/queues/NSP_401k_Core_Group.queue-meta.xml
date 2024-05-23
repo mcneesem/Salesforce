@@ -3,7 +3,7 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>contact_center@insperity.com.invalid</email>
     <name>Contact Center 401k Core</name>
-    <queueRoutingConfig>Messaging_Default</queueRoutingConfig>
+    <queueRoutingConfig>Messaging_Escalations</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -44,8 +44,6 @@ import Yes from '@salesforce/label/c.NSP_Yes';
 import No from '@salesforce/label/c.NSP_No';
 
 import isClientComingFromAnotherPEO from '@salesforce/label/c.NSP_Is_the_client_coming_from_Another_PEO';
-import isClientComingImplementingPerformance from '@salesforce/label/c.NSP_Will_the_client_be_implemening_Premier_Performannce';
-import whenClientLikeSolutionImplemented from '@salesforce/label/c.NSP_When_client_like_solution_implemented';
 import isClientImplementingAnyOtherBusinessSolutions from '@salesforce/label/c.NSP_Client_implementing_any_other_Business_Performance_Solutions';
 import premierPerformanceImplementationTimeline from '@salesforce/label/c.Premier_Performance_Implementation_Timeline';
 import organizationalPlanningImpTimeline from '@salesforce/label/c.Organizational_Planning_Imp_Timeline';
@@ -105,6 +103,17 @@ import isPayrollEntryItemizedOrSimpleEntry from '@salesforce/label/c.Is_payroll_
 import itemized from '@salesforce/label/c.If_Itemized_they_must_use_Integra';
 import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
 import allowances from '@salesforce/label/c.NSP_Allowances';
+import WhatQuickBooksversiondoyouuse from '@salesforce/label/c.What_QuickBooks_version_do_you_use';
+import Neededpayrollentryallocation from '@salesforce/label/c.Needed_payroll_entry_allocation';
+import Doyouneedtoallocatecosts from '@salesforce/label/c.Do_you_need_to_allocate_costs';
+import Doyourequiremorethan3jobcost from '@salesforce/label/c.Do_you_require_more_than_3_job_cost';
+import Doyouhavearecentjournalentry from '@salesforce/label/c.Do_you_have_a_recent_journal_entry';
+import Doyouhavearecentjournal from '@salesforce/label/c.Do_you_have_a_recent_journal';
+import Doyouneedtoallocatehelptext from '@salesforce/label/c.Do_you_need_to_allocate_help_text';
+import Doyourequiremorethan3jobhelptext from '@salesforce/label/c.Do_you_require_more_than_3_job_help_text';
+import ClientIntegraResponsessmartsheet from '@salesforce/label/c.Client_Integra_Responses_smartsheet';
+import Doyourequiremorethan3jobhyperlink from '@salesforce/label/c.Do_you_require_more_than_3_job_hyperlink';
+import IsthereaneedforIntegra from '@salesforce/label/c.Is_there_a_need_for_Integra_c';
 import expenses from '@salesforce/label/c.NSP_Expenses';
 import clientBusinessMeetingQuestion from '@salesforce/label/c.NSP_Client_Business_Meeting_States_Question';
 import clientBusinessMeeting from '@salesforce/label/c.NSP_Client_Business_Meeting_States';
@@ -579,7 +588,6 @@ export {
     YES_CONSTANT,
     No,
     isClientComingFromAnotherPEO,
-    isClientComingImplementingPerformance,
     isClientImplementingAnyOtherBusinessSolutions,
     premierPerformanceImplementationTimeline,
     organizationalPlanningImpTimeline,
@@ -644,6 +652,17 @@ export {
     whatAccountingSoftwareDoYouUse,
     wouldYouLikeAutomationForYourGeneralLedger,
     isPayrollEntryItemizedOrSimpleEntry,
+    WhatQuickBooksversiondoyouuse,
+    Neededpayrollentryallocation,
+    Doyouneedtoallocatecosts,
+    Doyourequiremorethan3jobcost,
+    Doyouhavearecentjournalentry,
+    Doyouhavearecentjournal,
+    Doyouneedtoallocatehelptext,
+    Doyourequiremorethan3jobhyperlink,
+    ClientIntegraResponsessmartsheet,
+    Doyourequiremorethan3jobhelptext,
+    IsthereaneedforIntegra,
     doAnyEEsHaveTaxLevies,
     doesClientHaveExpenseOrAllowance,
     doesClientHavePostTaxDeductions,
@@ -752,7 +771,6 @@ export {
     clientInternalDeadlineEE,
     allEEsPaidToSameFEIN,
     certCoverForGeneralLiability,
-    whenClientLikeSolutionImplemented,
     FSO,
     FSOHeader,
     MMHeader,

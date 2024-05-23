@@ -154,7 +154,7 @@ const APG_ROW_ACTIONS = [
 ];
 
 const STATUS_OPTIONS = ['Draft', 'Inactive', 'Cancelled'];
-const STATUS_OPTIONS_AIMS = ['Draft', 'Inactive'];
+const STATUS_OPTIONS_AIMS = ['Draft', 'Inactive', 'Cancelled'];
 
 const ACCRUAL_PROFILE_FIELDS = [
   'NSP_Accrual_Profile__c.NSP_Employee_Status_check_all_that_apply__c',

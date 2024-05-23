@@ -1308,64 +1308,104 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
             newQuote.NSP_Ship_To_Name__c       = objAddress.Name;            
         }
     }
-    
-            /**
-* Method Name : createEnrollmentFee 
-* Description : Method to create enrollment fee record with associated opportunity once quote approved
-* Author : Samba Raju       Date : 22/09/2021
-* @param QuoteNewMap Map of New Quote. 
-* @param QuoteOldMap Map of Old Quote.   
-* @return void  
-*/
-    
-public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap)  { 
-    List<NSP_Enrollment_Fee_Payment__c> enrollmentRecs= new List<NSP_Enrollment_Fee_Payment__c>();
-    List<Opportunity> optysToupdate= new List<Opportunity>();
-    Map<Id,NSP_Enrollment_Fee_Payment__c> existingEnrollments =getExistingEnrollments(quoteNewMap);
-    for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
-        SBQQ__Quote__c oldQuote =quoteOldMap.get(newQuote.Id);
-        If(newQuote.SBQQ__Opportunity2__c!=null && newQuote.SBQQ__Type__c=='New Product' && (newQuote.NSP_Opportunity_Primary_Product__c=='WX'||newQuote.NSP_Opportunity_Primary_Product__c=='WA') && 
-           ((newQuote.SBQQ__Primary__c==true && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED)||(newQuote.SBQQ__Primary__c!=oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c==true &&newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED))){
-              NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
-               If(existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c)){
-                   enrollmentFee.Id=existingEnrollments.get(newQuote.SBQQ__Opportunity2__c).Id;
-                   enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
-                   enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
-                   enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
-               }
-               else{
-                   enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
-                   enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
-                   enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
-                   enrollmentFee.NSP_Payment_Method__c='Card';
-               }
-               enrollmentRecs.add(enrollmentFee);
-           }
-        //if set up fee is zero,set non docupay flag on Opportunity to true
-        if(newQuote.NSP_WX_WA_Enrollment_Fee__c==0){
-            Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=true);
-            optysToupdate.add(opty);
+
+    // Method Name : createEnrollmentFee 
+    // Description : Method to create enrollment fee record with associated opportunity once quote approved
+    // Author : Samba Raju       Date : 22/09/2021
+    // @param QuoteNewMap Map of New Quote. 
+    // @param QuoteOldMap Map of Old Quote.   
+    // @return void  
+    public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap)  { 
+        List<NSP_Enrollment_Fee_Payment__c> enrollmentRecs= new List<NSP_Enrollment_Fee_Payment__c>();
+        List<Opportunity> optysToupdate= new List<Opportunity>();
+        Map<Id,NSP_Enrollment_Fee_Payment__c> existingEnrollments =getExistingEnrollments(quoteNewMap);
+        for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
+            SBQQ__Quote__c oldQuote =quoteOldMap.get(newQuote.Id);
+            if ( newQuote.SBQQ__Opportunity2__c != null
+                && newQuote.SBQQ__Type__c == 'New Product'
+                && (
+                    newQuote.NSP_Opportunity_Primary_Product__c == 'WX'
+                    || newQuote.NSP_Opportunity_Primary_Product__c == 'WA'
+                )
+                && (
+                    (
+                        newQuote.SBQQ__Primary__c == true
+                        && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c
+                        && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED
+                    )
+                    || (
+                        newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c
+                        && newQuote.SBQQ__Primary__c == true
+                        && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED
+                    )
+                )
+                )
+            {
+                NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
+                If(existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c)){
+                    enrollmentFee.Id=existingEnrollments.get(newQuote.SBQQ__Opportunity2__c).Id;
+                    enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
+                    enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
+                    enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
+                } else{
+                    enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
+                    enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
+                    enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
+                    enrollmentFee.NSP_Payment_Method__c='Card';
+                }
+                enrollmentRecs.add(enrollmentFee);
+            }
+            //if set up fee is zero,set non docupay flag on Opportunity to true
+            if(newQuote.NSP_WX_WA_Enrollment_Fee__c==0){
+                Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=true);
+                optysToupdate.add(opty);
+            } else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0 ){
+                Opportunity opty;
+                if( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED
+                    && oldQuote != null
+                    && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c
+                    )
+                {
+                    if(newQuote.SBQQ__Primary__c == true) {
+                        opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+                    }
+                } else if(
+                    newQuote.SBQQ__Primary__c == true
+                    && oldQuote != null
+                    && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c
+                    )
+                {
+                    if(newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED  ) {
+                        opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+                    }
+                }
+                optysToupdate.add(opty);
+            }
         }
-        else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0){
-            Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
-            optysToupdate.add(opty);
+        if(!enrollmentRecs.isEmpty()){
+            try{
+                upsert enrollmentRecs;
+            } catch(Exception ex){
+                NSP_ErrorLogHandler.logSaveException(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'createEnrollmentFee upsert enrollmentRecs' ,
+                    ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                );
+            }
+        }
+        if(!optysToupdate.isEmpty()){
+            try{
+                update optysToupdate;
+            } catch(Exception ex){
+                NSP_ErrorLogHandler.logSaveException(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'createEnrollmentFee update optysToupdat' ,
+                    ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                );
+            }
         }
     }
-    if(!enrollmentRecs.isEmpty()){
-        try{
-            upsert enrollmentRecs;
-        } catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'createEnrollmentFee',ex.getMessage());
-        }  
-    }
-    if(!optysToupdate.isEmpty()){
-        try{
-            update optysToupdate;
-        } catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'createEnrollmentFee',ex.getMessage());
-        }  
-    }
-}
+
 /**
 * Method Name : getExistingEnrollments 
 * Description : Method to retrieve existing enrollements related to opportunities

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Fields needed for any/all users to run reports/utilize enabled report filters</description>
+    <description>Fields needed for any/all users to run reports/utilize enabled report filters or when &quot;Any/All user should see X field&quot;</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Account_Assignment_Method__c</field>
@@ -123,6 +123,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sales_to_Implementation__c.AIMS_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -158,12 +163,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.X6Sense_Account_6QA_Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.X6Sense_Buying_Stage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Task.NSP_Activity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.User_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Assignment__c.Assignment_Id_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

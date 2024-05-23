@@ -4,6 +4,10 @@
 */
 @isTest(SeeAllData=false)
 public class NSP_OrderManagementTest {
+    
+    public static final String goLiveDate = 'Project go-live date';
+    public static final String TEST_PRODUCT = 'Test Product';
+    
     public class myException extends Exception {}
     
     /*
@@ -15,7 +19,8 @@ public class NSP_OrderManagementTest {
          Account acnt=NSP_TestHelper.createAccount(true);
          Opportunity opp=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
          SBQQ__Quote__c quote = NSP_TestHelper.createCPQQuote(acnt.Id,opp.Id,true);
-         Contract ctrct = new Contract(AccountId=acnt.id, 
+        
+        Contract ctrct = new Contract(AccountId=acnt.id, 
                                    SBQQ__Opportunity__c=opp.id, 
                                    SBQQ__Quote__c=quote.id, Status='Draft', 
                                    StartDate=Date.today(), 
@@ -23,6 +28,33 @@ public class NSP_OrderManagementTest {
                                    SBQQ__PreserveBundleStructureUponRenewals__c=true);
                                    
         insert ctrct;
+        
+        blng__BillingRule__c bRule=NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c rRule=NSP_TestHelper.createRevrecRule(NSP_CPQConstants.PROJ_REV_REC);
+        blng__TaxRule__c tRule=NSP_TestHelper.createRevTaxRule();
+        
+        Product2 objproduct = NSP_TestHelper.createBillingProduct(TEST_PRODUCT,rRule,tRule,bRule,'Monthly');
+         
+         List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+        //creates subscription
+        SBQQ__Subscription__c subscription = new SBQQ__Subscription__c();
+        subscription.SBQQ__Account__c = acnt.Id;
+        subscription.SBQQ__Quantity__c = 10;
+        subscription.SBQQ__Contract__c = ctrct.id;
+        subscription.SBQQ__Product__c = objproduct.Id;
+        subList.add(subscription);
+        //creates subscription
+        SBQQ__Subscription__c subscription1 = new SBQQ__Subscription__c();
+        subscription1.SBQQ__Account__c = acnt.Id;
+        subscription1.SBQQ__Quantity__c = 13;
+        subscription1.SBQQ__Contract__c = ctrct.id;
+        subscription1.SBQQ__Product__c = objproduct.Id;
+        subList.add(subscription1);
+        
+        system.debug(subscription);
+        system.debug(subscription1);
+        
+        insert subList;
         
         ctrct.Status = 'Activated';
         update ctrct;

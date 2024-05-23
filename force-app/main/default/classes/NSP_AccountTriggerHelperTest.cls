@@ -233,9 +233,6 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testAccountUpdate() {
-        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabledDeleteAccountTeams__c = True;
-        upsert settings;
 
         PlatformEventSettings__c setting = new PlatformEventSettings__c();
         setting.IsEnabled_IntegrationAccountEvent__c = true;
@@ -342,9 +339,6 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testhandleTask() {
-        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabledDeleteAccountTeams__c = True;
-        upsert settings;
 
         List<Account>  accountList = New List<Account>();
         Map<Id, Account> accountMapOld = new Map<Id, Account>();
@@ -536,9 +530,6 @@ public class NSP_AccountTriggerHelperTest {
     
     @isTest
     static void testAccountPremierUpdate() {
-        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabledDeleteAccountTeams__c = True;
-        upsert settings;
 
          List<Account>  accountList = New List<Account>();
          User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE Email = 'jsmith@insperity.com' Limit 1];

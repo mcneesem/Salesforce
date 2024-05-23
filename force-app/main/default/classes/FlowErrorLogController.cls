@@ -102,6 +102,7 @@ public with sharing class FlowErrorLogController {
             String duration = null;
             String errorElement = null;
             String errorMessage = null;
+            String interviewGuid = null;
             String interviewLabel = null;
             String processType = null;
             String startTime = null;
@@ -150,6 +151,13 @@ public with sharing class FlowErrorLogController {
                                 errorMessageIndex = ( lineIndex + 1 );
                                 System.debug( DEBUG_PREFIX + ' ~ errorMessageIndex=' + errorMessageIndex );
                             }
+                        }
+                    }
+                    if ( ( interviewGuid == null ) && flowErrorBodyLine.startsWith( 'Interview GUID: ' ) ) {
+                        // Interview GUID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXX
+                        String input = flowErrorBodyLine;
+                        if ( String.isNotBlank( input ) && input.contains( 'Interview GUID: ' ) ) {
+                            interviewGuid = input.substringAfter( 'Interview GUID: ' );
                         }
                     }
                     if ( ( interviewLabel == null ) && flowErrorBodyLine.startsWith( 'Interview Label: ' ) ) {
@@ -249,6 +257,10 @@ public with sharing class FlowErrorLogController {
             errorLog.ErrorMessage__c = SchemaController.safeText(
                 errorMessage ,
                 sObjectType.FlowErrorLog__c.Fields.ErrorMessage__c
+            );
+            errorLog.InterviewGuid__c = SchemaController.safeText(
+                interviewGuid ,
+                sObjectType.FlowErrorLog__c.Fields.InterviewGuid__c
             );
             errorLog.InterviewLabel__c = SchemaController.safeText(
                 interviewLabel ,

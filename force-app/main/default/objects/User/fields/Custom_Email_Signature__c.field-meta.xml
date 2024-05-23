@@ -4,7 +4,7 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Custom Email Signature</label>
-    <length>600</length>
+    <length>1000</length>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Html</type>
     <visibleLines>10</visibleLines>

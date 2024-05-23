@@ -54,36 +54,6 @@
   </lightning-input-field>
 
   <c-nsp_selection-box
-    disabled={disabledFields.Client_Implementing_Premier_Performance__c}
-    label={label.isClientComingImplementingPerformance}
-    data-name="Client_Implementing_Premier_Performance__c"
-    field-api-name="Implementation_Profile__c.Client_Implementing_Premier_Performance__c"
-    record-type-id={recordTypeId}
-    value={field.Client_Implementing_Premier_Performance__c}
-    class={styles.Client_Implementing_Premier_Performance__c}
-    onchange={handleValueChange}>
-  </c-nsp_selection-box>
-
-  <div
-    if:true={visibility.When_Client_Wants_Solution_implemented__c}>
-    <div class="slds-form-element__label">
-    <lightning-formatted-text
-      class={styles.When_Client_Wants_Solution_implemented__c}
-      data-field="When_Client_Wants_Solution_implemented__c"
-      value={label.whenClientLikeSolutionImplemented}>
-    </lightning-formatted-text>
-  </div>
-    <lightning-input-field value={field.When_Client_Wants_Solution_implemented__c}
-      disabled={disabledFields.When_Client_Wants_Solution_implemented__c}
-      variant="label-hidden"
-      field-name="When_Client_Wants_Solution_implemented__c"
-      data-name="When_Client_Wants_Solution_implemented__c"
-      onchange={handleValueChange}
-      class={styles.When_Client_Wants_Solution_implemented__c}>
-    </lightning-input-field>
-  </div>
-
-  <c-nsp_selection-box
     disabled={disabledFields.Implementing_biz_Performance_solutions__c}
     label={label.isClientImplementingAnyOtherBusinessSolutions}
     data-name="Implementing_biz_Performance_solutions__c"

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>NSP_Display_ConfidentialCases</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>This permission set provides Read access to all the service related objects</description>
     <fieldPermissions>
         <editable>false</editable>
@@ -404,7 +408,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Client_Implementing_Premier_Performance__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3199,7 +3203,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.When_Client_Wants_Solution_implemented__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

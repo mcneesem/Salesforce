@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (81%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (82%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -35,6 +35,9 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading FieldPermissions');
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
         loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
+
+        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading RecTypeVisibilities');
+        loadRecTypeVisibility(editPermSetId, currObjName); // upsert edit RecTypeVisibilities for first object in list
 
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
@@ -114,7 +117,6 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     //                  specified Perm Set.
     // *******************************************************************************************
     public static void loadFieldPermissions(Id permSetId, Boolean editFlag, String currObjName) {
-        
         if (!String.isBlank(permSetId)) {
             Set<String> skipFields = new Set<String>{'Id','IsDeleted','CreatedDate','LastModifiedDate','SystemModstamp','UserRecordAccessId',
                 'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','CurrencyIsoCode',
@@ -160,6 +162,41 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
                 }
             }
             if (errLogCount > 0) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', currObjName, errLogCount + ' FieldPermissions errors occurred on Perm Set: ' + permSetId);
+        }
+    }
+
+    // ************************************ Record Type Visibility ************************************
+    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types of specified 
+    //                  object name into specified Perm Set.
+    // *******************************************************************************************
+    @Future(callout=true)
+    public static void loadRecTypeVisibility(Id permSetId, String currObjName) {        
+        if (!String.isBlank(permSetId)) {
+            List<RecordType> recTypeList =  [SELECT DeveloperName FROM RecordType WHERE SobjectType = :currObjName AND IsActive = true];
+            MetadataService.MetadataPort service = NSP_PrepSandbox.createService();
+
+            String[] permissionSetNames = new String[] {[SELECT Name FROM PermissionSet WHERE Id = :permSetId LIMIT 1].Name};
+            MetadataService.PermissionSet permSet = new MetadataService.PermissionSet();
+            if (!Test.isRunningTest()) {
+                permSet = (MetadataService.PermissionSet) service.readMetadata('PermissionSet', permissionSetNames).getRecords()[0];
+            }
+
+            for (RecordType recType : recTypeList) {
+                MetadataService.PermissionSetRecordTypeVisibility recTypeVis = new MetadataService.PermissionSetRecordTypeVisibility();	
+                recTypeVis.recordType = currObjName + '.' + recType.DeveloperName;
+                recTypeVis.visible = true;
+
+                if (permSet.recordTypeVisibilities != null) {
+                    permSet.recordTypeVisibilities.add(recTypeVis);
+                } else {
+                    permSet.recordTypeVisibilities = new MetadataService.PermissionSetRecordTypeVisibility[] { recTypeVis };
+                }
+            }
+
+            if (permSet != null && !Test.isRunningTest()) {
+                List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
+                if (!results[0].success) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadRecTypeVisibility', currObjName, 'RecTypeVisibility errors occurred on Perm Set: ' + permSetId);
+            }
         }
     }
 

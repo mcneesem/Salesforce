@@ -55,7 +55,7 @@
         <!-- Footer -->
         <tfoot>
             <tr style="background-color: #006595;">
-                <td align="center" colspan="12">
+                <td align="center">
                     <!-- <img src="{!insperityLogoLink}" height="50" /> -->
                 </td>
             </tr>

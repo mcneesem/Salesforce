@@ -10251,11 +10251,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.If_EE_works_holiday_are_paid_prem__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Implementation_Profile__c.NSP_AIMS_Client_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10725,9 +10720,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Implementation_Profile__c.Client_Implementing_Premier_Performance__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13141,9 +13136,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Implementation_Profile__c.When_Client_Wants_Solution_implemented__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -37223,7 +37218,7 @@ m   <fieldPermissions>
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountContactRelation-ACR Service Layout</layout>
+        <layout>AccountContactRelation-Admin Support Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Additional_Payroll_Contact__c-Additional Payroll Contact Layout</layout>

@@ -35,8 +35,6 @@ const SECTION_FIELDS = [
   'Implementation_Profile__c',
   'PEO_Name__c',
   'Client_s_previous_payroll_provider__c',
-  'Client_Implementing_Premier_Performance__c',
-  'When_Client_Wants_Solution_implemented__c',
   'Implementing_biz_Performance_solutions__c',
   'Select_BPSes__c',
   'Organizational_Planning_Imp_Timeline__c',
