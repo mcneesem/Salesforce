@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Family_req_when_Level_is_Parent</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL( Campaign_Level__c , &quot;Parent: Program&quot; ),
+ISPICKVAL( Program_Family__c , &quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Program_Family__c</errorDisplayField>
+    <errorMessage>Program Family must have a value when Campaign Level = &quot;Parent: Program&quot;</errorMessage>
+</ValidationRule>
