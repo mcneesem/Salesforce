@@ -865,6 +865,14 @@
             <fullName>60</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>62</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>63</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ORK_Plan_Vendor__c</picklist>
