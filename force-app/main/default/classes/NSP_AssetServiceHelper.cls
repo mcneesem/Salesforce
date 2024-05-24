@@ -22,7 +22,6 @@ public class NSP_AssetServiceHelper {
     
     
     public  void createBPSProject(List<Asset> assetList ){
-        
         Set<Id>accountIdSet = new Set<Id>();
         Set<Id> integraAssetSet = new Set<Id>();
         Set<Id> performSmartAssetSet = new Set<Id>();
@@ -30,40 +29,38 @@ public class NSP_AssetServiceHelper {
         Set<Id> timeAttendanceAssetSet = new Set<Id>();
         Map<Id, Opportunity> mapOfOpportunity = new Map<Id, Opportunity>();
         Map<Id, Id> mapOfAssetOppty = new Map<Id, Id>();
-            
         List<pse__Proj__c> updatedProjectList = new List<pse__Proj__c>();
         List<Project_Asset__c> projectAssetMapping = new List<Project_Asset__c>();
         Map<Id, Account> mapOfAccount = new Map<Id, Account>();
         Id BPSRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-
-        
         try{
             List<String> assetRecordTypeList = new List<String>{INTEGRA_ASSET, PERFORM_SMART_ASSET, TIME_ATTENDANCE_ASSET, XML_ASSET};
             if ( assetList != null ){
                 for ( Asset asset : assetList ) {
-                    if (( asset.RecordTypeId == PERFORM_SMART_ASSET || asset.RecordTypeId == TIME_ATTENDANCE_ASSET )
-                        &&  asset.Opportunity__c != null 
+                    if ( ( asset.RecordTypeId == PERFORM_SMART_ASSET || asset.RecordTypeId == TIME_ATTENDANCE_ASSET )
+                        && ( asset.Opportunity__c != null )
                         )
                     {
                         mapOfAssetOppty.put(asset.id,asset.Opportunity__c);
                     }
                     
                 }
-                
                 if ( !mapOfAssetOppty.values().isEmpty() ){
-                    List<Opportunity> opptyList = [SELECT Id , NSP_Time_Entry_Recommendation__c , NSP_IPMRecommendation__c
-                                                   FROM Opportunity
-                                                   WHERE (
-                                                       ( Id IN :mapOfAssetOppty.values() )
-                                                       AND (
-                                                           ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.PERFORMANCE_MANAGEMENT )
-                                                           OR ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.TIME_ATTENDANCE )
-                                                       )
-                                                   )];
+                    List<Opportunity> opptyList = [
+                        SELECT Id , NSP_Time_Entry_Recommendation__c , NSP_IPMRecommendation__c
+                        FROM Opportunity
+                        WHERE (
+                            ( Id IN :mapOfAssetOppty.values() )
+                            AND (
+                                ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.PERFORMANCE_MANAGEMENT )
+                                OR ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.TIME_ATTENDANCE )
+                            )
+                        )
+                    ];
                     if ( !opptyList.isEmpty() ){
                         for ( Opportunity oppty : opptyList ) {
                             mapOfOpportunity.put(oppty.Id,oppty);
-                        } 
+                        }
                     }
                 }
                 for ( Asset asset : assetList ) {
@@ -73,9 +70,11 @@ public class NSP_AssetServiceHelper {
                         integraAssetSet.add(asset.Id);
                     }
                     if ( asset.RecordTypeId == PERFORM_SMART_ASSET
-                        &&  asset.AccountId != null
-                        && !asset.Is_Perform_WO_WS_Asset__c && mapOfAssetOppty.containsKey(asset.Id)
-						&& mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id)) && mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
+                        && asset.AccountId != null
+                        && !asset.Is_Perform_WO_WS_Asset__c
+                        && mapOfAssetOppty.containsKey(asset.Id)
+                        && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
+                        && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
                         )
                     {
                         accountIdSet.add(asset.AccountId);
@@ -83,8 +82,10 @@ public class NSP_AssetServiceHelper {
                     }
                     if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
                         && asset.AccountId!=null
-                        && !asset.Is_Perform_WO_WS_Asset__c && mapOfAssetOppty.containsKey(asset.Id)
-						&& mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id)) && mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att
+                        && !asset.Is_Perform_WO_WS_Asset__c
+                        && mapOfAssetOppty.containsKey(asset.Id)
+                        && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
+                        && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
                         )
                     {
                         accountIdSet.add(asset.AccountId);
@@ -112,10 +113,15 @@ public class NSP_AssetServiceHelper {
             
             // getting template from metadata
             Map<String, Template_Key_and_Id_Mapping__mdt> templateMap = new Map<String, Template_Key_and_Id_Mapping__mdt>();
-            Set<String> templateKeySet = new Set<String>{NSP_ServiceConstants.INTEGRA,NSP_ServiceConstants.PERFORMANCE,
-                										 NSP_ServiceConstants.XML_ASSET,NSP_ServiceConstants.CATEGORY_TIME_ATTENDANCE};
-                    List<Template_Key_and_Id_Mapping__mdt> templateList =[SELECT Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt
-                                                                          WHERE Key__c IN: templateKeySet AND NSP_From_Object__c = : NSP_ServiceConstants.FROM_OBJECT_ASSET];
+            Set<String> templateKeySet = new Set<String>{
+                NSP_ServiceConstants.INTEGRA,NSP_ServiceConstants.PERFORMANCE,
+                NSP_ServiceConstants.XML_ASSET,NSP_ServiceConstants.CATEGORY_TIME_ATTENDANCE
+            };
+            List<Template_Key_and_Id_Mapping__mdt> templateList =[
+                SELECT Key__c, Template_ID__c, Template_Name__c
+                FROM Template_Key_and_Id_Mapping__mdt
+                WHERE Key__c IN: templateKeySet AND NSP_From_Object__c = : NSP_ServiceConstants.FROM_OBJECT_ASSET
+            ];
             for(Template_Key_and_Id_Mapping__mdt template :templateList){
                 templateMap.put(template.Key__c, template);
             }
