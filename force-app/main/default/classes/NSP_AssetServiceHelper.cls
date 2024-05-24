@@ -28,7 +28,6 @@ public class NSP_AssetServiceHelper {
         Set<Id> performSmartAssetSet = new Set<Id>();
         Set<Id> xmlAssetSet = new Set<Id>();
         Set<Id> timeAttendanceAssetSet = new Set<Id>();
-    	Set<Id> opptyIdSet = new Set<Id>();
         Map<Id, Opportunity> mapOfOpportunity = new Map<Id, Opportunity>();
         Map<Id, Id> mapOfAssetOppty = new Map<Id, Id>();
             
@@ -46,14 +45,21 @@ public class NSP_AssetServiceHelper {
                         &&  asset.Opportunity__c != null 
                         )
                     {
-                        opptyIdSet.add(asset.Opportunity__c);
                         mapOfAssetOppty.put(asset.id,asset.Opportunity__c);
                     }
                     
                 }
                 
-                if ( !opptyIdSet.isEmpty() ){
-                    List<Opportunity> opptyList = [SELECT Id,NSP_Time_Entry_Recommendation__c,NSP_IPMRecommendation__c FROM Opportunity where (NSP_PrimaryProduct__c =: NSP_ServiceConstants.PERFORMANCE_MANAGEMENT OR NSP_PrimaryProduct__c =: NSP_ServiceConstants.TIME_ATTENDANCE) ];
+                if ( !mapOfAssetOppty.values().isEmpty() ){
+                    List<Opportunity> opptyList = [SELECT Id , NSP_Time_Entry_Recommendation__c , NSP_IPMRecommendation__c
+                                                   FROM Opportunity
+                                                   WHERE (
+                                                       ( Id IN :mapOfAssetOppty.values() )
+                                                       AND (
+                                                           ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.PERFORMANCE_MANAGEMENT )
+                                                           OR ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.TIME_ATTENDANCE )
+                                                       )
+                                                   )];
                     if ( !opptyList.isEmpty() ){
                         for ( Opportunity oppty : opptyList ) {
                             mapOfOpportunity.put(oppty.Id,oppty);
